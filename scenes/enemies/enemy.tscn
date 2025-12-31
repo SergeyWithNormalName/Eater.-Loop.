@@ -7,7 +7,7 @@
 size = Vector2(2528, 870)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lu5c6"]
-size = Vector2(656, 870)
+size = Vector2(906, 870)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
 size = Vector2(606, 870)
@@ -34,3 +34,4 @@ shape = SubResource("RectangleShape2D_8e3ao")
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
 [connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]
+[connection signal="body_exited" from="HitboxArea" to="." method="_on_hitbox_area_body_exited"]
