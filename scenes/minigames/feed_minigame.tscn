@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bookuyu7wubkp" path="res://textures/minigames/eat/andreys_faces/BasicEat.png" id="2_lc4ts"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wyl2e"]
-radius = 44.28318
+radius = 61.13101
 
 [node name="FeedMiniGame" type="CanvasLayer"]
 process_mode = 3

@@ -65,9 +65,8 @@ func _end_drag() -> void:
 	is_any_dragging = false
 	z_index = 0
 	
-	# ИСПРАВЛЕНИЕ: Проверяем флаг, который мы обновляли сигналами. 
-	# Это работает на 100% надежно.
-	if _is_over_mouth:
+	# Проверяем попадание даже при паузе дерева, без опоры на physics-сигналы.
+	if _is_in_mouth():
 		eat_me()
 	else:
 		_return_to_plate()
@@ -79,6 +78,30 @@ func _return_to_plate() -> void:
 func _process(_delta: float) -> void:
 	if _is_dragging:
 		global_position = get_global_mouse_position() + _grab_offset
+
+func _is_in_mouth() -> bool:
+	if _target_mouth == null:
+		return false
+	if _is_over_mouth:
+		return true
+	
+	var shape_node: CollisionShape2D = null
+	for child in _target_mouth.get_children():
+		if child is CollisionShape2D and child.shape:
+			shape_node = child
+			break
+	
+	if shape_node == null:
+		return false
+	
+	if shape_node.shape is CircleShape2D:
+		var circle := shape_node.shape as CircleShape2D
+		var scale := shape_node.global_scale
+		var radius: float = circle.radius * max(abs(scale.x), abs(scale.y))
+		return global_position.distance_to(shape_node.global_position) <= radius
+	
+	# Фоллбек: если форма не круг, пробуем стандартную проверку.
+	return _target_mouth.overlaps_area(self)
 
 func eat_me() -> void:
 	eaten.emit()
