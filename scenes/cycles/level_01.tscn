@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=28 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/furniture/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player.gd" id="2_3555j"]
 [ext_resource type="Texture2D" uid="uid://cj470h3nbgw5s" path="res://textures/Andry.png" id="3_nghjy"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="4_hl306"]
+[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scenes/cycles/flashlight.gd" id="4_srw7l"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/Door_2.png" id="5_wnv1a"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="6_srw7l"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/Bed.png" id="7_olvol"]
@@ -17,9 +18,22 @@
 [ext_resource type="AudioStream" uid="uid://broo4saywf1y1" path="res://audio/Не одну весну (slowed & reverb).mp3" id="14_nghjy"]
 [ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://textures/furniture/Frizzer.png" id="14_ugoxw"]
 [ext_resource type="AudioStream" uid="uid://dm1ej372r4l52" path="res://audio/festive-horn-noisy-close-squeaky.mp3" id="15_hl306"]
+[ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="18_wnv1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
+
+[sub_resource type="Gradient" id="Gradient_wnv1a"]
+offsets = PackedFloat32Array(0.019543974, 0.09771987, 0.7589577)
+colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.0011894, 1.0011894, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_srw7l"]
+gradient = SubResource("Gradient_wnv1a")
+width = 1024
+height = 256
+fill = 1
+fill_from = Vector2(0.182, 0.437)
+fill_to = Vector2(0.75, 0.237)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(204, 383)
@@ -33,16 +47,14 @@ size = Vector2(130, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cr2eh"]
 size = Vector2(187.5, 370.36243)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
+shader = ExtResource("18_wnv1a")
+shader_parameter/reach = 1.2900000580151199
+shader_parameter/intensity = 0.59200002812
+shader_parameter/color = Color(0, 0, 0, 1)
+
 [node name="Level" type="Node2D"]
 position = Vector2(16, 0)
-
-[node name="Darkness" type="ColorRect" parent="."]
-visible = false
-offset_left = -90.0
-offset_top = -52.0
-offset_right = 81.0
-offset_bottom = 44.0
-color = Color(0, 0, 0, 0.6862745)
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
@@ -63,7 +75,6 @@ region_rect = Rect2(0, 0, 1500, 550)
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(-303, 41)
 script = ExtResource("2_3555j")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-5.249996, 83.238884)
@@ -79,6 +90,14 @@ position_smoothing_speed = 50.0
 position = Vector2(-5.375, 83.37938)
 scale = Vector2(0.44800887, 0.44800875)
 texture = ExtResource("3_nghjy")
+
+[node name="PointLight2D" type="PointLight2D" parent="Player"]
+position = Vector2(23.356506, 59)
+rotation = 3.1415927
+scale = Vector2(1.0089942, 1)
+texture = SubResource("GradientTexture2D_srw7l")
+offset = Vector2(-250, 0)
+script = ExtResource("4_srw7l")
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2
@@ -187,6 +206,7 @@ texture = ExtResource("9_mhy53")
 [node name="Frizzer" type="Area2D" parent="."]
 z_index = -1
 position = Vector2(7850, 91)
+rotation = 0.002391043
 script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
@@ -212,6 +232,21 @@ start_game_time = "0:07"
 [node name="WorldClock2" parent="." instance=ExtResource("13_bij4o")]
 position = Vector2(6693, -107)
 start_game_time = "0:07"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+rotation = 0.009666472
+color = Color(0.23529412, 0.23529412, 0.27450982, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_srw7l")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]
