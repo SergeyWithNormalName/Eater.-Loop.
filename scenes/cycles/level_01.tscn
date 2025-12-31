@@ -1,18 +1,22 @@
-[gd_scene load_steps=19 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=23 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/furniture/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player.gd" id="2_3555j"]
 [ext_resource type="Texture2D" uid="uid://cj470h3nbgw5s" path="res://textures/Andry.png" id="3_nghjy"]
-[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/door.gd" id="4_hl306"]
+[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="4_hl306"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/Door_2.png" id="5_wnv1a"]
-[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/bed.gd" id="6_srw7l"]
+[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="6_srw7l"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/Bed.png" id="7_olvol"]
 [ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="9_mhy53"]
-[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://scripts/key.gd" id="11_tudbb"]
-[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/frizzer.gd" id="13_3jwi8"]
+[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/feed_minigame.tscn" id="11_3555j"]
+[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://scripts/objects/key.gd" id="11_tudbb"]
+[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food_dumpling.tscn" id="12_nghjy"]
+[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="13_3jwi8"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://scenes/objects/world_clock.tscn" id="13_bij4o"]
-[ext_resource type="PackedScene" uid="uid://detuq7pgbu4ib" path="res://scenes/enemies/enemy.tscn" id="13_f8a5e"]
+[ext_resource type="Texture2D" uid="uid://d0byt4s57oqe6" path="res://textures/minigames/eat/andreys_faces/SadEat.png" id="13_hl306"]
+[ext_resource type="AudioStream" uid="uid://broo4saywf1y1" path="res://audio/Не одну весну (slowed & reverb).mp3" id="14_nghjy"]
 [ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://textures/furniture/Frizzer.png" id="14_ugoxw"]
+[ext_resource type="AudioStream" uid="uid://dm1ej372r4l52" path="res://audio/festive-horn-noisy-close-squeaky.mp3" id="15_hl306"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
@@ -184,6 +188,11 @@ texture = ExtResource("9_mhy53")
 z_index = -1
 position = Vector2(7850, 91)
 script = ExtResource("13_3jwi8")
+minigame_scene = ExtResource("11_3555j")
+food_scene = ExtResource("12_nghjy")
+andrey_face = ExtResource("13_hl306")
+bg_music = ExtResource("14_nghjy")
+win_sound = ExtResource("15_hl306")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]
@@ -202,16 +211,6 @@ start_game_time = "0:07"
 [node name="WorldClock2" parent="." instance=ExtResource("13_bij4o")]
 position = Vector2(6693, -107)
 start_game_time = "0:07"
-
-[node name="Enemy" parent="." instance=ExtResource("13_f8a5e")]
-position = Vector2(6988, 67)
-scale = Vector2(0.5, 0.5)
-time_penalty = 8.0
-
-[node name="Enemy2" parent="." instance=ExtResource("13_f8a5e")]
-position = Vector2(7481, 67)
-scale = Vector2(0.5, 0.5)
-time_penalty = 6.0
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

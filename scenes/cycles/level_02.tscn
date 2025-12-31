@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://byw4pxe6xnbgt"]
 
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player.gd" id="1_scvo5"]
-[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/door.gd" id="2_ucrpc"]
-[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/frizzer.gd" id="3_57nq5"]
-[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/bed.gd" id="4_tbjq2"]
+[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="2_ucrpc"]
+[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="3_57nq5"]
+[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="4_tbjq2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(10, 20)
