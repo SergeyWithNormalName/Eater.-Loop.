@@ -1,8 +1,9 @@
 extends Node
 
+# --- НАСТРОЙКИ ---
 var cycle_settings: Dictionary = {
-	1: 60.0,
-	2: 45.0,
+	1: 0.0,  # 0.0 означает, что таймера нет
+	2: 0.0,  # На втором уровне тоже без таймера
 	3: 30.0,
 	4: 20.0
 }
@@ -27,12 +28,23 @@ func start_normal_phase() -> void:
 	
 	var current_cycle = GameState.cycle
 	var time_to_set: float = cycle_settings.get(current_cycle, default_time)
-	current_max_time = time_to_set
 	
-	_timer.start(time_to_set)
+	# Если время больше 0, запускаем таймер
+	if time_to_set > 0.0:
+		current_max_time = time_to_set
+		_timer.start(time_to_set)
+		print("GameDirector: Таймер запущен на %.1f сек." % time_to_set)
+	else:
+		# Если время 0 или меньше, останавливаем таймер (он не будет тикать)
+		_timer.stop()
+		current_max_time = 0.0 
+		print("GameDirector: Таймер отключен для цикла %d" % current_cycle)
 
 func reduce_time(amount: float) -> void:
-	if _timer.is_stopped(): return
+	# Если таймер не запущен (бесконечное время), урон по времени не наносится
+	if _timer.is_stopped() or current_max_time <= 0.0: 
+		return
+		
 	var new_time = _timer.time_left - amount
 	if new_time <= 0.0:
 		_timer.stop()
@@ -47,11 +59,13 @@ func _on_distortion_timeout() -> void:
 	_red_rect.visible = true
 
 func get_time_ratio() -> float:
-	# Исправлено: обращаемся к phase, а не к current_phase
 	if GameState.phase != GameState.Phase.NORMAL:
 		return 0.0
-	if _timer.is_stopped():
-		return 0.0
+	
+	# Если таймер стоит в нормальной фазе — значит время бесконечное (100%)
+	if _timer.is_stopped() or current_max_time <= 0.0:
+		return 1.0
+		
 	return _timer.time_left / current_max_time
 
 func _create_distortion_overlay() -> void:
