@@ -204,8 +204,14 @@ position = Vector2(6693, -107)
 start_game_time = "0:07"
 
 [node name="Enemy" parent="." instance=ExtResource("13_f8a5e")]
-position = Vector2(7225, 67)
+position = Vector2(6988, 67)
 scale = Vector2(0.5, 0.5)
+time_penalty = 8.0
+
+[node name="Enemy2" parent="." instance=ExtResource("13_f8a5e")]
+position = Vector2(7481, 67)
+scale = Vector2(0.5, 0.5)
+time_penalty = 6.0
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]
