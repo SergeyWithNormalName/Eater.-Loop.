@@ -4,7 +4,7 @@ signal minigame_finished
 
 @export var food_needed: int = 5
 @export var finish_delay: float = 2.0
-@export var gamepad_cursor_speed: float = 800.0 # Скорость курсора с геймпада
+@export var gamepad_cursor_speed: float = 800.0
 
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
 @onready var sfx_player: AudioStreamPlayer = $SFXPlayer
@@ -12,23 +12,15 @@ signal minigame_finished
 @onready var food_container: Node2D = $Control/FoodContainer
 @onready var mouth_area: Area2D = $Control/AndreyFace/MouthArea
 
-# Виртуальный курсор (картинка руки), если хочешь (необязательно)
-# @onready var hand_cursor: Sprite2D = $Control/HandCursor 
-
 var _eaten_count: int = 0
 var _is_won: bool = false
 
 func _ready() -> void:
 	get_tree().paused = true
-	
-	mouth_area.body_entered.connect(_on_mouth_entered)
-	mouth_area.area_entered.connect(_on_mouth_entered)
-	
+	# Сигнал нам больше не нужен, пельмень сам скажет, когда его съели
+	# но оставим на всякий случай для других механик
 	if music_player.stream:
 		music_player.play()
-	
-	# Скрываем системный курсор, если хочешь использовать свой спрайт
-	# Input.mouse_mode = Input.MOUSE_MODE_HIDDEN 
 
 func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream) -> void:
 	if andrey_texture:
@@ -45,38 +37,31 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 		var food = food_scene.instantiate()
 		food_container.add_child(food)
 		
-		# ИСПРАВЛЕНИЕ: Теперь спавним еду вокруг центра контейнера (0, 0),
-		# а не относительно экрана. Разброс +- 50 пикселей.
-		food.position = Vector2(
-			randf_range(-50, 50), 
-			randf_range(-50, 50)
-		)
+		# Спавн вокруг центра контейнера
+		food.position = Vector2(randf_range(-50, 50), randf_range(-50, 50))
 		
+		# ВАЖНО: Передаем пельменю ссылку на рот, чтобы он сам проверял попадание
+		if food.has_method("set_target_mouth"):
+			food.set_target_mouth(mouth_area)
+			
 		food.eaten.connect(_on_food_eaten)
 
 func _process(delta: float) -> void:
 	_handle_gamepad_cursor(delta)
 
 func _handle_gamepad_cursor(delta: float) -> void:
-	# Получаем ввод с левого стика (стандартные UI действия или move_right/left)
-	# Убедись, что у тебя настроены move_right, move_left, move_up, move_down в Input Map
-	var joy_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	# ИСПРАВЛЕНО: используем твои настройки input map (mg_cursor_...)
+	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
 	
 	if joy_vector.length() > 0.1:
 		var current_mouse = get_viewport().get_mouse_position()
 		var new_pos = current_mouse + joy_vector * gamepad_cursor_speed * delta
 		
-		# Ограничиваем курсор экраном
 		var screen_rect = get_viewport().get_visible_rect().size
 		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
 		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
 		
-		# Двигаем системную мышь
 		get_viewport().warp_mouse(new_pos)
-
-func _on_mouth_entered(area: Area2D) -> void:
-	if area.has_method("eat_me"):
-		area.eat_me()
 
 func _on_food_eaten() -> void:
 	_eaten_count += 1
@@ -93,10 +78,11 @@ func _win() -> void:
 
 func _close_game() -> void:
 	get_tree().paused = false
-	# Input.mouse_mode = Input.MOUSE_MODE_VISIBLE # Если скрывал курсор
 	minigame_finished.emit()
 	queue_free()
 
 func _exit_tree() -> void:
 	get_tree().paused = false
-	
+	# Сбрасываем статику при выходе, чтобы в следующей игре не было глюков
+	if GameState.has_method("reset_dragging"):
+		GameState.reset_dragging() # Можно добавить, но пока решим это внутри food_item
