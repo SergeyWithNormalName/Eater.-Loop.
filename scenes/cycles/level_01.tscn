@@ -10,10 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="9_mhy53"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/feed_minigame.tscn" id="11_3555j"]
 [ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://scripts/objects/key.gd" id="11_tudbb"]
+[ext_resource type="Texture2D" uid="uid://bookuyu7wubkp" path="res://textures/minigames/eat/andreys_faces/BasicEat.png" id="12_hl306"]
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food_dumpling.tscn" id="12_nghjy"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="13_3jwi8"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://scenes/objects/world_clock.tscn" id="13_bij4o"]
-[ext_resource type="Texture2D" uid="uid://d0byt4s57oqe6" path="res://textures/minigames/eat/andreys_faces/SadEat.png" id="13_hl306"]
 [ext_resource type="AudioStream" uid="uid://broo4saywf1y1" path="res://audio/Не одну весну (slowed & reverb).mp3" id="14_nghjy"]
 [ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://textures/furniture/Frizzer.png" id="14_ugoxw"]
 [ext_resource type="AudioStream" uid="uid://dm1ej372r4l52" path="res://audio/festive-horn-noisy-close-squeaky.mp3" id="15_hl306"]
@@ -190,7 +190,8 @@ position = Vector2(7850, 91)
 script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
-andrey_face = ExtResource("13_hl306")
+andrey_face = ExtResource("12_hl306")
+food_count = 3
 bg_music = ExtResource("14_nghjy")
 win_sound = ExtResource("15_hl306")
 metadata/_edit_group_ = true

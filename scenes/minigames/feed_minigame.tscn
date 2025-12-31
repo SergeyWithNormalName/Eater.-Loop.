@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bookuyu7wubkp" path="res://textures/minigames/eat/andreys_faces/BasicEat.png" id="2_lc4ts"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wyl2e"]
-radius = 43.0
+radius = 44.28318
 
 [node name="FeedMiniGame" type="CanvasLayer"]
 process_mode = 3
@@ -44,4 +44,4 @@ position = Vector2(349, 196)
 shape = SubResource("CircleShape2D_wyl2e")
 
 [node name="FoodContainer" type="Node2D" parent="Control"]
-position = Vector2(878, 469)
+position = Vector2(833, 400)
