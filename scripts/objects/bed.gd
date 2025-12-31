@@ -9,6 +9,7 @@ extends Area2D
 @export_multiline var sleep_message_template: String = "Поспал. Цикл %d → %d"
 
 var _player_in_range: Node = null
+var _is_sleeping: bool = false # Защита от повторного нажатия
 
 func _ready() -> void:
 	input_pickable = false
@@ -22,6 +23,8 @@ func _on_body_exited(body: Node) -> void:
 		_player_in_range = null
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _is_sleeping: return
+
 	if event.is_action_pressed("interact") and _player_in_range != null:
 		_try_sleep()
 
@@ -30,16 +33,23 @@ func _try_sleep() -> void:
 		UIMessage.show_text(not_ate_message)
 		return
 
+	_is_sleeping = true
+
 	var old_cycle := GameState.cycle
 	GameState.next_cycle()
 	var new_cycle := GameState.cycle
 
 	UIMessage.show_text(sleep_message_template % [old_cycle, new_cycle])
+	
+	# Даем игроку секунду прочитать сообщение перед тем, как экран погаснет
+	await get_tree().create_timer(1.0).timeout
 
 	var next_scene: PackedScene = level_by_cycle.get(new_cycle, null)
 	if next_scene == null:
 		push_warning("Bed: не назначена сцена для цикла " + str(new_cycle))
-		# Можно добавить дефолтное действие или конец игры здесь
+		_is_sleeping = false
 		return
 
-	get_tree().change_scene_to_packed(next_scene)
+	# Плавная смена сцены
+	await UIMessage.change_scene_with_fade(next_scene)
+	

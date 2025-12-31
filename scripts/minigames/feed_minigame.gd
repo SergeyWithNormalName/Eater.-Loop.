@@ -17,8 +17,6 @@ var _is_won: bool = false
 
 func _ready() -> void:
 	get_tree().paused = true
-	# Сигнал нам больше не нужен, пельмень сам скажет, когда его съели
-	# но оставим на всякий случай для других механик
 	if music_player.stream:
 		music_player.play()
 
@@ -36,11 +34,8 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	for i in range(count):
 		var food = food_scene.instantiate()
 		food_container.add_child(food)
-		
-		# Спавн вокруг центра контейнера
 		food.position = Vector2(randf_range(-50, 50), randf_range(-50, 50))
 		
-		# ВАЖНО: Передаем пельменю ссылку на рот, чтобы он сам проверял попадание
 		if food.has_method("set_target_mouth"):
 			food.set_target_mouth(mouth_area)
 			
@@ -50,7 +45,6 @@ func _process(delta: float) -> void:
 	_handle_gamepad_cursor(delta)
 
 func _handle_gamepad_cursor(delta: float) -> void:
-	# ИСПРАВЛЕНО: используем твои настройки input map (mg_cursor_...)
 	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
 	
 	if joy_vector.length() > 0.1:
@@ -77,12 +71,19 @@ func _win() -> void:
 	get_tree().create_timer(finish_delay).timeout.connect(_close_game)
 
 func _close_game() -> void:
+	# Снимаем паузу, чтобы игра могла продолжить работу (например, проигрывать анимацию затемнения)
 	get_tree().paused = false
+	
+	# Сообщаем холодильнику, что мы закончили
 	minigame_finished.emit()
-	queue_free()
+	
+	# === ВАЖНОЕ ИЗМЕНЕНИЕ ===
+	# Мы НЕ удаляем себя здесь (queue_free убран). 
+	# Теперь мы ждем, пока холодильник затемнит экран и удалит нас сам.
 
 func _exit_tree() -> void:
+	# Страховка на случай принудительного удаления
 	get_tree().paused = false
-	# Сбрасываем статику при выходе, чтобы в следующей игре не было глюков
 	if GameState.has_method("reset_dragging"):
-		GameState.reset_dragging() # Можно добавить, но пока решим это внутри food_item
+		GameState.reset_dragging()
+		
