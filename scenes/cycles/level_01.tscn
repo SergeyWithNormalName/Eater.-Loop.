@@ -30,7 +30,7 @@ colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.00118
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_srw7l"]
 gradient = SubResource("Gradient_wnv1a")
 width = 1024
-height = 256
+height = 480
 fill = 1
 fill_from = Vector2(0.182, 0.437)
 fill_to = Vector2(0.75, 0.237)
@@ -49,8 +49,8 @@ size = Vector2(187.5, 370.36243)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("18_wnv1a")
-shader_parameter/reach = 1.2900000580151199
-shader_parameter/intensity = 0.59200002812
+shader_parameter/reach = 1.5
+shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
@@ -67,14 +67,15 @@ region_rect = Rect2(0, 0, 3500, 550)
 [node name="WallBack_Bedroom" type="Sprite2D" parent="."]
 z_index = -5
 texture_repeat = 2
-position = Vector2(57, 19)
+position = Vector2(-1913, 19)
 texture = ExtResource("1_bij4o")
 region_enabled = true
 region_rect = Rect2(0, 0, 1500, 550)
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(-303, 41)
+position = Vector2(-2273, 41)
 script = ExtResource("2_3555j")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-5.249996, 83.238884)
@@ -92,16 +93,16 @@ scale = Vector2(0.44800887, 0.44800875)
 texture = ExtResource("3_nghjy")
 
 [node name="PointLight2D" type="PointLight2D" parent="Player"]
-position = Vector2(23.356506, 59)
-rotation = 3.1415927
+position = Vector2(-4.0000076, 63)
+rotation = 9.424778
 scale = Vector2(1.0089942, 1)
 texture = SubResource("GradientTexture2D_srw7l")
-offset = Vector2(-250, 0)
+offset = Vector2(-170.19318, 17.65319)
 script = ExtResource("4_srw7l")
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(481, 77)
+position = Vector2(-1489, 77)
 script = ExtResource("4_hl306")
 target_marker = NodePath("../Door(To Bedroom)/Marker2D")
 metadata/_edit_group_ = true
@@ -163,6 +164,7 @@ position = Vector2(5411, 77)
 script = ExtResource("4_hl306")
 is_locked = true
 locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(In Bedroom)")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Toilet)"]
@@ -177,9 +179,38 @@ position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("5_wnv1a")
 
+[node name="WallBack_Hall2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12407, 19)
+texture = ExtResource("1_bij4o")
+region_enabled = true
+region_rect = Rect2(0, 0, 1800, 550)
+
+[node name="Door(In Toilet)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(11947, 77)
+script = ExtResource("4_hl306")
+is_locked = true
+locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(To Bedroom)")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("5_wnv1a")
+
 [node name="Bed" type="Area2D" parent="."]
 z_index = -1
-position = Vector2(-391, 200)
+position = Vector2(-2361, 200)
 script = ExtResource("6_srw7l")
 metadata/_edit_group_ = true
 
@@ -211,7 +242,7 @@ script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_hl306")
-food_count = 3
+food_count = 11
 bg_music = ExtResource("14_nghjy")
 win_sound = ExtResource("15_hl306")
 metadata/_edit_group_ = true
@@ -226,7 +257,7 @@ scale = Vector2(0.7364341, 0.73643416)
 texture = ExtResource("14_ugoxw")
 
 [node name="WorldClock" parent="." instance=ExtResource("13_bij4o")]
-position = Vector2(50, -83)
+position = Vector2(-2061, 121)
 start_game_time = "0:07"
 
 [node name="WorldClock2" parent="." instance=ExtResource("13_bij4o")]
@@ -238,7 +269,6 @@ rotation = 0.009666472
 color = Color(0.23529412, 0.23529412, 0.27450982, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_srw7l")
@@ -247,6 +277,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]
@@ -256,6 +287,8 @@ grow_vertical = 2
 [connection signal="body_exited" from="Door(To Parents)" to="Door(To Parents)" method="_on_body_exited"]
 [connection signal="body_entered" from="Door(To Toilet)" to="Door(To Toilet)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(To Toilet)" to="Door(To Toilet)" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_exited"]
 [connection signal="body_entered" from="Bed" to="Bed" method="_on_body_entered"]
 [connection signal="body_exited" from="Bed" to="Bed" method="_on_body_exited"]
 [connection signal="body_entered" from="Key" to="Key" method="_on_body_entered"]
