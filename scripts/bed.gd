@@ -11,7 +11,7 @@ extends Area2D
 var _player_in_range: Node = null
 
 func _ready() -> void:
-	input_pickable = true
+	input_pickable = false
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
@@ -21,18 +21,11 @@ func _on_body_exited(body: Node) -> void:
 	if body == _player_in_range:
 		_player_in_range = null
 
-func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_try_sleep()
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _player_in_range != null:
 		_try_sleep()
 
 func _try_sleep() -> void:
-	if _player_in_range == null:
-		return
-
 	if not GameState.ate_this_cycle:
 		UIMessage.show_text(not_ate_message)
 		return
@@ -46,6 +39,7 @@ func _try_sleep() -> void:
 	var next_scene: PackedScene = level_by_cycle.get(new_cycle, null)
 	if next_scene == null:
 		push_warning("Bed: не назначена сцена для цикла " + str(new_cycle))
+		# Можно добавить дефолтное действие или конец игры здесь
 		return
 
 	get_tree().change_scene_to_packed(next_scene)

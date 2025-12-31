@@ -1,12 +1,11 @@
 extends CharacterBody2D
 
-@export var speed: float = 27.0
+@export var speed: float = 520 # Подкорректируй скорость, 27.0 кажется очень малой для пикселей
 
-# Храним ключи как набор строковых ID
-var keys: Dictionary = {}  # key_id -> true
+# Храним ключи как набор строковых ID: key_id -> true
+var keys: Dictionary = {}
 
 func _ready() -> void:
-	# На всякий случай — чтобы двери/ключи находили игрока по группе
 	if not is_in_group("player"):
 		add_to_group("player")
 
@@ -22,7 +21,6 @@ func add_key(key_id: String) -> void:
 	if key_id == "":
 		return
 	keys[key_id] = true
-	print("Игрок: получил ключ '", key_id, "'")
 
 func has_key(key_id: String) -> bool:
 	if key_id == "":
@@ -32,4 +30,3 @@ func has_key(key_id: String) -> bool:
 func remove_key(key_id: String) -> void:
 	if keys.has(key_id):
 		keys.erase(key_id)
-		print("Игрок: ключ '", key_id, "' использован/потрачен")
