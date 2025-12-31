@@ -1,0 +1,192 @@
+[gd_scene load_steps=11 format=3 uid="uid://byw4pxe6xnbgt"]
+
+[ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player.gd" id="1_scvo5"]
+[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/door.gd" id="2_ucrpc"]
+[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/frizzer.gd" id="3_57nq5"]
+[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/bed.gd" id="4_tbjq2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
+size = Vector2(10, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u52ul"]
+size = Vector2(164.5, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oi3di"]
+size = Vector2(3, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
+size = Vector2(12, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpiam"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lj6ne"]
+size = Vector2(20, 7)
+
+[node name="Level" type="Node2D"]
+position = Vector2(16, 0)
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(-16, 0)
+script = ExtResource("1_scvo5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_vonw3")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(8, 8)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+offset_left = -5.0
+offset_top = -9.0
+offset_right = 5.0
+offset_bottom = 11.0
+color = Color(1, 0.53333336, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(30.25, 12.5)
+shape = SubResource("RectangleShape2D_u52ul")
+
+[node name="ColorRect" type="ColorRect" parent="Floor"]
+offset_left = -52.0
+offset_top = 11.0
+offset_right = 113.0
+offset_bottom = 14.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Floor2" type="StaticBody2D" parent="."]
+position = Vector2(193, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2"]
+position = Vector2(30.25, 12.5)
+shape = SubResource("RectangleShape2D_u52ul")
+
+[node name="ColorRect" type="ColorRect" parent="Floor2"]
+offset_left = -52.0
+offset_top = 11.0
+offset_right = 113.0
+offset_bottom = 14.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Roof" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Roof"]
+position = Vector2(30.25, -22.5)
+shape = SubResource("RectangleShape2D_u52ul")
+
+[node name="ColorRect" type="ColorRect" parent="Roof"]
+offset_left = -52.0
+offset_top = -24.0
+offset_right = 113.0
+offset_bottom = -21.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Wall_1" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_1"]
+position = Vector2(-50.5, -5)
+shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="ColorRect" type="ColorRect" parent="Wall_1"]
+offset_left = -52.0
+offset_top = -21.0
+offset_right = -49.0
+offset_bottom = 11.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Wall_2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_2"]
+position = Vector2(111.5, -5)
+shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="ColorRect" type="ColorRect" parent="Wall_2"]
+offset_left = 110.0
+offset_top = -21.0
+offset_right = 113.0
+offset_bottom = 11.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Door(Bedroom)" type="Area2D" parent="."]
+script = ExtResource("2_ucrpc")
+target_marker = NodePath("../Door(Koridor)/Marker2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(Bedroom)"]
+z_index = -2
+position = Vector2(70, 0)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="ColorRect" type="ColorRect" parent="Door(Bedroom)"]
+z_index = -2
+offset_left = 64.0
+offset_top = -11.0
+offset_right = 76.0
+offset_bottom = 11.0
+color = Color(1, 1, 0.5372549, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Door(Bedroom)"]
+position = Vector2(70, 0)
+
+[node name="Door(Koridor)" type="Area2D" parent="."]
+position = Vector2(107, 0)
+script = ExtResource("2_ucrpc")
+target_marker = NodePath("../Door(Bedroom)/Marker2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(Koridor)"]
+z_index = -2
+position = Vector2(70, 0)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="ColorRect" type="ColorRect" parent="Door(Koridor)"]
+z_index = -2
+offset_left = 64.0
+offset_top = -11.0
+offset_right = 76.0
+offset_bottom = 11.0
+color = Color(1, 1, 0.5372549, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Marker2D" type="Marker2D" parent="Door(Koridor)"]
+position = Vector2(70, 0)
+
+[node name="Table" type="Area2D" parent="."]
+position = Vector2(155, 1)
+script = ExtResource("3_57nq5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Table"]
+shape = SubResource("RectangleShape2D_tpiam")
+
+[node name="ColorRect" type="ColorRect" parent="Table"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(1, 0.49019608, 0.5019608, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Bed" type="Area2D" parent="."]
+position = Vector2(-34, 1)
+script = ExtResource("4_tbjq2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_lj6ne")
+
+[node name="ColorRect" type="ColorRect" parent="Bed"]
+offset_left = -10.0
+offset_top = 3.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 1, 1, 1)
+
+[connection signal="body_entered" from="Door(Bedroom)" to="Door(Bedroom)" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(Bedroom)" to="Door(Bedroom)" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(Koridor)" to="Door(Koridor)" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(Koridor)" to="Door(Koridor)" method="_on_body_exited"]
+[connection signal="body_entered" from="Table" to="Table" method="_on_body_entered"]
+[connection signal="body_exited" from="Table" to="Table" method="_on_body_exited"]
