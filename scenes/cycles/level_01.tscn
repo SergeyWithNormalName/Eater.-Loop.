@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/furniture/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player.gd" id="2_3555j"]
-[ext_resource type="Texture2D" uid="uid://cj470h3nbgw5s" path="res://textures/Andry.png" id="3_nghjy"]
+[ext_resource type="Texture2D" uid="uid://ci6bx2jv3wsk4" path="res://textures/AndryWithFlashlight.png" id="3_srw7l"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="4_hl306"]
-[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scenes/cycles/flashlight.gd" id="4_srw7l"]
+[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scripts/flashlight.gd" id="4_srw7l"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/Door_2.png" id="5_wnv1a"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="6_srw7l"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/Bed.png" id="7_olvol"]
@@ -90,7 +90,7 @@ position_smoothing_speed = 50.0
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 position = Vector2(-5.375, 83.37938)
 scale = Vector2(0.44800887, 0.44800875)
-texture = ExtResource("3_nghjy")
+texture = ExtResource("3_srw7l")
 
 [node name="PointLight2D" type="PointLight2D" parent="Player"]
 position = Vector2(-4.0000076, 63)
@@ -242,7 +242,7 @@ script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_hl306")
-food_count = 1
+food_count = 7
 bg_music = ExtResource("14_nghjy")
 win_sound = ExtResource("15_hl306")
 metadata/_edit_group_ = true
@@ -257,7 +257,8 @@ scale = Vector2(0.7364341, 0.73643416)
 texture = ExtResource("14_ugoxw")
 
 [node name="WorldClock" parent="." instance=ExtResource("13_bij4o")]
-position = Vector2(-2061, 121)
+z_index = -1
+position = Vector2(-2002, 110)
 start_game_time = "0:07"
 
 [node name="WorldClock2" parent="." instance=ExtResource("13_bij4o")]
