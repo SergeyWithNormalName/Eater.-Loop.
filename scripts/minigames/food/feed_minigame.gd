@@ -80,11 +80,11 @@ func _update_layout() -> void:
 		return
 	
 	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
-	var offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
+	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
 	
-	andrey_sprite.position = offset + _andrey_base_pos * scale_factor
+	andrey_sprite.position = layout_offset + _andrey_base_pos * scale_factor
 	andrey_sprite.scale = _andrey_base_scale * scale_factor
-	food_container.position = offset + _food_base_pos * scale_factor
+	food_container.position = layout_offset + _food_base_pos * scale_factor
 	food_container.scale = _food_base_scale * scale_factor
 
 func _on_food_eaten() -> void:
