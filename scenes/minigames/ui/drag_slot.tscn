@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy6xhpl74b1ln"]
+
+[ext_resource type="Script" uid="uid://b28qxgjth1ilk" path="res://scripts/minigames/labs/sql/drag_slot.gd" id="1_2crd6"]
+
+[node name="DropSlot" type="PanelContainer"]
+custom_minimum_size = Vector2(80, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2crd6")

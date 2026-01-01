@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cgir8at2gjnkc"]
 
-[ext_resource type="Script" uid="uid://fg3a4j1ai28k" path="res://scripts/minigames/feed_minigame.gd" id="1_ansfs"]
+[ext_resource type="Script" uid="uid://fg3a4j1ai28k" path="res://scripts/minigames/food/feed_minigame.gd" id="1_ansfs"]
 [ext_resource type="Texture2D" uid="uid://bookuyu7wubkp" path="res://textures/minigames/eat/andreys_faces/BasicEat.png" id="2_lc4ts"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wyl2e"]

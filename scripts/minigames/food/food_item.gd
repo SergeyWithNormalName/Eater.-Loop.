@@ -96,8 +96,8 @@ func _is_in_mouth() -> bool:
 	
 	if shape_node.shape is CircleShape2D:
 		var circle := shape_node.shape as CircleShape2D
-		var scale := shape_node.global_scale
-		var radius: float = circle.radius * max(abs(scale.x), abs(scale.y))
+		var shape_scale := shape_node.global_scale
+		var radius: float = circle.radius * max(abs(shape_scale.x), abs(shape_scale.y))
 		return global_position.distance_to(shape_node.global_position) <= radius
 	
 	# Фоллбек: если форма не круг, пробуем стандартную проверку.

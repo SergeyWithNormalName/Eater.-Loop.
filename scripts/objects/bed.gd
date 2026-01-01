@@ -1,8 +1,8 @@
 extends Area2D
 
 @export var level_by_cycle: Dictionary = {
-	2: preload("res://scenes/cycles/level_02.tscn"),
-	3: preload("res://scenes/cycles/level_03.tscn")
+	2: "res://scenes/cycles/level_02.tscn",
+	3: "res://scenes/cycles/level_03.tscn"
 }
 
 @export_multiline var not_ate_message: String = "Нельзя спать: сначала поешь."
@@ -44,9 +44,15 @@ func _try_sleep() -> void:
 	# Даем игроку секунду прочитать сообщение перед тем, как экран погаснет
 	await get_tree().create_timer(1.0).timeout
 
-	var next_scene: PackedScene = level_by_cycle.get(new_cycle, null)
-	if next_scene == null:
+	var next_scene_path: String = level_by_cycle.get(new_cycle, "")
+	if next_scene_path == "":
 		push_warning("Bed: не назначена сцена для цикла " + str(new_cycle))
+		_is_sleeping = false
+		return
+	
+	var next_scene := load(next_scene_path) as PackedScene
+	if next_scene == null:
+		push_warning("Bed: не удалось загрузить сцену " + next_scene_path)
 		_is_sleeping = false
 		return
 
