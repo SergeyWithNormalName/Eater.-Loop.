@@ -32,12 +32,19 @@ var tasks = [
 
 var current_task_index = 0
 var current_time = 0.0
+var _is_finished: bool = false
+var _base_viewport: Vector2
+var _content_base_pos: Vector2
+var _content_base_scale: Vector2
 
-@onready var query_container = $QueryArea
-@onready var pool_container = $WordPool
-@onready var task_label = $Header/TaskLabel
-@onready var timer_label = $Header/TimerLabel
-@onready var progress_container = $Header/ProgressContainer
+@onready var content: Control = $Content
+@onready var background: ColorRect = $Content/Background
+@onready var drag_layer: Control = $Content/DragLayer
+@onready var query_container: HBoxContainer = $Content/QueryArea
+@onready var pool_container: GridContainer = $Content/WordPool
+@onready var task_label: Label = $Content/Header/TaskLabel
+@onready var timer_label: Label = $Content/Header/TimerLabel
+@onready var progress_container: HBoxContainer = $Content/Header/ProgressContainer
 
 # Префабы (загрузи их или создай кодом, здесь пример кодом для простоты, 
 # но лучше назначить .tscn файлы в инспекторе)
@@ -45,18 +52,45 @@ var slot_scene = preload("res://scenes/minigames/ui/drop_slot.tscn")
 var word_scene = preload("res://scenes/minigames/ui/drag_word.tscn")
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Ставим игру на паузу
 	get_tree().paused = true
 	current_time = time_limit
+	
+	_base_viewport = Vector2(
+		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
+		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
+	)
+	content.size = _base_viewport
+	background.custom_minimum_size = _base_viewport
+	_content_base_pos = content.position
+	_content_base_scale = content.scale
+	get_viewport().size_changed.connect(_update_layout)
+	_update_layout()
+	
 	update_progress_ui()
 	load_task(0)
 
 func _process(delta):
+	if _is_finished:
+		return
 	if current_time > 0:
 		current_time -= delta
 		timer_label.text = "ОСТАЛОСЬ: %.1f сек" % current_time
 		if current_time <= 0:
 			finish_game(false)
+	
+	_handle_gamepad_cursor(delta)
+
+func _handle_gamepad_cursor(delta: float) -> void:
+	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
+	if joy_vector.length() > 0.1:
+		var current_mouse = get_viewport().get_mouse_position()
+		var new_pos = current_mouse + joy_vector * 800.0 * delta
+		var screen_rect = get_viewport().get_visible_rect().size
+		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
+		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
+		get_viewport().warp_mouse(new_pos)
 
 func load_task(index):
 	current_task_index = index
@@ -85,6 +119,8 @@ func load_task(index):
 	for word_text in data["pool"]:
 		var word = word_scene.instantiate()
 		word.text_value = word_text
+		if word.has_method("set_drag_context"):
+			word.set_drag_context(drag_layer)
 		pool_container.add_child(word)
 		
 	update_progress_ui()
@@ -143,7 +179,11 @@ func update_progress_ui():
 		progress_container.add_child(circle)
 
 func finish_game(success: bool):
+	if _is_finished:
+		return
+	_is_finished = true
 	get_tree().paused = false # Снимаем паузу
+	task_completed.emit(success)
 	
 	if success:
 		print("Лабораторная сдана!")
@@ -156,9 +196,20 @@ func finish_game(success: bool):
 	
 	# В любом случае отмечаем, что этот квест (лаба) пройден
 	if quest_id != "":
-		GameState.completed_labs.append(quest_id)
-		# Сигнал для дверей/событий, которые ждут выполнения
-		GameState.emit_signal("lab_completed", quest_id)
+		if not GameState.completed_labs.has(quest_id):
+			GameState.completed_labs.append(quest_id)
+			# Сигнал для дверей/событий, которые ждут выполнения
+			GameState.emit_signal("lab_completed", quest_id)
 		
 	queue_free() # Закрываем мини-игру
+
+func _update_layout() -> void:
+	var viewport_size := get_viewport().get_visible_rect().size
+	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
+		return
+	
+	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
+	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
+	content.position = layout_offset + _content_base_pos * scale_factor
+	content.scale = _content_base_scale * scale_factor
 	
