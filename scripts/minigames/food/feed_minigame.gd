@@ -14,11 +14,28 @@ signal minigame_finished
 
 var _eaten_count: int = 0
 var _is_won: bool = false
+var _base_viewport: Vector2
+var _andrey_base_pos: Vector2
+var _food_base_pos: Vector2
+var _andrey_base_scale: Vector2
+var _food_base_scale: Vector2
 
 func _ready() -> void:
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
+	
+	_base_viewport = Vector2(
+		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
+		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
+	)
+	_andrey_base_pos = andrey_sprite.position
+	_food_base_pos = food_container.position
+	_andrey_base_scale = andrey_sprite.scale
+	_food_base_scale = food_container.scale
+	
+	get_viewport().size_changed.connect(_update_layout)
+	_update_layout()
 
 func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream) -> void:
 	if andrey_texture:
@@ -56,6 +73,19 @@ func _handle_gamepad_cursor(delta: float) -> void:
 		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
 		
 		get_viewport().warp_mouse(new_pos)
+
+func _update_layout() -> void:
+	var viewport_size := get_viewport().get_visible_rect().size
+	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
+		return
+	
+	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
+	var offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
+	
+	andrey_sprite.position = offset + _andrey_base_pos * scale_factor
+	andrey_sprite.scale = _andrey_base_scale * scale_factor
+	food_container.position = offset + _food_base_pos * scale_factor
+	food_container.scale = _food_base_scale * scale_factor
 
 func _on_food_eaten() -> void:
 	_eaten_count += 1

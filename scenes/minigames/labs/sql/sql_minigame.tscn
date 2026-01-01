@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cdumkmia83xpc"]
+
+[node name="SQLMinigame" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Header" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TaskLabel" type="Label" parent="Header"]
+layout_mode = 2
+
+[node name="ProgressContainer" type="HBoxContainer" parent="Header"]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="Header"]
+layout_mode = 2
+
+[node name="QueryArea" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WordPool" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

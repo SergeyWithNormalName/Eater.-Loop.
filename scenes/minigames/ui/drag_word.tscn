@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://csqq1su7c6r4b"]
+
+[ext_resource type="Script" uid="uid://dqa1sxyyjoich" path="res://scripts/minigames/labs/sql/drag_word.gd" id="1_yqwx3"]
+
+[node name="DragWord" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Select"
+script = ExtResource("1_yqwx3")

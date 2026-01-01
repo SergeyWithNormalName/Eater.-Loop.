@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://scripts/game_state.gd"
-UIMessage="*res://scripts/ui_message.gd"
-GameDirector="*res://scripts/game_director.gd"
+GameState="*res://scripts/tehnical/game_state.gd"
+UIMessage="*res://scripts/tehnical/ui_message.gd"
+GameDirector="*res://scripts/tehnical/game_director.gd"
 
 [display]
 
