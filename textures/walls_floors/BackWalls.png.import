@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bic51a06275mf"
-path="res://.godot/imported/BackWalls.png-1c5a411c5a4ab094777b08ba08e66270.ctex"
+path="res://.godot/imported/BackWalls.png-0ecee4ff3bd92732addad5d4fa7678bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/BackWalls.png"
-dest_files=["res://.godot/imported/BackWalls.png-1c5a411c5a4ab094777b08ba08e66270.ctex"]
+source_file="res://textures/walls_floors/BackWalls.png"
+dest_files=["res://.godot/imported/BackWalls.png-0ecee4ff3bd92732addad5d4fa7678bf.ctex"]
 
 [params]
 

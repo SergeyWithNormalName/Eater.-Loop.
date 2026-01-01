@@ -33,15 +33,17 @@ color = Color(0, 0, 0, 0.50980395)
 
 [node name="AndreyFace" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_right = 486.0
-offset_bottom = 784.0
+offset_left = 82.0
+offset_top = 143.0
+offset_right = 824.0
+offset_bottom = 1339.9712
 texture = ExtResource("2_lc4ts")
 
 [node name="MouthArea" type="Area2D" parent="Control/AndreyFace"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/AndreyFace/MouthArea"]
-position = Vector2(349, 196)
+position = Vector2(534, 298)
 shape = SubResource("CircleShape2D_wyl2e")
 
 [node name="FoodContainer" type="Node2D" parent="Control"]
-position = Vector2(833, 400)
+position = Vector2(1407, 694)
