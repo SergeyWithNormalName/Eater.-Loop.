@@ -1,5 +1,6 @@
 extends Area2D
 
+# --- Настройки мини-игры ---
 @export_group("Minigame Settings")
 @export var minigame_scene: PackedScene 
 @export var food_scene: PackedScene     
@@ -8,16 +9,28 @@ extends Area2D
 @export var bg_music: AudioStream       
 @export var win_sound: AudioStream      
 
+# --- Настройки звуков ---
+@export_group("Sounds")
+@export var open_sound: AudioStream # Сюда перетащите звук открытия двери
+
+# --- Внутренние переменные ---
 var player_inside: bool = false
 var _is_interacting: bool = false
-var _current_minigame: Node = null # Храним ссылку на текущую игру
+var _current_minigame: Node = null 
+var _sfx_player: AudioStreamPlayer # Плеер создается кодом
 
 func _ready() -> void:
 	input_pickable = false
+	
+	# Безопасное подключение сигналов входа/выхода
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
+	
+	# Создаем аудио-плеер динамически, чтобы не добавлять его вручную в сцену
+	_sfx_player = AudioStreamPlayer.new()
+	add_child(_sfx_player)
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
@@ -41,6 +54,12 @@ func _try_interact() -> void:
 
 	_is_interacting = true
 
+	# --- ВОСПРОИЗВЕДЕНИЕ ЗВУКА ОТКРЫТИЯ ---
+	if open_sound:
+		_sfx_player.stream = open_sound
+		_sfx_player.play()
+	# --------------------------------------
+
 	if minigame_scene == null or food_scene == null:
 		push_warning("Frizzer: Minigame scene or Food scene is missing!")
 		_complete_feeding()
@@ -53,24 +72,25 @@ func _try_interact() -> void:
 
 func _start_minigame() -> void:
 	var game = minigame_scene.instantiate()
-	_current_minigame = game # Запоминаем ссылку
+	_current_minigame = game 
 	get_tree().root.add_child(game)
 	
 	if game.has_method("setup_game"):
+		# Передаем win_sound в мини-игру
 		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound)
 	
 	game.minigame_finished.connect(_on_minigame_finished)
 
 func _on_minigame_finished() -> void:
-	# 1. Сначала затемняем экран (Андрей всё еще виден!)
+	# 1. Сначала затемняем экран
 	await UIMessage.fade_out(0.4)
 	
-	# 2. Теперь, когда темно, удаляем мини-игру
+	# 2. Удаляем мини-игру
 	if _current_minigame != null:
 		_current_minigame.queue_free()
 		_current_minigame = null
 	
-	# 3. Обновляем логику игры
+	# 3. Обновляем логику игры (Андрей поел)
 	_complete_feeding()
 	
 	# 4. Проявляем экран обратно

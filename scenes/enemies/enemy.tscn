@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://detuq7pgbu4ib"]
 
 [ext_resource type="Script" uid="uid://bd8bhvtvskl5v" path="res://scripts/enemy.gd" id="1_8e3ao"]
-[ext_resource type="Texture2D" uid="uid://c7icbf86owqjd" path="res://textures/minigames/eat/andreys_faces/VeryBadEat.png" id="2_38ino"]
+[ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_8e3ao"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(2528, 870)
@@ -16,19 +16,23 @@ size = Vector2(606, 870)
 script = ExtResource("1_8e3ao")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("RectangleShape2D_nb6gf")
 
 [node name="HitboxArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
 shape = SubResource("RectangleShape2D_lu5c6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_38ino")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_8e3ao")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_8e3ao")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

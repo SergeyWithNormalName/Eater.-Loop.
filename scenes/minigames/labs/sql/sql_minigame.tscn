@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cdumkmia83xpc"]
+[gd_scene load_steps=2 format=3 uid="uid://cdumkmia83xpc"]
 
 [ext_resource type="Script" uid="uid://jy2nxpy30h3f" path="res://scripts/minigames/labs/sql/sql_minigame.gd" id="1_8o5js"]
 
@@ -13,7 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_8o5js")
 
 [node name="Content" type="Control" parent="."]
-layout_mode = 0
+anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
@@ -33,6 +33,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Header" type="VBoxContainer" parent="Content"]
 layout_mode = 0
