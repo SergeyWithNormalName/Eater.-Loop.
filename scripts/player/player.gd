@@ -3,9 +3,9 @@ extends CharacterBody2D
 @export var speed: float = 520.0
 
 @export_group("Audio Settings")
-@export var step_sounds: Array[AudioStream] # Сюда добавьте звуки шагов
+@export var step_sounds: Array[AudioStream] # Звуки шагов
 @export var step_interval: float = 0.35     # Частота звука шагов
-@export var step_volume: float = -10.0 # Громкость шагов в дБ (чем меньше число, тем тише)
+@export var step_volume: float = -10.0      # Громкость шагов в дБ
 @export var flashlight_sound: AudioStream   # Звук фонарика
 
 var keys: Dictionary = {}
@@ -23,15 +23,21 @@ var _flashlight_base_offset: Vector2 = Vector2.ZERO
 
 # Переменные для аудио
 var _step_timer: float = 0.0
-var _sfx_player: AudioStreamPlayer
+# --- ИЗМЕНЕНИЕ: Теперь два отдельных плеера ---
+var _step_player: AudioStreamPlayer 
+var _flashlight_player: AudioStreamPlayer
 
 func _ready() -> void:
 	if not is_in_group("player"):
 		add_to_group("player")
 	
-	# Создаем аудио-плеер
-	_sfx_player = AudioStreamPlayer.new()
-	add_child(_sfx_player)
+	# --- ИЗМЕНЕНИЕ: Создаем два отдельных аудио-плеера ---
+	_step_player = AudioStreamPlayer.new()
+	add_child(_step_player)
+	
+	_flashlight_player = AudioStreamPlayer.new()
+	add_child(_flashlight_player)
+	# -----------------------------------------------------
 	
 	if pivot and pivot.has_node("PointLight2D"):
 		flashlight = pivot.get_node("PointLight2D") as PointLight2D
@@ -45,6 +51,9 @@ func _ready() -> void:
 	if flashlight:
 		_flashlight_base_scale = flashlight.scale
 		_flashlight_base_offset = flashlight.offset
+		
+		# --- ИЗМЕНЕНИЕ: Выключаем фонарик при старте ---
+		flashlight.enabled = false 
 	
 	_apply_facing()
 
@@ -57,17 +66,14 @@ func _physics_process(delta: float) -> void:
 	velocity.y = 0
 	move_and_slide()
 
-	# --- ЛОГИКА ШАГОВ (ИСПРАВЛЕННАЯ) ---
-	# Убрали проверку is_on_floor(), так как гравитации нет
+	# ЛОГИКА ШАГОВ
 	if direction != 0:
 		_step_timer -= delta
 		if _step_timer <= 0:
 			_play_step_sound()
 			_step_timer = step_interval
 	else:
-		# Сброс таймера, чтобы первый шаг звучал сразу при начале движения
 		_step_timer = 0.05
-	# -----------------------------------
 
 	# ЛОГИКА ПОВОРОТА
 	if direction != 0:
@@ -78,10 +84,11 @@ func _play_step_sound() -> void:
 	if step_sounds.is_empty():
 		return
 
-	_sfx_player.stream = step_sounds.pick_random()
-	_sfx_player.volume_db = step_volume # Устанавливаем громкость перед воспроизведением
-	_sfx_player.pitch_scale = randf_range(0.9, 1.1)
-	_sfx_player.play() 
+	# Используем отдельный плеер для шагов
+	_step_player.stream = step_sounds.pick_random()
+	_step_player.volume_db = step_volume
+	_step_player.pitch_scale = randf_range(0.9, 1.1)
+	_step_player.play()
 
 func _apply_facing() -> void:
 	if pivot:
@@ -98,10 +105,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_flashlight"):
 		if flashlight:
 			flashlight.enabled = !flashlight.enabled
+			
+			# Используем отдельный плеер для фонарика
 			if flashlight_sound:
-				_sfx_player.pitch_scale = 1.0
-				_sfx_player.stream = flashlight_sound
-				_sfx_player.play()
+				_flashlight_player.stream = flashlight_sound
+				_flashlight_player.volume_db = 0.0 # Громкость фонарика стандартная
+				_flashlight_player.pitch_scale = 1.0
+				_flashlight_player.play()
 
 # ===== Работа с ключами =====
 func add_key(key_id: String) -> void:
