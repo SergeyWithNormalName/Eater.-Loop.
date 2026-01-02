@@ -6,11 +6,15 @@ signal minigame_finished
 @export var finish_delay: float = 2.0
 @export var gamepad_cursor_speed: float = 800.0
 
+# Путь к сцене тарелки теперь жестко прописан в коде
+var tarelka_scene = load("res://scenes/minigames/food/tarelka.tscn") 
+
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
-@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
 @onready var andrey_sprite: TextureRect = $Control/AndreyFace
 @onready var food_container: Node2D = $Control/FoodContainer
 @onready var mouth_area: Area2D = $Control/AndreyFace/MouthArea
+
+var sfx_player: AudioStreamPlayer 
 
 var _eaten_count: int = 0
 var _is_won: bool = false
@@ -21,6 +25,12 @@ var _andrey_base_scale: Vector2
 var _food_base_scale: Vector2
 
 func _ready() -> void:
+	if has_node("SFXPlayer"):
+		sfx_player = $SFXPlayer
+	else:
+		sfx_player = AudioStreamPlayer.new()
+		add_child(sfx_player)
+
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
@@ -45,13 +55,33 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	
 	if music:
 		music_player.stream = music
+	
 	if win_sound:
 		sfx_player.stream = win_sound
 
+	# === ИСПРАВЛЕНИЕ 2: Одна тарелка для всей еды ===
+	# Создаем тарелку ОДИН раз перед тем, как спавнить пельмени
+	if tarelka_scene:
+		var tarelka = tarelka_scene.instantiate()
+		tarelka.name = "Tarelka"
+		# === ИСПРАВЛЕНИЕ 1: Пельмени поверх тарелки ===
+		# Добавляем тарелку в контейнер первой. В Godot это значит, что она будет в самом низу списка
+		# и все объекты, добавленные позже (еда), окажутся ПОВЕРХ неё.
+		food_container.add_child(tarelka)
+		# Устанавливаем тарелку в центр контейнера
+		tarelka.position = Vector2.ZERO 
+	else:
+		push_error("Не удалось найти сцену тарелки по пути res://scenes/minigames/food/tarelka.tscn")
+
+	# Теперь спавним еду в цикле
 	for i in range(count):
+		# Генерируем случайную позицию для пельменей (разброс внутри тарелки)
+		var spawn_pos = Vector2(randf_range(-120, 120), randf_range(-80, 80))
+		
 		var food = food_scene.instantiate()
+		# Добавляем еду после тарелки, чтобы она была визуально выше
 		food_container.add_child(food)
-		food.position = Vector2(randf_range(-50, 50), randf_range(-50, 50))
+		food.position = spawn_pos
 		
 		if food.has_method("set_target_mouth"):
 			food.set_target_mouth(mouth_area)
@@ -95,24 +125,17 @@ func _on_food_eaten() -> void:
 func _win() -> void:
 	_is_won = true
 	music_player.stop()
+	
 	if sfx_player.stream:
 		sfx_player.play()
 	
 	get_tree().create_timer(finish_delay).timeout.connect(_close_game)
 
 func _close_game() -> void:
-	# Снимаем паузу, чтобы игра могла продолжить работу (например, проигрывать анимацию затемнения)
 	get_tree().paused = false
-	
-	# Сообщаем холодильнику, что мы закончили
 	minigame_finished.emit()
 	
-	# === ВАЖНОЕ ИЗМЕНЕНИЕ ===
-	# Мы НЕ удаляем себя здесь (queue_free убран). 
-	# Теперь мы ждем, пока холодильник затемнит экран и удалит нас сам.
-
 func _exit_tree() -> void:
-	# Страховка на случай принудительного удаления
 	get_tree().paused = false
 	if GameState.has_method("reset_dragging"):
 		GameState.reset_dragging()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7ssns4hfdtva"
-path="res://.godot/imported/Table.png-a2c2f36336de11967bf91bcebc722ea1.ctex"
+uid="uid://clvy8hsvxotb0"
+path="res://.godot/imported/Tumbochka2.png-32387d78a97d756091b24bdb4236feb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Table.png"
-dest_files=["res://.godot/imported/Table.png-a2c2f36336de11967bf91bcebc722ea1.ctex"]
+source_file="res://textures/furniture/bedroom/Tumbochka2.png"
+dest_files=["res://.godot/imported/Tumbochka2.png-32387d78a97d756091b24bdb4236feb4.ctex"]
 
 [params]
 

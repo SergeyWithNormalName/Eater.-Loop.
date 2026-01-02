@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j2tc42n5cf6r"
-path="res://.godot/imported/Rakovina.png-b60cf2407af8245107ec4e57017fba32.ctex"
+uid="uid://obrre6750bjw"
+path="res://.godot/imported/Clock.png-ee5445912bb01fac85fef7ef408cc256.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Rakovina.png"
-dest_files=["res://.godot/imported/Rakovina.png-b60cf2407af8245107ec4e57017fba32.ctex"]
+source_file="res://textures/furniture/bedroom/Clock.png"
+dest_files=["res://.godot/imported/Clock.png-ee5445912bb01fac85fef7ef408cc256.ctex"]
 
 [params]
 

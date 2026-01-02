@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpgqw1njwmty3"
-path="res://.godot/imported/Vanna.png-4b811ef266fccd62b569c6b61f1f8efc.ctex"
+uid="uid://de1t1kxuo8uay"
+path="res://.godot/imported/NotebookOff.png-cc54145e4ac6f429abbaa10e68ce4c45.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Vanna.png"
-dest_files=["res://.godot/imported/Vanna.png-4b811ef266fccd62b569c6b61f1f8efc.ctex"]
+source_file="res://textures/furniture/bedroom/NotebookOff.png"
+dest_files=["res://.godot/imported/NotebookOff.png-cc54145e4ac6f429abbaa10e68ce4c45.ctex"]
 
 [params]
 

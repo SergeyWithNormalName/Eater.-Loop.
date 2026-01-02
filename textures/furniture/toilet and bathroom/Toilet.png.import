@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbws6f8me4k3o"
-path="res://.godot/imported/Kitchen_garn.png-d5a4b107588aeb3b42bbda578588a439.ctex"
+uid="uid://cwi80flmvwi5u"
+path="res://.godot/imported/Toilet.png-63348cc56da7fe79254c5a54b4e7135a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Kitchen_garn.png"
-dest_files=["res://.godot/imported/Kitchen_garn.png-d5a4b107588aeb3b42bbda578588a439.ctex"]
+source_file="res://textures/furniture/toilet and bathroom/Toilet.png"
+dest_files=["res://.godot/imported/Toilet.png-63348cc56da7fe79254c5a54b4e7135a.ctex"]
 
 [params]
 

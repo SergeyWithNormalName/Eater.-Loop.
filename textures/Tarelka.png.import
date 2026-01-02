@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk25q3reeyq1p"
-path="res://.godot/imported/Frizzer.png-0268c5fc6dccdcb01591e384f54403f7.ctex"
+uid="uid://d1w4gue4yj7ms"
+path="res://.godot/imported/Tarelka.png-8605123910370563ed0ae9dfb6e8a472.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Frizzer.png"
-dest_files=["res://.godot/imported/Frizzer.png-0268c5fc6dccdcb01591e384f54403f7.ctex"]
+source_file="res://textures/Tarelka.png"
+dest_files=["res://.godot/imported/Tarelka.png-8605123910370563ed0ae9dfb6e8a472.ctex"]
 
 [params]
 

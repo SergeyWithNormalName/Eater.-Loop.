@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byt7ynqrn81mo"
-path="res://.godot/imported/WaterMachine.png-6f5557df518c80f11b9683aa59b81d79.ctex"
+uid="uid://dk25q3reeyq1p"
+path="res://.godot/imported/Frizzer.png-7ba3662f86edab8a3fbdb1a2ce9b0b48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/WaterMachine.png"
-dest_files=["res://.godot/imported/WaterMachine.png-6f5557df518c80f11b9683aa59b81d79.ctex"]
+source_file="res://textures/furniture/kitchen/Frizzer.png"
+dest_files=["res://.godot/imported/Frizzer.png-7ba3662f86edab8a3fbdb1a2ce9b0b48.ctex"]
 
 [params]
 

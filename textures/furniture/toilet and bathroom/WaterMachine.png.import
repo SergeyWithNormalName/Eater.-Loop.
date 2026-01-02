@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfph65g52ypxj"
-path="res://.godot/imported/Bed.png-21d0d3bfec389033ad3fc3b879875faa.ctex"
+uid="uid://byt7ynqrn81mo"
+path="res://.godot/imported/WaterMachine.png-ae28803535c308dd89bd383dd636ea67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Bed.png"
-dest_files=["res://.godot/imported/Bed.png-21d0d3bfec389033ad3fc3b879875faa.ctex"]
+source_file="res://textures/furniture/toilet and bathroom/WaterMachine.png"
+dest_files=["res://.godot/imported/WaterMachine.png-ae28803535c308dd89bd383dd636ea67.ctex"]
 
 [params]
 

@@ -11,6 +11,6 @@ script = ExtResource("1_wcqiv")
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "00:00"
+text = "0:00"
 label_settings = SubResource("LabelSettings_wcqiv")
 horizontal_alignment = 1
