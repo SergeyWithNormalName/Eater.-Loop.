@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cocl8ggjke7cp"
-path="res://.godot/imported/Door.png-297473d243dcbd223cdbd59935db0364.ctex"
+uid="uid://dn3ucplc1keat"
+path="res://.godot/imported/Balka.png-a100e3c97595278cf2aeced2baf665ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Door.png"
-dest_files=["res://.godot/imported/Door.png-297473d243dcbd223cdbd59935db0364.ctex"]
+source_file="res://textures/furniture/allrooms/Balka.png"
+dest_files=["res://.godot/imported/Balka.png-a100e3c97595278cf2aeced2baf665ec.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0nnqdhgtkcgf"
-path="res://.godot/imported/OpenShtora.png-d6c017becacd26fa7ad7dd5b2bc16ad5.ctex"
+uid="uid://ckm7b2nur6i1w"
+path="res://.godot/imported/Shtora.png-2c9981f202eb0534142f27d6ac8489c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/OpenShtora.png"
-dest_files=["res://.godot/imported/OpenShtora.png-d6c017becacd26fa7ad7dd5b2bc16ad5.ctex"]
+source_file="res://textures/furniture/allrooms/Shtora.png"
+dest_files=["res://.godot/imported/Shtora.png-2c9981f202eb0534142f27d6ac8489c0.ctex"]
 
 [params]
 

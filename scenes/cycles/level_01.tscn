@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=100 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="2_3555j"]
@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="4_hl306"]
 [ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scripts/player/flashlight.gd" id="4_srw7l"]
 [ext_resource type="AudioStream" uid="uid://d4hreh7krx7g5" path="res://audio/player/steps/steps3.wav" id="5_m3n5y"]
-[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/Door_2.png" id="5_wnv1a"]
+[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/allrooms/Door_2.png" id="5_wnv1a"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="6_6h3m7"]
 [ext_resource type="AudioStream" uid="uid://baerfbi0o2rxq" path="res://audio/player/steps/steps4.wav" id="6_qr0f4"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="6_srw7l"]
@@ -23,19 +23,20 @@
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="12_nghjy"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="13_3jwi8"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://scenes/objects/world_clock.tscn" id="13_bij4o"]
-[ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/Door.png" id="14_m3n5y"]
-[ext_resource type="AudioStream" uid="uid://broo4saywf1y1" path="res://audio/Не одну весну (slowed & reverb).mp3" id="14_nghjy"]
-[ext_resource type="AudioStream" uid="uid://dm1ej372r4l52" path="res://audio/festive-horn-noisy-close-squeaky.mp3" id="15_hl306"]
+[ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="14_m3n5y"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="15_qr0f4"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="16_4cwao"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="17_84kq6"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="18_wnv1a"]
-[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/On-offer.png" id="20_olvol"]
-[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/Pozetka.png" id="21_1ekfm"]
+[ext_resource type="PackedScene" uid="uid://bsecib4k5glms" path="res://scenes/cycles/level_02.tscn" id="19_3fmbd"]
+[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/allrooms/On-offer.png" id="20_olvol"]
+[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/allrooms/Pozetka.png" id="21_1ekfm"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="21_ugoxw"]
 [ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://textures/furniture/kitchen/Kitchen_garn.png" id="22_mjper"]
 [ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://textures/furniture/toilet and bathroom/WaterMachine.png" id="23_3jwi8"]
+[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://audio/MusicForEat.mp3" id="25_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://textures/furniture/toilet and bathroom/Toilet.png" id="25_bvnc7"]
+[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://audio/AndreyEating/Poel_1.wav" id="26_5lo1f"]
 [ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://textures/furniture/toilet and bathroom/Rakovina.png" id="26_45wr0"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="26_gklq2"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="26_m068l"]
@@ -45,8 +46,8 @@
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://audio/furniture/FridgeNoizeE.wav" id="28_g1wwn"]
 [ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://textures/walls_floors/ToiletTiles.png" id="29_ndvd2"]
 [ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://scripts/objects/laptop.gd" id="29_ww2c2"]
-[ext_resource type="PackedScene" uid="uid://cdumkmia83xpc" path="res://scenes/minigames/labs/sql/sql_minigame.tscn" id="30_6nx5n"]
 [ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://textures/furniture/kitchen/CookingGas.png" id="37_75rkc"]
+[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://scripts/objects/phone.gd" id="41_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://textures/furniture/toilet and bathroom/bath.png" id="44_aotug"]
 [ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://textures/furniture/kitchen/Chair_1.png" id="45_4cwao"]
 [ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://textures/furniture/kitchen/Chair_2.png" id="46_kmmfc"]
@@ -59,12 +60,12 @@
 [ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://textures/furniture/bedroom/NotebookOff.png" id="53_mn4je"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://textures/furniture/bedroom/Plakat1.png" id="54_mn4je"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://textures/furniture/bedroom/Plakat2.png" id="55_tgt7k"]
-[ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://textures/furniture/Lamp1.png" id="56_tgt7k"]
-[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://textures/furniture/WallBOK.png" id="57_pgutp"]
+[ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://textures/furniture/allrooms/Lamp1.png" id="56_tgt7k"]
+[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://textures/furniture/allrooms/WallBOK.png" id="57_pgutp"]
 [ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://textures/furniture/toilet and bathroom/ToiletPaper.png" id="59_lty6u"]
 [ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://textures/furniture/toilet and bathroom/Vent.png" id="60_gklq2"]
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://textures/furniture/bedroom/ChairBedroom.png" id="62_jh16t"]
-[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://textures/furniture/OpenShtora.png" id="63_16lqf"]
+[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://textures/furniture/allrooms/OpenShtora.png" id="63_16lqf"]
 [ext_resource type="Texture2D" uid="uid://dn0h8y0pxtrr3" path="res://textures/furniture/toilet and bathroom/ToothPolka.png" id="66_ompdt"]
 [ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://textures/walls_floors/TilesFloor1.png" id="68_s5d4v"]
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://textures/furniture/bedroom/Sweets.png" id="69_1v4n6"]
@@ -78,8 +79,10 @@
 [ext_resource type="Texture2D" uid="uid://db4r1172wlmmj" path="res://textures/furniture/hall/Boots2.png" id="77_4a5ua"]
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://textures/furniture/hall/Boots6.png" id="78_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://textures/furniture/kitchen/Urna.png" id="79_o487h"]
-[ext_resource type="Texture2D" path="res://textures/furniture/Kover.png" id="81_4a5ua"]
+[ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="81_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://textures/furniture/bedroom/Powerbank2.png" id="81_j5rey"]
+[ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_3fmbd"]
+[ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="82_4a5ua"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
@@ -395,7 +398,9 @@ texture = ExtResource("16_4cwao")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("6_srw7l")
+next_level_scene = ExtResource("19_3fmbd")
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -416,8 +421,8 @@ minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_bvnc7")
 food_count = 7
-bg_music = ExtResource("14_nghjy")
-win_sound = ExtResource("15_hl306")
+bg_music = ExtResource("25_3fmbd")
+win_sound = ExtResource("26_5lo1f")
 open_sound = ExtResource("26_gklq2")
 metadata/_edit_group_ = true
 
@@ -478,7 +483,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("20_olvol")
 
 [node name="TestKey" type="Area2D" parent="."]
-position = Vector2(3702, 106)
+position = Vector2(3702, -536)
 script = ExtResource("11_tudbb")
 metadata/_edit_group_ = true
 
@@ -543,26 +548,47 @@ position = Vector2(10163.37, 276.23898)
 scale = Vector2(0.9169747, 0.91697466)
 texture = ExtResource("26_nl6wm")
 
-[node name="labstable" type="Sprite2D" parent="."]
-z_index = 7
-position = Vector2(4188.0005, 276.23898)
+[node name="TableForLab" type="Area2D" parent="."]
+position = Vector2(5454.0005, -502)
 scale = Vector2(0.9169747, 0.91697466)
-texture = ExtResource("26_nl6wm")
 script = ExtResource("29_ww2c2")
-minigame_scene = ExtResource("30_6nx5n")
 
-[node name="InteractArea" type="Area2D" parent="labstable"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="labstable/InteractArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TableForLab"]
 position = Vector2(0.5439453, -1.3511658)
 scale = Vector2(0.9999999, 1)
 shape = SubResource("RectangleShape2D_6nx5n")
+
+[node name="Sprite2D" type="Sprite2D" parent="TableForLab"]
+z_index = 7
+scale = Vector2(0.99999994, 1)
+texture = ExtResource("26_nl6wm")
+
+[node name="Phone" type="Area2D" parent="."]
+position = Vector2(7976, -502)
+scale = Vector2(0.9169747, 0.91697466)
+script = ExtResource("41_3fmbd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone"]
+position = Vector2(0.5439453, -1.3511658)
+scale = Vector2(0.9999999, 1)
+shape = SubResource("RectangleShape2D_6nx5n")
+
+[node name="Sprite2D" type="Sprite2D" parent="Phone"]
+z_index = 7
+scale = Vector2(0.99999994, 1)
+texture = ExtResource("26_nl6wm")
 
 [node name="WashMachine" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(13740.602, 197.2892)
 scale = Vector2(0.61568123, 0.61568123)
 texture = ExtResource("23_3jwi8")
+
+[node name="CookingGas" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(9993.2, 200.70374)
+scale = Vector2(0.2942373, 0.2942373)
+texture = ExtResource("37_75rkc")
 
 [node name="Rakovina" type="Sprite2D" parent="."]
 z_index = -2
@@ -723,17 +749,27 @@ scale = Vector2(0.1879456, 0.1879456)
 texture = ExtResource("55_tgt7k")
 
 [node name="Lamp1" type="Sprite2D" parent="."]
-position = Vector2(-1899, -178)
+position = Vector2(-1898.9999, -214)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("56_tgt7k")
+
+[node name="Lamp4" type="Sprite2D" parent="."]
+position = Vector2(9814, -214)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("56_tgt7k")
+
+[node name="Lamp5" type="Sprite2D" parent="."]
+position = Vector2(6699, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("56_tgt7k")
 
 [node name="Lamp2" type="Sprite2D" parent="."]
-position = Vector2(14165, -178)
+position = Vector2(14165, -208)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("56_tgt7k")
 
 [node name="Lamp3" type="Sprite2D" parent="."]
-position = Vector2(16701, -178)
+position = Vector2(16701, -209)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("56_tgt7k")
 
@@ -1217,14 +1253,8 @@ position = Vector2(10323, 54)
 scale = Vector2(0.66074157, 0.59296346)
 texture = ExtResource("63_16lqf")
 
-[node name="CookingGas" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(9993.2, 200.70374)
-scale = Vector2(0.2942373, 0.2942373)
-texture = ExtResource("37_75rkc")
-
 [node name="ToothPolka" type="Sprite2D" parent="."]
-position = Vector2(13907.999, 36.000004)
+position = Vector2(13906, 46.879997)
 scale = Vector2(0.18251042, 0.18251051)
 texture = ExtResource("66_ompdt")
 
@@ -1241,15 +1271,20 @@ scale = Vector2(0.45307007, 0.45307013)
 texture = ExtResource("68_s5d4v")
 
 [node name="Sweets" type="Sprite2D" parent="."]
-position = Vector2(-1728.4962, 113.156334)
-scale = Vector2(0.025, 0.025)
+position = Vector2(-1959.9788, 114.54161)
+rotation = -0.12217305
+scale = Vector2(0.02, 0.02)
+skew = -0.5637413
 texture = ExtResource("69_1v4n6")
+metadata/_edit_group_ = true
 
 [node name="Sweets2" type="Sprite2D" parent="."]
-position = Vector2(-1740.4962, 111.156334)
-rotation = -0.4221858
-scale = Vector2(0.025, 0.025)
+position = Vector2(-1972.4827, 114.3853)
+rotation = -0.12217305
+scale = Vector2(0.02, 0.02)
+skew = -0.5637413
 texture = ExtResource("69_1v4n6")
+metadata/_edit_group_ = true
 
 [node name="PictureOne" type="Sprite2D" parent="."]
 position = Vector2(9131, -15)
@@ -1312,7 +1347,25 @@ texture = ExtResource("81_j5rey")
 z_index = -5
 position = Vector2(6698, 306)
 scale = Vector2(0.19589221, 0.19589221)
-texture = ExtResource("81_4a5ua")
+
+[node name="HoleInWall6" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6557, -1)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("81_3fmbd")
+
+[node name="Mirror" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(13907, -8.120003)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("82_4a5ua")
+
+[node name="UsedFood" type="Sprite2D" parent="."]
+position = Vector2(-1754.9999, 107.99999)
+rotation = -0.061086524
+scale = Vector2(0.04193877, 0.052643225)
+skew = 0.08726646
+texture = ExtResource("82_3fmbd")
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

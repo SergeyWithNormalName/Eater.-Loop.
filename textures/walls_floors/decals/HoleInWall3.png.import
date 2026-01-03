@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byviqmju3y1gd"
-path="res://.godot/imported/WallBOK.png-67c5e66b0b212eea1ee94a3118739cc8.ctex"
+uid="uid://t64dqy3yqjie"
+path="res://.godot/imported/HoleInWall3.png-492265530eef1e452f3c87233201b12e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/WallBOK.png"
-dest_files=["res://.godot/imported/WallBOK.png-67c5e66b0b212eea1ee94a3118739cc8.ctex"]
+source_file="res://textures/walls_floors/decals/HoleInWall3.png"
+dest_files=["res://.godot/imported/HoleInWall3.png-492265530eef1e452f3c87233201b12e.ctex"]
 
 [params]
 

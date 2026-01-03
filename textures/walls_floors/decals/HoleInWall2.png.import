@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn3ucplc1keat"
-path="res://.godot/imported/Balka.png-59d0ab2c19fe5bb45039938534464eaa.ctex"
+uid="uid://cnk05aysq31fk"
+path="res://.godot/imported/HoleInWall2.png-fe1cc1136630c95c191d35ecd295f850.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Balka.png"
-dest_files=["res://.godot/imported/Balka.png-59d0ab2c19fe5bb45039938534464eaa.ctex"]
+source_file="res://textures/walls_floors/decals/HoleInWall2.png"
+dest_files=["res://.godot/imported/HoleInWall2.png-fe1cc1136630c95c191d35ecd295f850.ctex"]
 
 [params]
 

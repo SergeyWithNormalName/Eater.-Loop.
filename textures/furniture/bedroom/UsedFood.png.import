@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3n6wexvdd8xp"
-path="res://.godot/imported/Lamp1.png-598afcfd89bce3807454d38c9c796671.ctex"
+uid="uid://c2sjp6c63e3am"
+path="res://.godot/imported/UsedFood.png-7f4dc0bd8bdd7a67155e6862f65718a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/furniture/Lamp1.png"
-dest_files=["res://.godot/imported/Lamp1.png-598afcfd89bce3807454d38c9c796671.ctex"]
+source_file="res://textures/furniture/bedroom/UsedFood.png"
+dest_files=["res://.godot/imported/UsedFood.png-7f4dc0bd8bdd7a67155e6862f65718a5.ctex"]
 
 [params]
 
