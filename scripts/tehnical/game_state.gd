@@ -2,6 +2,7 @@ extends Node
 
 signal lab_completed(quest_id: String)
 signal phone_picked_changed
+signal fridge_interacted_changed
 
 enum Phase { NORMAL, DISTORTED }
 
@@ -10,10 +11,12 @@ var phase: Phase = Phase.NORMAL # Было просто phase
 var ate_this_cycle: bool = false
 var completed_labs: Array[String] = []
 var phone_picked: bool = false
+var fridge_interacted: bool = false
 
 func next_cycle() -> void:
 	cycle += 1
 	ate_this_cycle = false
+	fridge_interacted = false
 	set_phase(Phase.NORMAL)
 
 func mark_ate() -> void:
@@ -24,6 +27,12 @@ func mark_phone_picked() -> void:
 		return
 	phone_picked = true
 	phone_picked_changed.emit()
+
+func mark_fridge_interacted() -> void:
+	if fridge_interacted:
+		return
+	fridge_interacted = true
+	fridge_interacted_changed.emit()
 
 # Добавляем этот метод, чтобы GameDirector мог менять фазу
 func set_phase(new_phase: Phase) -> void:

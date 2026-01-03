@@ -113,4 +113,4 @@ func _handle_gamepad_cursor(delta: float) -> void:
 		get_viewport().warp_mouse(new_pos)
 
 func _is_grab_pressed(event: InputEvent) -> bool:
-	return event.is_action_pressed("mg_grab") or event.is_action_pressed("mg_grap")
+	return event.is_action_pressed("mg_grab")

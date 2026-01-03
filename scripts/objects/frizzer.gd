@@ -1,39 +1,44 @@
 extends Area2D
 
-# --- Настройки мини-игры ---
-@export_group("Minigame Settings")
-@export var minigame_scene: PackedScene 
-@export var food_scene: PackedScene     
-@export var andrey_face: Texture2D      
-@export var food_count: int = 5         
-@export var bg_music: AudioStream       
-@export var win_sound: AudioStream      
+@export_group("Minigame")
+@export var minigame_scene: PackedScene
+@export var food_scene: PackedScene
+@export var andrey_face: Texture2D
+@export var food_count: int = 5
+@export var bg_music: AudioStream
+@export var win_sound: AudioStream
 @export var eat_sound: AudioStream
 @export var background_texture: Texture2D
-@export var required_lab_id: String = ""
-@export var required_cycle: int = 0
-@export_multiline var locked_message: String = "Точно! Сначала я должен доделать лабораторную работу"
 
-# --- Настройки звуков ---
+@export_group("Access")
+@export var require_lab_completion: bool = false
+@export var required_lab_id: String = ""
+@export_multiline var locked_message: String = "Точно! Сначала я должен доделать лабораторную работу"
+@export var require_access_code: bool = false
+@export var access_code: String = "1234"
+
+@export_group("Teleport")
+@export var enable_teleport: bool = false
+@export var teleport_target: NodePath
+
 @export_group("Sounds")
 @export var open_sound: AudioStream # Сюда перетащите звук открытия двери
 
-# --- Внутренние переменные ---
 var player_inside: bool = false
 var _is_interacting: bool = false
-var _current_minigame: Node = null 
-var _sfx_player: AudioStreamPlayer # Плеер создается кодом
+var _current_minigame: Node = null
+var _sfx_player: AudioStreamPlayer
+var _code_unlocked: bool = false
+var _code_canvas: CanvasLayer = null
 
 func _ready() -> void:
 	input_pickable = false
 	
-	# Безопасное подключение сигналов входа/выхода
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
 	
-	# Создаем аудио-плеер динамически, чтобы не добавлять его вручную в сцену
 	_sfx_player = AudioStreamPlayer.new()
 	add_child(_sfx_player)
 
@@ -46,63 +51,65 @@ func _on_body_exited(body: Node) -> void:
 		player_inside = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _is_interacting: return
-	if not player_inside: return
+	if _is_interacting:
+		return
+	if not player_inside:
+		return
 	
 	if event.is_action_pressed("interact"):
 		_try_interact()
 
 func _try_interact() -> void:
+	if GameState.has_method("mark_fridge_interacted"):
+		GameState.mark_fridge_interacted()
+
+	if GameState.ate_this_cycle:
+		UIMessage.show_text("Я уже поел.")
+		return
+
 	if _is_locked_by_lab():
 		UIMessage.show_text(locked_message)
 		return
-
-	if GameState.ate_this_cycle:
-		UIMessage.show_text("Я уже наелся и хочу спать")
+	if _is_locked_by_code():
+		_open_code_lock()
 		return
-
+	
 	_is_interacting = true
-
-	# --- ВОСПРОИЗВЕДЕНИЕ ЗВУКА ОТКРЫТИЯ ---
+	
 	if open_sound:
 		_sfx_player.stream = open_sound
 		_sfx_player.play()
-	# --------------------------------------
-
+	
 	if minigame_scene == null or food_scene == null:
 		push_warning("Frizzer: Minigame scene or Food scene is missing!")
 		_complete_feeding()
 		_is_interacting = false
 		return
-
+	
 	await UIMessage.fade_out(0.3)
 	_start_minigame()
 	await UIMessage.fade_in(0.3)
 
 func _start_minigame() -> void:
 	var game = minigame_scene.instantiate()
-	_current_minigame = game 
+	_current_minigame = game
 	get_tree().root.add_child(game)
 	
 	if game.has_method("setup_game"):
-		# Передаем win_sound в мини-игру
 		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture)
 	
 	game.minigame_finished.connect(_on_minigame_finished)
 
 func _on_minigame_finished() -> void:
-	# 1. Сначала затемняем экран
 	await UIMessage.fade_out(0.4)
 	
-	# 2. Удаляем мини-игру
 	if _current_minigame != null:
 		_current_minigame.queue_free()
 		_current_minigame = null
 	
-	# 3. Обновляем логику игры (Андрей поел)
 	_complete_feeding()
+	_teleport_player_if_needed()
 	
-	# 4. Проявляем экран обратно
 	await UIMessage.fade_in(0.4)
 	_is_interacting = false
 
@@ -115,10 +122,64 @@ func _complete_feeding() -> void:
 		current_level.on_fed_andrey()
 
 func _is_locked_by_lab() -> bool:
+	if not require_lab_completion:
+		return false
 	if required_lab_id == "":
-		return false
-	if required_cycle > 0 and GameState.cycle != required_cycle:
-		return false
+		return true
 	return not GameState.completed_labs.has(required_lab_id)
-		
-		
+
+func _is_locked_by_code() -> bool:
+	return require_access_code and not _code_unlocked
+
+func _open_code_lock() -> void:
+	if _is_interacting:
+		return
+	_is_interacting = true
+	
+	var code_scene := load("res://scenes/minigames/ui/code_lock.tscn") as PackedScene
+	if code_scene == null:
+		push_warning("Frizzer: code_lock.tscn не найден.")
+		_is_interacting = false
+		return
+	
+	var lock = code_scene.instantiate()
+	lock.code_value = access_code
+	lock.unlocked.connect(_on_code_unlocked)
+	lock.tree_exited.connect(_on_code_closed)
+	
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100
+	canvas.add_child(lock)
+	get_tree().root.add_child(canvas)
+	_code_canvas = canvas
+
+func _on_code_unlocked() -> void:
+	_code_unlocked = true
+	UIMessage.show_text("Замок открыт.")
+
+func _on_code_closed() -> void:
+	_is_interacting = false
+	if _code_canvas != null:
+		_code_canvas.queue_free()
+		_code_canvas = null
+
+func _teleport_player_if_needed() -> void:
+	if not enable_teleport:
+		return
+	if teleport_target.is_empty():
+		push_warning("Frizzer: teleport_target не задан.")
+		return
+	
+	var marker := get_node_or_null(teleport_target)
+	if marker == null:
+		push_warning("Frizzer: teleport_target не найден.")
+		return
+	
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_physics_process"):
+		player.set_physics_process(false)
+	if player:
+		player.global_position = marker.global_position
+	await get_tree().create_timer(0.1).timeout
+	if player and player.has_method("set_physics_process"):
+		player.set_physics_process(true)

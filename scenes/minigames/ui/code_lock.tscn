@@ -1,0 +1,104 @@
+[gd_scene load_steps=2 format=3 uid="uid://code_lock_ui"]
+
+[ext_resource type="Script" uid="uid://code_lock_script" path="res://scripts/minigames/ui/code_lock.gd" id="1_code"]
+
+[node name="CodeLock" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_code")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Кодовый замок"
+horizontal_alignment = 1
+
+[node name="Display" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+
+[node name="Info" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="Panel/VBox"]
+layout_mode = 2
+columns = 3
+
+[node name="Btn1" type="Button" parent="Panel/VBox/Grid"]
+text = "1"
+
+[node name="Btn2" type="Button" parent="Panel/VBox/Grid"]
+text = "2"
+
+[node name="Btn3" type="Button" parent="Panel/VBox/Grid"]
+text = "3"
+
+[node name="Btn4" type="Button" parent="Panel/VBox/Grid"]
+text = "4"
+
+[node name="Btn5" type="Button" parent="Panel/VBox/Grid"]
+text = "5"
+
+[node name="Btn6" type="Button" parent="Panel/VBox/Grid"]
+text = "6"
+
+[node name="Btn7" type="Button" parent="Panel/VBox/Grid"]
+text = "7"
+
+[node name="Btn8" type="Button" parent="Panel/VBox/Grid"]
+text = "8"
+
+[node name="Btn9" type="Button" parent="Panel/VBox/Grid"]
+text = "9"
+
+[node name="Btn0" type="Button" parent="Panel/VBox/Grid"]
+text = "0"
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="OkButton" type="Button" parent="Panel/VBox/Buttons"]
+text = "ОК"
+
+[node name="ClearButton" type="Button" parent="Panel/VBox/Buttons"]
+text = "Очистить"
+
+[node name="CancelButton" type="Button" parent="Panel/VBox/Buttons"]
+text = "Отмена"

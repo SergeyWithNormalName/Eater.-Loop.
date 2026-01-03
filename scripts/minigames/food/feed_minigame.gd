@@ -7,6 +7,7 @@ signal minigame_finished
 @export var gamepad_cursor_speed: float = 800.0
 @export var eat_sound: AudioStream
 @export var background_texture: Texture2D
+@export_range(-40.0, 6.0, 0.1) var music_volume_db: float = -12.0
 
 const DEFAULT_BG: Texture2D = preload("res://textures/FonForFood.png")
 const DEFAULT_MUSIC: AudioStream = preload("res://audio/MusicForEat.mp3")
@@ -46,6 +47,7 @@ func _ready() -> void:
 	add_child(eat_sfx_player)
 
 	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	music_player.volume_db = music_volume_db
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
@@ -71,6 +73,7 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	var selected_music: AudioStream = music if music else DEFAULT_MUSIC
 	if selected_music:
 		music_player.stream = selected_music
+		music_player.volume_db = music_volume_db
 		music_player.play()
 	
 	var selected_win: AudioStream = win_sound if win_sound else DEFAULT_WIN
