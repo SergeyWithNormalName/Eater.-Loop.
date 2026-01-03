@@ -22,8 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_ji2tt"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_2hh0t"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="21_grmby"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="22_fpiqc"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://textures/minigames/eat/andreys_faces/HappyEat.png" id="23_25l3s"]
+[ext_resource type="PackedScene" uid="uid://d27nya7n60vae" path="res://scenes/minigames/food/food_chicken.tscn" id="23_w6s2q"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="26_m14sj"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="27_6yfxh"]
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://audio/furniture/FridgeNoizeE.wav" id="28_vjjy3"]
@@ -412,13 +412,13 @@ texture = ExtResource("19_ji2tt")
 
 [node name="Frizzer" type="Area2D" parent="."]
 z_index = -1
-position = Vector2(9809.79, 115.749985)
+position = Vector2(9809.79, 121)
 rotation = 0.002391043
 script = ExtResource("20_2hh0t")
 minigame_scene = ExtResource("21_grmby")
-food_scene = ExtResource("22_fpiqc")
+food_scene = ExtResource("23_w6s2q")
 andrey_face = ExtResource("23_25l3s")
-food_count = 7
+food_count = 2
 open_sound = ExtResource("26_m14sj")
 metadata/_edit_group_ = true
 
