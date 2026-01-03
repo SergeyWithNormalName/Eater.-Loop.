@@ -8,6 +8,11 @@ extends Area2D
 @export var food_count: int = 5         
 @export var bg_music: AudioStream       
 @export var win_sound: AudioStream      
+@export var eat_sound: AudioStream
+@export var background_texture: Texture2D
+@export var required_lab_id: String = ""
+@export var required_cycle: int = 0
+@export_multiline var locked_message: String = "Точно! Сначала я должен доделать лабораторную работу"
 
 # --- Настройки звуков ---
 @export_group("Sounds")
@@ -48,6 +53,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_try_interact()
 
 func _try_interact() -> void:
+	if _is_locked_by_lab():
+		UIMessage.show_text(locked_message)
+		return
+
 	if GameState.ate_this_cycle:
 		UIMessage.show_text("Я уже наелся и хочу спать")
 		return
@@ -77,7 +86,7 @@ func _start_minigame() -> void:
 	
 	if game.has_method("setup_game"):
 		# Передаем win_sound в мини-игру
-		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound)
+		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture)
 	
 	game.minigame_finished.connect(_on_minigame_finished)
 
@@ -104,5 +113,12 @@ func _complete_feeding() -> void:
 	var current_level = get_tree().current_scene
 	if current_level.has_method("on_fed_andrey"):
 		current_level.on_fed_andrey()
+
+func _is_locked_by_lab() -> bool:
+	if required_lab_id == "":
+		return false
+	if required_cycle > 0 and GameState.cycle != required_cycle:
+		return false
+	return not GameState.completed_labs.has(required_lab_id)
 		
 		

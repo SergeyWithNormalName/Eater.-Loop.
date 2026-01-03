@@ -103,10 +103,14 @@ func load_task(index):
 	for child in pool_container.get_children(): child.queue_free()
 	
 	# Генерация слотов запроса
+	var correct_index := 0
 	for item in data["template"]:
 		if item == null:
 			# Это пустой слот для перетаскивания
 			var slot = slot_scene.instantiate()
+			if correct_index < data["correct"].size():
+				slot.expected_text = data["correct"][correct_index]
+				correct_index += 1
 			query_container.add_child(slot)
 			slot.word_dropped.connect(check_answer)
 		else:

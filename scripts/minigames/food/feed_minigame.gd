@@ -5,6 +5,13 @@ signal minigame_finished
 @export var food_needed: int = 5
 @export var finish_delay: float = 2.0
 @export var gamepad_cursor_speed: float = 800.0
+@export var eat_sound: AudioStream
+@export var background_texture: Texture2D
+
+const DEFAULT_BG: Texture2D = preload("res://textures/FonForFood.png")
+const DEFAULT_MUSIC: AudioStream = preload("res://audio/MusicForEat.mp3")
+const DEFAULT_EAT: AudioStream = preload("res://audio/AndreyEating/Nam-nam_1.wav")
+const DEFAULT_WIN: AudioStream = preload("res://audio/AndreyEating/Poel_1.wav")
 
 # Путь к сцене тарелки теперь жестко прописан в коде
 var tarelka_scene = load("res://scenes/minigames/food/tarelka.tscn") 
@@ -17,6 +24,7 @@ var tarelka_scene = load("res://scenes/minigames/food/tarelka.tscn")
 @onready var mouth_area: Area2D = $Control/AndreyFace/MouthArea
 
 var sfx_player: AudioStreamPlayer 
+var eat_sfx_player: AudioStreamPlayer
 
 var _eaten_count: int = 0
 var _is_won: bool = false
@@ -32,7 +40,12 @@ func _ready() -> void:
 	else:
 		sfx_player = AudioStreamPlayer.new()
 		add_child(sfx_player)
+	
+	eat_sfx_player = AudioStreamPlayer.new()
+	eat_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(eat_sfx_player)
 
+	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
@@ -49,17 +62,30 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_update_layout)
 	_update_layout()
 
-func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream) -> void:
+func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null) -> void:
 	if andrey_texture:
 		andrey_sprite.texture = andrey_texture
 	
 	food_needed = count
 	
-	if music:
-		music_player.stream = music
+	var selected_music: AudioStream = music if music else DEFAULT_MUSIC
+	if selected_music:
+		music_player.stream = selected_music
+		music_player.play()
 	
-	if win_sound:
-		sfx_player.stream = win_sound
+	var selected_win: AudioStream = win_sound if win_sound else DEFAULT_WIN
+	if selected_win:
+		sfx_player.stream = selected_win
+	
+	var selected_eat: AudioStream = eat_sound_override if eat_sound_override else (eat_sound if eat_sound else DEFAULT_EAT)
+	if selected_eat:
+		eat_sfx_player.stream = selected_eat
+	
+	var selected_bg: Texture2D = bg_override if bg_override else (background_texture if background_texture else backfon.texture)
+	if selected_bg == null:
+		selected_bg = DEFAULT_BG
+	if selected_bg:
+		backfon.texture = selected_bg
 
 	# === ИСПРАВЛЕНИЕ 2: Одна тарелка для всей еды ===
 	# Создаем тарелку ОДИН раз перед тем, как спавнить пельмени
@@ -128,6 +154,8 @@ func _update_layout() -> void:
 
 func _on_food_eaten() -> void:
 	_eaten_count += 1
+	if eat_sfx_player.stream:
+		eat_sfx_player.play()
 	if _eaten_count >= food_needed and not _is_won:
 		_win()
 

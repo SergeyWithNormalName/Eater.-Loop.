@@ -12,19 +12,20 @@ var _drag_layer: Control = null
 func _ready():
 	text = text_value
 	custom_minimum_size = Vector2(80, 40) # Примерный размер
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func set_drag_context(drag_layer: Control) -> void:
 	_drag_layer = drag_layer
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("mg_grab"):
+	if _is_grab_pressed(event):
 		if is_any_dragging or _drag_layer == null:
 			return
 		
 		var mouse_pos = get_global_mouse_position()
 		if _is_point_over_self(mouse_pos):
 			_start_drag(mouse_pos)
-	elif event.is_action_released("mg_grab") and _is_dragging:
+	elif _is_grab_released(event) and _is_dragging:
 		_end_drag()
 
 func _process(_delta: float) -> void:
@@ -37,9 +38,11 @@ func _start_drag(mouse_pos: Vector2) -> void:
 	
 	_ghost = Button.new()
 	_ghost.text = text
-	_ghost.size = size
+	_ghost.custom_minimum_size = custom_minimum_size
+	_ghost.size = size if size.x > 0.0 and size.y > 0.0 else custom_minimum_size
 	_ghost.focus_mode = Control.FOCUS_NONE
 	_ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ghost.z_index = 1000
 	_drag_layer.add_child(_ghost)
 	_ghost.global_position = mouse_pos - _ghost.size * 0.5
 
@@ -67,6 +70,12 @@ func _find_drop_slot() -> Node:
 			return node
 		node = node.get_parent()
 	return null
+
+func _is_grab_pressed(event: InputEvent) -> bool:
+	return event.is_action_pressed("mg_grab") or event.is_action_pressed("mg_grap")
+
+func _is_grab_released(event: InputEvent) -> bool:
+	return event.is_action_released("mg_grab") or event.is_action_released("mg_grap")
 
 func _exit_tree() -> void:
 	if _is_dragging:

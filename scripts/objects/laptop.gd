@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Area2D
 
 @export_category("Minigame Settings")
 @export var quest_id: String = "lab_1" # Уникальный ID этой работы

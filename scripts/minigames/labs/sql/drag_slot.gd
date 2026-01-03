@@ -7,7 +7,11 @@ var expected_text: String = "" # Правильный ответ для этой
 @onready var label = $Label # Добавь Label внутрь PanelContainer в редакторе
 
 func can_accept_word(word_text: String) -> bool:
-	return current_text == "" and word_text != ""
+	if word_text == "" or current_text != "":
+		return false
+	if expected_text != "" and word_text != expected_text:
+		return false
+	return true
 
 func set_word(word_text: String) -> void:
 	current_text = word_text
