@@ -5,6 +5,13 @@ extends Area2D
 @export var time_limit: float = 45.0
 @export var penalty_time: float = 10.0
 @export var minigame_scene: PackedScene # Сюда перетяни sql_minigame.tscn
+@export var require_fridge_interaction: bool = false
+@export_multiline var fridge_locked_message: String = "Сначала нужно подойти к холодильнику."
+@export var locked_sprite: Texture2D
+@export var available_sprite: Texture2D
+@export var sprite_node: NodePath = NodePath("Sprite2D")
+@export var available_light_node: NodePath
+@export var available_light_node_secondary: NodePath
 
 # Флаг, чтобы нельзя было делать лабу дважды
 var is_done = false
@@ -12,6 +19,9 @@ var _player_inside: bool = false
 var _is_interacting: bool = false
 var _current_canvas: CanvasLayer = null
 var _current_minigame: Node = null
+var _sprite: Sprite2D = null
+var _available_light: CanvasItem = null
+var _available_light_secondary: CanvasItem = null
 
 @onready var interact_area: Area2D = get_node_or_null("InteractArea") as Area2D
 
@@ -26,6 +36,15 @@ func _ready() -> void:
 			interact_area.body_exited.connect(_on_body_exited)
 	else:
 		push_warning("Laptop: InteractArea не найден.")
+	
+	_sprite = get_node_or_null(sprite_node) as Sprite2D
+	_available_light = get_node_or_null(available_light_node) as CanvasItem
+	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
+	_update_sprite()
+	if GameState.has_signal("lab_completed"):
+		GameState.lab_completed.connect(func(_id): _update_sprite())
+	if GameState.has_signal("fridge_interacted_changed"):
+		GameState.fridge_interacted_changed.connect(func(): _update_sprite())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_interacting or not _player_inside:
@@ -49,9 +68,14 @@ func _try_interact() -> void:
 	if is_done:
 		UIMessage.show_text("Я уже сдал эту работу...")
 		return
+	if require_fridge_interaction:
+		if not GameState.fridge_interacted:
+			UIMessage.show_text(fridge_locked_message)
+			return
 	if quest_id != "" and GameState.completed_labs.has(quest_id):
 		is_done = true
 		UIMessage.show_text("Я уже сдал эту работу...")
+		_update_sprite()
 		return
 		
 	if minigame_scene:
@@ -80,9 +104,37 @@ func _on_minigame_closed():
 	if quest_id in GameState.completed_labs:
 		is_done = true
 		# Тут можно поменять текстуру экрана ноутбука на "Выключен" или "Рабочий стол"
+	_update_sprite()
 	
 	if _current_canvas != null:
 		_current_canvas.queue_free()
 		_current_canvas = null
 		_current_minigame = null
+
+func _update_sprite() -> void:
+	if _sprite == null:
+		pass
+	if _can_use_now():
+		if _sprite and available_sprite:
+			_sprite.texture = available_sprite
+		if _available_light:
+			_available_light.visible = true
+		if _available_light_secondary:
+			_available_light_secondary.visible = true
+	else:
+		if _sprite and locked_sprite:
+			_sprite.texture = locked_sprite
+		if _available_light:
+			_available_light.visible = false
+		if _available_light_secondary:
+			_available_light_secondary.visible = false
+
+func _can_use_now() -> bool:
+	if is_done:
+		return false
+	if quest_id != "" and GameState.completed_labs.has(quest_id):
+		return false
+	if require_fridge_interaction and not GameState.fridge_interacted:
+		return false
+	return true
 		

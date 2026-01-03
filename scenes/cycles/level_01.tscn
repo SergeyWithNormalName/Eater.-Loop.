@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=98 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="2_3555j"]
@@ -34,9 +34,7 @@
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="21_ugoxw"]
 [ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://textures/furniture/kitchen/Kitchen_garn.png" id="22_mjper"]
 [ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://textures/furniture/toilet and bathroom/WaterMachine.png" id="23_3jwi8"]
-[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://audio/MusicForEat.mp3" id="25_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://textures/furniture/toilet and bathroom/Toilet.png" id="25_bvnc7"]
-[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://audio/AndreyEating/Poel_1.wav" id="26_5lo1f"]
 [ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://textures/furniture/toilet and bathroom/Rakovina.png" id="26_45wr0"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="26_gklq2"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="26_m068l"]
@@ -421,8 +419,6 @@ minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_bvnc7")
 food_count = 1
-bg_music = ExtResource("25_3fmbd")
-win_sound = ExtResource("26_5lo1f")
 open_sound = ExtResource("26_gklq2")
 metadata/_edit_group_ = true
 
@@ -720,6 +716,7 @@ texture = ExtResource("51_kmqpk")
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
 start_game_time = "0:07"
+metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="WorldClock"]
 position = Vector2(47.222225, 38.88893)
