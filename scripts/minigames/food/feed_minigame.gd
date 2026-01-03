@@ -10,6 +10,8 @@ signal minigame_finished
 var tarelka_scene = load("res://scenes/minigames/food/tarelka.tscn") 
 
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
+@onready var backfon: Sprite2D = $Control/BackFon
+@onready var dim_rect: ColorRect = $Control/ColorRect
 @onready var andrey_sprite: TextureRect = $Control/AndreyFace
 @onready var food_container: Node2D = $Control/FoodContainer
 @onready var mouth_area: Area2D = $Control/AndreyFace/MouthArea
@@ -111,6 +113,13 @@ func _update_layout() -> void:
 	
 	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
 	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
+
+	if backfon and backfon.texture:
+		var tex_size := backfon.texture.get_size()
+		if tex_size.x > 0.0 and tex_size.y > 0.0:
+			var cover_scale: float = max(viewport_size.x / tex_size.x, viewport_size.y / tex_size.y)
+			backfon.scale = Vector2(cover_scale, cover_scale)
+			backfon.position = viewport_size * 0.5
 	
 	andrey_sprite.position = layout_offset + _andrey_base_pos * scale_factor
 	andrey_sprite.scale = _andrey_base_scale * scale_factor

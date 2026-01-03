@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _try_interact() -> void:
 	if GameState.ate_this_cycle:
-		UIMessage.show_text("Ты уже ел.")
+		UIMessage.show_text("Я уже наелся и хочу спать")
 		return
 
 	_is_interacting = true
@@ -99,7 +99,7 @@ func _on_minigame_finished() -> void:
 
 func _complete_feeding() -> void:
 	GameState.mark_ate()
-	UIMessage.show_text("Андрей поел.")
+	UIMessage.show_text("Вкуснятина")
 	
 	var current_level = get_tree().current_scene
 	if current_level.has_method("on_fed_andrey"):
