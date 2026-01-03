@@ -16,6 +16,9 @@ var _current_minigame: Node = null
 @onready var interact_area: Area2D = get_node_or_null("InteractArea") as Area2D
 
 func _ready() -> void:
+	input_pickable = false
+	if interact_area == null:
+		interact_area = self
 	if interact_area:
 		if not interact_area.body_entered.is_connected(_on_body_entered):
 			interact_area.body_entered.connect(_on_body_entered)

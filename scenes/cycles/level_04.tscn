@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=98 format=3 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_3gkos"]
@@ -19,12 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_gc20h"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_0eq3o"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_52cbj"]
+[ext_resource type="PackedScene" uid="uid://dnxt35x7beohh" path="res://scenes/cycles/level_03.tscn" id="19_c86yy"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_uyds2"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="21_ufkeh"]
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="22_pmxgm"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://textures/minigames/eat/andreys_faces/HappyEat.png" id="23_vgmn4"]
-[ext_resource type="AudioStream" uid="uid://broo4saywf1y1" path="res://audio/Не одну весну (slowed & reverb).mp3" id="24_ifue1"]
-[ext_resource type="AudioStream" uid="uid://dm1ej372r4l52" path="res://audio/festive-horn-noisy-close-squeaky.mp3" id="25_og7lu"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="26_qcm2f"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="27_shmu5"]
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://audio/furniture/FridgeNoizeE.wav" id="28_wh6c5"]
@@ -397,7 +396,9 @@ texture = ExtResource("17_gc20h")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("18_0eq3o")
+next_level_scene = ExtResource("19_c86yy")
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -418,8 +419,6 @@ minigame_scene = ExtResource("21_ufkeh")
 food_scene = ExtResource("22_pmxgm")
 andrey_face = ExtResource("23_vgmn4")
 food_count = 7
-bg_music = ExtResource("24_ifue1")
-win_sound = ExtResource("25_og7lu")
 open_sound = ExtResource("26_qcm2f")
 metadata/_edit_group_ = true
 
@@ -716,27 +715,9 @@ texture = ExtResource("55_0h60q")
 [node name="WorldClock" parent="." instance=ExtResource("29_klwe0")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
-start_game_time = "0:07"
+start_game_time = "0:21"
 
 [node name="PointLight2D" type="PointLight2D" parent="WorldClock"]
-position = Vector2(47.222225, 38.88893)
-scale = Vector2(2.9513855, 1.1284723)
-texture = SubResource("GradientTexture2D_pgutp")
-
-[node name="Clock2" type="Sprite2D" parent="."]
-z_index = 7
-position = Vector2(10044.53, 183.58)
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("55_0h60q")
-
-[node name="WorldClock3" parent="." instance=ExtResource("29_klwe0")]
-z_index = 7
-position = Vector2(10027.53, 172.57997)
-scale = Vector2(0.36, 0.36)
-start_game_time = "0:07"
-
-[node name="PointLight2D" type="PointLight2D" parent="WorldClock3"]
-z_index = 7
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_pgutp")
