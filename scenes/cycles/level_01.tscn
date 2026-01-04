@@ -28,7 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="16_4cwao"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="17_84kq6"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="18_wnv1a"]
-[ext_resource type="PackedScene" uid="uid://0xf1f3qbgpow" path="res://scenes/cycles/level_04.tscn" id="19_3fmbd"]
+[ext_resource type="PackedScene" uid="uid://bsecib4k5glms" path="res://scenes/cycles/level_02.tscn" id="19_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/allrooms/On-offer.png" id="20_olvol"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/allrooms/Pozetka.png" id="21_1ekfm"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="21_ugoxw"]
