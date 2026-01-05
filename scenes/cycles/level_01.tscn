@@ -418,7 +418,7 @@ script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_bvnc7")
-food_count = 1
+food_count = 6
 open_sound = ExtResource("26_gklq2")
 metadata/_edit_group_ = true
 
