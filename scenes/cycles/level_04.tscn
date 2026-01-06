@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=103 format=3 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_3gkos"]
@@ -83,6 +83,7 @@
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://scripts/objects/trigger_set_property.gd" id="82_vcxip"]
 [ext_resource type="Script" uid="uid://b2ugbi3sjr8u1" path="res://scripts/objects/property_change.gd" id="83_3gkos"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://audio/MusicEtc/InsideAmbient.wav" id="83_ek680"]
+[ext_resource type="AudioStream" uid="uid://noqmowvr33dv" path="res://audio/furniture/ScaryStepsAndDoor.mp3" id="83_ji18s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
@@ -2224,6 +2225,8 @@ position = Vector2(6843, 2516)
 script = ExtResource("82_vcxip")
 affect_on_exit = true
 changes = Array[ExtResource("83_3gkos")]([SubResource("Resource_ek680")])
+sfx_stream = ExtResource("83_ji18s")
+sfx_position = Vector2(8434.125, 2482)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
