@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=97 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_bij4o"]
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="2_3555j"]
@@ -28,7 +28,6 @@
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="16_4cwao"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="17_84kq6"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="18_wnv1a"]
-[ext_resource type="PackedScene" uid="uid://bsecib4k5glms" path="res://scenes/cycles/level_02.tscn" id="19_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/allrooms/On-offer.png" id="20_olvol"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/allrooms/Pozetka.png" id="21_1ekfm"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="21_ugoxw"]
@@ -396,7 +395,7 @@ texture = ExtResource("16_4cwao")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("6_srw7l")
-next_level_scene = ExtResource("19_3fmbd")
+next_level_path = "uid://bsecib4k5glms"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
 metadata/_edit_group_ = true
@@ -418,7 +417,7 @@ script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
 food_scene = ExtResource("12_nghjy")
 andrey_face = ExtResource("12_bvnc7")
-food_count = 6
+food_count = 1
 open_sound = ExtResource("26_gklq2")
 metadata/_edit_group_ = true
 
