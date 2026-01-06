@@ -12,6 +12,10 @@ extends Area2D
 @export var sprite_node: NodePath = NodePath("Sprite2D")
 @export var available_light_node: NodePath
 @export var available_light_node_secondary: NodePath
+@export_group("Completed Note")
+@export var show_note_on_completed: bool = false
+@export var completed_note_texture: Texture2D
+@export_multiline var completed_note_empty_message: String = "Тут ничего не написано."
 
 # Флаг, чтобы нельзя было делать лабу дважды
 var is_done = false
@@ -66,6 +70,8 @@ func interact():
 
 func _try_interact() -> void:
 	if is_done:
+		if _show_completed_note_if_enabled():
+			return
 		UIMessage.show_text("Я уже сдал эту работу...")
 		return
 	if require_fridge_interaction:
@@ -74,6 +80,9 @@ func _try_interact() -> void:
 			return
 	if quest_id != "" and GameState.completed_labs.has(quest_id):
 		is_done = true
+		if _show_completed_note_if_enabled():
+			_update_sprite()
+			return
 		UIMessage.show_text("Я уже сдал эту работу...")
 		_update_sprite()
 		return
@@ -136,5 +145,14 @@ func _can_use_now() -> bool:
 		return false
 	if require_fridge_interaction and not GameState.fridge_interacted:
 		return false
+	return true
+
+func _show_completed_note_if_enabled() -> bool:
+	if not show_note_on_completed:
+		return false
+	if completed_note_texture:
+		UIMessage.show_note(completed_note_texture)
+	else:
+		UIMessage.show_text(completed_note_empty_message)
 	return true
 		

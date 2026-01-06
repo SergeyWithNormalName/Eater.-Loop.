@@ -440,6 +440,7 @@ andrey_face = ExtResource("23_1dbsv")
 food_count = 1
 require_lab_completion = true
 required_lab_id = "lab_1"
+locked_message = "Я не должен есть, пока не доделаю лабораторную работу"
 open_sound = ExtResource("26_ew5nb")
 metadata/_edit_group_ = true
 
