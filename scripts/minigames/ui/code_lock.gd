@@ -26,6 +26,8 @@ func _process(delta: float) -> void:
 	_handle_gamepad_cursor(delta)
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		return
 	if _is_grab_pressed(event):
 		var hovered := get_viewport().gui_get_hovered_control()
 		if hovered is Button:

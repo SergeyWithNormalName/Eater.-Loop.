@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=102 format=3 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_3gkos"]
@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_gc20h"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_0eq3o"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_52cbj"]
-[ext_resource type="PackedScene" uid="uid://c3s82ewvaot7t" path="res://scenes/cycles/level_05.tscn" id="19_ek680"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_uyds2"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="21_ufkeh"]
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="22_pmxgm"]
@@ -409,7 +408,7 @@ texture = ExtResource("17_gc20h")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("18_0eq3o")
-next_level_scene = ExtResource("19_ek680")
+next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
 metadata/_edit_group_ = true

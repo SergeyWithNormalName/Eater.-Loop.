@@ -4,8 +4,20 @@ extends Node
 var cycle_settings: Dictionary = {
 	1: 0.0,  # 0.0 означает, что таймера нет
 	2: 0.0,  # На втором уровне тоже без таймера
-	3: 30.0,
-	4: 20.0
+	3: 0.0,
+	4: 0.0,
+	5: 0.0,  # 0.0 означает, что таймера нет
+	6: 0.0,  # На втором уровне тоже без таймера
+	7: 120.0,
+	8: 120.0,
+	9: 120.0,  # 0.0 означает, что таймера нет
+	10: 120.0,  # На втором уровне тоже без таймера
+	11: 120.0,
+	12: 120.0,
+	13: 120.0,  # 0.0 означает, что таймера нет
+	14: 120.0,  # На втором уровне тоже без таймера
+	15: 120.0,
+	16: 120.0
 }
 @export var default_time: float = 15.0
 
@@ -20,6 +32,8 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_distortion_timeout)
 	add_child(_timer)
 	_create_distortion_overlay()
+	if GameState and GameState.has_signal("cycle_changed"):
+		GameState.cycle_changed.connect(func(_cycle: int): start_normal_phase())
 	start_normal_phase()
 
 func start_normal_phase() -> void:
