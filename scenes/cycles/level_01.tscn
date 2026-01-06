@@ -713,6 +713,7 @@ texture = ExtResource("51_kmqpk")
 
 [node name="WorldClock" parent="." instance=ExtResource("13_bij4o")]
 position = Vector2(-2141, 138.99998)
+rotation = 0.002830834
 scale = Vector2(0.36, 0.36)
 start_game_time = "0:07"
 metadata/_edit_group_ = true

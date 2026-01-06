@@ -260,7 +260,7 @@ texture = ExtResource("14_bs7lo")
 
 [node name="Door(To Bedroom)" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(8434.125, 83)
+position = Vector2(8123, 83)
 script = ExtResource("11_xwm2s")
 target_marker = NodePath("../Door(In Bedroom)/Marker2D")
 sfx_locked = ExtResource("12_4xwr8")
@@ -281,7 +281,7 @@ texture = ExtResource("14_bs7lo")
 
 [node name="Door(To Parents)" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(8818.125, 83)
+position = Vector2(8523, 83)
 script = ExtResource("11_xwm2s")
 is_locked = true
 locked_message = "Там спят родители. Их сейчас лучше не тревожить."
@@ -325,7 +325,7 @@ texture = ExtResource("15_x5cps")
 
 [node name="Door(To Toilet)" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(7832.125, 83)
+position = Vector2(7651, 83)
 script = ExtResource("11_xwm2s")
 locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(In Toilet)/Marker2D")
@@ -347,7 +347,7 @@ texture = ExtResource("16_fojdr")
 
 [node name="Door(To Bathroom)" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(7515.125, 83)
+position = Vector2(7334, 83)
 script = ExtResource("11_xwm2s")
 locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(In Bathroom)/Marker2D")
@@ -528,7 +528,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("34_ql7cc")
 
 [node name="OnOffer2" type="Sprite2D" parent="."]
-position = Vector2(7694, 29)
+position = Vector2(7512.875, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("30_8124a")
 
@@ -543,7 +543,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("30_8124a")
 
 [node name="OnOffer3" type="Sprite2D" parent="."]
-position = Vector2(7656, 29)
+position = Vector2(7474.875, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("30_8124a")
 
@@ -757,7 +757,7 @@ texture = ExtResource("57_t86id")
 [node name="WorldClock" parent="." instance=ExtResource("28_ow03l")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
-start_game_time = "0:34"
+start_game_time = "1:03"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="WorldClock"]
