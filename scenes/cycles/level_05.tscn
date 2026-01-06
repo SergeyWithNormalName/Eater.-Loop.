@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="23_8d7c5"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://textures/minigames/eat/andreys_faces/HappyEat.png" id="24_augq3"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="25_jklwv"]
-[ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://textures/furniture/kitchen/Frizzer.png" id="26_7icwu"]
+[ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://textures/furniture/kitchen/LockedFridge.png" id="25_usp2j"]
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://audio/furniture/FridgeNoizeE.wav" id="27_wnhsn"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://scenes/objects/world_clock.tscn" id="28_ow03l"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="29_e0b7i"]
@@ -448,7 +448,7 @@ shape = SubResource("RectangleShape2D_2yfbk")
 [node name="Sprite2D" type="Sprite2D" parent="Frizzer"]
 position = Vector2(1.000001, 0.15893745)
 scale = Vector2(0.7364341, 0.73643416)
-texture = ExtResource("26_7icwu")
+texture = ExtResource("25_usp2j")
 
 [node name="PointLight2D" type="PointLight2D" parent="Frizzer"]
 visible = false
