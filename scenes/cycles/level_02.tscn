@@ -417,7 +417,6 @@ script = ExtResource("20_2hh0t")
 minigame_scene = ExtResource("21_grmby")
 food_scene = ExtResource("23_w6s2q")
 andrey_face = ExtResource("23_25l3s")
-food_count = 1
 open_sound = ExtResource("26_m14sj")
 metadata/_edit_group_ = true
 
@@ -459,7 +458,7 @@ start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.23529412, 0.23529412, 0.27450982, 1)
+color = Color(0.15686275, 0.15686275, 0.18431373, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
