@@ -25,6 +25,9 @@ func _get_flashlight() -> PointLight2D:
 	return _cached_flashlight
 
 func _is_flashlight_hitting() -> bool:
+	return _is_flashlight_cone_hitting() or _is_lamp_light_hitting()
+
+func _is_flashlight_cone_hitting() -> bool:
 	var flashlight := _get_flashlight()
 	if flashlight == null:
 		return false
@@ -44,3 +47,26 @@ func _is_flashlight_hitting() -> bool:
 	var facing := -flashlight.global_transform.x.normalized()
 	var half_angle := deg_to_rad(flashlight_fov_deg) * 0.5
 	return facing.dot(to_self.normalized()) >= cos(half_angle)
+
+func _is_lamp_light_hitting() -> bool:
+	var lights := get_tree().get_nodes_in_group("lamp_light")
+	for light_node in lights:
+		var light := light_node as PointLight2D
+		if light == null:
+			continue
+		if not light.enabled:
+			continue
+		if not light.visible:
+			continue
+		if light.texture == null:
+			continue
+
+		var origin := light.global_transform * light.offset
+		var base_radius = max(light.texture.get_width(), light.texture.get_height()) * 0.5
+		if base_radius <= 0.0:
+			continue
+		var scale_factor = max(light.global_scale.x, light.global_scale.y)
+		var range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
+		if origin.distance_to(global_position) <= range:
+			return true
+	return false

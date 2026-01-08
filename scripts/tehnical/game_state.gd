@@ -4,6 +4,7 @@ signal lab_completed(quest_id: String)
 signal phone_picked_changed
 signal fridge_interacted_changed
 signal cycle_changed(new_cycle: int)
+signal electricity_changed(is_on: bool)
 
 enum Phase { NORMAL, DISTORTED }
 
@@ -14,6 +15,15 @@ var completed_labs: Array[String] = []
 var phone_picked: bool = false
 var fridge_interacted: bool = false
 var pending_sleep_spawn: bool = false
+var _electricity_on: bool = true
+var electricity_on: bool:
+	set(value):
+		if _electricity_on == value:
+			return
+		_electricity_on = value
+		electricity_changed.emit(_electricity_on)
+	get:
+		return _electricity_on
 
 func next_cycle() -> void:
 	cycle += 1

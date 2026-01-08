@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8tbfxglfucld"]
+[gd_scene load_steps=6 format=3 uid="uid://dhw0qiihdwuj3"]
 
-[ext_resource type="Script" uid="uid://6whp9eo5x9rjl" path="res://scripts/enemies/enemy_ceiling.gd" id="1_ceiling"]
+[ext_resource type="Script" uid="uid://y7rjxc5gnrhh" path="res://scripts/enemies/enemy_ceiling.gd" id="1_ceiling"]
 [ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_ceiling"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]

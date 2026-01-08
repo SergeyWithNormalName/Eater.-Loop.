@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		_update_idle_wander(delta)
 
 	move_and_slide()
+	_update_facing_from_velocity()
 	_update_steps(delta, is_chasing)
 	_update_growls(delta)
 
