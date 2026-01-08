@@ -1,22 +1,35 @@
 extends Area2D
 
 @export_group("Trigger")
+## Применять изменения при входе игрока.
 @export var affect_on_enter: bool = true
+## Применять изменения при выходе игрока.
 @export var affect_on_exit: bool = false
+## Срабатывает только один раз.
 @export var one_shot: bool = true
+## Группа, которую считает игроком.
 @export var player_group: String = "player"
 
 @export_group("Targets")
+## Набор изменений через ресурсы PropertyChange (приоритетнее списков ниже).
 @export var changes: Array[PropertyChange] = []
+## Пути к целевым узлам для простого изменения свойства.
 @export var target_paths: Array[NodePath] = []
+## Имя свойства для простого изменения.
 @export var property_name: String = ""
+## Значение свойства для простого изменения.
 @export var value: Variant
 
 @export_group("Sound")
+## Звук, который проигрывается при срабатывании.
 @export var sfx_stream: AudioStream
+## Позиция звука, если не использовать позицию триггера.
 @export var sfx_position: Vector2 = Vector2.ZERO
+## Использовать позицию триггера для звука.
 @export var sfx_use_trigger_position: bool = false
+## Задержка перед проигрыванием звука.
 @export var sfx_delay: float = 0.0
+## Громкость звука в дБ.
 @export var sfx_volume_db: float = 0.0
 
 var _has_fired: bool = false

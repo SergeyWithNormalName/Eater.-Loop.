@@ -1,11 +1,16 @@
 extends CharacterBody2D
 
+## Скорость движения игрока.
 @export var speed: float = 520.0
 
 @export_group("Audio Settings")
+## Набор звуков шагов.
 @export var step_sounds: Array[AudioStream] # Звуки шагов
+## Интервал между шагами.
 @export var step_interval: float = 0.35     # Частота звука шагов
+## Громкость шагов в дБ.
 @export var step_volume: float = -10.0      # Громкость шагов в дБ
+## Звук включения/выключения фонарика.
 @export var flashlight_sound: AudioStream   # Звук фонарика
 
 var keys: Dictionary = {}

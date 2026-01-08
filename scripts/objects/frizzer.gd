@@ -1,27 +1,43 @@
 extends Area2D
 
 @export_group("Minigame")
+## Сцена мини-игры.
 @export var minigame_scene: PackedScene
+## Сцена еды (для мини-игры).
 @export var food_scene: PackedScene
+## Текстура лица Андрея.
 @export var andrey_face: Texture2D
+## Количество еды в мини-игре.
 @export var food_count: int = 5
+## Фоновая музыка мини-игры.
 @export var bg_music: AudioStream
+## Звук победы.
 @export var win_sound: AudioStream
+## Звук поедания.
 @export var eat_sound: AudioStream
+## Текстура фона мини-игры.
 @export var background_texture: Texture2D
 
 @export_group("Access")
+## Требовать завершения лабораторной работы.
 @export var require_lab_completion: bool = false
+## ID требуемой лабораторной.
 @export var required_lab_id: String = ""
+## Сообщение, если доступ закрыт.
 @export_multiline var locked_message: String = "Точно! Сначала я должен доделать лабораторную работу"
+## Требовать ввод кода доступа.
 @export var require_access_code: bool = false
+## Код доступа.
 @export var access_code: String = "1234"
 
 @export_group("Teleport")
+## Включить телепорт после взаимодействия.
 @export var enable_teleport: bool = false
+## Маркер телепорта.
 @export var teleport_target: NodePath
 
 @export_group("Sounds")
+## Звук открытия холодильника.
 @export var open_sound: AudioStream # Сюда перетащите звук открытия двери
 
 var player_inside: bool = false

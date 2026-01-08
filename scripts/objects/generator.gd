@@ -1,9 +1,13 @@
 extends Area2D
 
 @export_group("Interaction")
+## Узел Area2D для зоны взаимодействия (пусто — использовать сам объект).
 @export var interact_area_node: NodePath = NodePath("")
+## Звук включения электричества.
 @export var power_on_sfx: AudioStream
+## Громкость звука в дБ.
 @export var power_on_volume_db: float = 0.0
+## Сообщение, если электричество уже включено.
 @export_multiline var already_on_message: String = ""
 
 var _player_inside: bool = false

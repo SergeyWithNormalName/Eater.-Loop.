@@ -1,7 +1,10 @@
 extends Area2D
 
+## ID ключа для проверки (должен совпадать с требованием двери).
 @export var key_id: String = "bedroom_key"
+## Название ключа для отображения игроку.
 @export var key_name: String = "Ключ"
+## Сообщение при подборе ключа.
 @export_multiline var pickup_message: String = "Подобрал"
 
 var _player_in_range: Node = null

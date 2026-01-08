@@ -1,27 +1,45 @@
 extends "res://scripts/enemy.gd"
 
 @export_group("Audio")
+## Звуки шагов.
 @export var step_sounds: Array[AudioStream] = []
+## Интервал шагов при бродяжничестве.
 @export var step_interval: float = 0.45
+## Интервал шагов при преследовании.
 @export var step_interval_chase: float = 0.2
+## Громкость шагов в дБ.
 @export var step_volume_db: float = -12.0
+## Звуки рычания.
 @export var growl_sounds: Array[AudioStream] = []
+## Минимальный интервал рычания.
 @export var growl_interval_min: float = 2.5
+## Максимальный интервал рычания.
 @export var growl_interval_max: float = 5.0
+## Громкость рычания в дБ.
 @export var growl_volume_db: float = -6.0
+## Минимальный питч рычания.
 @export var growl_pitch_min: float = 0.95
+## Максимальный питч рычания.
 @export var growl_pitch_max: float = 1.05
 
 @export_group("Idle Wander")
+## Разрешить бродяжничать вне зоны обнаружения.
 @export var allow_idle_wander: bool = true
+## Скорость бродяжничества.
 @export var wander_speed: float = 40.0
+## Минимальная длительность шага.
 @export var wander_walk_time_min: float = 0.4
+## Максимальная длительность шага.
 @export var wander_walk_time_max: float = 1.2
+## Минимальная пауза между шагами.
 @export var wander_pause_time_min: float = 1.0
+## Максимальная пауза между шагами.
 @export var wander_pause_time_max: float = 2.5
 
 @export_group("Camera Shake")
+## Сила тряски камеры от шагов.
 @export var camera_shake_intensity: float = 3.0
+## Длительность тряски камеры.
 @export var camera_shake_duration: float = 0.08
 
 var _step_timer: float = 0.0

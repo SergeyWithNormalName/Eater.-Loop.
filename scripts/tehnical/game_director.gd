@@ -19,6 +19,7 @@ var cycle_settings: Dictionary = {
 	15: 120.0,
 	16: 120.0
 }
+## Время по умолчанию для циклов, где не задано отдельно.
 @export var default_time: float = 15.0
 
 var _timer: Timer

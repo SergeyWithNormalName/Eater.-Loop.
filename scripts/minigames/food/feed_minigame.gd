@@ -2,11 +2,17 @@ extends CanvasLayer
 
 signal minigame_finished
 
+## Сколько еды нужно скормить для победы.
 @export var food_needed: int = 5
+## Задержка перед завершением мини-игры.
 @export var finish_delay: float = 2.0
+## Скорость курсора геймпада.
 @export var gamepad_cursor_speed: float = 800.0
+## Звук поедания.
 @export var eat_sound: AudioStream
+## Фон мини-игры.
 @export var background_texture: Texture2D
+## Громкость музыки в дБ.
 @export_range(-40.0, 6.0, 0.1) var music_volume_db: float = -12.0
 
 const DEFAULT_BG: Texture2D = preload("res://textures/FonForFood.png")

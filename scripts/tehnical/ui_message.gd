@@ -1,5 +1,6 @@
 extends CanvasLayer #
 
+## Длительность показа сообщений по умолчанию.
 @export var default_duration: float = 2.0 #
 
 var _label: Label

@@ -1,20 +1,30 @@
 extends Area2D
 
 # --- Настройки логики ---
+## Дверь закрыта и требует ключ или сообщение.
 @export var is_locked: bool = false
+## Сообщение, когда дверь заперта.
 @export_multiline var locked_message: String = "Дверь закрыта."
+## ID ключа, который открывает дверь (пусто — не нужен).
 @export var required_key_id: String = ""         
+## Название ключа для текста подсказки.
 @export var required_key_name: String = ""       
+## Удалять ключ из инвентаря при открытии.
 @export var consume_key_on_unlock: bool = false
 
 # --- Настройки перехода ---
+## Маркер, куда телепортировать игрока (если переход без смены сцены).
 @export var target_marker: NodePath
+## Сцена, куда переключаться при переходе.
 @export var target_scene: PackedScene
+## Если включено — делает смену сцены, иначе телепорт на маркер.
 @export var use_scene_change: bool = false
 
 # --- Настройки звука (НОВОЕ) ---
 @export_group("Sounds")
+## Звук, когда дергаешь запертую дверь.
 @export var sfx_locked: AudioStream # Звук, когда дергаешь запертую дверь
+## Звук скрипа/открытия.
 @export var sfx_open: AudioStream   # Звук скрипа/открытия
 
 var _player_in_range: Node = null

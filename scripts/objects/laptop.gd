@@ -1,20 +1,34 @@
 extends Area2D
 
 @export_category("Minigame Settings")
+## Уникальный ID этой работы.
 @export var quest_id: String = "lab_1" # Уникальный ID этой работы
+## Лимит времени на мини-игру.
 @export var time_limit: float = 45.0
+## Штраф по времени за ошибку.
 @export var penalty_time: float = 10.0
+## Сцена мини-игры (например, sql_minigame.tscn).
 @export var minigame_scene: PackedScene # Сюда перетяни sql_minigame.tscn
+## Требовать взаимодействия с холодильником перед запуском.
 @export var require_fridge_interaction: bool = false
+## Сообщение, если холодильник не посещен.
 @export_multiline var fridge_locked_message: String = "Сначала нужно подойти к холодильнику."
+## Текстура экрана, когда ноут недоступен.
 @export var locked_sprite: Texture2D
+## Текстура экрана, когда ноут доступен.
 @export var available_sprite: Texture2D
+## Узел со спрайтом экрана ноутбука.
 @export var sprite_node: NodePath = NodePath("Sprite2D")
+## Узел подсветки доступности (основной).
 @export var available_light_node: NodePath
+## Узел подсветки доступности (дополнительный).
 @export var available_light_node_secondary: NodePath
 @export_group("Completed Note")
+## Показывать записку после выполнения.
 @export var show_note_on_completed: bool = false
+## Текстура записки после выполнения.
 @export var completed_note_texture: Texture2D
+## Сообщение, если текстуры записки нет.
 @export_multiline var completed_note_empty_message: String = "Тут ничего не написано."
 
 # Флаг, чтобы нельзя было делать лабу дважды

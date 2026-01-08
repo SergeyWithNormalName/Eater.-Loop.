@@ -1,7 +1,10 @@
 extends PointLight2D
 
+## Сила дрожания луча.
 @export var shake_intensity: float = 2.0
+## Шанс мерцания на кадр.
 @export var flicker_chance: float = 0.05
+## Базовая энергия света.
 @export var base_energy: float = 1.0
 
 func _process(_delta: float) -> void:

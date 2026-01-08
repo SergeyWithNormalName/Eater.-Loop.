@@ -1,8 +1,11 @@
 extends "res://scripts/enemy.gd"
 
 @export_group("Flashlight Detection")
+## Максимальная дальность влияния фонарика.
 @export var flashlight_range: float = 650.0
+## Угол конуса фонарика в градусах.
 @export var flashlight_fov_deg: float = 90.0
+## Учитывать только включенный фонарик.
 @export var flashlight_requires_enabled: bool = true
 
 var _cached_flashlight: PointLight2D = null

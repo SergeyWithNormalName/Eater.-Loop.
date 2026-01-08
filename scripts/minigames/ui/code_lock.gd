@@ -2,6 +2,7 @@ extends Control
 
 signal unlocked
 
+## Код, который нужно ввести.
 @export var code_value: String = "1234"
 
 var _current_input: String = ""
