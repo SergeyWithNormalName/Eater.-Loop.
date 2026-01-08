@@ -1,19 +1,29 @@
 extends Area2D
 
 @export_group("Interaction")
+## Узел Area2D для зоны взаимодействия (пусто — использовать сам объект).
 @export var interact_area_node: NodePath = NodePath("")
+## Сообщение, если нет электричества.
 @export_multiline var no_power_message: String = "Нет электричества."
 
 @export_group("Lamp Settings")
+## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
+## Включена ли лампа при старте.
 @export var start_on: bool = false
+## Звук включения лампы.
 @export var turn_on_sfx: AudioStream
+## Громкость звука включения в дБ.
 @export var turn_on_volume_db: float = 0.0
 
 @export_group("Light Settings")
+## Узел PointLight2D для света.
 @export var light_node: NodePath = NodePath("PointLight2D")
+## Цвет света лампы.
 @export var light_color: Color = Color(1.0, 0.95, 0.8)
+## Дальность света (масштаб текстуры света).
 @export var light_range: float = 450.0
+## Энергия света.
 @export var light_energy: float = 1.0
 
 var _player_inside: bool = false

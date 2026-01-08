@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var label: Label = $Label
+## Стартовое время в формате HH:MM.
 @export var start_game_time: String = "01:20"
 var _total_game_minutes: float = 0.0
 

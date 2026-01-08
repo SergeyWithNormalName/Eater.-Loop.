@@ -1,9 +1,13 @@
 extends "res://scripts/enemies/enemy_flashlight_base.gd"
 
 @export_group("Stun")
+## Длительность стана от света.
 @export var stun_duration: float = 2.0
+## Перезарядка стана.
 @export var stun_cooldown: float = 6.0
+## Дистанция отступления при стане.
 @export var knockback_distance: float = 60.0
+## Скорость отступления при стане.
 @export var knockback_speed: float = 120.0
 
 var _stun_timer: float = 0.0

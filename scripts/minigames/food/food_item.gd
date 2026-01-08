@@ -13,6 +13,7 @@ var _target_mouth: Area2D = null
 # Новый флаг: находится ли пельмень прямо сейчас над ртом?
 var _is_over_mouth: bool = false
 
+## Радиус захвата еды курсором.
 @export var grab_radius: float = 60.0
 
 func _ready() -> void:

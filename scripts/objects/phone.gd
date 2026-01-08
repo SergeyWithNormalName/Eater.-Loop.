@@ -1,8 +1,11 @@
 extends Area2D
 
 @export_category("Phone Settings")
+## Звук звонка телефона.
 @export var ring_sound: AudioStream
+## Звук поднятия трубки.
 @export var pickup_sound: AudioStream
+## Интервал между звонками.
 @export var ring_interval: float = 6.0
 
 var _player_inside: bool = false

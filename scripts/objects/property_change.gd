@@ -2,7 +2,9 @@
 extends Resource
 class_name PropertyChange
 
+## Путь к узлу, в котором меняем свойство.
 @export var target: NodePath
+## Быстрый выбор свойства из списка (заполнит property_name).
 @export_enum(
 	"is_locked",
 	"locked_message",
@@ -17,7 +19,9 @@ class_name PropertyChange
 	"target_scene",
 	"use_scene_change"
 ) var property_preset: String = "is_locked"
+## Имя свойства для изменения.
 @export var property_name: String
+## Значение, которое будет установлено.
 @export var value: Variant
 
 func _set(property: StringName, value_in: Variant) -> bool:

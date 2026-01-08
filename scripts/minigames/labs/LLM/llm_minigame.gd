@@ -2,9 +2,13 @@ extends Control
 
 signal task_completed(success: bool)
 
+## Лимит времени на мини-игру.
 @export var time_limit: float = 60.0
+## Штраф по времени за ошибку.
 @export var penalty_time: float = 15.0
+## ID квеста для отметки выполнения.
 @export var quest_id: String = ""
+## Прогресс за одно нажатие.
 @export var progress_per_click: float = 0.1
 
 var current_time: float = 0.0

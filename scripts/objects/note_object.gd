@@ -1,6 +1,8 @@
 extends Area2D
 
+## Текстура записки для просмотра.
 @export var note_texture: Texture2D # Сюда перетаскиваешь картинку в Инспекторе
+## Подсказка при наведении (опционально).
 @export_multiline var interact_message: String = "Прочитать" # Подсказка при наведении (опционально)
 
 var _player_in_range: bool = false

@@ -1,11 +1,17 @@
 extends Area2D
 
+## Путь к следующей сцене, куда переносить игрока после сна.
 @export_file("*.tscn") var next_level_path: String
+## Звук засыпания/пробуждения.
 @export var sleep_sfx: AudioStream
 
+## Сообщение, если игрок не ел в этом цикле.
 @export_multiline var not_ate_message: String = "Нельзя спать: сначала поешь."
+## Шаблон сообщения после сна (старый/новый цикл).
 @export_multiline var sleep_message_template: String = "Поспал. Цикл %d → %d"
+## С какого цикла требуется свет в спальне для сна.
 @export var require_bedroom_light_from_cycle: int = 4
+## Сообщение, если света в спальне нет.
 @export_multiline var no_bedroom_light_message: String = "Я боюсь засыпать в темноте..."
 
 var _player_in_range: Node = null

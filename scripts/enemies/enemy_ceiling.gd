@@ -1,6 +1,8 @@
 extends "res://scripts/enemy.gd"
 
+## Допуск по X, чтобы считать игрока под собой.
 @export var align_threshold: float = 24.0
+## Атаковать только если игрок ниже.
 @export var attack_requires_below: bool = true
 
 func _physics_process(_delta: float) -> void:

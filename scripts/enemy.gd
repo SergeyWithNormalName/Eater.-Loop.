@@ -1,9 +1,13 @@
 extends CharacterBody2D
 
-@export var speed: float = 140.0           # Скорость движения
-@export var chase_player: bool = true     # Будет ли преследовать
-@export var time_penalty: float = 5.0     # Сколько секунд отнимает при касании
-@export var kill_on_attack: bool = false  # Убивает игрока сразу
+## Скорость движения по оси X.
+@export var speed: float = 140.0
+## Включить преследование игрока.
+@export var chase_player: bool = true
+## Сколько секунд отнимает при касании.
+@export var time_penalty: float = 5.0
+## Убивает игрока сразу (перезагрузка сцены).
+@export var kill_on_attack: bool = false
 
 var _player: Node2D = null
 @onready var _sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
