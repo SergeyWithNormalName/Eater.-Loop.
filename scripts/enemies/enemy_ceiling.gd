@@ -15,6 +15,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
+	_update_facing_from_velocity()
 	_try_attack_when_aligned()
 
 func _try_attack_when_aligned() -> void:

@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfc126iaf7qya"]
+[gd_scene load_steps=6 format=3 uid="uid://bpeloj4upnwn1"]
 
-[ext_resource type="Script" uid="uid://j9oclk03hs5b7" path="res://scripts/enemies/enemy_runner.gd" id="1_runner"]
+[ext_resource type="Script" uid="uid://cjulfg6ldfeso" path="res://scripts/enemies/enemy_runner.gd" id="1_runner"]
 [ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_runner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]

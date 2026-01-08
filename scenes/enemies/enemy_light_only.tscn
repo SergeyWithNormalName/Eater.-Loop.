@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvrpm72yftv5i"]
+[gd_scene load_steps=6 format=3 uid="uid://c8tigiycrqn8"]
 
-[ext_resource type="Script" uid="uid://owzgpk53o39lc" path="res://scripts/enemies/enemy_light_only.gd" id="1_light_only"]
+[ext_resource type="Script" uid="uid://dcrtxffc0inb1" path="res://scripts/enemies/enemy_light_only.gd" id="1_light_only"]
 [ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_light_only"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]

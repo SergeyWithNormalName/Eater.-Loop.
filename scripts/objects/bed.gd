@@ -5,6 +5,8 @@ extends Area2D
 
 @export_multiline var not_ate_message: String = "Нельзя спать: сначала поешь."
 @export_multiline var sleep_message_template: String = "Поспал. Цикл %d → %d"
+@export var require_bedroom_light_from_cycle: int = 4
+@export_multiline var no_bedroom_light_message: String = "Я боюсь засыпать в темноте..."
 
 var _player_in_range: Node = null
 var _is_sleeping: bool = false # Защита от повторного нажатия
@@ -38,6 +40,9 @@ func _try_sleep() -> void:
 	if not GameState.ate_this_cycle:
 		UIMessage.show_text(not_ate_message)
 		return
+	if GameState.cycle >= require_bedroom_light_from_cycle and not _is_bedroom_light_on():
+		UIMessage.show_text(no_bedroom_light_message)
+		return
 
 	_is_sleeping = true
 	if sleep_sfx != null:
@@ -67,3 +72,10 @@ func _try_sleep() -> void:
 		GameState.next_cycle()
 		GameState.emit_cycle_changed()
 	)
+
+func _is_bedroom_light_on() -> bool:
+	var lamps := get_tree().get_nodes_in_group("bedroom_lamp")
+	for lamp in lamps:
+		if lamp.has_method("is_light_active") and lamp.is_light_active():
+			return true
+	return false

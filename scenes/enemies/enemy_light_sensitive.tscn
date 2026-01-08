@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bs33t84rvfvih"]
+[gd_scene load_steps=6 format=3 uid="uid://t48uttt1m656"]
 
-[ext_resource type="Script" uid="uid://nndbi4jxojl34" path="res://scripts/enemies/enemy_light_sensitive.gd" id="1_light_sensitive"]
+[ext_resource type="Script" uid="uid://b14oqxr6ywytt" path="res://scripts/enemies/enemy_light_sensitive.gd" id="1_light_sensitive"]
 [ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_light_sensitive"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
@@ -34,6 +34,7 @@ texture = ExtResource("2_light_sensitive")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_8e3ao")
+disabled = true
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
