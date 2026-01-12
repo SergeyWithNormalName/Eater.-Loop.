@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="1_player_script"]
+[ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="2_step1"]
+[ext_resource type="Texture2D" uid="uid://ci6bx2jv3wsk4" path="res://textures/AndryWithFlashlight.png" id="3_andry_tex"]
+[ext_resource type="AudioStream" uid="uid://ci4rbsvq4bcc1" path="res://audio/player/steps/steps2.wav" id="4_step2"]
+[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scripts/player/flashlight.gd" id="5_flashlight_script"]
+[ext_resource type="AudioStream" uid="uid://d4hreh7krx7g5" path="res://audio/player/steps/steps3.wav" id="6_step3"]
+[ext_resource type="AudioStream" uid="uid://baerfbi0o2rxq" path="res://audio/player/steps/steps4.wav" id="7_step4"]
+[ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="8_flashlight_sound"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
+size = Vector2(101, 346)
+
+[sub_resource type="Gradient" id="Gradient_wnv1a"]
+offsets = PackedFloat32Array(0.019543974, 0.09771987, 0.6123778)
+colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.0011894, 1.0011894, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_srw7l"]
+gradient = SubResource("Gradient_wnv1a")
+width = 3000
+height = 910
+fill = 1
+fill_from = Vector2(0.182, 0.437)
+fill_to = Vector2(0.75, 0.237)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+light_mask = 2
+z_index = 2
+script = ExtResource("1_player_script")
+step_sounds = Array[AudioStream]([ExtResource("2_step1"), ExtResource("4_step2"), ExtResource("6_step3"), ExtResource("7_step4")])
+step_interval = 0.45
+step_volume = -24.0
+flashlight_sound = ExtResource("8_flashlight_sound")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5.249996, 83.238884)
+shape = SubResource("RectangleShape2D_vonw3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(3.8146973e-06, -26)
+offset = Vector2(0, -5)
+zoom = Vector2(1.32, 1.32)
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 2
+position = Vector2(-5.375, 83.37938)
+scale = Vector2(0.44800887, 0.44800875)
+texture = ExtResource("3_andry_tex")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-4.0000076, 63)
+rotation = 9.424778
+scale = Vector2(1.0089942, 1)
+texture = SubResource("GradientTexture2D_srw7l")
+offset = Vector2(-170.19318, 17.65319)
+script = ExtResource("5_flashlight_script")
+base_energy = 1.12
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2272.0
+offset_top = -92.0
+offset_right = 2272.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

@@ -13,11 +13,17 @@ extends CharacterBody2D
 ## Звук включения/выключения фонарика.
 @export var flashlight_sound: AudioStream   # Звук фонарика
 
+@export_group("Walk Animation")
+@export var walk_frames_path: String = "res://textures/andreys_animations/walking"
+@export var walk_frame_prefix: String = "ezgif-frame-"
+@export var walk_frame_count: int = 15
+@export var walk_frame_time: float = 0.08
+
 var keys: Dictionary = {}
 
 # Ссылки на узлы
 @onready var pivot: Node2D = get_node_or_null("Pivot") as Node2D
-@onready var sprite: Node2D = get_node_or_null("Sprite2D") as Node2D
+@onready var sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
 @onready var flashlight: PointLight2D = null
 
 var _facing_dir: float = 1.0
@@ -25,6 +31,13 @@ var _pivot_base_scale: Vector2 = Vector2.ONE
 var _sprite_base_scale: Vector2 = Vector2.ONE
 var _flashlight_base_scale: Vector2 = Vector2.ONE
 var _flashlight_base_offset: Vector2 = Vector2.ZERO
+var _idle_texture: Texture2D = null
+var _walk_frames: Array[Texture2D] = []
+var _walk_frame_index: int = 0
+var _walk_frame_timer: float = 0.0
+var _is_walking: bool = false
+var _sprite_anim_scale: Vector2 = Vector2.ONE
+var _sprite_under_pivot: bool = false
 
 # Переменные для аудио
 var _step_timer: float = 0.0
@@ -48,11 +61,17 @@ func _ready() -> void:
 		flashlight = pivot.get_node("PointLight2D") as PointLight2D
 	else:
 		flashlight = get_node_or_null("PointLight2D") as PointLight2D
+
+	if sprite == null and pivot and pivot.has_node("Sprite2D"):
+		sprite = pivot.get_node("Sprite2D") as Sprite2D
 	
 	if pivot:
 		_pivot_base_scale = pivot.scale
 	if sprite:
 		_sprite_base_scale = sprite.scale
+		_idle_texture = sprite.texture
+		_sprite_under_pivot = pivot != null and pivot.is_ancestor_of(sprite)
+		_load_walk_frames()
 	if flashlight:
 		_flashlight_base_scale = flashlight.scale
 		_flashlight_base_offset = flashlight.offset
@@ -85,6 +104,8 @@ func _physics_process(delta: float) -> void:
 		_facing_dir = sign(direction)
 		_apply_facing()
 
+	_update_walk_animation(delta, direction)
+
 func _play_step_sound() -> void:
 	if step_sounds.is_empty():
 		return
@@ -98,13 +119,70 @@ func _play_step_sound() -> void:
 func _apply_facing() -> void:
 	if pivot:
 		pivot.scale = Vector2(abs(_pivot_base_scale.x) * _facing_dir, _pivot_base_scale.y)
-		return
-	
 	if sprite:
-		sprite.scale = Vector2(abs(_sprite_base_scale.x) * _facing_dir, _sprite_base_scale.y)
+		var x_scale: float = absf(_sprite_base_scale.x) * _sprite_anim_scale.x
+		var y_scale: float = _sprite_base_scale.y * _sprite_anim_scale.y
+		if not _sprite_under_pivot:
+			x_scale *= _facing_dir
+		sprite.scale = Vector2(x_scale, y_scale)
 	if flashlight:
-		flashlight.scale = Vector2(abs(_flashlight_base_scale.x) * _facing_dir, _flashlight_base_scale.y)
-		flashlight.offset = _flashlight_base_offset
+		if pivot == null:
+			flashlight.scale = Vector2(abs(_flashlight_base_scale.x) * _facing_dir, _flashlight_base_scale.y)
+			flashlight.offset = _flashlight_base_offset
+
+func _load_walk_frames() -> void:
+	_walk_frames.clear()
+	if walk_frame_count <= 0:
+		return
+	for i in range(1, walk_frame_count + 1):
+		var path := "%s/%s%03d.png" % [walk_frames_path, walk_frame_prefix, i]
+		var frame := load(path) as Texture2D
+		if frame:
+			_walk_frames.append(frame)
+		else:
+			push_warning("Missing walk frame: %s" % path)
+
+func _calc_texture_scale(texture: Texture2D) -> Vector2:
+	if _idle_texture == null or texture == null:
+		return Vector2.ONE
+	var idle_size := _idle_texture.get_size()
+	var tex_size := texture.get_size()
+	if idle_size.y <= 0.0 or tex_size.y <= 0.0:
+		return Vector2.ONE
+	var ratio := idle_size.y / tex_size.y
+	return Vector2(ratio, ratio)
+
+func _set_sprite_texture(texture: Texture2D) -> void:
+	if sprite == null or texture == null:
+		return
+	sprite.texture = texture
+	_sprite_anim_scale = _calc_texture_scale(texture)
+	_apply_facing()
+
+func _update_walk_animation(delta: float, direction: float) -> void:
+	if sprite == null or _walk_frames.is_empty():
+		return
+	if walk_frame_time <= 0.0:
+		return
+	var is_moving := direction != 0.0
+	if is_moving:
+		if not _is_walking:
+			_is_walking = true
+			_walk_frame_index = 0
+			_walk_frame_timer = 0.0
+			_set_sprite_texture(_walk_frames[_walk_frame_index])
+		_walk_frame_timer += delta
+		while _walk_frame_timer >= walk_frame_time:
+			_walk_frame_timer -= walk_frame_time
+			_walk_frame_index = (_walk_frame_index + 1) % _walk_frames.size()
+			_set_sprite_texture(_walk_frames[_walk_frame_index])
+	else:
+		if _is_walking:
+			_is_walking = false
+			_walk_frame_timer = 0.0
+			_walk_frame_index = 0
+			if _idle_texture:
+				_set_sprite_texture(_idle_texture)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_flashlight"):
