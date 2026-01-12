@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3 uid="uid://cmxtuvlqs321l"]
 
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="1_player_script"]
 [ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="2_step1"]
@@ -29,9 +29,12 @@ light_mask = 2
 z_index = 2
 script = ExtResource("1_player_script")
 step_sounds = Array[AudioStream]([ExtResource("2_step1"), ExtResource("4_step2"), ExtResource("6_step3"), ExtResource("7_step4")])
-step_interval = 0.45
 step_volume = -24.0
 flashlight_sound = ExtResource("8_flashlight_sound")
+walk_frame_count = 16
+walk_frame_time = 0.2
+walk_loop_start_index = 5
+step_frame_indices = Array[int]([7, 10, 13, 16])
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

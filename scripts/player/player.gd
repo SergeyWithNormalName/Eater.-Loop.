@@ -5,11 +5,11 @@ extends CharacterBody2D
 
 @export_group("Audio Settings")
 ## Набор звуков шагов.
-@export var step_sounds: Array[AudioStream] # Звуки шагов
+@export var step_sounds: Array[AudioStream] = []
 ## Громкость шагов в дБ.
-@export var step_volume: float = -10.0      # Громкость шагов в дБ
+@export var step_volume: float = -10.0
 ## Звук включения/выключения фонарика.
-@export var flashlight_sound: AudioStream   # Звук фонарика
+@export var flashlight_sound: AudioStream
 
 @export_group("Walk Animation")
 ## Папка с кадрами ходьбы.
@@ -24,7 +24,8 @@ extends CharacterBody2D
 @export var walk_loop_start_index: int = 1
 ## Конечный кадр цикла (1-based), -1 = последний кадр.
 @export var walk_loop_end_index: int = -1
-## Кадры (1-based), на которых звучат шаги.
+## Номера кадров (начиная с 1), на которых должен звучать шаг.
+## Например: [2, 9] означает, что звук будет на 2-м и 9-м кадре анимации.
 @export var step_frame_indices: Array[int] = [2, 9]
 
 var keys: Dictionary = {}
@@ -34,6 +35,7 @@ var keys: Dictionary = {}
 @onready var sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
 @onready var flashlight: PointLight2D = null
 
+# Внутренние переменные
 var _facing_dir: float = 1.0
 var _pivot_base_scale: Vector2 = Vector2.ONE
 var _sprite_base_scale: Vector2 = Vector2.ONE
@@ -48,24 +50,27 @@ var _sprite_anim_scale: Vector2 = Vector2.ONE
 var _sprite_under_pivot: bool = false
 var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
-var _step_frame_lookup: Dictionary = {}
+var _step_frame_lookup: Dictionary = {} # Словарь для быстрого поиска кадров шага (0-based)
 
 # Переменные для аудио
 var _step_player: AudioStreamPlayer 
 var _flashlight_player: AudioStreamPlayer
 
 func _ready() -> void:
-	if not is_in_group("player"):
-		add_to_group("player")
+	add_to_group("player")
 	
-	# --- ИЗМЕНЕНИЕ: Создаем два отдельных аудио-плеера ---
+	# --- Настройка аудио ---
 	_step_player = AudioStreamPlayer.new()
+	# Важно: max_polyphony позволяет проигрывать несколько звуков шагов одновременно,
+	# не обрывая предыдущий, если анимация быстрая.
+	_step_player.max_polyphony = 4 
 	add_child(_step_player)
 	
 	_flashlight_player = AudioStreamPlayer.new()
 	add_child(_flashlight_player)
-	# -----------------------------------------------------
+	# -----------------------
 	
+	# Инициализация узлов
 	if pivot and pivot.has_node("PointLight2D"):
 		flashlight = pivot.get_node("PointLight2D") as PointLight2D
 	else:
@@ -76,22 +81,24 @@ func _ready() -> void:
 	
 	if pivot:
 		_pivot_base_scale = pivot.scale
+	
 	if sprite:
 		_sprite_base_scale = sprite.scale
 		_idle_texture = sprite.texture
 		_sprite_under_pivot = pivot != null and pivot.is_ancestor_of(sprite)
-		_load_walk_frames()
+		_load_walk_frames() # Загружаем кадры и настраиваем звуки
+	
 	if flashlight:
 		_flashlight_base_scale = flashlight.scale
 		_flashlight_base_offset = flashlight.offset
-		
-		# --- ИЗМЕНЕНИЕ: Выключаем фонарик при старте ---
 		flashlight.enabled = false 
 	
 	_apply_facing()
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
+	
+	# Небольшая мертвая зона для аналоговых стиков
 	if abs(direction) < 0.1:
 		direction = 0.0
 	
@@ -99,21 +106,22 @@ func _physics_process(delta: float) -> void:
 	velocity.y = 0
 	move_and_slide()
 
-	# ЛОГИКА ПОВОРОТА
+	# Логика поворота персонажа
 	if direction != 0:
 		_facing_dir = sign(direction)
 		_apply_facing()
 
+	# Обновление анимации
 	_update_walk_animation(delta, direction)
 
 func _play_step_sound() -> void:
 	if step_sounds.is_empty():
 		return
 
-	# Используем отдельный плеер для шагов
 	_step_player.stream = step_sounds.pick_random()
 	_step_player.volume_db = step_volume
-	_step_player.pitch_scale = randf_range(0.9, 1.1)
+	# Небольшая вариация высоты тона для реализма
+	_step_player.pitch_scale = randf_range(0.95, 1.05)
 	_step_player.play()
 
 func _apply_facing() -> void:
@@ -125,22 +133,24 @@ func _apply_facing() -> void:
 		if not _sprite_under_pivot:
 			x_scale *= _facing_dir
 		sprite.scale = Vector2(x_scale, y_scale)
-	if flashlight:
-		if pivot == null:
-			flashlight.scale = Vector2(abs(_flashlight_base_scale.x) * _facing_dir, _flashlight_base_scale.y)
-			flashlight.offset = _flashlight_base_offset
+	if flashlight and pivot == null:
+		flashlight.scale = Vector2(abs(_flashlight_base_scale.x) * _facing_dir, _flashlight_base_scale.y)
+		flashlight.offset = _flashlight_base_offset
 
 func _load_walk_frames() -> void:
 	_walk_frames.clear()
 	if walk_frame_count <= 0:
 		return
+		
 	for i in range(1, walk_frame_count + 1):
+		# Формируем путь: ...prefix001.png, ...prefix002.png и т.д.
 		var path := "%s/%s%03d.png" % [walk_frames_path, walk_frame_prefix, i]
 		var frame := load(path) as Texture2D
 		if frame:
 			_walk_frames.append(frame)
 		else:
-			push_warning("Missing walk frame: %s" % path)
+			push_warning("Игрок: Отсутствует кадр ходьбы: %s" % path)
+			
 	_update_walk_loop_bounds()
 	_update_step_frame_lookup()
 
@@ -150,26 +160,35 @@ func _update_walk_loop_bounds() -> void:
 	if _walk_frames.is_empty():
 		return
 	var max_index := _walk_frames.size() - 1
-	_walk_loop_start = clampi(walk_loop_start_index, 0, max_index)
-	var end_index := walk_loop_end_index
-	if end_index < 0:
-		end_index = max_index
-	_walk_loop_end = clampi(end_index, _walk_loop_start, max_index)
+	# Превращаем 1-based index из инспектора в 0-based index массива
+	_walk_loop_start = clampi(walk_loop_start_index - 1, 0, max_index)
+	
+	var end_index_req := walk_loop_end_index
+	if end_index_req < 0: # Если -1, то до конца
+		_walk_loop_end = max_index
+	else:
+		_walk_loop_end = clampi(end_index_req - 1, _walk_loop_start, max_index)
 
 func _update_step_frame_lookup() -> void:
 	_step_frame_lookup.clear()
 	if _walk_frames.is_empty():
 		return
+		
+	# Преобразуем список кадров шагов в быстрый словарь
 	for index in step_frame_indices:
 		if index <= 0:
 			continue
-		var frame_index := index - 1
-		if frame_index >= 0 and frame_index < _walk_frames.size():
-			_step_frame_lookup[frame_index] = true
+		# Инспектор: 1 (первый кадр). Массив: 0.
+		var frame_index_0_based := index - 1
+		
+		# Проверяем, существует ли такой кадр вообще
+		if frame_index_0_based >= 0 and frame_index_0_based < _walk_frames.size():
+			_step_frame_lookup[frame_index_0_based] = true
+		else:
+			push_warning("Игрок: Указан кадр шага %d, но всего кадров %d" % [index, _walk_frames.size()])
 
 func _maybe_play_step_for_frame(frame_index: int) -> void:
-	if _step_frame_lookup.is_empty():
-		return
+	# Если текущий индекс кадра (0-based) есть в нашем "списке шагов", играем звук
 	if _step_frame_lookup.has(frame_index):
 		_play_step_sound()
 
@@ -197,28 +216,44 @@ func _update_walk_animation(delta: float, direction: float) -> void:
 		return
 	if _walk_loop_end < 0:
 		return
+
 	var is_moving := direction != 0.0
+	
 	if is_moving:
 		if not _is_walking:
+			# --- НАЧАЛО ДВИЖЕНИЯ ---
 			_is_walking = true
 			_walk_frame_index = _walk_loop_start
 			_walk_frame_timer = 0.0
+			
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
+			# Проверяем звук сразу при постановке первого кадра
 			_maybe_play_step_for_frame(_walk_frame_index)
+			
+		# Накапливаем время
 		_walk_frame_timer += delta
+		
+		# Цикл while гарантирует, что мы не пропустим кадры при низком FPS
 		while _walk_frame_timer >= walk_frame_time:
 			_walk_frame_timer -= walk_frame_time
+			
+			# Переход к следующему кадру
 			if _walk_frame_index >= _walk_loop_end:
 				_walk_frame_index = _walk_loop_start
 			else:
 				_walk_frame_index += 1
+			
+			# Обновляем спрайт
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
+			# ПРОВЕРЯЕМ ЗВУК ДЛЯ НОВОГО КАДРА
 			_maybe_play_step_for_frame(_walk_frame_index)
+			
 	else:
 		if _is_walking:
+			# --- ОСТАНОВКА ---
 			_is_walking = false
 			_walk_frame_timer = 0.0
-			_walk_frame_index = _walk_loop_start
+			_walk_frame_index = _walk_loop_start # Сброс на начало (или можно на idle)
 			if _idle_texture:
 				_set_sprite_texture(_idle_texture)
 
@@ -227,10 +262,9 @@ func _input(event: InputEvent) -> void:
 		if flashlight:
 			flashlight.enabled = !flashlight.enabled
 			
-			# Используем отдельный плеер для фонарика
 			if flashlight_sound:
 				_flashlight_player.stream = flashlight_sound
-				_flashlight_player.volume_db = 0.0 # Громкость фонарика стандартная
+				_flashlight_player.volume_db = 0.0
 				_flashlight_player.pitch_scale = 1.0
 				_flashlight_player.play()
 
@@ -245,4 +279,5 @@ func has_key(key_id: String) -> bool:
 
 func remove_key(key_id: String) -> void:
 	if keys.has(key_id): keys.erase(key_id)
+	
 	

@@ -201,7 +201,9 @@
 │   │       ├── ezgif-frame-014.png
 │   │       ├── ezgif-frame-014.png.import
 │   │       ├── ezgif-frame-015.png
-│   │       └── ezgif-frame-015.png.import
+│   │       ├── ezgif-frame-015.png.import
+│   │       ├── ezgif-frame-016.png
+│   │       └── ezgif-frame-016.png.import
 │   ├── furniture
 │   │   ├── allrooms
 │   │   │   ├── Balka.png
@@ -393,4 +395,4 @@
 ├── project.godot
 └── structure.txt
 
-46 directories, 348 files
+46 directories, 350 files
