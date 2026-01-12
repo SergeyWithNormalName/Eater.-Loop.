@@ -1,17 +1,8 @@
-[gd_scene load_steps=98 format=3 uid="uid://bsecib4k5glms"]
-
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_plrscn"]
+[gd_scene load_steps=87 format=3 uid="uid://bsecib4k5glms"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_mo3bn"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_bhnwp"]
-[ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="3_tv4qg"]
-[ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="4_pduox"]
-[ext_resource type="AudioStream" uid="uid://ci4rbsvq4bcc1" path="res://audio/player/steps/steps2.wav" id="5_nts3q"]
-[ext_resource type="AudioStream" uid="uid://d4hreh7krx7g5" path="res://audio/player/steps/steps3.wav" id="6_1h3wv"]
-[ext_resource type="AudioStream" uid="uid://baerfbi0o2rxq" path="res://audio/player/steps/steps4.wav" id="7_frr38"]
-[ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="8_a8lxs"]
-[ext_resource type="Texture2D" uid="uid://ci6bx2jv3wsk4" path="res://textures/AndryWithFlashlight.png" id="9_u2ej6"]
-[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scripts/player/flashlight.gd" id="10_5agfs"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="11_c2h4a"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="12_7q3i5"]
 [ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://audio/furniture/door/door_open1.wav" id="13_3q35y"]
@@ -82,21 +73,6 @@
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="80_i8eaf"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="81_hrs8a"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_7w84o"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
-size = Vector2(101, 346)
-
-[sub_resource type="Gradient" id="Gradient_wnv1a"]
-offsets = PackedFloat32Array(0.019543974, 0.09771987, 0.6123778)
-colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.0011894, 1.0011894, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_srw7l"]
-gradient = SubResource("Gradient_wnv1a")
-width = 3000
-height = 910
-fill = 1
-fill_from = Vector2(0.182, 0.437)
-fill_to = Vector2(0.75, 0.237)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -170,6 +146,7 @@ texture = ExtResource("2_bhnwp")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2366, 96)
+step_frame_indices = Array[int]([10, 11, 12])
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2

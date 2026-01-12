@@ -6,18 +6,26 @@ extends CharacterBody2D
 @export_group("Audio Settings")
 ## Набор звуков шагов.
 @export var step_sounds: Array[AudioStream] # Звуки шагов
-## Интервал между шагами.
-@export var step_interval: float = 0.35     # Частота звука шагов
 ## Громкость шагов в дБ.
 @export var step_volume: float = -10.0      # Громкость шагов в дБ
 ## Звук включения/выключения фонарика.
 @export var flashlight_sound: AudioStream   # Звук фонарика
 
 @export_group("Walk Animation")
+## Папка с кадрами ходьбы.
 @export var walk_frames_path: String = "res://textures/andreys_animations/walking"
+## Префикс имени кадра (например, ezgif-frame-001.png).
 @export var walk_frame_prefix: String = "ezgif-frame-"
+## Количество кадров в последовательности.
 @export var walk_frame_count: int = 15
+## Длительность кадра в секундах.
 @export var walk_frame_time: float = 0.08
+## Стартовый кадр цикла (1-based).
+@export var walk_loop_start_index: int = 1
+## Конечный кадр цикла (1-based), -1 = последний кадр.
+@export var walk_loop_end_index: int = -1
+## Кадры (1-based), на которых звучат шаги.
+@export var step_frame_indices: Array[int] = [2, 9]
 
 var keys: Dictionary = {}
 
@@ -38,10 +46,11 @@ var _walk_frame_timer: float = 0.0
 var _is_walking: bool = false
 var _sprite_anim_scale: Vector2 = Vector2.ONE
 var _sprite_under_pivot: bool = false
+var _walk_loop_start: int = 0
+var _walk_loop_end: int = 0
+var _step_frame_lookup: Dictionary = {}
 
 # Переменные для аудио
-var _step_timer: float = 0.0
-# --- ИЗМЕНЕНИЕ: Теперь два отдельных плеера ---
 var _step_player: AudioStreamPlayer 
 var _flashlight_player: AudioStreamPlayer
 
@@ -90,15 +99,6 @@ func _physics_process(delta: float) -> void:
 	velocity.y = 0
 	move_and_slide()
 
-	# ЛОГИКА ШАГОВ
-	if direction != 0:
-		_step_timer -= delta
-		if _step_timer <= 0:
-			_play_step_sound()
-			_step_timer = step_interval
-	else:
-		_step_timer = 0.05
-
 	# ЛОГИКА ПОВОРОТА
 	if direction != 0:
 		_facing_dir = sign(direction)
@@ -141,6 +141,37 @@ func _load_walk_frames() -> void:
 			_walk_frames.append(frame)
 		else:
 			push_warning("Missing walk frame: %s" % path)
+	_update_walk_loop_bounds()
+	_update_step_frame_lookup()
+
+func _update_walk_loop_bounds() -> void:
+	_walk_loop_start = 0
+	_walk_loop_end = -1
+	if _walk_frames.is_empty():
+		return
+	var max_index := _walk_frames.size() - 1
+	_walk_loop_start = clampi(walk_loop_start_index, 0, max_index)
+	var end_index := walk_loop_end_index
+	if end_index < 0:
+		end_index = max_index
+	_walk_loop_end = clampi(end_index, _walk_loop_start, max_index)
+
+func _update_step_frame_lookup() -> void:
+	_step_frame_lookup.clear()
+	if _walk_frames.is_empty():
+		return
+	for index in step_frame_indices:
+		if index <= 0:
+			continue
+		var frame_index := index - 1
+		if frame_index >= 0 and frame_index < _walk_frames.size():
+			_step_frame_lookup[frame_index] = true
+
+func _maybe_play_step_for_frame(frame_index: int) -> void:
+	if _step_frame_lookup.is_empty():
+		return
+	if _step_frame_lookup.has(frame_index):
+		_play_step_sound()
 
 func _calc_texture_scale(texture: Texture2D) -> Vector2:
 	if _idle_texture == null or texture == null:
@@ -164,23 +195,30 @@ func _update_walk_animation(delta: float, direction: float) -> void:
 		return
 	if walk_frame_time <= 0.0:
 		return
+	if _walk_loop_end < 0:
+		return
 	var is_moving := direction != 0.0
 	if is_moving:
 		if not _is_walking:
 			_is_walking = true
-			_walk_frame_index = 0
+			_walk_frame_index = _walk_loop_start
 			_walk_frame_timer = 0.0
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
+			_maybe_play_step_for_frame(_walk_frame_index)
 		_walk_frame_timer += delta
 		while _walk_frame_timer >= walk_frame_time:
 			_walk_frame_timer -= walk_frame_time
-			_walk_frame_index = (_walk_frame_index + 1) % _walk_frames.size()
+			if _walk_frame_index >= _walk_loop_end:
+				_walk_frame_index = _walk_loop_start
+			else:
+				_walk_frame_index += 1
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
+			_maybe_play_step_for_frame(_walk_frame_index)
 	else:
 		if _is_walking:
 			_is_walking = false
 			_walk_frame_timer = 0.0
-			_walk_frame_index = 0
+			_walk_frame_index = _walk_loop_start
 			if _idle_texture:
 				_set_sprite_texture(_idle_texture)
 
