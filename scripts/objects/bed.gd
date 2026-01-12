@@ -21,6 +21,7 @@ var _sfx_player: AudioStreamPlayer
 func _ready() -> void:
 	input_pickable = false
 	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.bus = "SFX"
 	add_child(_sfx_player)
 	_sfx_player.stream = sleep_sfx
 	if GameState.pending_sleep_spawn:

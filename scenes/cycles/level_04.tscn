@@ -1,17 +1,8 @@
-[gd_scene load_steps=110 format=3 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=103 format=3 uid="uid://0xf1f3qbgpow"]
 
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_plrscn"]
-
+[ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_3gkos"]
-[ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="3_ek680"]
-[ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="4_ji18s"]
-[ext_resource type="AudioStream" uid="uid://ci4rbsvq4bcc1" path="res://audio/player/steps/steps2.wav" id="5_modav"]
-[ext_resource type="AudioStream" uid="uid://d4hreh7krx7g5" path="res://audio/player/steps/steps3.wav" id="6_w71je"]
-[ext_resource type="AudioStream" uid="uid://baerfbi0o2rxq" path="res://audio/player/steps/steps4.wav" id="7_pvwmj"]
-[ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="8_7y3jx"]
-[ext_resource type="Texture2D" uid="uid://ci6bx2jv3wsk4" path="res://textures/AndryWithFlashlight.png" id="9_tcw4j"]
-[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://scripts/player/flashlight.gd" id="10_v5fy7"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="11_xykha"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="12_gphoc"]
 [ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://audio/furniture/door/door_open1.wav" id="13_psyox"]
@@ -88,24 +79,14 @@
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://audio/MusicEtc/InsideAmbient.wav" id="83_ek680"]
 [ext_resource type="AudioStream" uid="uid://noqmowvr33dv" path="res://audio/furniture/ScaryStepsAndDoor.mp3" id="83_ji18s"]
 [ext_resource type="Texture2D" uid="uid://c8ivdj4vh8kfh" path="res://textures/furniture/allrooms/Door_Opened_1.png" id="84_7y3jx"]
+[ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://scenes/objects/lamp.tscn" id="84_ek680"]
 [ext_resource type="Texture2D" uid="uid://cnk05aysq31fk" path="res://textures/walls_floors/decals/HoleInWall2.png" id="85_w71je"]
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://textures/walls_floors/decals/HoleInWall4.png" id="86_pvwmj"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://textures/walls_floors/decals/HoleInWall1.png" id="87_7y3jx"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://scripts/tehnical/level_music.gd" id="88_lvl_music"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
-size = Vector2(101, 346)
-
-[sub_resource type="Gradient" id="Gradient_wnv1a"]
-offsets = PackedFloat32Array(0.019543974, 0.09771987, 0.6123778)
-colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.0011894, 1.0011894, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_srw7l"]
-gradient = SubResource("Gradient_wnv1a")
-width = 3000
-height = 910
-fill = 1
-fill_from = Vector2(0.182, 0.437)
-fill_to = Vector2(0.75, 0.237)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_music"]
+size = Vector2(1775, 880)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -169,6 +150,9 @@ metadata/_custom_type_script = "uid://b2ugbi3sjr8u1"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3gkos"]
 size = Vector2(240, 426)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ek680"]
+size = Vector2(104, 98)
+
 [node name="Level3" type="Node2D"]
 position = Vector2(16, 0)
 
@@ -195,7 +179,21 @@ scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("2_3gkos")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
-position = Vector2(-2366, 96)
+position = Vector2(-2367, 96)
+
+[node name="BedroomMusicTrigger" type="Area2D" parent="."]
+position = Vector2(-1913, 83)
+script = ExtResource("82_vcxip")
+affect_on_exit = true
+one_shot = false
+music_enabled = true
+music_on_enter = 2
+music_on_exit = 3
+music_fade_time = 1.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomMusicTrigger"]
+position = Vector2(-48.5, 0)
+shape = SubResource("RectangleShape2D_bedroom_music")
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2
@@ -378,6 +376,7 @@ script = ExtResource("18_0eq3o")
 next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
+no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -1341,11 +1340,11 @@ region_rect = Rect2(0, 0, 4500, 550)
 
 [node name="Door(To Bedroom)2" type="Area2D" parent="."]
 z_index = -2
-position = Vector2(8434.125, 2482.8599)
+position = Vector2(8434, 2483)
 script = ExtResource("11_xykha")
 is_locked = true
 locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = NodePath("../Door(In Bedroom)/Marker2D")
+target_marker = NodePath("../Door(In Bedroom)2")
 sfx_locked = ExtResource("12_gphoc")
 sfx_open = ExtResource("13_psyox")
 metadata/_edit_group_ = true
@@ -2185,8 +2184,278 @@ scale = Vector2(0.04193877, 0.052643225)
 skew = 0.08726646
 texture = ExtResource("82_abdbj")
 
+[node name="WallBack_Bedroom2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(-1913, 2635.8599)
+texture = ExtResource("1_vcxip")
+region_enabled = true
+region_rect = Rect2(0, 0, 1500, 550)
+
+[node name="Window4" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(-2360, 2604.8604)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("2_3gkos")
+
+[node name="BedroomMusicTrigger2" type="Area2D" parent="."]
+position = Vector2(-1913, 2699.8599)
+script = ExtResource("82_vcxip")
+affect_on_exit = true
+one_shot = false
+music_enabled = true
+music_on_enter = 2
+music_on_exit = 3
+music_fade_time = 1.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomMusicTrigger2"]
+position = Vector2(-48.5, 0)
+shape = SubResource("RectangleShape2D_bedroom_music")
+
+[node name="Door(In Bedroom)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(-1581, 2699.8599)
+script = ExtResource("11_xykha")
+target_marker = NodePath("../Door(To Bedroom)/Marker2D")
+sfx_locked = ExtResource("12_gphoc")
+sfx_open = ExtResource("13_psyox")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bedroom)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(In Bedroom)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Bedroom)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("14_qxeap")
+
+[node name="Bed2" type="Area2D" parent="."]
+z_index = -1
+position = Vector2(-2420, 2842.8599)
+script = ExtResource("18_0eq3o")
+next_level_path = "res://scenes/cycles/level_05.tscn"
+not_ate_message = "Не могу уснуть, мне нужно поесть"
+sleep_message_template = ""
+no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed2"]
+position = Vector2(-0.20233154, -0.49996948)
+shape = SubResource("RectangleShape2D_lj6ne")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bed2"]
+position = Vector2(-1.0320587, 0.2812729)
+scale = Vector2(0.5486593, 0.54865927)
+texture = ExtResource("19_52cbj")
+
+[node name="OnOffer10" type="Sprite2D" parent="."]
+position = Vector2(-1735.2787, 2645.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("31_8fhpb")
+
+[node name="Rozetka2" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-2467.875, 2789.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("35_e2yy0")
+
+[node name="FloorBedroom2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(-1913.0001, 2942.8599)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("47_01krp")
+region_enabled = true
+region_rect = Rect2(0, 0, 6840, 500)
+
+[node name="Comode3" type="Sprite2D" parent="."]
+position = Vector2(-1323.5944, 2805.8599)
+scale = Vector2(0.32872525, 0.32872525)
+texture = ExtResource("52_kcr60")
+
+[node name="Comode4" type="Sprite2D" parent="."]
+position = Vector2(-1857.2787, 2806.8599)
+scale = Vector2(0.3389674, 0.33896744)
+texture = ExtResource("53_whw54")
+
+[node name="Tumbochka3" type="Sprite2D" parent="."]
+position = Vector2(-2112.125, 2854.8599)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("54_j05h0")
+
+[node name="Clock2" type="Sprite2D" parent="."]
+position = Vector2(-2124, 2766.8604)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("55_0h60q")
+
+[node name="WorldClock3" parent="." instance=ExtResource("29_klwe0")]
+position = Vector2(-2141, 2755.8604)
+scale = Vector2(0.36, 0.36)
+start_game_time = "0:47"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="WorldClock3"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="SteamDeck2" type="Sprite2D" parent="."]
+position = Vector2(-1258.5944, 2672.8198)
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("56_llelx")
+
+[node name="NotebookOff2" type="Sprite2D" parent="."]
+position = Vector2(-1839, 2702.8599)
+scale = Vector2(0.24179614, 0.24179614)
+texture = ExtResource("57_nfjqj")
+
+[node name="Plakat3" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-2091, 2653.8599)
+scale = Vector2(0.18294117, 0.18294117)
+texture = ExtResource("58_cunim")
+
+[node name="Plakat4" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(-1353, 2570.8599)
+scale = Vector2(0.1879456, 0.1879456)
+texture = ExtResource("59_n1vgj")
+
+[node name="WallEnd15" type="StaticBody2D" parent="."]
+position = Vector2(-1151.5, 2680.7207)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd15"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd15"]
+light_mask = 2
+texture = ExtResource("61_bd04p")
+
+[node name="WallRoof41" type="StaticBody2D" parent="."]
+position = Vector2(-1450.9999, 2341.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof41"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof41"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("61_bd04p")
+
+[node name="WallRoof42" type="StaticBody2D" parent="."]
+position = Vector2(-2252, 2341.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof42"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof42"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("61_bd04p")
+
+[node name="WallRoof43" type="StaticBody2D" parent="."]
+position = Vector2(-1450.9999, 3015.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof43"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof43"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("61_bd04p")
+
+[node name="WallRoof44" type="StaticBody2D" parent="."]
+position = Vector2(-2252, 3015.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof44"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof44"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("61_bd04p")
+
+[node name="WallEnd16" type="StaticBody2D" parent="."]
+position = Vector2(-2680, 2680.7207)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd16"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd16"]
+light_mask = 2
+texture = ExtResource("61_bd04p")
+
+[node name="ChairBedroom2" type="Sprite2D" parent="."]
+position = Vector2(-1840.9999, 2838.8604)
+scale = Vector2(0.29, 0.29)
+texture = ExtResource("64_gwepj")
+
+[node name="OpenShtora4" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-2362, 2670.8599)
+scale = Vector2(0.59296346, 0.59296346)
+texture = ExtResource("65_rtyv8")
+
+[node name="Sweets3" type="Sprite2D" parent="."]
+position = Vector2(-1959.9789, 2731.4019)
+rotation = -0.12217305
+scale = Vector2(0.02, 0.02)
+skew = -0.5637413
+texture = ExtResource("68_4s72e")
+metadata/_edit_group_ = true
+
+[node name="Sweets4" type="Sprite2D" parent="."]
+position = Vector2(-1972.4828, 2731.2456)
+rotation = -0.12217305
+scale = Vector2(0.02, 0.02)
+skew = -0.5637413
+texture = ExtResource("68_4s72e")
+metadata/_edit_group_ = true
+
+[node name="Powerbank3" type="Sprite2D" parent="."]
+position = Vector2(-1310.9999, 2656.8604)
+rotation = -0.061086524
+scale = Vector2(0.23, 0.26)
+skew = 0.10646509
+texture = ExtResource("79_08wxe")
+
+[node name="UsedFood2" type="Sprite2D" parent="."]
+position = Vector2(-1754.9999, 2724.8599)
+rotation = -0.061086524
+scale = Vector2(0.04193877, 0.052643225)
+skew = 0.08726646
+texture = ExtResource("82_abdbj")
+
 [node name="Trigger" type="Area2D" parent="."]
-position = Vector2(6843, 2516)
+position = Vector2(6843, 2515)
 script = ExtResource("82_vcxip")
 affect_on_exit = true
 changes = Array[ExtResource("83_3gkos")]([SubResource("Resource_ek680"), SubResource("Resource_tcw4j")])
@@ -2200,7 +2469,8 @@ shape = SubResource("RectangleShape2D_3gkos")
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("83_ek680")
 volume_db = -17.0
-autoplay = true
+script = ExtResource("88_lvl_music")
+fade_time = 1.2
 
 [node name="HoleInWall2" type="Sprite2D" parent="."]
 z_index = -3
@@ -2237,6 +2507,16 @@ position = Vector2(6964.809, 2276.1174)
 rotation = -0.16435091
 scale = Vector2(0.28508687, 0.28508684)
 texture = ExtResource("87_7y3jx")
+
+[node name="Lamp" parent="." instance=ExtResource("84_ek680")]
+z_index = -1
+position = Vector2(-1899, 2402)
+interact_area_node = NodePath("CollisionShape2D2")
+is_bedroom = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Lamp"]
+position = Vector2(165, 243)
+shape = SubResource("RectangleShape2D_ek680")
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]
@@ -2278,5 +2558,9 @@ texture = ExtResource("87_7y3jx")
 [connection signal="body_exited" from="Door(In Bathroom)2" to="Door(In Bathroom)2" method="_on_body_exited"]
 [connection signal="body_entered" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(In Bedroom)2" to="Door(In Bedroom)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(In Bedroom)2" to="Door(In Bedroom)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Bed2" to="Bed2" method="_on_body_entered"]
+[connection signal="body_exited" from="Bed2" to="Bed2" method="_on_body_exited"]
 [connection signal="body_entered" from="Trigger" to="Trigger" method="_on_body_entered"]
 [connection signal="body_exited" from="Trigger" to="Trigger" method="_on_body_exited"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://c3s82ewvaot7t"
+run/main_scene="uid://sdmle35lsdig"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,9 @@ config/icon="res://icon.svg"
 GameState="*res://scripts/tehnical/game_state.gd"
 UIMessage="*res://scripts/tehnical/ui_message.gd"
 GameDirector="*res://scripts/tehnical/game_director.gd"
+SettingsManager="*res://scripts/tehnical/settings_manager.gd"
+MusicManager="*res://scripts/tehnical/music_manager.gd"
+PauseManager="*res://scripts/tehnical/pause_manager.gd"
 
 [display]
 
@@ -109,4 +112,5 @@ lamp_switch={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)

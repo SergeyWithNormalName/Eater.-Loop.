@@ -32,7 +32,26 @@ extends Area2D
 ## Громкость звука в дБ.
 @export var sfx_volume_db: float = 0.0
 
+@export_group("Музыка")
+## Включить управление музыкой через триггер.
+@export var music_enabled: bool = false
+## Действие с музыкой при входе.
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить") var music_on_enter: int = 0
+## Действие с музыкой при выходе.
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить") var music_on_exit: int = 0
+## Музыка для подмены.
+@export var music_stream: AudioStream
+## Громкость музыки (дБ).
+@export_range(-80.0, 6.0, 0.1) var music_volume_db: float = 0.0
+## Длительность плавного перехода (сек).
+@export_range(0.0, 10.0, 0.1) var music_fade_time: float = 1.0
+
 var _has_fired: bool = false
+
+const MUSIC_ACTION_NONE := 0
+const MUSIC_ACTION_REPLACE := 1
+const MUSIC_ACTION_DUCK := 2
+const MUSIC_ACTION_RESTORE := 3
 
 func _ready() -> void:
 	input_pickable = false
@@ -48,7 +67,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if not body.is_in_group(player_group):
 		return
-	_apply()
+	_apply(false)
 
 func _on_body_exited(body: Node) -> void:
 	if not affect_on_exit:
@@ -57,9 +76,9 @@ func _on_body_exited(body: Node) -> void:
 		return
 	if not body.is_in_group(player_group):
 		return
-	_apply()
+	_apply(true)
 
-func _apply() -> void:
+func _apply(is_exit: bool) -> void:
 	if changes.size() > 0:
 		for change in changes:
 			_apply_change(change)
@@ -74,6 +93,7 @@ func _apply() -> void:
 				continue
 			node.set(property_name, value)
 	_play_sound()
+	_apply_music(is_exit)
 	_has_fired = true
 
 func _play_sound() -> void:
@@ -81,6 +101,7 @@ func _play_sound() -> void:
 		return
 	var play := func() -> void:
 		var player := AudioStreamPlayer2D.new()
+		player.bus = "SFX"
 		player.stream = sfx_stream
 		player.volume_db = sfx_volume_db
 		player.global_position = global_position if sfx_use_trigger_position else sfx_position
@@ -91,6 +112,22 @@ func _play_sound() -> void:
 		get_tree().create_timer(sfx_delay).timeout.connect(play)
 	else:
 		play.call()
+
+func _apply_music(is_exit: bool) -> void:
+	if not music_enabled:
+		return
+	if MusicManager == null:
+		return
+	var action: int = music_on_exit if is_exit else music_on_enter
+	match action:
+		MUSIC_ACTION_REPLACE:
+			MusicManager.play_music(music_stream, music_fade_time, music_volume_db)
+		MUSIC_ACTION_DUCK:
+			MusicManager.duck_music(music_fade_time)
+		MUSIC_ACTION_RESTORE:
+			MusicManager.restore_music_volume(music_fade_time)
+		_:
+			return
 
 func _apply_change(change: PropertyChange) -> void:
 	if change == null:

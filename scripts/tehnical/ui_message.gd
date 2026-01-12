@@ -115,12 +115,14 @@ func fade_in(duration: float = 0.5) -> void:
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE #
 
 func change_scene_with_fade(new_scene: PackedScene, duration: float = 0.5) -> void:
+	_track_scene(new_scene)
 	await fade_out(duration) #
 	get_tree().change_scene_to_packed(new_scene) #
 	await get_tree().process_frame #
 	await fade_in(duration) #
 
 func change_scene_with_fade_delay(new_scene: PackedScene, duration: float = 0.5, post_change_delay: float = 1.0, on_dark: Callable = Callable()) -> void:
+	_track_scene(new_scene)
 	await fade_out(duration) #
 	if on_dark.is_valid():
 		on_dark.call()
@@ -129,5 +131,12 @@ func change_scene_with_fade_delay(new_scene: PackedScene, duration: float = 0.5,
 	if post_change_delay > 0.0:
 		await get_tree().create_timer(post_change_delay).timeout #
 	await fade_in(duration) #
-	
+
+func _track_scene(new_scene: PackedScene) -> void:
+	if GameState == null or new_scene == null:
+		return
+	var path := new_scene.resource_path
+	if path.find("/scenes/cycles/") == -1:
+		return
+	GameState.set_current_scene_path(path)
 	

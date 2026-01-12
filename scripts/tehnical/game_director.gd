@@ -35,7 +35,9 @@ func _ready() -> void:
 	_create_distortion_overlay()
 	if GameState and GameState.has_signal("cycle_changed"):
 		GameState.cycle_changed.connect(func(_cycle: int): start_normal_phase())
-	start_normal_phase()
+	if get_tree() and get_tree().has_signal("scene_changed"):
+		get_tree().scene_changed.connect(_on_scene_changed)
+	_update_for_scene(get_tree().current_scene)
 
 func start_normal_phase() -> void:
 	GameState.set_phase(GameState.Phase.NORMAL)
@@ -104,4 +106,18 @@ func _flash_red() -> void:
 			_red_rect.visible = false
 			_red_rect.color.a = 0.3
 	)
+
+func _on_scene_changed(scene: Node) -> void:
+	_update_for_scene(scene)
+
+func _update_for_scene(scene: Node) -> void:
+	var path := scene.scene_file_path if scene else ""
+	var in_game := path.find("/scenes/cycles/") != -1
+	if in_game:
+		start_normal_phase()
+		return
+	_timer.stop()
+	_red_rect.visible = false
+	if GameState:
+		GameState.set_phase(GameState.Phase.NORMAL)
 	

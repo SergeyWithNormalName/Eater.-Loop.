@@ -15,6 +15,8 @@ var completed_labs: Array[String] = []
 var phone_picked: bool = false
 var fridge_interacted: bool = false
 var pending_sleep_spawn: bool = false
+var last_scene_path: String = ""
+var has_active_run: bool = false
 var _electricity_on: bool = true
 var electricity_on: bool:
 	set(value):
@@ -52,3 +54,28 @@ func mark_fridge_interacted() -> void:
 # Добавляем этот метод, чтобы GameDirector мог менять фазу
 func set_phase(new_phase: Phase) -> void:
 	phase = new_phase
+
+func set_current_scene_path(path: String) -> void:
+	if path == "":
+		return
+	last_scene_path = path
+	has_active_run = true
+
+func reset_cycle_state() -> void:
+	ate_this_cycle = false
+	fridge_interacted = false
+	phone_picked = false
+	pending_sleep_spawn = false
+	set_phase(Phase.NORMAL)
+
+func reset_run() -> void:
+	cycle = 1
+	ate_this_cycle = false
+	completed_labs = []
+	phone_picked = false
+	fridge_interacted = false
+	pending_sleep_spawn = false
+	electricity_on = true
+	set_phase(Phase.NORMAL)
+	last_scene_path = ""
+	has_active_run = false

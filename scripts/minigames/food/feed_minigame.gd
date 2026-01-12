@@ -47,11 +47,14 @@ func _ready() -> void:
 	else:
 		sfx_player = AudioStreamPlayer.new()
 		add_child(sfx_player)
+	sfx_player.bus = "SFX"
 	
 	eat_sfx_player = AudioStreamPlayer.new()
+	eat_sfx_player.bus = "SFX"
 	eat_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(eat_sfx_player)
 
+	music_player.bus = "Music"
 	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	music_player.volume_db = music_volume_db
 	get_tree().paused = true

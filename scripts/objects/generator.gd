@@ -27,6 +27,7 @@ func _ready() -> void:
 			_interact_area.body_exited.connect(_on_body_exited)
 
 	_sfx_player = AudioStreamPlayer2D.new()
+	_sfx_player.bus = "SFX"
 	_sfx_player.volume_db = power_on_volume_db
 	add_child(_sfx_player)
 

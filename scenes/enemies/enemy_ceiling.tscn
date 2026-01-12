@@ -13,6 +13,8 @@ size = Vector2(906, 870)
 size = Vector2(606, 870)
 
 [node name="EnemyCeiling" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_ceiling")
 
 [node name="DetectionArea" type="Area2D" parent="."]

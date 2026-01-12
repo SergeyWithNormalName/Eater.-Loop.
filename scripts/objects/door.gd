@@ -36,6 +36,7 @@ func _ready() -> void:
 	
 	# Создаем аудио-плеер программно
 	_audio_player = AudioStreamPlayer2D.new()
+	_audio_player.bus = "SFX"
 	# Убираем затухание по дистанции, чтобы звук двери был четким, даже если камера чуть в стороне
 	_audio_player.max_distance = 2000 
 	add_child(_audio_player)

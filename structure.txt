@@ -94,8 +94,12 @@
 │   │   ├── generator.tscn
 │   │   ├── lamp.tscn
 │   │   └── world_clock.tscn
-│   └── player
-│       └── player.tscn
+│   ├── player
+│   │   └── player.tscn
+│   └── ui
+│       ├── main_menu.tscn
+│       ├── pause_menu.tscn
+│       └── settings_panel.tscn
 ├── scripts
 │   ├── enemies
 │   │   ├── enemy_ceiling.gd
@@ -165,8 +169,25 @@
 │   │   ├── game_director.gd.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
+│   │   ├── level_music.gd
+│   │   ├── level_music.gd.uid
+│   │   ├── music_manager.gd
+│   │   ├── music_manager.gd.uid
+│   │   ├── pause_manager.gd
+│   │   ├── pause_manager.gd.uid
+│   │   ├── settings_manager.gd
+│   │   ├── settings_manager.gd.uid
 │   │   ├── ui_message.gd
 │   │   └── ui_message.gd.uid
+│   ├── ui
+│   │   ├── main_menu.gd
+│   │   ├── main_menu.gd.uid
+│   │   ├── menu_base.gd
+│   │   ├── menu_base.gd.uid
+│   │   ├── pause_menu.gd
+│   │   ├── pause_menu.gd.uid
+│   │   ├── settings_panel.gd
+│   │   └── settings_panel.gd.uid
 │   ├── enemy.gd
 │   └── enemy.gd.uid
 ├── textures
@@ -340,6 +361,49 @@
 │   │           ├── MeetSteak.png.import
 │   │           ├── Naggets.png
 │   │           └── Naggets.png.import
+│   ├── monster_runner_animation_walking
+│   │   ├── ezgif-frame-001.png
+│   │   ├── ezgif-frame-001.png.import
+│   │   ├── ezgif-frame-002.png
+│   │   ├── ezgif-frame-002.png.import
+│   │   ├── ezgif-frame-003.png
+│   │   ├── ezgif-frame-003.png.import
+│   │   ├── ezgif-frame-004.png
+│   │   ├── ezgif-frame-004.png.import
+│   │   ├── ezgif-frame-005.png
+│   │   ├── ezgif-frame-005.png.import
+│   │   ├── ezgif-frame-006.png
+│   │   ├── ezgif-frame-006.png.import
+│   │   ├── ezgif-frame-007.png
+│   │   ├── ezgif-frame-007.png.import
+│   │   ├── ezgif-frame-008.png
+│   │   ├── ezgif-frame-008.png.import
+│   │   ├── ezgif-frame-009.png
+│   │   ├── ezgif-frame-009.png.import
+│   │   ├── ezgif-frame-010.png
+│   │   ├── ezgif-frame-010.png.import
+│   │   ├── ezgif-frame-011.png
+│   │   ├── ezgif-frame-011.png.import
+│   │   ├── ezgif-frame-012.png
+│   │   ├── ezgif-frame-012.png.import
+│   │   ├── ezgif-frame-013.png
+│   │   ├── ezgif-frame-013.png.import
+│   │   ├── ezgif-frame-014.png
+│   │   ├── ezgif-frame-014.png.import
+│   │   ├── ezgif-frame-015.png
+│   │   ├── ezgif-frame-015.png.import
+│   │   ├── ezgif-frame-016.png
+│   │   ├── ezgif-frame-016.png.import
+│   │   ├── ezgif-frame-017.png
+│   │   ├── ezgif-frame-017.png.import
+│   │   ├── ezgif-frame-018.png
+│   │   ├── ezgif-frame-018.png.import
+│   │   ├── ezgif-frame-019.png
+│   │   ├── ezgif-frame-019.png.import
+│   │   ├── ezgif-frame-020.png
+│   │   ├── ezgif-frame-020.png.import
+│   │   ├── ezgif-frame-021.png
+│   │   └── ezgif-frame-021.png.import
 │   ├── walls_floors
 │   │   ├── decals
 │   │   │   ├── HoleInWall1.png
@@ -390,9 +454,10 @@
 │   ├── Monster.png.import
 │   ├── Tarelka.png
 │   └── Tarelka.png.import
+├── export_presets.cfg
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-46 directories, 350 files
+49 directories, 412 files

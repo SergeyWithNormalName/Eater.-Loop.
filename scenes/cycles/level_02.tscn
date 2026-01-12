@@ -1,7 +1,7 @@
 [gd_scene load_steps=87 format=3 uid="uid://bsecib4k5glms"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_mo3bn"]
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_plrscn"]
+[ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="2_bhnwp"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="11_c2h4a"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="12_7q3i5"]
@@ -146,7 +146,6 @@ texture = ExtResource("2_bhnwp")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2366, 96)
-step_frame_indices = Array[int]([10, 11, 12])
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2

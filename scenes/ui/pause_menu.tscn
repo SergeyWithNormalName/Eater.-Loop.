@@ -1,0 +1,150 @@
+[gd_scene load_steps=8 format=3 uid="uid://k7m2v5p8s1d6n"]
+
+[ext_resource type="Script" uid="uid://r2s5p9k1q7d3f" path="res://scripts/ui/pause_menu.gd" id="1_pause_menu_script"]
+[ext_resource type="PackedScene" uid="uid://g4j2m6p8n1s5c" path="res://scenes/ui/settings_panel.tscn" id="2_settings_panel"]
+[ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="3_click_sfx"]
+[ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="4_hover_sfx"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://audio/MusicEtc/CreepyAmbient.wav" id="5_menu_music"]
+[ext_resource type="PackedScene" uid="uid://u9k4t2m1c8x7b" path="res://scenes/ui/main_menu.tscn" id="6_main_menu"]
+[ext_resource type="PackedScene" uid="uid://cc6ehxxoauhyn" path="res://scenes/cycles/level_01.tscn" id="7_level_01"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.08, 0.09, 0.85)
+border_width_all = 2
+border_color = Color(0.55, 0.45, 0.35, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_left = 16
+corner_radius_bottom_right = 16
+content_margin_left = 26
+content_margin_top = 20
+content_margin_right = 26
+content_margin_bottom = 20
+
+[node name="PauseMenuLayer" type="CanvasLayer"]
+layer = 80
+process_mode = 3
+
+[node name="PauseMenu" type="Control" parent="."]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pause_menu_script")
+main_menu_scene = ExtResource("6_main_menu")
+new_game_scene = ExtResource("7_level_01")
+hover_sfx = ExtResource("4_hover_sfx")
+click_sfx = ExtResource("3_click_sfx")
+menu_music = ExtResource("5_menu_music")
+
+[node name="Dim" type="ColorRect" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="MainPanel" type="PanelContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+separation = 14
+
+[node name="Title" type="Label" parent="PauseMenu/MainPanel/VBox"]
+layout_mode = 2
+text = "Пауза"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="PauseMenu/MainPanel/VBox"]
+layout_mode = 2
+alignment = 1
+separation = 10
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Продолжить"
+
+[node name="NewGameButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Новая игра"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Настройки"
+
+[node name="ExitMenuButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Выйти в меню"
+
+[node name="ExitGameButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Выйти из игры"
+
+[node name="SettingsPanel" parent="PauseMenu" instance=ExtResource("2_settings_panel")]
+
+[node name="ConfirmPanel" type="PanelContainer" parent="PauseMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/ConfirmPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 12
+
+[node name="Message" type="Label" parent="PauseMenu/ConfirmPanel/VBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="PauseMenu/ConfirmPanel/VBox"]
+layout_mode = 2
+alignment = 1
+separation = 12
+
+[node name="YesButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Да"
+
+[node name="NoButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Нет"
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="PauseMenu"]
+bus = "SFX"

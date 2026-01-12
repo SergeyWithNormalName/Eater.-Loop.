@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal player_made_sound
+
 ## Скорость движения игрока.
 @export var speed: float = 520.0
 
@@ -61,12 +63,14 @@ func _ready() -> void:
 	
 	# --- Настройка аудио ---
 	_step_player = AudioStreamPlayer.new()
+	_step_player.bus = "SFX"
 	# Важно: max_polyphony позволяет проигрывать несколько звуков шагов одновременно,
 	# не обрывая предыдущий, если анимация быстрая.
 	_step_player.max_polyphony = 4 
 	add_child(_step_player)
 	
 	_flashlight_player = AudioStreamPlayer.new()
+	_flashlight_player.bus = "SFX"
 	add_child(_flashlight_player)
 	# -----------------------
 	
@@ -123,6 +127,7 @@ func _play_step_sound() -> void:
 	# Небольшая вариация высоты тона для реализма
 	_step_player.pitch_scale = randf_range(0.95, 1.05)
 	_step_player.play()
+	player_made_sound.emit()
 
 func _apply_facing() -> void:
 	if pivot:
@@ -267,6 +272,7 @@ func _input(event: InputEvent) -> void:
 				_flashlight_player.volume_db = 0.0
 				_flashlight_player.pitch_scale = 1.0
 				_flashlight_player.play()
+				player_made_sound.emit()
 
 # ===== Работа с ключами =====
 func add_key(key_id: String) -> void:

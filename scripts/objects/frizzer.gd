@@ -56,6 +56,7 @@ func _ready() -> void:
 		body_exited.connect(_on_body_exited)
 	
 	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.bus = "SFX"
 	add_child(_sfx_player)
 
 func _on_body_entered(body: Node) -> void:

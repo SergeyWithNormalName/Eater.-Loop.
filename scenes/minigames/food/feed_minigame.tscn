@@ -12,8 +12,10 @@ process_mode = 3
 script = ExtResource("1_ansfs")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+bus = "SFX"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
