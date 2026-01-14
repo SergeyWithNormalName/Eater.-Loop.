@@ -75,15 +75,19 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
+		_update_prompt()
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_lamp(self)
 
 func _toggle() -> void:
 	if _is_on:
 		_is_on = false
 		_update_light_enabled(false)
+		_update_prompt()
 		return
 
 	if not _has_power():
@@ -92,6 +96,7 @@ func _toggle() -> void:
 
 	_is_on = true
 	_update_light_enabled(true)
+	_update_prompt()
 
 func _has_power() -> bool:
 	if GameState == null:
@@ -106,6 +111,7 @@ func _update_light_enabled(play_sound: bool) -> void:
 	_light.enabled = should_enable
 	if play_sound and should_enable and not was_enabled:
 		_play_turn_on_sound()
+	_update_prompt()
 
 func _play_turn_on_sound() -> void:
 	if turn_on_sfx == null:
@@ -138,3 +144,10 @@ func _on_electricity_changed(_is_on: bool) -> void:
 
 func is_light_active() -> bool:
 	return _light != null and _light.enabled
+
+func _update_prompt() -> void:
+	if not InteractionPrompts:
+		return
+	if not _player_inside:
+		return
+	InteractionPrompts.show_lamp(self, InteractionPrompts.get_default_lamp_text(_is_on))

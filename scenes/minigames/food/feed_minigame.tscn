@@ -27,6 +27,8 @@ grow_vertical = 2
 
 [node name="BackFon" type="Sprite2D" parent="Control"]
 texture = ExtResource("2_co0r1")
+position = Vector2(960, 540)
+scale = Vector2(1.25, 1.25)
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 layout_mode = 1

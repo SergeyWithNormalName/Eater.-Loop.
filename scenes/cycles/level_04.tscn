@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=104 format=3 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
@@ -84,6 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://textures/walls_floors/decals/HoleInWall4.png" id="86_pvwmj"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://textures/walls_floors/decals/HoleInWall1.png" id="87_7y3jx"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://scripts/tehnical/level_music.gd" id="88_lvl_music"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_music"]
 size = Vector2(1775, 880)
@@ -155,6 +156,8 @@ size = Vector2(104, 98)
 
 [node name="Level3" type="Node2D"]
 position = Vector2(16, 0)
+script = ExtResource("level_settings")
+cycle_number = 4
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
@@ -186,6 +189,7 @@ position = Vector2(-1913, 83)
 script = ExtResource("82_vcxip")
 affect_on_exit = true
 one_shot = false
+apply_on_ready_if_overlapping = true
 music_enabled = true
 music_on_enter = 2
 music_on_exit = 3
@@ -376,6 +380,7 @@ script = ExtResource("18_0eq3o")
 next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
+require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
 metadata/_edit_group_ = true
 
@@ -2203,6 +2208,7 @@ position = Vector2(-1913, 2699.8599)
 script = ExtResource("82_vcxip")
 affect_on_exit = true
 one_shot = false
+apply_on_ready_if_overlapping = true
 music_enabled = true
 music_on_enter = 2
 music_on_exit = 3
@@ -2240,6 +2246,7 @@ script = ExtResource("18_0eq3o")
 next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
+require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
 metadata/_edit_group_ = true
 

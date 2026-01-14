@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://sdmle35lsdig"]
+[gd_scene load_steps=98 format=3 uid="uid://sdmle35lsdig"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_j5jbj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -73,11 +73,12 @@
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://textures/furniture/hall/Boots6.png" id="77_y0ton"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://audio/AndreyEating/Nam-nam_1.wav" id="78_nlubh"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://textures/furniture/kitchen/Urna.png" id="78_ug0bd"]
-[ext_resource type="PackedScene" uid="uid://dhw0qiihdwuj3" path="res://scenes/enemies/enemy_ceiling.tscn" id="78_usr32"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://textures/furniture/bedroom/Powerbank2.png" id="79_kqa0o"]
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="80_0fedf"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="81_wwm0w"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_tu4sr"]
+[ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://scenes/enemies/enemy_light_sensitive.tscn" id="85_3pht0"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -144,6 +145,7 @@ size = Vector2(111.6167, 1199.4946)
 
 [node name="Level2" type="Node2D"]
 position = Vector2(16, 0)
+script = ExtResource("level_settings")
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
@@ -1352,12 +1354,10 @@ walk_loop_start_index = 5
 walk_loop_end_index = 19
 step_frame_indices = Array[int]([6, 10, 14, 18])
 camera_shake_intensity = 8.0
-speed = 560.0
+speed = 480.0
 
-[node name="EnemyCeiling" parent="." instance=ExtResource("78_usr32")]
-position = Vector2(9307, 105)
-attack_requires_below = false
-only_sound = true
+[node name="EnemyLightSensitive" parent="." instance=ExtResource("85_3pht0")]
+position = Vector2(9387, 134)
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

@@ -9,6 +9,8 @@ extends Area2D
 @export var one_shot: bool = true
 ## Группа, которую считает игроком.
 @export var player_group: String = "player"
+## Применять изменения сразу при старте, если игрок уже в зоне.
+@export var apply_on_ready_if_overlapping: bool = false
 
 @export_group("Targets")
 ## Набор изменений через ресурсы PropertyChange (приоритетнее списков ниже).
@@ -59,6 +61,8 @@ func _ready() -> void:
 		body_entered.connect(_on_body_entered)
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
+	if apply_on_ready_if_overlapping:
+		call_deferred("_apply_if_overlapping")
 
 func _on_body_entered(body: Node) -> void:
 	if not affect_on_enter:
@@ -95,6 +99,16 @@ func _apply(is_exit: bool) -> void:
 	_play_sound()
 	_apply_music(is_exit)
 	_has_fired = true
+
+func _apply_if_overlapping() -> void:
+	if not affect_on_enter:
+		return
+	if _has_fired and one_shot:
+		return
+	for body in get_overlapping_bodies():
+		if body.is_in_group(player_group):
+			_apply(false)
+			return
 
 func _play_sound() -> void:
 	if sfx_stream == null:

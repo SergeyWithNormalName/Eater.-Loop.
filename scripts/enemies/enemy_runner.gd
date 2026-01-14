@@ -83,6 +83,8 @@ func _ready() -> void:
 	_step_player = AudioStreamPlayer2D.new()
 	_step_player.bus = "SFX"
 	_step_player.max_polyphony = 4
+	_step_player.max_distance = 50000.0
+	_step_player.attenuation = 0.0
 	add_child(_step_player)
 	
 	_growl_player = AudioStreamPlayer2D.new()

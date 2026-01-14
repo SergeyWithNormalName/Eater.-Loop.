@@ -74,6 +74,7 @@
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="82_4a5ua"]
 
+[ext_resource type="Script" path="res://scripts/tehnical/level.gd" id="level_settings"]
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
 
@@ -120,6 +121,9 @@ size = Vector2(111.6167, 966.4249)
 size = Vector2(111.6167, 1199.4946)
 
 [node name="Level" type="Node2D"]
+timer_duration = 0.0
+cycle_number = 1
+script = ExtResource("level_settings")
 position = Vector2(16, 0)
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]

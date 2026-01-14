@@ -6,6 +6,7 @@ extends CanvasLayer #
 var _label: Label
 var _timer: Timer
 var _fade_rect: ColorRect
+var _sfx_player: AudioStreamPlayer
 
 # --- Переменные для записок ---
 var _note_bg: ColorRect      #
@@ -56,6 +57,11 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_timeout) #
 	add_child(_timer) #
 	
+	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.bus = "SFX"
+	_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_sfx_player)
+	
 	_setup_note_viewer() #
 
 func _setup_note_viewer() -> void:
@@ -100,6 +106,14 @@ func show_text(text: String, duration: float = -1.0) -> void:
 	_label.text = t #
 	_label.visible = true #
 	_timer.start(duration if duration > 0.0 else default_duration) #
+
+func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	if stream == null:
+		return
+	_sfx_player.stream = stream
+	_sfx_player.volume_db = volume_db
+	_sfx_player.pitch_scale = pitch_scale
+	_sfx_player.play()
 
 func _on_timeout() -> void:
 	_label.visible = false #

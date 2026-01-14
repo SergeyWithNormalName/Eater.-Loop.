@@ -1,10 +1,18 @@
 .
 ├── audio
 │   ├── AndreyEating
+│   │   ├── DushuProdat.wav
+│   │   ├── DushuProdat.wav.import
 │   │   ├── Nam-nam_1.wav
 │   │   ├── Nam-nam_1.wav.import
+│   │   ├── Ohuenno.wav
+│   │   ├── Ohuenno.wav.import
+│   │   ├── Pizdato.wav
+│   │   ├── Pizdato.wav.import
 │   │   ├── Poel_1.wav
-│   │   └── Poel_1.wav.import
+│   │   ├── Poel_1.wav.import
+│   │   ├── Upitanaya_Bitch.wav
+│   │   └── Upitanaya_Bitch.wav.import
 │   ├── MusicEtc
 │   │   ├── AlienSounds.wav
 │   │   ├── AlienSounds.wav.import
@@ -22,6 +30,11 @@
 │   │   ├── MyHorrorHit_3.wav.import
 │   │   ├── TypeSilentHill.wav
 │   │   └── TypeSilentHill.wav.import
+│   ├── Sereja
+│   │   ├── Hahaha.wav
+│   │   ├── Hahaha.wav.import
+│   │   ├── JokeAboutChicken.wav
+│   │   └── JokeAboutChicken.wav.import
 │   ├── furniture
 │   │   ├── door
 │   │   │   ├── door_locked1.wav
@@ -32,6 +45,8 @@
 │   │   ├── FridgeNoizeE.wav.import
 │   │   ├── OpenFridgeE.wav
 │   │   ├── OpenFridgeE.wav.import
+│   │   ├── OutOfBed.wav
+│   │   ├── OutOfBed.wav.import
 │   │   ├── ScaryStepsAndDoor.mp3
 │   │   ├── ScaryStepsAndDoor.mp3.import
 │   │   ├── door_unlocked.wav
@@ -169,6 +184,10 @@
 │   │   ├── game_director.gd.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
+│   │   ├── interaction_prompts.gd
+│   │   ├── interaction_prompts.gd.uid
+│   │   ├── level.gd
+│   │   ├── level.gd.uid
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── music_manager.gd
@@ -460,4 +479,4 @@
 ├── project.godot
 └── structure.txt
 
-49 directories, 412 files
+50 directories, 430 files

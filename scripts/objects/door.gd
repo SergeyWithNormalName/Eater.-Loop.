@@ -44,10 +44,14 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = body
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body == _player_in_range:
 		_player_in_range = null
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_transitioning: return

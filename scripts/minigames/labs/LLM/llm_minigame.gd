@@ -14,12 +14,7 @@ signal task_completed(success: bool)
 var current_time: float = 0.0
 var _progress: float = 0.0
 var _is_finished: bool = false
-var _base_viewport: Vector2
-var _content_base_pos: Vector2
-var _content_base_scale: Vector2
 
-@onready var content: Control = $Content
-@onready var background: ColorRect = $Content/Background
 @onready var title_label: Label = $Content/Header/TitleLabel
 @onready var timer_label: Label = $Content/Header/TimerLabel
 @onready var progress_bar: ProgressBar = $Content/Body/ProgressBar
@@ -29,17 +24,6 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 	current_time = time_limit
-	
-	_base_viewport = Vector2(
-		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
-		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
-	)
-	content.size = _base_viewport
-	background.custom_minimum_size = _base_viewport
-	_content_base_pos = content.position
-	_content_base_scale = content.scale
-	get_viewport().size_changed.connect(_update_layout)
-	_update_layout()
 	
 	title_label.text = "Нейросеть глубокий Сик"
 	_update_progress_ui()
@@ -97,16 +81,6 @@ func finish_game(success: bool) -> void:
 			GameState.emit_signal("lab_completed", quest_id)
 	
 	queue_free()
-
-func _update_layout() -> void:
-	var viewport_size := get_viewport().get_visible_rect().size
-	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
-		return
-	
-	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
-	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
-	content.position = layout_offset + _content_base_pos * scale_factor
-	content.scale = _content_base_scale * scale_factor
 
 func _handle_gamepad_cursor(delta: float) -> void:
 	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")

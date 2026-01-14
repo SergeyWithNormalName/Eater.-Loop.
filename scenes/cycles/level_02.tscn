@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://bsecib4k5glms"]
+[gd_scene load_steps=88 format=3 uid="uid://bsecib4k5glms"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_mo3bn"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -73,6 +73,7 @@
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="80_i8eaf"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="81_hrs8a"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_7w84o"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -121,6 +122,8 @@ size = Vector2(111.6167, 1199.4946)
 
 [node name="Level" type="Node2D"]
 position = Vector2(16, 0)
+script = ExtResource("level_settings")
+cycle_number = 2
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5

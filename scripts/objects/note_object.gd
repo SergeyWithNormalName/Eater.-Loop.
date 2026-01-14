@@ -17,11 +17,18 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = true
-		# Если у тебя есть система UI подсказок "Нажми Е", вызови её тут
+		if InteractionPrompts:
+			var prompt_text := interact_message.strip_edges()
+			if prompt_text != "":
+				InteractionPrompts.show_interact(self, "E — %s" % prompt_text)
+			else:
+				InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not _player_in_range:

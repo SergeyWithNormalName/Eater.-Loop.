@@ -36,10 +36,6 @@ var eat_sfx_player: AudioStreamPlayer
 var _eaten_count: int = 0
 var _is_won: bool = false
 var _base_viewport: Vector2
-var _andrey_base_pos: Vector2
-var _food_base_pos: Vector2
-var _andrey_base_scale: Vector2
-var _food_base_scale: Vector2
 
 func _ready() -> void:
 	if has_node("SFXPlayer"):
@@ -65,13 +61,7 @@ func _ready() -> void:
 		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
 		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
 	)
-	_andrey_base_pos = andrey_sprite.position
-	_food_base_pos = food_container.position
-	_andrey_base_scale = andrey_sprite.scale
-	_food_base_scale = food_container.scale
-	
-	get_viewport().size_changed.connect(_update_layout)
-	_update_layout()
+	_apply_background_layout()
 
 func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null) -> void:
 	if andrey_texture:
@@ -98,6 +88,7 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 		selected_bg = DEFAULT_BG
 	if selected_bg:
 		backfon.texture = selected_bg
+		_apply_background_layout()
 
 	# === ИСПРАВЛЕНИЕ 2: Одна тарелка для всей еды ===
 	# Создаем тарелку ОДИН раз перед тем, как спавнить пельмени
@@ -144,25 +135,19 @@ func _handle_gamepad_cursor(delta: float) -> void:
 		
 		get_viewport().warp_mouse(new_pos)
 
-func _update_layout() -> void:
-	var viewport_size := get_viewport().get_visible_rect().size
+func _apply_background_layout() -> void:
+	if backfon == null or backfon.texture == null:
+		return
 	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
 		return
 	
-	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
-	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
-
-	if backfon and backfon.texture:
-		var tex_size := backfon.texture.get_size()
-		if tex_size.x > 0.0 and tex_size.y > 0.0:
-			var cover_scale: float = max(viewport_size.x / tex_size.x, viewport_size.y / tex_size.y)
-			backfon.scale = Vector2(cover_scale, cover_scale)
-			backfon.position = viewport_size * 0.5
+	var tex_size := backfon.texture.get_size()
+	if tex_size.x <= 0.0 or tex_size.y <= 0.0:
+		return
 	
-	andrey_sprite.position = layout_offset + _andrey_base_pos * scale_factor
-	andrey_sprite.scale = _andrey_base_scale * scale_factor
-	food_container.position = layout_offset + _food_base_pos * scale_factor
-	food_container.scale = _food_base_scale * scale_factor
+	var cover_scale: float = max(_base_viewport.x / tex_size.x, _base_viewport.y / tex_size.y)
+	backfon.scale = Vector2(cover_scale, cover_scale)
+	backfon.position = _base_viewport * 0.5
 
 func _on_food_eaten() -> void:
 	_eaten_count += 1
