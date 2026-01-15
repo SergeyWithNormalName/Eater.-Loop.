@@ -27,8 +27,8 @@ extends "res://scripts/enemy.gd"
 @export var chase_music: AudioStream
 ## Громкость музыки погони (дБ).
 @export_range(-80.0, 6.0, 0.1) var chase_music_volume_db: float = -6.0
-## Длительность плавного перехода к музыке погони.
-@export_range(0.0, 10.0, 0.1) var chase_music_fade_time: float = 0.8
+## Длительность плавного затухания музыки при окончании погони.
+@export_range(0.0, 10.0, 0.1) var chase_music_fade_out_time: float = 2.0
 
 @export_group("Walk Animation")
 ## Папка с кадрами ходьбы.
@@ -166,7 +166,8 @@ func _start_chase_music() -> void:
 		return
 	
 	_chase_music_started = true
-	MusicManager.push_music(chase_music, chase_music_fade_time, chase_music_volume_db)
+	# Резкий старт музыки (fade_time = 0.0)
+	MusicManager.push_music(chase_music, 0.0, chase_music_volume_db)
 
 func _stop_chase_music() -> void:
 	if not _chase_music_started:
@@ -175,7 +176,8 @@ func _stop_chase_music() -> void:
 		return
 	
 	_chase_music_started = false
-	MusicManager.pop_music(chase_music_fade_time)
+	# Плавное затухание
+	MusicManager.pop_music(chase_music_fade_out_time)
 
 func _reset_growl_timer() -> void:
 	var min_val = max(0.1, growl_interval_min)
