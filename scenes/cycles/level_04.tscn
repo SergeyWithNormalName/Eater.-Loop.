@@ -2203,21 +2203,6 @@ position = Vector2(-2360, 2604.8604)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("2_3gkos")
 
-[node name="BedroomMusicTrigger2" type="Area2D" parent="."]
-position = Vector2(-1913, 2699.8599)
-script = ExtResource("82_vcxip")
-affect_on_exit = true
-one_shot = false
-apply_on_ready_if_overlapping = true
-music_enabled = true
-music_on_enter = 2
-music_on_exit = 3
-music_fade_time = 1.2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomMusicTrigger2"]
-position = Vector2(-48.5, 0)
-shape = SubResource("RectangleShape2D_bedroom_music")
-
 [node name="Door(In Bedroom)2" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(-1581, 2699.8599)

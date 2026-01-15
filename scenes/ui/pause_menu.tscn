@@ -147,4 +147,4 @@ layout_mode = 2
 text = "Нет"
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="PauseMenu"]
-bus = "SFX"
+bus = "Sounds"

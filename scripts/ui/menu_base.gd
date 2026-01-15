@@ -8,12 +8,12 @@ extends Control
 ## Размер шрифта для текста/описаний.
 @export var body_font_size: int = 32
 
-@export_group("SFX")
+@export_group("Sounds")
 ## Звук наведения.
 @export var hover_sfx: AudioStream
 ## Звук нажатия.
 @export var click_sfx: AudioStream
-## Громкость SFX (дБ).
+## Громкость звуков (дБ).
 @export_range(-40.0, 6.0, 0.1) var sfx_volume_db: float = -6.0
 
 @export_group("Визуальный отклик")

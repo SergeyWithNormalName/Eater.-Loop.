@@ -81,7 +81,7 @@ func _ready() -> void:
 	add_child(_timer) #
 	
 	_sfx_player = AudioStreamPlayer.new()
-	_sfx_player.bus = "SFX"
+	_sfx_player.bus = "Sounds"
 	_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_sfx_player)
 	

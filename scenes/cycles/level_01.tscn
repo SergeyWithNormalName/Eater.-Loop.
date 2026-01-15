@@ -383,7 +383,7 @@ shadow_filter_smooth = 24.4
 texture = SubResource("GradientTexture2D_ww2c2")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Frizzer"]
-bus = "SFX"
+bus = "Sounds"
 stream = ExtResource("28_g1wwn")
 volume_db = -18.0
 autoplay = true

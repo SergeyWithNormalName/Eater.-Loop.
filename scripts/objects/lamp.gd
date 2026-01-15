@@ -54,7 +54,7 @@ func _ready() -> void:
 	_update_light_enabled(false)
 
 	_sfx_player = AudioStreamPlayer2D.new()
-	_sfx_player.bus = "SFX"
+	_sfx_player.bus = "Sounds"
 	_sfx_player.volume_db = turn_on_volume_db
 	add_child(_sfx_player)
 

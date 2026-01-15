@@ -71,7 +71,7 @@ func _ready() -> void:
 		body_exited.connect(_on_body_exited)
 	
 	_sfx_player = AudioStreamPlayer.new()
-	_sfx_player.bus = "SFX"
+	_sfx_player.bus = "Sounds"
 	add_child(_sfx_player)
 	
 	_sprite = get_node_or_null(sprite_node) as Sprite2D

@@ -14,6 +14,8 @@ signal minigame_finished
 @export var background_texture: Texture2D
 ## Громкость музыки в дБ.
 @export_range(-40.0, 6.0, 0.1) var music_volume_db: float = -12.0
+## Длительность затухания фоновой музыки при старте мини-игры.
+@export_range(0.0, 5.0, 0.1) var music_suspend_fade_time: float = 0.3
 
 const DEFAULT_BG: Texture2D = preload("res://textures/FonForFood.png")
 const DEFAULT_MUSIC: AudioStream = preload("res://audio/MusicForEat.mp3")
@@ -37,25 +39,27 @@ var _eaten_count: int = 0
 var _is_won: bool = false
 var _base_viewport: Vector2
 var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
+var _music_suspended: bool = false
 
 func _ready() -> void:
 	_prev_mouse_mode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if has_node("SFXPlayer"):
-		sfx_player = $SFXPlayer
+	if has_node("SoundsPlayer"):
+		sfx_player = $SoundsPlayer
 	else:
 		sfx_player = AudioStreamPlayer.new()
 		add_child(sfx_player)
-	sfx_player.bus = "SFX"
+	sfx_player.bus = "Sounds"
 	
 	eat_sfx_player = AudioStreamPlayer.new()
-	eat_sfx_player.bus = "SFX"
+	eat_sfx_player.bus = "Sounds"
 	eat_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(eat_sfx_player)
 
 	music_player.bus = "Music"
 	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	music_player.volume_db = music_volume_db
+	_suspend_level_music()
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
@@ -170,11 +174,29 @@ func _win() -> void:
 
 func _close_game() -> void:
 	get_tree().paused = false
+	_restore_level_music()
 	minigame_finished.emit()
 	
 func _exit_tree() -> void:
 	get_tree().paused = false
+	_restore_level_music()
 	Input.set_mouse_mode(_prev_mouse_mode)
 	if GameState.has_method("reset_dragging"):
 		GameState.reset_dragging()
+
+func _suspend_level_music() -> void:
+	if MusicManager == null:
+		return
+	if _music_suspended:
+		return
+	MusicManager.push_music(null, music_suspend_fade_time)
+	_music_suspended = true
+
+func _restore_level_music() -> void:
+	if MusicManager == null:
+		return
+	if not _music_suspended:
+		return
+	MusicManager.pop_music(music_suspend_fade_time)
+	_music_suspended = false
 		

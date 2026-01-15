@@ -21,12 +21,12 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 	
 	_ring_player = AudioStreamPlayer.new()
-	_ring_player.bus = "SFX"
+	_ring_player.bus = "Sounds"
 	_ring_player.stream = ring_sound
 	add_child(_ring_player)
 
 	_pickup_player = AudioStreamPlayer.new()
-	_pickup_player.bus = "SFX"
+	_pickup_player.bus = "Sounds"
 	_pickup_player.stream = pickup_sound
 	add_child(_pickup_player)
 	

@@ -80,14 +80,14 @@ func _ready() -> void:
 	
 	# --- Настройка аудио ---
 	_step_player = AudioStreamPlayer.new()
-	_step_player.bus = "SFX"
+	_step_player.bus = "Sounds"
 	# Важно: max_polyphony позволяет проигрывать несколько звуков шагов одновременно,
 	# не обрывая предыдущий, если анимация быстрая.
 	_step_player.max_polyphony = 4 
 	add_child(_step_player)
 	
 	_flashlight_player = AudioStreamPlayer.new()
-	_flashlight_player.bus = "SFX"
+	_flashlight_player.bus = "Sounds"
 	add_child(_flashlight_player)
 	# -----------------------
 	

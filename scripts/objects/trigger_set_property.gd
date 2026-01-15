@@ -86,9 +86,7 @@ func _apply(is_exit: bool) -> void:
 	if changes.size() > 0:
 		for change in changes:
 			_apply_change(change)
-	else:
-		if property_name == "":
-			return
+	elif property_name != "":
 		for path in target_paths:
 			var node := get_node_or_null(path)
 			if node == null:
@@ -115,7 +113,7 @@ func _play_sound() -> void:
 		return
 	var play := func() -> void:
 		var player := AudioStreamPlayer2D.new()
-		player.bus = "SFX"
+		player.bus = "Sounds"
 		player.stream = sfx_stream
 		player.volume_db = sfx_volume_db
 		player.global_position = global_position if sfx_use_trigger_position else sfx_position

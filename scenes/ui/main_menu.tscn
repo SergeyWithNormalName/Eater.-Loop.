@@ -229,4 +229,4 @@ layout_mode = 2
 text = "Нет"
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
-bus = "SFX"
+bus = "Sounds"

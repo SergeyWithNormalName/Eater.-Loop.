@@ -1776,6 +1776,8 @@ position = Vector2(13907, 2247.7397)
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("81_wwm0w")
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
 [node name="UsedFood" type="Sprite2D" parent="."]
 position = Vector2(-1754.9999, 107.99999)
 rotation = -0.061086524

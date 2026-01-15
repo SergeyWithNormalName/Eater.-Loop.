@@ -28,7 +28,7 @@ extends "res://scripts/enemy.gd"
 ## Громкость музыки погони (дБ).
 @export_range(-80.0, 6.0, 0.1) var chase_music_volume_db: float = -8.0
 ## Длительность затухания после погони (сек).
-@export_range(0.0, 10.0, 0.1) var chase_music_fade_time: float = 1.0
+@export_range(0.0, 10.0, 0.1) var chase_music_fade_time: float = 2.0
 
 @export_group("Walk Animation")
 ## Папка с кадрами ходьбы.
@@ -44,33 +44,29 @@ extends "res://scripts/enemy.gd"
 ## Конечный кадр цикла (1-based), -1 = последний кадр.
 @export var walk_loop_end_index: int = -1
 ## Номера кадров (начиная с 1), на которых должен звучать шаг.
-## Например: [2, 9] означает, что звук будет на 2-м и 9-м кадре анимации.
 @export var step_frame_indices: Array[int] = [2, 9]
 
 @export_group("Idle Wander")
-## Разрешить бродяжничать вне зоны обнаружения.
 @export var allow_idle_wander: bool = true
-## Скорость бродяжничества.
 @export var wander_speed: float = 40.0
-## Минимальная длительность шага.
 @export var wander_walk_time_min: float = 0.4
-## Максимальная длительность шага.
 @export var wander_walk_time_max: float = 1.2
-## Минимальная пауза между шагами.
 @export var wander_pause_time_min: float = 1.0
-## Максимальная пауза между шагами.
 @export var wander_pause_time_max: float = 2.5
 
 @export_group("Camera Shake")
-## Сила тряски камеры от шагов.
 @export var camera_shake_intensity: float = 3.0
-## Длительность тряски камеры.
 @export var camera_shake_duration: float = 0.08
 
 var _growl_timer: float = 0.0
 var _step_player: AudioStreamPlayer2D
 var _growl_player: AudioStreamPlayer2D
 var _scream_player: AudioStreamPlayer2D
+
+# --- Логика музыки ---
+var _chase_music_active: bool = false
+
+# --- Логика движения и анимации ---
 var _wander_timer: float = 0.0
 var _wander_dir: float = 1.0
 var _wander_moving: bool = false
@@ -84,47 +80,40 @@ var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _step_frame_lookup: Dictionary = {}
 var _facing_dir: float = 1.0
-var _chase_music_active: bool = false
-var _chase_music_player: AudioStreamPlayer
-var _chase_music_tween: Tween
 
 func _ready() -> void:
 	super._ready()
-
-	_step_player = AudioStreamPlayer2D.new()
-	_step_player.bus = "SFX"
+	
+	# Настройка звуков
+	_step_player = _create_sfx_player("Sounds")
 	_step_player.max_polyphony = 4
-	_step_player.max_distance = 50000.0
-	_step_player.attenuation = 0.0
-	add_child(_step_player)
+	_step_player.max_distance = 2000.0
 	
-	_growl_player = AudioStreamPlayer2D.new()
-	_growl_player.bus = "SFX"
-	add_child(_growl_player)
-
-	_scream_player = AudioStreamPlayer2D.new()
-	_scream_player.bus = "SFX"
-	add_child(_scream_player)
-	
-	_chase_music_player = AudioStreamPlayer.new()
-	_chase_music_player.bus = "Music"
-	_chase_music_player.process_mode = Node.PROCESS_MODE_ALWAYS
-	add_child(_chase_music_player)
-	if not _chase_music_player.finished.is_connected(_on_chase_music_finished):
-		_chase_music_player.finished.connect(_on_chase_music_finished)
+	_growl_player = _create_sfx_player("Sounds")
+	_scream_player = _create_sfx_player("Sounds")
 
 	_reset_growl_timer()
 
 	if _sprite:
 		_idle_texture = _sprite.texture
 		_load_walk_frames()
+	
+	if chase_music_stream == null:
+		push_warning("Runner: Не назначена музыка погони (chase_music_stream)!")
+	_configure_runner_music()
 
 func _physics_process(delta: float) -> void:
+	# Определяем состояние погони
+	# Важно: super._physics_process не вызываем, так как полностью переписываем движение
+	
 	var is_chasing := chase_player and _player != null
-	_update_chase_music(is_chasing)
+	
+	# Управляем музыкой
+	_update_chase_music_logic(is_chasing)
+
 	if is_chasing:
 		var offset = _player.global_position - global_position
-		if abs(offset.x) < 1.0:
+		if abs(offset.x) < 5.0:
 			velocity = Vector2.ZERO
 		else:
 			velocity = Vector2(sign(offset.x) * speed, 0.0)
@@ -135,6 +124,65 @@ func _physics_process(delta: float) -> void:
 	_update_facing_from_velocity()
 	_update_walk_animation(delta)
 	_update_growls(delta)
+
+func _exit_tree() -> void:
+	# При удалении врага восстанавливаем музыку уровня
+	if _chase_music_active:
+		_stop_chase_music()
+
+# --- СИСТЕМА МУЗЫКИ (ИСПРАВЛЕНА) ---
+
+func _update_chase_music_logic(is_chasing: bool) -> void:
+	if is_chasing == _chase_music_active:
+		return
+	
+	_chase_music_active = is_chasing
+	
+	if is_chasing:
+		_start_chase_music()
+	else:
+		_stop_chase_music()
+
+func _start_chase_music() -> void:
+	if chase_music_stream == null:
+		return
+
+	# 1. Приглушаем фоновую музыку через менеджер
+	if MusicManager:
+		_configure_runner_music()
+		MusicManager.set_runner_music_active(self, true)
+		# Duck на -15 дБ за 0.5 сек (резко)
+		MusicManager.duck_music(0.5, -15.0)
+
+func _stop_chase_music() -> void:
+	# 1. Восстанавливаем фоновую музыку
+	_restore_level_music()
+
+	# 2. Плавно глушим музыку погони
+	if MusicManager:
+		MusicManager.set_runner_music_active(self, false)
+
+func _restore_level_music() -> void:
+	if MusicManager:
+		MusicManager.restore_music_volume(chase_music_fade_time)
+
+func _configure_runner_music() -> void:
+	if MusicManager == null:
+		return
+	MusicManager.configure_runner_music(chase_music_stream, chase_music_volume_db, chase_music_fade_time)
+
+# --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
+
+func _create_sfx_player(bus_name: String) -> AudioStreamPlayer2D:
+	var player = AudioStreamPlayer2D.new()
+	if AudioServer.get_bus_index(bus_name) != -1:
+		player.bus = bus_name
+	else:
+		player.bus = "Master"
+	add_child(player)
+	return player
+
+# --- ДАЛЕЕ СТАНДАРТНАЯ ЛОГИКА ВРАГА ---
 
 func _play_step_sound() -> void:
 	if step_sounds.is_empty():
@@ -226,8 +274,6 @@ func _load_walk_frames() -> void:
 		var frame := load(path) as Texture2D
 		if frame:
 			_walk_frames.append(frame)
-		else:
-			push_warning("Runner: Отсутствует кадр ходьбы: %s" % path)
 
 	_update_walk_loop_bounds()
 	_update_step_frame_lookup()
@@ -250,15 +296,12 @@ func _update_step_frame_lookup() -> void:
 	_step_frame_lookup.clear()
 	if _walk_frames.is_empty():
 		return
-
 	for index in step_frame_indices:
 		if index <= 0:
 			continue
 		var frame_index_0_based := index - 1
 		if frame_index_0_based >= 0 and frame_index_0_based < _walk_frames.size():
 			_step_frame_lookup[frame_index_0_based] = true
-		else:
-			push_warning("Runner: Указан кадр шага %d, но всего кадров %d" % [index, _walk_frames.size()])
 
 func _maybe_play_step_for_frame(frame_index: int) -> void:
 	if _step_frame_lookup.has(frame_index):
@@ -296,19 +339,16 @@ func _update_walk_animation(delta: float) -> void:
 			_is_walking = true
 			_walk_frame_index = _walk_loop_start
 			_walk_frame_timer = 0.0
-
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
 			_maybe_play_step_for_frame(_walk_frame_index)
 
 		_walk_frame_timer += delta
 		while _walk_frame_timer >= walk_frame_time:
 			_walk_frame_timer -= walk_frame_time
-
 			if _walk_frame_index >= _walk_loop_end:
 				_walk_frame_index = _walk_loop_start
 			else:
 				_walk_frame_index += 1
-
 			_set_sprite_texture(_walk_frames[_walk_frame_index])
 			_maybe_play_step_for_frame(_walk_frame_index)
 	else:
@@ -325,13 +365,13 @@ func _on_detection_area_body_entered(body: Node) -> void:
 		_play_scream()
 
 func _shake_camera() -> void:
-	if camera_shake_intensity <= 0.0 or camera_shake_duration <= 0.0:
+	if camera_shake_intensity <= 0.0:
 		return
 	var camera := get_viewport().get_camera_2d()
 	if camera == null:
 		return
-
-	var base_offset: Vector2
+	
+	var base_offset: Vector2 = Vector2.ZERO
 	if camera.has_meta("enemy_step_base_offset"):
 		base_offset = camera.get_meta("enemy_step_base_offset")
 	else:
@@ -345,66 +385,9 @@ func _shake_camera() -> void:
 	camera.offset = base_offset + shake
 	get_tree().create_timer(camera_shake_duration).timeout.connect(func():
 		if is_instance_valid(camera):
-			var stored_base = base_offset
-			if camera.has_meta("enemy_step_base_offset"):
-				stored_base = camera.get_meta("enemy_step_base_offset")
-			camera.offset = stored_base
+			# Возвращаем аккуратно, если не перебито другим шейком
+			var current_meta = camera.get_meta("enemy_step_base_offset", base_offset)
+			camera.offset = current_meta
 	)
-
-func _exit_tree() -> void:
-	_update_chase_music(false)
-
-func _update_chase_music(active: bool) -> void:
-	if active == _chase_music_active:
-		return
-	_chase_music_active = active
-	if active:
-		_start_chase_music()
-	else:
-		_stop_chase_music()
-
-func _start_chase_music() -> void:
-	if _chase_music_player == null:
-		return
-	if chase_music_stream == null:
-		return
-	_ensure_chase_music_loop(chase_music_stream)
-	if _chase_music_tween and _chase_music_tween.is_running():
-		_chase_music_tween.kill()
-	_chase_music_player.stream = chase_music_stream
-	_chase_music_player.volume_db = chase_music_volume_db
-	if _chase_music_player.playing:
-		_chase_music_player.stop()
-	_chase_music_player.play()
-
-func _stop_chase_music() -> void:
-	if _chase_music_player == null:
-		return
-	if not _chase_music_player.playing:
-		return
-	if chase_music_fade_time <= 0.0:
-		_chase_music_player.stop()
-		return
-	if _chase_music_tween and _chase_music_tween.is_running():
-		_chase_music_tween.kill()
-	_chase_music_tween = create_tween()
-	_chase_music_tween.tween_property(_chase_music_player, "volume_db", -80.0, chase_music_fade_time)
-	_chase_music_tween.tween_callback(_chase_music_player.stop)
-
-func _on_chase_music_finished() -> void:
-	if _chase_music_active:
-		_start_chase_music()
-
-func _ensure_chase_music_loop(stream: AudioStream) -> void:
-	if stream is AudioStreamWAV:
-		var wav: AudioStreamWAV = stream
-		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
-			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
-		return
-	if stream is AudioStreamOggVorbis:
-		var ogg: AudioStreamOggVorbis = stream
-		ogg.loop = true
-		return
-	if stream is AudioStreamMP3:
-		var mp3: AudioStreamMP3 = stream
-		mp3.loop = true
+	
+	
