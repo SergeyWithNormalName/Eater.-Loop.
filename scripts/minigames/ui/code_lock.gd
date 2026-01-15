@@ -6,6 +6,7 @@ signal unlocked
 @export var code_value: String = "1234"
 
 var _current_input: String = ""
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 
 @onready var display_label: Label = $Panel/VBox/Display
 @onready var info_label: Label = $Panel/VBox/Info
@@ -13,6 +14,8 @@ var _current_input: String = ""
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
+	_prev_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_update_display()
 	
 	for button in $Panel/VBox/Grid.get_children():
@@ -63,6 +66,9 @@ func _update_display() -> void:
 func _close() -> void:
 	get_tree().paused = false
 	queue_free()
+
+func _exit_tree() -> void:
+	Input.set_mouse_mode(_prev_mouse_mode)
 
 func _handle_gamepad_cursor(delta: float) -> void:
 	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")

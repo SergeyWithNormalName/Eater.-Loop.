@@ -95,6 +95,7 @@ func _on_scene_changed(scene: Node) -> void:
 func _update_for_scene(scene: Node) -> void:
 	var path := scene.scene_file_path if scene else ""
 	var in_game := path.find("/scenes/cycles/") != -1
+	_set_mouse_visibility(in_game)
 	if in_game:
 		_apply_level_settings(scene)
 		return
@@ -121,6 +122,12 @@ func _resolve_timer_duration(scene: Node) -> float:
 	if scene.has_method("get_timer_duration"):
 		return float(scene.get_timer_duration())
 	return default_time
+
+func _set_mouse_visibility(in_game: bool) -> void:
+	if in_game:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func get_cycle_number() -> int:
 	return _current_cycle_number

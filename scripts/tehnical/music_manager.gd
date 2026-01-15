@@ -10,6 +10,16 @@ extends Node
 ## Шина, в которую уходит музыка.
 @export var music_bus: String = "Music"
 
+@export_group("Музыка погони")
+## Музыка погони за игроком.
+@export var runner_music_stream: AudioStream = preload("res://audio/MusicEtc/RunnerHARDMUSIC.wav")
+## Громкость музыки погони (дБ).
+@export_range(-80.0, 6.0, 0.1) var runner_music_volume_db: float = -8.0
+## Длительность плавного перехода музыки погони.
+@export_range(0.0, 10.0, 0.1) var runner_music_fade_time: float = 1.0
+
+const RUNNER_MUSIC_PATH := "res://audio/MusicEtc/RunnerHARDMUSIC.wav"
+
 var _player_a: AudioStreamPlayer
 var _player_b: AudioStreamPlayer
 var _active_player: AudioStreamPlayer
@@ -20,6 +30,10 @@ var _is_ducked: bool = false
 var _pre_duck_volume_db: float = 0.0
 var _fade_tween: Tween
 var _stack: Array[Dictionary] = []
+var _runner_player: AudioStreamPlayer
+var _runner_fade_tween: Tween
+var _runner_sources: Dictionary = {}
+var _runner_active: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -31,6 +45,12 @@ func _ready() -> void:
 	add_child(_player_b)
 	_active_player = _player_a
 	_inactive_player = _player_b
+	_runner_player = AudioStreamPlayer.new()
+	_setup_player(_runner_player)
+	add_child(_runner_player)
+	if not _runner_player.finished.is_connected(_on_runner_music_finished):
+		_runner_player.finished.connect(_on_runner_music_finished)
+	set_process(true)
 
 func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0, start_position: float = 0.0) -> void:
 	if stream == null:
@@ -110,8 +130,91 @@ func pop_music(fade_time: float = -1.0) -> void:
 func clear_stack() -> void:
 	_stack.clear()
 
+func set_runner_music_active(source: Object, active: bool) -> void:
+	if source == null:
+		return
+	var id := source.get_instance_id()
+	if active:
+		_runner_sources[id] = true
+	else:
+		_runner_sources.erase(id)
+	_update_runner_music_state()
+
+func _process(_delta: float) -> void:
+	if not _runner_active:
+		return
+	if _runner_player == null:
+		_start_runner_music()
+		return
+	if not _runner_player.playing:
+		_start_runner_music()
+
+func _update_runner_music_state() -> void:
+	var should_play := not _runner_sources.is_empty()
+	_runner_active = should_play
+	if should_play:
+		if _runner_player == null or not _runner_player.playing:
+			_start_runner_music()
+	else:
+		_stop_runner_music()
+
+func _start_runner_music() -> void:
+	var stream := _resolve_runner_stream()
+	if stream == null or _runner_player == null:
+		return
+	_ensure_runner_loop(stream)
+	_runner_player.stream = stream
+	if _runner_fade_tween and _runner_fade_tween.is_running():
+		_runner_fade_tween.kill()
+	_runner_player.volume_db = runner_music_volume_db
+	if _runner_player.playing:
+		_runner_player.stop()
+	_runner_player.play()
+
+func _stop_runner_music() -> void:
+	if _runner_player == null:
+		return
+	if not _runner_player.playing:
+		return
+	_fade_runner_volume(-80.0, runner_music_fade_time, true)
+
+func _fade_runner_volume(target_db: float, duration: float, stop_after: bool = false) -> void:
+	if _runner_fade_tween and _runner_fade_tween.is_running():
+		_runner_fade_tween.kill()
+	_runner_fade_tween = create_tween()
+	_runner_fade_tween.tween_property(_runner_player, "volume_db", target_db, duration)
+	if stop_after:
+		_runner_fade_tween.tween_callback(_runner_player.stop)
+
+func _ensure_runner_loop(stream: AudioStream) -> void:
+	if stream is AudioStreamWAV:
+		var wav: AudioStreamWAV = stream
+		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		return
+	if stream is AudioStreamOggVorbis:
+		var ogg: AudioStreamOggVorbis = stream
+		ogg.loop = true
+		return
+	if stream is AudioStreamMP3:
+		var mp3: AudioStreamMP3 = stream
+		mp3.loop = true
+
+func _resolve_runner_stream() -> AudioStream:
+	if runner_music_stream != null:
+		return runner_music_stream
+	var loaded: Resource = load(RUNNER_MUSIC_PATH)
+	return loaded as AudioStream
+
+func _on_runner_music_finished() -> void:
+	if _runner_active:
+		_start_runner_music()
+
 func _setup_player(player: AudioStreamPlayer) -> void:
-	player.bus = music_bus
+	var bus_name := music_bus
+	if AudioServer.get_bus_index(bus_name) == -1:
+		bus_name = "Master"
+	player.bus = bus_name
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	player.volume_db = -80.0
 

@@ -14,6 +14,7 @@ signal task_completed(success: bool)
 var current_time: float = 0.0
 var _progress: float = 0.0
 var _is_finished: bool = false
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 
 @onready var title_label: Label = $Content/Header/TitleLabel
 @onready var timer_label: Label = $Content/Header/TimerLabel
@@ -23,6 +24,8 @@ var _is_finished: bool = false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
+	_prev_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	current_time = time_limit
 	
 	title_label.text = "Нейросеть глубокий Сик"
@@ -81,6 +84,9 @@ func finish_game(success: bool) -> void:
 			GameState.emit_signal("lab_completed", quest_id)
 	
 	queue_free()
+
+func _exit_tree() -> void:
+	Input.set_mouse_mode(_prev_mouse_mode)
 
 func _handle_gamepad_cursor(delta: float) -> void:
 	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")

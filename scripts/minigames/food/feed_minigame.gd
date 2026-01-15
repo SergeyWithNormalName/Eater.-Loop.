@@ -36,8 +36,11 @@ var eat_sfx_player: AudioStreamPlayer
 var _eaten_count: int = 0
 var _is_won: bool = false
 var _base_viewport: Vector2
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 
 func _ready() -> void:
+	_prev_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if has_node("SFXPlayer"):
 		sfx_player = $SFXPlayer
 	else:
@@ -171,6 +174,7 @@ func _close_game() -> void:
 	
 func _exit_tree() -> void:
 	get_tree().paused = false
+	Input.set_mouse_mode(_prev_mouse_mode)
 	if GameState.has_method("reset_dragging"):
 		GameState.reset_dragging()
 		

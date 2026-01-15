@@ -42,8 +42,8 @@ func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if _update_lamp_freeze_state():
 		return
 	if _is_flashlight_cone_hitting():
-		_try_stun()
-		return
+		if _try_stun():
+			return
 	if _stun_timer > 0.0:
 		return
 	super._on_hitbox_area_body_entered(body)
@@ -53,14 +53,15 @@ func _on_hitbox_area_body_exited(body: Node2D) -> void:
 		_player_in_hitbox = null
 	super._on_hitbox_area_body_exited(body)
 
-func _try_stun() -> void:
+func _try_stun() -> bool:
 	if _lamp_frozen:
-		return
+		return false
 	if _stun_timer > 0.0 or _stun_cooldown_timer > 0.0:
-		return
+		return false
 	_stun_timer = max(0.0, stun_duration)
 	_stun_cooldown_timer = max(0.0, stun_cooldown)
 	_start_knockback()
+	return _stun_timer > 0.0
 
 func _start_knockback() -> void:
 	_knockback_remaining = max(0.0, knockback_distance)

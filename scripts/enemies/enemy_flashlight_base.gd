@@ -69,7 +69,7 @@ func _is_lamp_light_hitting() -> bool:
 		if base_radius <= 0.0:
 			continue
 		var scale_factor = max(light.global_scale.x, light.global_scale.y)
-		var range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
-		if origin.distance_to(global_position) <= range:
+		var light_range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
+		if origin.distance_to(global_position) <= light_range:
 			return true
 	return false

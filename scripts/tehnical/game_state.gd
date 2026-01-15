@@ -1,5 +1,6 @@
 extends Node
 
+@warning_ignore("unused_signal")
 signal lab_completed(quest_id: String)
 signal phone_picked_changed
 signal fridge_interacted_changed

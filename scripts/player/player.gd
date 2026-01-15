@@ -5,6 +5,20 @@ signal player_made_sound
 ## Скорость движения игрока.
 @export var speed: float = 520.0
 
+@export_group("Бег и выносливость")
+## Множитель скорости при беге.
+@export var run_speed_multiplier: float = 1.6
+## Максимальная выносливость.
+@export var stamina_max: float = 5.0
+## Расход выносливости в секунду при беге.
+@export var stamina_drain_rate: float = 1.0
+## Восстановление выносливости в секунду.
+@export var stamina_recovery_rate: float = 0.6
+## Задержка перед восстановлением выносливости (сек).
+@export var stamina_recovery_delay: float = 2.0
+## Минимальная выносливость для старта бега.
+@export var stamina_min_to_run: float = 0.2
+
 @export_group("Audio Settings")
 ## Набор звуков шагов.
 @export var step_sounds: Array[AudioStream] = []
@@ -48,11 +62,14 @@ var _walk_frames: Array[Texture2D] = []
 var _walk_frame_index: int = 0
 var _walk_frame_timer: float = 0.0
 var _is_walking: bool = false
+var _is_running: bool = false
 var _sprite_anim_scale: Vector2 = Vector2.ONE
 var _sprite_under_pivot: bool = false
 var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _step_frame_lookup: Dictionary = {} # Словарь для быстрого поиска кадров шага (0-based)
+var _stamina: float = 0.0
+var _time_since_run: float = 0.0
 
 # Переменные для аудио
 var _step_player: AudioStreamPlayer 
@@ -97,6 +114,7 @@ func _ready() -> void:
 		_flashlight_base_offset = flashlight.offset
 		flashlight.enabled = false 
 	
+	_stamina = stamina_max
 	_apply_facing()
 
 func _physics_process(delta: float) -> void:
@@ -106,7 +124,9 @@ func _physics_process(delta: float) -> void:
 	if abs(direction) < 0.1:
 		direction = 0.0
 	
-	velocity.x = direction * speed
+	_is_running = _resolve_running_state(delta, direction)
+	var current_speed := speed * (run_speed_multiplier if _is_running else 1.0)
+	velocity.x = direction * current_speed
 	velocity.y = 0
 	move_and_slide()
 
@@ -117,6 +137,54 @@ func _physics_process(delta: float) -> void:
 
 	# Обновление анимации
 	_update_walk_animation(delta, direction)
+
+func _resolve_running_state(delta: float, direction: float) -> bool:
+	if direction == 0.0:
+		_time_since_run += delta
+		_try_restore_stamina(delta)
+		return false
+
+	if stamina_max <= 0.0:
+		var unlimited_run := Input.is_action_pressed("run")
+		if unlimited_run:
+			_time_since_run = 0.0
+		else:
+			_time_since_run += delta
+		return unlimited_run
+
+	if Input.is_action_pressed("run") and _stamina > stamina_min_to_run:
+		_time_since_run = 0.0
+		_drain_stamina(delta)
+		return true
+
+	_time_since_run += delta
+	_try_restore_stamina(delta)
+	return false
+
+func _drain_stamina(delta: float) -> void:
+	if stamina_drain_rate <= 0.0:
+		return
+	_stamina = max(0.0, _stamina - stamina_drain_rate * delta)
+
+func _restore_stamina(delta: float) -> void:
+	if stamina_recovery_rate <= 0.0:
+		return
+	if stamina_max <= 0.0:
+		return
+	_stamina = min(stamina_max, _stamina + stamina_recovery_rate * delta)
+
+func _try_restore_stamina(delta: float) -> void:
+	if _time_since_run < stamina_recovery_delay:
+		return
+	_restore_stamina(delta)
+
+func get_stamina_ratio() -> float:
+	if stamina_max <= 0.0:
+		return 1.0
+	return clamp(_stamina / stamina_max, 0.0, 1.0)
+
+func is_running() -> bool:
+	return _is_running
 
 func _play_step_sound() -> void:
 	if step_sounds.is_empty():

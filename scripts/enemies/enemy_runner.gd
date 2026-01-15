@@ -22,6 +22,14 @@ extends "res://scripts/enemy.gd"
 ## Максимальный питч рычания.
 @export var growl_pitch_max: float = 1.05
 
+@export_group("Chase Music")
+## Музыка погони.
+@export var chase_music_stream: AudioStream = preload("res://audio/MusicEtc/RunnerHARDMUSIC.wav")
+## Громкость музыки погони (дБ).
+@export_range(-80.0, 6.0, 0.1) var chase_music_volume_db: float = -8.0
+## Длительность затухания после погони (сек).
+@export_range(0.0, 10.0, 0.1) var chase_music_fade_time: float = 1.0
+
 @export_group("Walk Animation")
 ## Папка с кадрами ходьбы.
 @export var walk_frames_path: String = "res://textures/monster_runner_animation_walking"
@@ -76,6 +84,9 @@ var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _step_frame_lookup: Dictionary = {}
 var _facing_dir: float = 1.0
+var _chase_music_active: bool = false
+var _chase_music_player: AudioStreamPlayer
+var _chase_music_tween: Tween
 
 func _ready() -> void:
 	super._ready()
@@ -94,6 +105,13 @@ func _ready() -> void:
 	_scream_player = AudioStreamPlayer2D.new()
 	_scream_player.bus = "SFX"
 	add_child(_scream_player)
+	
+	_chase_music_player = AudioStreamPlayer.new()
+	_chase_music_player.bus = "Music"
+	_chase_music_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_chase_music_player)
+	if not _chase_music_player.finished.is_connected(_on_chase_music_finished):
+		_chase_music_player.finished.connect(_on_chase_music_finished)
 
 	_reset_growl_timer()
 
@@ -103,6 +121,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var is_chasing := chase_player and _player != null
+	_update_chase_music(is_chasing)
 	if is_chasing:
 		var offset = _player.global_position - global_position
 		if abs(offset.x) < 1.0:
@@ -331,3 +350,61 @@ func _shake_camera() -> void:
 				stored_base = camera.get_meta("enemy_step_base_offset")
 			camera.offset = stored_base
 	)
+
+func _exit_tree() -> void:
+	_update_chase_music(false)
+
+func _update_chase_music(active: bool) -> void:
+	if active == _chase_music_active:
+		return
+	_chase_music_active = active
+	if active:
+		_start_chase_music()
+	else:
+		_stop_chase_music()
+
+func _start_chase_music() -> void:
+	if _chase_music_player == null:
+		return
+	if chase_music_stream == null:
+		return
+	_ensure_chase_music_loop(chase_music_stream)
+	if _chase_music_tween and _chase_music_tween.is_running():
+		_chase_music_tween.kill()
+	_chase_music_player.stream = chase_music_stream
+	_chase_music_player.volume_db = chase_music_volume_db
+	if _chase_music_player.playing:
+		_chase_music_player.stop()
+	_chase_music_player.play()
+
+func _stop_chase_music() -> void:
+	if _chase_music_player == null:
+		return
+	if not _chase_music_player.playing:
+		return
+	if chase_music_fade_time <= 0.0:
+		_chase_music_player.stop()
+		return
+	if _chase_music_tween and _chase_music_tween.is_running():
+		_chase_music_tween.kill()
+	_chase_music_tween = create_tween()
+	_chase_music_tween.tween_property(_chase_music_player, "volume_db", -80.0, chase_music_fade_time)
+	_chase_music_tween.tween_callback(_chase_music_player.stop)
+
+func _on_chase_music_finished() -> void:
+	if _chase_music_active:
+		_start_chase_music()
+
+func _ensure_chase_music_loop(stream: AudioStream) -> void:
+	if stream is AudioStreamWAV:
+		var wav: AudioStreamWAV = stream
+		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		return
+	if stream is AudioStreamOggVorbis:
+		var ogg: AudioStreamOggVorbis = stream
+		ogg.loop = true
+		return
+	if stream is AudioStreamMP3:
+		var mp3: AudioStreamMP3 = stream
+		mp3.loop = true

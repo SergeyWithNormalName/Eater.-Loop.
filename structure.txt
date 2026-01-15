@@ -28,6 +28,8 @@
 │   │   ├── MyHorrorHit_2.wav.import
 │   │   ├── MyHorrorHit_3.wav
 │   │   ├── MyHorrorHit_3.wav.import
+│   │   ├── RunnerHARDMUSIC.wav
+│   │   ├── RunnerHARDMUSIC.wav.import
 │   │   ├── TypeSilentHill.wav
 │   │   └── TypeSilentHill.wav.import
 │   ├── Sereja
@@ -62,7 +64,9 @@
 │   │   │   ├── steps4.wav
 │   │   │   └── steps4.wav.import
 │   │   ├── FlashlightOnOff.wav
-│   │   └── FlashlightOnOff.wav.import
+│   │   ├── FlashlightOnOff.wav.import
+│   │   ├── HeartBeat_1.wav
+│   │   └── HeartBeat_1.wav.import
 │   ├── MusicForEat.mp3
 │   └── MusicForEat.mp3.import
 ├── fonts
@@ -108,6 +112,7 @@
 │   ├── objects
 │   │   ├── generator.tscn
 │   │   ├── lamp.tscn
+│   │   ├── obstacle.tscn
 │   │   └── world_clock.tscn
 │   ├── player
 │   │   └── player.tscn
@@ -166,6 +171,8 @@
 │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   ├── note_object.gd
 │   │   ├── note_object.gd.uid
+│   │   ├── obstacle.gd
+│   │   ├── obstacle.gd.uid
 │   │   ├── phone.gd
 │   │   ├── phone.gd.uid
 │   │   ├── property_change.gd
@@ -196,6 +203,8 @@
 │   │   ├── pause_manager.gd.uid
 │   │   ├── settings_manager.gd
 │   │   ├── settings_manager.gd.uid
+│   │   ├── stamina_bar.gd
+│   │   ├── stamina_bar.gd.uid
 │   │   ├── ui_message.gd
 │   │   └── ui_message.gd.uid
 │   ├── ui
@@ -471,6 +480,8 @@
 │   ├── FonForFood.png.import
 │   ├── Monster.png
 │   ├── Monster.png.import
+│   ├── Monster_2.png
+│   ├── Monster_2.png.import
 │   ├── Tarelka.png
 │   └── Tarelka.png.import
 ├── export_presets.cfg
@@ -479,4 +490,4 @@
 ├── project.godot
 └── structure.txt
 
-50 directories, 430 files
+50 directories, 441 files

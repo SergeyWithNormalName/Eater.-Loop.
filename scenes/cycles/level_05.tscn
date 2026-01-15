@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=103 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -62,6 +62,7 @@
 [ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://textures/walls_floors/TilesFloor1.png" id="68_61vya"]
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://textures/furniture/bedroom/Sweets.png" id="69_6xuyw"]
 [ext_resource type="Texture2D" uid="uid://bbdgtswvtauqi" path="res://textures/furniture/hall/PictureOne.png" id="70_3tees"]
+[ext_resource type="AudioStream" uid="uid://b8mota5j1bj6r" path="res://audio/player/HeartBeat_1.wav" id="70_hi6qj"]
 [ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://textures/furniture/hall/Shkaf1.png" id="71_aurte"]
 [ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://textures/furniture/hall/BootsBoard.png" id="72_2g3o0"]
 [ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://textures/furniture/hall/Boots1.png" id="73_6dg2p"]
@@ -2043,6 +2044,8 @@ texture = ExtResource("61_a0psa")
 position = Vector2(9126, 94)
 script = ExtResource("87_7c4ho")
 affect_on_exit = true
+sfx_stream = ExtResource("70_hi6qj")
+sfx_use_trigger_position = true
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/Trigger"]
