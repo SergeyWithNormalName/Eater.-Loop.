@@ -14,6 +14,8 @@ signal minigame_finished
 @export var background_texture: Texture2D
 ## Громкость музыки в дБ.
 @export_range(-40.0, 6.0, 0.1) var music_volume_db: float = -12.0
+## Длительность затухания фоновой музыки при старте мини-игры.
+@export_range(0.0, 5.0, 0.1) var music_suspend_fade_time: float = 0.3
 
 const DEFAULT_BG: Texture2D = preload("res://textures/FonForFood.png")
 const DEFAULT_MUSIC: AudioStream = preload("res://audio/MusicForEat.mp3")
@@ -36,27 +38,29 @@ var eat_sfx_player: AudioStreamPlayer
 var _eaten_count: int = 0
 var _is_won: bool = false
 var _base_viewport: Vector2
-var _andrey_base_pos: Vector2
-var _food_base_pos: Vector2
-var _andrey_base_scale: Vector2
-var _food_base_scale: Vector2
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
+var _music_suspended: bool = false
 
 func _ready() -> void:
-	if has_node("SFXPlayer"):
-		sfx_player = $SFXPlayer
+	add_to_group("minigame_ui")
+	_prev_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if has_node("SoundsPlayer"):
+		sfx_player = $SoundsPlayer
 	else:
 		sfx_player = AudioStreamPlayer.new()
 		add_child(sfx_player)
-	sfx_player.bus = "SFX"
+	sfx_player.bus = "Sounds"
 	
 	eat_sfx_player = AudioStreamPlayer.new()
-	eat_sfx_player.bus = "SFX"
+	eat_sfx_player.bus = "Sounds"
 	eat_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(eat_sfx_player)
 
 	music_player.bus = "Music"
 	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	music_player.volume_db = music_volume_db
+	_suspend_level_music()
 	get_tree().paused = true
 	if music_player.stream:
 		music_player.play()
@@ -65,13 +69,7 @@ func _ready() -> void:
 		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
 		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
 	)
-	_andrey_base_pos = andrey_sprite.position
-	_food_base_pos = food_container.position
-	_andrey_base_scale = andrey_sprite.scale
-	_food_base_scale = food_container.scale
-	
-	get_viewport().size_changed.connect(_update_layout)
-	_update_layout()
+	_apply_background_layout()
 
 func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null) -> void:
 	if andrey_texture:
@@ -98,6 +96,7 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 		selected_bg = DEFAULT_BG
 	if selected_bg:
 		backfon.texture = selected_bg
+		_apply_background_layout()
 
 	# === ИСПРАВЛЕНИЕ 2: Одна тарелка для всей еды ===
 	# Создаем тарелку ОДИН раз перед тем, как спавнить пельмени
@@ -144,25 +143,19 @@ func _handle_gamepad_cursor(delta: float) -> void:
 		
 		get_viewport().warp_mouse(new_pos)
 
-func _update_layout() -> void:
-	var viewport_size := get_viewport().get_visible_rect().size
+func _apply_background_layout() -> void:
+	if backfon == null or backfon.texture == null:
+		return
 	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
 		return
 	
-	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
-	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
-
-	if backfon and backfon.texture:
-		var tex_size := backfon.texture.get_size()
-		if tex_size.x > 0.0 and tex_size.y > 0.0:
-			var cover_scale: float = max(viewport_size.x / tex_size.x, viewport_size.y / tex_size.y)
-			backfon.scale = Vector2(cover_scale, cover_scale)
-			backfon.position = viewport_size * 0.5
+	var tex_size := backfon.texture.get_size()
+	if tex_size.x <= 0.0 or tex_size.y <= 0.0:
+		return
 	
-	andrey_sprite.position = layout_offset + _andrey_base_pos * scale_factor
-	andrey_sprite.scale = _andrey_base_scale * scale_factor
-	food_container.position = layout_offset + _food_base_pos * scale_factor
-	food_container.scale = _food_base_scale * scale_factor
+	var cover_scale: float = max(_base_viewport.x / tex_size.x, _base_viewport.y / tex_size.y)
+	backfon.scale = Vector2(cover_scale, cover_scale)
+	backfon.position = _base_viewport * 0.5
 
 func _on_food_eaten() -> void:
 	_eaten_count += 1
@@ -182,10 +175,29 @@ func _win() -> void:
 
 func _close_game() -> void:
 	get_tree().paused = false
+	_restore_level_music()
 	minigame_finished.emit()
 	
 func _exit_tree() -> void:
 	get_tree().paused = false
+	_restore_level_music()
+	Input.set_mouse_mode(_prev_mouse_mode)
 	if GameState.has_method("reset_dragging"):
 		GameState.reset_dragging()
+
+func _suspend_level_music() -> void:
+	if MusicManager == null:
+		return
+	if _music_suspended:
+		return
+	MusicManager.push_music(null, music_suspend_fade_time)
+	_music_suspended = true
+
+func _restore_level_music() -> void:
+	if MusicManager == null:
+		return
+	if not _music_suspended:
+		return
+	MusicManager.pop_music(music_suspend_fade_time)
+	_music_suspended = false
 		

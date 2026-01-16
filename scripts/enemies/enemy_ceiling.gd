@@ -8,8 +8,11 @@ extends "res://scripts/enemy.gd"
 @export var only_sound: bool = false
 
 var _heard_player_sound: bool = false
+var _lamp_frozen: bool = false
 
 func _physics_process(_delta: float) -> void:
+	if _apply_lamp_freeze():
+		return
 	if not _should_chase_player():
 		velocity = Vector2.ZERO
 		return
@@ -76,7 +79,40 @@ func _on_player_made_sound() -> void:
 	_heard_player_sound = true
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
+	if _lamp_frozen:
+		return
 	if not _should_chase_player():
 		return
 	if body.is_in_group("player"):
 		_attack_player()
+
+func _apply_lamp_freeze() -> bool:
+	_lamp_frozen = _is_lamp_light_hitting()
+	if not _lamp_frozen:
+		return false
+	velocity = Vector2.ZERO
+	move_and_slide()
+	return true
+
+func _is_lamp_light_hitting() -> bool:
+	var lights := get_tree().get_nodes_in_group("lamp_light")
+	for light_node in lights:
+		var light := light_node as PointLight2D
+		if light == null:
+			continue
+		if not light.enabled:
+			continue
+		if not light.visible:
+			continue
+		if light.texture == null:
+			continue
+
+		var origin := light.global_transform * light.offset
+		var base_radius = max(light.texture.get_width(), light.texture.get_height()) * 0.5
+		if base_radius <= 0.0:
+			continue
+		var scale_factor = max(light.global_scale.x, light.global_scale.y)
+		var light_range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
+		if origin.distance_to(global_position) <= light_range:
+			return true
+	return false

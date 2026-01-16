@@ -5,6 +5,8 @@ extends Node
 var _pause_menu_layer: Node
 var _pause_menu: Node
 var _is_open: bool = false
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
+var _prev_paused_state: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -16,7 +18,7 @@ func _input(event: InputEvent) -> void:
 		return
 	if _is_open:
 		return
-	if get_tree().paused:
+	if get_tree().paused and not _is_minigame_active():
 		return
 	_open_menu()
 	get_viewport().set_input_as_handled()
@@ -24,17 +26,21 @@ func _input(event: InputEvent) -> void:
 func _open_menu() -> void:
 	if pause_menu_scene == null:
 		return
+	_prev_mouse_mode = Input.get_mouse_mode()
+	_prev_paused_state = get_tree().paused
 	_ensure_menu_instance()
 	if _pause_menu and _pause_menu.has_method("open_menu"):
 		_pause_menu.call("open_menu")
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().paused = true
 	_is_open = true
 
 func _request_resume() -> void:
 	if _pause_menu and _pause_menu.has_method("close_menu"):
 		_pause_menu.call("close_menu")
-	get_tree().paused = false
+	get_tree().paused = _prev_paused_state
 	_is_open = false
+	Input.set_mouse_mode(_prev_mouse_mode)
 
 func _ensure_menu_instance() -> void:
 	if is_instance_valid(_pause_menu_layer):
@@ -58,3 +64,12 @@ func _is_menu_scene() -> bool:
 	if current == null:
 		return true
 	return current.scene_file_path.find("/scenes/ui/") != -1
+
+func _is_minigame_active() -> bool:
+	var nodes := get_tree().get_nodes_in_group("minigame_ui")
+	for node in nodes:
+		if node is CanvasItem and node.visible:
+			return true
+		if node.is_inside_tree():
+			return true
+	return false

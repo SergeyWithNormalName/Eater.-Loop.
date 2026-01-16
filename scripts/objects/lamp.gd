@@ -15,6 +15,10 @@ extends Area2D
 @export var turn_on_sfx: AudioStream
 ## Громкость звука включения в дБ.
 @export var turn_on_volume_db: float = 0.0
+## Минимальная высота тона звука (для разнообразия).
+@export_range(0.5, 1.5, 0.01) var switch_pitch_min: float = 0.95
+## Максимальная высота тона звука (для разнообразия).
+@export_range(0.5, 1.5, 0.01) var switch_pitch_max: float = 1.05
 
 @export_group("Light Settings")
 ## Узел PointLight2D для света.
@@ -54,7 +58,7 @@ func _ready() -> void:
 	_update_light_enabled(false)
 
 	_sfx_player = AudioStreamPlayer2D.new()
-	_sfx_player.bus = "SFX"
+	_sfx_player.bus = "Sounds"
 	_sfx_player.volume_db = turn_on_volume_db
 	add_child(_sfx_player)
 
@@ -75,15 +79,20 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
+		_update_prompt()
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_lamp(self)
 
 func _toggle() -> void:
 	if _is_on:
 		_is_on = false
 		_update_light_enabled(false)
+		_play_switch_sound()
+		_update_prompt()
 		return
 
 	if not _has_power():
@@ -92,6 +101,8 @@ func _toggle() -> void:
 
 	_is_on = true
 	_update_light_enabled(true)
+	_play_switch_sound()
+	_update_prompt()
 
 func _has_power() -> bool:
 	if GameState == null:
@@ -104,15 +115,18 @@ func _update_light_enabled(play_sound: bool) -> void:
 	var should_enable = _is_on and _has_power()
 	var was_enabled = _light.enabled
 	_light.enabled = should_enable
-	if play_sound and should_enable and not was_enabled:
-		_play_turn_on_sound()
+	if play_sound and was_enabled != should_enable:
+		_play_switch_sound()
+	_update_prompt()
 
-func _play_turn_on_sound() -> void:
+func _play_switch_sound() -> void:
 	if turn_on_sfx == null:
 		return
 	_sfx_player.stream = turn_on_sfx
 	_sfx_player.volume_db = turn_on_volume_db
-	_sfx_player.pitch_scale = 1.0
+	var min_pitch: float = min(switch_pitch_min, switch_pitch_max)
+	var max_pitch: float = max(switch_pitch_min, switch_pitch_max)
+	_sfx_player.pitch_scale = randf_range(min_pitch, max_pitch)
 	_sfx_player.play()
 
 func _apply_light_settings() -> void:
@@ -138,3 +152,10 @@ func _on_electricity_changed(_is_on: bool) -> void:
 
 func is_light_active() -> bool:
 	return _light != null and _light.enabled
+
+func _update_prompt() -> void:
+	if not InteractionPrompts:
+		return
+	if not _player_inside:
+		return
+	InteractionPrompts.show_lamp(self, InteractionPrompts.get_default_lamp_text(_is_on))

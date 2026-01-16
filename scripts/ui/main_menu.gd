@@ -37,6 +37,11 @@ extends "res://scripts/ui/menu_base.gd"
 
 var _confirm_action: Callable
 var _credits_active: bool = false
+const PANEL_MAIN := "main"
+const PANEL_SETTINGS := "settings"
+const PANEL_CREDITS := "credits"
+var _active_panel: String = PANEL_MAIN
+var _panel_before_confirm: String = PANEL_MAIN
 
 func _ready() -> void:
 	super._ready()
@@ -84,6 +89,7 @@ func _update_continue_state() -> void:
 	_continue_button.disabled = not can_continue
 
 func _show_main() -> void:
+	_active_panel = PANEL_MAIN
 	_main_panel.visible = true
 	_settings_panel.visible = false
 	_credits_panel.visible = false
@@ -99,6 +105,7 @@ func _on_continue_pressed() -> void:
 	_start_continue()
 
 func _on_settings_pressed() -> void:
+	_active_panel = PANEL_SETTINGS
 	_main_panel.visible = false
 	_settings_panel.visible = true
 	_credits_panel.visible = false
@@ -107,6 +114,7 @@ func _on_settings_pressed() -> void:
 		_settings_panel.call("focus_default")
 
 func _on_credits_pressed() -> void:
+	_active_panel = PANEL_CREDITS
 	_main_panel.visible = false
 	_settings_panel.visible = false
 	_confirm_panel.visible = false
@@ -141,20 +149,29 @@ func _start_continue() -> void:
 	await UIMessage.change_scene_with_fade(scene)
 
 func _show_confirm(message: String, action: Callable) -> void:
+	_panel_before_confirm = _active_panel
 	_confirm_label.text = message
 	_confirm_action = action
+	_main_panel.visible = false
+	_settings_panel.visible = false
+	_credits_panel.visible = false
+	_credits_active = false
 	_confirm_panel.visible = true
 	_confirm_yes.grab_focus()
 
 func _hide_confirm() -> void:
 	_confirm_panel.visible = false
 	_confirm_action = Callable()
-	_new_game_button.grab_focus()
+	_restore_panel_after_confirm()
 
 func _on_confirm_yes() -> void:
 	_confirm_panel.visible = false
-	if _confirm_action.is_valid():
-		_confirm_action.call()
+	var action := _confirm_action
+	_confirm_action = Callable()
+	if action.is_valid():
+		action.call()
+	else:
+		_restore_panel_after_confirm()
 
 func _hide_settings() -> void:
 	_show_main()
@@ -162,6 +179,15 @@ func _hide_settings() -> void:
 func _hide_credits() -> void:
 	_credits_active = false
 	_show_main()
+
+func _restore_panel_after_confirm() -> void:
+	match _panel_before_confirm:
+		PANEL_SETTINGS:
+			_on_settings_pressed()
+		PANEL_CREDITS:
+			_on_credits_pressed()
+		_:
+			_show_main()
 
 func _play_menu_music() -> void:
 	if MusicManager == null or menu_music == null:

@@ -27,7 +27,7 @@ func _ready() -> void:
 			_interact_area.body_exited.connect(_on_body_exited)
 
 	_sfx_player = AudioStreamPlayer2D.new()
-	_sfx_player.bus = "SFX"
+	_sfx_player.bus = "Sounds"
 	_sfx_player.volume_db = power_on_volume_db
 	add_child(_sfx_player)
 
@@ -40,10 +40,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _activate() -> void:
 	if GameState != null and GameState.electricity_on:

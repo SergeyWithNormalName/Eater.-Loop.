@@ -1,10 +1,18 @@
 .
 ├── audio
 │   ├── AndreyEating
+│   │   ├── DushuProdat.wav
+│   │   ├── DushuProdat.wav.import
 │   │   ├── Nam-nam_1.wav
 │   │   ├── Nam-nam_1.wav.import
+│   │   ├── Ohuenno.wav
+│   │   ├── Ohuenno.wav.import
+│   │   ├── Pizdato.wav
+│   │   ├── Pizdato.wav.import
 │   │   ├── Poel_1.wav
-│   │   └── Poel_1.wav.import
+│   │   ├── Poel_1.wav.import
+│   │   ├── Upitanaya_Bitch.wav
+│   │   └── Upitanaya_Bitch.wav.import
 │   ├── MusicEtc
 │   │   ├── AlienSounds.wav
 │   │   ├── AlienSounds.wav.import
@@ -20,8 +28,15 @@
 │   │   ├── MyHorrorHit_2.wav.import
 │   │   ├── MyHorrorHit_3.wav
 │   │   ├── MyHorrorHit_3.wav.import
+│   │   ├── RunnerHARDMUSIC.wav
+│   │   ├── RunnerHARDMUSIC.wav.import
 │   │   ├── TypeSilentHill.wav
 │   │   └── TypeSilentHill.wav.import
+│   ├── Sereja
+│   │   ├── Hahaha.wav
+│   │   ├── Hahaha.wav.import
+│   │   ├── JokeAboutChicken.wav
+│   │   └── JokeAboutChicken.wav.import
 │   ├── furniture
 │   │   ├── door
 │   │   │   ├── door_locked1.wav
@@ -32,10 +47,14 @@
 │   │   ├── FridgeNoizeE.wav.import
 │   │   ├── OpenFridgeE.wav
 │   │   ├── OpenFridgeE.wav.import
+│   │   ├── OutOfBed.wav
+│   │   ├── OutOfBed.wav.import
 │   │   ├── ScaryStepsAndDoor.mp3
 │   │   ├── ScaryStepsAndDoor.mp3.import
 │   │   ├── door_unlocked.wav
-│   │   └── door_unlocked.wav.import
+│   │   ├── door_unlocked.wav.import
+│   │   ├── lamp.wav
+│   │   └── lamp.wav.import
 │   ├── player
 │   │   ├── steps
 │   │   │   ├── steps1.wav
@@ -47,7 +66,9 @@
 │   │   │   ├── steps4.wav
 │   │   │   └── steps4.wav.import
 │   │   ├── FlashlightOnOff.wav
-│   │   └── FlashlightOnOff.wav.import
+│   │   ├── FlashlightOnOff.wav.import
+│   │   ├── HeartBeat_1.wav
+│   │   └── HeartBeat_1.wav.import
 │   ├── MusicForEat.mp3
 │   └── MusicForEat.mp3.import
 ├── fonts
@@ -93,6 +114,7 @@
 │   ├── objects
 │   │   ├── generator.tscn
 │   │   ├── lamp.tscn
+│   │   ├── obstacle.tscn
 │   │   └── world_clock.tscn
 │   ├── player
 │   │   └── player.tscn
@@ -151,6 +173,8 @@
 │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   ├── note_object.gd
 │   │   ├── note_object.gd.uid
+│   │   ├── obstacle.gd
+│   │   ├── obstacle.gd.uid
 │   │   ├── phone.gd
 │   │   ├── phone.gd.uid
 │   │   ├── property_change.gd
@@ -169,6 +193,10 @@
 │   │   ├── game_director.gd.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
+│   │   ├── interaction_prompts.gd
+│   │   ├── interaction_prompts.gd.uid
+│   │   ├── level.gd
+│   │   ├── level.gd.uid
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── music_manager.gd
@@ -177,6 +205,8 @@
 │   │   ├── pause_manager.gd.uid
 │   │   ├── settings_manager.gd
 │   │   ├── settings_manager.gd.uid
+│   │   ├── stamina_bar.gd
+│   │   ├── stamina_bar.gd.uid
 │   │   ├── ui_message.gd
 │   │   └── ui_message.gd.uid
 │   ├── ui
@@ -439,7 +469,9 @@
 │   │   ├── WindowKilled2.png
 │   │   ├── WindowKilled2.png.import
 │   │   ├── WindowKilled3.png
-│   │   └── WindowKilled3.png.import
+│   │   ├── WindowKilled3.png.import
+│   │   ├── WindowWithMonster.png
+│   │   └── WindowWithMonster.png.import
 │   ├── Andry.png
 │   ├── Andry.png.import
 │   ├── AndryWithFlashlight.png
@@ -452,12 +484,15 @@
 │   ├── FonForFood.png.import
 │   ├── Monster.png
 │   ├── Monster.png.import
+│   ├── Monster_2.png
+│   ├── Monster_2.png.import
 │   ├── Tarelka.png
 │   └── Tarelka.png.import
+├── default_bus_layout.tres
 ├── export_presets.cfg
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-49 directories, 412 files
+50 directories, 446 files

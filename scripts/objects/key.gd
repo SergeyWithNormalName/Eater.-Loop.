@@ -15,10 +15,14 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = body
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body == _player_in_range:
 		_player_in_range = null
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _player_in_range != null:
@@ -29,4 +33,6 @@ func _pickup() -> void:
 		_player_in_range.add_key(key_id)
 
 	UIMessage.show_text("%s: %s" % [pickup_message, key_name])
+	if InteractionPrompts:
+		InteractionPrompts.hide_interact(self)
 	queue_free()

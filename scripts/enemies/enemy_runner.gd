@@ -22,6 +22,14 @@ extends "res://scripts/enemy.gd"
 ## Максимальный питч рычания.
 @export var growl_pitch_max: float = 1.05
 
+@export_group("Chase Music")
+## Музыка погони.
+@export var chase_music: AudioStream
+## Громкость музыки погони (дБ).
+@export_range(-80.0, 6.0, 0.1) var chase_music_volume_db: float = -6.0
+## Длительность плавного затухания музыки при окончании погони.
+@export_range(0.0, 10.0, 0.1) var chase_music_fade_out_time: float = 2.0
+
 @export_group("Walk Animation")
 ## Папка с кадрами ходьбы.
 @export var walk_frames_path: String = "res://textures/monster_runner_animation_walking"
@@ -36,7 +44,6 @@ extends "res://scripts/enemy.gd"
 ## Конечный кадр цикла (1-based), -1 = последний кадр.
 @export var walk_loop_end_index: int = -1
 ## Номера кадров (начиная с 1), на которых должен звучать шаг.
-## Например: [2, 9] означает, что звук будет на 2-м и 9-м кадре анимации.
 @export var step_frame_indices: Array[int] = [2, 9]
 
 @export_group("Idle Wander")
@@ -76,6 +83,7 @@ var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _step_frame_lookup: Dictionary = {}
 var _facing_dir: float = 1.0
+var _chase_music_started: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -148,6 +156,28 @@ func _play_scream() -> void:
 	_scream_player.volume_db = scream_volume_db
 	_scream_player.pitch_scale = randf_range(0.95, 1.05)
 	_scream_player.play()
+
+func _start_chase_music() -> void:
+	if _chase_music_started:
+		return
+	if chase_music == null:
+		return
+	if MusicManager == null:
+		return
+	
+	_chase_music_started = true
+	# Резкий старт музыки (fade_time = 0.0)
+	MusicManager.push_music(chase_music, 0.0, chase_music_volume_db)
+
+func _stop_chase_music() -> void:
+	if not _chase_music_started:
+		return
+	if MusicManager == null:
+		return
+	
+	_chase_music_started = false
+	# Плавное затухание
+	MusicManager.pop_music(chase_music_fade_out_time)
 
 func _reset_growl_timer() -> void:
 	var min_val = max(0.1, growl_interval_min)
@@ -302,6 +332,13 @@ func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
 	if body.is_in_group("player"):
 		_play_scream()
+		_start_chase_music()
+
+func _on_detection_area_body_exited(body: Node) -> void:
+	var was_player := body == _player
+	super._on_detection_area_body_exited(body)
+	if was_player:
+		_stop_chase_music()
 
 func _shake_camera() -> void:
 	if camera_shake_intensity <= 0.0 or camera_shake_duration <= 0.0:
@@ -329,3 +366,8 @@ func _shake_camera() -> void:
 				stored_base = camera.get_meta("enemy_step_base_offset")
 			camera.offset = stored_base
 	)
+
+func _exit_tree() -> void:
+	_stop_chase_music()
+	
+	

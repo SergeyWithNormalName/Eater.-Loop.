@@ -29,7 +29,7 @@ func _sync_from_settings() -> void:
 		return
 	_master_slider.value = SettingsManager.get_master_volume_db()
 	_music_slider.value = SettingsManager.get_music_volume_db()
-	_sfx_slider.value = SettingsManager.get_sfx_volume_db()
+	_sfx_slider.value = SettingsManager.get_sounds_volume_db()
 	_fullscreen_check.button_pressed = SettingsManager.get_fullscreen()
 	_vsync_check.button_pressed = SettingsManager.get_vsync()
 
@@ -43,7 +43,7 @@ func _on_music_changed(value: float) -> void:
 
 func _on_sfx_changed(value: float) -> void:
 	if SettingsManager:
-		SettingsManager.set_sfx_volume_db(value)
+		SettingsManager.set_sounds_volume_db(value)
 
 func _on_fullscreen_toggled(pressed: bool) -> void:
 	if SettingsManager:

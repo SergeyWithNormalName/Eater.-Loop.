@@ -33,12 +33,8 @@ var tasks = [
 var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
-var _base_viewport: Vector2
-var _content_base_pos: Vector2
-var _content_base_scale: Vector2
+var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 
-@onready var content: Control = $Content
-@onready var background: ColorRect = $Content/Background
 @onready var drag_layer: Control = $Content/DragLayer
 @onready var query_container: HBoxContainer = $Content/QueryArea
 @onready var pool_container: GridContainer = $Content/WordPool
@@ -52,22 +48,14 @@ var slot_scene = preload("res://scenes/minigames/ui/drop_slot.tscn")
 var word_scene = preload("res://scenes/minigames/ui/drag_word.tscn")
 
 func _ready():
+	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Ставим игру на паузу
 	get_tree().paused = true
+	_prev_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	current_time = time_limit
-	
-	_base_viewport = Vector2(
-		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
-		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
-	)
-	content.size = _base_viewport
-	background.custom_minimum_size = _base_viewport
-	_content_base_pos = content.position
-	_content_base_scale = content.scale
-	get_viewport().size_changed.connect(_update_layout)
-	_update_layout()
-	
+
 	update_progress_ui()
 	load_task(0)
 
@@ -207,13 +195,6 @@ func finish_game(success: bool):
 		
 	queue_free() # Закрываем мини-игру
 
-func _update_layout() -> void:
-	var viewport_size := get_viewport().get_visible_rect().size
-	if _base_viewport.x <= 0.0 or _base_viewport.y <= 0.0:
-		return
-	
-	var scale_factor: float = min(viewport_size.x / _base_viewport.x, viewport_size.y / _base_viewport.y)
-	var layout_offset: Vector2 = (viewport_size - _base_viewport * scale_factor) * 0.5
-	content.position = layout_offset + _content_base_pos * scale_factor
-	content.scale = _content_base_scale * scale_factor
+func _exit_tree() -> void:
+	Input.set_mouse_mode(_prev_mouse_mode)
 	

@@ -8,12 +8,12 @@ extends Control
 ## Размер шрифта для текста/описаний.
 @export var body_font_size: int = 32
 
-@export_group("SFX")
+@export_group("Sounds")
 ## Звук наведения.
 @export var hover_sfx: AudioStream
 ## Звук нажатия.
 @export var click_sfx: AudioStream
-## Громкость SFX (дБ).
+## Громкость звуков (дБ).
 @export_range(-40.0, 6.0, 0.1) var sfx_volume_db: float = -6.0
 
 @export_group("Визуальный отклик")
@@ -25,6 +25,7 @@ extends Control
 @onready var _sfx_player: AudioStreamPlayer = _resolve_sfx_player()
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_apply_theme()
 	_wire_buttons()
 
@@ -34,7 +35,7 @@ func _apply_theme() -> void:
 	if not regular_font:
 		return
 
-	var theme := Theme.new()
+	var menu_theme := Theme.new()
 	var body_font := FontVariation.new()
 	body_font.base_font = regular_font
 	body_font.spacing_glyph = 3
@@ -43,13 +44,13 @@ func _apply_theme() -> void:
 	title_font.base_font = bold_font if bold_font else regular_font
 	title_font.spacing_glyph = 4
 
-	theme.set_font("font", "Label", body_font)
-	theme.set_font_size("font_size", "Label", body_font_size)
+	menu_theme.set_font("font", "Label", body_font)
+	menu_theme.set_font_size("font_size", "Label", body_font_size)
 
-	theme.set_font("font", "Button", body_font)
-	theme.set_font_size("font_size", "Button", button_font_size)
+	menu_theme.set_font("font", "Button", body_font)
+	menu_theme.set_font_size("font_size", "Button", button_font_size)
 
-	set_theme(theme)
+	set_theme(menu_theme)
 	set_meta("menu_title_font", title_font)
 
 func apply_title_style(label: Label) -> void:

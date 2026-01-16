@@ -3,14 +3,38 @@ extends CanvasLayer #
 ## Длительность показа сообщений по умолчанию.
 @export var default_duration: float = 2.0 #
 
+@export_group("Подсказки")
+## Цвет затемнения фона подсказки.
+@export var hint_overlay_color: Color = Color(0, 0, 0, 0.7)
+## Цвет окна подсказки.
+@export var hint_panel_color: Color = Color(0.12, 0.1, 0.08, 0.95)
+## Доля ширины окна подсказки относительно экрана.
+@export_range(0.4, 0.95, 0.01) var hint_panel_width_ratio: float = 0.85
+## Доля высоты окна подсказки относительно экрана.
+@export_range(0.4, 0.95, 0.01) var hint_panel_height_ratio: float = 0.75
+## Размер шрифта текста подсказки.
+@export var hint_text_font_size: int = 48
+## Доля высоты окна под картинку.
+@export_range(0.2, 0.8, 0.01) var hint_image_height_ratio: float = 0.45
+
 var _label: Label
 var _timer: Timer
 var _fade_rect: ColorRect
+var _sfx_player: AudioStreamPlayer
 
 # --- Переменные для записок ---
 var _note_bg: ColorRect      #
 var _note_image: TextureRect #
 var _is_viewing_note: bool = false #
+
+# --- Переменные для подсказок ---
+var _hint_bg: ColorRect
+var _hint_panel: PanelContainer
+var _hint_image: TextureRect
+var _hint_label: Label
+var _is_viewing_hint: bool = false
+var _hint_prev_paused: bool = false
+var _hint_pause_requested: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS #
@@ -56,7 +80,13 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_timeout) #
 	add_child(_timer) #
 	
+	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.bus = "Sounds"
+	_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_sfx_player)
+	
 	_setup_note_viewer() #
+	_setup_hint_viewer()
 
 func _setup_note_viewer() -> void:
 	# Фон под запиской
@@ -74,6 +104,62 @@ func _setup_note_viewer() -> void:
 	_note_image.visible = false #
 	add_child(_note_image) #
 
+func _setup_hint_viewer() -> void:
+	_hint_bg = ColorRect.new()
+	_hint_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_hint_bg.color = hint_overlay_color
+	_hint_bg.visible = false
+	_hint_bg.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_hint_bg)
+
+	_hint_panel = PanelContainer.new()
+	_hint_panel.visible = false
+	_hint_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_hint_panel)
+
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = hint_panel_color
+	panel_style.corner_radius_top_left = 16
+	panel_style.corner_radius_top_right = 16
+	panel_style.corner_radius_bottom_left = 16
+	panel_style.corner_radius_bottom_right = 16
+	panel_style.set_border_width_all(2)
+	panel_style.border_color = Color(1, 1, 1, 0.15)
+	_hint_panel.add_theme_stylebox_override("panel", panel_style)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 32)
+	margin.add_theme_constant_override("margin_right", 32)
+	margin.add_theme_constant_override("margin_top", 24)
+	margin.add_theme_constant_override("margin_bottom", 24)
+	_hint_panel.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 20)
+	margin.add_child(vbox)
+
+	_hint_image = TextureRect.new()
+	_hint_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_hint_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_hint_image.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_hint_image.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_hint_image.visible = false
+	vbox.add_child(_hint_image)
+
+	_hint_label = Label.new()
+	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hint_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_hint_label.add_theme_font_size_override("font_size", hint_text_font_size)
+	var base_font = load("res://fonts/AmaticSC-Regular.ttf")
+	if base_font:
+		var font_variation = FontVariation.new()
+		font_variation.base_font = base_font
+		font_variation.spacing_glyph = 3
+		_hint_label.add_theme_font_override("font", font_variation)
+	vbox.add_child(_hint_label)
+
 func show_note(texture: Texture2D) -> void:
 	if texture == null: return #
 	_is_viewing_note = true #
@@ -88,7 +174,50 @@ func hide_note() -> void:
 	_note_image.visible = false #
 	get_tree().paused = false #
 
+func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true) -> void:
+	var t := text.strip_edges()
+	if t == "":
+		return
+	_is_viewing_hint = true
+	_hint_label.text = t
+	_hint_image.texture = texture
+	_hint_image.visible = texture != null
+	_hint_bg.color = hint_overlay_color
+	_hint_bg.visible = true
+	_hint_panel.visible = true
+	_hint_prev_paused = get_tree().paused
+	_hint_pause_requested = pause_game
+	if pause_game:
+		get_tree().paused = true
+	_apply_hint_layout()
+
+func hide_hint() -> void:
+	if not _is_viewing_hint:
+		return
+	_is_viewing_hint = false
+	_hint_bg.visible = false
+	_hint_panel.visible = false
+	if _hint_pause_requested:
+		get_tree().paused = _hint_prev_paused
+
+func _apply_hint_layout() -> void:
+	var viewport_size := get_viewport().get_visible_rect().size
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return
+	var panel_size = Vector2(
+		viewport_size.x * hint_panel_width_ratio,
+		viewport_size.y * hint_panel_height_ratio
+	)
+	_hint_panel.size = panel_size
+	_hint_panel.position = (viewport_size - panel_size) * 0.5
+	_hint_image.custom_minimum_size = Vector2(0, panel_size.y * hint_image_height_ratio)
+
 func _input(event: InputEvent) -> void:
+	if _is_viewing_hint:
+		if event.is_action_pressed("mg_cancel") or event.is_action_pressed("ui_cancel"):
+			get_viewport().set_input_as_handled()
+			hide_hint()
+			return
 	if _is_viewing_note: #
 		if event.is_action_pressed("mg_cancel") or event.is_action_pressed("ui_cancel"): #
 			get_viewport().set_input_as_handled() #
@@ -100,6 +229,14 @@ func show_text(text: String, duration: float = -1.0) -> void:
 	_label.text = t #
 	_label.visible = true #
 	_timer.start(duration if duration > 0.0 else default_duration) #
+
+func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
+	if stream == null:
+		return
+	_sfx_player.stream = stream
+	_sfx_player.volume_db = volume_db
+	_sfx_player.pitch_scale = pitch_scale
+	_sfx_player.play()
 
 func _on_timeout() -> void:
 	_label.visible = false #
@@ -113,6 +250,11 @@ func fade_in(duration: float = 0.5) -> void:
 	var tween = create_tween() #
 	await tween.tween_property(_fade_rect, "color:a", 0.0, duration).finished #
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE #
+
+func is_screen_dark(threshold: float = 0.01) -> bool:
+	if _fade_rect == null:
+		return false
+	return _fade_rect.color.a > threshold
 
 func change_scene_with_fade(new_scene: PackedScene, duration: float = 0.5) -> void:
 	_track_scene(new_scene)

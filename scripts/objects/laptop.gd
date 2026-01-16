@@ -74,10 +74,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func interact():
 	_try_interact()
@@ -103,6 +107,7 @@ func _try_interact() -> void:
 		
 	if minigame_scene:
 		_is_interacting = true
+		_set_prompts_enabled(false)
 		var game_instance = minigame_scene.instantiate()
 		
 		# Передаем параметры в инстанс игры
@@ -123,6 +128,7 @@ func _try_interact() -> void:
 
 func _on_minigame_closed():
 	_is_interacting = false
+	_set_prompts_enabled(true)
 	# Проверяем через GameState, выполнилась ли работа
 	if quest_id in GameState.completed_labs:
 		is_done = true
@@ -169,4 +175,15 @@ func _show_completed_note_if_enabled() -> bool:
 	else:
 		UIMessage.show_text(completed_note_empty_message)
 	return true
+
+func _set_prompts_enabled(enabled: bool) -> void:
+	if InteractionPrompts == null:
+		return
+	if InteractionPrompts.has_method("set_prompts_enabled"):
+		InteractionPrompts.set_prompts_enabled(enabled)
+	elif enabled:
+		if _player_inside:
+			InteractionPrompts.show_interact(self)
+	else:
+		InteractionPrompts.hide_interact(self)
 		

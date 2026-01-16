@@ -34,6 +34,10 @@ const EXIT_WARNING := "Несохранённые данные будут пот
 @onready var _confirm_no: Button = $ConfirmPanel/VBox/Buttons/NoButton
 
 var _confirm_action: Callable
+const PANEL_MAIN := "main"
+const PANEL_SETTINGS := "settings"
+var _active_panel: String = PANEL_MAIN
+var _panel_before_confirm: String = PANEL_MAIN
 
 func _ready() -> void:
 	super._ready()
@@ -76,6 +80,7 @@ func _connect_buttons() -> void:
 		_settings_panel.connect("closed", _hide_settings)
 
 func _show_main() -> void:
+	_active_panel = PANEL_MAIN
 	_main_panel.visible = true
 	_settings_panel.visible = false
 	_confirm_panel.visible = false
@@ -89,6 +94,7 @@ func _on_new_game_pressed() -> void:
 	_show_confirm("Точно начать новую игру?", _start_new_game)
 
 func _on_settings_pressed() -> void:
+	_active_panel = PANEL_SETTINGS
 	_main_panel.visible = false
 	_settings_panel.visible = true
 	_confirm_panel.visible = false
@@ -128,22 +134,37 @@ func _exit_game() -> void:
 	get_tree().quit()
 
 func _show_confirm(message: String, action: Callable) -> void:
+	_panel_before_confirm = _active_panel
 	_confirm_label.text = message
 	_confirm_action = action
+	_main_panel.visible = false
+	_settings_panel.visible = false
 	_confirm_panel.visible = true
 	_confirm_yes.grab_focus()
 
 func _hide_confirm() -> void:
 	_confirm_panel.visible = false
 	_confirm_action = Callable()
+	_restore_panel_after_confirm()
 
 func _on_confirm_yes() -> void:
 	_confirm_panel.visible = false
-	if _confirm_action.is_valid():
-		_confirm_action.call()
+	var action := _confirm_action
+	_confirm_action = Callable()
+	if action.is_valid():
+		action.call()
+	else:
+		_restore_panel_after_confirm()
 
 func _hide_settings() -> void:
 	_show_main()
+
+func _restore_panel_after_confirm() -> void:
+	match _panel_before_confirm:
+		PANEL_SETTINGS:
+			_on_settings_pressed()
+		_:
+			_show_main()
 
 func _play_menu_music() -> void:
 	if MusicManager == null or menu_music == null:

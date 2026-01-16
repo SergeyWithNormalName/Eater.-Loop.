@@ -4,7 +4,7 @@ const SETTINGS_PATH := "user://settings.cfg"
 
 var _master_volume_db: float = -6.0
 var _music_volume_db: float = -10.0
-var _sfx_volume_db: float = -6.0
+var _sounds_volume_db: float = -6.0
 var _fullscreen: bool = false
 var _vsync: bool = true
 
@@ -20,8 +20,11 @@ func get_master_volume_db() -> float:
 func get_music_volume_db() -> float:
 	return _music_volume_db
 
+func get_sounds_volume_db() -> float:
+	return _sounds_volume_db
+
 func get_sfx_volume_db() -> float:
-	return _sfx_volume_db
+	return get_sounds_volume_db()
 
 func get_fullscreen() -> bool:
 	return _fullscreen
@@ -39,10 +42,13 @@ func set_music_volume_db(value: float) -> void:
 	_apply_music_volume()
 	_save_settings()
 
-func set_sfx_volume_db(value: float) -> void:
-	_sfx_volume_db = clamp(value, -80.0, 0.0)
-	_apply_sfx_volume()
+func set_sounds_volume_db(value: float) -> void:
+	_sounds_volume_db = clamp(value, -80.0, 0.0)
+	_apply_sounds_volume()
 	_save_settings()
+
+func set_sfx_volume_db(value: float) -> void:
+	set_sounds_volume_db(value)
 
 func set_fullscreen(enabled: bool) -> void:
 	_fullscreen = enabled
@@ -56,7 +62,7 @@ func set_vsync(enabled: bool) -> void:
 
 func _ensure_audio_buses() -> void:
 	_ensure_bus("Music")
-	_ensure_bus("SFX")
+	_ensure_bus("Sounds")
 
 func _ensure_bus(bus_name: String) -> void:
 	var index := AudioServer.get_bus_index(bus_name)
@@ -70,7 +76,7 @@ func _ensure_bus(bus_name: String) -> void:
 func _apply_all() -> void:
 	_apply_master_volume()
 	_apply_music_volume()
-	_apply_sfx_volume()
+	_apply_sounds_volume()
 	_apply_fullscreen()
 	_apply_vsync()
 
@@ -84,10 +90,10 @@ func _apply_music_volume() -> void:
 	if index != -1:
 		AudioServer.set_bus_volume_db(index, _music_volume_db)
 
-func _apply_sfx_volume() -> void:
-	var index := AudioServer.get_bus_index("SFX")
+func _apply_sounds_volume() -> void:
+	var index := AudioServer.get_bus_index("Sounds")
 	if index != -1:
-		AudioServer.set_bus_volume_db(index, _sfx_volume_db)
+		AudioServer.set_bus_volume_db(index, _sounds_volume_db)
 
 func _apply_fullscreen() -> void:
 	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if _fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
@@ -103,7 +109,10 @@ func _load_settings() -> void:
 		return
 	_master_volume_db = config.get_value("audio", "master_db", _master_volume_db)
 	_music_volume_db = config.get_value("audio", "music_db", _music_volume_db)
-	_sfx_volume_db = config.get_value("audio", "sfx_db", _sfx_volume_db)
+	if config.has_section_key("audio", "sounds_db"):
+		_sounds_volume_db = config.get_value("audio", "sounds_db", _sounds_volume_db)
+	else:
+		_sounds_volume_db = config.get_value("audio", "sfx_db", _sounds_volume_db)
 	_fullscreen = config.get_value("video", "fullscreen", _fullscreen)
 	_vsync = config.get_value("video", "vsync", _vsync)
 
@@ -111,7 +120,8 @@ func _save_settings() -> void:
 	var config := ConfigFile.new()
 	config.set_value("audio", "master_db", _master_volume_db)
 	config.set_value("audio", "music_db", _music_volume_db)
-	config.set_value("audio", "sfx_db", _sfx_volume_db)
+	config.set_value("audio", "sounds_db", _sounds_volume_db)
+	config.set_value("audio", "sfx_db", _sounds_volume_db)
 	config.set_value("video", "fullscreen", _fullscreen)
 	config.set_value("video", "vsync", _vsync)
 	config.save(SETTINGS_PATH)

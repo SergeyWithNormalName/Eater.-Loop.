@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	# Создаем аудио-плеер программно
 	_audio_player = AudioStreamPlayer2D.new()
-	_audio_player.bus = "SFX"
+	_audio_player.bus = "Sounds"
 	# Убираем затухание по дистанции, чтобы звук двери был четким, даже если камера чуть в стороне
 	_audio_player.max_distance = 2000 
 	add_child(_audio_player)
@@ -44,10 +44,14 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_in_range = body
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body == _player_in_range:
 		_player_in_range = null
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_transitioning: return

@@ -21,12 +21,12 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 	
 	_ring_player = AudioStreamPlayer.new()
-	_ring_player.bus = "SFX"
+	_ring_player.bus = "Sounds"
 	_ring_player.stream = ring_sound
 	add_child(_ring_player)
 
 	_pickup_player = AudioStreamPlayer.new()
-	_pickup_player.bus = "SFX"
+	_pickup_player.bus = "Sounds"
 	_pickup_player.stream = pickup_sound
 	add_child(_pickup_player)
 	
@@ -47,10 +47,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
+		if InteractionPrompts:
+			InteractionPrompts.show_interact(self)
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = false
+		if InteractionPrompts:
+			InteractionPrompts.hide_interact(self)
 
 func _start_ringing() -> void:
 	if _is_picked:
@@ -74,6 +78,8 @@ func _pickup() -> void:
 	_is_picked = true
 	_ring_timer.stop()
 	_ring_player.stop()
+	if InteractionPrompts:
+		InteractionPrompts.hide_interact(self)
 	if pickup_sound:
 		_pickup_player.stream = pickup_sound
 	if _pickup_player.stream:

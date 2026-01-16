@@ -1,31 +1,14 @@
 extends Node
 
-# --- НАСТРОЙКИ ---
-var cycle_settings: Dictionary = {
-	1: 0.0,  # 0.0 означает, что таймера нет
-	2: 0.0,  # На втором уровне тоже без таймера
-	3: 0.0,
-	4: 0.0,
-	5: 0.0,  # 0.0 означает, что таймера нет
-	6: 0.0,  # На втором уровне тоже без таймера
-	7: 120.0,
-	8: 120.0,
-	9: 120.0,  # 0.0 означает, что таймера нет
-	10: 120.0,  # На втором уровне тоже без таймера
-	11: 120.0,
-	12: 120.0,
-	13: 120.0,  # 0.0 означает, что таймера нет
-	14: 120.0,  # На втором уровне тоже без таймера
-	15: 120.0,
-	16: 120.0
-}
-## Время по умолчанию для циклов, где не задано отдельно.
+## Время по умолчанию, если на уровне не задано.
 @export var default_time: float = 15.0
 
 var _timer: Timer
 var _overlay_layer: CanvasLayer
 var _red_rect: ColorRect
 var current_max_time: float = 1.0
+var _current_cycle_number: int = 0
+var _current_timer_duration: float = 0.0
 
 func _ready() -> void:
 	_timer = Timer.new()
@@ -33,18 +16,17 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_distortion_timeout)
 	add_child(_timer)
 	_create_distortion_overlay()
-	if GameState and GameState.has_signal("cycle_changed"):
-		GameState.cycle_changed.connect(func(_cycle: int): start_normal_phase())
 	if get_tree() and get_tree().has_signal("scene_changed"):
 		get_tree().scene_changed.connect(_on_scene_changed)
 	_update_for_scene(get_tree().current_scene)
 
-func start_normal_phase() -> void:
+func start_normal_phase(timer_duration: float = -1.0) -> void:
 	GameState.set_phase(GameState.Phase.NORMAL)
 	_red_rect.visible = false
 	
-	var current_cycle = GameState.cycle
-	var time_to_set: float = cycle_settings.get(current_cycle, default_time)
+	var time_to_set: float = timer_duration
+	if time_to_set < 0.0:
+		time_to_set = default_time
 	
 	# Если время больше 0, запускаем таймер
 	if time_to_set > 0.0:
@@ -55,7 +37,7 @@ func start_normal_phase() -> void:
 		# Если время 0 или меньше, останавливаем таймер (он не будет тикать)
 		_timer.stop()
 		current_max_time = 0.0 
-		print("GameDirector: Таймер отключен для цикла %d" % current_cycle)
+		print("GameDirector: Таймер отключен для уровня.")
 
 func reduce_time(amount: float) -> void:
 	# Если таймер не запущен (бесконечное время), урон по времени не наносится
@@ -113,11 +95,40 @@ func _on_scene_changed(scene: Node) -> void:
 func _update_for_scene(scene: Node) -> void:
 	var path := scene.scene_file_path if scene else ""
 	var in_game := path.find("/scenes/cycles/") != -1
+	_set_mouse_visibility(in_game)
 	if in_game:
-		start_normal_phase()
+		_apply_level_settings(scene)
 		return
 	_timer.stop()
 	_red_rect.visible = false
 	if GameState:
 		GameState.set_phase(GameState.Phase.NORMAL)
+
+func _apply_level_settings(scene: Node) -> void:
+	_current_cycle_number = _resolve_cycle_number(scene)
+	_current_timer_duration = _resolve_timer_duration(scene)
+	start_normal_phase(_current_timer_duration)
+
+func _resolve_cycle_number(scene: Node) -> int:
+	if scene == null:
+		return 0
+	if scene.has_method("get_cycle_number"):
+		return int(scene.get_cycle_number())
+	return 0
+
+func _resolve_timer_duration(scene: Node) -> float:
+	if scene == null:
+		return default_time
+	if scene.has_method("get_timer_duration"):
+		return float(scene.get_timer_duration())
+	return default_time
+
+func _set_mouse_visibility(in_game: bool) -> void:
+	if in_game:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func get_cycle_number() -> int:
+	return _current_cycle_number
 	

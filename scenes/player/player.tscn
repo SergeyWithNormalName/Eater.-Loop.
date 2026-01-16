@@ -28,6 +28,7 @@ fill_to = Vector2(0.75, 0.237)
 light_mask = 2
 z_index = 2
 script = ExtResource("1_player_script")
+run_speed_multiplier = 1.5
 step_sounds = Array[AudioStream]([ExtResource("2_step1"), ExtResource("4_step2"), ExtResource("6_step3"), ExtResource("7_step4")])
 step_volume = -24.0
 flashlight_sound = ExtResource("8_flashlight_sound")
@@ -44,10 +45,8 @@ shape = SubResource("RectangleShape2D_vonw3")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(3.8146973e-06, -26)
 offset = Vector2(0, -5)
-zoom = Vector2(1.32, 1.32)
+zoom = Vector2(1.1, 1.1)
 limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 light_mask = 2
