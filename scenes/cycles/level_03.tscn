@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://dnxt35x7beohh"]
+[gd_scene load_steps=100 format=3 uid="uid://dnxt35x7beohh"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_nyxq3"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="15_tw5p7"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="16_rdh85"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_cdarl"]
+[ext_resource type="AudioStream" uid="uid://bjdyj7gxdtyw6" path="res://audio/AndreyEating/Ohuenno.wav" id="18_c7dde"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_f1xxx"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_o12kx"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_dwgmq"]
@@ -144,7 +145,7 @@ size = Vector2(111.6167, 966.4249)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dwgmq"]
 size = Vector2(111.6167, 1199.4946)
 
-[node name="Level3" type="Node2D"]
+[node name="Level4" type="Node2D"]
 position = Vector2(16, 0)
 script = ExtResource("level_settings")
 cycle_number = 3
@@ -376,6 +377,7 @@ minigame_scene = ExtResource("21_56gvw")
 food_scene = ExtResource("22_r2tj0")
 andrey_face = ExtResource("23_1dbsv")
 food_count = 4
+win_sound = ExtResource("18_c7dde")
 require_lab_completion = true
 required_lab_id = "lab_3"
 locked_message = "Я не должен есть, пока не доделаю лабораторную работу"
@@ -425,7 +427,7 @@ start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.15686275, 0.15686275, 0.18431373, 1)
+color = Color(0.2627451, 0.2627451, 0.30588236, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

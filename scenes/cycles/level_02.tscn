@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://bsecib4k5glms"]
+[gd_scene load_steps=89 format=4 uid="uid://bsecib4k5glms"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_mo3bn"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="15_qrtr6"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="16_c4j4b"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_5xtg8"]
+[ext_resource type="AudioStream" uid="uid://cwe32vwc8q8kb" path="res://audio/AndreyEating/Pizdato.wav" id="18_3s6wf"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_32xxs"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_ji2tt"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_2hh0t"]
@@ -354,6 +355,7 @@ script = ExtResource("20_2hh0t")
 minigame_scene = ExtResource("21_grmby")
 food_scene = ExtResource("23_w6s2q")
 andrey_face = ExtResource("23_25l3s")
+win_sound = ExtResource("18_3s6wf")
 open_sound = ExtResource("26_m14sj")
 metadata/_edit_group_ = true
 
@@ -395,7 +397,7 @@ start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.15686275, 0.15686275, 0.18431373, 1)
+color = Color(0.28627452, 0.28627452, 0.33333334, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

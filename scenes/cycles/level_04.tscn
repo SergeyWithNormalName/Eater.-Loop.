@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=4 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=107 format=4 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_gc20h"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_0eq3o"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_52cbj"]
+[ext_resource type="AudioStream" uid="uid://bjxapi5i5raul" path="res://audio/AndreyEating/Upitanaya_Bitch.wav" id="19_w71je"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_uyds2"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="21_ufkeh"]
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="22_pmxgm"]
@@ -406,6 +407,7 @@ script = ExtResource("20_uyds2")
 minigame_scene = ExtResource("21_ufkeh")
 food_scene = ExtResource("22_pvwmj")
 andrey_face = ExtResource("23_vgmn4")
+win_sound = ExtResource("19_w71je")
 enable_teleport = true
 teleport_target = NodePath("../Frizzer2")
 open_sound = ExtResource("26_qcm2f")
