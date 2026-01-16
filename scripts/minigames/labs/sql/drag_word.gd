@@ -72,10 +72,10 @@ func _find_drop_slot() -> Node:
 	return null
 
 func _is_grab_pressed(event: InputEvent) -> bool:
-	return event.is_action_pressed("mg_grab") or event.is_action_pressed("mg_grap")
+	return event.is_action_pressed("mg_grab")
 
 func _is_grab_released(event: InputEvent) -> bool:
-	return event.is_action_released("mg_grab") or event.is_action_released("mg_grap")
+	return event.is_action_released("mg_grab")
 
 func _exit_tree() -> void:
 	if _is_dragging:

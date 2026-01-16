@@ -52,7 +52,9 @@
 │   │   ├── ScaryStepsAndDoor.mp3
 │   │   ├── ScaryStepsAndDoor.mp3.import
 │   │   ├── door_unlocked.wav
-│   │   └── door_unlocked.wav.import
+│   │   ├── door_unlocked.wav.import
+│   │   ├── lamp.wav
+│   │   └── lamp.wav.import
 │   ├── player
 │   │   ├── steps
 │   │   │   ├── steps1.wav
@@ -467,7 +469,9 @@
 │   │   ├── WindowKilled2.png
 │   │   ├── WindowKilled2.png.import
 │   │   ├── WindowKilled3.png
-│   │   └── WindowKilled3.png.import
+│   │   ├── WindowKilled3.png.import
+│   │   ├── WindowWithMonster.png
+│   │   └── WindowWithMonster.png.import
 │   ├── Andry.png
 │   ├── Andry.png.import
 │   ├── AndryWithFlashlight.png
@@ -491,4 +495,4 @@
 ├── project.godot
 └── structure.txt
 
-50 directories, 442 files
+50 directories, 446 files

@@ -48,6 +48,7 @@ var slot_scene = preload("res://scenes/minigames/ui/drop_slot.tscn")
 var word_scene = preload("res://scenes/minigames/ui/drag_word.tscn")
 
 func _ready():
+	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Ставим игру на паузу
 	get_tree().paused = true

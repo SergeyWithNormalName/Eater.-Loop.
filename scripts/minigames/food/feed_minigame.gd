@@ -42,6 +42,7 @@ var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 var _music_suspended: bool = false
 
 func _ready() -> void:
+	add_to_group("minigame_ui")
 	_prev_mouse_mode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if has_node("SoundsPlayer"):

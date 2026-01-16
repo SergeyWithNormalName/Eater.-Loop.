@@ -3,11 +3,13 @@ extends CharacterBody2D
 signal player_made_sound
 
 ## Скорость движения игрока.
-@export var speed: float = 520.0
+@export var speed: float = 415.0
 
 @export_group("Бег и выносливость")
+## Разрешить бег.
+@export var allow_running: bool = true
 ## Множитель скорости при беге.
-@export var run_speed_multiplier: float = 1.6
+@export var run_speed_multiplier: float = 1.8
 ## Максимальная выносливость.
 @export var stamina_max: float = 5.0
 ## Расход выносливости в секунду при беге.
@@ -119,6 +121,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
+	if _is_screen_dark():
+		direction = 0.0
 	
 	# Небольшая мертвая зона для аналоговых стиков
 	if abs(direction) < 0.1:
@@ -138,7 +142,19 @@ func _physics_process(delta: float) -> void:
 	# Обновление анимации
 	_update_walk_animation(delta, direction)
 
+func _is_screen_dark() -> bool:
+	if UIMessage == null:
+		return false
+	if UIMessage.has_method("is_screen_dark"):
+		return bool(UIMessage.call("is_screen_dark"))
+	return false
+
 func _resolve_running_state(delta: float, direction: float) -> bool:
+	if not allow_running:
+		_time_since_run += delta
+		_try_restore_stamina(delta)
+		return false
+
 	if direction == 0.0:
 		_time_since_run += delta
 		_try_restore_stamina(delta)

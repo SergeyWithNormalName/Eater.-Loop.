@@ -1,7 +1,7 @@
-[gd_scene load_steps=87 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=88 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_bij4o"]
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_plrscn"]
+[ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="4_hl306"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/allrooms/Door_2.png" id="5_wnv1a"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="6_6h3m7"]
@@ -73,8 +73,8 @@
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://textures/furniture/bedroom/Powerbank2.png" id="81_j5rey"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="82_4a5ua"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
-[ext_resource type="Script" path="res://scripts/tehnical/level.gd" id="level_settings"]
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
 
@@ -121,10 +121,11 @@ size = Vector2(111.6167, 966.4249)
 size = Vector2(111.6167, 1199.4946)
 
 [node name="Level" type="Node2D"]
-timer_duration = 0.0
-cycle_number = 1
-script = ExtResource("level_settings")
 position = Vector2(16, 0)
+show_start_hint = true
+start_hint_text = "Ходьба: A/D или стрелки\nВзаимодействие: E\nФонарик: F (вкл/выкл)"
+pause_on_start_hint = true
+script = ExtResource("level_settings")
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
@@ -150,6 +151,8 @@ texture = ExtResource("26_m068l")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2366, 96)
+speed = 340.0
+allow_running = false
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2
@@ -383,10 +386,10 @@ shadow_filter_smooth = 24.4
 texture = SubResource("GradientTexture2D_ww2c2")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Frizzer"]
-bus = "Sounds"
 stream = ExtResource("28_g1wwn")
 volume_db = -18.0
 autoplay = true
+bus = &"Sounds"
 
 [node name="WorldClock2" parent="." instance=ExtResource("13_bij4o")]
 position = Vector2(9236, -756)

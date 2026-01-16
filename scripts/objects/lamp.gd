@@ -15,6 +15,10 @@ extends Area2D
 @export var turn_on_sfx: AudioStream
 ## Громкость звука включения в дБ.
 @export var turn_on_volume_db: float = 0.0
+## Минимальная высота тона звука (для разнообразия).
+@export_range(0.5, 1.5, 0.01) var switch_pitch_min: float = 0.95
+## Максимальная высота тона звука (для разнообразия).
+@export_range(0.5, 1.5, 0.01) var switch_pitch_max: float = 1.05
 
 @export_group("Light Settings")
 ## Узел PointLight2D для света.
@@ -87,6 +91,7 @@ func _toggle() -> void:
 	if _is_on:
 		_is_on = false
 		_update_light_enabled(false)
+		_play_switch_sound()
 		_update_prompt()
 		return
 
@@ -96,6 +101,7 @@ func _toggle() -> void:
 
 	_is_on = true
 	_update_light_enabled(true)
+	_play_switch_sound()
 	_update_prompt()
 
 func _has_power() -> bool:
@@ -109,16 +115,18 @@ func _update_light_enabled(play_sound: bool) -> void:
 	var should_enable = _is_on and _has_power()
 	var was_enabled = _light.enabled
 	_light.enabled = should_enable
-	if play_sound and should_enable and not was_enabled:
-		_play_turn_on_sound()
+	if play_sound and was_enabled != should_enable:
+		_play_switch_sound()
 	_update_prompt()
 
-func _play_turn_on_sound() -> void:
+func _play_switch_sound() -> void:
 	if turn_on_sfx == null:
 		return
 	_sfx_player.stream = turn_on_sfx
 	_sfx_player.volume_db = turn_on_volume_db
-	_sfx_player.pitch_scale = 1.0
+	var min_pitch: float = min(switch_pitch_min, switch_pitch_max)
+	var max_pitch: float = max(switch_pitch_min, switch_pitch_max)
+	_sfx_player.pitch_scale = randf_range(min_pitch, max_pitch)
 	_sfx_player.play()
 
 func _apply_light_settings() -> void:

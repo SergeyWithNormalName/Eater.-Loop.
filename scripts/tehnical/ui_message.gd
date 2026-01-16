@@ -251,6 +251,11 @@ func fade_in(duration: float = 0.5) -> void:
 	await tween.tween_property(_fade_rect, "color:a", 0.0, duration).finished #
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE #
 
+func is_screen_dark(threshold: float = 0.01) -> bool:
+	if _fade_rect == null:
+		return false
+	return _fade_rect.color.a > threshold
+
 func change_scene_with_fade(new_scene: PackedScene, duration: float = 0.5) -> void:
 	_track_scene(new_scene)
 	await fade_out(duration) #

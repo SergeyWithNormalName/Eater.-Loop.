@@ -19,21 +19,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
+color = Color(0, 0, 0, 0.65)
 
-[node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -220.0
-offset_right = 220.0
-offset_bottom = 220.0
-
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,64 +29,261 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="PanelRoot" type="Control" parent="Center"]
+layout_mode = 2
+custom_minimum_size = Vector2(640, 760)
+
+[node name="PanelBase" type="ColorRect" parent="Center/PanelRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.07, 0.06, 0.96)
+mouse_filter = 2
+
+[node name="PanelTexture" type="TextureRect" parent="Center/PanelRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="ContentMargin" type="MarginContainer" parent="Center/PanelRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBox" type="VBoxContainer" parent="Center/PanelRoot/ContentMargin"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+separation = 14
+
+[node name="Title" type="Label" parent="Center/PanelRoot/ContentMargin/VBox"]
 layout_mode = 2
 text = "Кодовый замок"
 horizontal_alignment = 1
 
-[node name="Display" type="Label" parent="Panel/VBox"]
+[node name="DisplayPanel" type="Control" parent="Center/PanelRoot/ContentMargin/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 90)
+size_flags_horizontal = 3
+
+[node name="DisplayBase" type="ColorRect" parent="Center/PanelRoot/ContentMargin/VBox/DisplayPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.1, 0.08, 0.95)
+mouse_filter = 2
+
+[node name="DisplayTexture" type="TextureRect" parent="Center/PanelRoot/ContentMargin/VBox/DisplayPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Display" type="Label" parent="Center/PanelRoot/ContentMargin/VBox/DisplayPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Info" type="Label" parent="Center/PanelRoot/ContentMargin/VBox"]
 layout_mode = 2
 text = ""
 horizontal_alignment = 1
 
-[node name="Info" type="Label" parent="Panel/VBox"]
+[node name="KeypadPanel" type="Control" parent="Center/PanelRoot/ContentMargin/VBox"]
 layout_mode = 2
-text = ""
-horizontal_alignment = 1
+custom_minimum_size = Vector2(320, 360)
 
-[node name="Grid" type="GridContainer" parent="Panel/VBox"]
-layout_mode = 2
+[node name="KeypadBase" type="ColorRect" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.09, 0.08, 0.65)
+mouse_filter = 2
+
+[node name="KeypadTexture" type="TextureRect" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Grid" type="GridContainer" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 columns = 3
+theme_override_constants/hseparation = 12
+theme_override_constants/vseparation = 12
 
-[node name="Btn1" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn1" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "1"
+flat = true
 
-[node name="Btn2" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn2" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "2"
+flat = true
 
-[node name="Btn3" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn3" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "3"
+flat = true
 
-[node name="Btn4" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn4" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "4"
+flat = true
 
-[node name="Btn5" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn5" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "5"
+flat = true
 
-[node name="Btn6" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn6" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "6"
+flat = true
 
-[node name="Btn7" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn7" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "7"
+flat = true
 
-[node name="Btn8" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn8" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "8"
+flat = true
 
-[node name="Btn9" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn9" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "9"
+flat = true
 
-[node name="Btn0" type="Button" parent="Panel/VBox/Grid"]
+[node name="Btn0" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/KeypadPanel/Grid"]
+custom_minimum_size = Vector2(90, 90)
 text = "0"
+flat = true
 
-[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+[node name="ActionPanel" type="Control" parent="Center/PanelRoot/ContentMargin/VBox"]
 layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+size_flags_horizontal = 3
+
+[node name="ActionBase" type="ColorRect" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.07, 0.06, 0.75)
+mouse_filter = 2
+
+[node name="ActionTexture" type="TextureRect" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
+separation = 12
 
-[node name="OkButton" type="Button" parent="Panel/VBox/Buttons"]
+[node name="OkButton" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+size_flags_horizontal = 3
 text = "ОК"
+flat = true
 
-[node name="ClearButton" type="Button" parent="Panel/VBox/Buttons"]
+[node name="ClearButton" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+size_flags_horizontal = 3
 text = "Очистить"
+flat = true
 
-[node name="CancelButton" type="Button" parent="Panel/VBox/Buttons"]
+[node name="CancelButton" type="Button" parent="Center/PanelRoot/ContentMargin/VBox/ActionPanel/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+size_flags_horizontal = 3
 text = "Отмена"
+flat = true
+
+[node name="PanelFrame" type="TextureRect" parent="Center/PanelRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="LockIcon" type="TextureRect" parent="Center/PanelRoot"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -64.0
+offset_top = -24.0
+offset_right = 64.0
+offset_bottom = 104.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2

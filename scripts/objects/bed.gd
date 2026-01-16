@@ -22,6 +22,8 @@ var _is_sleeping: bool = false # Защита от повторного нажа
 func _ready() -> void:
 	input_pickable = false
 	if GameState.pending_sleep_spawn:
+		if UIMessage and sleep_sfx != null:
+			UIMessage.play_sfx(sleep_sfx)
 		GameState.pending_sleep_spawn = false
 
 func _on_body_entered(body: Node) -> void:
@@ -76,11 +78,8 @@ func _try_sleep() -> void:
 		return
 	
 	GameState.pending_sleep_spawn = true
-	await UIMessage.change_scene_with_fade_delay(next_level_scene, 0.4, 1.0, func():
-		if GameState.pending_sleep_spawn:
-			GameState.pending_sleep_spawn = false
-			if UIMessage and sleep_sfx != null:
-				UIMessage.play_sfx(sleep_sfx)
+	var sleep_delay := _get_sleep_sfx_delay()
+	await UIMessage.change_scene_with_fade_delay(next_level_scene, 0.4, sleep_delay, func():
 		GameState.next_cycle()
 	)
 
@@ -113,3 +112,11 @@ func _get_next_cycle_number(fallback: int) -> int:
 	if cycle_number <= 0:
 		return fallback
 	return cycle_number
+
+func _get_sleep_sfx_delay() -> float:
+	if sleep_sfx == null:
+		return 0.0
+	var length := sleep_sfx.get_length()
+	if length <= 0.0:
+		return 1.0
+	return length

@@ -18,7 +18,7 @@ extends CanvasLayer
 
 var _bar: ColorRect
 var _ratio: float = 1.0
-var _fade_alpha: float = 1.0
+var _fade_alpha: float = 0.0
 var _idle_time: float = 0.0
 
 func _ready() -> void:
@@ -29,6 +29,7 @@ func _ready() -> void:
 	_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_bar.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	add_child(_bar)
+	_idle_time = hide_delay
 
 func _process(delta: float) -> void:
 	_update_visibility()
@@ -75,14 +76,13 @@ func _update_fade(delta: float) -> void:
 	if player != null and player.has_method("is_running"):
 		is_running = bool(player.is_running())
 
+	var target_alpha := 1.0
 	if is_running:
 		_idle_time = 0.0
 	else:
 		_idle_time += delta
-
-	var target_alpha := 1.0
-	if _idle_time >= hide_delay:
-		target_alpha = 0.0
+		if _idle_time >= hide_delay:
+			target_alpha = 0.0
 
 	if fade_time <= 0.0:
 		_fade_alpha = target_alpha
