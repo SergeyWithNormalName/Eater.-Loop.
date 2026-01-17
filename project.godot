@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://dnxt35x7beohh"
+run/main_scene="uid://bsecib4k5glms"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
