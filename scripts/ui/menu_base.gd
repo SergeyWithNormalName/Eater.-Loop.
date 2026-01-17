@@ -25,9 +25,16 @@ extends Control
 @onready var _sfx_player: AudioStreamPlayer = _resolve_sfx_player()
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_apply_theme()
 	_wire_buttons()
+	_update_cursor_request()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED or what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		_update_cursor_request()
+
+func _exit_tree() -> void:
+	_release_cursor_request()
 
 func _apply_theme() -> void:
 	var regular_font := load("res://fonts/AmaticSC-Regular.ttf")
@@ -111,3 +118,16 @@ func _resolve_sfx_player() -> AudioStreamPlayer:
 	if has_node("SfxPlayer"):
 		return get_node("SfxPlayer") as AudioStreamPlayer
 	return null
+
+func _update_cursor_request() -> void:
+	if CursorManager == null:
+		return
+	if is_visible_in_tree():
+		CursorManager.request_visible(self)
+	else:
+		CursorManager.release_visible(self)
+
+func _release_cursor_request() -> void:
+	if CursorManager == null:
+		return
+	CursorManager.release_visible(self)

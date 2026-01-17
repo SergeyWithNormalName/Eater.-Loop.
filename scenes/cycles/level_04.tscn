@@ -189,6 +189,7 @@ texture = ExtResource("2_3gkos")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2367, 96)
+allow_running = false
 
 [node name="BedroomMusicTrigger" type="Area2D" parent="."]
 position = Vector2(-1913, 83)

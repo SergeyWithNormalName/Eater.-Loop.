@@ -11,8 +11,6 @@ const BODY_FONT_SIZE: int = 32
 const BUTTON_FONT_SIZE: int = 40
 
 var _current_input: String = ""
-var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
-
 @onready var title_label: Label = $Center/PanelRoot/ContentMargin/VBox/Title
 @onready var display_label: Label = $Center/PanelRoot/ContentMargin/VBox/DisplayPanel/Display
 @onready var info_label: Label = $Center/PanelRoot/ContentMargin/VBox/Info
@@ -25,8 +23,8 @@ func _ready() -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
-	_prev_mouse_mode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if CursorManager:
+		CursorManager.request_visible(self)
 	_apply_theme()
 	_update_display()
 	
@@ -80,7 +78,8 @@ func _close() -> void:
 	queue_free()
 
 func _exit_tree() -> void:
-	Input.set_mouse_mode(_prev_mouse_mode)
+	if CursorManager:
+		CursorManager.release_visible(self)
 
 func _apply_theme() -> void:
 	var regular_font := load("res://fonts/AmaticSC-Regular.ttf")

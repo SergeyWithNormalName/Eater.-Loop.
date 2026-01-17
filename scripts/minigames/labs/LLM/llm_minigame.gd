@@ -20,7 +20,6 @@ signal task_completed(success: bool)
 var current_time: float = 0.0
 var _progress: float = 0.0
 var _is_finished: bool = false
-var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 var _cooldown_remaining: float = 0.0
 var _cooldown_duration: float = 0.0
 var _generate_base_text: String = ""
@@ -35,8 +34,8 @@ func _ready() -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
-	_prev_mouse_mode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if CursorManager:
+		CursorManager.request_visible(self)
 	current_time = time_limit
 	_rng.randomize()
 	
@@ -137,7 +136,8 @@ func finish_game(success: bool) -> void:
 	queue_free()
 
 func _exit_tree() -> void:
-	Input.set_mouse_mode(_prev_mouse_mode)
+	if CursorManager:
+		CursorManager.release_visible(self)
 
 func _handle_gamepad_cursor(delta: float) -> void:
 	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")

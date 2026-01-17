@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://cc6ehxxoauhyn"
+run/main_scene="uid://bxjrvr1ri8lfh"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -23,8 +23,9 @@ GameDirector="*res://scripts/tehnical/game_director.gd"
 SettingsManager="*res://scripts/tehnical/settings_manager.gd"
 MusicManager="*res://scripts/tehnical/music_manager.gd"
 PauseManager="*res://scripts/tehnical/pause_manager.gd"
-InteractionPrompts="*res://scripts/tehnical/interaction_prompts.gd"
+InteractionPrompts="*res://scenes/ui/interaction_prompts.tscn"
 StaminaBar="*res://scripts/tehnical/stamina_bar.gd"
+CursorManager="*res://scripts/tehnical/cursor_manager.gd"
 
 [display]
 

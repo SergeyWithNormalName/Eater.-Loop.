@@ -124,10 +124,8 @@ func _resolve_timer_duration(scene: Node) -> float:
 	return default_time
 
 func _set_mouse_visibility(in_game: bool) -> void:
-	if in_game:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if CursorManager:
+		CursorManager.set_in_game(in_game)
 
 func get_cycle_number() -> int:
 	return _current_cycle_number

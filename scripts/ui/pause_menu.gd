@@ -124,12 +124,12 @@ func _exit_to_menu() -> void:
 		return
 	if GameState:
 		GameState.reset_cycle_state()
-	_keep_menu_music()
+	_stop_menu_music()
 	get_tree().paused = false
 	await UIMessage.change_scene_with_fade(main_menu_scene)
 
 func _exit_game() -> void:
-	_keep_menu_music()
+	_stop_menu_music()
 	get_tree().paused = false
 	get_tree().quit()
 
@@ -175,12 +175,6 @@ func _restore_menu_music() -> void:
 	if MusicManager == null:
 		return
 	MusicManager.pop_music(menu_music_fade_time)
-
-func _keep_menu_music() -> void:
-	if MusicManager == null:
-		return
-	MusicManager.clear_stack()
-	MusicManager.play_music(menu_music, menu_music_fade_time, menu_music_volume_db)
 
 func _stop_menu_music() -> void:
 	if MusicManager == null:

@@ -116,11 +116,13 @@ func restore_music_volume(fade_time: float = -1.0) -> void:
 	_fade_volume(player, _pre_duck_volume_db, target_fade)
 
 func push_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
+	var player := _resolve_playing_player()
+	var was_playing := player != null and player.playing
 	var entry := {
-		"stream": _current_stream,
+		"stream": _current_stream if was_playing else null,
 		"volume_db": _base_volume_db,
-		"position": _get_playback_position(_active_player),
-		"was_playing": _active_player.playing
+		"position": _get_playback_position(player),
+		"was_playing": was_playing
 	}
 	_stack.append(entry)
 	play_music(stream, fade_time, volume_db)
@@ -130,7 +132,8 @@ func pop_music(fade_time: float = -1.0) -> void:
 		return
 	var entry: Dictionary = _stack.pop_back()
 	var stream: AudioStream = entry.get("stream", null)
-	if stream == null:
+	var was_playing: bool = bool(entry.get("was_playing", true))
+	if stream == null or not was_playing:
 		stop_music(fade_time)
 		return
 	var volume_db: float = entry.get("volume_db", default_volume_db)

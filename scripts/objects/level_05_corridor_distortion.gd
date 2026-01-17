@@ -52,6 +52,14 @@ extends Node2D
 ## Тип easing для уезда кухни.
 @export var kitchen_ease: Tween.EaseType = Tween.EASE_IN
 
+@export_group("Audio Stop")
+## Останавливать звуки у кухонных объектов, когда коридор уезжает.
+@export var stop_kitchen_audio: bool = true
+## Дополнительные узлы со звуком, которые нужно остановить (плееры или их родители).
+@export var stop_audio_nodes: Array[NodePath] = []
+## Задержка перед остановкой звука после триггера.
+@export var stop_audio_delay: float = 2.0
+
 @export_group("New Corridor")
 ## Узел-контейнер нового коридора, который проявляется.
 @export var new_corridor_path: NodePath
@@ -104,6 +112,7 @@ var _new_base_pos: Vector2 = Vector2.ZERO
 var _new_base_scale: Vector2 = Vector2.ONE
 var _new_base_modulate: Color = Color.WHITE
 var _camera_base_zoom: Vector2 = Vector2.ONE
+var _audio_stop_scheduled := false
 
 func _ready() -> void:
 	_stretch_root = get_node_or_null(stretch_root_path) as Node2D
@@ -190,6 +199,7 @@ func _play_sequence() -> void:
 	_animate_kitchen()
 	_animate_new_corridor()
 	_animate_camera_squash()
+	_schedule_audio_stop()
 
 func _animate_stretch() -> void:
 	if _stretch_root == null or not stretch_enabled:
@@ -252,3 +262,46 @@ func _animate_camera_squash() -> void:
 	if camera_hold > 0.0:
 		tween.tween_interval(camera_hold)
 	tween.tween_property(_camera, "zoom", _camera_base_zoom, camera_recover_duration).set_trans(camera_trans).set_ease(camera_ease)
+
+func _schedule_audio_stop() -> void:
+	if _audio_stop_scheduled:
+		return
+	var targets := _collect_audio_targets()
+	if targets.is_empty():
+		return
+	_audio_stop_scheduled = true
+	if stop_audio_delay <= 0.0:
+		_stop_audio_targets(targets)
+		return
+	var timer := get_tree().create_timer(stop_audio_delay)
+	timer.timeout.connect(func(): _stop_audio_targets(targets))
+
+func _collect_audio_targets() -> Array:
+	var targets: Array = []
+	for path in stop_audio_nodes:
+		var node := get_node_or_null(path)
+		if node != null:
+			_append_audio_targets_from_node(node, targets)
+	if stop_kitchen_audio:
+		for node in _kitchen_nodes:
+			_append_audio_targets_from_node(node, targets)
+	return targets
+
+func _append_audio_targets_from_node(node: Node, targets: Array) -> void:
+	if node == null:
+		return
+	if _is_audio_node(node):
+		if not targets.has(node):
+			targets.append(node)
+	for child in node.get_children():
+		_append_audio_targets_from_node(child, targets)
+
+func _is_audio_node(node: Node) -> bool:
+	return node is AudioStreamPlayer or node is AudioStreamPlayer2D or node is AudioStreamPlayer3D
+
+func _stop_audio_targets(targets: Array) -> void:
+	for node in targets:
+		if not is_instance_valid(node):
+			continue
+		if node.has_method("stop"):
+			node.call("stop")

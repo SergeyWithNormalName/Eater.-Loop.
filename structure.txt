@@ -30,6 +30,8 @@
 │   │   ├── MyHorrorHit_3.wav.import
 │   │   ├── RunnerHARDMUSIC.wav
 │   │   ├── RunnerHARDMUSIC.wav.import
+│   │   ├── StressMusic.wav
+│   │   ├── StressMusic.wav.import
 │   │   ├── TypeSilentHill.wav
 │   │   └── TypeSilentHill.wav.import
 │   ├── Sereja
@@ -119,6 +121,10 @@
 │   ├── player
 │   │   └── player.tscn
 │   └── ui
+│       ├── prompts
+│       │   ├── prompt_interact_default.tscn
+│       │   └── prompt_lamp_default.tscn
+│       ├── interaction_prompts.tscn
 │       ├── main_menu.tscn
 │       ├── pause_menu.tscn
 │       └── settings_panel.tscn
@@ -189,6 +195,8 @@
 │   │   ├── player.gd
 │   │   └── player.gd.uid
 │   ├── tehnical
+│   │   ├── cursor_manager.gd
+│   │   ├── cursor_manager.gd.uid
 │   │   ├── game_director.gd
 │   │   ├── game_director.gd.uid
 │   │   ├── game_state.gd
@@ -203,6 +211,8 @@
 │   │   ├── music_manager.gd.uid
 │   │   ├── pause_manager.gd
 │   │   ├── pause_manager.gd.uid
+│   │   ├── prompt_view.gd
+│   │   ├── prompt_view.gd.uid
 │   │   ├── settings_manager.gd
 │   │   ├── settings_manager.gd.uid
 │   │   ├── stamina_bar.gd
@@ -495,4 +505,4 @@
 ├── project.godot
 └── structure.txt
 
-50 directories, 446 files
+51 directories, 455 files

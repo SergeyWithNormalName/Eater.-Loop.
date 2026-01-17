@@ -33,7 +33,6 @@ var tasks = [
 var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
-var _prev_mouse_mode: int = Input.MOUSE_MODE_VISIBLE
 
 @onready var drag_layer: Control = $Content/DragLayer
 @onready var query_container: HBoxContainer = $Content/QueryArea
@@ -52,8 +51,8 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Ставим игру на паузу
 	get_tree().paused = true
-	_prev_mouse_mode = Input.get_mouse_mode()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if CursorManager:
+		CursorManager.request_visible(self)
 	current_time = time_limit
 
 	update_progress_ui()
@@ -196,5 +195,6 @@ func finish_game(success: bool):
 	queue_free() # Закрываем мини-игру
 
 func _exit_tree() -> void:
-	Input.set_mouse_mode(_prev_mouse_mode)
+	if CursorManager:
+		CursorManager.release_visible(self)
 	

@@ -154,6 +154,7 @@ texture = ExtResource("2_bhnwp")
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2366, 96)
 speed = 340.0
+allow_running = false
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://g4j2m6p8n1s5c" path="res://scenes/ui/settings_panel.tscn" id="2_settings_panel"]
 [ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="3_click_sfx"]
 [ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="4_hover_sfx"]
-[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://audio/MusicEtc/CreepyAmbient.wav" id="5_menu_music"]
+[ext_resource type="AudioStream" path="res://audio/MusicEtc/StressMusic.wav" id="5_menu_music"]
 [ext_resource type="PackedScene" uid="uid://cc6ehxxoauhyn" path="res://scenes/cycles/level_01.tscn" id="6_level_01"]
 
 [sub_resource type="Gradient" id="Gradient_menu"]

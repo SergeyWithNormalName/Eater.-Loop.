@@ -7,7 +7,14 @@ const DEFAULT_INTERACT_TEXT := "E — взаимодействовать"
 const DEFAULT_LAMP_ON_TEXT := "Q — включить свет"
 const DEFAULT_LAMP_OFF_TEXT := "Q — выключить свет"
 
-var _container: HBoxContainer
+@export_group("Scenes")
+@export var interact_prompt_scene: PackedScene = preload("res://scenes/ui/prompts/prompt_interact_default.tscn")
+@export var lamp_prompt_scene: PackedScene = preload("res://scenes/ui/prompts/prompt_lamp_default.tscn")
+
+@export_group("Layout")
+@export var prompt_container_path: NodePath = NodePath("PromptRoot/PromptContainer")
+
+var _container: Container
 var _channels: Dictionary = {}
 var _suspended: bool = false
 
@@ -15,18 +22,12 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 90
 
-	var root := Control.new()
-	root.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	root.offset_left = 20
-	root.offset_top = 20
-	add_child(root)
+	_container = get_node_or_null(prompt_container_path) as Container
+	if _container == null:
+		_container = _create_fallback_container()
 
-	_container = HBoxContainer.new()
-	_container.add_theme_constant_override("separation", 12)
-	root.add_child(_container)
-
-	_channels[CHANNEL_INTERACT] = _create_prompt_panel()
-	_channels[CHANNEL_LAMP] = _create_prompt_panel()
+	_channels[CHANNEL_INTERACT] = _create_prompt_panel(interact_prompt_scene)
+	_channels[CHANNEL_LAMP] = _create_prompt_panel(lamp_prompt_scene)
 
 func show_interact(source: Object, text: String = "") -> void:
 	_set_prompt(CHANNEL_INTERACT, source, text if text != "" else DEFAULT_INTERACT_TEXT)
@@ -47,7 +48,42 @@ func set_prompts_enabled(enabled: bool) -> void:
 func get_default_lamp_text(is_on: bool) -> String:
 	return DEFAULT_LAMP_OFF_TEXT if is_on else DEFAULT_LAMP_ON_TEXT
 
-func _create_prompt_panel() -> Dictionary:
+func _create_fallback_container() -> Container:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	root.offset_left = 20
+	root.offset_top = 20
+	add_child(root)
+
+	var container := HBoxContainer.new()
+	container.add_theme_constant_override("separation", 12)
+	root.add_child(container)
+	return container
+
+func _create_prompt_panel(scene: PackedScene) -> Dictionary:
+	var panel: CanvasItem = null
+	if scene != null:
+		var instance := scene.instantiate()
+		if instance is CanvasItem:
+			panel = instance
+		else:
+			if instance != null:
+				instance.queue_free()
+	if panel == null:
+		panel = _create_prompt_panel_fallback()
+	if panel == null:
+		return {}
+	panel.visible = false
+	_container.add_child(panel)
+
+	return {
+		"panel": panel,
+		"text_node": _find_text_node(panel),
+		"sources": {},
+		"order": []
+	}
+
+func _create_prompt_panel_fallback() -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.visible = false
 	panel.custom_minimum_size = Vector2(280, 38)
@@ -66,14 +102,7 @@ func _create_prompt_panel() -> Dictionary:
 		label.add_theme_font_override("font", font_variation)
 	panel.add_child(label)
 
-	_container.add_child(panel)
-
-	return {
-		"panel": panel,
-		"label": label,
-		"sources": {},
-		"order": []
-	}
+	return panel
 
 func _set_prompt(channel: String, source: Object, text: String) -> void:
 	if source == null:
@@ -104,20 +133,50 @@ func _clear_prompt(channel: String, source: Object) -> void:
 	_refresh_prompt(data)
 
 func _refresh_prompt(data: Dictionary) -> void:
-	var panel: PanelContainer = data["panel"]
-	var label: Label = data["label"]
+	var panel: Node = data.get("panel")
 	if _suspended:
-		panel.visible = false
+		_set_panel_visible(panel, false)
 		return
 	var order: Array = data["order"]
 	if order.is_empty():
-		label.text = ""
-		panel.visible = false
+		_set_prompt_text(data, "")
+		_set_panel_visible(panel, false)
 		return
 	var id = order.back()
 	var text: String = str(data["sources"].get(id, ""))
-	label.text = text
-	panel.visible = text != ""
+	_set_prompt_text(data, text)
+	_set_panel_visible(panel, text != "")
+
+func _set_prompt_text(data: Dictionary, text: String) -> void:
+	var panel: Node = data.get("panel")
+	if panel == null:
+		return
+	if panel.has_method("set_prompt_text"):
+		panel.call("set_prompt_text", text)
+		return
+	var text_node: Node = data.get("text_node")
+	if text_node == null or not is_instance_valid(text_node):
+		text_node = _find_text_node(panel)
+		data["text_node"] = text_node
+	if text_node != null:
+		text_node.set("text", text)
+
+func _set_panel_visible(panel: Node, visible: bool) -> void:
+	if panel == null:
+		return
+	if panel is CanvasItem:
+		panel.visible = visible
+	elif panel.has_method("set_visible"):
+		panel.call("set_visible", visible)
+
+func _find_text_node(node: Node) -> Node:
+	if node is Label or node is RichTextLabel:
+		return node
+	for child in node.get_children():
+		var found := _find_text_node(child)
+		if found != null:
+			return found
+	return null
 
 func _refresh_all() -> void:
 	for data in _channels.values():
