@@ -2,13 +2,12 @@ extends Control
 
 signal task_completed(success: bool)
 
-# Настройки для Инспектора (передадим их из объекта Ноутбука)
+# --- Настройки ---
 var time_limit: float = 60.0
 var penalty_time: float = 15.0
-var quest_id: String = "" # ID текущей лабы, чтобы открыть двери
+var quest_id: String = "" 
 
-# Данные заданий (можно вынести в отдельный ресурс JSON, но пока так)
-# "template": структура запроса, где null - это пустая ячейка
+# --- Данные заданий ---
 var tasks = [
 	{
 		"description": "Выбрать всех студентов из таблицы Users",
@@ -41,20 +40,21 @@ var _is_finished: bool = false
 @onready var timer_label: Label = $Content/Header/TimerLabel
 @onready var progress_container: HBoxContainer = $Content/Header/ProgressContainer
 
-# Префабы (загрузи их или создай кодом, здесь пример кодом для простоты, 
-# но лучше назначить .tscn файлы в инспекторе)
+# Загружаем сцены слотов и слов
 var slot_scene = preload("res://scenes/minigames/ui/drop_slot.tscn") 
 var word_scene = preload("res://scenes/minigames/ui/drag_word.tscn")
 
 func _ready():
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	# Ставим игру на паузу
 	get_tree().paused = true
-	if CursorManager:
-		CursorManager.request_visible(self)
+	
+	# Безопасное включение курсора
+	var cm = get_node_or_null("/root/CursorManager")
+	if cm:
+		cm.request_visible(self)
+	
 	current_time = time_limit
-
 	update_progress_ui()
 	load_task(0)
 
@@ -63,7 +63,7 @@ func _process(delta):
 		return
 	if current_time > 0:
 		current_time -= delta
-		timer_label.text = "ОСТАЛОСЬ: %.1f сек" % current_time
+		timer_label.text = "ОСТАЛОСЬ: %.1f сек" % max(0.0, current_time)
 		if current_time <= 0:
 			finish_game(false)
 	
@@ -85,28 +85,32 @@ func load_task(index):
 	
 	task_label.text = data["description"]
 	
-	# Очистка старого
+	# Очистка старых элементов
 	for child in query_container.get_children(): child.queue_free()
 	for child in pool_container.get_children(): child.queue_free()
 	
-	# Генерация слотов запроса
+	# Создание слотов запроса
 	var correct_index := 0
 	for item in data["template"]:
 		if item == null:
-			# Это пустой слот для перетаскивания
+			# Это слот
 			var slot = slot_scene.instantiate()
+			# Передаем правильный ответ в слот (важно для вашего drag_slot.gd, так как он проверяет expected_text)
 			if correct_index < data["correct"].size():
 				slot.expected_text = data["correct"][correct_index]
 				correct_index += 1
+			
 			query_container.add_child(slot)
-			slot.word_dropped.connect(check_answer)
+			# Подписываемся на сигнал падения слова
+			if slot.has_signal("word_dropped"):
+				slot.word_dropped.connect(check_answer)
 		else:
-			# Это фиксированное слово (просто Label или заблокированная кнопка)
+			# Это статический текст
 			var static_lbl = Label.new()
 			static_lbl.text = item
 			query_container.add_child(static_lbl)
 			
-	# Генерация слов для выбора
+	# Создание слов для выбора
 	for word_text in data["pool"]:
 		var word = word_scene.instantiate()
 		word.text_value = word_text
@@ -116,37 +120,50 @@ func load_task(index):
 		
 	update_progress_ui()
 
-func check_answer():
+# Основная функция проверки
+func check_answer(_arg = null):
+	# Ждем 1 кадр, чтобы переменные в слоте успели обновиться после сигнала
+	await get_tree().process_frame
+	
+	if _is_finished: return
+
 	var data = tasks[current_task_index]
 	var slots = []
 	
-	# Собираем все слоты
+	# --- ВАЖНОЕ ИСПРАВЛЕНИЕ: Ищем слоты по методу "set_word", который есть в drag_slot.gd ---
 	for child in query_container.get_children():
-		if child.has_method("_drop_data"): # Проверка, что это слот
+		if not child.is_queued_for_deletion() and child.has_method("set_word"):
 			slots.append(child)
 	
-	# Проверяем, все ли заполнены
+	var correct_matches = 0
 	var filled_count = 0
-	for slot in slots:
-		if slot.current_text != "":
-			filled_count += 1
-			
-	if filled_count < slots.size():
-		return # Еще не все заполнено
-		
-	# Проверяем правильность
-	var is_correct = true
+	
+	# Проверяем содержимое слотов
 	for i in range(slots.size()):
-		if slots[i].current_text != data["correct"][i]:
-			is_correct = false
-			break
-			
-	if is_correct:
-		print("Задание выполнено!")
+		var slot = slots[i]
+		var slot_text = ""
+		
+		if "current_text" in slot:
+			slot_text = slot.current_text
+		
+		if slot_text != "":
+			filled_count += 1
+		
+		# Сравниваем с правильным ответом
+		if i < data["correct"].size():
+			if slot_text == data["correct"][i]:
+				correct_matches += 1
+	
+	# Отладка в консоль (поможет понять, что происходит)
+	print("Проверка: Слотов %d, Заполнено %d, Верно %d" % [slots.size(), filled_count, correct_matches])
+	
+	# Если ВСЕ слоты заполнены И ВСЕ верны — победа
+	if correct_matches == slots.size() and slots.size() > 0:
+		print(">> Уровень пройден!")
 		next_level()
-	else:
-		# Можно добавить звук ошибки или покраснение
-		print("Ошибка в запросе")
+	elif filled_count == slots.size():
+		# Все заполнили, но есть ошибки
+		print(">> Ошибка в ответе")
 
 func next_level():
 	if current_task_index + 1 < tasks.size():
@@ -155,46 +172,44 @@ func next_level():
 		finish_game(true)
 
 func update_progress_ui():
-	# Обновляем кружочки (удаляем старые, создаем новые)
 	for c in progress_container.get_children(): c.queue_free()
-	
 	for i in range(tasks.size()):
 		var circle = ColorRect.new()
 		circle.custom_minimum_size = Vector2(20, 20)
 		if i < current_task_index:
-			circle.color = Color.GREEN # Выполнено
+			circle.color = Color.GREEN 
 		elif i == current_task_index:
-			circle.color = Color.YELLOW # Текущее
+			circle.color = Color.YELLOW 
 		else:
-			circle.color = Color.GRAY # Впереди
+			circle.color = Color.GRAY 
 		progress_container.add_child(circle)
 
 func finish_game(success: bool):
 	if _is_finished:
 		return
 	_is_finished = true
-	get_tree().paused = false # Снимаем паузу
+	get_tree().paused = false 
 	task_completed.emit(success)
 	
 	if success:
-		print("Лабораторная сдана!")
+		print("Лабораторная выполнена!")
 	else:
 		print("Время вышло! Штраф.")
-		# Вызов штрафа в GameDirector
-		# Предполагается, что GameDirector глобальный или есть к нему доступ
-		if GameDirector:
-			GameDirector.reduce_time(penalty_time)
+		var gd = get_node_or_null("/root/GameDirector")
+		if gd:
+			gd.reduce_time(penalty_time)
 	
-	# В любом случае отмечаем, что этот квест (лаба) пройден
 	if quest_id != "":
-		if not GameState.completed_labs.has(quest_id):
-			GameState.completed_labs.append(quest_id)
-			# Сигнал для дверей/событий, которые ждут выполнения
-			GameState.emit_signal("lab_completed", quest_id)
+		var gs = get_node_or_null("/root/GameState")
+		if gs and not gs.completed_labs.has(quest_id):
+			gs.completed_labs.append(quest_id)
+			gs.emit_signal("lab_completed", quest_id)
 		
-	queue_free() # Закрываем мини-игру
+	queue_free()
 
 func _exit_tree() -> void:
-	if CursorManager:
-		CursorManager.release_visible(self)
-	
+	var cm = get_node_or_null("/root/CursorManager")
+	if cm:
+		cm.release_visible(self)
+		
+		

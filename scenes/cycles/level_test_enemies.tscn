@@ -519,7 +519,6 @@ scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("37_xe867")
 quest_id = "lab_2"
 minigame_scene = ExtResource("38_le2t6")
-require_fridge_interaction = true
 fridge_locked_message = ""
 locked_sprite = ExtResource("39_vbm7i")
 available_sprite = ExtResource("40_2ii75")
