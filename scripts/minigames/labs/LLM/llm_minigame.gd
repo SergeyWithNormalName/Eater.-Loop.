@@ -26,6 +26,9 @@ var _progress: float = 0.0
 var _is_finished: bool = false
 var _cooldown_remaining: float = 0.0
 var _rng := RandomNumberGenerator.new()
+var _music_pushed: bool = false
+
+const LAB_MUSIC_STREAM := preload("res://audio/MusicEtc/TimerForLabs_DEMO.wav")
 
 # Тексты для кнопки (имитация состояний)
 const TEXT_IDLE = "   Сгенерировать отчёт"
@@ -42,6 +45,7 @@ func _ready() -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
+	_start_lab_music()
 
 	if get_tree().root.has_node("CursorManager"):
 		var cursor_mgr = get_tree().root.get_node("CursorManager")
@@ -118,6 +122,7 @@ func finish_game(success: bool) -> void:
 	if _is_finished:
 		return
 	_is_finished = true
+	_restore_lab_music()
 
 	if success:
 		generate_button.text = TEXT_DONE
@@ -146,6 +151,7 @@ func finish_game(success: bool) -> void:
 	queue_free()
 
 func _exit_tree() -> void:
+	_restore_lab_music()
 	if get_tree().root.has_node("CursorManager"):
 		var cursor_mgr = get_tree().root.get_node("CursorManager")
 		if cursor_mgr.has_method("release_visible"):
@@ -176,3 +182,35 @@ func _input(event: InputEvent) -> void:
 		var hovered = get_viewport().gui_get_hovered_control()
 		if hovered == generate_button:
 			_on_generate_pressed()
+
+func _start_lab_music() -> void:
+	if MusicManager == null:
+		return
+	if _music_pushed:
+		return
+	_ensure_lab_music_loop()
+	MusicManager.push_music(LAB_MUSIC_STREAM)
+	_music_pushed = true
+
+func _restore_lab_music() -> void:
+	if MusicManager == null:
+		return
+	if not _music_pushed:
+		return
+	MusicManager.pop_music()
+	_music_pushed = false
+
+func _ensure_lab_music_loop() -> void:
+	var stream: AudioStream = LAB_MUSIC_STREAM
+	if stream is AudioStreamWAV:
+		var wav := stream as AudioStreamWAV
+		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		return
+	if stream is AudioStreamOggVorbis:
+		var ogg := stream as AudioStreamOggVorbis
+		ogg.loop = true
+		return
+	if stream is AudioStreamMP3:
+		var mp3 := stream as AudioStreamMP3
+		mp3.loop = true

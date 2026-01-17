@@ -32,6 +32,9 @@ var tasks = [
 var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
+var _music_pushed: bool = false
+
+const LAB_MUSIC_STREAM := preload("res://audio/MusicEtc/TimerForLabs_DEMO.wav")
 
 @onready var drag_layer: Control = $Content/DragLayer
 @onready var query_container: HBoxContainer = $Content/QueryArea
@@ -48,6 +51,7 @@ func _ready():
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
+	_start_lab_music()
 	
 	# Безопасное включение курсора
 	var cm = get_node_or_null("/root/CursorManager")
@@ -188,6 +192,7 @@ func finish_game(success: bool):
 	if _is_finished:
 		return
 	_is_finished = true
+	_restore_lab_music()
 	get_tree().paused = false 
 	task_completed.emit(success)
 	
@@ -198,16 +203,49 @@ func finish_game(success: bool):
 		var gd = get_node_or_null("/root/GameDirector")
 		if gd:
 			gd.reduce_time(penalty_time)
-	
-	if quest_id != "":
+
+	if success and quest_id != "":
 		var gs = get_node_or_null("/root/GameState")
 		if gs and not gs.completed_labs.has(quest_id):
 			gs.completed_labs.append(quest_id)
 			gs.emit_signal("lab_completed", quest_id)
-		
+
 	queue_free()
 
+func _start_lab_music() -> void:
+	if MusicManager == null:
+		return
+	if _music_pushed:
+		return
+	_ensure_lab_music_loop()
+	MusicManager.push_music(LAB_MUSIC_STREAM)
+	_music_pushed = true
+
+func _restore_lab_music() -> void:
+	if MusicManager == null:
+		return
+	if not _music_pushed:
+		return
+	MusicManager.pop_music()
+	_music_pushed = false
+
+func _ensure_lab_music_loop() -> void:
+	var stream: AudioStream = LAB_MUSIC_STREAM
+	if stream is AudioStreamWAV:
+		var wav := stream as AudioStreamWAV
+		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
+			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		return
+	if stream is AudioStreamOggVorbis:
+		var ogg := stream as AudioStreamOggVorbis
+		ogg.loop = true
+		return
+	if stream is AudioStreamMP3:
+		var mp3 := stream as AudioStreamMP3
+		mp3.loop = true
+
 func _exit_tree() -> void:
+	_restore_lab_music()
 	var cm = get_node_or_null("/root/CursorManager")
 	if cm:
 		cm.release_visible(self)

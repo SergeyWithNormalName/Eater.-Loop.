@@ -96,7 +96,9 @@ func _on_button_pressed(_button: Button) -> void:
 	_play_sfx(click_sfx)
 
 func _tween_button(button: Button, target_scale: float, target_tint: Color) -> void:
-	var tween: Tween = button.get_meta("hover_tween") as Tween
+	var tween: Tween = null
+	if button.has_meta("hover_tween"):
+		tween = button.get_meta("hover_tween") as Tween
 	if tween and tween.is_running():
 		tween.kill()
 	var new_tween := button.create_tween()
