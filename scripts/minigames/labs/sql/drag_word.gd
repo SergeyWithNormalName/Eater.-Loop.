@@ -11,7 +11,9 @@ var _drag_layer: Control = null
 
 func _ready():
 	text = text_value
-	custom_minimum_size = Vector2(80, 40) # Примерный размер
+	if custom_minimum_size == Vector2.ZERO:
+		custom_minimum_size = Vector2(80, 28)
+	focus_mode = Control.FOCUS_NONE
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func set_drag_context(drag_layer: Control) -> void:
@@ -43,6 +45,7 @@ func _start_drag(mouse_pos: Vector2) -> void:
 	_ghost.focus_mode = Control.FOCUS_NONE
 	_ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_ghost.z_index = 1000
+	_apply_theme_to_ghost(_ghost)
 	_drag_layer.add_child(_ghost)
 	_ghost.global_position = mouse_pos - _ghost.size * 0.5
 
@@ -83,3 +86,26 @@ func _exit_tree() -> void:
 	if _ghost:
 		_ghost.queue_free()
 		_ghost = null
+
+func _apply_theme_to_ghost(target: Button) -> void:
+	var style_keys = ["normal", "hover", "pressed", "disabled", "focus"]
+	for key in style_keys:
+		var style := get_theme_stylebox(key)
+		if style:
+			target.add_theme_stylebox_override(key, style)
+	var font := get_theme_font("font")
+	if font:
+		target.add_theme_font_override("font", font)
+	var font_size := get_theme_font_size("font_size")
+	if font_size > 0:
+		target.add_theme_font_size_override("font_size", font_size)
+	var color_keys = [
+		"font_color",
+		"font_color_hover",
+		"font_color_pressed",
+		"font_color_focus",
+		"font_color_disabled"
+	]
+	for key in color_keys:
+		var color := get_theme_color(key)
+		target.add_theme_color_override(key, color)

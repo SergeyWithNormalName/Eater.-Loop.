@@ -3,9 +3,9 @@ extends Control
 signal task_completed(success: bool)
 
 # --- Настройки ---
-var time_limit: float = 60.0
-var penalty_time: float = 15.0
-var quest_id: String = "" 
+@export var time_limit: float = 60.0
+@export var penalty_time: float = 15.0
+@export var quest_id: String = ""
 
 # --- Данные заданий ---
 var tasks = [
@@ -35,13 +35,17 @@ var _is_finished: bool = false
 var _music_pushed: bool = false
 
 const LAB_MUSIC_STREAM := preload("res://audio/MusicEtc/TimerForLabs_DEMO.wav")
+const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
+const STATUS_TEMPLATE := " SQL | UTF-8 | ВРЕМЯ: %.1f сек | LN 1, COL 1"
+const MONO_FONT_NAMES := ["JetBrains Mono", "Menlo", "Consolas", "Courier New", "Courier"]
 
-@onready var drag_layer: Control = $Content/DragLayer
-@onready var query_container: HBoxContainer = $Content/QueryArea
-@onready var pool_container: GridContainer = $Content/WordPool
-@onready var task_label: Label = $Content/Header/TaskLabel
-@onready var timer_label: Label = $Content/Header/TimerLabel
-@onready var progress_container: HBoxContainer = $Content/Header/ProgressContainer
+@onready var drag_layer: Control = $DragLayer
+@onready var query_container: HBoxContainer = $Layout/MainContent/EditorArea/QueryEditor/QueryFlow
+@onready var pool_container: GridContainer = $Layout/MainContent/EditorArea/WordBank/WordGrid
+@onready var task_label: Label = $Layout/MainContent/LeftSidebar/TaskInfo/Description
+@onready var timer_label: Label = $Footer/StatusLabel
+
+var _mono_font_bold: SystemFont = null
 
 # Загружаем сцены слотов и слов
 var slot_scene = preload("res://scenes/minigames/ui/drop_slot.tscn") 
@@ -52,6 +56,7 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 	_start_lab_music()
+	_mono_font_bold = _build_mono_font(600)
 	
 	# Безопасное включение курсора
 	var cm = get_node_or_null("/root/CursorManager")
@@ -59,17 +64,16 @@ func _ready():
 		cm.request_visible(self)
 	
 	current_time = time_limit
-	update_progress_ui()
+	_update_status_label()
 	load_task(0)
 
 func _process(delta):
 	if _is_finished:
 		return
-	if current_time > 0:
-		current_time -= delta
-		timer_label.text = "ОСТАЛОСЬ: %.1f сек" % max(0.0, current_time)
-		if current_time <= 0:
-			finish_game(false)
+	current_time = max(0.0, current_time - delta)
+	_update_status_label()
+	if current_time <= 0:
+		finish_game(false)
 	
 	_handle_gamepad_cursor(delta)
 
@@ -82,6 +86,10 @@ func _handle_gamepad_cursor(delta: float) -> void:
 		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
 		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
 		get_viewport().warp_mouse(new_pos)
+
+func _update_status_label() -> void:
+	if timer_label:
+		timer_label.text = STATUS_TEMPLATE % max(0.0, current_time)
 
 func load_task(index):
 	current_task_index = index
@@ -110,9 +118,13 @@ func load_task(index):
 				slot.word_dropped.connect(check_answer)
 		else:
 			# Это статический текст
-			var static_lbl = Label.new()
-			static_lbl.text = item
-			query_container.add_child(static_lbl)
+			var keyword = Label.new()
+			keyword.text = item
+			keyword.add_theme_color_override("font_color", COLOR_KEYWORD)
+			if _mono_font_bold:
+				keyword.add_theme_font_override("font", _mono_font_bold)
+			keyword.add_theme_font_size_override("font_size", 16)
+			query_container.add_child(keyword)
 			
 	# Создание слов для выбора
 	for word_text in data["pool"]:
@@ -122,8 +134,6 @@ func load_task(index):
 			word.set_drag_context(drag_layer)
 		pool_container.add_child(word)
 		
-	update_progress_ui()
-
 # Основная функция проверки
 func check_answer(_arg = null):
 	# Ждем 1 кадр, чтобы переменные в слоте успели обновиться после сигнала
@@ -175,19 +185,6 @@ func next_level():
 	else:
 		finish_game(true)
 
-func update_progress_ui():
-	for c in progress_container.get_children(): c.queue_free()
-	for i in range(tasks.size()):
-		var circle = ColorRect.new()
-		circle.custom_minimum_size = Vector2(20, 20)
-		if i < current_task_index:
-			circle.color = Color.GREEN 
-		elif i == current_task_index:
-			circle.color = Color.YELLOW 
-		else:
-			circle.color = Color.GRAY 
-		progress_container.add_child(circle)
-
 func finish_game(success: bool):
 	if _is_finished:
 		return
@@ -211,6 +208,12 @@ func finish_game(success: bool):
 			gs.emit_signal("lab_completed", quest_id)
 
 	queue_free()
+
+func _build_mono_font(weight: int) -> SystemFont:
+	var font := SystemFont.new()
+	font.font_names = PackedStringArray(MONO_FONT_NAMES)
+	font.font_weight = weight
+	return font
 
 func _start_lab_music() -> void:
 	if MusicManager == null:
