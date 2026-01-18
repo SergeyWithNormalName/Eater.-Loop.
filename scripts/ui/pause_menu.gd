@@ -5,8 +5,6 @@ signal resume_requested
 @export_group("Сцены")
 ## Сцена главного меню.
 @export var main_menu_scene: PackedScene
-## Сцена новой игры.
-@export var new_game_scene: PackedScene
 
 @export_group("Музыка")
 ## Музыка меню паузы.
@@ -20,7 +18,6 @@ const EXIT_WARNING := "Несохранённые данные будут пот
 
 @onready var _title_label: Label = $MainPanel/VBox/Title
 @onready var _resume_button: Button = $MainPanel/VBox/Buttons/ResumeButton
-@onready var _new_game_button: Button = $MainPanel/VBox/Buttons/NewGameButton
 @onready var _settings_button: Button = $MainPanel/VBox/Buttons/SettingsButton
 @onready var _exit_menu_button: Button = $MainPanel/VBox/Buttons/ExitMenuButton
 @onready var _exit_game_button: Button = $MainPanel/VBox/Buttons/ExitGameButton
@@ -70,7 +67,6 @@ func close_menu() -> void:
 
 func _connect_buttons() -> void:
 	_resume_button.pressed.connect(_resume)
-	_new_game_button.pressed.connect(_on_new_game_pressed)
 	_settings_button.pressed.connect(_on_settings_pressed)
 	_exit_menu_button.pressed.connect(_on_exit_menu_pressed)
 	_exit_game_button.pressed.connect(_on_exit_game_pressed)
@@ -90,9 +86,6 @@ func _resume() -> void:
 	_restore_menu_music()
 	emit_signal("resume_requested")
 
-func _on_new_game_pressed() -> void:
-	_show_confirm("Точно начать новую игру?", _start_new_game)
-
 func _on_settings_pressed() -> void:
 	_active_panel = PANEL_SETTINGS
 	_main_panel.visible = false
@@ -106,17 +99,6 @@ func _on_exit_menu_pressed() -> void:
 
 func _on_exit_game_pressed() -> void:
 	_show_confirm(EXIT_WARNING, _exit_game)
-
-func _start_new_game() -> void:
-	if new_game_scene == null:
-		push_warning("PauseMenu: не назначена сцена для новой игры.")
-		return
-	if GameState:
-		GameState.reset_run()
-		GameState.set_current_scene_path(new_game_scene.resource_path)
-	_stop_menu_music()
-	get_tree().paused = false
-	await UIMessage.change_scene_with_fade(new_game_scene)
 
 func _exit_to_menu() -> void:
 	if main_menu_scene == null:

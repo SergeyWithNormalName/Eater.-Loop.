@@ -30,11 +30,20 @@ extends Area2D
 ## Энергия света.
 @export var light_energy: float = 1.0
 
+@export_group("Sprite Settings")
+## Узел Sprite2D лампы.
+@export var sprite_node: NodePath = NodePath("Sprite2D")
+## Текстура выключенной лампы.
+@export var off_texture: Texture2D
+## Текстура включенной лампы.
+@export var on_texture: Texture2D
+
 var _player_inside: bool = false
 var _is_on: bool = false
 var _light: PointLight2D = null
 var _interact_area: Area2D = null
 var _sfx_player: AudioStreamPlayer2D
+var _sprite: Sprite2D = null
 
 func _ready() -> void:
 	input_pickable = false
@@ -53,6 +62,10 @@ func _ready() -> void:
 		_apply_light_settings()
 		if not _light.is_in_group("lamp_light"):
 			_light.add_to_group("lamp_light")
+
+	_sprite = get_node_or_null(sprite_node) as Sprite2D
+	if _sprite and off_texture == null:
+		off_texture = _sprite.texture
 
 	_is_on = start_on
 	_update_light_enabled(false)
@@ -110,13 +123,14 @@ func _has_power() -> bool:
 	return GameState.electricity_on
 
 func _update_light_enabled(play_sound: bool) -> void:
-	if _light == null:
-		return
 	var should_enable = _is_on and _has_power()
-	var was_enabled = _light.enabled
-	_light.enabled = should_enable
-	if play_sound and was_enabled != should_enable:
-		_play_switch_sound()
+	var was_enabled = false
+	if _light != null:
+		was_enabled = _light.enabled
+		_light.enabled = should_enable
+		if play_sound and was_enabled != should_enable:
+			_play_switch_sound()
+	_update_sprite(should_enable)
 	_update_prompt()
 
 func _play_switch_sound() -> void:
@@ -146,6 +160,14 @@ func _update_light_range() -> void:
 		return
 	var range_val = max(1.0, light_range)
 	_light.texture_scale = range_val / base_radius
+
+func _update_sprite(is_lit: bool) -> void:
+	if _sprite == null:
+		return
+	if is_lit and on_texture != null:
+		_sprite.texture = on_texture
+	elif off_texture != null:
+		_sprite.texture = off_texture
 
 func _on_electricity_changed(_is_on: bool) -> void:
 	_update_light_enabled(true)

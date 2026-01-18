@@ -20,6 +20,7 @@ var _bar: ColorRect
 var _ratio: float = 1.0
 var _fade_alpha: float = 0.0
 var _idle_time: float = 0.0
+var _was_visible: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -30,6 +31,7 @@ func _ready() -> void:
 	_bar.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	add_child(_bar)
 	_idle_time = hide_delay
+	_fade_alpha = 0.0
 
 func _process(delta: float) -> void:
 	_update_visibility()
@@ -44,7 +46,12 @@ func _process(delta: float) -> void:
 func _update_visibility() -> void:
 	var scene := get_tree().current_scene
 	var path := scene.scene_file_path if scene else ""
-	visible = path.find("/scenes/cycles/") != -1
+	var should_show := path.find("/scenes/cycles/") != -1
+	if should_show and not _was_visible:
+		_idle_time = hide_delay
+		_fade_alpha = 0.0
+	visible = should_show
+	_was_visible = should_show
 
 func _update_ratio(delta: float) -> void:
 	var player := _get_player()

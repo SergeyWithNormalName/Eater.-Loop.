@@ -281,6 +281,8 @@
 │   │   │   ├── Door_Opened_2.png.import
 │   │   │   ├── Lamp1.png
 │   │   │   ├── Lamp1.png.import
+│   │   │   ├── LampOn1.png
+│   │   │   ├── LampOn1.png.import
 │   │   │   ├── On-offer.png
 │   │   │   ├── On-offer.png.import
 │   │   │   ├── OpenShtora.png
@@ -402,10 +404,16 @@
 │   │           ├── Chicken.png.import
 │   │           ├── Dumpling.png
 │   │           ├── Dumpling.png.import
+│   │           ├── Fish.png
+│   │           ├── Fish.png.import
+│   │           ├── Hachapuri.png
+│   │           ├── Hachapuri.png.import
 │   │           ├── MeetSteak.png
 │   │           ├── MeetSteak.png.import
 │   │           ├── Naggets.png
-│   │           └── Naggets.png.import
+│   │           ├── Naggets.png.import
+│   │           ├── RawMeet.png
+│   │           └── RawMeet.png.import
 │   ├── monster_runner_animation_walking
 │   │   ├── ezgif-frame-001.png
 │   │   ├── ezgif-frame-001.png.import
@@ -497,6 +505,8 @@
 │   ├── DoorToilet2.png.import
 │   ├── FonForFood.png
 │   ├── FonForFood.png.import
+│   ├── MainMenuBackground.png
+│   ├── MainMenuBackground.png.import
 │   ├── Monster.png
 │   ├── Monster.png.import
 │   ├── Monster_2.png
@@ -510,4 +520,4 @@
 ├── project.godot
 └── structure.txt
 
-52 directories, 459 files
+52 directories, 469 files
