@@ -90,6 +90,7 @@
 │   │   ├── level_03.tscn
 │   │   ├── level_04.tscn
 │   │   ├── level_05.tscn
+│   │   ├── level_06.tscn
 │   │   └── level_test_enemies.tscn
 │   ├── enemies
 │   │   ├── enemy.tscn
@@ -342,7 +343,9 @@
 │   │   │   ├── PictureOne.png
 │   │   │   ├── PictureOne.png.import
 │   │   │   ├── Shkaf1.png
-│   │   │   └── Shkaf1.png.import
+│   │   │   ├── Shkaf1.png.import
+│   │   │   ├── tv_1.png
+│   │   │   └── tv_1.png.import
 │   │   ├── kitchen
 │   │   │   ├── Chair_1.png
 │   │   │   ├── Chair_1.png.import
@@ -520,4 +523,4 @@
 ├── project.godot
 └── structure.txt
 
-52 directories, 469 files
+52 directories, 472 files
