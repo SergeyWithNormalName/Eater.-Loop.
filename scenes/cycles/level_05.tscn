@@ -3018,6 +3018,7 @@ start_on = true
 turn_on_sfx = ExtResource("86_7c4ho")
 light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
 light_range = 200.0
+flicker_enabled = true
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
 position = Vector2(13325, 119)

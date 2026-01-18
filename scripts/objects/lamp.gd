@@ -30,6 +30,18 @@ extends Area2D
 ## Энергия света.
 @export var light_energy: float = 1.0
 
+@export_group("Flicker Settings")
+## Включить мерцание света.
+@export var flicker_enabled: bool = false
+## Шанс мерцания на кадр.
+@export_range(0.0, 1.0, 0.01) var flicker_chance: float = 0.05
+## Минимальный множитель энергии при мерцании.
+@export_range(0.0, 2.0, 0.01) var flicker_energy_min: float = 0.8
+## Максимальный множитель энергии при мерцании.
+@export_range(0.0, 2.0, 0.01) var flicker_energy_max: float = 1.1
+## Скорость возвращения энергии к базовой.
+@export_range(0.0, 1.0, 0.01) var flicker_return_speed: float = 0.1
+
 @export_group("Sprite Settings")
 ## Узел Sprite2D лампы.
 @export var sprite_node: NodePath = NodePath("Sprite2D")
@@ -89,6 +101,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("lamp_switch"):
 		_toggle()
 
+func _process(_delta: float) -> void:
+	if _light == null:
+		return
+	if not _light.enabled:
+		_reset_light_energy()
+		return
+	if not flicker_enabled:
+		_reset_light_energy()
+		return
+
+	var min_mult: float = min(flicker_energy_min, flicker_energy_max)
+	var max_mult: float = max(flicker_energy_min, flicker_energy_max)
+	if randf() < flicker_chance:
+		_light.energy = light_energy * randf_range(min_mult, max_mult)
+	else:
+		_light.energy = lerp(_light.energy, light_energy, flicker_return_speed)
+
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		_player_inside = true
@@ -128,6 +157,7 @@ func _update_light_enabled(play_sound: bool) -> void:
 	if _light != null:
 		was_enabled = _light.enabled
 		_light.enabled = should_enable
+		_reset_light_energy()
 		if play_sound and was_enabled != should_enable:
 			_play_switch_sound()
 	_update_sprite(should_enable)
@@ -147,7 +177,7 @@ func _apply_light_settings() -> void:
 	if _light == null:
 		return
 	_light.color = light_color
-	_light.energy = light_energy
+	_reset_light_energy()
 	_update_light_range()
 
 func _update_light_range() -> void:
@@ -160,6 +190,12 @@ func _update_light_range() -> void:
 		return
 	var range_val = max(1.0, light_range)
 	_light.texture_scale = range_val / base_radius
+
+func _reset_light_energy() -> void:
+	if _light == null:
+		return
+	if _light.energy != light_energy:
+		_light.energy = light_energy
 
 func _update_sprite(is_lit: bool) -> void:
 	if _sprite == null:
