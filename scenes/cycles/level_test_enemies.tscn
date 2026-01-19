@@ -1794,7 +1794,7 @@ walk_frame_time = 0.12
 walk_loop_start_index = 4
 walk_loop_end_index = 19
 step_frame_indices = Array[int]([6, 10, 14, 18])
-camera_shake_intensity = 14.0
+camera_shake_intensity = 19.0
 kill_on_attack = true
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("85_3pht0")]

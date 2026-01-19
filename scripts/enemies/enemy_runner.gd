@@ -67,7 +67,7 @@ extends "res://scripts/enemy.gd"
 @export var camera_shake_duration: float = 0.08
 
 var _growl_timer: float = 0.0
-var _step_player: AudioStreamPlayer2D
+var _step_player: AudioStreamPlayer
 var _growl_player: AudioStreamPlayer2D
 var _scream_player: AudioStreamPlayer2D
 var _wander_timer: float = 0.0
@@ -88,17 +88,17 @@ var _chase_music_started: bool = false
 func _ready() -> void:
 	super._ready()
 
-	_step_player = AudioStreamPlayer2D.new()
-	_step_player.bus = "SFX"
+	_step_player = AudioStreamPlayer.new()
+	_step_player.bus = "Sounds"
 	_step_player.max_polyphony = 4
 	add_child(_step_player)
 	
 	_growl_player = AudioStreamPlayer2D.new()
-	_growl_player.bus = "SFX"
+	_growl_player.bus = "Sounds"
 	add_child(_growl_player)
 
 	_scream_player = AudioStreamPlayer2D.new()
-	_scream_player.bus = "SFX"
+	_scream_player.bus = "Sounds"
 	add_child(_scream_player)
 
 	_reset_growl_timer()
