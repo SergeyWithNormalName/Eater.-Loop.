@@ -14,7 +14,10 @@ extends Control
 ## Звук нажатия.
 @export var click_sfx: AudioStream
 ## Громкость звуков (дБ).
-@export_range(-40.0, 6.0, 0.1) var sfx_volume_db: float = -6.0
+## Громкость звука наведения (дБ).
+@export_range(-40.0, 6.0, 0.1) var hover_sfx_volume_db: float = -10.0
+## Громкость звука нажатия (дБ).
+@export_range(-40.0, 6.0, 0.1) var click_sfx_volume_db: float = -10.0
 
 @export_group("Визуальный отклик")
 ## Масштаб кнопки при фокусе/наведении.
@@ -86,14 +89,14 @@ func _wire_buttons() -> void:
 func _on_button_hover(button: Button) -> void:
 	if button.disabled:
 		return
-	_play_sfx(hover_sfx)
+	_play_sfx(hover_sfx, hover_sfx_volume_db)
 	_tween_button(button, hover_scale, hover_tint)
 
 func _on_button_unhover(button: Button) -> void:
 	_tween_button(button, 1.0, Color(1, 1, 1, 1))
 
 func _on_button_pressed(_button: Button) -> void:
-	_play_sfx(click_sfx)
+	_play_sfx(click_sfx, click_sfx_volume_db)
 
 func _tween_button(button: Button, target_scale: float, target_tint: Color) -> void:
 	var tween: Tween = null
@@ -108,12 +111,12 @@ func _tween_button(button: Button, target_scale: float, target_tint: Color) -> v
 	new_tween.tween_property(button, "modulate", target_tint, 0.12)
 	new_tween.set_parallel(false)
 
-func _play_sfx(stream: AudioStream) -> void:
+func _play_sfx(stream: AudioStream, volume_db: float) -> void:
 	if _sfx_player == null or stream == null:
 		return
 	_sfx_player.stop()
 	_sfx_player.stream = stream
-	_sfx_player.volume_db = sfx_volume_db
+	_sfx_player.volume_db = volume_db
 	_sfx_player.play()
 
 func _resolve_sfx_player() -> AudioStreamPlayer:

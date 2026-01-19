@@ -274,7 +274,7 @@ texture = ExtResource("14_bs7lo")
 z_index = -1
 position = Vector2(-2420, 2439.8599)
 script = ExtResource("18_xj310")
-next_level_path = "res://scenes/cycles/level_01.tscn"
+next_level_path = "uid://b0rhqem0xcvbc"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
 require_light_for_sleep = true
@@ -2107,7 +2107,7 @@ texture = ExtResource("14_bs7lo")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("18_xj310")
-next_level_path = "res://scenes/cycles/level_01.tscn"
+next_level_path = "uid://b0rhqem0xcvbc"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 sleep_message_template = ""
 require_light_for_sleep = true
@@ -3019,6 +3019,8 @@ turn_on_sfx = ExtResource("86_7c4ho")
 light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
 light_range = 200.0
 flicker_enabled = true
+flicker_chance = 0.04
+flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
 position = Vector2(13325, 119)

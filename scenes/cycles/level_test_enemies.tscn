@@ -68,9 +68,9 @@
 [ext_resource type="Texture2D" uid="uid://b32dbypa4avi4" path="res://textures/furniture/hall/Boots4.png" id="74_bddgk"]
 [ext_resource type="Texture2D" uid="uid://xgjccvayabbh" path="res://textures/furniture/hall/Boots5.png" id="75_0a7ki"]
 [ext_resource type="Texture2D" uid="uid://db4r1172wlmmj" path="res://textures/furniture/hall/Boots2.png" id="76_h6a1m"]
+[ext_resource type="AudioStream" uid="uid://cloagxjbd1mt3" path="res://audio/monsters/BigStep_1V.wav" id="77_nlubh"]
 [ext_resource type="PackedScene" uid="uid://bpeloj4upnwn1" path="res://scenes/enemies/enemy_runner.tscn" id="77_vpq6w"]
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://textures/furniture/hall/Boots6.png" id="77_y0ton"]
-[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://audio/AndreyEating/Nam-nam_1.wav" id="78_nlubh"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://textures/furniture/kitchen/Urna.png" id="78_ug0bd"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://textures/furniture/bedroom/Powerbank2.png" id="79_kqa0o"]
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="80_0fedf"]
@@ -1788,10 +1788,10 @@ texture = ExtResource("82_tu4sr")
 
 [node name="EnemyRunner" parent="." instance=ExtResource("77_vpq6w")]
 position = Vector2(6675, 120)
-step_sounds = Array[AudioStream]([ExtResource("78_nlubh")])
+step_sounds = Array[AudioStream]([ExtResource("77_nlubh")])
 step_volume_db = -6.0
 walk_frame_time = 0.12
-walk_loop_start_index = 5
+walk_loop_start_index = 4
 walk_loop_end_index = 19
 step_frame_indices = Array[int]([6, 10, 14, 18])
 camera_shake_intensity = 14.0

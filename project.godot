@@ -11,9 +11,11 @@ config_version=5
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://c3s82ewvaot7t"
+run/main_scene="uid://sdmle35lsdig"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bwxfalfqm6n1r"
+config/macos_native_icon="res://Иконка_предварительно.icns"
+config/windows_native_icon="res://Иконка_предварительно.ico"
 
 [autoload]
 

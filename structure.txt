@@ -59,6 +59,9 @@
 │   │   ├── door_unlocked.wav.import
 │   │   ├── lamp.wav
 │   │   └── lamp.wav.import
+│   ├── monsters
+│   │   ├── BigStep_1V.wav
+│   │   └── BigStep_1V.wav.import
 │   ├── player
 │   │   ├── steps
 │   │   │   ├── steps1.wav
@@ -520,7 +523,11 @@
 ├── export_presets.cfg
 ├── icon.svg
 ├── icon.svg.import
+├── iconofgame.png
+├── iconofgame.png.import
 ├── project.godot
-└── structure.txt
+├── structure.txt
+├── Иконка_предварительно.icns
+└── Иконка_предварительно.ico
 
-52 directories, 472 files
+53 directories, 478 files

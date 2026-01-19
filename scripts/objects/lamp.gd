@@ -205,7 +205,7 @@ func _update_sprite(is_lit: bool) -> void:
 	elif off_texture != null:
 		_sprite.texture = off_texture
 
-func _on_electricity_changed(_is_on: bool) -> void:
+func _on_electricity_changed(_electricity_on: bool) -> void:
 	_update_light_enabled(true)
 
 func is_light_active() -> bool:
