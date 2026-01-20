@@ -3024,6 +3024,7 @@ flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
 position = Vector2(13325, 119)
+kill_on_attack = true
 
 [connection signal="body_entered" from="TestKey" to="TestKey" method="_on_body_entered"]
 [connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]
