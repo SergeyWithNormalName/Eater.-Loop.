@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://scripts/objects/interactive_object.gd"
 
 @export_group("Minigame")
 ## Сцена мини-игры.
@@ -52,7 +52,6 @@ extends Area2D
 ## Узел подсветки доступности (дополнительный).
 @export var available_light_node_secondary: NodePath
 
-var player_inside: bool = false
 var _is_interacting: bool = false
 var _current_minigame: Node = null
 var _sfx_player: AudioStreamPlayer
@@ -63,12 +62,8 @@ var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 
 func _ready() -> void:
+	super._ready()
 	input_pickable = false
-	
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-	if not body_exited.is_connected(_on_body_exited):
-		body_exited.connect(_on_body_exited)
 	
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.bus = "Sounds"
@@ -81,26 +76,10 @@ func _ready() -> void:
 	if GameState.has_signal("lab_completed"):
 		GameState.lab_completed.connect(func(_id): _update_visuals())
 
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		player_inside = true
-		if InteractionPrompts:
-			InteractionPrompts.show_interact(self)
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		player_inside = false
-		if InteractionPrompts:
-			InteractionPrompts.hide_interact(self)
-
-func _unhandled_input(event: InputEvent) -> void:
+func _on_interact() -> void:
 	if _is_interacting:
 		return
-	if not player_inside:
-		return
-	
-	if event.is_action_pressed("interact"):
-		_try_interact()
+	_try_interact()
 
 func _try_interact() -> void:
 	if GameState.has_method("mark_fridge_interacted"):
@@ -257,7 +236,7 @@ func _set_prompts_enabled(enabled: bool) -> void:
 	if InteractionPrompts.has_method("set_prompts_enabled"):
 		InteractionPrompts.set_prompts_enabled(enabled)
 	elif enabled:
-		if player_inside:
-			InteractionPrompts.show_interact(self)
+		if is_player_in_range():
+			_show_prompt()
 	else:
-		InteractionPrompts.hide_interact(self)
+		_hide_prompt()

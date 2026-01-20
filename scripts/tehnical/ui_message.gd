@@ -3,6 +3,12 @@ extends CanvasLayer
 ## Длительность показа сообщений по умолчанию.
 @export var default_duration: float = 2.0
 
+@export_group("Субтитры")
+## Длительность показа субтитров по умолчанию.
+@export var subtitle_duration: float = 2.5
+## Размер шрифта субтитров.
+@export var subtitle_font_size: int = 52
+
 @export_group("Подсказки")
 ## Цвет затемнения фона подсказки.
 @export var hint_overlay_color: Color = Color(0, 0, 0, 0.7)
@@ -18,9 +24,12 @@ extends CanvasLayer
 @export_range(0.2, 0.8, 0.01) var hint_image_height_ratio: float = 0.45
 
 var _label: Label
+var _subtitle_label: Label
 var _timer: Timer
+var _subtitle_timer: Timer
 var _fade_rect: ColorRect
 var _sfx_player: AudioStreamPlayer
+var _modules: Dictionary = {}
 
 # --- Переменные для записок ---
 var _note_bg: ColorRect
@@ -77,6 +86,32 @@ func _ready() -> void:
 	_timer.one_shot = true
 	_timer.timeout.connect(_on_timeout)
 	add_child(_timer)
+
+	_subtitle_label = Label.new()
+	add_child(_subtitle_label)
+	_subtitle_label.visible = false
+
+	var subtitle_font = load("res://fonts/AmaticSC-Regular.ttf")
+	if subtitle_font:
+		var subtitle_variation = FontVariation.new()
+		subtitle_variation.base_font = subtitle_font
+		subtitle_variation.spacing_glyph = 3
+		_subtitle_label.add_theme_font_override("font", subtitle_variation)
+	_subtitle_label.add_theme_font_size_override("font_size", subtitle_font_size)
+	_subtitle_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_subtitle_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	_subtitle_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_subtitle_label.offset_left = 60
+	_subtitle_label.offset_right = -60
+	_subtitle_label.offset_top = 0
+	_subtitle_label.offset_bottom = -120
+	_subtitle_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	_subtitle_timer = Timer.new()
+	_subtitle_timer.one_shot = true
+	_subtitle_timer.timeout.connect(_on_subtitle_timeout)
+	add_child(_subtitle_timer)
 	
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.bus = "Sounds"
@@ -245,6 +280,48 @@ func show_text(text: String, duration: float = -1.0) -> void:
 	_label.visible = true
 	_timer.start(duration if duration > 0.0 else default_duration)
 
+func show_subtitle(text: String, duration: float = -1.0) -> void:
+	var t := text.strip_edges()
+	if t == "":
+		return
+	_subtitle_label.text = t
+	_subtitle_label.visible = true
+	_subtitle_timer.start(duration if duration > 0.0 else subtitle_duration)
+
+func hide_subtitle() -> void:
+	_subtitle_label.visible = false
+	_subtitle_timer.stop()
+
+func show_interact_prompt(source: Object, text: String = "") -> void:
+	if InteractionPrompts:
+		InteractionPrompts.show_interact(source, text)
+
+func hide_interact_prompt(source: Object) -> void:
+	if InteractionPrompts:
+		InteractionPrompts.hide_interact(source)
+
+func show_lamp_prompt(source: Object, text: String = "") -> void:
+	if InteractionPrompts:
+		InteractionPrompts.show_lamp(source, text)
+
+func hide_lamp_prompt(source: Object) -> void:
+	if InteractionPrompts:
+		InteractionPrompts.hide_lamp(source)
+
+func set_stamina_visible(is_visible: bool) -> void:
+	if StaminaBar:
+		StaminaBar.visible = is_visible
+
+func register_module(name: String, node: Node) -> void:
+	if name == "" or node == null:
+		return
+	_modules[name] = node
+	if node.get_parent() == null:
+		add_child(node)
+
+func get_module(name: String) -> Node:
+	return _modules.get(name, null)
+
 func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	if stream == null:
 		return
@@ -255,6 +332,9 @@ func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 
 
 func _on_timeout() -> void:
 	_label.visible = false
+
+func _on_subtitle_timeout() -> void:
+	_subtitle_label.visible = false
 
 func fade_out(duration: float = 0.5) -> void:
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP

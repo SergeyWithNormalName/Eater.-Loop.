@@ -1,5 +1,18 @@
 extends Node
 
+## MusicManager — единый слой управления музыкой.
+##
+## Основные режимы:
+## - play_music(stream, fade, volume): базовое воспроизведение трека с кроссфейдом.
+## - push_music(stream, fade, volume): временно заменить музыку (мини-игры, меню).
+## - pop_music(fade): вернуть предыдущий трек из стека.
+## - duck_music / restore_music_volume: временно приглушить основной трек.
+##
+## Музыка погони:
+## - configure_runner_music(stream, volume_db, fade_time)
+## - set_runner_music_active(source, true/false)
+##   Музыка погони играет, пока есть хотя бы один активный источник.
+
 @export_group("Музыка")
 ## Длительность плавного перехода по умолчанию.
 @export_range(0.0, 10.0, 0.1) var default_fade_time: float = 1.0

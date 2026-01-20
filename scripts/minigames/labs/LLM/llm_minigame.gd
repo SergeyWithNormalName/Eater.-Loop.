@@ -26,7 +26,6 @@ var _progress: float = 0.0
 var _is_finished: bool = false
 var _cooldown_remaining: float = 0.0
 var _rng := RandomNumberGenerator.new()
-var _music_pushed: bool = false
 
 const LAB_MUSIC_STREAM := preload("res://audio/MusicEtc/TimerForLabs_DEMO.wav")
 
@@ -44,31 +43,18 @@ const TEXT_DONE = "   Отчёт готов!"
 func _ready() -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
-	_start_lab_music()
-
-	if get_tree().root.has_node("CursorManager"):
-		var cursor_mgr = get_tree().root.get_node("CursorManager")
-		if cursor_mgr.has_method("request_visible"):
-			cursor_mgr.request_visible(self)
+	_start_minigame_session()
 
 	current_time = time_limit
 	_rng.randomize()
 
 	_update_ui_state()
 	generate_button.pressed.connect(_on_generate_pressed)
+	if MinigameController == null:
+		_update_timer_label()
 
 func _process(delta: float) -> void:
 	if _is_finished:
-		return
-
-	current_time -= delta
-	var mins = floor(current_time / 60)
-	var secs = int(current_time) % 60
-	timer_label.text = "%02d:%02d" % [mins, secs]
-
-	if current_time <= 0.0:
-		finish_game(false)
 		return
 
 	if _cooldown_remaining > 0.0:
@@ -77,8 +63,6 @@ func _process(delta: float) -> void:
 			_cooldown_finished()
 		else:
 			generate_button.text = TEXT_PROCESSING + "%.1f сек" % _cooldown_remaining
-
-	_handle_gamepad_cursor(delta)
 
 func _on_generate_pressed() -> void:
 	if _is_finished:
@@ -122,7 +106,8 @@ func finish_game(success: bool) -> void:
 	if _is_finished:
 		return
 	_is_finished = true
-	_restore_lab_music()
+	if MinigameController:
+		MinigameController.finish_minigame(self, success)
 
 	if success:
 		generate_button.text = TEXT_DONE
@@ -134,7 +119,6 @@ func finish_game(success: bool) -> void:
 
 	await get_tree().create_timer(0.5).timeout
 
-	get_tree().paused = false
 	task_completed.emit(success)
 
 	if not success:
@@ -151,11 +135,13 @@ func finish_game(success: bool) -> void:
 	queue_free()
 
 func _exit_tree() -> void:
-	_restore_lab_music()
-	if get_tree().root.has_node("CursorManager"):
-		var cursor_mgr = get_tree().root.get_node("CursorManager")
-		if cursor_mgr.has_method("release_visible"):
-			cursor_mgr.release_visible(self)
+	if MinigameController:
+		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
+			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
+		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
+			MinigameController.minigame_time_expired.disconnect(_on_time_expired)
+		if MinigameController.is_active(self):
+			MinigameController.finish_minigame(self, false)
 
 func _shake_button() -> void:
 	var tween = create_tween()
@@ -165,16 +151,6 @@ func _shake_button() -> void:
 		tween.tween_property(generate_button, "position:x", orig_pos - 5, 0.05)
 	tween.tween_property(generate_button, "position:x", orig_pos, 0.05)
 
-func _handle_gamepad_cursor(delta: float) -> void:
-	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
-	if joy_vector.length() > 0.1:
-		var current_mouse = get_viewport().get_mouse_position()
-		var new_pos = current_mouse + joy_vector * 800.0 * delta
-		var screen_rect = get_viewport().get_visible_rect().size
-		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
-		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
-		get_viewport().warp_mouse(new_pos)
-
 func _input(event: InputEvent) -> void:
 	if _is_finished:
 		return
@@ -183,22 +159,38 @@ func _input(event: InputEvent) -> void:
 		if hovered == generate_button:
 			_on_generate_pressed()
 
-func _start_lab_music() -> void:
-	if MusicManager == null:
-		return
-	if _music_pushed:
+func _start_minigame_session() -> void:
+	if MinigameController == null:
 		return
 	_ensure_lab_music_loop()
-	MusicManager.push_music(LAB_MUSIC_STREAM)
-	_music_pushed = true
+	MinigameController.start_minigame(self, {
+		"pause_game": true,
+		"enable_gamepad_cursor": true,
+		"time_limit": time_limit,
+		"music_stream": LAB_MUSIC_STREAM,
+		"music_fade_time": 0.0,
+		"auto_finish_on_timeout": false
+	})
+	current_time = time_limit
+	_update_timer_label()
+	MinigameController.minigame_time_updated.connect(_on_time_updated)
+	MinigameController.minigame_time_expired.connect(_on_time_expired)
 
-func _restore_lab_music() -> void:
-	if MusicManager == null:
+func _on_time_updated(minigame: Node, time_left: float, _limit: float) -> void:
+	if minigame != self:
 		return
-	if not _music_pushed:
+	current_time = time_left
+	_update_timer_label()
+
+func _on_time_expired(minigame: Node) -> void:
+	if minigame != self:
 		return
-	MusicManager.pop_music()
-	_music_pushed = false
+	finish_game(false)
+
+func _update_timer_label() -> void:
+	var mins = floor(current_time / 60)
+	var secs = int(current_time) % 60
+	timer_label.text = "%02d:%02d" % [mins, secs]
 
 func _ensure_lab_music_loop() -> void:
 	var stream: AudioStream = LAB_MUSIC_STREAM

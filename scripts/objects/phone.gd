@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://scripts/objects/interactive_object.gd"
 
 @export_category("Phone Settings")
 ## Звук звонка телефона.
@@ -8,17 +8,14 @@ extends Area2D
 ## Интервал между звонками.
 @export var ring_interval: float = 6.0
 
-var _player_inside: bool = false
 var _is_picked: bool = false
 var _ring_timer: Timer
 var _ring_player: AudioStreamPlayer
 var _pickup_player: AudioStreamPlayer
 
 func _ready() -> void:
+	super._ready()
 	input_pickable = false
-	
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 	
 	_ring_player = AudioStreamPlayer.new()
 	_ring_player.bus = "Sounds"
@@ -37,24 +34,10 @@ func _ready() -> void:
 	
 	_start_ringing()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if _is_picked or not _player_inside:
+func _on_interact() -> void:
+	if _is_picked:
 		return
-	
-	if event.is_action_pressed("interact"):
-		_pickup()
-
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = true
-		if InteractionPrompts:
-			InteractionPrompts.show_interact(self)
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = false
-		if InteractionPrompts:
-			InteractionPrompts.hide_interact(self)
+	_pickup()
 
 func _start_ringing() -> void:
 	if _is_picked:
@@ -78,8 +61,7 @@ func _pickup() -> void:
 	_is_picked = true
 	_ring_timer.stop()
 	_ring_player.stop()
-	if InteractionPrompts:
-		InteractionPrompts.hide_interact(self)
+	_hide_prompt()
 	if pickup_sound:
 		_pickup_player.stream = pickup_sound
 	if _pickup_player.stream:

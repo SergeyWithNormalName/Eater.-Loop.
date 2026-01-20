@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://scripts/objects/interactive_object.gd"
 
 @export_category("Minigame Settings")
 ## Уникальный ID этой работы.
@@ -33,7 +33,6 @@ extends Area2D
 
 # Флаг, чтобы нельзя было делать лабу дважды
 var is_done = false
-var _player_inside: bool = false
 var _is_interacting: bool = false
 var _current_canvas: CanvasLayer = null
 var _current_minigame: Node = null
@@ -41,19 +40,10 @@ var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 
-@onready var interact_area: Area2D = get_node_or_null("InteractArea") as Area2D
-
 func _ready() -> void:
+	interact_area_node = NodePath("InteractArea")
+	super._ready()
 	input_pickable = false
-	if interact_area == null:
-		interact_area = self
-	if interact_area:
-		if not interact_area.body_entered.is_connected(_on_body_entered):
-			interact_area.body_entered.connect(_on_body_entered)
-		if not interact_area.body_exited.is_connected(_on_body_exited):
-			interact_area.body_exited.connect(_on_body_exited)
-	else:
-		push_warning("Laptop: InteractArea не найден.")
 	
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
@@ -64,26 +54,12 @@ func _ready() -> void:
 	if GameState.has_signal("fridge_interacted_changed"):
 		GameState.fridge_interacted_changed.connect(func(): _update_sprite())
 
-func _unhandled_input(event: InputEvent) -> void:
-	if _is_interacting or not _player_inside:
+func _on_interact() -> void:
+	if _is_interacting:
 		return
-	
-	if event.is_action_pressed("interact"):
-		_try_interact()
+	_try_interact()
 
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = true
-		if InteractionPrompts:
-			InteractionPrompts.show_interact(self)
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = false
-		if InteractionPrompts:
-			InteractionPrompts.hide_interact(self)
-
-func interact():
+func interact() -> void:
 	_try_interact()
 
 func _try_interact() -> void:
@@ -182,8 +158,8 @@ func _set_prompts_enabled(enabled: bool) -> void:
 	if InteractionPrompts.has_method("set_prompts_enabled"):
 		InteractionPrompts.set_prompts_enabled(enabled)
 	elif enabled:
-		if _player_inside:
-			InteractionPrompts.show_interact(self)
+		if is_player_in_range():
+			_show_prompt()
 	else:
-		InteractionPrompts.hide_interact(self)
+		_hide_prompt()
 		

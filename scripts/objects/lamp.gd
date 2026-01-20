@@ -1,8 +1,4 @@
-extends Area2D
-
-@export_group("Interaction")
-## Узел Area2D для зоны взаимодействия (пусто — использовать сам объект).
-@export var interact_area_node: NodePath = NodePath("")
+extends "res://scripts/objects/interactive_object.gd"
 ## Сообщение, если нет электричества.
 @export_multiline var no_power_message: String = "Нет электричества."
 
@@ -50,24 +46,14 @@ extends Area2D
 ## Текстура включенной лампы.
 @export var on_texture: Texture2D
 
-var _player_inside: bool = false
 var _is_on: bool = false
 var _light: PointLight2D = null
-var _interact_area: Area2D = null
 var _sfx_player: AudioStreamPlayer2D
 var _sprite: Sprite2D = null
 
 func _ready() -> void:
+	super._ready()
 	input_pickable = false
-
-	_interact_area = get_node_or_null(interact_area_node) as Area2D
-	if _interact_area == null:
-		_interact_area = self
-	if _interact_area:
-		if not _interact_area.body_entered.is_connected(_on_body_entered):
-			_interact_area.body_entered.connect(_on_body_entered)
-		if not _interact_area.body_exited.is_connected(_on_body_exited):
-			_interact_area.body_exited.connect(_on_body_exited)
 
 	_light = get_node_or_null(light_node) as PointLight2D
 	if _light:
@@ -95,11 +81,11 @@ func _ready() -> void:
 	if GameState and GameState.has_signal("electricity_changed"):
 		GameState.electricity_changed.connect(_on_electricity_changed)
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not _player_inside:
-		return
-	if event.is_action_pressed("lamp_switch"):
-		_toggle()
+func _get_interact_action() -> String:
+	return "lamp_switch"
+
+func _on_interact() -> void:
+	_toggle()
 
 func _process(_delta: float) -> void:
 	if _light == null:
@@ -118,16 +104,23 @@ func _process(_delta: float) -> void:
 	else:
 		_light.energy = lerp(_light.energy, light_energy, flicker_return_speed)
 
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = true
-		_update_prompt()
+func _show_prompt() -> void:
+	var text := _get_lamp_prompt_text()
+	if UIMessage:
+		UIMessage.show_lamp_prompt(self, text)
+	elif InteractionPrompts:
+		InteractionPrompts.show_lamp(self, text)
 
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_inside = false
-		if InteractionPrompts:
-			InteractionPrompts.hide_lamp(self)
+func _hide_prompt() -> void:
+	if UIMessage:
+		UIMessage.hide_lamp_prompt(self)
+	elif InteractionPrompts:
+		InteractionPrompts.hide_lamp(self)
+
+func _get_lamp_prompt_text() -> String:
+	if InteractionPrompts:
+		return InteractionPrompts.get_default_lamp_text(_is_on)
+	return "Q — выключить свет" if _is_on else "Q — включить свет"
 
 func _toggle() -> void:
 	if _is_on:
@@ -212,8 +205,6 @@ func is_light_active() -> bool:
 	return _light != null and _light.enabled
 
 func _update_prompt() -> void:
-	if not InteractionPrompts:
+	if not is_player_in_range():
 		return
-	if not _player_inside:
-		return
-	InteractionPrompts.show_lamp(self, InteractionPrompts.get_default_lamp_text(_is_on))
+	_show_prompt()

@@ -32,7 +32,6 @@ var tasks = [
 var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
-var _music_pushed: bool = false
 
 const LAB_MUSIC_STREAM := preload("res://audio/MusicEtc/TimerForLabs_DEMO.wav")
 const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
@@ -54,38 +53,10 @@ var word_scene = preload("res://scenes/minigames/ui/drag_word.tscn")
 func _ready():
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
-	_start_lab_music()
 	_mono_font_bold = _build_mono_font(600)
-	
-	# Безопасное включение курсора
-	var cm = get_node_or_null("/root/CursorManager")
-	if cm:
-		cm.request_visible(self)
-	
-	current_time = time_limit
-	_update_status_label()
+
+	_start_minigame_session()
 	load_task(0)
-
-func _process(delta):
-	if _is_finished:
-		return
-	current_time = max(0.0, current_time - delta)
-	_update_status_label()
-	if current_time <= 0:
-		finish_game(false)
-	
-	_handle_gamepad_cursor(delta)
-
-func _handle_gamepad_cursor(delta: float) -> void:
-	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
-	if joy_vector.length() > 0.1:
-		var current_mouse = get_viewport().get_mouse_position()
-		var new_pos = current_mouse + joy_vector * 800.0 * delta
-		var screen_rect = get_viewport().get_visible_rect().size
-		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
-		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
-		get_viewport().warp_mouse(new_pos)
 
 func _update_status_label() -> void:
 	if timer_label:
@@ -189,8 +160,8 @@ func finish_game(success: bool):
 	if _is_finished:
 		return
 	_is_finished = true
-	_restore_lab_music()
-	get_tree().paused = false 
+	if MinigameController:
+		MinigameController.finish_minigame(self, success)
 	task_completed.emit(success)
 	
 	if success:
@@ -209,28 +180,41 @@ func finish_game(success: bool):
 
 	queue_free()
 
+func _start_minigame_session() -> void:
+	if MinigameController == null:
+		current_time = time_limit
+		_update_status_label()
+		return
+	_ensure_lab_music_loop()
+	MinigameController.start_minigame(self, {
+		"pause_game": true,
+		"enable_gamepad_cursor": true,
+		"time_limit": time_limit,
+		"music_stream": LAB_MUSIC_STREAM,
+		"music_fade_time": 0.0,
+		"auto_finish_on_timeout": false
+	})
+	current_time = time_limit
+	_update_status_label()
+	MinigameController.minigame_time_updated.connect(_on_time_updated)
+	MinigameController.minigame_time_expired.connect(_on_time_expired)
+
+func _on_time_updated(minigame: Node, time_left: float, _time_limit: float) -> void:
+	if minigame != self:
+		return
+	current_time = time_left
+	_update_status_label()
+
+func _on_time_expired(minigame: Node) -> void:
+	if minigame != self:
+		return
+	finish_game(false)
+
 func _build_mono_font(weight: int) -> SystemFont:
 	var font := SystemFont.new()
 	font.font_names = PackedStringArray(MONO_FONT_NAMES)
 	font.font_weight = weight
 	return font
-
-func _start_lab_music() -> void:
-	if MusicManager == null:
-		return
-	if _music_pushed:
-		return
-	_ensure_lab_music_loop()
-	MusicManager.push_music(LAB_MUSIC_STREAM)
-	_music_pushed = true
-
-func _restore_lab_music() -> void:
-	if MusicManager == null:
-		return
-	if not _music_pushed:
-		return
-	MusicManager.pop_music()
-	_music_pushed = false
 
 func _ensure_lab_music_loop() -> void:
 	var stream: AudioStream = LAB_MUSIC_STREAM
@@ -248,9 +232,12 @@ func _ensure_lab_music_loop() -> void:
 		mp3.loop = true
 
 func _exit_tree() -> void:
-	_restore_lab_music()
-	var cm = get_node_or_null("/root/CursorManager")
-	if cm:
-		cm.release_visible(self)
+	if MinigameController:
+		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
+			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
+		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
+			MinigameController.minigame_time_expired.disconnect(_on_time_expired)
+		if MinigameController.is_active(self):
+			MinigameController.finish_minigame(self, false)
 		
 		

@@ -28,6 +28,7 @@ PauseManager="*res://scripts/tehnical/pause_manager.gd"
 InteractionPrompts="*res://scenes/ui/interaction_prompts.tscn"
 StaminaBar="*res://scripts/tehnical/stamina_bar.gd"
 CursorManager="*res://scripts/tehnical/cursor_manager.gd"
+MinigameController="*res://scripts/tehnical/minigame_controller.gd"
 
 [display]
 

@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://scripts/objects/interactive_object.gd"
 
 # --- Настройки логики ---
 ## Дверь закрыта и требует ключ или сообщение.
@@ -27,11 +27,11 @@ extends Area2D
 ## Звук скрипа/открытия.
 @export var sfx_open: AudioStream   # Звук скрипа/открытия
 
-var _player_in_range: Node = null
 var _is_transitioning: bool = false 
 var _audio_player: AudioStreamPlayer2D # Наш "динамик"
 
 func _ready() -> void:
+	super._ready()
 	input_pickable = false 
 	
 	# Создаем аудио-плеер программно
@@ -41,33 +41,23 @@ func _ready() -> void:
 	_audio_player.max_distance = 2000 
 	add_child(_audio_player)
 
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_in_range = body
-		if InteractionPrompts:
-			InteractionPrompts.show_interact(self)
-
-func _on_body_exited(body: Node) -> void:
-	if body == _player_in_range:
-		_player_in_range = null
-		if InteractionPrompts:
-			InteractionPrompts.hide_interact(self)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _is_transitioning: return
-	
-	if event.is_action_pressed("interact") and _player_in_range != null:
-		_try_use_door()
+func _on_interact() -> void:
+	if _is_transitioning:
+		return
+	_try_use_door()
 
 func _try_use_door() -> void:
+	var player = get_interacting_player()
+	if player == null:
+		return
 	if is_locked:
 		if required_key_id != "":
-			var player_has_key: bool = _player_in_range.has_method("has_key") and _player_in_range.has_key(required_key_id)
+			var player_has_key: bool = player.has_method("has_key") and player.has_key(required_key_id)
 			
 			if player_has_key:
 				is_locked = false
-				if consume_key_on_unlock and _player_in_range.has_method("remove_key"):
-					_player_in_range.remove_key(required_key_id)
+				if consume_key_on_unlock and player.has_method("remove_key"):
+					player.remove_key(required_key_id)
 				
 				UIMessage.show_text("Дверь открылась.")
 				_play_sound(sfx_open) # ЗВУК: Открыли ключом
@@ -92,7 +82,7 @@ func _try_use_door() -> void:
 func _perform_transition() -> void:
 	_is_transitioning = true 
 	
-	var player = _player_in_range
+	var player = get_interacting_player()
 	if not is_instance_valid(player):
 		_is_transitioning = false
 		return

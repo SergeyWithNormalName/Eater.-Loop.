@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+const INTERACTION_SCRIPT := preload("res://scripts/objects/interactive_object.gd")
+
 enum ClearMode { HOLD, PRESS }
 
 @export_group("Препятствие")
@@ -30,8 +32,11 @@ var _last_prompt_text: String = ""
 
 func _ready() -> void:
 	if _interact_area:
-		_interact_area.body_entered.connect(_on_interact_area_body_entered)
-		_interact_area.body_exited.connect(_on_interact_area_body_exited)
+		_ensure_interact_area_script()
+		if _interact_area.has_signal("player_entered"):
+			_interact_area.player_entered.connect(_on_interact_area_player_entered)
+		if _interact_area.has_signal("player_exited"):
+			_interact_area.player_exited.connect(_on_interact_area_player_exited)
 	set_process(true)
 
 func _process(delta: float) -> void:
@@ -63,13 +68,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		_refresh_prompt()
 
-func _on_interact_area_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_in_range = body
-		_refresh_prompt()
+func _ensure_interact_area_script() -> void:
+	if _interact_area.get_script() == INTERACTION_SCRIPT:
+		_interact_area.auto_prompt = false
+		_interact_area.handle_input = false
+		return
+	_interact_area.set_script(INTERACTION_SCRIPT)
+	_interact_area.auto_prompt = false
+	_interact_area.handle_input = false
 
-func _on_interact_area_body_exited(body: Node) -> void:
-	if body == _player_in_range:
+func _on_interact_area_player_entered(player: Node) -> void:
+	_player_in_range = player
+	_refresh_prompt()
+
+func _on_interact_area_player_exited(player: Node) -> void:
+	if player == _player_in_range:
 		_player_in_range = null
 		if reset_on_exit:
 			_reset_progress()

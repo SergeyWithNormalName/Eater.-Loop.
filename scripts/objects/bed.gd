@@ -1,4 +1,4 @@
-extends Area2D
+extends "res://scripts/objects/interactive_object.gd"
 
 ## Путь к следующей сцене, куда переносить игрока после сна.
 @export_file("*.tscn") var next_level_path: String
@@ -16,33 +16,20 @@ extends Area2D
 
 const DEFAULT_NO_LIGHT_MESSAGE: String = "Я боюсь засыпать в темноте..."
 
-var _player_in_range: Node = null
 var _is_sleeping: bool = false # Защита от повторного нажатия
 
 func _ready() -> void:
+	super._ready()
 	input_pickable = false
 	if GameState.pending_sleep_spawn:
 		if UIMessage and sleep_sfx != null:
 			UIMessage.play_sfx(sleep_sfx)
 		GameState.pending_sleep_spawn = false
 
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_player_in_range = body
-		if InteractionPrompts:
-			InteractionPrompts.show_interact(self)
-
-func _on_body_exited(body: Node) -> void:
-	if body == _player_in_range:
-		_player_in_range = null
-		if InteractionPrompts:
-			InteractionPrompts.hide_interact(self)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _is_sleeping: return
-
-	if event.is_action_pressed("interact") and _player_in_range != null:
-		_try_sleep()
+func _on_interact() -> void:
+	if _is_sleeping:
+		return
+	_try_sleep()
 
 func _try_sleep() -> void:
 	if not GameState.ate_this_cycle:

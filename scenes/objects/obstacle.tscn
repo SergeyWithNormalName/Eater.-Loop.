@@ -1,6 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/objects/obstacle.gd" id="1_obstacle"]
+[ext_resource type="Script" path="res://scripts/objects/interactive_object.gd" id="2_interactive_object"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
 size = Vector2(200, 100)
@@ -15,6 +16,7 @@ script = ExtResource("1_obstacle")
 shape = SubResource("RectangleShape2D_block")
 
 [node name="InteractArea" type="Area2D" parent="."]
+script = ExtResource("2_interactive_object")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 shape = SubResource("RectangleShape2D_interact")

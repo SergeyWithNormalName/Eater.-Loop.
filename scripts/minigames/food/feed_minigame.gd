@@ -25,7 +25,6 @@ const DEFAULT_WIN: AudioStream = preload("res://audio/AndreyEating/Poel_1.wav")
 # Путь к сцене тарелки теперь жестко прописан в коде
 var tarelka_scene = load("res://scenes/minigames/food/tarelka.tscn") 
 
-@onready var music_player: AudioStreamPlayer = $MusicPlayer
 @onready var backfon: Sprite2D = $Control/BackFon
 @onready var dim_rect: ColorRect = $Control/ColorRect
 @onready var andrey_sprite: TextureRect = $Control/AndreyFace
@@ -38,12 +37,10 @@ var eat_sfx_player: AudioStreamPlayer
 var _eaten_count: int = 0
 var _is_won: bool = false
 var _base_viewport: Vector2
-var _music_suspended: bool = false
+var _selected_music: AudioStream = null
 
 func _ready() -> void:
 	add_to_group("minigame_ui")
-	if CursorManager:
-		CursorManager.request_visible(self)
 	if has_node("SoundsPlayer"):
 		sfx_player = $SoundsPlayer
 	else:
@@ -56,13 +53,8 @@ func _ready() -> void:
 	eat_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(eat_sfx_player)
 
-	music_player.bus = "Music"
-	music_player.process_mode = Node.PROCESS_MODE_ALWAYS
-	music_player.volume_db = music_volume_db
-	_suspend_level_music()
-	get_tree().paused = true
-	if music_player.stream:
-		music_player.play()
+	_selected_music = DEFAULT_MUSIC
+	_start_minigame_session()
 	
 	_base_viewport = Vector2(
 		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
@@ -78,9 +70,9 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	
 	var selected_music: AudioStream = music if music else DEFAULT_MUSIC
 	if selected_music:
-		music_player.stream = selected_music
-		music_player.volume_db = music_volume_db
-		music_player.play()
+		_selected_music = selected_music
+		if MinigameController:
+			MinigameController.update_minigame_music(selected_music, music_volume_db, music_suspend_fade_time)
 	
 	var selected_win: AudioStream = win_sound if win_sound else DEFAULT_WIN
 	if selected_win:
@@ -127,20 +119,7 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 		food.eaten.connect(_on_food_eaten)
 
 func _process(delta: float) -> void:
-	_handle_gamepad_cursor(delta)
-
-func _handle_gamepad_cursor(delta: float) -> void:
-	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
-	
-	if joy_vector.length() > 0.1:
-		var current_mouse = get_viewport().get_mouse_position()
-		var new_pos = current_mouse + joy_vector * gamepad_cursor_speed * delta
-		
-		var screen_rect = get_viewport().get_visible_rect().size
-		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
-		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
-		
-		get_viewport().warp_mouse(new_pos)
+	pass
 
 func _apply_background_layout() -> void:
 	if backfon == null or backfon.texture == null:
@@ -165,7 +144,8 @@ func _on_food_eaten() -> void:
 
 func _win() -> void:
 	_is_won = true
-	music_player.stop()
+	if MinigameController:
+		MinigameController.stop_minigame_music(music_suspend_fade_time)
 	
 	if sfx_player.stream:
 		sfx_player.play()
@@ -173,31 +153,28 @@ func _win() -> void:
 	get_tree().create_timer(finish_delay).timeout.connect(_close_game)
 
 func _close_game() -> void:
-	get_tree().paused = false
-	_restore_level_music()
+	if MinigameController:
+		MinigameController.finish_minigame(self, true)
 	minigame_finished.emit()
 	
 func _exit_tree() -> void:
-	get_tree().paused = false
-	_restore_level_music()
-	if CursorManager:
-		CursorManager.release_visible(self)
+	if MinigameController:
+		if MinigameController.is_active(self):
+			MinigameController.finish_minigame(self, false)
 	if GameState.has_method("reset_dragging"):
 		GameState.reset_dragging()
 
-func _suspend_level_music() -> void:
-	if MusicManager == null:
+func _start_minigame_session() -> void:
+	if MinigameController == null:
 		return
-	if _music_suspended:
-		return
-	MusicManager.push_music(null, music_suspend_fade_time)
-	_music_suspended = true
-
-func _restore_level_music() -> void:
-	if MusicManager == null:
-		return
-	if not _music_suspended:
-		return
-	MusicManager.pop_music(music_suspend_fade_time)
-	_music_suspended = false
+	MinigameController.start_minigame(self, {
+		"pause_game": true,
+		"enable_gamepad_cursor": true,
+		"gamepad_cursor_speed": gamepad_cursor_speed,
+		"music_stream": _selected_music,
+		"music_volume_db": music_volume_db,
+		"music_fade_time": music_suspend_fade_time,
+		"auto_finish_on_timeout": false,
+		"stop_music_on_finish": false
+	})
 		

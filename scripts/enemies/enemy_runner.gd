@@ -160,14 +160,11 @@ func _play_scream() -> void:
 func _start_chase_music() -> void:
 	if _chase_music_started:
 		return
-	if chase_music == null:
-		return
 	if MusicManager == null:
 		return
-	
+	MusicManager.configure_runner_music(chase_music, chase_music_volume_db, chase_music_fade_out_time)
 	_chase_music_started = true
-	# Резкий старт музыки (fade_time = 0.0)
-	MusicManager.push_music(chase_music, 0.0, chase_music_volume_db)
+	MusicManager.set_runner_music_active(self, true)
 
 func _stop_chase_music() -> void:
 	if not _chase_music_started:
@@ -176,8 +173,7 @@ func _stop_chase_music() -> void:
 		return
 	
 	_chase_music_started = false
-	# Плавное затухание
-	MusicManager.pop_music(chase_music_fade_out_time)
+	MusicManager.set_runner_music_active(self, false)
 
 func _reset_growl_timer() -> void:
 	var min_val = max(0.1, growl_interval_min)

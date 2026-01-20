@@ -22,9 +22,7 @@ var _current_input: String = ""
 func _ready() -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
-	if CursorManager:
-		CursorManager.request_visible(self)
+	_start_minigame_session()
 	_apply_theme()
 	_update_display()
 	
@@ -35,9 +33,6 @@ func _ready() -> void:
 	ok_button.pressed.connect(_on_ok_pressed)
 	clear_button.pressed.connect(_on_clear_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
-
-func _process(delta: float) -> void:
-	_handle_gamepad_cursor(delta)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton or event is InputEventScreenTouch:
@@ -74,12 +69,14 @@ func _update_display() -> void:
 	display_label.text = _current_input
 
 func _close() -> void:
-	get_tree().paused = false
+	if MinigameController:
+		MinigameController.finish_minigame(self, true)
 	queue_free()
 
 func _exit_tree() -> void:
-	if CursorManager:
-		CursorManager.release_visible(self)
+	if MinigameController:
+		if MinigameController.is_active(self):
+			MinigameController.finish_minigame(self, false)
 
 func _apply_theme() -> void:
 	var regular_font := load("res://fonts/AmaticSC-Regular.ttf")
@@ -107,15 +104,14 @@ func _apply_theme() -> void:
 		display_label.add_theme_font_override("font", title_font)
 		display_label.add_theme_font_size_override("font_size", DISPLAY_FONT_SIZE)
 
-func _handle_gamepad_cursor(delta: float) -> void:
-	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
-	if joy_vector.length() > 0.1:
-		var current_mouse = get_viewport().get_mouse_position()
-		var new_pos = current_mouse + joy_vector * 800.0 * delta
-		var screen_rect = get_viewport().get_visible_rect().size
-		new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
-		new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
-		get_viewport().warp_mouse(new_pos)
+func _start_minigame_session() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.start_minigame(self, {
+		"pause_game": true,
+		"enable_gamepad_cursor": true,
+		"gamepad_cursor_speed": 800.0
+	})
 
 func _is_grab_pressed(event: InputEvent) -> bool:
 	return event.is_action_pressed("mg_grab")
