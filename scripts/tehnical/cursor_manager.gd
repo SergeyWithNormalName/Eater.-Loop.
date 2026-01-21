@@ -15,7 +15,9 @@ func set_in_game(in_game: bool) -> void:
 	_in_game = in_game
 	_update_mouse_mode()
 
-func _on_scene_changed(scene: Node) -> void:
+func _on_scene_changed(scene: Node = null) -> void:
+	if scene == null:
+		scene = get_tree().current_scene
 	_update_in_game_from_scene(scene)
 
 func _refresh_scene_state() -> void:

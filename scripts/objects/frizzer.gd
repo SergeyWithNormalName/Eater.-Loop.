@@ -74,7 +74,10 @@ func _ready() -> void:
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	_update_visuals()
 	if GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(func(_id): _update_visuals())
+		GameState.lab_completed.connect(_on_lab_completed)
+
+func _on_lab_completed(_id: String) -> void:
+	_update_visuals()
 
 func _on_interact() -> void:
 	if _is_interacting:

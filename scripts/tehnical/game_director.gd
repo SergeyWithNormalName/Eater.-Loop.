@@ -89,7 +89,9 @@ func _flash_red() -> void:
 			_red_rect.color.a = 0.3
 	)
 
-func _on_scene_changed(scene: Node) -> void:
+func _on_scene_changed(scene: Node = null) -> void:
+	if scene == null:
+		scene = get_tree().current_scene
 	_update_for_scene(scene)
 
 func _update_for_scene(scene: Node) -> void:

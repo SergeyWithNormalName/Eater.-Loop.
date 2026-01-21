@@ -189,6 +189,7 @@ texture = ExtResource("2_3gkos")
 
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2367, 96)
+speed = 340.0
 allow_running = false
 
 [node name="BedroomMusicTrigger" type="Area2D" parent="."]
@@ -2511,9 +2512,9 @@ texture = ExtResource("87_7y3jx")
 [node name="Lamp" parent="." instance=ExtResource("84_ek680")]
 z_index = -1
 position = Vector2(-1899, 2402)
-interact_area_node = NodePath("CollisionShape2D2")
 is_bedroom = true
 turn_on_sfx = ExtResource("86_modav")
+interact_area_node = NodePath("CollisionShape2D2")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Lamp"]
 position = Vector2(165, 243)

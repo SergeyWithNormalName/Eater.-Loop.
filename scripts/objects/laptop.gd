@@ -50,9 +50,15 @@ func _ready() -> void:
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	_update_sprite()
 	if GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(func(_id): _update_sprite())
+		GameState.lab_completed.connect(_on_lab_completed)
 	if GameState.has_signal("fridge_interacted_changed"):
-		GameState.fridge_interacted_changed.connect(func(): _update_sprite())
+		GameState.fridge_interacted_changed.connect(_on_fridge_interacted_changed)
+
+func _on_lab_completed(_id: String) -> void:
+	_update_sprite()
+
+func _on_fridge_interacted_changed() -> void:
+	_update_sprite()
 
 func _on_interact() -> void:
 	if _is_interacting:

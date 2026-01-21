@@ -2014,7 +2014,7 @@ kitchen_fade_delay = 3.0
 kitchen_ease = 1
 new_corridor_path = NodePath("NewCorridor")
 camera_path = NodePath("../../Bedroom1/Player/Camera2D")
-camera_squash_zoom_mult = Vector2(1.12, 0.86)
+camera_squash_zoom_mult = Vector2(1, 1)
 camera_duration = 0.22
 camera_recover_duration = 0.65
 

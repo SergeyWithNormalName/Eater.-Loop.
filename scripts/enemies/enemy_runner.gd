@@ -343,11 +343,14 @@ func _shake_camera() -> void:
 	if camera == null:
 		return
 
-	var base_offset: Vector2
+	var base_offset: Vector2 = camera.offset
 	if camera.has_meta("enemy_step_base_offset"):
-		base_offset = camera.get_meta("enemy_step_base_offset")
+		var meta_value: Variant = camera.get_meta("enemy_step_base_offset")
+		if meta_value is Vector2:
+			base_offset = meta_value
+		else:
+			camera.set_meta("enemy_step_base_offset", base_offset)
 	else:
-		base_offset = camera.offset
 		camera.set_meta("enemy_step_base_offset", base_offset)
 
 	var shake = Vector2(
@@ -355,13 +358,21 @@ func _shake_camera() -> void:
 		randf_range(-camera_shake_intensity, camera_shake_intensity)
 	)
 	camera.offset = base_offset + shake
-	get_tree().create_timer(camera_shake_duration).timeout.connect(func():
-		if is_instance_valid(camera):
-			var stored_base = base_offset
-			if camera.has_meta("enemy_step_base_offset"):
-				stored_base = camera.get_meta("enemy_step_base_offset")
-			camera.offset = stored_base
-	)
+	var camera_ref: WeakRef = weakref(camera)
+	get_tree().create_timer(camera_shake_duration).timeout.connect(_restore_camera_offset.bind(camera_ref, base_offset))
+
+func _restore_camera_offset(camera_ref: WeakRef, base_offset: Vector2) -> void:
+	if camera_ref == null:
+		return
+	var camera: Camera2D = camera_ref.get_ref() as Camera2D
+	if camera == null:
+		return
+	var stored_base: Vector2 = base_offset
+	if camera.has_meta("enemy_step_base_offset"):
+		var meta_value: Variant = camera.get_meta("enemy_step_base_offset")
+		if meta_value is Vector2:
+			stored_base = meta_value
+	camera.offset = stored_base
 
 func _exit_tree() -> void:
 	_stop_chase_music()

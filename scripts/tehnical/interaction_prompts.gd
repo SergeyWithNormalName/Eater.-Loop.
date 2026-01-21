@@ -161,13 +161,13 @@ func _set_prompt_text(data: Dictionary, text: String) -> void:
 	if text_node != null:
 		text_node.set("text", text)
 
-func _set_panel_visible(panel: Node, is_visible: bool) -> void:
+func _set_panel_visible(panel: Node, visible_state: bool) -> void:
 	if panel == null:
 		return
 	if panel is CanvasItem:
-		panel.visible = is_visible
+		panel.visible = visible_state
 	elif panel.has_method("set_visible"):
-		panel.call("set_visible", is_visible)
+		panel.call("set_visible", visible_state)
 
 func _find_text_node(node: Node) -> Node:
 	if node is Label or node is RichTextLabel:

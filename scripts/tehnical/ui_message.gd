@@ -308,19 +308,19 @@ func hide_lamp_prompt(source: Object) -> void:
 	if InteractionPrompts:
 		InteractionPrompts.hide_lamp(source)
 
-func set_stamina_visible(is_visible: bool) -> void:
+func set_stamina_visible(visible_state: bool) -> void:
 	if StaminaBar:
-		StaminaBar.visible = is_visible
+		StaminaBar.visible = visible_state
 
-func register_module(name: String, node: Node) -> void:
-	if name == "" or node == null:
+func register_module(module_name: String, node: Node) -> void:
+	if module_name == "" or node == null:
 		return
-	_modules[name] = node
+	_modules[module_name] = node
 	if node.get_parent() == null:
 		add_child(node)
 
-func get_module(name: String) -> Node:
-	return _modules.get(name, null)
+func get_module(module_name: String) -> Node:
+	return _modules.get(module_name, null)
 
 func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	if stream == null:
@@ -351,11 +351,14 @@ func is_screen_dark(threshold: float = 0.01) -> bool:
 		return false
 	return _fade_rect.color.a > threshold
 
-func change_scene_with_fade(new_scene: PackedScene, duration: float = 0.5) -> void:
+func change_scene_with_fade(new_scene: PackedScene, duration: float = 0.5, unpause_after: bool = false) -> void:
 	_track_scene(new_scene)
+	var was_paused := get_tree().paused
 	await fade_out(duration)
 	get_tree().change_scene_to_packed(new_scene)
 	await get_tree().process_frame
+	if unpause_after and was_paused:
+		get_tree().paused = false
 	await fade_in(duration)
 
 func change_scene_with_fade_delay(new_scene: PackedScene, duration: float = 0.5, post_change_delay: float = 1.0, on_dark: Callable = Callable()) -> void:

@@ -118,7 +118,7 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 			
 		food.eaten.connect(_on_food_eaten)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _apply_background_layout() -> void:

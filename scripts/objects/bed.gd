@@ -53,7 +53,10 @@ func _try_sleep() -> void:
 		push_warning("Bed: не назначена следующая сцена")
 		_is_sleeping = false
 		return
-	UIMessage.show_text(sleep_message_template % [old_cycle, new_cycle])
+	var template := sleep_message_template.strip_edges()
+	if template == "":
+		template = "Поспал. Цикл %d → %d"
+	UIMessage.show_text(template % [old_cycle, new_cycle])
 
 	await UIMessage.fade_out(0.4)
 	

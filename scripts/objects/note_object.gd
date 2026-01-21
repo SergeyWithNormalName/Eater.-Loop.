@@ -9,10 +9,10 @@ func _ready() -> void:
 	super._ready()
 
 func _get_prompt_text() -> String:
-	var prompt_text := interact_message.strip_edges()
-	if prompt_text == "":
+	var message_text := interact_message.strip_edges()
+	if message_text == "":
 		return ""
-	return "E — %s" % prompt_text
+	return "E — %s" % message_text
 
 func _on_interact() -> void:
 	if note_texture:

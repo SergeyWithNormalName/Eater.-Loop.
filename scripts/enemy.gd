@@ -67,4 +67,4 @@ func _attack_player() -> void:
 	UIMessage.show_text("Время потеряно! -%.1f с" % time_penalty)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
-	queue_free()
+	call_deferred("queue_free")

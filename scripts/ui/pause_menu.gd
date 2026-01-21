@@ -107,8 +107,7 @@ func _exit_to_menu() -> void:
 	if GameState:
 		GameState.reset_cycle_state()
 	_stop_menu_music()
-	get_tree().paused = false
-	await UIMessage.change_scene_with_fade(main_menu_scene)
+	await UIMessage.change_scene_with_fade(main_menu_scene, 0.5, true)
 
 func _exit_game() -> void:
 	_stop_menu_music()

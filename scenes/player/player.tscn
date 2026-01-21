@@ -28,6 +28,7 @@ fill_to = Vector2(0.75, 0.237)
 light_mask = 2
 z_index = 2
 script = ExtResource("1_player_script")
+speed = 340.0
 run_speed_multiplier = 1.5
 step_sounds = Array[AudioStream]([ExtResource("2_step1"), ExtResource("4_step2"), ExtResource("6_step3"), ExtResource("7_step4")])
 step_volume = -24.0

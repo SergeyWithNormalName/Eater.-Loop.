@@ -183,6 +183,7 @@ texture = ExtResource("2_7eav4")
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 z_index = 3
 position = Vector2(-2366, 96)
+run_speed_multiplier = 1.8
 stamina_max = 30.0
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
@@ -1790,7 +1791,7 @@ texture = ExtResource("82_tu4sr")
 position = Vector2(6675, 120)
 step_sounds = Array[AudioStream]([ExtResource("77_nlubh")])
 step_volume_db = -6.0
-walk_frame_time = 0.12
+walk_frame_time = 0.115
 walk_loop_start_index = 4
 walk_loop_end_index = 19
 step_frame_indices = Array[int]([6, 10, 14, 18])

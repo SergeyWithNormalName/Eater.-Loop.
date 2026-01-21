@@ -78,6 +78,8 @@
 │   │   └── HeartBeat_1.wav.import
 │   ├── MusicForEat.mp3
 │   └── MusicForEat.mp3.import
+├── docs
+│   └── audio_system.md
 ├── fonts
 │   ├── AmaticSC-Bold.ttf
 │   ├── AmaticSC-Bold.ttf.import
@@ -175,6 +177,8 @@
 │   │   ├── frizzer.gd.uid
 │   │   ├── generator.gd
 │   │   ├── generator.gd.uid
+│   │   ├── interactive_object.gd
+│   │   ├── interactive_object.gd.uid
 │   │   ├── key.gd
 │   │   ├── key.gd.uid
 │   │   ├── lamp.gd
@@ -213,6 +217,8 @@
 │   │   ├── level.gd.uid
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
+│   │   ├── minigame_controller.gd
+│   │   ├── minigame_controller.gd.uid
 │   │   ├── music_manager.gd
 │   │   ├── music_manager.gd.uid
 │   │   ├── pause_manager.gd
@@ -530,4 +536,4 @@
 ├── Иконка_предварительно.icns
 └── Иконка_предварительно.ico
 
-53 directories, 478 files
+54 directories, 483 files

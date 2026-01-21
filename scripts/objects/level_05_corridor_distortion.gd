@@ -274,7 +274,10 @@ func _schedule_audio_stop() -> void:
 		_stop_audio_targets(targets)
 		return
 	var timer := get_tree().create_timer(stop_audio_delay)
-	timer.timeout.connect(func(): _stop_audio_targets(targets))
+	timer.timeout.connect(_on_audio_stop_timeout.bind(targets))
+
+func _on_audio_stop_timeout(targets: Array) -> void:
+	_stop_audio_targets(targets)
 
 func _collect_audio_targets() -> Array:
 	var targets: Array = []
