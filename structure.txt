@@ -98,7 +98,8 @@
 │   │   ├── level_04.tscn
 │   │   ├── level_05.tscn
 │   │   ├── level_06.tscn
-│   │   └── level_test_enemies.tscn
+│   │   ├── level_test_enemies.tscn
+│   │   └── level_test_enemies2.tscn
 │   ├── enemies
 │   │   ├── enemy.tscn
 │   │   ├── enemy_ceiling.tscn
@@ -140,7 +141,8 @@
 │       └── settings_panel.tscn
 ├── scripts
 │   ├── components
-│   │   └── step_audio_component.gd
+│   │   ├── step_audio_component.gd
+│   │   └── step_audio_component.gd.uid
 │   ├── enemies
 │   │   ├── enemy_ceiling.gd
 │   │   ├── enemy_ceiling.gd.uid
@@ -553,4 +555,4 @@
 ├── Иконка_предварительно.icns
 └── Иконка_предварительно.ico
 
-56 directories, 498 files
+56 directories, 500 files
