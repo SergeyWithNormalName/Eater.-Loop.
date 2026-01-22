@@ -10,7 +10,7 @@ extends CharacterBody2D
 @export var kill_on_attack: bool = false
 
 var _player: Node2D = null
-@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
+@onready var _sprite: Node2D = _resolve_visual_node()
 var _sprite_base_scale: Vector2 = Vector2.ONE
 
 func _ready() -> void:
@@ -36,6 +36,12 @@ func _update_facing_from_velocity() -> void:
 		return
 	var dir = sign(velocity.x)
 	_sprite.scale = Vector2(_sprite_base_scale.x * -dir, _sprite_base_scale.y)
+
+func _resolve_visual_node() -> Node2D:
+	var animated := get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+	if animated:
+		return animated
+	return get_node_or_null("Sprite2D") as Node2D
 
 # --- Сигналы обнаружения (Detection Area) ---
 
