@@ -9,9 +9,8 @@ extends Node
 ## - duck_music / restore_music_volume: временно приглушить основной трек.
 ##
 ## Музыка погони:
-## - configure_runner_music(stream, volume_db, fade_time)
-## - set_runner_music_active(source, true/false)
-##   Музыка погони играет, пока есть хотя бы один активный источник.
+## - set_chase_music_source(source, active, stream, volume_db, fade_time)
+##   Музыка погони играет от первого активного источника, пока он не пропадет.
 
 @export_group("Музыка")
 ## Длительность плавного перехода по умолчанию.
@@ -50,6 +49,8 @@ var _stack: Array[Dictionary] = []
 var _runner_player: AudioStreamPlayer
 var _runner_fade_tween: Tween
 var _runner_sources: Dictionary = {}
+var _runner_source_order: Array[int] = []
+var _runner_active_source_id: int = 0
 var _runner_active: bool = false
 
 func _ready() -> void:
@@ -156,23 +157,27 @@ func pop_music(fade_time: float = -1.0) -> void:
 func clear_stack() -> void:
 	_stack.clear()
 
-func set_runner_music_active(source: Object, active: bool) -> void:
+func set_chase_music_source(source: Object, active: bool, stream: AudioStream = null, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
 	if source == null:
 		return
 	var id := source.get_instance_id()
 	if active:
-		_runner_sources[id] = true
+		_runner_sources[id] = {
+			"stream": stream,
+			"volume_db": volume_db,
+			"fade_time": fade_time
+		}
+		if not _runner_source_order.has(id):
+			_runner_source_order.append(id)
+		if _runner_active_source_id == 0:
+			_set_active_runner_source(id)
 	else:
 		_runner_sources.erase(id)
+		_runner_source_order.erase(id)
+		if _runner_active_source_id == id:
+			_runner_active_source_id = 0
+			_set_next_runner_source()
 	_update_runner_music_state()
-
-func configure_runner_music(stream: AudioStream, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
-	if stream != null:
-		runner_music_stream = stream
-	if volume_db <= 500.0:
-		runner_music_volume_db = volume_db
-	if fade_time >= 0.0:
-		runner_music_fade_time = fade_time
 
 func _process(_delta: float) -> void:
 	if not _runner_active:
@@ -184,13 +189,34 @@ func _process(_delta: float) -> void:
 		_start_runner_music()
 
 func _update_runner_music_state() -> void:
-	var should_play := not _runner_sources.is_empty()
+	var should_play := _runner_active_source_id != 0
 	_runner_active = should_play
 	if should_play:
 		if _runner_player == null or not _runner_player.playing:
 			_start_runner_music()
 	else:
 		_stop_runner_music()
+
+func _set_active_runner_source(source_id: int) -> void:
+	if source_id == 0:
+		return
+	var data: Dictionary = _runner_sources.get(source_id, {})
+	var stream: AudioStream = data.get("stream", null)
+	if stream != null:
+		runner_music_stream = stream
+	var volume_db: float = data.get("volume_db", 999.0)
+	if volume_db <= 500.0:
+		runner_music_volume_db = volume_db
+	var fade_time: float = data.get("fade_time", -1.0)
+	if fade_time >= 0.0:
+		runner_music_fade_time = fade_time
+	_runner_active_source_id = source_id
+
+func _set_next_runner_source() -> void:
+	if _runner_source_order.is_empty():
+		return
+	var next_id: int = _runner_source_order[0]
+	_set_active_runner_source(next_id)
 
 func _start_runner_music() -> void:
 	var stream := _resolve_runner_stream()

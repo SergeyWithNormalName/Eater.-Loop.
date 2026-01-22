@@ -22,14 +22,6 @@ extends "res://scripts/enemy.gd"
 ## Максимальный питч рычания.
 @export var growl_pitch_max: float = 1.05
 
-@export_group("Chase Music")
-## Музыка погони.
-@export var chase_music: AudioStream
-## Громкость музыки погони (дБ).
-@export_range(-80.0, 6.0, 0.1) var chase_music_volume_db: float = -6.0
-## Длительность плавного затухания музыки при окончании погони.
-@export_range(0.0, 10.0, 0.1) var chase_music_fade_out_time: float = 2.0
-
 @export_group("Walk Animation")
 ## Имя анимации ходьбы в AnimatedSprite2D.
 @export var walk_animation: StringName = &"walk"
@@ -76,7 +68,6 @@ var _sprite_anim_scale: Vector2 = Vector2.ONE
 var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _facing_dir: float = 1.0
-var _chase_music_started: bool = false
 var _adjusting_frame: bool = false
 var _animated_sprite: AnimatedSprite2D = null
 var _step_audio: StepAudioComponent = null
@@ -147,24 +138,6 @@ func _play_scream() -> void:
 	_scream_player.volume_db = scream_volume_db
 	_scream_player.pitch_scale = randf_range(0.95, 1.05)
 	_scream_player.play()
-
-func _start_chase_music() -> void:
-	if _chase_music_started:
-		return
-	if MusicManager == null:
-		return
-	MusicManager.configure_runner_music(chase_music, chase_music_volume_db, chase_music_fade_out_time)
-	_chase_music_started = true
-	MusicManager.set_runner_music_active(self, true)
-
-func _stop_chase_music() -> void:
-	if not _chase_music_started:
-		return
-	if MusicManager == null:
-		return
-	
-	_chase_music_started = false
-	MusicManager.set_runner_music_active(self, false)
 
 func _reset_growl_timer() -> void:
 	var min_val = max(0.1, growl_interval_min)
@@ -332,13 +305,6 @@ func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
 	if body.is_in_group("player"):
 		_play_scream()
-		_start_chase_music()
-
-func _on_detection_area_body_exited(body: Node) -> void:
-	var was_player := body == _player
-	super._on_detection_area_body_exited(body)
-	if was_player:
-		_stop_chase_music()
 
 func _shake_camera() -> void:
 	if camera_shake_intensity <= 0.0 or camera_shake_duration <= 0.0:
@@ -377,8 +343,3 @@ func _restore_camera_offset(camera_ref: WeakRef, base_offset: Vector2) -> void:
 		if meta_value is Vector2:
 			stored_base = meta_value
 	camera.offset = stored_base
-
-func _exit_tree() -> void:
-	_stop_chase_music()
-	
-	
