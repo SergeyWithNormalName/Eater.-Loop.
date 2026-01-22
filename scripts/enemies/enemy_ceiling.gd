@@ -87,7 +87,10 @@ func _on_hitbox_area_body_entered(body: Node2D) -> void:
 		_attack_player()
 
 func _apply_lamp_freeze() -> bool:
+	var was_frozen := _lamp_frozen
 	_lamp_frozen = _is_lamp_light_hitting()
+	if _lamp_frozen != was_frozen:
+		_set_chase_music_suppressed(_lamp_frozen)
 	if not _lamp_frozen:
 		return false
 	velocity = Vector2.ZERO

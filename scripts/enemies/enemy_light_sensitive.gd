@@ -95,7 +95,10 @@ func _try_attack_if_in_hitbox() -> void:
 		_attack_player()
 
 func _update_lamp_freeze_state() -> bool:
+	var was_frozen := _lamp_frozen
 	_lamp_frozen = _is_lamp_light_hitting()
+	if _lamp_frozen != was_frozen:
+		_set_chase_music_suppressed(_lamp_frozen)
 	return _lamp_frozen
 
 func _apply_lamp_freeze_motion() -> void:

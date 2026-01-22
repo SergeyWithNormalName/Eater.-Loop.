@@ -99,6 +99,11 @@ func _stop_chase_music() -> void:
 	_chase_music_started = false
 	MusicManager.set_chase_music_source(self, false)
 
+func _set_chase_music_suppressed(suppressed: bool) -> void:
+	if MusicManager == null:
+		return
+	MusicManager.set_chase_music_suppressed(self, suppressed)
+
 func _attack_player() -> void:
 	# ИСПРАВЛЕНО: phase вместо current_phase
 	if kill_on_attack or GameState.phase == GameState.Phase.DISTORTED:

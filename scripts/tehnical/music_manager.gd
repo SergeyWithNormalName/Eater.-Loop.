@@ -52,6 +52,10 @@ var _runner_sources: Dictionary = {}
 var _runner_source_order: Array[int] = []
 var _runner_active_source_id: int = 0
 var _runner_active: bool = false
+var _runner_suppressed: Dictionary = {}
+var _runner_pause_position: float = 0.0
+var _runner_paused: bool = false
+var _runner_global_paused: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -173,14 +177,57 @@ func set_chase_music_source(source: Object, active: bool, stream: AudioStream = 
 			_set_active_runner_source(id)
 	else:
 		_runner_sources.erase(id)
+		_runner_suppressed.erase(id)
 		_runner_source_order.erase(id)
 		if _runner_active_source_id == id:
 			_runner_active_source_id = 0
 			_set_next_runner_source()
 	_update_runner_music_state()
 
-func _process(_delta: float) -> void:
+func set_chase_music_suppressed(source: Object, suppressed: bool) -> void:
+	if source == null:
+		return
+	var id := source.get_instance_id()
+	if suppressed:
+		_runner_suppressed[id] = true
+	else:
+		_runner_suppressed.erase(id)
+	_update_runner_music_state()
+
+func pause_chase_music(fade_time: float = -1.0) -> void:
+	if _runner_global_paused:
+		return
+	_runner_global_paused = true
+	var target_fade := _resolve_fade_time(fade_time)
+	_pause_runner_music(target_fade)
+
+func resume_chase_music(fade_time: float = -1.0) -> void:
+	if not _runner_global_paused:
+		return
+	_runner_global_paused = false
 	if not _runner_active:
+		return
+	var target_fade := _resolve_fade_time(fade_time)
+	if _runner_paused:
+		_resume_runner_music(target_fade)
+	elif _runner_player == null or not _runner_player.playing:
+		_start_runner_music()
+
+func clear_chase_music_sources(fade_time: float = -1.0) -> void:
+	_runner_sources.clear()
+	_runner_source_order.clear()
+	_runner_suppressed.clear()
+	_runner_active_source_id = 0
+	_runner_active = false
+	_runner_paused = false
+	_runner_pause_position = 0.0
+	_runner_global_paused = false
+	var target_fade := _resolve_fade_time(fade_time)
+	if _runner_player != null and _runner_player.playing:
+		_fade_runner_volume(-80.0, target_fade, true)
+
+func _process(_delta: float) -> void:
+	if not _runner_active or _runner_global_paused or _runner_paused:
 		return
 	if _runner_player == null:
 		_start_runner_music()
@@ -189,13 +236,29 @@ func _process(_delta: float) -> void:
 		_start_runner_music()
 
 func _update_runner_music_state() -> void:
-	var should_play := _runner_active_source_id != 0
+	var next_id := _get_next_runner_source_id()
+	var should_play := next_id != 0
+	if next_id != _runner_active_source_id:
+		if next_id == 0:
+			_runner_active_source_id = 0
+		else:
+			_set_active_runner_source(next_id)
 	_runner_active = should_play
+	if _runner_global_paused:
+		if _runner_player != null and _runner_player.playing:
+			_pause_runner_music(runner_music_fade_time)
+		return
 	if should_play:
-		if _runner_player == null or not _runner_player.playing:
+		if _runner_paused:
+			_resume_runner_music(runner_music_fade_time)
+		elif _runner_player == null or not _runner_player.playing:
 			_start_runner_music()
 	else:
-		_stop_runner_music()
+		if _runner_player != null and _runner_player.playing:
+			_pause_runner_music(runner_music_fade_time)
+		if _runner_sources.is_empty():
+			_runner_pause_position = 0.0
+			_runner_paused = false
 
 func _set_active_runner_source(source_id: int) -> void:
 	if source_id == 0:
@@ -203,7 +266,10 @@ func _set_active_runner_source(source_id: int) -> void:
 	var data: Dictionary = _runner_sources.get(source_id, {})
 	var stream: AudioStream = data.get("stream", null)
 	if stream != null:
+		var prev_stream := runner_music_stream
 		runner_music_stream = stream
+		if prev_stream != stream:
+			_runner_pause_position = 0.0
 	var volume_db: float = data.get("volume_db", 999.0)
 	if volume_db <= 500.0:
 		runner_music_volume_db = volume_db
@@ -213,12 +279,20 @@ func _set_active_runner_source(source_id: int) -> void:
 	_runner_active_source_id = source_id
 
 func _set_next_runner_source() -> void:
-	if _runner_source_order.is_empty():
-		return
-	var next_id: int = _runner_source_order[0]
-	_set_active_runner_source(next_id)
+	var next_id := _get_next_runner_source_id()
+	if next_id != 0:
+		_set_active_runner_source(next_id)
 
-func _start_runner_music() -> void:
+func _get_next_runner_source_id() -> int:
+	for source_id in _runner_source_order:
+		if _runner_sources.has(source_id) and not _is_runner_source_suppressed(source_id):
+			return source_id
+	return 0
+
+func _is_runner_source_suppressed(source_id: int) -> bool:
+	return bool(_runner_suppressed.get(source_id, false))
+
+func _start_runner_music(start_position: float = 0.0, fade_in_time: float = -1.0) -> void:
 	var stream := _resolve_runner_stream()
 	if stream == null or _runner_player == null:
 		return
@@ -226,10 +300,17 @@ func _start_runner_music() -> void:
 	_runner_player.stream = stream
 	if _runner_fade_tween and _runner_fade_tween.is_running():
 		_runner_fade_tween.kill()
-	_runner_player.volume_db = runner_music_volume_db
+	var target_volume := runner_music_volume_db
+	if fade_in_time >= 0.0:
+		_runner_player.volume_db = -80.0
+	else:
+		_runner_player.volume_db = target_volume
 	if _runner_player.playing:
 		_runner_player.stop()
 	_runner_player.play()
+	_seek_if_possible(_runner_player, start_position)
+	if fade_in_time >= 0.0:
+		_fade_runner_volume(target_volume, fade_in_time, false)
 
 func _stop_runner_music() -> void:
 	if _runner_player == null:
@@ -237,6 +318,24 @@ func _stop_runner_music() -> void:
 	if not _runner_player.playing:
 		return
 	_fade_runner_volume(-80.0, runner_music_fade_time, true)
+
+func _pause_runner_music(fade_time: float) -> void:
+	if _runner_player == null:
+		_runner_paused = true
+		return
+	if _runner_player.playing:
+		_runner_pause_position = _runner_player.get_playback_position()
+		_runner_paused = true
+		_fade_runner_volume(-80.0, fade_time, true)
+	else:
+		_runner_paused = true
+
+func _resume_runner_music(fade_time: float) -> void:
+	if _runner_player == null:
+		return
+	var start_pos := _runner_pause_position
+	_runner_paused = false
+	_start_runner_music(start_pos, fade_time)
 
 func _fade_runner_volume(target_db: float, duration: float, stop_after: bool = false) -> void:
 	if _runner_fade_tween and _runner_fade_tween.is_running():

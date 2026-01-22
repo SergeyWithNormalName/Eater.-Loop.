@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=108 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -85,6 +85,7 @@
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://textures/walls_floors/decals/HoleInWall3.png" id="86_fa34t"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://scripts/objects/trigger_set_property.gd" id="87_7c4ho"]
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://scenes/enemies/enemy_light_sensitive.tscn" id="87_j1ifr"]
+[ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://audio/MusicEtc/MusicForBasicMonster.wav" id="88_j1ifr"]
 [ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://scripts/objects/level_05_corridor_distortion.gd" id="88_ky05d"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
@@ -3024,7 +3025,10 @@ flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
 position = Vector2(13325, 119)
+speed = 240.0
+keep_chasing_outside_detection = true
 kill_on_attack = true
+chase_music = ExtResource("88_j1ifr")
 
 [connection signal="body_entered" from="TestKey" to="TestKey" method="_on_body_entered"]
 [connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]

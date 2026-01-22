@@ -139,6 +139,8 @@
 │       ├── pause_menu.tscn
 │       └── settings_panel.tscn
 ├── scripts
+│   ├── components
+│   │   └── step_audio_component.gd
 │   ├── enemies
 │   │   ├── enemy_ceiling.gd
 │   │   ├── enemy_ceiling.gd.uid
@@ -245,6 +247,19 @@
 │   ├── enemy.gd
 │   └── enemy.gd.uid
 ├── textures
+│   ├── MonstersNSTU
+│   │   ├── Denis.png
+│   │   ├── Denis.png.import
+│   │   ├── Max.png
+│   │   ├── Max.png.import
+│   │   ├── Nikita.png
+│   │   ├── Nikita.png.import
+│   │   ├── Serega.png
+│   │   ├── Serega.png.import
+│   │   ├── Slava.png
+│   │   ├── Slava.png.import
+│   │   ├── Tolya.png
+│   │   └── Tolya.png.import
 │   ├── andreys_animations
 │   │   └── walking
 │   │       ├── ezgif-frame-001.png
@@ -538,4 +553,4 @@
 ├── Иконка_предварительно.icns
 └── Иконка_предварительно.ico
 
-54 directories, 485 files
+56 directories, 498 files
