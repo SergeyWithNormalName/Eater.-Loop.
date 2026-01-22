@@ -1,8 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpeloj4upnwn1"]
+[gd_scene load_steps=30 format=3 uid="uid://bpeloj4upnwn1"]
 
 [ext_resource type="Script" uid="uid://cjulfg6ldfeso" path="res://scripts/enemies/enemy_runner.gd" id="1_runner"]
 [ext_resource type="AudioStream" uid="uid://lgby5tojubfb" path="res://audio/MusicEtc/RunnerHARDMUSIC.wav" id="2_jru3r"]
 [ext_resource type="Texture2D" uid="uid://bja1riq0mdnod" path="res://textures/Monster.png" id="2_runner"]
+[ext_resource type="Script" path="res://scripts/components/step_audio_component.gd" id="3_step_audio_component"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-001.png" id="4_runner_walk_001"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-002.png" id="5_runner_walk_002"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-003.png" id="6_runner_walk_003"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-004.png" id="7_runner_walk_004"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-005.png" id="8_runner_walk_005"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-006.png" id="9_runner_walk_006"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-007.png" id="10_runner_walk_007"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-008.png" id="11_runner_walk_008"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-009.png" id="12_runner_walk_009"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-010.png" id="13_runner_walk_010"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-011.png" id="14_runner_walk_011"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-012.png" id="15_runner_walk_012"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-013.png" id="16_runner_walk_013"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-014.png" id="17_runner_walk_014"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-015.png" id="18_runner_walk_015"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-016.png" id="19_runner_walk_016"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-017.png" id="20_runner_walk_017"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-018.png" id="21_runner_walk_018"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-019.png" id="22_runner_walk_019"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-020.png" id="23_runner_walk_020"]
+[ext_resource type="Texture2D" path="res://textures/monster_runner_animation_walking/ezgif-frame-021.png" id="24_runner_walk_021"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(27492, 870)
@@ -12,6 +34,19 @@ size = Vector2(906, 870)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
 size = Vector2(606, 870)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_runner"]
+animations = [{
+"frames": [ExtResource("4_runner_walk_001"), ExtResource("5_runner_walk_002"), ExtResource("6_runner_walk_003"), ExtResource("7_runner_walk_004"), ExtResource("8_runner_walk_005"), ExtResource("9_runner_walk_006"), ExtResource("10_runner_walk_007"), ExtResource("11_runner_walk_008"), ExtResource("12_runner_walk_009"), ExtResource("13_runner_walk_010"), ExtResource("14_runner_walk_011"), ExtResource("15_runner_walk_012"), ExtResource("16_runner_walk_013"), ExtResource("17_runner_walk_014"), ExtResource("18_runner_walk_015"), ExtResource("19_runner_walk_016"), ExtResource("20_runner_walk_017"), ExtResource("21_runner_walk_018"), ExtResource("22_runner_walk_019"), ExtResource("23_runner_walk_020"), ExtResource("24_runner_walk_021")],
+"loop": true,
+"name": &"walk",
+"speed": 12.5
+}, {
+"frames": [ExtResource("2_runner")],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="EnemyRunner" type="CharacterBody2D"]
 script = ExtResource("1_runner")
@@ -30,9 +65,15 @@ scale = Vector2(0.5, 0.5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
 shape = SubResource("RectangleShape2D_lu5c6")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("2_runner")
+sprite_frames = SubResource("SpriteFrames_runner")
+animation = &"idle"
+frame = 0
+playing = true
+
+[node name="StepAudioComponent" type="Node" parent="AnimatedSprite2D"]
+script = ExtResource("3_step_audio_component")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.5, 0.5)

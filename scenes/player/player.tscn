@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cmxtuvlqs321l"]
+[gd_scene load_steps=30 format=3 uid="uid://cmxtuvlqs321l"]
 
 [ext_resource type="Script" uid="uid://k1u0wn4216ss" path="res://scripts/player/player.gd" id="1_player_script"]
 [ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://audio/player/steps/steps1.wav" id="2_step1"]
@@ -8,6 +8,23 @@
 [ext_resource type="AudioStream" uid="uid://d4hreh7krx7g5" path="res://audio/player/steps/steps3.wav" id="6_step3"]
 [ext_resource type="AudioStream" uid="uid://baerfbi0o2rxq" path="res://audio/player/steps/steps4.wav" id="7_step4"]
 [ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://audio/player/FlashlightOnOff.wav" id="8_flashlight_sound"]
+[ext_resource type="Script" path="res://scripts/components/step_audio_component.gd" id="9_step_audio_component"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-001.png" id="10_walk_001"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-002.png" id="11_walk_002"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-003.png" id="12_walk_003"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-004.png" id="13_walk_004"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-005.png" id="14_walk_005"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-006.png" id="15_walk_006"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-007.png" id="16_walk_007"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-008.png" id="17_walk_008"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-009.png" id="18_walk_009"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-010.png" id="19_walk_010"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-011.png" id="20_walk_011"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-012.png" id="21_walk_012"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-013.png" id="22_walk_013"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-014.png" id="23_walk_014"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-015.png" id="24_walk_015"]
+[ext_resource type="Texture2D" path="res://textures/andreys_animations/walking/ezgif-frame-016.png" id="25_walk_016"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
@@ -24,6 +41,19 @@ fill = 1
 fill_from = Vector2(0.182, 0.437)
 fill_to = Vector2(0.75, 0.237)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_player"]
+animations = [{
+"frames": [ExtResource("10_walk_001"), ExtResource("11_walk_002"), ExtResource("12_walk_003"), ExtResource("13_walk_004"), ExtResource("14_walk_005"), ExtResource("15_walk_006"), ExtResource("16_walk_007"), ExtResource("17_walk_008"), ExtResource("18_walk_009"), ExtResource("19_walk_010"), ExtResource("20_walk_011"), ExtResource("21_walk_012"), ExtResource("22_walk_013"), ExtResource("23_walk_014"), ExtResource("24_walk_015"), ExtResource("25_walk_016")],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [ExtResource("3_andry_tex")],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 light_mask = 2
 z_index = 2
@@ -33,7 +63,6 @@ run_speed_multiplier = 1.5
 step_sounds = Array[AudioStream]([ExtResource("2_step1"), ExtResource("4_step2"), ExtResource("6_step3"), ExtResource("7_step4")])
 step_volume = -24.0
 flashlight_sound = ExtResource("8_flashlight_sound")
-walk_frame_count = 16
 walk_frame_time = 0.2
 walk_loop_start_index = 5
 step_frame_indices = Array[int]([7, 10, 13, 16])
@@ -49,11 +78,17 @@ offset = Vector2(0, -5)
 zoom = Vector2(1.1, 1.1)
 limit_smoothed = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 2
 position = Vector2(-5.375, 83.37938)
 scale = Vector2(0.44800887, 0.44800875)
-texture = ExtResource("3_andry_tex")
+sprite_frames = SubResource("SpriteFrames_player")
+animation = &"idle"
+frame = 0
+playing = true
+
+[node name="StepAudioComponent" type="Node" parent="AnimatedSprite2D"]
+script = ExtResource("9_step_audio_component")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-4.0000076, 63)

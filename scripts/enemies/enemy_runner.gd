@@ -31,12 +31,10 @@ extends "res://scripts/enemy.gd"
 @export_range(0.0, 10.0, 0.1) var chase_music_fade_out_time: float = 2.0
 
 @export_group("Walk Animation")
-## Папка с кадрами ходьбы.
-@export var walk_frames_path: String = "res://textures/monster_runner_animation_walking"
-## Префикс имени кадра (например, ezgif-frame-001.png).
-@export var walk_frame_prefix: String = "ezgif-frame-"
-## Количество кадров в последовательности.
-@export var walk_frame_count: int = 21
+## Имя анимации ходьбы в AnimatedSprite2D.
+@export var walk_animation: StringName = &"walk"
+## Имя анимации покоя (если нет, будет стоять на первом кадре walk).
+@export var idle_animation: StringName = &"idle"
 ## Длительность кадра в секундах.
 @export var walk_frame_time: float = 0.08
 ## Стартовый кадр цикла (1-based).
@@ -67,32 +65,25 @@ extends "res://scripts/enemy.gd"
 @export var camera_shake_duration: float = 0.08
 
 var _growl_timer: float = 0.0
-var _step_player: AudioStreamPlayer
 var _growl_player: AudioStreamPlayer2D
 var _scream_player: AudioStreamPlayer2D
 var _wander_timer: float = 0.0
 var _wander_dir: float = 1.0
 var _wander_moving: bool = false
 var _idle_texture: Texture2D = null
-var _walk_frames: Array[Texture2D] = []
-var _walk_frame_index: int = 0
-var _walk_frame_timer: float = 0.0
 var _is_walking: bool = false
 var _sprite_anim_scale: Vector2 = Vector2.ONE
 var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
-var _step_frame_lookup: Dictionary = {}
 var _facing_dir: float = 1.0
 var _chase_music_started: bool = false
+var _adjusting_frame: bool = false
+var _animated_sprite: AnimatedSprite2D = null
+var _step_audio: StepAudioComponent = null
 
 func _ready() -> void:
 	super._ready()
 
-	_step_player = AudioStreamPlayer.new()
-	_step_player.bus = "Sounds"
-	_step_player.max_polyphony = 4
-	add_child(_step_player)
-	
 	_growl_player = AudioStreamPlayer2D.new()
 	_growl_player.bus = "Sounds"
 	add_child(_growl_player)
@@ -103,9 +94,18 @@ func _ready() -> void:
 
 	_reset_growl_timer()
 
-	if _sprite:
-		_idle_texture = _sprite.texture
-		_load_walk_frames()
+	_animated_sprite = _sprite as AnimatedSprite2D
+	if _animated_sprite == null:
+		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if _animated_sprite:
+			_sprite = _animated_sprite
+	if _animated_sprite:
+		_animated_sprite.frame_changed.connect(_on_sprite_frame_changed)
+		_step_audio = _resolve_step_audio_component()
+		if _step_audio:
+			_step_audio.configure(step_sounds, step_volume_db, step_frame_indices, walk_animation)
+			_step_audio.step_triggered.connect(_on_step_triggered)
+		_setup_animations()
 
 func _physics_process(delta: float) -> void:
 	var is_chasing := chase_player and _player != null
@@ -123,16 +123,7 @@ func _physics_process(delta: float) -> void:
 	_update_walk_animation(delta)
 	_update_growls(delta)
 
-func _play_step_sound() -> void:
-	if step_sounds.is_empty():
-		return
-	_step_player.stream = step_sounds.pick_random()
-	_step_player.volume_db = step_volume_db
-	_step_player.pitch_scale = randf_range(0.9, 1.1)
-	_step_player.play()
-
 func _trigger_step() -> void:
-	_play_step_sound()
 	_shake_camera()
 
 func _update_growls(delta: float) -> void:
@@ -220,54 +211,39 @@ func _update_facing_from_velocity() -> void:
 		return
 	_facing_dir = sign(velocity.x)
 	_apply_facing()
-
-func _load_walk_frames() -> void:
-	_walk_frames.clear()
-	if walk_frame_count <= 0:
+func _setup_animations() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
-
-	for i in range(1, walk_frame_count + 1):
-		var path := "%s/%s%03d.png" % [walk_frames_path, walk_frame_prefix, i]
-		var frame := load(path) as Texture2D
-		if frame:
-			_walk_frames.append(frame)
-		else:
-			push_warning("Runner: Отсутствует кадр ходьбы: %s" % path)
-
+	_idle_texture = _get_idle_texture()
 	_update_walk_loop_bounds()
-	_update_step_frame_lookup()
+	if walk_frame_time > 0.0 and _animated_sprite.sprite_frames.has_animation(walk_animation):
+		_animated_sprite.sprite_frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
+
+func _get_idle_texture() -> Texture2D:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return null
+	if idle_animation != StringName() and _animated_sprite.sprite_frames.has_animation(idle_animation):
+		return _animated_sprite.sprite_frames.get_frame_texture(idle_animation, 0)
+	if _animated_sprite.sprite_frames.has_animation(walk_animation):
+		return _animated_sprite.sprite_frames.get_frame_texture(walk_animation, 0)
+	return null
 
 func _update_walk_loop_bounds() -> void:
 	_walk_loop_start = 0
 	_walk_loop_end = -1
-	if _walk_frames.is_empty():
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
-	var max_index := _walk_frames.size() - 1
+	if not _animated_sprite.sprite_frames.has_animation(walk_animation):
+		return
+	var max_index := _animated_sprite.sprite_frames.get_frame_count(walk_animation) - 1
+	if max_index < 0:
+		return
 	_walk_loop_start = clampi(walk_loop_start_index - 1, 0, max_index)
-
 	var end_index_req := walk_loop_end_index
 	if end_index_req < 0:
 		_walk_loop_end = max_index
 	else:
 		_walk_loop_end = clampi(end_index_req - 1, _walk_loop_start, max_index)
-
-func _update_step_frame_lookup() -> void:
-	_step_frame_lookup.clear()
-	if _walk_frames.is_empty():
-		return
-
-	for index in step_frame_indices:
-		if index <= 0:
-			continue
-		var frame_index_0_based := index - 1
-		if frame_index_0_based >= 0 and frame_index_0_based < _walk_frames.size():
-			_step_frame_lookup[frame_index_0_based] = true
-		else:
-			push_warning("Runner: Указан кадр шага %d, но всего кадров %d" % [index, _walk_frames.size()])
-
-func _maybe_play_step_for_frame(frame_index: int) -> void:
-	if _step_frame_lookup.has(frame_index):
-		_trigger_step()
 
 func _calc_texture_scale(texture: Texture2D) -> Vector2:
 	if _idle_texture == null or texture == null:
@@ -279,50 +255,78 @@ func _calc_texture_scale(texture: Texture2D) -> Vector2:
 	var ratio := idle_size.y / tex_size.y
 	return Vector2(ratio, ratio)
 
-func _set_sprite_texture(texture: Texture2D) -> void:
-	if _sprite == null or texture == null:
+func _update_walk_animation(_delta: float) -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
-	_sprite.texture = texture
-	_sprite_anim_scale = _calc_texture_scale(texture)
-	_apply_facing()
-
-func _update_walk_animation(delta: float) -> void:
-	if _sprite == null or _walk_frames.is_empty():
-		return
-	if walk_frame_time <= 0.0:
-		return
-	if _walk_loop_end < 0:
-		return
-
 	var is_moving := velocity.length() > 0.1
 
 	if is_moving:
 		if not _is_walking:
 			_is_walking = true
-			_walk_frame_index = _walk_loop_start
-			_walk_frame_timer = 0.0
-
-			_set_sprite_texture(_walk_frames[_walk_frame_index])
-			_maybe_play_step_for_frame(_walk_frame_index)
-
-		_walk_frame_timer += delta
-		while _walk_frame_timer >= walk_frame_time:
-			_walk_frame_timer -= walk_frame_time
-
-			if _walk_frame_index >= _walk_loop_end:
-				_walk_frame_index = _walk_loop_start
-			else:
-				_walk_frame_index += 1
-
-			_set_sprite_texture(_walk_frames[_walk_frame_index])
-			_maybe_play_step_for_frame(_walk_frame_index)
+			_start_walk_animation()
 	else:
 		if _is_walking:
 			_is_walking = false
-			_walk_frame_timer = 0.0
-			_walk_frame_index = _walk_loop_start
-			if _idle_texture:
-				_set_sprite_texture(_idle_texture)
+			_start_idle_animation()
+
+func _start_walk_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if not _animated_sprite.sprite_frames.has_animation(walk_animation):
+		return
+	if _animated_sprite.animation != walk_animation:
+		_animated_sprite.play(walk_animation)
+	_animated_sprite.frame = _walk_loop_start
+	_animated_sprite.play()
+	_enforce_walk_loop_range()
+
+func _start_idle_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if idle_animation != StringName() and _animated_sprite.sprite_frames.has_animation(idle_animation):
+		if _animated_sprite.animation != idle_animation:
+			_animated_sprite.play(idle_animation)
+		return
+	_animated_sprite.stop()
+	_animated_sprite.frame = 0
+	_update_sprite_scale_for_current_frame()
+
+func _on_sprite_frame_changed() -> void:
+	if _animated_sprite == null:
+		return
+	_update_sprite_scale_for_current_frame()
+	_enforce_walk_loop_range()
+
+func _update_sprite_scale_for_current_frame() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	var texture := _animated_sprite.sprite_frames.get_frame_texture(_animated_sprite.animation, _animated_sprite.frame)
+	_sprite_anim_scale = _calc_texture_scale(texture)
+	_apply_facing()
+
+func _enforce_walk_loop_range() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if _animated_sprite.animation != walk_animation:
+		return
+	if _walk_loop_end < 0:
+		return
+	if _adjusting_frame:
+		return
+	if _animated_sprite.frame < _walk_loop_start or _animated_sprite.frame > _walk_loop_end:
+		_adjusting_frame = true
+		_animated_sprite.frame = _walk_loop_start
+		_adjusting_frame = false
+
+func _on_step_triggered(_frame_index: int, _animation_name: StringName) -> void:
+	_trigger_step()
+
+func _resolve_step_audio_component() -> StepAudioComponent:
+	if _animated_sprite and _animated_sprite.has_node("StepAudioComponent"):
+		return _animated_sprite.get_node("StepAudioComponent") as StepAudioComponent
+	if has_node("StepAudioComponent"):
+		return get_node("StepAudioComponent") as StepAudioComponent
+	return null
 
 func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
