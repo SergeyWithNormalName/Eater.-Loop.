@@ -13,6 +13,27 @@
 │   │   ├── Poel_1.wav.import
 │   │   ├── Upitanaya_Bitch.wav
 │   │   └── Upitanaya_Bitch.wav.import
+│   ├── furniture
+│   │   ├── door
+│   │   │   ├── door_locked1.wav
+│   │   │   ├── door_locked1.wav.import
+│   │   │   ├── door_open1.wav
+│   │   │   └── door_open1.wav.import
+│   │   ├── door_unlocked.wav
+│   │   ├── door_unlocked.wav.import
+│   │   ├── FridgeNoizeE.wav
+│   │   ├── FridgeNoizeE.wav.import
+│   │   ├── lamp.wav
+│   │   ├── lamp.wav.import
+│   │   ├── OpenFridgeE.wav
+│   │   ├── OpenFridgeE.wav.import
+│   │   ├── OutOfBed.wav
+│   │   ├── OutOfBed.wav.import
+│   │   ├── ScaryStepsAndDoor.mp3
+│   │   └── ScaryStepsAndDoor.mp3.import
+│   ├── monsters
+│   │   ├── BigStep_1V.wav
+│   │   └── BigStep_1V.wav.import
 │   ├── MusicEtc
 │   │   ├── AlienSounds.wav
 │   │   ├── AlienSounds.wav.import
@@ -38,32 +59,6 @@
 │   │   ├── TimerForLabs_DEMO.wav.import
 │   │   ├── TypeSilentHill.wav
 │   │   └── TypeSilentHill.wav.import
-│   ├── Sereja
-│   │   ├── Hahaha.wav
-│   │   ├── Hahaha.wav.import
-│   │   ├── JokeAboutChicken.wav
-│   │   └── JokeAboutChicken.wav.import
-│   ├── furniture
-│   │   ├── door
-│   │   │   ├── door_locked1.wav
-│   │   │   ├── door_locked1.wav.import
-│   │   │   ├── door_open1.wav
-│   │   │   └── door_open1.wav.import
-│   │   ├── FridgeNoizeE.wav
-│   │   ├── FridgeNoizeE.wav.import
-│   │   ├── OpenFridgeE.wav
-│   │   ├── OpenFridgeE.wav.import
-│   │   ├── OutOfBed.wav
-│   │   ├── OutOfBed.wav.import
-│   │   ├── ScaryStepsAndDoor.mp3
-│   │   ├── ScaryStepsAndDoor.mp3.import
-│   │   ├── door_unlocked.wav
-│   │   ├── door_unlocked.wav.import
-│   │   ├── lamp.wav
-│   │   └── lamp.wav.import
-│   ├── monsters
-│   │   ├── BigStep_1V.wav
-│   │   └── BigStep_1V.wav.import
 │   ├── player
 │   │   ├── steps
 │   │   │   ├── steps1.wav
@@ -78,6 +73,11 @@
 │   │   ├── FlashlightOnOff.wav.import
 │   │   ├── HeartBeat_1.wav
 │   │   └── HeartBeat_1.wav.import
+│   ├── Sereja
+│   │   ├── Hahaha.wav
+│   │   ├── Hahaha.wav.import
+│   │   ├── JokeAboutChicken.wav
+│   │   └── JokeAboutChicken.wav.import
 │   ├── MusicForEat.mp3
 │   └── MusicForEat.mp3.import
 ├── docs
@@ -101,11 +101,11 @@
 │   │   ├── level_test_enemies.tscn
 │   │   └── level_test_enemies2.tscn
 │   ├── enemies
-│   │   ├── enemy.tscn
 │   │   ├── enemy_ceiling.tscn
 │   │   ├── enemy_light_only.tscn
 │   │   ├── enemy_light_sensitive.tscn
-│   │   └── enemy_runner.tscn
+│   │   ├── enemy_runner.tscn
+│   │   └── enemy.tscn
 │   ├── minigames
 │   │   ├── food
 │   │   │   ├── feed_minigame.tscn
@@ -219,10 +219,10 @@
 │   │   ├── game_state.gd.uid
 │   │   ├── interaction_prompts.gd
 │   │   ├── interaction_prompts.gd.uid
-│   │   ├── level.gd
-│   │   ├── level.gd.uid
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
+│   │   ├── level.gd
+│   │   ├── level.gd.uid
 │   │   ├── minigame_controller.gd
 │   │   ├── minigame_controller.gd.uid
 │   │   ├── music_manager.gd
@@ -249,19 +249,6 @@
 │   ├── enemy.gd
 │   └── enemy.gd.uid
 ├── textures
-│   ├── MonstersNSTU
-│   │   ├── Denis.png
-│   │   ├── Denis.png.import
-│   │   ├── Max.png
-│   │   ├── Max.png.import
-│   │   ├── Nikita.png
-│   │   ├── Nikita.png.import
-│   │   ├── Serega.png
-│   │   ├── Serega.png.import
-│   │   ├── Slava.png
-│   │   ├── Slava.png.import
-│   │   ├── Tolya.png
-│   │   └── Tolya.png.import
 │   ├── andreys_animations
 │   │   └── walking
 │   │       ├── ezgif-frame-001.png
@@ -300,14 +287,14 @@
 │   │   ├── allrooms
 │   │   │   ├── Balka.png
 │   │   │   ├── Balka.png.import
-│   │   │   ├── Door.png
-│   │   │   ├── Door.png.import
 │   │   │   ├── Door_2.png
 │   │   │   ├── Door_2.png.import
 │   │   │   ├── Door_Opened_1.png
 │   │   │   ├── Door_Opened_1.png.import
 │   │   │   ├── Door_Opened_2.png
 │   │   │   ├── Door_Opened_2.png.import
+│   │   │   ├── Door.png
+│   │   │   ├── Door.png.import
 │   │   │   ├── Lamp1.png
 │   │   │   ├── Lamp1.png.import
 │   │   │   ├── LampOn1.png
@@ -396,6 +383,8 @@
 │   │   │   ├── Urna.png
 │   │   │   └── Urna.png.import
 │   │   └── toilet and bathroom
+│   │       ├── bath.png
+│   │       ├── bath.png.import
 │   │       ├── Mirror.png
 │   │       ├── Mirror.png.import
 │   │       ├── Rakovina.png
@@ -411,9 +400,7 @@
 │   │       ├── WaterMachine.png
 │   │       ├── WaterMachine.png.import
 │   │       ├── Yorhic.png
-│   │       ├── Yorhic.png.import
-│   │       ├── bath.png
-│   │       └── bath.png.import
+│   │       └── Yorhic.png.import
 │   ├── minigames
 │   │   ├── BackgroundsLabs
 │   │   │   ├── Deep_Seek.png
@@ -488,6 +475,19 @@
 │   │   ├── ezgif-frame-020.png.import
 │   │   ├── ezgif-frame-021.png
 │   │   └── ezgif-frame-021.png.import
+│   ├── MonstersNSTU
+│   │   ├── Denis.png
+│   │   ├── Denis.png.import
+│   │   ├── Max.png
+│   │   ├── Max.png.import
+│   │   ├── Nikita.png
+│   │   ├── Nikita.png.import
+│   │   ├── Serega.png
+│   │   ├── Serega.png.import
+│   │   ├── Slava.png
+│   │   ├── Slava.png.import
+│   │   ├── Tolya.png
+│   │   └── Tolya.png.import
 │   ├── walls_floors
 │   │   ├── decals
 │   │   │   ├── HoleInWall1.png
@@ -538,12 +538,14 @@
 │   ├── FonForFood.png.import
 │   ├── MainMenuBackground.png
 │   ├── MainMenuBackground.png.import
-│   ├── Monster.png
-│   ├── Monster.png.import
 │   ├── Monster_2.png
 │   ├── Monster_2.png.import
+│   ├── Monster.png
+│   ├── Monster.png.import
 │   ├── Tarelka.png
 │   └── Tarelka.png.import
+├── Иконка_предварительно.icns
+├── Иконка_предварительно.ico
 ├── default_bus_layout.tres
 ├── export_presets.cfg
 ├── icon.svg
@@ -551,8 +553,6 @@
 ├── iconofgame.png
 ├── iconofgame.png.import
 ├── project.godot
-├── structure.txt
-├── Иконка_предварительно.icns
-└── Иконка_предварительно.ico
+└── structure.txt
 
 56 directories, 500 files
