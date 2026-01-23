@@ -1436,6 +1436,7 @@ kitchen_duration = 12.0
 kitchen_fade_duration = 0.01
 kitchen_fade_delay = 3.0
 kitchen_ease = 1
+stop_kitchen_audio = false
 new_corridor_path = NodePath("NewCorridor")
 camera_path = NodePath("../../Bedroom1/Player/Camera2D")
 camera_squash_zoom_mult = Vector2(1.15, 0.83)
