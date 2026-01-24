@@ -145,7 +145,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_lamp_014")
 }],
-"loop": true,
+"loop": false,
 "name": &"lamp",
 "speed": 12.0
 }, {
