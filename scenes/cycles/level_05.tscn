@@ -1401,6 +1401,18 @@ texture = ExtResource("49_hw0rt")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
+[node name="WallEnd5" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-7537, 63.999996)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallEnd5"]
+shape = SubResource("RectangleShape2D_o12kx")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallEnd5"]
+light_mask = 2
+texture = ExtResource("62_lrwde")
+
 [node name="WallRoofLeftTop" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
 position = Vector2(-7109, -275)
 rotation = -1.5707964
@@ -1428,6 +1440,166 @@ position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
 [node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop3" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-3397, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop3"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop3"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom3" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-3397, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom3"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom3"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop4" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-4184, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop4"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop4"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom4" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-4184, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom4"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom4"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop5" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-4966, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop5"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop5"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom5" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-4966, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom5"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom5"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop6" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-5750, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop6"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop6"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom6" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-5750, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom6"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom6"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop7" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-6386, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop7"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop7"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom7" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-6386, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom7"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom7"]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
