@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=107 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -63,8 +63,6 @@
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://textures/furniture/bedroom/Sweets.png" id="69_6xuyw"]
 [ext_resource type="Texture2D" uid="uid://bbdgtswvtauqi" path="res://textures/furniture/hall/PictureOne.png" id="70_3tees"]
 [ext_resource type="AudioStream" uid="uid://b8mota5j1bj6r" path="res://audio/player/HeartBeat_1.wav" id="70_hi6qj"]
-[ext_resource type="Script" uid="uid://b2ugbi3sjr8u1" path="res://scripts/objects/property_change.gd" id="70_sve3q"]
-[ext_resource type="Texture2D" uid="uid://br0dv8vjk2dyh" path="res://textures/furniture/hall/PictureTwo.png" id="71_0i8n6"]
 [ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://textures/furniture/hall/Shkaf1.png" id="71_aurte"]
 [ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://textures/furniture/hall/BootsBoard.png" id="72_2g3o0"]
 [ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://textures/furniture/hall/Boots1.png" id="73_6dg2p"]
@@ -150,13 +148,6 @@ colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xddf6"]
 gradient = SubResource("Gradient_5lqof")
 
-[sub_resource type="Resource" id="Resource_v8753"]
-script = ExtResource("70_sve3q")
-target = NodePath("../PictureOne")
-property_name = "texture"
-value = ExtResource("71_0i8n6")
-metadata/_custom_type_script = "uid://b2ugbi3sjr8u1"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ifr"]
 size = Vector2(240, 426)
 
@@ -174,7 +165,7 @@ start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.15686275, 0.15686275, 0.18431373, 1)
+color = Color(0.12941177, 0.12941177, 0.15294118, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -1650,7 +1641,6 @@ texture = ExtResource("62_lrwde")
 position = Vector2(9126, 94)
 script = ExtResource("87_7c4ho")
 affect_on_exit = true
-changes = Array[ExtResource("70_sve3q")]([SubResource("Resource_v8753")])
 sfx_stream = ExtResource("70_hi6qj")
 sfx_use_trigger_position = true
 metadata/_edit_group_ = true

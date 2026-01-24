@@ -403,6 +403,44 @@
 │   │       ├── WaterMachine.png.import
 │   │       ├── Yorhic.png
 │   │       └── Yorhic.png.import
+│   ├── M_LightSensitive
+│   │   └── Flashlight
+│   │       ├── ezgif-frame-001.png
+│   │       ├── ezgif-frame-001.png.import
+│   │       ├── ezgif-frame-002.png
+│   │       ├── ezgif-frame-002.png.import
+│   │       ├── ezgif-frame-003.png
+│   │       ├── ezgif-frame-003.png.import
+│   │       ├── ezgif-frame-004.png
+│   │       ├── ezgif-frame-004.png.import
+│   │       ├── ezgif-frame-005.png
+│   │       ├── ezgif-frame-005.png.import
+│   │       ├── ezgif-frame-006.png
+│   │       ├── ezgif-frame-006.png.import
+│   │       ├── ezgif-frame-007.png
+│   │       ├── ezgif-frame-007.png.import
+│   │       ├── ezgif-frame-008.png
+│   │       ├── ezgif-frame-008.png.import
+│   │       ├── ezgif-frame-009.png
+│   │       ├── ezgif-frame-009.png.import
+│   │       ├── ezgif-frame-010.png
+│   │       ├── ezgif-frame-010.png.import
+│   │       ├── ezgif-frame-011.png
+│   │       ├── ezgif-frame-011.png.import
+│   │       ├── ezgif-frame-012.png
+│   │       ├── ezgif-frame-012.png.import
+│   │       ├── ezgif-frame-013.png
+│   │       ├── ezgif-frame-013.png.import
+│   │       ├── ezgif-frame-014.png
+│   │       ├── ezgif-frame-014.png.import
+│   │       ├── ezgif-frame-015.png
+│   │       ├── ezgif-frame-015.png.import
+│   │       ├── ezgif-frame-016.png
+│   │       ├── ezgif-frame-016.png.import
+│   │       ├── ezgif-frame-017.png
+│   │       ├── ezgif-frame-017.png.import
+│   │       ├── ezgif-frame-018.png
+│   │       └── ezgif-frame-018.png.import
 │   ├── minigames
 │   │   ├── BackgroundsLabs
 │   │   │   ├── Deep_Seek.png
@@ -557,4 +595,4 @@
 ├── project.godot
 └── structure.txt
 
-56 directories, 502 files
+58 directories, 538 files
