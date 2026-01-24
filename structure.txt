@@ -111,6 +111,7 @@
 │   │   │   ├── feed_minigame.tscn
 │   │   │   ├── food_chicken.tscn
 │   │   │   ├── food_dumpling.tscn
+│   │   │   ├── food_hachapuri.tscn
 │   │   │   ├── food_meet.tscn
 │   │   │   ├── food_naggets.tscn
 │   │   │   └── tarelka.tscn
@@ -440,36 +441,47 @@
 │   │   │   ├── ezgif-frame-017.png
 │   │   │   ├── ezgif-frame-017.png.import
 │   │   │   ├── ezgif-frame-018.png
-│   │   │   └── ezgif-frame-018.png.import
-│   │   └── LampReact
+│   │   │   ├── ezgif-frame-018.png.import
+│   │   │   ├── ezgif-frame-019.png
+│   │   │   ├── ezgif-frame-019.png.import
+│   │   │   ├── ezgif-frame-020.png
+│   │   │   └── ezgif-frame-020.png.import
+│   │   ├── LampReact
+│   │   │   ├── ezgif-frame-001.png
+│   │   │   ├── ezgif-frame-001.png.import
+│   │   │   ├── ezgif-frame-002.png
+│   │   │   ├── ezgif-frame-002.png.import
+│   │   │   ├── ezgif-frame-003.png
+│   │   │   ├── ezgif-frame-003.png.import
+│   │   │   ├── ezgif-frame-004.png
+│   │   │   ├── ezgif-frame-004.png.import
+│   │   │   ├── ezgif-frame-005.png
+│   │   │   ├── ezgif-frame-005.png.import
+│   │   │   ├── ezgif-frame-006.png
+│   │   │   ├── ezgif-frame-006.png.import
+│   │   │   ├── ezgif-frame-007.png
+│   │   │   ├── ezgif-frame-007.png.import
+│   │   │   ├── ezgif-frame-008.png
+│   │   │   ├── ezgif-frame-008.png.import
+│   │   │   ├── ezgif-frame-009.png
+│   │   │   ├── ezgif-frame-009.png.import
+│   │   │   ├── ezgif-frame-010.png
+│   │   │   ├── ezgif-frame-010.png.import
+│   │   │   ├── ezgif-frame-011.png
+│   │   │   ├── ezgif-frame-011.png.import
+│   │   │   ├── ezgif-frame-012.png
+│   │   │   ├── ezgif-frame-012.png.import
+│   │   │   ├── ezgif-frame-013.png
+│   │   │   ├── ezgif-frame-013.png.import
+│   │   │   ├── ezgif-frame-014.png
+│   │   │   └── ezgif-frame-014.png.import
+│   │   └── LampStan
 │   │       ├── ezgif-frame-001.png
 │   │       ├── ezgif-frame-001.png.import
 │   │       ├── ezgif-frame-002.png
 │   │       ├── ezgif-frame-002.png.import
 │   │       ├── ezgif-frame-003.png
-│   │       ├── ezgif-frame-003.png.import
-│   │       ├── ezgif-frame-004.png
-│   │       ├── ezgif-frame-004.png.import
-│   │       ├── ezgif-frame-005.png
-│   │       ├── ezgif-frame-005.png.import
-│   │       ├── ezgif-frame-006.png
-│   │       ├── ezgif-frame-006.png.import
-│   │       ├── ezgif-frame-007.png
-│   │       ├── ezgif-frame-007.png.import
-│   │       ├── ezgif-frame-008.png
-│   │       ├── ezgif-frame-008.png.import
-│   │       ├── ezgif-frame-009.png
-│   │       ├── ezgif-frame-009.png.import
-│   │       ├── ezgif-frame-010.png
-│   │       ├── ezgif-frame-010.png.import
-│   │       ├── ezgif-frame-011.png
-│   │       ├── ezgif-frame-011.png.import
-│   │       ├── ezgif-frame-012.png
-│   │       ├── ezgif-frame-012.png.import
-│   │       ├── ezgif-frame-013.png
-│   │       ├── ezgif-frame-013.png.import
-│   │       ├── ezgif-frame-014.png
-│   │       └── ezgif-frame-014.png.import
+│   │       └── ezgif-frame-003.png.import
 │   ├── minigames
 │   │   ├── BackgroundsLabs
 │   │   │   ├── Deep_Seek.png
@@ -624,4 +636,4 @@
 ├── project.godot
 └── structure.txt
 
-59 directories, 566 files
+60 directories, 577 files

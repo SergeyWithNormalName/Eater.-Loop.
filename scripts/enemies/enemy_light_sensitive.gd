@@ -6,7 +6,9 @@ extends "res://scripts/enemies/enemy_flashlight_base.gd"
 ## Имя анимации реакции на фонарик.
 @export var flashlight_animation: StringName = &"flashlight"
 ## Имя анимации реакции на свет лампы.
-@export var lamp_animation: StringName = &"lamp"
+@export var lamp_react_animation: StringName = &"lamp_react"
+## Имя анимации стана от лампы.
+@export var lamp_stan_animation: StringName = &"lamp_stan"
 
 @export_group("Stun")
 ## Длительность стана от света.
@@ -28,6 +30,7 @@ var _lamp_frozen: bool = false
 var _animated_sprite: AnimatedSprite2D = null
 var _flashlight_anim_active: bool = false
 var _lamp_anim_active: bool = false
+var _lamp_react_playing: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -36,6 +39,9 @@ func _ready() -> void:
 		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 		if _animated_sprite != null:
 			_sprite = _animated_sprite
+	if _animated_sprite != null:
+		if not _animated_sprite.animation_finished.is_connected(_on_animation_finished):
+			_animated_sprite.animation_finished.connect(_on_animation_finished)
 	_set_idle_animation()
 
 func _physics_process(delta: float) -> void:
@@ -162,21 +168,46 @@ func _stop_flashlight_stun_animation() -> void:
 	_set_idle_animation()
 
 func _start_lamp_animation() -> void:
+	if _lamp_anim_active:
+		return
 	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
-	if not _animated_sprite.sprite_frames.has_animation(lamp_animation):
-		return
 	_lamp_anim_active = true
-	if _animated_sprite.animation != lamp_animation:
-		_animated_sprite.play(lamp_animation)
-	_animated_sprite.play()
+	_stop_flashlight_stun_animation()
+	if _animated_sprite.sprite_frames.has_animation(lamp_react_animation):
+		_lamp_react_playing = true
+		if _animated_sprite.animation != lamp_react_animation:
+			_animated_sprite.play(lamp_react_animation)
+		_animated_sprite.frame = 0
+		_animated_sprite.play()
+		return
+	_start_lamp_stan_animation()
 
 func _stop_lamp_animation() -> void:
 	_lamp_anim_active = false
-	if _flashlight_anim_active and _stun_timer > 0.0:
+	_lamp_react_playing = false
+	if _stun_timer > 0.0:
 		_play_flashlight_animation_for(_stun_timer)
 		return
 	_set_idle_animation()
+
+func _start_lamp_stan_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if not _animated_sprite.sprite_frames.has_animation(lamp_stan_animation):
+		return
+	_lamp_react_playing = false
+	if _animated_sprite.animation != lamp_stan_animation:
+		_animated_sprite.play(lamp_stan_animation)
+	_animated_sprite.play()
+
+func _on_animation_finished() -> void:
+	if not _lamp_anim_active:
+		return
+	if _animated_sprite == null:
+		return
+	if _animated_sprite.animation == lamp_react_animation:
+		_start_lamp_stan_animation()
 
 func _set_idle_animation() -> void:
 	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
