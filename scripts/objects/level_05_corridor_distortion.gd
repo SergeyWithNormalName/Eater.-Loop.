@@ -8,32 +8,8 @@ extends Node2D
 ## Если включено — срабатывает только один раз.
 @export var one_shot: bool = true
 
-@export_group("Stretch")
-## Включить растяжение коридора (стены/пол).
-@export var stretch_enabled: bool = true
-## Узел-родитель, который растягивается (обычно контейнер стен/пола).
-@export var stretch_root_path: NodePath
-## Начальный масштаб растяжения (относительно базового).
-@export var stretch_start_scale: Vector2 = Vector2(0.08, 1.0)
-## Конечный масштаб растяжения (относительно базового).
-@export var stretch_end_scale: Vector2 = Vector2(2.2, 1.0)
-## Длительность растяжения.
-@export var stretch_duration: float = 2.8
-## Задержка перед началом растяжения.
-@export var stretch_delay: float = 0.0
-## Длительность проявления (alpha) растягиваемого коридора.
-@export var stretch_fade_duration: float = 0.9
-## Тип кривой анимации растяжения.
-@export var stretch_trans: Tween.TransitionType = Tween.TRANS_SINE
-## Тип easing для растяжения.
-@export var stretch_ease: Tween.EaseType = Tween.EASE_OUT
-## Длительность лёгкого «успокоения» после овершота.
-@export var stretch_settle_duration: float = 0.5
-## Сила овершота при растяжении (0 — без овершота).
-@export var stretch_settle_strength: float = 0.05
-
 @export_group("Kitchen")
-## Список кухонных объектов, которые уезжают и исчезают.
+## Список кухонных объектов, которые уезжают.
 @export var kitchen_nodes: Array[NodePath] = []
 ## Смещение кухонных объектов (куда уезжают).
 @export var kitchen_move: Vector2 = Vector2(2200, 0)
@@ -41,16 +17,26 @@ extends Node2D
 @export var kitchen_duration: float = 0.7
 ## Задержка перед уездом кухни.
 @export var kitchen_delay: float = 0.0
-## Длительность затухания кухни.
-@export var kitchen_fade_duration: float = 0.7
-## Задержка перед затуханием кухни.
-@export var kitchen_fade_delay: float = 0.0
 ## Множитель масштаба кухни при уезде.
 @export var kitchen_scale_mult: Vector2 = Vector2.ONE
 ## Тип кривой анимации уезда кухни.
 @export var kitchen_trans: Tween.TransitionType = Tween.TRANS_CUBIC
 ## Тип easing для уезда кухни.
 @export var kitchen_ease: Tween.EaseType = Tween.EASE_IN
+
+@export_group("Back Move")
+## Список объектов коридора позади игрока, которые уезжают в обратную сторону.
+@export var back_nodes: Array[NodePath] = []
+## Смещение для объектов позади игрока.
+@export var back_move: Vector2 = Vector2(-2200, 0)
+## Длительность уезда объектов позади.
+@export var back_duration: float = 0.7
+## Задержка перед уездом объектов позади.
+@export var back_delay: float = 0.0
+## Тип кривой анимации уезда объектов позади.
+@export var back_trans: Tween.TransitionType = Tween.TRANS_CUBIC
+## Тип easing для уезда объектов позади.
+@export var back_ease: Tween.EaseType = Tween.EASE_IN
 
 @export_group("Audio Stop")
 ## Останавливать звуки у кухонных объектов, когда коридор уезжает.
@@ -101,13 +87,12 @@ extends Node2D
 @export var camera_ease: Tween.EaseType = Tween.EASE_OUT
 
 var _has_fired := false
-var _stretch_root: Node2D
 var _new_corridor: Node2D
 var _camera: Camera2D
 var _kitchen_nodes: Array[Node2D] = []
 var _kitchen_base: Dictionary = {}
-var _stretch_base_scale: Vector2 = Vector2.ONE
-var _stretch_base_modulate: Color = Color.WHITE
+var _back_nodes: Array[Node2D] = []
+var _back_base: Dictionary = {}
 var _new_base_pos: Vector2 = Vector2.ZERO
 var _new_base_scale: Vector2 = Vector2.ONE
 var _new_base_modulate: Color = Color.WHITE
@@ -115,15 +100,11 @@ var _camera_base_zoom: Vector2 = Vector2.ONE
 var _audio_stop_scheduled := false
 
 func _ready() -> void:
-	_stretch_root = get_node_or_null(stretch_root_path) as Node2D
 	_new_corridor = get_node_or_null(new_corridor_path) as Node2D
 	_camera = get_node_or_null(camera_path) as Camera2D
 	_cache_kitchen_nodes()
+	_cache_back_nodes()
 
-	if _stretch_root != null:
-		_stretch_base_scale = _stretch_root.scale
-		if _stretch_root is CanvasItem:
-			_stretch_base_modulate = _stretch_root.modulate
 	if _new_corridor != null:
 		_new_base_pos = _new_corridor.position
 		_new_base_scale = _new_corridor.scale
@@ -146,12 +127,6 @@ func _connect_trigger() -> void:
 			trigger.body_entered.connect(_on_trigger_body_entered)
 
 func _apply_initial_state() -> void:
-	if _stretch_root != null and stretch_enabled:
-		_stretch_root.scale = _stretch_base_scale * stretch_start_scale
-		if _stretch_root is CanvasItem:
-			var mod := _stretch_base_modulate
-			mod.a = 0.0
-			_stretch_root.modulate = mod
 	if _new_corridor != null:
 		_new_corridor.position = _new_base_pos + new_corridor_offset
 		_new_corridor.scale = _new_base_scale * new_corridor_start_scale
@@ -159,6 +134,14 @@ func _apply_initial_state() -> void:
 			var mod := _new_base_modulate
 			mod.a = 0.0
 			_new_corridor.modulate = mod
+	for node in _back_nodes:
+		var data: Dictionary = _back_base.get(node, {})
+		if data.is_empty():
+			continue
+		node.global_position = data["global_position"]
+		node.scale = data["scale"]
+		if node is CanvasItem:
+			node.modulate = data["modulate"]
 	for node in _kitchen_nodes:
 		var data: Dictionary = _kitchen_base.get(node, {})
 		if data.is_empty():
@@ -186,36 +169,38 @@ func _cache_kitchen_nodes() -> void:
 				"modulate": mod,
 			}
 
+func _cache_back_nodes() -> void:
+	_back_nodes.clear()
+	_back_base.clear()
+	for path in back_nodes:
+		var node := get_node_or_null(path)
+		if node == null:
+			continue
+		if node is Node2D:
+			_back_nodes.append(node)
+			var mod := Color.WHITE
+			if node is CanvasItem:
+				mod = node.modulate
+			_back_base[node] = {
+				"global_position": node.global_position,
+				"scale": node.scale,
+				"modulate": mod,
+			}
+
 func _on_trigger_body_entered(body: Node) -> void:
 	if one_shot and _has_fired:
 		return
 	if player_group != "" and not body.is_in_group(player_group):
 		return
 	_has_fired = true
-	_play_sequence()
+	_play_sequence(body)
 
-func _play_sequence() -> void:
-	_animate_stretch()
+func _play_sequence(player_body: Node) -> void:
 	_animate_kitchen()
+	_animate_back_objects(player_body)
 	_animate_new_corridor()
 	_animate_camera_squash()
 	_schedule_audio_stop()
-
-func _animate_stretch() -> void:
-	if _stretch_root == null or not stretch_enabled:
-		return
-	var target_scale := _stretch_base_scale * stretch_end_scale
-	if stretch_settle_strength > 0.0:
-		var overshoot_scale := target_scale * (1.0 + stretch_settle_strength)
-		var scale_tween := create_tween()
-		scale_tween.tween_property(_stretch_root, "scale", overshoot_scale, stretch_duration * 0.7).set_delay(stretch_delay).set_trans(stretch_trans).set_ease(stretch_ease)
-		scale_tween.tween_property(_stretch_root, "scale", target_scale, stretch_settle_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	else:
-		var scale_tween := create_tween()
-		scale_tween.tween_property(_stretch_root, "scale", target_scale, stretch_duration).set_delay(stretch_delay).set_trans(stretch_trans).set_ease(stretch_ease)
-	if _stretch_root is CanvasItem:
-		var fade_tween := create_tween()
-		fade_tween.tween_property(_stretch_root, "modulate:a", 1.0, stretch_fade_duration).set_delay(stretch_delay).set_trans(stretch_trans).set_ease(stretch_ease)
 
 func _animate_kitchen() -> void:
 	if _kitchen_nodes.is_empty():
@@ -232,8 +217,27 @@ func _animate_kitchen() -> void:
 		tween.tween_property(node, "position", target_pos, kitchen_duration).set_delay(kitchen_delay).set_trans(kitchen_trans).set_ease(kitchen_ease)
 		if kitchen_scale_mult != Vector2.ONE:
 			tween.tween_property(node, "scale", base_scale * kitchen_scale_mult, kitchen_duration).set_delay(kitchen_delay).set_trans(kitchen_trans).set_ease(kitchen_ease)
-		if node is CanvasItem:
-			tween.tween_property(node, "modulate:a", 0.0, kitchen_fade_duration).set_delay(kitchen_delay + kitchen_fade_delay).set_trans(kitchen_trans).set_ease(kitchen_ease)
+
+func _animate_back_objects(player_body: Node) -> void:
+	if _back_nodes.is_empty():
+		return
+	var player_pos := Vector2.ZERO
+	if player_body is Node2D:
+		player_pos = player_body.global_position
+	var tween := create_tween()
+	tween.set_parallel(true)
+	for node in _back_nodes:
+		var data: Dictionary = _back_base.get(node, {})
+		if data.is_empty():
+			continue
+		if node.global_position.x >= player_pos.x:
+			continue
+		var base_pos: Vector2 = data.get("global_position", node.global_position)
+		var base_scale: Vector2 = data.get("scale", Vector2.ONE)
+		var target_pos: Vector2 = base_pos + back_move
+		tween.tween_property(node, "global_position", target_pos, back_duration).set_delay(back_delay).set_trans(back_trans).set_ease(back_ease)
+		if node.scale != base_scale:
+			tween.tween_property(node, "scale", base_scale, back_duration).set_delay(back_delay).set_trans(back_trans).set_ease(back_ease)
 
 func _animate_new_corridor() -> void:
 	if _new_corridor == null:

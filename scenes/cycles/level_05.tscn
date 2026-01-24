@@ -574,33 +574,6 @@ position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("14_bs7lo")
 
-[node name="Door(To Idk)2" type="Area2D" parent="Hall1"]
-z_index = -2
-position = Vector2(15981, 83)
-script = ExtResource("11_xwm2s")
-is_locked = null
-locked_message = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-target_marker = NodePath("../../Bedroom1/Door(In Bedroom)/Marker2D")
-use_scene_change = null
-sfx_locked = ExtResource("12_4xwr8")
-sfx_open = ExtResource("13_3rylc")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/Door(To Idk)2"]
-position = Vector2(0.25, 0.3960724)
-shape = SubResource("RectangleShape2D_fh42t")
-
-[node name="Marker2D" type="Marker2D" parent="Hall1/Door(To Idk)2"]
-position = Vector2(0.25, 0.8960724)
-
-[node name="Sprite2D" type="Sprite2D" parent="Hall1/Door(To Idk)2"]
-position = Vector2(0.25, 0.8960724)
-scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("14_bs7lo")
-
 [node name="Door(To Parents)" type="Area2D" parent="Hall1"]
 z_index = -2
 position = Vector2(8645, 83)
@@ -792,6 +765,24 @@ position = Vector2(10323, -12.000001)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("36_bf5co")
 
+[node name="OpenShtora2" type="Sprite2D" parent="Hall1"]
+z_index = -3
+position = Vector2(10323, 54)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("66_wjkrl")
+
+[node name="Window3" type="Sprite2D" parent="Hall1"]
+z_index = -4
+position = Vector2(14312, -11.508119)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("36_bf5co")
+
+[node name="OpenShtora3" type="Sprite2D" parent="Hall1"]
+z_index = -3
+position = Vector2(14312, 54.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("66_wjkrl")
+
 [node name="KitchenTable" type="Sprite2D" parent="Hall1"]
 z_index = 7
 position = Vector2(10163.37, 276.23898)
@@ -809,6 +800,23 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(8351.001, 326)
 scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("49_hw0rt")
+region_enabled = true
+region_rect = Rect2(0, 0, 20500, 500)
+
+[node name="WallBack_Hall2" type="Sprite2D" parent="Hall1"]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12849, 19)
+texture = ExtResource("1_hi6qj")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="FloorKitchen2" type="Sprite2D" parent="Hall1"]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12847.412, 326)
+scale = Vector2(0.2194548, 0.21939737)
 texture = ExtResource("49_hw0rt")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
@@ -847,7 +855,7 @@ scale = Vector2(0.28, 0.28)
 texture = ExtResource("61_a0psa")
 
 [node name="WallEnd3" type="StaticBody2D" parent="Hall1"]
-position = Vector2(16579, 63.999996)
+position = Vector2(15113.001, 63.999996)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
@@ -1050,38 +1058,6 @@ position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("62_lrwde")
 
-[node name="WallRoof33" type="StaticBody2D" parent="Hall1"]
-position = Vector2(15588, -275)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof33"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof33"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
-[node name="WallRoof34" type="StaticBody2D" parent="Hall1"]
-position = Vector2(16281, -275)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof34"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof34"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
 [node name="WallRoof35" type="StaticBody2D" parent="Hall1"]
 position = Vector2(14123, 399)
 rotation = -1.5707964
@@ -1109,38 +1085,6 @@ position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
 [node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof36"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
-[node name="WallRoof37" type="StaticBody2D" parent="Hall1"]
-position = Vector2(15588, 399)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof37"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof37"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
-[node name="WallRoof38" type="StaticBody2D" parent="Hall1"]
-position = Vector2(16281, 399)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof38"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof38"]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
@@ -1318,12 +1262,6 @@ shape = SubResource("RectangleShape2D_o12kx")
 light_mask = 2
 texture = ExtResource("62_lrwde")
 
-[node name="OpenShtora2" type="Sprite2D" parent="Hall1"]
-z_index = -3
-position = Vector2(10323, 54)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("66_wjkrl")
-
 [node name="PictureOne" type="Sprite2D" parent="Hall1"]
 position = Vector2(9131, -15)
 scale = Vector2(0.15, 0.15)
@@ -1428,58 +1366,104 @@ texture = ExtResource("81_hptho")
 position = Vector2(9126, 0)
 script = ExtResource("88_ky05d")
 trigger_path = NodePath("../Trigger")
-stretch_enabled = false
-stretch_root_path = NodePath("StretchRoot")
 kitchen_nodes = Array[NodePath]([NodePath("../Frizzer"), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna")])
 kitchen_move = Vector2(4000, 0)
 kitchen_duration = 12.0
-kitchen_fade_duration = 0.01
-kitchen_fade_delay = 3.0
 kitchen_ease = 1
+back_nodes = Array[NodePath]([NodePath("../Door(To Bedroom)"), NodePath("../Door(To Parents)"), NodePath("../Door(To Toilet)"), NodePath("../Door(To Bathroom)"), NodePath("../Door(To Exit)"), NodePath("../Lamp5"), NodePath("../Kover"), NodePath("../HoleInWall6"), NodePath("../HoleInWall2"), NodePath("../HoleInWall4"), NodePath("../HoleInWall1"), NodePath("../HoleInWall3"), NodePath("../Boots1"), NodePath("../Boots2"), NodePath("../Boots3"), NodePath("../Boots4"), NodePath("../Boots5"), NodePath("../Boots6")])
+back_move = Vector2(-4000, 0)
+back_duration = 12.0
+back_ease = 1
 stop_kitchen_audio = false
 new_corridor_path = NodePath("NewCorridor")
+new_corridor_offset = Vector2(-650, 0)
 camera_path = NodePath("../../Bedroom1/Player/Camera2D")
 camera_squash_zoom_mult = Vector2(1.15, 0.83)
 camera_hold = 0.3
 camera_recover_duration = 1.0
 
-[node name="StretchRoot" type="Node2D" parent="Hall1/CorridorDistortion"]
-
-[node name="StretchWall" type="Sprite2D" parent="Hall1/CorridorDistortion/StretchRoot"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(2255.8232, 19)
-texture = ExtResource("1_hi6qj")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
-[node name="StretchWall2" type="Sprite2D" parent="Hall1/CorridorDistortion/StretchRoot"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(5194, 19)
-texture = ExtResource("1_hi6qj")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
-[node name="StretchFloor" type="Sprite2D" parent="Hall1/CorridorDistortion/StretchRoot"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(2250.8232, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("49_hw0rt")
-region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
-
-[node name="StretchFloor2" type="Sprite2D" parent="Hall1/CorridorDistortion/StretchRoot"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(5200, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("49_hw0rt")
-region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
-
 [node name="NewCorridor" type="Node2D" parent="Hall1/CorridorDistortion"]
+
+[node name="WallBack_Hall_Extended" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+z_index = -5
+texture_repeat = 2
+position = Vector2(-5274, 19)
+texture = ExtResource("1_hi6qj")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="FloorKitchen_Extended" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+z_index = -5
+texture_repeat = 2
+position = Vector2(-5275.001, 326)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("49_hw0rt")
+region_enabled = true
+region_rect = Rect2(0, 0, 20500, 500)
+
+[node name="WallRoofLeftTop" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-7109, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-7109, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftTop2" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-11609, -275)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop2"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftTop2"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
+
+[node name="WallRoofLeftBottom2" type="StaticBody2D" parent="Hall1/CorridorDistortion/NewCorridor"]
+position = Vector2(-11609, 399)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom2"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_dwgmq")
+
+[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion/NewCorridor/WallRoofLeftBottom2"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("62_lrwde")
 
 [node name="Trigger" type="Area2D" parent="Hall1"]
 position = Vector2(9126, 94)
@@ -2450,7 +2434,7 @@ texture = ExtResource("68_61vya")
 
 [node name="Lamp" parent="." instance=ExtResource("85_o4yqd")]
 z_index = -1
-position = Vector2(12237, -214)
+position = Vector2(10967, -214)
 start_on = true
 turn_on_sfx = ExtResource("86_7c4ho")
 light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
@@ -2460,7 +2444,7 @@ flicker_chance = 0.04
 flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
-position = Vector2(16083, 119)
+position = Vector2(14013, 119)
 speed = 325.0
 keep_chasing_outside_detection = true
 kill_on_attack = true
@@ -2477,8 +2461,6 @@ chase_music_fade_out_time = 5.0
 [connection signal="body_exited" from="Bedroom2/Bed2" to="Bedroom2/Bed2" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]
-[connection signal="body_entered" from="Hall1/Door(To Idk)2" to="Hall1/Door(To Idk)2" method="_on_body_entered"]
-[connection signal="body_exited" from="Hall1/Door(To Idk)2" to="Hall1/Door(To Idk)2" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Parents)" to="Hall1/Door(To Parents)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Parents)" to="Hall1/Door(To Parents)" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Exit)" to="Hall1/Door(To Exit)" method="_on_body_entered"]
