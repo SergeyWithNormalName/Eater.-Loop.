@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://t48uttt1m656"]
+[gd_scene load_steps=39 format=3 uid="uid://t48uttt1m656"]
 
 [ext_resource type="Script" uid="uid://b14oqxr6ywytt" path="res://scripts/enemies/enemy_light_sensitive.gd" id="1_light_sensitive"]
 [ext_resource type="Texture2D" uid="uid://cm6c126i05u23" path="res://textures/Monster_2.png" id="2_yagbc"]
@@ -20,6 +20,20 @@
 [ext_resource type="Texture2D" uid="uid://bavj0yrygatxt" path="res://textures/M_LightSensitive/Flashlight/ezgif-frame-016.png" id="18_flashlight_016"]
 [ext_resource type="Texture2D" uid="uid://c2bhv8h01hgb2" path="res://textures/M_LightSensitive/Flashlight/ezgif-frame-017.png" id="19_flashlight_017"]
 [ext_resource type="Texture2D" uid="uid://ca2n255flxu8g" path="res://textures/M_LightSensitive/Flashlight/ezgif-frame-018.png" id="20_flashlight_018"]
+[ext_resource type="Texture2D" uid="uid://dma1qknj0ybos" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-001.png" id="21_lamp_001"]
+[ext_resource type="Texture2D" uid="uid://cngplexqgvaht" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-002.png" id="22_lamp_002"]
+[ext_resource type="Texture2D" uid="uid://dhfyr82a3434w" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-003.png" id="23_lamp_003"]
+[ext_resource type="Texture2D" uid="uid://bi023vc4wo7wi" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-004.png" id="24_lamp_004"]
+[ext_resource type="Texture2D" uid="uid://50guxir757l4" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-005.png" id="25_lamp_005"]
+[ext_resource type="Texture2D" uid="uid://dcovg1eavdw0m" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-006.png" id="26_lamp_006"]
+[ext_resource type="Texture2D" uid="uid://c7t7lfgi2fj1c" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-007.png" id="27_lamp_007"]
+[ext_resource type="Texture2D" uid="uid://bpvw3ollefdb" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-008.png" id="28_lamp_008"]
+[ext_resource type="Texture2D" uid="uid://dshgg5r5uewxq" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-009.png" id="29_lamp_009"]
+[ext_resource type="Texture2D" uid="uid://568w08urj8m0" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-010.png" id="30_lamp_010"]
+[ext_resource type="Texture2D" uid="uid://dqbr5ksp6m1kp" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-011.png" id="31_lamp_011"]
+[ext_resource type="Texture2D" uid="uid://qbd0mdte5bfl" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-012.png" id="32_lamp_012"]
+[ext_resource type="Texture2D" uid="uid://c8flp88c5as4u" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-013.png" id="33_lamp_013"]
+[ext_resource type="Texture2D" uid="uid://b2nld6gdhc3ar" path="res://textures/M_LightSensitive/LampReact/ezgif-frame-014.png" id="34_lamp_014"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(4044, 870)
@@ -84,8 +98,55 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("20_flashlight_018")
 }],
-"loop": true,
+"loop": false,
 "name": &"flashlight",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_lamp_001")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_lamp_002")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_lamp_003")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_lamp_004")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lamp_005")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_lamp_006")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_lamp_007")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_lamp_008")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_lamp_009")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_lamp_010")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_lamp_011")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_lamp_012")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_lamp_013")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_lamp_014")
+}],
+"loop": true,
+"name": &"lamp",
 "speed": 12.0
 }, {
 "frames": [{
@@ -118,7 +179,9 @@ shape = SubResource("RectangleShape2D_lu5c6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_light_sensitive")
-animation = &"flashlight"
+animation = &"idle"
+frame = 0
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.5, 0.5)

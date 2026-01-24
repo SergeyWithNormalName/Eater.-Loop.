@@ -5,6 +5,8 @@ extends "res://scripts/enemies/enemy_flashlight_base.gd"
 @export var idle_animation: StringName = &"idle"
 ## Имя анимации реакции на фонарик.
 @export var flashlight_animation: StringName = &"flashlight"
+## Имя анимации реакции на свет лампы.
+@export var lamp_animation: StringName = &"lamp"
 
 @export_group("Stun")
 ## Длительность стана от света.
@@ -24,6 +26,8 @@ var _player_in_hitbox: Node2D = null
 var _was_stunned: bool = false
 var _lamp_frozen: bool = false
 var _animated_sprite: AnimatedSprite2D = null
+var _flashlight_anim_active: bool = false
+var _lamp_anim_active: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -37,7 +41,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_update_stun_timers(delta)
 	var flashlight_hit := _is_flashlight_cone_hitting()
-	_update_flashlight_animation(flashlight_hit)
+	if _flashlight_anim_active and _stun_timer <= 0.0:
+		_stop_flashlight_stun_animation()
 	var lamp_frozen_now := _update_lamp_freeze_state()
 	var stunned_now := lamp_frozen_now or _stun_timer > 0.0
 	if _was_stunned and not stunned_now:
@@ -78,6 +83,8 @@ func _try_stun() -> bool:
 		return false
 	_stun_timer = max(0.0, stun_duration)
 	_stun_cooldown_timer = max(0.0, stun_cooldown)
+	if _stun_timer > 0.0:
+		_start_flashlight_stun_animation()
 	_start_knockback()
 	return _stun_timer > 0.0
 
@@ -117,19 +124,57 @@ func _update_lamp_freeze_state() -> bool:
 	_lamp_frozen = _is_lamp_light_hitting()
 	if _lamp_frozen != was_frozen:
 		_set_chase_music_suppressed(_lamp_frozen)
+		if _lamp_frozen:
+			_start_lamp_animation()
+		else:
+			_stop_lamp_animation()
 	return _lamp_frozen
 
 func _apply_lamp_freeze_motion() -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
 
-func _update_flashlight_animation(flashlight_hit: bool) -> void:
+func _start_flashlight_stun_animation() -> void:
+	_play_flashlight_animation_for(stun_duration)
+
+func _play_flashlight_animation_for(duration: float) -> void:
 	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
-	if flashlight_hit:
-		if _animated_sprite.sprite_frames.has_animation(flashlight_animation):
-			if _animated_sprite.animation != flashlight_animation:
-				_animated_sprite.play(flashlight_animation)
+	if not _animated_sprite.sprite_frames.has_animation(flashlight_animation):
+		return
+	_flashlight_anim_active = true
+	var frames := _animated_sprite.sprite_frames.get_frame_count(flashlight_animation)
+	if duration > 0.0 and frames > 0:
+		var total_duration := 0.0
+		for index in range(frames):
+			total_duration += _animated_sprite.sprite_frames.get_frame_duration(flashlight_animation, index)
+		if total_duration > 0.0:
+			_animated_sprite.sprite_frames.set_animation_speed(flashlight_animation, total_duration / duration)
+	if _animated_sprite.animation != flashlight_animation:
+		_animated_sprite.play(flashlight_animation)
+	_animated_sprite.frame = 0
+	_animated_sprite.play()
+
+func _stop_flashlight_stun_animation() -> void:
+	_flashlight_anim_active = false
+	if _lamp_anim_active:
+		return
+	_set_idle_animation()
+
+func _start_lamp_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if not _animated_sprite.sprite_frames.has_animation(lamp_animation):
+		return
+	_lamp_anim_active = true
+	if _animated_sprite.animation != lamp_animation:
+		_animated_sprite.play(lamp_animation)
+	_animated_sprite.play()
+
+func _stop_lamp_animation() -> void:
+	_lamp_anim_active = false
+	if _flashlight_anim_active and _stun_timer > 0.0:
+		_play_flashlight_animation_for(_stun_timer)
 		return
 	_set_idle_animation()
 
