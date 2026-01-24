@@ -1,5 +1,11 @@
 extends "res://scripts/enemies/enemy_flashlight_base.gd"
 
+@export_group("Animation")
+## Имя анимации простоя.
+@export var idle_animation: StringName = &"idle"
+## Имя анимации реакции на фонарик.
+@export var flashlight_animation: StringName = &"flashlight"
+
 @export_group("Stun")
 ## Длительность стана от света.
 @export var stun_duration: float = 2.0
@@ -17,9 +23,21 @@ var _knockback_dir: Vector2 = Vector2.ZERO
 var _player_in_hitbox: Node2D = null
 var _was_stunned: bool = false
 var _lamp_frozen: bool = false
+var _animated_sprite: AnimatedSprite2D = null
+
+func _ready() -> void:
+	super._ready()
+	_animated_sprite = _sprite as AnimatedSprite2D
+	if _animated_sprite == null:
+		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if _animated_sprite != null:
+			_sprite = _animated_sprite
+	_set_idle_animation()
 
 func _physics_process(delta: float) -> void:
 	_update_stun_timers(delta)
+	var flashlight_hit := _is_flashlight_cone_hitting()
+	_update_flashlight_animation(flashlight_hit)
 	var lamp_frozen_now := _update_lamp_freeze_state()
 	var stunned_now := lamp_frozen_now or _stun_timer > 0.0
 	if _was_stunned and not stunned_now:
@@ -33,7 +51,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	super._physics_process(delta)
-	if _is_flashlight_cone_hitting():
+	if flashlight_hit:
 		_try_stun()
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
@@ -104,3 +122,23 @@ func _update_lamp_freeze_state() -> bool:
 func _apply_lamp_freeze_motion() -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
+
+func _update_flashlight_animation(flashlight_hit: bool) -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if flashlight_hit:
+		if _animated_sprite.sprite_frames.has_animation(flashlight_animation):
+			if _animated_sprite.animation != flashlight_animation:
+				_animated_sprite.play(flashlight_animation)
+		return
+	_set_idle_animation()
+
+func _set_idle_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if idle_animation != StringName() and _animated_sprite.sprite_frames.has_animation(idle_animation):
+		if _animated_sprite.animation != idle_animation:
+			_animated_sprite.play(idle_animation)
+		return
+	_animated_sprite.stop()
+	_animated_sprite.frame = 0
