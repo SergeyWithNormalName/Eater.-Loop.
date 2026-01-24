@@ -38,6 +38,16 @@ extends Node2D
 ## Тип easing для уезда объектов позади.
 @export var back_ease: Tween.EaseType = Tween.EASE_IN
 
+@export_group("Disable Nodes")
+## Узлы, которые скрываем и отключаем коллизии после триггера.
+@export var disable_nodes: Array[NodePath] = []
+## Задержка перед скрытием/отключением узлов.
+@export var disable_delay: float = 0.0
+## Скрывать CanvasItem узлы.
+@export var disable_hide: bool = true
+## Отключать коллизии у узлов.
+@export var disable_collision: bool = true
+
 @export_group("Audio Stop")
 ## Останавливать звуки у кухонных объектов, когда коридор уезжает.
 @export var stop_kitchen_audio: bool = true
@@ -98,6 +108,7 @@ var _new_base_scale: Vector2 = Vector2.ONE
 var _new_base_modulate: Color = Color.WHITE
 var _camera_base_zoom: Vector2 = Vector2.ONE
 var _audio_stop_scheduled := false
+var _disable_applied := false
 
 func _ready() -> void:
 	_new_corridor = get_node_or_null(new_corridor_path) as Node2D
@@ -198,6 +209,7 @@ func _on_trigger_body_entered(body: Node) -> void:
 func _play_sequence(player_body: Node) -> void:
 	_animate_kitchen()
 	_animate_back_objects(player_body)
+	_schedule_disable_nodes()
 	_animate_new_corridor()
 	_animate_camera_squash()
 	_schedule_audio_stop()
@@ -238,6 +250,39 @@ func _animate_back_objects(player_body: Node) -> void:
 		tween.tween_property(node, "global_position", target_pos, back_duration).set_delay(back_delay).set_trans(back_trans).set_ease(back_ease)
 		if node.scale != base_scale:
 			tween.tween_property(node, "scale", base_scale, back_duration).set_delay(back_delay).set_trans(back_trans).set_ease(back_ease)
+
+func _schedule_disable_nodes() -> void:
+	if _disable_applied:
+		return
+	if disable_nodes.is_empty():
+		return
+	if disable_delay <= 0.0:
+		_apply_disable_nodes()
+		return
+	var timer := get_tree().create_timer(disable_delay)
+	timer.timeout.connect(_apply_disable_nodes)
+
+func _apply_disable_nodes() -> void:
+	if _disable_applied:
+		return
+	_disable_applied = true
+	for path in disable_nodes:
+		var node := get_node_or_null(path)
+		if node == null:
+			continue
+		_disable_node_recursive(node)
+
+func _disable_node_recursive(node: Node) -> void:
+	if disable_hide and node is CanvasItem:
+		node.set_deferred("visible", false)
+	if disable_collision:
+		if node is CollisionObject2D:
+			node.set_deferred("collision_layer", 0)
+			node.set_deferred("collision_mask", 0)
+		if node is CollisionShape2D or node is CollisionPolygon2D:
+			node.set_deferred("disabled", true)
+	for child in node.get_children():
+		_disable_node_recursive(child)
 
 func _animate_new_corridor() -> void:
 	if _new_corridor == null:

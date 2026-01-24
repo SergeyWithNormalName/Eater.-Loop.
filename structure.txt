@@ -357,6 +357,8 @@
 │   │   │   ├── Kover.png.import
 │   │   │   ├── PictureOne.png
 │   │   │   ├── PictureOne.png.import
+│   │   │   ├── PictureTwo.png
+│   │   │   ├── PictureTwo.png.import
 │   │   │   ├── Shkaf1.png
 │   │   │   ├── Shkaf1.png.import
 │   │   │   ├── tv_1.png
@@ -555,4 +557,4 @@
 ├── project.godot
 └── structure.txt
 
-56 directories, 500 files
+56 directories, 502 files
