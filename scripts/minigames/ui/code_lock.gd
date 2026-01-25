@@ -83,16 +83,16 @@ func _apply_theme() -> void:
 	if regular_font == null:
 		return
 	var bold_font := load("res://fonts/AmaticSC-Bold.ttf")
-	var theme := Theme.new()
+	var ui_theme := Theme.new()
 
 	var body_font := FontVariation.new()
 	body_font.base_font = regular_font
 	body_font.spacing_glyph = 2
-	theme.set_font("font", "Label", body_font)
-	theme.set_font_size("font_size", "Label", BODY_FONT_SIZE)
-	theme.set_font("font", "Button", body_font)
-	theme.set_font_size("font_size", "Button", BUTTON_FONT_SIZE)
-	set_theme(theme)
+	ui_theme.set_font("font", "Label", body_font)
+	ui_theme.set_font_size("font_size", "Label", BODY_FONT_SIZE)
+	ui_theme.set_font("font", "Button", body_font)
+	ui_theme.set_font_size("font_size", "Button", BUTTON_FONT_SIZE)
+	set_theme(ui_theme)
 
 	var title_font := FontVariation.new()
 	title_font.base_font = bold_font if bold_font else regular_font

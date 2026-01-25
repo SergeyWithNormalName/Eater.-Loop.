@@ -23,8 +23,6 @@ enum ClearMode { HOLD, PRESS }
 @export var cleared_message: String = ""
 
 @onready var _interact_area: Area2D = $InteractArea
-@onready var _block_shape: CollisionShape2D = $CollisionShape2D
-
 var _player_in_range: Node = null
 var _hold_time: float = 0.0
 var _presses: int = 0

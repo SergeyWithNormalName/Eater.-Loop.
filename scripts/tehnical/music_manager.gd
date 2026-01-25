@@ -169,11 +169,11 @@ func pop_music(fade_time: float = -1.0) -> void:
 	var volume_db: float = entry.get("volume_db", default_volume_db)
 	var position: float = entry.get("position", 0.0)
 	if was_ducked:
-		var duck_volume_db: float = entry.get("duck_volume_db", _resolve_duck_volume(999.0))
-		play_music(stream, fade_time, volume_db, position, duck_volume_db)
+		var entry_duck_volume_db: float = entry.get("duck_volume_db", _resolve_duck_volume(999.0))
+		play_music(stream, fade_time, volume_db, position, entry_duck_volume_db)
 		_is_ducked = true
 		_pre_duck_volume_db = _base_volume_db
-		_last_duck_volume_db = duck_volume_db
+		_last_duck_volume_db = entry_duck_volume_db
 		return
 	play_music(stream, fade_time, volume_db, position)
 
