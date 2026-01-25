@@ -9,6 +9,8 @@ extends "res://scripts/objects/interactive_object.gd"
 @export var penalty_time: float = 10.0
 ## Сцена мини-игры (например, sql_minigame.tscn).
 @export var minigame_scene: PackedScene # Сюда перетяни sql_minigame.tscn
+## Разрешить взаимодействие с ноутбуком.
+@export var is_enabled: bool = true
 ## Требовать взаимодействия с холодильником перед запуском.
 @export var require_fridge_interaction: bool = false
 ## Сообщение, если холодильник не посещен.
@@ -49,6 +51,7 @@ func _ready() -> void:
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	_update_sprite()
+	set_prompts_enabled(is_enabled)
 	if GameState.has_signal("lab_completed"):
 		GameState.lab_completed.connect(_on_lab_completed)
 	if GameState.has_signal("fridge_interacted_changed"):
@@ -69,6 +72,8 @@ func interact() -> void:
 	_try_interact()
 
 func _try_interact() -> void:
+	if not is_enabled:
+		return
 	if is_done:
 		if _show_completed_note_if_enabled():
 			return
@@ -141,6 +146,8 @@ func _update_sprite() -> void:
 			_available_light_secondary.visible = false
 
 func _can_use_now() -> bool:
+	if not is_enabled:
+		return false
 	if is_done:
 		return false
 	if quest_id != "" and GameState.completed_labs.has(quest_id):

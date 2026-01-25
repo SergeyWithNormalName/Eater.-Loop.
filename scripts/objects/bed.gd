@@ -8,7 +8,7 @@ extends "res://scripts/objects/interactive_object.gd"
 ## Сообщение, если игрок не ел в этом цикле.
 @export_multiline var not_ate_message: String = "Нельзя спать: сначала поешь."
 ## Шаблон сообщения после сна (старый/новый цикл).
-@export_multiline var sleep_message_template: String = "Поспал. Цикл %d → %d"
+@export_multiline var sleep_message_template: String = ""
 ## Требовать свет в спальне для сна.
 @export var require_light_for_sleep: bool = false
 ## Сообщение, если света в спальне нет.
@@ -44,19 +44,10 @@ func _try_sleep() -> void:
 
 	_is_sleeping = true
 
-	var old_cycle := _get_current_cycle_number()
-	if old_cycle <= 0:
-		old_cycle = 1
-	var new_cycle := _get_next_cycle_number(old_cycle + 1)
-
 	if next_level_path.is_empty():
 		push_warning("Bed: не назначена следующая сцена")
 		_is_sleeping = false
 		return
-	var template := sleep_message_template.strip_edges()
-	if template == "":
-		template = "Поспал. Цикл %d → %d"
-	UIMessage.show_text(template % [old_cycle, new_cycle])
 
 	await UIMessage.fade_out(0.4)
 	

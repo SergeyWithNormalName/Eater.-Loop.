@@ -154,7 +154,6 @@ texture = ExtResource("3_yp1q5")
 
 [node name="Player" parent="." instance=ExtResource("4_06yhc")]
 position = Vector2(-2366, 96)
-speed = 340.0
 allow_running = false
 
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
@@ -337,7 +336,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("12_h4q3k")
 next_level_path = "uid://dnxt35x7beohh"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]

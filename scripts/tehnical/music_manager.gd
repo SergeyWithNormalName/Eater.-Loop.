@@ -40,6 +40,7 @@ var _current_stream: AudioStream
 var _base_volume_db: float = 0.0
 var _is_ducked: bool = false
 var _pre_duck_volume_db: float = 0.0
+var _last_duck_volume_db: float = 999.0
 var _fade_tween: Tween
 var _is_crossfading: bool = false
 var _crossfade_from: AudioStreamPlayer
@@ -75,19 +76,22 @@ func _ready() -> void:
 		_runner_player.finished.connect(_on_runner_music_finished)
 	set_process(true)
 
-func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0, start_position: float = 0.0) -> void:
+func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0, start_position: float = 0.0, output_volume_db: float = 999.0) -> void:
 	if stream == null:
 		stop_music(fade_time)
 		return
 
 	var target_fade := _resolve_fade_time(fade_time)
 	var target_volume := _resolve_volume(volume_db)
+	var output_volume := target_volume
+	if output_volume_db <= 500.0:
+		output_volume = output_volume_db
 
 	if _current_stream == stream and _active_player.playing:
 		_base_volume_db = target_volume
 		_is_ducked = false
 		_pre_duck_volume_db = target_volume
-		_fade_volume(_active_player, target_volume, target_fade)
+		_fade_volume(_active_player, output_volume, target_fade)
 		return
 
 	_current_stream = stream
@@ -100,7 +104,7 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	_inactive_player.play()
 	_seek_if_possible(_inactive_player, start_position)
 
-	_crossfade_players(_active_player, _inactive_player, target_volume, target_fade)
+	_crossfade_players(_active_player, _inactive_player, output_volume, target_fade)
 
 func stop_music(fade_time: float = -1.0) -> void:
 	_kill_fade_tween()
@@ -121,6 +125,7 @@ func duck_music(fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	_is_ducked = true
 	var target_fade := _resolve_fade_time(fade_time)
 	var target_volume := _resolve_duck_volume(volume_db)
+	_last_duck_volume_db = target_volume
 	_fade_volume(player, target_volume, target_fade)
 
 func restore_music_volume(fade_time: float = -1.0) -> void:
@@ -137,11 +142,16 @@ func restore_music_volume(fade_time: float = -1.0) -> void:
 func push_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	var player := _resolve_playing_player()
 	var was_playing := player != null and player.playing
+	var duck_volume := _last_duck_volume_db
+	if duck_volume > 500.0:
+		duck_volume = _resolve_duck_volume(999.0)
 	var entry := {
 		"stream": _current_stream if was_playing else null,
 		"volume_db": _base_volume_db,
 		"position": _get_playback_position(player),
-		"was_playing": was_playing
+		"was_playing": was_playing,
+		"was_ducked": _is_ducked,
+		"duck_volume_db": duck_volume
 	}
 	_stack.append(entry)
 	play_music(stream, fade_time, volume_db)
@@ -152,11 +162,19 @@ func pop_music(fade_time: float = -1.0) -> void:
 	var entry: Dictionary = _stack.pop_back()
 	var stream: AudioStream = entry.get("stream", null)
 	var was_playing: bool = bool(entry.get("was_playing", true))
+	var was_ducked: bool = bool(entry.get("was_ducked", false))
 	if stream == null or not was_playing:
 		stop_music(fade_time)
 		return
 	var volume_db: float = entry.get("volume_db", default_volume_db)
 	var position: float = entry.get("position", 0.0)
+	if was_ducked:
+		var duck_volume_db: float = entry.get("duck_volume_db", _resolve_duck_volume(999.0))
+		play_music(stream, fade_time, volume_db, position, duck_volume_db)
+		_is_ducked = true
+		_pre_duck_volume_db = _base_volume_db
+		_last_duck_volume_db = duck_volume_db
+		return
 	play_music(stream, fade_time, volume_db, position)
 
 func clear_stack() -> void:

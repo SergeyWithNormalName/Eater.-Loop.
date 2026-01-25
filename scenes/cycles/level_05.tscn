@@ -2418,9 +2418,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_xj310")
 next_level_path = "uid://b0rhqem0xcvbc"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
-require_light_for_sleep = true
-no_bedroom_light_message = null
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroom1/Bed"]
@@ -2447,16 +2444,13 @@ texture = ExtResource("34_ql7cc")
 position = Vector2(-1857.0001, 165)
 scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("38_7bnod")
-time_limit = null
-penalty_time = null
+is_enabled = false
 fridge_locked_message = ""
 locked_sprite = ExtResource("40_x01w4")
 available_sprite = ExtResource("41_ces63")
 sprite_node = NodePath("NotebookOff2")
 available_light_node = NodePath("PointLight2D")
 available_light_node_secondary = NodePath("PointLight2D2")
-show_note_on_completed = null
-completed_note_empty_message = null
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroom1/TableForLab"]
