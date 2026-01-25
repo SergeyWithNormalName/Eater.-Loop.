@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="16_fojdr"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_cle1j"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_xj310"]
+[ext_resource type="PackedScene" uid="uid://b24a61wf6w2m" path="res://scenes/minigames/food/food_sushi.tscn" id="19_4xwr8"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="20_tmjb6"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="21_tnagf"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="22_xxec8"]
@@ -30,7 +31,6 @@
 [ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://textures/walls_floors/Window3.png" id="36_bf5co"]
 [ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://textures/furniture/kitchen/Table.png" id="37_o4572"]
 [ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://scripts/objects/laptop.gd" id="38_7bnod"]
-[ext_resource type="PackedScene" uid="uid://cdumkmia83xpc" path="res://scenes/minigames/labs/sql/sql_minigame.tscn" id="39_hi6qj"]
 [ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://textures/furniture/bedroom/NotebookOff.png" id="40_x01w4"]
 [ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://textures/furniture/bedroom/NotebookOn.png" id="41_ces63"]
 [ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://scripts/objects/phone.gd" id="42_fs7ni"]
@@ -389,7 +389,7 @@ position = Vector2(9809.79, 121)
 rotation = 0.002391043
 script = ExtResource("21_tnagf")
 minigame_scene = ExtResource("22_xxec8")
-food_scene = ExtResource("23_8d7c5")
+food_scene = ExtResource("19_4xwr8")
 andrey_face = ExtResource("24_augq3")
 food_count = null
 require_lab_completion = null
@@ -2447,11 +2447,8 @@ texture = ExtResource("34_ql7cc")
 position = Vector2(-1857.0001, 165)
 scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("38_7bnod")
-quest_id = "lab_2"
 time_limit = null
 penalty_time = null
-minigame_scene = ExtResource("39_hi6qj")
-require_fridge_interaction = true
 fridge_locked_message = ""
 locked_sprite = ExtResource("40_x01w4")
 available_sprite = ExtResource("41_ces63")
@@ -3769,11 +3766,13 @@ scale = Vector2(0.53352284, 0.53352284)
 texture = ExtResource("88_0i8n6")
 
 [node name="Tv3" type="Sprite2D" parent="."]
+z_index = -4
 position = Vector2(11151, 3032)
 scale = Vector2(0.5350467, 0.53504676)
 texture = ExtResource("89_v8753")
 
 [node name="Armchair2" type="Sprite2D" parent="."]
+z_index = -3
 position = Vector2(10650.001, 3147)
 scale = Vector2(0.46985453, 0.5219123)
 texture = ExtResource("90_shxk8")
@@ -4073,6 +4072,7 @@ scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("94_4xwr8")
 
 [node name="PictureThree2" type="Sprite2D" parent="."]
+z_index = -4
 position = Vector2(10674, 2912)
 scale = Vector2(0.52642274, 0.52642274)
 texture = ExtResource("95_3rylc")

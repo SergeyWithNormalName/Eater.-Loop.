@@ -110,10 +110,13 @@
 │   │   ├── food
 │   │   │   ├── feed_minigame.tscn
 │   │   │   ├── food_chicken.tscn
+│   │   │   ├── food_cookies.tscn
 │   │   │   ├── food_dumpling.tscn
 │   │   │   ├── food_hachapuri.tscn
+│   │   │   ├── food_krilishki.tscn
 │   │   │   ├── food_meet.tscn
 │   │   │   ├── food_naggets.tscn
+│   │   │   ├── food_sushi.tscn
 │   │   │   └── tarelka.tscn
 │   │   ├── labs
 │   │   │   ├── LLM
@@ -666,4 +669,4 @@
 ├── project.godot
 └── structure.txt
 
-60 directories, 607 files
+60 directories, 610 files

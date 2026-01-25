@@ -91,7 +91,8 @@ func _try_stun() -> bool:
 	_stun_cooldown_timer = max(0.0, stun_cooldown)
 	if _stun_timer > 0.0:
 		_start_flashlight_stun_animation()
-	_start_knockback()
+	_knockback_remaining = 0.0
+	_knockback_dir = Vector2.ZERO
 	return _stun_timer > 0.0
 
 func _start_knockback() -> void:

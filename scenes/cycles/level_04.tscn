@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=4 uid="uid://0xf1f3qbgpow"]
+[gd_scene load_steps=109 format=4 uid="uid://0xf1f3qbgpow"]
 
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_vcxip"]
@@ -10,13 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="15_5y1bp"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="16_1m7jn"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="17_gc20h"]
+[ext_resource type="PackedScene" uid="uid://phdu5uudp1p0" path="res://scenes/minigames/food/food_krilishki.tscn" id="17_w71je"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://scripts/objects/bed.gd" id="18_0eq3o"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="19_52cbj"]
 [ext_resource type="AudioStream" uid="uid://bjxapi5i5raul" path="res://audio/AndreyEating/Upitanaya_Bitch.wav" id="19_w71je"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="20_uyds2"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="21_ufkeh"]
 [ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://scenes/minigames/food/food_dumpling.tscn" id="22_pmxgm"]
-[ext_resource type="PackedScene" uid="uid://d27nya7n60vae" path="res://scenes/minigames/food/food_chicken.tscn" id="22_pvwmj"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://textures/minigames/eat/andreys_faces/HappyEat.png" id="23_vgmn4"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="26_qcm2f"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="27_shmu5"]
@@ -85,7 +85,9 @@
 [ext_resource type="AudioStream" uid="uid://d4eupfrq48qey" path="res://audio/furniture/lamp.wav" id="86_modav"]
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://textures/walls_floors/decals/HoleInWall4.png" id="86_pvwmj"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://textures/walls_floors/decals/HoleInWall1.png" id="87_7y3jx"]
+[ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://textures/furniture/hall/Battery.png" id="88_7y3jx"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://scripts/tehnical/level_music.gd" id="88_lvl_music"]
+[ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://textures/furniture/allrooms/Plintus.png" id="88_pvwmj"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_music"]
@@ -181,15 +183,8 @@ texture = ExtResource("1_vcxip")
 region_enabled = true
 region_rect = Rect2(0, 0, 1500, 550)
 
-[node name="Window1" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(-2360, -12.000001)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("2_3gkos")
-
 [node name="Player" parent="." instance=ExtResource("1_plrscn")]
 position = Vector2(-2367, 96)
-speed = 340.0
 allow_running = false
 
 [node name="BedroomMusicTrigger" type="Area2D" parent="."]
@@ -407,7 +402,7 @@ position = Vector2(9809.79, 115.749985)
 rotation = 0.002391043
 script = ExtResource("20_uyds2")
 minigame_scene = ExtResource("21_ufkeh")
-food_scene = ExtResource("22_pvwmj")
+food_scene = ExtResource("17_w71je")
 andrey_face = ExtResource("23_vgmn4")
 win_sound = ExtResource("19_w71je")
 enable_teleport = true
@@ -493,12 +488,6 @@ shape = SubResource("RectangleShape2D_px6rj")
 [node name="Sprite2D" type="Sprite2D" parent="TestNote"]
 texture = ExtResource("33_2s4dc")
 
-[node name="Rozetka1" type="Sprite2D" parent="."]
-z_index = -3
-position = Vector2(-2467.875, 173)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("35_e2yy0")
-
 [node name="OnOffer2" type="Sprite2D" parent="."]
 position = Vector2(7694, 29)
 scale = Vector2(0.75, 0.75)
@@ -524,12 +513,6 @@ z_index = -2
 position = Vector2(9479.546, 176.75)
 scale = Vector2(0.65167105, 0.6516709)
 texture = ExtResource("36_a1pf0")
-
-[node name="Window2" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(10323, -12.000001)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("37_anu6v")
 
 [node name="KitchenTable" type="Sprite2D" parent="."]
 z_index = 7
@@ -1230,18 +1213,6 @@ texture = ExtResource("63_f3pji")
 position = Vector2(-1840.9999, 221.99998)
 scale = Vector2(0.29, 0.29)
 texture = ExtResource("64_gwepj")
-
-[node name="OpenShtora" type="Sprite2D" parent="."]
-z_index = -3
-position = Vector2(-2362, 54)
-scale = Vector2(0.59296346, 0.59296346)
-texture = ExtResource("65_rtyv8")
-
-[node name="OpenShtora2" type="Sprite2D" parent="."]
-z_index = -3
-position = Vector2(10323, 54)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("65_rtyv8")
 
 [node name="ToothPolka" type="Sprite2D" parent="."]
 position = Vector2(13906, 46.879997)
@@ -2519,6 +2490,306 @@ interact_area_node = NodePath("CollisionShape2D2")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Lamp"]
 position = Vector2(165, 243)
 shape = SubResource("RectangleShape2D_ek680")
+
+[node name="Plintus" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1377, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus2" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1275, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus3" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1784, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus4" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1990, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus5" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-2159, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus6" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-2562.0002, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus7" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1376.5146, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus8" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1274.5146, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus9" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1783.5146, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus10" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-1989.5146, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus11" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-2158.5146, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus12" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-2561.515, 2882.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Battery3" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(-2373, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("88_7y3jx")
+
+[node name="OpenShtora" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-2361.8748, 13.491882)
+scale = Vector2(0.59296346, 0.59296346)
+texture = ExtResource("65_rtyv8")
+
+[node name="Window1" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(-2359.8748, -52.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("2_3gkos")
+
+[node name="Rozetka1" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-2574, 129)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("35_e2yy0")
+
+[node name="Plintus13" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6212, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus14" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6610, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus15" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6898.9995, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus16" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7106, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus17" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7313, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus18" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7680, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus19" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8034, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus20" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8239, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus21" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8625.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus22" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9018, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus23" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9218, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus24" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9735, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus25" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9945.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus26" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10162, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus27" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10366.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus28" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10522, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus29" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6212.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus30" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6610.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus31" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6899.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus32" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7106.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus33" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7313.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus34" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(7680.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus35" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8034.4854, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus36" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8239.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus37" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(8625.486, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus38" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9018.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus39" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9218.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus40" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(9735.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus41" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10162.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus42" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10366.486, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Plintus43" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(10522.485, 2666.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("88_pvwmj")
+
+[node name="Window2" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(10323, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("37_anu6v")
+
+[node name="OpenShtora2" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(10323, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("65_rtyv8")
+
+[node name="Battery" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(10324, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("88_7y3jx")
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

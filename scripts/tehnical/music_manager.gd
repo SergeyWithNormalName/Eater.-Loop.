@@ -9,7 +9,7 @@ extends Node
 ## - duck_music / restore_music_volume: временно приглушить основной трек.
 ##
 ## Музыка погони:
-## - set_chase_music_source(source, active, stream, volume_db, fade_time)
+## - set_chase_music_source(source, active, stream, volume_db, fade_out_time)
 ##   Музыка погони играет от первого активного источника, пока он не пропадет.
 
 @export_group("Музыка")
@@ -53,6 +53,7 @@ var _runner_source_order: Array[int] = []
 var _runner_active_source_id: int = 0
 var _runner_active: bool = false
 var _runner_suppressed: Dictionary = {}
+var _runner_active_fade_out_time: float = -1.0
 var _runner_pause_position: float = 0.0
 var _runner_paused: bool = false
 var _runner_global_paused: bool = false
@@ -161,7 +162,7 @@ func pop_music(fade_time: float = -1.0) -> void:
 func clear_stack() -> void:
 	_stack.clear()
 
-func set_chase_music_source(source: Object, active: bool, stream: AudioStream = null, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
+func set_chase_music_source(source: Object, active: bool, stream: AudioStream = null, volume_db: float = 999.0, fade_out_time: float = -1.0) -> void:
 	if source == null:
 		return
 	var id := source.get_instance_id()
@@ -169,7 +170,7 @@ func set_chase_music_source(source: Object, active: bool, stream: AudioStream = 
 		_runner_sources[id] = {
 			"stream": stream,
 			"volume_db": volume_db,
-			"fade_time": fade_time
+			"fade_out_time": fade_out_time
 		}
 		if not _runner_source_order.has(id):
 			_runner_source_order.append(id)
@@ -222,6 +223,7 @@ func clear_chase_music_sources(fade_time: float = -1.0) -> void:
 	_runner_paused = false
 	_runner_pause_position = 0.0
 	_runner_global_paused = false
+	_runner_active_fade_out_time = -1.0
 	var target_fade := _resolve_fade_time(fade_time)
 	if _runner_player != null and _runner_player.playing:
 		_fade_runner_volume(-80.0, target_fade, true)
@@ -255,7 +257,7 @@ func _update_runner_music_state() -> void:
 			_start_runner_music()
 	else:
 		if _runner_player != null and _runner_player.playing:
-			_pause_runner_music(runner_music_fade_time)
+			_pause_runner_music(_get_runner_fade_out_time())
 		if _runner_sources.is_empty():
 			_runner_pause_position = 0.0
 			_runner_paused = false
@@ -273,9 +275,8 @@ func _set_active_runner_source(source_id: int) -> void:
 	var volume_db: float = data.get("volume_db", 999.0)
 	if volume_db <= 500.0:
 		runner_music_volume_db = volume_db
-	var fade_time: float = data.get("fade_time", -1.0)
-	if fade_time >= 0.0:
-		runner_music_fade_time = fade_time
+	var fade_out_time: float = data.get("fade_out_time", -1.0)
+	_runner_active_fade_out_time = fade_out_time if fade_out_time >= 0.0 else -1.0
 	_runner_active_source_id = source_id
 
 func _set_next_runner_source() -> void:
@@ -291,6 +292,11 @@ func _get_next_runner_source_id() -> int:
 
 func _is_runner_source_suppressed(source_id: int) -> bool:
 	return bool(_runner_suppressed.get(source_id, false))
+
+func _get_runner_fade_out_time() -> float:
+	if _runner_active_fade_out_time >= 0.0:
+		return _runner_active_fade_out_time
+	return runner_music_fade_time
 
 func _start_runner_music(start_position: float = 0.0, fade_in_time: float = -1.0) -> void:
 	var stream := _resolve_runner_stream()
@@ -330,12 +336,12 @@ func _pause_runner_music(fade_time: float) -> void:
 	else:
 		_runner_paused = true
 
-func _resume_runner_music(fade_time: float) -> void:
+func _resume_runner_music(_fade_time: float) -> void:
 	if _runner_player == null:
 		return
 	var start_pos := _runner_pause_position
 	_runner_paused = false
-	_start_runner_music(start_pos, fade_time)
+	_start_runner_music(start_pos)
 
 func _fade_runner_volume(target_db: float, duration: float, stop_after: bool = false) -> void:
 	if _runner_fade_tween and _runner_fade_tween.is_running():
