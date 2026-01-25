@@ -108,7 +108,7 @@ func _attack_player() -> void:
 	# ИСПРАВЛЕНО: phase вместо current_phase
 	if kill_on_attack or GameState.phase == GameState.Phase.DISTORTED:
 		UIMessage.show_text("Тебя поглотили.")
-		get_tree().reload_current_scene()
+		get_tree().call_deferred("reload_current_scene")
 		return
 	# ИСПРАВЛЕНО: Теперь функция будет существовать в GameDirector
 	GameDirector.reduce_time(time_penalty)

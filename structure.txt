@@ -304,6 +304,8 @@
 │   │   │   ├── On-offer.png.import
 │   │   │   ├── OpenShtora.png
 │   │   │   ├── OpenShtora.png.import
+│   │   │   ├── Plintus.png
+│   │   │   ├── Plintus.png.import
 │   │   │   ├── Pozetka.png
 │   │   │   ├── Pozetka.png.import
 │   │   │   ├── Shtora.png
@@ -340,8 +342,12 @@
 │   │   │   ├── UsedFood.png
 │   │   │   └── UsedFood.png.import
 │   │   ├── hall
+│   │   │   ├── Aquarium.png
+│   │   │   ├── Aquarium.png.import
 │   │   │   ├── Armchair.png
 │   │   │   ├── Armchair.png.import
+│   │   │   ├── Battery.png
+│   │   │   ├── Battery.png.import
 │   │   │   ├── Boots1.png
 │   │   │   ├── Boots1.png.import
 │   │   │   ├── Boots2.png
@@ -362,6 +368,8 @@
 │   │   │   ├── Kover.png.import
 │   │   │   ├── PictureOne.png
 │   │   │   ├── PictureOne.png.import
+│   │   │   ├── PictureThree.png
+│   │   │   ├── PictureThree.png.import
 │   │   │   ├── PictureTwo.png
 │   │   │   ├── PictureTwo.png.import
 │   │   │   ├── Shkaf1.png
@@ -507,20 +515,34 @@
 │   │       │   ├── VeryBadEat.png
 │   │       │   └── VeryBadEat.png.import
 │   │       └── food
+│   │           ├── Burger.png
+│   │           ├── Burger.png.import
 │   │           ├── Chicken.png
 │   │           ├── Chicken.png.import
+│   │           ├── Cookie.png
+│   │           ├── Cookie.png.import
 │   │           ├── Dumpling.png
 │   │           ├── Dumpling.png.import
 │   │           ├── Fish.png
 │   │           ├── Fish.png.import
 │   │           ├── Hachapuri.png
 │   │           ├── Hachapuri.png.import
+│   │           ├── HotDog.png
+│   │           ├── HotDog.png.import
+│   │           ├── Krilishko.png
+│   │           ├── Krilishko.png.import
 │   │           ├── MeetSteak.png
 │   │           ├── MeetSteak.png.import
 │   │           ├── Naggets.png
 │   │           ├── Naggets.png.import
 │   │           ├── RawMeet.png
-│   │           └── RawMeet.png.import
+│   │           ├── RawMeet.png.import
+│   │           ├── Shaurma.png
+│   │           ├── Shaurma.png.import
+│   │           ├── Sushi.png
+│   │           ├── Sushi.png.import
+│   │           ├── Tort.png
+│   │           └── Tort.png.import
 │   ├── monster_runner_animation_walking
 │   │   ├── ezgif-frame-001.png
 │   │   ├── ezgif-frame-001.png.import
@@ -644,4 +666,4 @@
 ├── project.godot
 └── structure.txt
 
-60 directories, 585 files
+60 directories, 607 files
