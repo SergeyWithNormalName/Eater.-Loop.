@@ -1,11 +1,13 @@
-[gd_scene load_steps=89 format=4 uid="uid://b0rhqem0xcvbc"]
+[gd_scene load_steps=94 format=4 uid="uid://b0rhqem0xcvbc"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="1_vmdq5"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="2_erpo7"]
+[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://textures/walls_floors/BackWallsDistorted.png" id="3_1g1t3"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://textures/walls_floors/Window2.png" id="3_yp1q5"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="4_06yhc"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://scripts/objects/door.gd" id="5_pepau"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://audio/furniture/door/door_locked1.wav" id="6_8j36r"]
+[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://textures/walls_floors/FloorDistorted.png" id="6_hqykv"]
 [ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://audio/furniture/door/door_open1.wav" id="7_hqykv"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://textures/furniture/allrooms/Door_2.png" id="8_ky4bj"]
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="9_obyus"]
@@ -74,6 +76,9 @@
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="72_jjmdl"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="73_0y1kv"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="74_ab40f"]
+[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://scripts/tehnical/texture_distortion_manager.gd" id="75_8vxm4"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://audio/MusicEtc/CreepyAmbient.wav" id="76_5sv4l"]
+[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://audio/MusicEtc/MyHorrorHit_3.wav" id="77_cbx0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -128,7 +133,16 @@ size = Vector2(111.6167, 1199.4946)
 position = Vector2(16, 0)
 script = ExtResource("1_vmdq5")
 cycle_number = 6
-timer_duration = 180.0
+timer_duration = 15.0
+
+[node name="TextureDistortionManager" type="Node" parent="."]
+script = ExtResource("75_8vxm4")
+texture_map = {
+ExtResource("2_erpo7"): ExtResource("3_1g1t3"),
+ExtResource("39_bljws"): ExtResource("6_hqykv")
+}
+distortion_music = ExtResource("76_5sv4l")
+distortion_sfx = ExtResource("77_cbx0m")
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5

@@ -1,11 +1,14 @@
 extends Node
 
+signal distortion_started
+
 ## Время по умолчанию, если на уровне не задано.
 @export var default_time: float = 15.0
 
 var _timer: Timer
 var _overlay_layer: CanvasLayer
-var _red_rect: ColorRect
+var _distortion_rect: ColorRect
+var _distortion_material: ShaderMaterial
 var current_max_time: float = 1.0
 var _current_cycle_number: int = 0
 var _current_timer_duration: float = 0.0
@@ -22,7 +25,8 @@ func _ready() -> void:
 
 func start_normal_phase(timer_duration: float = -1.0) -> void:
 	GameState.set_phase(GameState.Phase.NORMAL)
-	_red_rect.visible = false
+	_set_distortion_intensity(0.0)
+	_distortion_rect.visible = false
 	
 	var time_to_set: float = timer_duration
 	if time_to_set < 0.0:
@@ -55,7 +59,9 @@ func reduce_time(amount: float) -> void:
 func _on_distortion_timeout() -> void:
 	GameState.set_phase(GameState.Phase.DISTORTED)
 	UIMessage.show_text("РЕАЛЬНОСТЬ ИСКАЖЕНА")
-	_red_rect.visible = true
+	_set_distortion_intensity(1.0)
+	_distortion_rect.visible = true
+	distortion_started.emit()
 
 func get_time_ratio() -> float:
 	if GameState.phase != GameState.Phase.NORMAL:
@@ -72,21 +78,24 @@ func _create_distortion_overlay() -> void:
 	_overlay_layer.layer = 90
 	add_child(_overlay_layer)
 	
-	_red_rect = ColorRect.new()
-	_red_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_red_rect.color = Color(1.0, 0.0, 0.0, 0.3)
-	_red_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_red_rect.visible = false
-	_overlay_layer.add_child(_red_rect)
+	_distortion_rect = ColorRect.new()
+	_distortion_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_distortion_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_distortion_rect.visible = false
+	_distortion_material = ShaderMaterial.new()
+	_distortion_material.shader = preload("res://shaders/distortion_overlay.gdshader")
+	_distortion_rect.material = _distortion_material
+	_overlay_layer.add_child(_distortion_rect)
 
 func _flash_red() -> void:
-	if _red_rect.visible: return
-	_red_rect.visible = true
-	_red_rect.color.a = 0.1
+	if _distortion_rect.visible:
+		return
+	_distortion_rect.visible = true
+	_set_distortion_intensity(0.25)
 	get_tree().create_timer(0.1).timeout.connect(func():
 		if GameState.phase == GameState.Phase.NORMAL:
-			_red_rect.visible = false
-			_red_rect.color.a = 0.3
+			_distortion_rect.visible = false
+			_set_distortion_intensity(0.0)
 	)
 
 func _on_scene_changed(scene: Node = null) -> void:
@@ -102,7 +111,8 @@ func _update_for_scene(scene: Node) -> void:
 		_apply_level_settings(scene)
 		return
 	_timer.stop()
-	_red_rect.visible = false
+	_set_distortion_intensity(0.0)
+	_distortion_rect.visible = false
 	if GameState:
 		GameState.set_phase(GameState.Phase.NORMAL)
 
@@ -128,6 +138,11 @@ func _resolve_timer_duration(scene: Node) -> float:
 func _set_mouse_visibility(in_game: bool) -> void:
 	if CursorManager:
 		CursorManager.set_in_game(in_game)
+
+func _set_distortion_intensity(value: float) -> void:
+	if _distortion_material == null:
+		return
+	_distortion_material.set_shader_parameter("intensity", value)
 
 func get_cycle_number() -> int:
 	return _current_cycle_number
