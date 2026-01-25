@@ -340,6 +340,8 @@
 │   │   │   ├── UsedFood.png
 │   │   │   └── UsedFood.png.import
 │   │   ├── hall
+│   │   │   ├── Armchair.png
+│   │   │   ├── Armchair.png.import
 │   │   │   ├── Boots1.png
 │   │   │   ├── Boots1.png.import
 │   │   │   ├── Boots2.png
@@ -354,6 +356,8 @@
 │   │   │   ├── Boots6.png.import
 │   │   │   ├── BootsBoard.png
 │   │   │   ├── BootsBoard.png.import
+│   │   │   ├── CoverOnWall_1.png
+│   │   │   ├── CoverOnWall_1.png.import
 │   │   │   ├── Kover.png
 │   │   │   ├── Kover.png.import
 │   │   │   ├── PictureOne.png
@@ -362,8 +366,12 @@
 │   │   │   ├── PictureTwo.png.import
 │   │   │   ├── Shkaf1.png
 │   │   │   ├── Shkaf1.png.import
+│   │   │   ├── Sofa.png
+│   │   │   ├── Sofa.png.import
 │   │   │   ├── tv_1.png
-│   │   │   └── tv_1.png.import
+│   │   │   ├── tv_1.png.import
+│   │   │   ├── tv_2.png
+│   │   │   └── tv_2.png.import
 │   │   ├── kitchen
 │   │   │   ├── Chair_1.png
 │   │   │   ├── Chair_1.png.import
@@ -636,4 +644,4 @@
 ├── project.godot
 └── structure.txt
 
-60 directories, 577 files
+60 directories, 585 files

@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=111 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -84,8 +84,12 @@
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://textures/walls_floors/decals/HoleInWall3.png" id="86_fa34t"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://scripts/objects/trigger_set_property.gd" id="87_7c4ho"]
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://scenes/enemies/enemy_light_sensitive.tscn" id="87_j1ifr"]
+[ext_resource type="Texture2D" uid="uid://byt2rs4n15wun" path="res://textures/furniture/hall/Sofa.png" id="88_0i8n6"]
 [ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://audio/MusicEtc/MusicForBasicMonster.wav" id="88_j1ifr"]
 [ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://scripts/objects/level_05_corridor_distortion.gd" id="88_ky05d"]
+[ext_resource type="Texture2D" uid="uid://bps1urucw0afw" path="res://textures/furniture/hall/tv_2.png" id="89_v8753"]
+[ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://textures/furniture/hall/Armchair.png" id="90_shxk8"]
+[ext_resource type="Texture2D" uid="uid://cxx0yb2fd50j8" path="res://textures/furniture/hall/CoverOnWall_1.png" id="91_v8753"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
@@ -2606,7 +2610,7 @@ texture = ExtResource("68_61vya")
 
 [node name="Lamp" parent="." instance=ExtResource("85_o4yqd")]
 z_index = -1
-position = Vector2(10967, -214)
+position = Vector2(11132, -214)
 start_on = true
 turn_on_sfx = ExtResource("86_7c4ho")
 light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
@@ -2616,13 +2620,34 @@ flicker_chance = 0.04
 flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
-light_mask = 2
 position = Vector2(14013, 119)
 speed = 325.0
 keep_chasing_outside_detection = true
 kill_on_attack = true
 chase_music = ExtResource("88_j1ifr")
 chase_music_fade_out_time = 5.0
+
+[node name="Sofa" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(11155.339, 265)
+scale = Vector2(0.53352284, 0.53352284)
+texture = ExtResource("88_0i8n6")
+
+[node name="Tv2" type="Sprite2D" parent="."]
+position = Vector2(11151, 88)
+scale = Vector2(0.5350467, 0.53504676)
+texture = ExtResource("89_v8753")
+
+[node name="Armchair" type="Sprite2D" parent="."]
+position = Vector2(10650.001, 203)
+scale = Vector2(0.46985453, 0.5219123)
+texture = ExtResource("90_shxk8")
+
+[node name="CoverOnWall1" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(11789.001, 11)
+scale = Vector2(0.68613136, 0.68613136)
+texture = ExtResource("91_v8753")
 
 [connection signal="body_entered" from="TestKey" to="TestKey" method="_on_body_entered"]
 [connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]

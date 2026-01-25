@@ -428,7 +428,7 @@ start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.03529412, 0.03529412, 0.043137256, 1)
+color = Color(0.015686275, 0.015686275, 0.019607844, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
