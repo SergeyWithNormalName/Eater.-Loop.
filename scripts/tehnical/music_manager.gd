@@ -58,6 +58,7 @@ var _runner_active_fade_out_time: float = -1.0
 var _runner_pause_position: float = 0.0
 var _runner_paused: bool = false
 var _runner_global_paused: bool = false
+var _chase_base_muted: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -86,6 +87,8 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	var output_volume := target_volume
 	if output_volume_db <= 500.0:
 		output_volume = output_volume_db
+	if _chase_base_muted or _should_mute_base_for_chase():
+		output_volume = -80.0
 
 	if _current_stream == stream and _active_player.playing:
 		_base_volume_db = target_volume
@@ -126,6 +129,8 @@ func duck_music(fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	var target_fade := _resolve_fade_time(fade_time)
 	var target_volume := _resolve_duck_volume(volume_db)
 	_last_duck_volume_db = target_volume
+	if _chase_base_muted:
+		return
 	_fade_volume(player, target_volume, target_fade)
 
 func restore_music_volume(fade_time: float = -1.0) -> void:
@@ -136,6 +141,8 @@ func restore_music_volume(fade_time: float = -1.0) -> void:
 	if not _is_ducked:
 		return
 	_is_ducked = false
+	if _chase_base_muted:
+		return
 	var target_fade := _resolve_fade_time(fade_time)
 	_fade_volume(player, _pre_duck_volume_db, target_fade)
 
@@ -219,6 +226,7 @@ func pause_chase_music(fade_time: float = -1.0) -> void:
 	_runner_global_paused = true
 	var target_fade := _resolve_fade_time(fade_time)
 	_pause_runner_music(target_fade)
+	_sync_chase_base_mute()
 
 func resume_chase_music(fade_time: float = -1.0) -> void:
 	if not _runner_global_paused:
@@ -231,6 +239,7 @@ func resume_chase_music(fade_time: float = -1.0) -> void:
 		_resume_runner_music(target_fade)
 	elif _runner_player == null or not _runner_player.playing:
 		_start_runner_music()
+	_sync_chase_base_mute()
 
 func clear_chase_music_sources(fade_time: float = -1.0) -> void:
 	_runner_sources.clear()
@@ -247,6 +256,7 @@ func clear_chase_music_sources(fade_time: float = -1.0) -> void:
 		_fade_runner_volume(-80.0, target_fade, true)
 
 func _process(_delta: float) -> void:
+	_sync_chase_base_mute()
 	if not _runner_active or _runner_global_paused or _runner_paused:
 		return
 	if _runner_player == null:
@@ -279,6 +289,7 @@ func _update_runner_music_state() -> void:
 		if _runner_sources.is_empty():
 			_runner_pause_position = 0.0
 			_runner_paused = false
+	_sync_chase_base_mute()
 
 func _set_active_runner_source(source_id: int) -> void:
 	if source_id == 0:
@@ -488,3 +499,25 @@ func _get_playback_position(player: AudioStreamPlayer) -> float:
 	if player == null or not player.playing:
 		return 0.0
 	return player.get_playback_position()
+
+func _should_mute_base_for_chase() -> bool:
+	if not _runner_active or _runner_global_paused:
+		return false
+	if GameState == null:
+		return false
+	return GameState.phase == GameState.Phase.DISTORTED
+
+func _get_base_target_volume_db() -> float:
+	return _last_duck_volume_db if _is_ducked else _base_volume_db
+
+func _sync_chase_base_mute() -> void:
+	var should_mute := _should_mute_base_for_chase()
+	if should_mute == _chase_base_muted:
+		return
+	_chase_base_muted = should_mute
+	var player := _resolve_playing_player()
+	if player == null or not player.playing:
+		return
+	var target_fade := runner_music_fade_time
+	var target_volume := -80.0 if should_mute else _get_base_target_volume_db()
+	_fade_volume(player, target_volume, target_fade)

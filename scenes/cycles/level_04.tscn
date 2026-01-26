@@ -382,7 +382,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_0eq3o")
 next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
 metadata/_edit_group_ = true
@@ -1508,7 +1507,7 @@ texture = ExtResource("36_a1pf0")
 
 [node name="Window3" type="Sprite2D" parent="."]
 z_index = -4
-position = Vector2(10323, 2387.86)
+position = Vector2(10323, 2349.4922)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("37_anu6v")
 
@@ -1784,7 +1783,7 @@ texture = ExtResource("61_bd04p")
 
 [node name="OpenShtora3" type="Sprite2D" parent="."]
 z_index = -3
-position = Vector2(10323, 2453.8599)
+position = Vector2(10323, 2415.492)
 scale = Vector2(0.66074157, 0.59296346)
 texture = ExtResource("65_rtyv8")
 
@@ -2210,7 +2209,6 @@ position = Vector2(-2420, 2842.8599)
 script = ExtResource("18_0eq3o")
 next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
 metadata/_edit_group_ = true
@@ -2788,6 +2786,12 @@ texture = ExtResource("65_rtyv8")
 [node name="Battery" type="Sprite2D" parent="."]
 z_index = -4
 position = Vector2(10324, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("88_7y3jx")
+
+[node name="Battery2" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(10324.001, 2606)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("88_7y3jx")
 
