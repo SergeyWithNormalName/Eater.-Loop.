@@ -8,6 +8,8 @@ signal minigame_finished
 @export var finish_delay: float = 2.0
 ## Скорость курсора геймпада.
 @export var gamepad_cursor_speed: float = 800.0
+## Небольшая рандомизация поворота еды (в градусах).
+@export_range(0.0, 20.0, 0.1) var food_rotation_jitter_deg: float = 10.0
 ## Звук поедания.
 @export var eat_sound: AudioStream
 ## Фон мини-игры.
@@ -62,7 +64,7 @@ func _ready() -> void:
 	)
 	_apply_background_layout()
 
-func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null) -> void:
+func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null, food_scenes: Array[PackedScene] = []) -> void:
 	if andrey_texture:
 		andrey_sprite.texture = andrey_texture
 	
@@ -89,6 +91,16 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 		backfon.texture = selected_bg
 		_apply_background_layout()
 
+	var available_scenes: Array[PackedScene] = []
+	for scene in food_scenes:
+		if scene != null:
+			available_scenes.append(scene)
+	if available_scenes.is_empty() and food_scene != null:
+		available_scenes.append(food_scene)
+	if available_scenes.is_empty():
+		push_error("FeedMinigame: не заданы сцены еды.")
+		return
+
 	# === ИСПРАВЛЕНИЕ 2: Одна тарелка для всей еды ===
 	# Создаем тарелку ОДИН раз перед тем, как спавнить пельмени
 	if tarelka_scene:
@@ -103,15 +115,18 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	else:
 		push_error("Не удалось найти сцену тарелки по пути res://scenes/minigames/food/tarelka.tscn")
 
+	var spawn_scenes := _build_food_scene_pool(available_scenes, count)
 	# Теперь спавним еду в цикле
-	for i in range(count):
+	for scene in spawn_scenes:
 		# Генерируем случайную позицию для пельменей (разброс внутри тарелки)
 		var spawn_pos = Vector2(randf_range(-120, 120), randf_range(-80, 80))
 		
-		var food = food_scene.instantiate()
+		var food = scene.instantiate()
 		# Добавляем еду после тарелки, чтобы она была визуально выше
 		food_container.add_child(food)
 		food.position = spawn_pos
+		if food_rotation_jitter_deg > 0.0:
+			food.rotation_degrees = randf_range(-food_rotation_jitter_deg, food_rotation_jitter_deg)
 		
 		if food.has_method("set_target_mouth"):
 			food.set_target_mouth(mouth_area)
@@ -120,6 +135,24 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 
 func _process(_delta: float) -> void:
 	pass
+
+func _build_food_scene_pool(scenes: Array[PackedScene], count: int) -> Array[PackedScene]:
+	var result: Array[PackedScene] = []
+	if scenes.is_empty() or count <= 0:
+		return result
+
+	while result.size() < count:
+		var batch: Array[PackedScene] = scenes.duplicate()
+		batch.shuffle()
+		if result.size() > 0 and batch.size() > 1 and batch[0] == result[result.size() - 1]:
+			var temp = batch[0]
+			batch[0] = batch[1]
+			batch[1] = temp
+		for scene in batch:
+			result.append(scene)
+			if result.size() >= count:
+				break
+	return result
 
 func _apply_background_layout() -> void:
 	if backfon == null or backfon.texture == null:

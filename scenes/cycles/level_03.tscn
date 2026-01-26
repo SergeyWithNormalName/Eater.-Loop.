@@ -353,7 +353,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_f1xxx")
 next_level_path = "res://scenes/cycles/level_04.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -373,7 +372,7 @@ script = ExtResource("20_dwgmq")
 minigame_scene = ExtResource("21_56gvw")
 food_scene = ExtResource("16_c7dde")
 andrey_face = ExtResource("23_1dbsv")
-food_count = 4
+food_count = 6
 win_sound = ExtResource("18_c7dde")
 require_lab_completion = true
 required_lab_id = "lab_3"

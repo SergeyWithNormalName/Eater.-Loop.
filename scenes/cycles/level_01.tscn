@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=95 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_bij4o"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -18,10 +18,15 @@
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://textures/furniture/allrooms/Door.png" id="14_m3n5y"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://textures/DoorToilet.png" id="15_qr0f4"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://textures/DoorToilet2.png" id="16_4cwao"]
-[ext_resource type="PackedScene" uid="uid://bx5bjpmgnq1d5" path="res://scenes/minigames/food/food_cookies.tscn" id="16_luqlq"]
+[ext_resource type="PackedScene" uid="uid://cuhcdtpyoi3mu" path="res://scenes/minigames/food/food_cookie_2.tscn" id="16_j5rey"]
+[ext_resource type="PackedScene" uid="uid://bx5bjpmgnq1d5" path="res://scenes/minigames/food/food_cookie_1.tscn" id="16_luqlq"]
+[ext_resource type="PackedScene" uid="uid://dt0ylyekbtppr" path="res://scenes/minigames/food/food_cookie_3.tscn" id="17_4a5ua"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="17_84kq6"]
+[ext_resource type="PackedScene" uid="uid://b2wokl832lofw" path="res://scenes/minigames/food/food_cookie_4.tscn" id="18_3fmbd"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="18_wnv1a"]
+[ext_resource type="PackedScene" uid="uid://dolp7h1gyk6t5" path="res://scenes/minigames/food/food_cookie_5.tscn" id="19_5lo1f"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/allrooms/On-offer.png" id="20_olvol"]
+[ext_resource type="PackedScene" uid="uid://lvsu747fkgw6" path="res://scenes/minigames/food/food_cookie_6.tscn" id="20_v5xqk"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/allrooms/Pozetka.png" id="21_1ekfm"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="21_ugoxw"]
 [ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://textures/furniture/kitchen/Kitchen_garn.png" id="22_mjper"]
@@ -326,7 +331,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("6_srw7l")
 next_level_path = "uid://bsecib4k5glms"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -344,7 +348,7 @@ position = Vector2(9809.79, 115.749985)
 rotation = 0.002391043
 script = ExtResource("13_3jwi8")
 minigame_scene = ExtResource("11_3555j")
-food_scene = ExtResource("16_luqlq")
+food_scenes = Array[PackedScene]([ExtResource("16_luqlq"), ExtResource("16_j5rey"), ExtResource("17_4a5ua"), ExtResource("18_3fmbd"), ExtResource("19_5lo1f"), ExtResource("20_v5xqk")])
 andrey_face = ExtResource("12_bvnc7")
 food_count = 6
 open_sound = ExtResource("26_gklq2")

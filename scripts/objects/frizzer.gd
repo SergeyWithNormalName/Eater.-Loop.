@@ -5,6 +5,8 @@ extends "res://scripts/objects/interactive_object.gd"
 @export var minigame_scene: PackedScene
 ## Сцена еды (для мини-игры).
 @export var food_scene: PackedScene
+## Набор сцен еды (если задан, используется вместо одиночной сцены).
+@export var food_scenes: Array[PackedScene] = []
 ## Текстура лица Андрея.
 @export var andrey_face: Texture2D
 ## Количество еды в мини-игре.
@@ -106,8 +108,9 @@ func _try_interact() -> void:
 		_sfx_player.stream = open_sound
 		_sfx_player.play()
 	
-	if minigame_scene == null or food_scene == null:
-		push_warning("Frizzer: Minigame scene or Food scene is missing!")
+	var has_food := food_scene != null or not food_scenes.is_empty()
+	if minigame_scene == null or not has_food:
+		push_warning("Frizzer: Minigame scene or food scene(s) is missing!")
 		_complete_feeding()
 		_is_interacting = false
 		_set_prompts_enabled(true)
@@ -123,7 +126,7 @@ func _start_minigame() -> void:
 	get_tree().root.add_child(game)
 	
 	if game.has_method("setup_game"):
-		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture)
+		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
 	
 	game.minigame_finished.connect(_on_minigame_finished)
 
