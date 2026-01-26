@@ -42,6 +42,7 @@ var _cursor_speed: float = 800.0
 var _music_pushed: bool = false
 var _music_stop_on_finish: bool = false
 var _music_fade_time: float = 0.3
+var _block_player_movement: bool = true
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -59,6 +60,7 @@ func start_minigame(minigame: Node, config: Dictionary = {}) -> void:
 	_music_fade_time = float(config.get("music_fade_time", default_music_fade_time))
 	_music_stop_on_finish = bool(config.get("stop_music_on_finish", false))
 	_auto_finish_on_timeout = bool(config.get("auto_finish_on_timeout", false))
+	_block_player_movement = bool(config.get("block_player_movement", true))
 
 	_setup_pause()
 	_setup_cursor()
@@ -81,6 +83,7 @@ func finish_minigame(minigame: Node, success: bool = true) -> void:
 	_restore_pause()
 	_clear_timer()
 	_active_minigame = null
+	_block_player_movement = false
 	minigame_finished.emit(minigame, success)
 
 func stop_minigame_music(fade_time: float = -1.0) -> void:
@@ -112,6 +115,9 @@ func get_time_limit() -> float:
 
 func is_active(minigame: Node) -> bool:
 	return minigame != null and minigame == _active_minigame
+
+func should_block_player_movement() -> bool:
+	return _active_minigame != null and _block_player_movement
 
 func _process(delta: float) -> void:
 	_update_timer(delta)

@@ -31,6 +31,10 @@ extends "res://scripts/objects/interactive_object.gd"
 @export var require_access_code: bool = false
 ## Код доступа.
 @export var access_code: String = "1234"
+## Показывать подсказку при первой попытке ввода кода.
+@export var show_access_code_hint_once: bool = false
+## Текст подсказки (субтитры Андрея) перед вводом кода.
+@export_multiline var access_code_hint_text: String = ""
 
 @export_group("Teleport")
 ## Включить телепорт после взаимодействия.
@@ -62,6 +66,7 @@ var _code_canvas: CanvasLayer = null
 var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
+var _access_hint_shown: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -101,6 +106,9 @@ func _try_interact() -> void:
 		UIMessage.show_text(locked_message)
 		return
 	if _is_locked_by_code():
+		if _should_show_access_code_hint():
+			_show_access_code_hint()
+			return
 		_open_code_lock()
 		return
 	
@@ -217,6 +225,7 @@ func _on_code_unlocked() -> void:
 	_code_unlocked = true
 	UIMessage.show_text("Замок открыт.")
 	_update_visuals()
+	_access_hint_shown = true
 
 func _on_code_closed() -> void:
 	_is_interacting = false
@@ -256,3 +265,15 @@ func _set_prompts_enabled(enabled: bool) -> void:
 			_show_prompt()
 	else:
 		_hide_prompt()
+
+func _should_show_access_code_hint() -> bool:
+	if not show_access_code_hint_once:
+		return false
+	if _access_hint_shown:
+		return false
+	return access_code_hint_text.strip_edges() != ""
+
+func _show_access_code_hint() -> void:
+	_access_hint_shown = true
+	if UIMessage:
+		UIMessage.show_subtitle(access_code_hint_text)

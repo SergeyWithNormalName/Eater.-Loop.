@@ -30,6 +30,7 @@ var _transition_active: bool = false
 var _transition_progress: float = 0.0
 var _flash_active: bool = false
 var _minigame_active: bool = false
+var _minigame_blocks_distortion: bool = false
 var _in_game_scene: bool = false
 
 func _ready() -> void:
@@ -179,6 +180,7 @@ func _update_for_scene(scene: Node) -> void:
 	var path := scene.scene_file_path if scene else ""
 	_in_game_scene = path.find("/scenes/cycles/") != -1
 	_minigame_active = false
+	_minigame_blocks_distortion = false
 	_set_mouse_visibility(_in_game_scene)
 	if _in_game_scene:
 		_apply_level_settings(scene)
@@ -275,7 +277,7 @@ func _ease_out(t: float) -> float:
 func _is_distortion_allowed() -> bool:
 	if not _in_game_scene:
 		return false
-	if _minigame_active:
+	if _minigame_active and _minigame_blocks_distortion:
 		return false
 	return true
 
@@ -308,9 +310,20 @@ func _connect_minigame_controller() -> void:
 
 func _on_minigame_started(_minigame: Node) -> void:
 	_minigame_active = true
+	_minigame_blocks_distortion = not _minigame_allows_distortion(_minigame)
 
 func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
 	_minigame_active = false
+	_minigame_blocks_distortion = false
+
+func _minigame_allows_distortion(minigame: Node) -> bool:
+	if minigame == null:
+		return false
+	if minigame.has_method("allows_distortion_overlay"):
+		return bool(minigame.allows_distortion_overlay())
+	if minigame.has_meta("allow_distortion_overlay"):
+		return bool(minigame.get_meta("allow_distortion_overlay"))
+	return false
 
 func get_cycle_number() -> int:
 	return _current_cycle_number

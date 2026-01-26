@@ -115,3 +115,6 @@ func _start_minigame_session() -> void:
 
 func _is_grab_pressed(event: InputEvent) -> bool:
 	return event.is_action_pressed("mg_grab")
+
+func allows_distortion_overlay() -> bool:
+	return true

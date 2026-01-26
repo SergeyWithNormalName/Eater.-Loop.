@@ -133,7 +133,9 @@
 │   │       ├── code_lock.tscn
 │   │       ├── code_lock.tscn.uid
 │   │       ├── drag_word.tscn
-│   │       └── drop_slot.tscn
+│   │       ├── draggable_trash.tscn
+│   │       ├── drop_slot.tscn
+│   │       └── search_minigame.tscn
 │   ├── objects
 │   │   ├── generator.tscn
 │   │   ├── lamp.tscn
@@ -183,7 +185,11 @@
 │   │   │       └── sql_minigame.gd.uid
 │   │   └── ui
 │   │       ├── code_lock.gd
-│   │       └── code_lock.gd.uid
+│   │       ├── code_lock.gd.uid
+│   │       ├── draggable_trash.gd
+│   │       ├── draggable_trash.gd.uid
+│   │       ├── search_minigame.gd
+│   │       └── search_minigame.gd.uid
 │   ├── objects
 │   │   ├── bed.gd
 │   │   ├── bed.gd.uid
@@ -211,6 +217,8 @@
 │   │   ├── phone.gd.uid
 │   │   ├── property_change.gd
 │   │   ├── property_change.gd.uid
+│   │   ├── search_spot.gd
+│   │   ├── search_spot.gd.uid
 │   │   ├── trigger_set_property.gd
 │   │   ├── trigger_set_property.gd.uid
 │   │   ├── world_clock.gd
@@ -241,6 +249,8 @@
 │   │   ├── pause_manager.gd.uid
 │   │   ├── prompt_view.gd
 │   │   ├── prompt_view.gd.uid
+│   │   ├── search_key_manager.gd
+│   │   ├── search_key_manager.gd.uid
 │   │   ├── settings_manager.gd
 │   │   ├── settings_manager.gd.uid
 │   │   ├── stamina_bar.gd
@@ -702,4 +712,4 @@
 ├── Иконка_предварительно.icns
 └── Иконка_предварительно.ico
 
-61 directories, 642 files
+61 directories, 652 files

@@ -112,6 +112,12 @@ func _ready() -> void:
 	_apply_facing()
 
 func _physics_process(delta: float) -> void:
+	if _is_movement_blocked():
+		_is_running = _resolve_running_state(delta, 0.0)
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_update_walk_animation(delta, 0.0)
+		return
 	var direction := Input.get_axis("move_left", "move_right")
 	if _is_screen_dark():
 		direction = 0.0
@@ -133,6 +139,11 @@ func _physics_process(delta: float) -> void:
 
 	# Обновление анимации
 	_update_walk_animation(delta, direction)
+
+func _is_movement_blocked() -> bool:
+	if MinigameController and MinigameController.has_method("should_block_player_movement"):
+		return bool(MinigameController.should_block_player_movement())
+	return false
 
 func _is_screen_dark() -> bool:
 	if UIMessage == null:
