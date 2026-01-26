@@ -134,7 +134,7 @@ size = Vector2(111.6167, 1199.4946)
 position = Vector2(16, 0)
 script = ExtResource("1_vmdq5")
 cycle_number = 6
-timer_duration = 5.0
+timer_duration = 3.0
 
 [node name="TextureDistortionManager" type="Node" parent="."]
 script = ExtResource("75_8vxm4")

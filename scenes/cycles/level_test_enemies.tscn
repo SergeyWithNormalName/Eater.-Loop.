@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=4 uid="uid://sdmle35lsdig"]
+[gd_scene load_steps=104 format=4 uid="uid://sdmle35lsdig"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="1_j5jbj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://scenes/player/player.tscn" id="1_plrscn"]
@@ -72,10 +72,16 @@
 [ext_resource type="PackedScene" uid="uid://bpeloj4upnwn1" path="res://scenes/enemies/enemy_runner.tscn" id="77_vpq6w"]
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://textures/furniture/hall/Boots6.png" id="77_y0ton"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://textures/furniture/kitchen/Urna.png" id="78_ug0bd"]
+[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://scripts/tehnical/texture_distortion_manager.gd" id="79_2r2n3"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://textures/furniture/bedroom/Powerbank2.png" id="79_kqa0o"]
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://textures/walls_floors/decals/HoleInWall6.png" id="80_0fedf"]
+[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://textures/walls_floors/BackWallsDistorted.png" id="80_3pht0"]
+[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://textures/walls_floors/FloorDistorted.png" id="81_sho1l"]
 [ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://textures/furniture/toilet and bathroom/Mirror.png" id="81_wwm0w"]
+[ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://textures/furniture/allrooms/Door_2_Distorted.png" id="82_r1utm"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://textures/furniture/bedroom/UsedFood.png" id="82_tu4sr"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://audio/MusicEtc/CreepyAmbient.wav" id="83_yr25g"]
+[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://audio/MusicEtc/MyHorrorHit_3.wav" id="84_5dg1s"]
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://scenes/enemies/enemy_light_sensitive.tscn" id="85_3pht0"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="level_settings"]
 
@@ -149,6 +155,7 @@ size = Vector2(111.6167, 1199.4946)
 [node name="Level2" type="Node2D"]
 position = Vector2(16, 0)
 script = ExtResource("level_settings")
+timer_duration = 3.0
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
@@ -366,7 +373,6 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_nk8an")
 next_level_path = "res://scenes/cycles/level_01.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
-sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -1800,6 +1806,16 @@ kill_on_attack = true
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("85_3pht0")]
 position = Vector2(13077, 134)
+
+[node name="TextureDistortionManager" type="Node" parent="."]
+script = ExtResource("79_2r2n3")
+texture_map = {
+ExtResource("1_j5jbj"): ExtResource("80_3pht0"),
+ExtResource("48_d35qo"): ExtResource("81_sho1l"),
+ExtResource("14_247hy"): ExtResource("82_r1utm")
+}
+distortion_music = ExtResource("83_yr25g")
+distortion_sfx = ExtResource("84_5dg1s")
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

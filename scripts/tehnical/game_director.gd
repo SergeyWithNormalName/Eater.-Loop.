@@ -5,13 +5,13 @@ signal distortion_started
 ## Время по умолчанию, если на уровне не задано.
 @export var default_time: float = 15.0
 ## Длительность плавного появления постоянного искажения (сек).
-@export_range(0.5, 10.0, 0.1) var distortion_ramp_duration: float = 3.0
+@export_range(0.5, 10.0, 0.1) var distortion_ramp_duration: float = 2.0
 ## Сила сплющивания камеры для постоянного искажения.
 @export_range(0.0, 0.2, 0.005) var distortion_squash_amount: float = 0.08
 ## Длительность переходного эффекта сразу после искажения (сек).
-@export_range(1.0, 6.0, 0.1) var distortion_transition_duration: float = 5.0
+@export_range(1.0, 6.0, 0.1) var distortion_transition_duration: float = 4.0
 ## Сила переходного эффекта сразу после искажения.
-@export_range(0.0, 1.0, 0.05) var distortion_transition_intensity: float = 0.65
+@export_range(0.0, 1.0, 0.05) var distortion_transition_intensity: float = 1.0
 ## Сила сплющивания камеры в переходном эффекте.
 @export_range(0.0, 0.2, 0.005) var distortion_transition_squash_amount: float = 0.25
 
@@ -243,8 +243,9 @@ func _apply_distortion_progress(progress: float) -> void:
 
 func _apply_transition_strength(strength: float) -> void:
 	var value: float = float(clamp(strength, 0.0, 1.0))
+	# Мы убрали squash, так как новый шейдер делает всё через intensity
 	_set_transition_intensity(value * distortion_transition_intensity)
-	_set_transition_squash(value * distortion_transition_squash_amount)
+	# _set_transition_squash(...) — эту строку можно удалить, она больше не нужна
 
 func _advance_distortion(delta: float) -> void:
 	if distortion_ramp_duration <= 0.0:
