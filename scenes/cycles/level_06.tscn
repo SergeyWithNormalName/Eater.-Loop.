@@ -18,13 +18,13 @@
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://textures/furniture/bedroom/Bed.png" id="13_s6d7u"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://scripts/objects/frizzer.gd" id="14_6ploe"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://scenes/minigames/food/feed_minigame.tscn" id="15_r16un"]
-[ext_resource type="PackedScene" uid="uid://byx06s4t2xtvj" path="res://scenes/minigames/food/food_naggets.tscn" id="16_7lmqx"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://textures/minigames/eat/andreys_faces/HappyEat.png" id="17_6isns"]
 [ext_resource type="AudioStream" uid="uid://cwe32vwc8q8kb" path="res://audio/AndreyEating/Pizdato.wav" id="18_ih3uk"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://audio/furniture/OpenFridgeE.wav" id="19_3sp1u"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://textures/furniture/kitchen/Fridge.png" id="20_x83xt"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://scenes/objects/world_clock.tscn" id="21_rk46u"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://scenes/cycles/level_01.gdshader" id="22_7chgp"]
+[ext_resource type="PackedScene" uid="uid://bnpwlr8312djs" path="res://scenes/minigames/food/food_meet.tscn" id="23_hqykv"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://textures/furniture/allrooms/On-offer.png" id="23_xhdw5"]
 [ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://scripts/objects/key.gd" id="24_qvpel"]
 [ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="25_6g1x0"]
@@ -134,7 +134,7 @@ size = Vector2(111.6167, 1199.4946)
 position = Vector2(16, 0)
 script = ExtResource("1_vmdq5")
 cycle_number = 6
-timer_duration = 3.0
+timer_duration = 90.0
 
 [node name="TextureDistortionManager" type="Node" parent="."]
 script = ExtResource("75_8vxm4")
@@ -352,6 +352,7 @@ position = Vector2(-2420, 226)
 script = ExtResource("12_h4q3k")
 next_level_path = "uid://dnxt35x7beohh"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -369,10 +370,14 @@ position = Vector2(9809.79, 121)
 rotation = 0.002391043
 script = ExtResource("14_6ploe")
 minigame_scene = ExtResource("15_r16un")
-food_scene = ExtResource("16_7lmqx")
+food_scene = ExtResource("23_hqykv")
 andrey_face = ExtResource("17_6isns")
+food_count = 4
 win_sound = ExtResource("18_ih3uk")
+enable_teleport = true
+teleport_target = NodePath("../Frizzer2/Node2D")
 open_sound = ExtResource("19_3sp1u")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]
@@ -660,18 +665,67 @@ position = Vector2(-2112.125, 238)
 scale = Vector2(0.21, 0.21)
 texture = ExtResource("46_hql8h")
 
-[node name="Clock" type="Sprite2D" parent="."]
+[node name="Clock2" type="Sprite2D" parent="."]
 position = Vector2(-2124, 150)
-scale = Vector2(0.18, 0.18)
+scale = Vector2(0.18000002, 0.18000002)
 texture = ExtResource("47_44qop")
 
-[node name="WorldClock" parent="." instance=ExtResource("21_rk46u")]
-position = Vector2(-2141, 138.99998)
-scale = Vector2(0.36, 0.36)
+[node name="WorldClock" parent="Clock2" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444336, -61.111206)
+scale = Vector2(1.9999999, 1.9999999)
 start_game_time = "1:30"
 metadata/_edit_group_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="WorldClock"]
+[node name="PointLight2D" type="PointLight2D" parent="Clock2/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Clock3" type="Sprite2D" parent="."]
+position = Vector2(9439, 109.00001)
+scale = Vector2(0.18000002, 0.18000002)
+texture = ExtResource("47_44qop")
+
+[node name="WorldClock" parent="Clock3" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444336, -61.111206)
+scale = Vector2(1.9999999, 1.9999999)
+start_game_time = "1:30"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock3/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Clock4" type="Sprite2D" parent="."]
+z_index = 7
+position = Vector2(10041, 182)
+scale = Vector2(0.18000002, 0.18000002)
+texture = ExtResource("47_44qop")
+
+[node name="WorldClock" parent="Clock4" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444336, -61.111206)
+scale = Vector2(1.9999999, 1.9999999)
+start_game_time = "1:30"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock4/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Clock" type="Sprite2D" parent="."]
+position = Vector2(-1405, 61.000015)
+scale = Vector2(0.18000002, 0.18000002)
+texture = ExtResource("47_44qop")
+
+[node name="WorldClock3" parent="Clock" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444824, -61.111237)
+scale = Vector2(1.9999999, 1.9999999)
+start_game_time = "1:30"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock/WorldClock3"]
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_pgutp")
@@ -1304,9 +1358,886 @@ position = Vector2(6557, -1)
 scale = Vector2(0.27, 0.27)
 texture = ExtResource("72_jjmdl")
 
+[node name="WallBack_Hall2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, 2430.8599)
+texture = ExtResource("2_erpo7")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="Door(To Bedroom)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(8434.125, 2494.8599)
+script = ExtResource("5_pepau")
+is_locked = true
+locked_message = "Заперто... Нужно найти ключ"
+target_marker = NodePath("../Door(In Bedroom)/Marker2D")
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bedroom)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(To Bedroom)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Bedroom)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("8_ky4bj")
+
+[node name="Door(To Parents)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(8818.125, 2494.8599)
+script = ExtResource("5_pepau")
+is_locked = true
+locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Parents)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(To Parents)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Parents)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("8_ky4bj")
+
+[node name="Door(To Exit)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(6699, 2494.8599)
+script = ExtResource("5_pepau")
+is_locked = true
+locked_message = "Мне незачем выходить на улицу"
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Exit)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(To Exit)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Exit)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.8562749, 0.8975009)
+texture = ExtResource("9_obyus")
+
+[node name="Door(To Toilet)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(7832.125, 2494.8599)
+script = ExtResource("5_pepau")
+locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(In Toilet)2")
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Toilet)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(To Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("10_47ppq")
+
+[node name="Door(To Bathroom)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(7515.125, 2494.8599)
+script = ExtResource("5_pepau")
+locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(In Bathroom)2")
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bathroom)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(To Bathroom)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Bathroom)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("10_47ppq")
+
+[node name="Frizzer2" type="Area2D" parent="."]
+z_index = -1
+position = Vector2(9809.79, 2532.8599)
+rotation = 0.002391043
+script = ExtResource("14_6ploe")
+minigame_scene = ExtResource("15_r16un")
+food_scene = ExtResource("23_hqykv")
+andrey_face = ExtResource("17_6isns")
+food_count = 4
+win_sound = ExtResource("18_ih3uk")
+open_sound = ExtResource("19_3sp1u")
+prompt_text = "Поесть"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer2"]
+position = Vector2(0.25, -0.22574615)
+shape = SubResource("RectangleShape2D_cr2eh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Frizzer2"]
+position = Vector2(1.000001, 0.15893745)
+scale = Vector2(0.7364341, 0.73643416)
+texture = ExtResource("20_x83xt")
+
+[node name="PointLight2D" type="PointLight2D" parent="Frizzer2"]
+position = Vector2(-72.01596, -0.6028094)
+scale = Vector2(0.75128275, 5.546401)
+shadow_enabled = true
+shadow_filter_smooth = 24.4
+texture = SubResource("GradientTexture2D_ww2c2")
+
+[node name="PointLight2D2" type="PointLight2D" parent="Frizzer2"]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(-135.00371, -1.4271885)
+scale = Vector2(0.7293383, 5.756114)
+energy = 0.3
+range_item_cull_mask = 3
+shadow_enabled = true
+shadow_filter_smooth = 24.4
+texture = SubResource("GradientTexture2D_ww2c2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Frizzer2"]
+stream = SubResource("AudioStreamWAV_nlubh")
+volume_db = -18.0
+autoplay = true
+
+[node name="Node2D" type="Node2D" parent="Frizzer2"]
+position = Vector2(0.14095524, -28.860285)
+
+[node name="OnOffer6" type="Sprite2D" parent="."]
+position = Vector2(7694, 2440.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_xhdw5")
+
+[node name="OnOffer7" type="Sprite2D" parent="."]
+position = Vector2(6861, 2440.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_xhdw5")
+
+[node name="OnOffer8" type="Sprite2D" parent="."]
+position = Vector2(8980, 2440.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_xhdw5")
+
+[node name="OnOffer9" type="Sprite2D" parent="."]
+position = Vector2(7656, 2440.8599)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_xhdw5")
+
+[node name="KitchenFurniture2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(9479.546, 2588.6099)
+scale = Vector2(0.65167105, 0.6516709)
+texture = ExtResource("28_w3noi")
+
+[node name="Window3" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(10323, 2399.8604)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("29_34y60")
+
+[node name="KitchenTable2" type="Sprite2D" parent="."]
+z_index = 7
+position = Vector2(10163.37, 2688.099)
+scale = Vector2(0.9169747, 0.91697466)
+texture = ExtResource("30_x8hc1")
+
+[node name="CookingGas2" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(9993.2, 2612.5637)
+scale = Vector2(0.2942373, 0.2942373)
+texture = ExtResource("34_nlfb3")
+
+[node name="FloorKitchen2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8351.001, 2737.8599)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("39_bljws")
+region_enabled = true
+region_rect = Rect2(0, 0, 20500, 500)
+
+[node name="Chair4" type="Sprite2D" parent="."]
+z_index = 6
+position = Vector2(10442, 2656.8599)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("41_oivdx")
+
+[node name="Chair5" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(10252, 2641.8599)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("42_slj7g")
+
+[node name="Chair6" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(10092.369, 2641.8599)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("42_slj7g")
+
+[node name="HighKitchen2" type="Sprite2D" parent="."]
+position = Vector2(9477, 2307.8599)
+scale = Vector2(0.31, 0.31)
+texture = ExtResource("43_hw314")
+
+[node name="Clock5" type="Sprite2D" parent="."]
+position = Vector2(9439, 2520.8599)
+scale = Vector2(0.18000002, 0.18000002)
+texture = ExtResource("47_44qop")
+
+[node name="WorldClock" parent="Clock5" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444336, -61.111206)
+scale = Vector2(1.9999999, 1.9999999)
+start_game_time = "1:30"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock5/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Clock6" type="Sprite2D" parent="."]
+z_index = 7
+position = Vector2(10041, 2593.8599)
+scale = Vector2(0.18000002, 0.18000002)
+texture = ExtResource("47_44qop")
+
+[node name="WorldClock" parent="Clock6" instance=ExtResource("21_rk46u")]
+position = Vector2(-94.444336, -61.111206)
+scale = Vector2(1.9999999, 1.9999999)
+start_game_time = "1:30"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock6/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Lamp6" type="Sprite2D" parent="."]
+position = Vector2(9814, 2197.8599)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("52_2m4vn")
+
+[node name="Lamp7" type="Sprite2D" parent="."]
+position = Vector2(6699, 2197.8599)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("52_2m4vn")
+
+[node name="WallEnd9" type="StaticBody2D" parent="."]
+position = Vector2(10620.5, 2475.7207)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd9"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd9"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof17" type="StaticBody2D" parent="."]
+position = Vector2(10321, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof17"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof17"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof24" type="StaticBody2D" parent="."]
+position = Vector2(6517, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof24"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof24"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof25" type="StaticBody2D" parent="."]
+position = Vector2(10321, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof25"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof25"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof26" type="StaticBody2D" parent="."]
+position = Vector2(9540, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof26"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof26"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof27" type="StaticBody2D" parent="."]
+position = Vector2(9540, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof27"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof27"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof28" type="StaticBody2D" parent="."]
+position = Vector2(8757, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof28"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof28"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof29" type="StaticBody2D" parent="."]
+position = Vector2(8757, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof29"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof29"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof30" type="StaticBody2D" parent="."]
+position = Vector2(7977, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof30"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof30"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof31" type="StaticBody2D" parent="."]
+position = Vector2(7977, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof31"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof31"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof32" type="StaticBody2D" parent="."]
+position = Vector2(7292, 2136.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof32"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof32"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof33" type="StaticBody2D" parent="."]
+position = Vector2(7292, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof33"]
+position = Vector2(0, -108.873535)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof33"]
+light_mask = 2
+position = Vector2(0, -113.01953)
+scale = Vector2(1, 1.230417)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof34" type="StaticBody2D" parent="."]
+position = Vector2(6517, 2810.8599)
+rotation = -1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof34"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof34"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallEnd10" type="StaticBody2D" parent="."]
+position = Vector2(6089, 2475.7207)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd10"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd10"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="OpenShtora3" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(10323, 2465.8599)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("57_8ajk0")
+
+[node name="PictureOne2" type="Sprite2D" parent="."]
+position = Vector2(9131, 2396.8599)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("61_io7cb")
+
+[node name="Shkaf2" type="Sprite2D" parent="."]
+position = Vector2(6333.0005, 2455.8599)
+scale = Vector2(0.7199503, 0.7199504)
+texture = ExtResource("62_qdd7s")
+
+[node name="BootsBoard2" type="Sprite2D" parent="."]
+position = Vector2(6954.0005, 2660.8599)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("63_ygifj")
+
+[node name="Boots7" type="Sprite2D" parent="."]
+position = Vector2(6877, 2591.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("64_buj63")
+
+[node name="Boots8" type="Sprite2D" parent="."]
+position = Vector2(6951, 2650.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("65_5fssg")
+
+[node name="Boots9" type="Sprite2D" parent="."]
+position = Vector2(6878, 2651.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("66_8tr4u")
+
+[node name="Boots10" type="Sprite2D" parent="."]
+position = Vector2(7024, 2651.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("67_tb0hd")
+
+[node name="Boots11" type="Sprite2D" parent="."]
+position = Vector2(6949, 2595.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("68_vgxoq")
+
+[node name="Boots12" type="Sprite2D" parent="."]
+position = Vector2(7028, 2589.8599)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("69_8w5b6")
+
+[node name="Urna2" type="Sprite2D" parent="."]
+position = Vector2(9198, 2638.8599)
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("70_55thb")
+
+[node name="Kover2" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6698, 2717.8599)
+scale = Vector2(0.19589221, 0.19589221)
+
+[node name="HoleInWall7" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(6557, 2410.8599)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("72_jjmdl")
+
 [node name="Mirror" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(13907, -8.120003)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("73_0y1kv")
+
+[node name="Door(In Bathroom)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(14090.726, 2501.86)
+script = ExtResource("5_pepau")
+locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(To Bathroom)2")
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bathroom)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(In Bathroom)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Bathroom)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("11_6uy72")
+
+[node name="Door(In Toilet)2" type="Area2D" parent="."]
+z_index = -2
+position = Vector2(16842.371, 2501.86)
+script = ExtResource("5_pepau")
+locked_message = "Кто, блять, запер дверь в туалет?"
+target_marker = NodePath("../Door(To Toilet)2")
+sfx_locked = ExtResource("6_8j36r")
+sfx_open = ExtResource("7_hqykv")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.3960724)
+shape = SubResource("RectangleShape2D_fh42t")
+
+[node name="Marker2D" type="Marker2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Toilet)2"]
+position = Vector2(0.25, 0.8960724)
+scale = Vector2(0.6841216, 0.6841215)
+texture = ExtResource("11_6uy72")
+
+[node name="WashMachine2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(13740.602, 2616.1494)
+scale = Vector2(0.61568123, 0.61568123)
+texture = ExtResource("33_w42ac")
+
+[node name="Rakovina2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(13906.001, 2619.86)
+scale = Vector2(0.536, 0.536)
+texture = ExtResource("35_xgn51")
+
+[node name="WallBack_Toilet2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(16690.602, 2437.86)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("36_2klcp")
+region_enabled = true
+region_rect = Rect2(0, 0, 2400, 2200)
+
+[node name="WallBack_Bathroom2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(14139, 2437.86)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("36_2klcp")
+region_enabled = true
+region_rect = Rect2(0, 0, 4100, 2200)
+
+[node name="Toilet2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(16536, 2599.86)
+scale = Vector2(0.61568123, 0.61568123)
+texture = ExtResource("37_3cvit")
+
+[node name="Yorhic2" type="Sprite2D" parent="."]
+position = Vector2(16446, 2646.86)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("38_wtnha")
+
+[node name="FloorBathroom2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(14139, 2744.86)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("39_bljws")
+region_enabled = true
+region_rect = Rect2(0, 0, 4650, 500)
+
+[node name="FloorToilet2" type="Sprite2D" parent="."]
+z_index = -5
+texture_repeat = 2
+position = Vector2(16690.602, 2744.86)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("39_bljws")
+region_enabled = true
+region_rect = Rect2(0, 0, 2750, 500)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(14479, 2614.86)
+scale = Vector2(0.61568123, 0.61568123)
+
+[node name="Wash" type="Sprite2D" parent="StaticBody2D2"]
+z_index = -2
+texture = ExtResource("40_0476s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-2.4355469, 45.47809)
+shape = SubResource("RectangleShape2D_nshje")
+
+[node name="Lamp8" type="Sprite2D" parent="."]
+position = Vector2(14165, 2210.86)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("52_2m4vn")
+
+[node name="Lamp9" type="Sprite2D" parent="."]
+position = Vector2(16701, 2209.86)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("52_2m4vn")
+
+[node name="WallEnd11" type="StaticBody2D" parent="."]
+position = Vector2(17008, 2482.721)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd11"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd11"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof35" type="StaticBody2D" parent="."]
+position = Vector2(16735, 2143.86)
+rotation = -1.5707964
+scale = Vector2(0.385, 0.562)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof35"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof35"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof36" type="StaticBody2D" parent="."]
+position = Vector2(16735, 2817.86)
+rotation = -1.5707964
+scale = Vector2(0.485, 0.562)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof36"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof36"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallEnd12" type="StaticBody2D" parent="."]
+position = Vector2(16372, 2482.721)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd12"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd12"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="WallEnd13" type="StaticBody2D" parent="."]
+position = Vector2(14666, 2482.721)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd13"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd13"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof37" type="StaticBody2D" parent="."]
+position = Vector2(13909, 2143.86)
+rotation = -1.5707964
+scale = Vector2(0.385, 0.46)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof37"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof37"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof38" type="StaticBody2D" parent="."]
+position = Vector2(14445, 2143.86)
+rotation = -1.5707964
+scale = Vector2(0.385, 0.46)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof38"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof38"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof39" type="StaticBody2D" parent="."]
+position = Vector2(13909, 2817.86)
+rotation = -1.5707964
+scale = Vector2(0.385, 0.46)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof39"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof39"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallRoof40" type="StaticBody2D" parent="."]
+position = Vector2(14447, 2817.86)
+rotation = -1.5707964
+scale = Vector2(0.385, 0.46)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof40"]
+position = Vector2(0, -85.822266)
+shape = SubResource("RectangleShape2D_w2g1e")
+
+[node name="WallBok" type="Sprite2D" parent="WallRoof40"]
+light_mask = 2
+position = Vector2(0, -81.81008)
+scale = Vector2(1, 1.2386152)
+texture = ExtResource("53_ififj")
+
+[node name="WallEnd14" type="StaticBody2D" parent="."]
+position = Vector2(13615, 2482.721)
+scale = Vector2(0.38524616, 0.6557377)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd14"]
+shape = SubResource("RectangleShape2D_pgutp")
+
+[node name="WallBok" type="Sprite2D" parent="WallEnd14"]
+light_mask = 2
+texture = ExtResource("53_ififj")
+
+[node name="ToiletPaper2" type="Sprite2D" parent="."]
+position = Vector2(16640, 2568.86)
+scale = Vector2(0.08124997, 0.081249975)
+texture = ExtResource("54_2wim4")
+
+[node name="Vent3" type="Sprite2D" parent="."]
+position = Vector2(16550, 2258.86)
+scale = Vector2(0.15588242, 0.1558824)
+texture = ExtResource("55_ke70q")
+
+[node name="Vent4" type="Sprite2D" parent="."]
+position = Vector2(13849.999, 2258.86)
+scale = Vector2(0.15588242, 0.1558824)
+texture = ExtResource("55_ke70q")
+
+[node name="ToothPolka2" type="Sprite2D" parent="."]
+position = Vector2(13906, 2465.7402)
+scale = Vector2(0.18251042, 0.18251051)
+texture = ExtResource("58_h66jn")
+
+[node name="TilesFloor3" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(16691.934, 2745.8606)
+scale = Vector2(0.3938595, 0.39385954)
+texture = ExtResource("59_x5q5f")
+
+[node name="TilesFloor4" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(13981.504, 2750.2976)
+scale = Vector2(0.45307007, 0.45307013)
+texture = ExtResource("59_x5q5f")
+
+[node name="Mirror2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(13907, 2410.7402)
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("73_0y1kv")
 
@@ -1341,3 +2272,19 @@ texture = ExtResource("74_ab40f")
 [connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]
 [connection signal="body_entered" from="TestNote" to="TestNote" method="_on_body_entered"]
 [connection signal="body_exited" from="TestNote" to="TestNote" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(To Bedroom)2" to="Door(To Bedroom)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(To Bedroom)2" to="Door(To Bedroom)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(To Parents)2" to="Door(To Parents)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(To Parents)2" to="Door(To Parents)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(To Exit)2" to="Door(To Exit)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(To Exit)2" to="Door(To Exit)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(To Toilet)2" to="Door(To Toilet)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(To Toilet)2" to="Door(To Toilet)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(To Bathroom)2" to="Door(To Bathroom)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(To Bathroom)2" to="Door(To Bathroom)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Frizzer2" to="Frizzer2" method="_on_body_entered"]
+[connection signal="body_exited" from="Frizzer2" to="Frizzer2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(In Bathroom)2" to="Door(In Bathroom)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(In Bathroom)2" to="Door(In Bathroom)2" method="_on_body_exited"]
+[connection signal="body_entered" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_entered"]
+[connection signal="body_exited" from="Door(In Toilet)2" to="Door(In Toilet)2" method="_on_body_exited"]

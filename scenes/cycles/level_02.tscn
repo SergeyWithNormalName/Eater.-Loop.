@@ -331,6 +331,7 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_32xxs")
 next_level_path = "uid://dnxt35x7beohh"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -353,6 +354,7 @@ andrey_face = ExtResource("23_25l3s")
 food_count = 8
 win_sound = ExtResource("18_3s6wf")
 open_sound = ExtResource("26_m14sj")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]

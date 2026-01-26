@@ -81,6 +81,7 @@ func _try_use_door() -> void:
 
 func _perform_transition() -> void:
 	_is_transitioning = true 
+	_stop_chase_for_transition()
 	
 	var player = get_interacting_player()
 	if not is_instance_valid(player):
@@ -126,6 +127,11 @@ func _perform_transition() -> void:
 			player.set_physics_process(true)
 		
 		_is_transitioning = false
+
+func _stop_chase_for_transition() -> void:
+	get_tree().call_group("enemies", "force_stop_chase")
+	if MusicManager:
+		MusicManager.clear_chase_music_sources(0.2)
 
 # Вспомогательная функция для проигрывания
 func _play_sound(stream: AudioStream) -> void:

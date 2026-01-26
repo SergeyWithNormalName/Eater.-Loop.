@@ -353,6 +353,7 @@ position = Vector2(-2420, 226)
 script = ExtResource("18_f1xxx")
 next_level_path = "res://scenes/cycles/level_04.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -381,6 +382,7 @@ open_sound = ExtResource("26_ew5nb")
 available_sprite = ExtResource("86_fridge")
 available_light_node = NodePath("PointLight2D")
 available_light_node_secondary = NodePath("PointLight2D2")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]

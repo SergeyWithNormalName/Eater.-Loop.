@@ -27,6 +27,7 @@ var _sprite_base_scale: Vector2 = Vector2.ONE
 var _chase_music_started: bool = false
 
 func _ready() -> void:
+	add_to_group("enemies")
 	if _sprite:
 		_sprite_base_scale = _sprite.scale
 
@@ -98,6 +99,11 @@ func _stop_chase_music() -> void:
 		return
 	_chase_music_started = false
 	MusicManager.set_chase_music_source(self, false)
+
+func force_stop_chase() -> void:
+	_player = null
+	velocity = Vector2.ZERO
+	_stop_chase_music()
 
 func _set_chase_music_suppressed(suppressed: bool) -> void:
 	if MusicManager == null:

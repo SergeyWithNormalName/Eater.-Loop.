@@ -331,6 +331,7 @@ position = Vector2(-2420, 226)
 script = ExtResource("6_srw7l")
 next_level_path = "uid://bsecib4k5glms"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -352,6 +353,7 @@ food_scenes = Array[PackedScene]([ExtResource("16_luqlq"), ExtResource("16_j5rey
 andrey_face = ExtResource("12_bvnc7")
 food_count = 6
 open_sound = ExtResource("26_gklq2")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]

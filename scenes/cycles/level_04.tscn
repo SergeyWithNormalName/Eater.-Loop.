@@ -384,6 +384,7 @@ next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -407,6 +408,7 @@ win_sound = ExtResource("19_w71je")
 enable_teleport = true
 teleport_target = NodePath("../Frizzer2")
 open_sound = ExtResource("26_qcm2f")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]
@@ -1445,6 +1447,7 @@ andrey_face = ExtResource("23_vgmn4")
 food_count = 7
 enable_teleport = true
 open_sound = ExtResource("26_qcm2f")
+prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer2"]
@@ -2211,6 +2214,7 @@ next_level_path = "res://scenes/cycles/level_05.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 require_light_for_sleep = true
 no_bedroom_light_message = "Я боюсь засыпать в темноте, в ней могут таиться монстры..."
+prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed2"]
