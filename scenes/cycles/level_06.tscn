@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=4 uid="uid://b0rhqem0xcvbc"]
+[gd_scene load_steps=96 format=4 uid="uid://b0rhqem0xcvbc"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://scripts/tehnical/level.gd" id="1_vmdq5"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://textures/walls_floors/BackWalls.png" id="2_erpo7"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="25_6g1x0"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://scripts/objects/note_object.gd" id="26_tu0xe"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://textures/furniture/allrooms/Pozetka.png" id="27_8g7p3"]
+[ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://textures/furniture/kitchen/LockedFridge.png" id="27_ky4bj"]
 [ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://textures/furniture/kitchen/Kitchen_garn.png" id="28_w3noi"]
 [ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://textures/walls_floors/Window3.png" id="29_34y60"]
 [ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://textures/furniture/kitchen/Table.png" id="30_x8hc1"]
@@ -176,7 +177,7 @@ allow_running = false
 z_index = -2
 position = Vector2(-1581, 83)
 script = ExtResource("5_pepau")
-target_marker = NodePath("../Door(To Bedroom)/Marker2D")
+target_marker = NodePath("../Door(To Bedroom)2")
 sfx_locked = ExtResource("6_8j36r")
 sfx_open = ExtResource("7_hqykv")
 metadata/_edit_group_ = true
@@ -374,9 +375,12 @@ food_scene = ExtResource("23_hqykv")
 andrey_face = ExtResource("17_6isns")
 food_count = 4
 win_sound = ExtResource("18_ih3uk")
-enable_teleport = true
-teleport_target = NodePath("../Frizzer2/Node2D")
+require_access_code = true
 open_sound = ExtResource("19_3sp1u")
+locked_sprite = ExtResource("27_ky4bj")
+available_sprite = ExtResource("20_x83xt")
+available_light_node = NodePath("PointLight2D")
+available_light_node_secondary = NodePath("PointLight2D2")
 prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
@@ -1487,7 +1491,12 @@ food_scene = ExtResource("23_hqykv")
 andrey_face = ExtResource("17_6isns")
 food_count = 4
 win_sound = ExtResource("18_ih3uk")
+require_access_code = true
 open_sound = ExtResource("19_3sp1u")
+locked_sprite = ExtResource("27_ky4bj")
+available_sprite = ExtResource("20_x83xt")
+available_light_node = NodePath("PointLight2D")
+available_light_node_secondary = NodePath("PointLight2D2")
 prompt_text = "Поесть"
 metadata/_edit_group_ = true
 
