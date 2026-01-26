@@ -43,6 +43,34 @@ func _ready() -> void:
 		if not _animated_sprite.animation_finished.is_connected(_on_animation_finished):
 			_animated_sprite.animation_finished.connect(_on_animation_finished)
 	_set_idle_animation()
+	_sync_light_mask_with_player()
+
+func _sync_light_mask_with_player() -> void:
+	var player := _player
+	if player == null:
+		player = get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return
+
+	var player_sprite := player.get_node_or_null("Pivot/AnimatedSprite2D") as CanvasItem
+	if player_sprite == null:
+		player_sprite = player.get_node_or_null("AnimatedSprite2D") as CanvasItem
+	if player_sprite == null:
+		player_sprite = player.get_node_or_null("Sprite2D") as CanvasItem
+	var mask := 0
+	if player_sprite != null:
+		mask = player_sprite.light_mask
+	else:
+		var player_item := player as CanvasItem
+		if player_item == null:
+			return
+		mask = player_item.light_mask
+	light_mask = mask
+	var sprite_item := _sprite as CanvasItem
+	if sprite_item != null:
+		sprite_item.light_mask = mask
+	if _animated_sprite != null:
+		_animated_sprite.light_mask = mask
 
 func _physics_process(delta: float) -> void:
 	_update_stun_timers(delta)

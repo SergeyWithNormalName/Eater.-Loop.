@@ -141,6 +141,8 @@ animation = &"idle"
 script = ExtResource("9_step_audio_component")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+light_mask = 3
+range_item_cull_mask = 3
 position = Vector2(-4.0000076, 63)
 rotation = 9.424778
 scale = Vector2(1.0089942, 1)

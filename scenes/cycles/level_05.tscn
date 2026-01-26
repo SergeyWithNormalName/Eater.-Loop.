@@ -391,13 +391,8 @@ script = ExtResource("21_tnagf")
 minigame_scene = ExtResource("22_xxec8")
 food_scene = ExtResource("19_4xwr8")
 andrey_face = ExtResource("24_augq3")
-food_count = null
-require_lab_completion = null
-required_lab_id = null
-locked_message = null
-access_code = null
 enable_teleport = true
-teleport_target = NodePath("../Frizzer2")
+teleport_target = NodePath("../Frizzer2/Node2D")
 open_sound = ExtResource("25_jklwv")
 metadata/_edit_group_ = true
 
@@ -1638,13 +1633,6 @@ script = ExtResource("21_tnagf")
 minigame_scene = ExtResource("22_xxec8")
 food_scene = ExtResource("23_8d7c5")
 andrey_face = ExtResource("24_augq3")
-food_count = null
-require_lab_completion = null
-required_lab_id = null
-locked_message = null
-access_code = null
-enable_teleport = null
-teleport_target = null
 open_sound = ExtResource("25_jklwv")
 metadata/_edit_group_ = true
 
@@ -1679,6 +1667,9 @@ texture = SubResource("GradientTexture2D_xddf6")
 stream = ExtResource("27_wnhsn")
 volume_db = -18.0
 autoplay = true
+
+[node name="Node2D" type="Node2D" parent="Hall1/Frizzer2"]
+position = Vector2(-0.17928272, -41.489925)
 
 [node name="OnOffer6" type="Sprite2D" parent="Hall1"]
 position = Vector2(7512.875, 2973)

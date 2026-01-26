@@ -220,6 +220,9 @@ func set_chase_music_suppressed(source: Object, suppressed: bool) -> void:
 		_runner_suppressed.erase(id)
 	_update_runner_music_state()
 
+func is_chase_active() -> bool:
+	return _runner_active and not _runner_global_paused and not _runner_paused
+
 func pause_chase_music(fade_time: float = -1.0) -> void:
 	if _runner_global_paused:
 		return

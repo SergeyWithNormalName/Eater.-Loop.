@@ -87,6 +87,9 @@ func _on_interact() -> void:
 	_try_interact()
 
 func _try_interact() -> void:
+	if _is_chase_active():
+		UIMessage.show_text("Нельзя есть на бегу")
+		return
 	if GameState.has_method("mark_fridge_interacted"):
 		GameState.mark_fridge_interacted()
 
@@ -151,6 +154,13 @@ func _complete_feeding() -> void:
 	var current_level = get_tree().current_scene
 	if current_level.has_method("on_fed_andrey"):
 		current_level.on_fed_andrey()
+
+func _is_chase_active() -> bool:
+	if MusicManager == null:
+		return false
+	if MusicManager.has_method("is_chase_active"):
+		return MusicManager.is_chase_active()
+	return false
 
 func _is_locked_by_lab() -> bool:
 	if not require_lab_completion:
