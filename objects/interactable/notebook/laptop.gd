@@ -1,8 +1,6 @@
 extends InteractiveObject
 
 @export_group("Lab Settings")
-## Уникальный ID этой работы (например, lab_1).
-@export var quest_id: String = "lab_1"
 ## Сцена мини-игры (sql_minigame.tscn).
 @export var minigame_scene: PackedScene
 ## Лимит времени на мини-игру.
@@ -10,13 +8,15 @@ extends InteractiveObject
 ## Штраф по времени за ошибку.
 @export var penalty_time: float = 10.0
 
-@export_group("Legacy Requirements")
-## Требовать взаимодействия с холодильником перед запуском.
-@export var require_fridge_interaction: bool = false
-## Сообщение, если холодильник еще не трогали.
-@export var fridge_locked_message: String = ""
-## Вручную отключить ноутбук (старые сцены).
-@export var is_enabled: bool = true
+@export_group("Availability")
+## Вручную отключить ноутбук.
+@export var is_enabled: bool = true:
+	set(value):
+		_is_enabled = value
+		if _is_ready:
+			_apply_enabled_state()
+	get:
+		return _is_enabled
 
 @export_group("Completed Visuals")
 ## Показывать записку после выполнения вместо повторного запуска?
@@ -41,6 +41,9 @@ var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
+var _quest_id_cache: String = ""
+var _is_ready: bool = false
+var _is_enabled: bool = true
 
 func _ready() -> void:
 	super._ready() # Важно для работы базового класса
@@ -49,7 +52,9 @@ func _ready() -> void:
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	
-	_update_visuals()
+	_quest_id_cache = _resolve_quest_id()
+	_is_ready = true
+	_apply_enabled_state()
 	
 	# Если у нас есть зависимость (Холодильник), подписываемся на её завершение,
 	# чтобы включить экран ноутбука, когда холодильник будет открыт.
@@ -60,26 +65,13 @@ func _ready() -> void:
 	# Следим за завершением лаб через GameState
 	if GameState.has_signal("lab_completed"):
 		GameState.lab_completed.connect(func(_id): _update_visuals())
-	
-	# Старый путь: обновляем визуал после взаимодействия с холодильником
-	if require_fridge_interaction and GameState.has_signal("fridge_interacted_changed"):
-		GameState.fridge_interacted_changed.connect(func(): _update_visuals())
 
 # --- ВЗАИМОДЕЙСТВИЕ ---
 func _on_interact() -> void:
 	# Сюда мы попадаем, только если dependency_object (Холодильник) уже выполнен!
 	
-	if not is_enabled:
-		_show_locked_message()
-		return
-
-	# Легаси-проверка: нужен холодильник
-	if require_fridge_interaction and not GameState.fridge_interacted:
-		_show_fridge_locked_message()
-		return
-	
 	# 1. Если работа уже сдана
-	if GameState.completed_labs.has(quest_id):
+	if _is_lab_completed():
 		_handle_completed_interaction()
 		return
 
@@ -98,7 +90,6 @@ func _start_lab_minigame() -> void:
 	# Настраиваем параметры (как в твоем старом коде)
 	if "time_limit" in game: game.time_limit = time_limit
 	if "penalty_time" in game: game.penalty_time = penalty_time
-	if "quest_id" in game: game.quest_id = quest_id
 	
 	# Добавляем на сцену
 	get_tree().root.add_child(game)
@@ -120,7 +111,7 @@ func _on_minigame_closed() -> void:
 	_update_visuals()
 	
 	# Если после игры лаба появилась в списке выполненных — успех
-	if GameState.completed_labs.has(quest_id):
+	if _is_lab_completed():
 		complete_interaction() # Помечаем ноутбук как "пройденный" (для других цепочек)
 
 func _handle_completed_interaction() -> void:
@@ -139,9 +130,7 @@ func _update_visuals() -> void:
 	var is_unlocked = true
 	if dependency_object and not dependency_object.is_completed:
 		is_unlocked = false
-	if require_fridge_interaction and not GameState.fridge_interacted:
-		is_unlocked = false
-	if not is_enabled:
+	if not _is_enabled:
 		is_unlocked = false
 	
 	if is_unlocked:
@@ -153,14 +142,38 @@ func _update_visuals() -> void:
 		if _available_light: _available_light.visible = false
 		if _available_light_secondary: _available_light_secondary.visible = false
 
-func _show_fridge_locked_message() -> void:
-	var msg := fridge_locked_message.strip_edges()
-	if msg == "":
-		_show_locked_message()
+func _can_interact() -> bool:
+	return _is_enabled
+
+func _show_prompt() -> void:
+	if not _is_enabled:
 		return
-	if UIMessage:
-		UIMessage.show_text(msg)
-	else:
-		print(msg)
+	super._show_prompt()
+
+func _apply_enabled_state() -> void:
+	set_prompts_enabled(_is_enabled)
+	_update_visuals()
+
+func _resolve_quest_id() -> String:
+	if minigame_scene == null:
+		return ""
+	var state := minigame_scene.get_state()
+	if state == null or not state.has_method("get_node_property_count"):
+		return ""
+	var root_index := 0
+	var prop_count := int(state.get_node_property_count(root_index))
+	for i in range(prop_count):
+		if str(state.get_node_property_name(root_index, i)) == "quest_id":
+			return str(state.get_node_property_value(root_index, i))
+	return ""
+
+func _get_quest_id() -> String:
+	if _quest_id_cache == "":
+		_quest_id_cache = _resolve_quest_id()
+	return _quest_id_cache
+
+func _is_lab_completed() -> bool:
+	var quest_id := _get_quest_id()
+	return quest_id != "" and GameState.completed_labs.has(quest_id)
 		
 		

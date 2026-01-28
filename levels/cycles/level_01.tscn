@@ -152,19 +152,19 @@ z_index = 10
 position = Vector2(13614, 64)
 
 [node name="WallAbove_1" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
-position = Vector2(14347, -271)
-scale = Vector2(1.065, 1)
-
-[node name="WallAbove_2" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
 position = Vector2(13931, -271)
 scale = Vector2(1.065, 1)
 
-[node name="WallAbove_3" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
-position = Vector2(14347, 400)
+[node name="WallAbove_2" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(14347, -271)
 scale = Vector2(1.065, 1)
 
-[node name="WallAbove_4" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+[node name="WallBelow_1" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
 position = Vector2(13931, 400)
+scale = Vector2(1.065, 1)
+
+[node name="WallBelow_2" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(14347, 400)
 scale = Vector2(1.065, 1)
 
 [node name="Sprites" type="Node2D" parent="Bathroom"]
@@ -745,7 +745,7 @@ door_locked_message = "Сначала нужно сделать что-то др
 required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
-target_marker = null
+target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)")
 use_scene_change = null
 door_texture = ExtResource("15_qr0f4")
 interact_area_node = null

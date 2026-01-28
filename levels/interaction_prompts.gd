@@ -45,6 +45,9 @@ func set_prompts_enabled(enabled: bool) -> void:
 	_suspended = not enabled
 	_refresh_all()
 
+func are_prompts_enabled() -> bool:
+	return not _suspended
+
 func get_default_lamp_text(is_on: bool) -> String:
 	return DEFAULT_LAMP_OFF_TEXT if is_on else DEFAULT_LAMP_ON_TEXT
 

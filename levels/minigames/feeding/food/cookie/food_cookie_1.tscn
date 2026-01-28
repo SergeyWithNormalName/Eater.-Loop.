@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://cx1sqw2gkng0" path="res://levels/minigames/feeding/food/cookie/Cookie_1.png" id="2_ijf0c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1a4a"]
-radius = 246.00592
-height = 684.58276
+radius = 217.96591
+height = 622.15704
 
 [node name="FoodItem" type="Area2D"]
 script = ExtResource("1_6enlm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.48780507, 0.48780486)
+scale = Vector2(0.488, 0.408)
 texture = ExtResource("2_ijf0c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -43,6 +43,9 @@ var _music_pushed: bool = false
 var _music_stop_on_finish: bool = false
 var _music_fade_time: float = 0.3
 var _block_player_movement: bool = true
+var _prompts_prev_enabled: bool = true
+var _prompts_suspended: bool = false
+var _prompts_restore_target: Node = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -64,6 +67,7 @@ func start_minigame(minigame: Node, config: Dictionary = {}) -> void:
 
 	_setup_pause()
 	_setup_cursor()
+	_setup_prompts()
 	_setup_timer(config.get("time_limit", -1.0))
 	_setup_music(
 		config.get("music_stream", null),
@@ -78,11 +82,12 @@ func finish_minigame(minigame: Node, success: bool = true) -> void:
 		return
 	if minigame != _active_minigame:
 		return
+	_active_minigame = null
 	_restore_music()
 	_restore_cursor()
 	_restore_pause()
+	_schedule_prompt_restore(minigame)
 	_clear_timer()
-	_active_minigame = null
 	_block_player_movement = false
 	minigame_finished.emit(minigame, success)
 
@@ -172,6 +177,53 @@ func _restore_cursor() -> void:
 		return
 	if CursorManager:
 		CursorManager.release_visible(self)
+
+func _setup_prompts() -> void:
+	if InteractionPrompts == null:
+		return
+	if _prompts_suspended:
+		return
+	if InteractionPrompts.has_method("are_prompts_enabled"):
+		_prompts_prev_enabled = InteractionPrompts.are_prompts_enabled()
+	else:
+		_prompts_prev_enabled = true
+	InteractionPrompts.set_prompts_enabled(false)
+	_prompts_suspended = true
+
+func _restore_prompts() -> void:
+	if not _prompts_suspended:
+		return
+	if InteractionPrompts:
+		InteractionPrompts.set_prompts_enabled(_prompts_prev_enabled)
+	_prompts_suspended = false
+
+func _schedule_prompt_restore(minigame: Node) -> void:
+	if not _prompts_suspended:
+		return
+	_clear_prompt_restore_target()
+	if minigame != null and minigame.is_inside_tree():
+		_prompts_restore_target = minigame
+		if not minigame.tree_exited.is_connected(_on_prompt_restore_target_exited):
+			minigame.tree_exited.connect(_on_prompt_restore_target_exited)
+		return
+	_restore_prompts_if_safe()
+
+func _restore_prompts_if_safe() -> void:
+	if _active_minigame != null:
+		return
+	_restore_prompts()
+
+func _clear_prompt_restore_target() -> void:
+	if _prompts_restore_target == null:
+		return
+	if is_instance_valid(_prompts_restore_target):
+		if _prompts_restore_target.tree_exited.is_connected(_on_prompt_restore_target_exited):
+			_prompts_restore_target.tree_exited.disconnect(_on_prompt_restore_target_exited)
+	_prompts_restore_target = null
+
+func _on_prompt_restore_target_exited() -> void:
+	_prompts_restore_target = null
+	_restore_prompts_if_safe()
 
 func _setup_timer(limit: float) -> void:
 	_time_limit = float(limit)

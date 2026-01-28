@@ -29,6 +29,7 @@ available_sprite = ExtResource("1_j6lc8")
 sprite_node = NodePath("NotebookOff2")
 available_light_node = NodePath("PointLight2D")
 available_light_node_secondary = NodePath("PointLight2D2")
+prompt_text = "Сделать лабораторную"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(17.98601, -4.1136475)

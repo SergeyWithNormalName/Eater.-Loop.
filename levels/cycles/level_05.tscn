@@ -2393,7 +2393,6 @@ position = Vector2(-1857.0001, 165)
 scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("38_7bnod")
 is_enabled = false
-fridge_locked_message = ""
 locked_sprite = ExtResource("40_x01w4")
 available_sprite = ExtResource("41_ces63")
 sprite_node = NodePath("NotebookOff2")
