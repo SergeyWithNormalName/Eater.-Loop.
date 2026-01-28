@@ -1,0 +1,219 @@
+[gd_scene load_steps=44 format=3 uid="uid://t48uttt1m656"]
+
+[ext_resource type="Script" uid="uid://b14oqxr6ywytt" path="res://enemies/light_sensitive/enemy_light_sensitive.gd" id="1_light_sensitive"]
+[ext_resource type="Texture2D" uid="uid://cm6c126i05u23" path="res://enemies/light_sensitive/Monster_2.png" id="2_yagbc"]
+[ext_resource type="Texture2D" uid="uid://cpjjlbqlx0ms7" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-001.png" id="3_flashlight_001"]
+[ext_resource type="Texture2D" uid="uid://b36sp48l6m1h3" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-002.png" id="4_flashlight_002"]
+[ext_resource type="Texture2D" uid="uid://cvghh0jlksn65" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-003.png" id="5_flashlight_003"]
+[ext_resource type="Texture2D" uid="uid://cpy066dxs8ii6" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-004.png" id="6_flashlight_004"]
+[ext_resource type="Texture2D" uid="uid://c18skul7q60x4" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-005.png" id="7_flashlight_005"]
+[ext_resource type="Texture2D" uid="uid://c4gyircntcyo1" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-006.png" id="8_flashlight_006"]
+[ext_resource type="Texture2D" uid="uid://d2rbi6nkyi6y5" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-007.png" id="9_flashlight_007"]
+[ext_resource type="Texture2D" uid="uid://h0nx81hlkpas" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-008.png" id="10_flashlight_008"]
+[ext_resource type="Texture2D" uid="uid://cymooi8gnbdyq" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-009.png" id="11_flashlight_009"]
+[ext_resource type="Texture2D" uid="uid://c1lkyrkvrfkpj" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-010.png" id="12_flashlight_010"]
+[ext_resource type="Texture2D" uid="uid://bq80d00ncmaro" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-011.png" id="13_flashlight_011"]
+[ext_resource type="Texture2D" uid="uid://c57bamgbxjwhm" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-012.png" id="14_flashlight_012"]
+[ext_resource type="Texture2D" uid="uid://cs1i4h6umimfn" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-013.png" id="15_flashlight_013"]
+[ext_resource type="Texture2D" uid="uid://iigmj6i3348t" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-014.png" id="16_flashlight_014"]
+[ext_resource type="Texture2D" uid="uid://e80wj5gblwbk" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-015.png" id="17_flashlight_015"]
+[ext_resource type="Texture2D" uid="uid://bavj0yrygatxt" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-016.png" id="18_flashlight_016"]
+[ext_resource type="Texture2D" uid="uid://c2bhv8h01hgb2" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-017.png" id="19_flashlight_017"]
+[ext_resource type="Texture2D" uid="uid://ca2n255flxu8g" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-018.png" id="20_flashlight_018"]
+[ext_resource type="Texture2D" uid="uid://dma1qknj0ybos" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-001.png" id="21_lamp_001"]
+[ext_resource type="Texture2D" uid="uid://cngplexqgvaht" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-002.png" id="22_lamp_002"]
+[ext_resource type="Texture2D" uid="uid://dhfyr82a3434w" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-003.png" id="23_lamp_003"]
+[ext_resource type="Texture2D" uid="uid://bi023vc4wo7wi" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-004.png" id="24_lamp_004"]
+[ext_resource type="Texture2D" uid="uid://50guxir757l4" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-005.png" id="25_lamp_005"]
+[ext_resource type="Texture2D" uid="uid://dcovg1eavdw0m" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-006.png" id="26_lamp_006"]
+[ext_resource type="Texture2D" uid="uid://c7t7lfgi2fj1c" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-007.png" id="27_lamp_007"]
+[ext_resource type="Texture2D" uid="uid://bpvw3ollefdb" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-008.png" id="28_lamp_008"]
+[ext_resource type="Texture2D" uid="uid://dshgg5r5uewxq" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-009.png" id="29_lamp_009"]
+[ext_resource type="Texture2D" uid="uid://568w08urj8m0" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-010.png" id="30_lamp_010"]
+[ext_resource type="Texture2D" uid="uid://dqbr5ksp6m1kp" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-011.png" id="31_lamp_011"]
+[ext_resource type="Texture2D" uid="uid://qbd0mdte5bfl" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-012.png" id="32_lamp_012"]
+[ext_resource type="Texture2D" uid="uid://c8flp88c5as4u" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-013.png" id="33_lamp_013"]
+[ext_resource type="Texture2D" uid="uid://b2nld6gdhc3ar" path="res://enemies/light_sensitive/animations/LampReact/ezgif-frame-014.png" id="34_lamp_014"]
+[ext_resource type="Texture2D" uid="uid://cphxgbxx68xpj" path="res://enemies/light_sensitive/animations/LampStan/ezgif-frame-001.png" id="35_lamp_stan_001"]
+[ext_resource type="Texture2D" uid="uid://bbjnhaqtf8wv7" path="res://enemies/light_sensitive/animations/LampStan/ezgif-frame-002.png" id="36_lamp_stan_002"]
+[ext_resource type="Texture2D" uid="uid://bdj3v5vmn674s" path="res://enemies/light_sensitive/animations/LampStan/ezgif-frame-003.png" id="37_lamp_stan_003"]
+[ext_resource type="Texture2D" uid="uid://bcloxo2f2phi2" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-019.png" id="38_flashlight_019"]
+[ext_resource type="Texture2D" uid="uid://bex4cmsv5nrev" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-020.png" id="39_flashlight_020"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
+size = Vector2(4044, 870)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lu5c6"]
+size = Vector2(624, 870)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_light_sensitive"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_flashlight_001")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_flashlight_002")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_flashlight_003")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_flashlight_004")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_flashlight_005")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_flashlight_006")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_flashlight_007")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_flashlight_008")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_flashlight_009")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_flashlight_010")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_flashlight_011")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_flashlight_012")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_flashlight_013")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_flashlight_014")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_flashlight_015")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_flashlight_016")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_flashlight_017")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_flashlight_018")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_flashlight_019")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_flashlight_020")
+}],
+"loop": false,
+"name": &"flashlight",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yagbc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_lamp_001")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_lamp_002")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_lamp_003")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_lamp_004")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lamp_005")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_lamp_006")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_lamp_007")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_lamp_008")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_lamp_009")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_lamp_010")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_lamp_011")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_lamp_012")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_lamp_013")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_lamp_014")
+}],
+"loop": false,
+"name": &"lamp_react",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("35_lamp_stan_001")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_lamp_stan_002")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_lamp_stan_003")
+}],
+"loop": true,
+"name": &"lamp_stan",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
+size = Vector2(520, 870)
+
+[node name="EnemyLightSensitive" type="CharacterBody2D"]
+light_mask = 2
+script = ExtResource("1_light_sensitive")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_nb6gf")
+
+[node name="HitboxArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+shape = SubResource("RectangleShape2D_lu5c6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 2
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_light_sensitive")
+animation = &"lamp_stan"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_8e3ao")
+disabled = true
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]
+[connection signal="body_exited" from="HitboxArea" to="." method="_on_hitbox_area_body_exited"]

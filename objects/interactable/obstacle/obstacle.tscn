@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" uid="uid://bgifwydigal0f" path="res://objects/interactable/obstacle/obstacle.gd" id="1_obstacle"]
+[ext_resource type="Script" uid="uid://cgs35voeng85l" path="res://objects/interactable/interactive_object.gd" id="2_interactive_object"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
+size = Vector2(200, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(240, 140)
+
+[node name="Obstacle" type="StaticBody2D"]
+script = ExtResource("1_obstacle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_block")
+
+[node name="InteractArea" type="Area2D" parent="."]
+script = ExtResource("2_interactive_object")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("RectangleShape2D_interact")

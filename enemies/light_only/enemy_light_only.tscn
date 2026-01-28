@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8tigiycrqn8"]
+
+[ext_resource type="Script" uid="uid://dcrtxffc0inb1" path="res://enemies/light_only/enemy_light_only.gd" id="1_light_only"]
+[ext_resource type="Texture2D" uid="uid://bnj7pe2mabwrx" path="res://enemies/light_only/sprites/Denis.png" id="2_6ora2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
+size = Vector2(2528, 870)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lu5c6"]
+size = Vector2(906, 870)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
+size = Vector2(606, 870)
+
+[node name="EnemyLightOnly" type="CharacterBody2D"]
+script = ExtResource("1_light_only")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_nb6gf")
+
+[node name="HitboxArea" type="Area2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+shape = SubResource("RectangleShape2D_lu5c6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_6ora2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_8e3ao")
+disabled = true
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]
+[connection signal="body_exited" from="HitboxArea" to="." method="_on_hitbox_area_body_exited"]

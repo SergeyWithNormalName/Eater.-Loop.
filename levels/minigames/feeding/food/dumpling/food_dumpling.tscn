@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctd8ulf2b7pu6"]
+
+[ext_resource type="Script" uid="uid://gygsji0chilg" path="res://levels/minigames/feeding/food/food_item.gd" id="1_45ci1"]
+[ext_resource type="Texture2D" uid="uid://d384jqltckn0j" path="res://levels/minigames/feeding/food/dumpling/Dumpling.png" id="2_dpqj1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j4b0v"]
+radius = 229.29669
+
+[node name="FoodItem" type="Area2D"]
+script = ExtResource("1_45ci1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.13807538, 0.1380753)
+texture = ExtResource("2_dpqj1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.205021, 0.20502092)
+shape = SubResource("CircleShape2D_j4b0v")

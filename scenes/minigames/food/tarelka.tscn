@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://u123hb175uht"]
-
-[ext_resource type="Texture2D" uid="uid://d1w4gue4yj7ms" path="res://textures/Tarelka.png" id="1_pcjoq"]
-
-[node name="Sprite2D" type="Sprite2D"]
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_pcjoq")

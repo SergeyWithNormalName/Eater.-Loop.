@@ -1,0 +1,133 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhtcp1vqommn4"]
+
+[ext_resource type="Script" uid="uid://cl6od1v1ieu2d" path="res://levels/menu/pause_menu.gd" id="1_pause_menu_script"]
+[ext_resource type="PackedScene" uid="uid://c84614sy3txek" path="res://levels/menu/settings_panel.tscn" id="2_settings_panel"]
+[ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://player/audio/FlashlightOnOff.wav" id="3_click_sfx"]
+[ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://player/audio/steps/steps1.wav" id="4_hover_sfx"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="5_menu_music"]
+[ext_resource type="PackedScene" uid="uid://bxjrvr1ri8lfh" path="res://levels/menu/main_menu.tscn" id="6_main_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 26.0
+content_margin_top = 20.0
+content_margin_right = 26.0
+content_margin_bottom = 20.0
+bg_color = Color(0.08, 0.08, 0.09, 0.85)
+border_color = Color(0.55, 0.45, 0.35, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="PauseMenuLayer" type="CanvasLayer"]
+process_mode = 3
+layer = 80
+
+[node name="PauseMenu" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pause_menu_script")
+main_menu_scene = ExtResource("6_main_menu")
+menu_music = ExtResource("5_menu_music")
+hover_sfx = ExtResource("4_hover_sfx")
+click_sfx = ExtResource("3_click_sfx")
+hover_sfx_volume_db = -24.0
+
+[node name="Dim" type="ColorRect" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="MainPanel" type="PanelContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/MainPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="PauseMenu/MainPanel/VBox"]
+layout_mode = 2
+text = "Пауза"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="PauseMenu/MainPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Продолжить"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Настройки"
+
+[node name="ExitMenuButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Выйти в меню"
+
+[node name="ExitGameButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Выйти из игры"
+
+[node name="SettingsPanel" parent="PauseMenu" instance=ExtResource("2_settings_panel")]
+
+[node name="ConfirmPanel" type="PanelContainer" parent="PauseMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/ConfirmPanel"]
+layout_mode = 2
+
+[node name="Message" type="Label" parent="PauseMenu/ConfirmPanel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="PauseMenu/ConfirmPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="YesButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Да"
+
+[node name="NoButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+layout_mode = 2
+text = "Нет"
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="PauseMenu"]
+bus = &"Sounds"

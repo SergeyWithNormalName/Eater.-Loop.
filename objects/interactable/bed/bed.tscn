@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb7ct4ybeeytr"]
+
+[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://objects/interactable/bed/bed.gd" id="1_bed_script"]
+[ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://objects/interactable/bed/Bed.png" id="2_jx3i1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5a0r"]
+size = Vector2(455, 149)
+
+[node name="Bed" type="Area2D"]
+script = ExtResource("1_bed_script")
+not_ate_message = "Не могу уснуть, мне нужно поесть"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.20233154, -0.49996948)
+shape = SubResource("RectangleShape2D_g5a0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.0320587, 0.2812729)
+scale = Vector2(0.5486593, 0.54865927)
+texture = ExtResource("2_jx3i1")

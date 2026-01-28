@@ -1,6 +1,38 @@
-# Godot 4+ specific ignores
+# --- Godot стандарт ---
 .godot/
-.DS_Store
+*.translation
+export_presets.cfg
 /android/
-/audio/
-/textures/
+
+# --- Игнорируем импорты (метафайлы Godot) ---
+# Если нет исходника, импорт файл не нужен
+*.import
+
+# --- Игнорируем ассеты (КАК ТЫ ПРОСИЛ) ---
+# Аудио
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aif
+*.aiff
+
+# Изображения и Текстуры
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.tga
+*.svg
+*.psd
+*.kra
+
+# 3D модели (на всякий случай)
+*.glb
+*.gltf
+*.obj
+*.blend
+
+# --- OS мусор ---
+.DS_Store
+Thumbs.db

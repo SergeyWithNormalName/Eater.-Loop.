@@ -11,30 +11,36 @@ config_version=5
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://b0rhqem0xcvbc"
+run/main_scene="uid://cc6ehxxoauhyn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="uid://bwxfalfqm6n1r"
-config/macos_native_icon="res://Иконка_предварительно.icns"
-config/windows_native_icon="res://Иконка_предварительно.ico"
+config/macos_native_icon="res://global/Иконка_предварительно.icns"
+config/windows_native_icon="res://global/Иконка_предварительно.ico"
 
 [autoload]
 
-GameState="*res://scripts/tehnical/game_state.gd"
-UIMessage="*res://scripts/tehnical/ui_message.gd"
-GameDirector="*res://scripts/tehnical/game_director.gd"
-SettingsManager="*res://scripts/tehnical/settings_manager.gd"
-MusicManager="*res://scripts/tehnical/music_manager.gd"
-PauseManager="*res://scripts/tehnical/pause_manager.gd"
-InteractionPrompts="*res://scenes/ui/interaction_prompts.tscn"
-StaminaBar="*res://scripts/tehnical/stamina_bar.gd"
-CursorManager="*res://scripts/tehnical/cursor_manager.gd"
-MinigameController="*res://scripts/tehnical/minigame_controller.gd"
+GameState="*res://levels/cycles/game_state.gd"
+UIMessage="*res://player/ui_message.gd"
+GameDirector="*res://levels/game_director.gd"
+SettingsManager="*res://levels/menu/settings_manager.gd"
+MusicManager="*res://levels/music_manager.gd"
+PauseManager="*res://levels/menu/pause_manager.gd"
+InteractionPrompts="*res://levels/ui/interaction_prompts.tscn"
+StaminaBar="*res://player/stamina_bar.gd"
+CursorManager="*res://levels/minigames/cursor_manager.gd"
+MinigameController="*res://levels/minigames/minigame_controller.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
+
+[file_customization]
+
+folder_colors={
+"res://levels/minigames/feeding/food/1_textures/": "red"
+}
 
 [input]
 

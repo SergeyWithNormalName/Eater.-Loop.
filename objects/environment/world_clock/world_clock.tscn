@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cundvm73iemvc"]
+
+[ext_resource type="Script" uid="uid://c3qey37gk0k76" path="res://objects/environment/world_clock/world_clock.gd" id="1_wcqiv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wcqiv"]
+font_size = 48
+
+[node name="WorldClock" type="Node2D"]
+script = ExtResource("1_wcqiv")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0:00"
+label_settings = SubResource("LabelSettings_wcqiv")
+horizontal_alignment = 1
