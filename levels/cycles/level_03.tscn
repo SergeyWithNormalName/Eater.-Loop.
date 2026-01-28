@@ -1,8 +1,8 @@
-[gd_scene load_steps=102 format=3 uid="uid://dnxt35x7beohh"]
+[gd_scene load_steps=96 format=3 uid="uid://dnxt35x7beohh"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_nyxq3"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
-[ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/allrooms/windows/Window2.png" id="2_8u1p6"]
+[ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="2_8u1p6"]
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://objects/interactable/door/door.gd" id="11_5lqof"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://objects/interactable/door/audio/door_locked1.wav" id="12_xddf6"]
 [ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://objects/interactable/door/audio/door_open1.wav" id="13_lu44e"]
@@ -18,20 +18,16 @@
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="21_56gvw"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="23_1dbsv"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="26_ew5nb"]
-[ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://objects/environment/sprites/kitchen/Frizzer.png" id="28_8u1p6"]
+[ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://objects/interactable/fridge/sprites/ClosedFridge.png" id="28_8u1p6"]
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://objects/interactable/fridge/audio/FridgeNoizeE.wav" id="28_rjgpn"]
-[ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/world_clock/world_clock.tscn" id="29_u0cdv"]
+[ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="29_u0cdv"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="30_gcw8w"]
-[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/allrooms/On-offer.png" id="31_rp640"]
-[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://objects/interactable/key/key.gd" id="32_g4aa3"]
-[ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="33_oof3a"]
-[ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://objects/interactable/note/note_object.gd" id="34_wym01"]
-[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/allrooms/Pozetka.png" id="35_msdij"]
+[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="31_rp640"]
+[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="35_msdij"]
 [ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://objects/environment/sprites/kitchen/Kitchen_garn.png" id="36_ye38f"]
-[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/allrooms/windows/Window3.png" id="37_su3dj"]
+[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="37_su3dj"]
 [ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://objects/environment/sprites/kitchen/Table.png" id="38_wcrpj"]
 [ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://objects/interactable/notebook/laptop.gd" id="39_dlgu2"]
-[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://objects/interactable/phone/phone.gd" id="40_styj6"]
 [ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://objects/interactable/notebook/NotebookOn.png" id="41_8u1p6"]
 [ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="41_nwnkj"]
 [ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="42_3s7a2"]
@@ -47,17 +43,17 @@
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="52_2s2vb"]
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="53_umjy2"]
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="54_w1nn3"]
-[ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/world_clock/Clock.png" id="55_baccg"]
+[ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="55_baccg"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="56_r0ktd"]
 [ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="57_qcqjf"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_hkd02"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_pileu"]
 [ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="60_3u7d0"]
-[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/allrooms/WallBOK.png" id="61_fyw5n"]
+[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/sprites/allrooms/WallBOK.png" id="61_fyw5n"]
 [ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="62_kke6i"]
 [ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="63_4gcof"]
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="64_mdh05"]
-[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/allrooms/OpenShtora.png" id="65_l57hk"]
+[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/sprites/allrooms/OpenShtora.png" id="65_l57hk"]
 [ext_resource type="Texture2D" uid="uid://dn0h8y0pxtrr3" path="res://objects/environment/sprites/toilet and bathroom/ToothPolka.png" id="66_2hmrf"]
 [ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://objects/environment/background/TilesFloor1.png" id="67_1u7cu"]
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="68_0xppu"]
@@ -81,7 +77,7 @@
 [ext_resource type="Texture2D" uid="uid://cnk05aysq31fk" path="res://objects/environment/background/decals/HoleInWall2.png" id="83_twaj4"]
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://objects/environment/background/decals/HoleInWall4.png" id="84_r2tj0"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://objects/environment/background/decals/HoleInWall1.png" id="85_r2tj0"]
-[ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://objects/environment/sprites/kitchen/Fridge.png" id="86_fridge"]
+[ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://objects/interactable/fridge/sprites/OpenFridge.png" id="86_fridge"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
@@ -93,12 +89,12 @@ size = Vector2(455, 149)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2yfbk"]
 size = Vector2(187.5, 370.36243)
 
-[sub_resource type="Gradient" id="Gradient_5lqof"]
+[sub_resource type="Gradient" id="Gradient_2oqmg"]
 offsets = PackedFloat32Array(0, 0.8534202, 1)
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xddf6"]
-gradient = SubResource("Gradient_5lqof")
+gradient = SubResource("Gradient_2oqmg")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
 shader = ExtResource("30_gcw8w")
@@ -106,29 +102,23 @@ shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqck0"]
-size = Vector2(130, 130)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nyxq3"]
 size = Vector2(166.8562, 267.75226)
 
-[sub_resource type="Gradient" id="Gradient_8u1p6"]
+[sub_resource type="Gradient" id="Gradient_n0mpn"]
 colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_twaj4"]
-gradient = SubResource("Gradient_8u1p6")
+gradient = SubResource("Gradient_n0mpn")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.75, 0)
 
-[sub_resource type="Gradient" id="Gradient_twaj4"]
+[sub_resource type="Gradient" id="Gradient_lftuy"]
 colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0.92156863, 0.9411765, 0.9411765, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_r2tj0"]
-gradient = SubResource("Gradient_twaj4")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tw5p7"]
-size = Vector2(509.28296, 205.022)
+gradient = SubResource("Gradient_lftuy")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rdh85"]
 size = Vector2(547.3623, 503.50735)
@@ -419,10 +409,6 @@ stream = ExtResource("28_rjgpn")
 volume_db = -18.0
 autoplay = true
 
-[node name="WorldClock2" parent="." instance=ExtResource("29_u0cdv")]
-position = Vector2(9236, -756)
-start_game_time = "0:07"
-
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
 color = Color(0.2627451, 0.2627451, 0.30588236, 1)
@@ -442,28 +428,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-1735.2787, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("31_rp640")
-
-[node name="TestKey" type="Area2D" parent="."]
-position = Vector2(3702, -536)
-script = ExtResource("32_g4aa3")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey"]
-shape = SubResource("RectangleShape2D_aqck0")
-
-[node name="Sprite2D" type="Sprite2D" parent="TestKey"]
-texture = ExtResource("33_oof3a")
-
-[node name="TestNote" type="Area2D" parent="."]
-position = Vector2(7082, -533)
-script = ExtResource("34_wym01")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote"]
-shape = SubResource("RectangleShape2D_aqck0")
-
-[node name="Sprite2D" type="Sprite2D" parent="TestNote"]
-texture = ExtResource("33_oof3a")
 
 [node name="OnOffer2" type="Sprite2D" parent="."]
 position = Vector2(7694, 29)
@@ -532,21 +496,6 @@ texture = SubResource("GradientTexture2D_twaj4")
 position = Vector2(19.084557, -94.877205)
 scale = Vector2(1.686933, 0.88606596)
 texture = SubResource("GradientTexture2D_r2tj0")
-
-[node name="Phone" type="Area2D" parent="."]
-position = Vector2(7976, -502)
-scale = Vector2(0.9169747, 0.91697466)
-script = ExtResource("40_styj6")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone"]
-position = Vector2(0.5439453, -1.3511658)
-scale = Vector2(0.9999999, 1)
-shape = SubResource("RectangleShape2D_tw5p7")
-
-[node name="Sprite2D" type="Sprite2D" parent="Phone"]
-z_index = 7
-scale = Vector2(0.99999994, 1)
-texture = ExtResource("38_wcrpj")
 
 [node name="WashMachine" type="Sprite2D" parent="."]
 z_index = -2
@@ -1541,7 +1490,3 @@ texture = ExtResource("81_8u1p6")
 [connection signal="body_exited" from="Bed" to="Bed" method="_on_body_exited"]
 [connection signal="body_entered" from="Frizzer" to="Frizzer" method="_on_body_entered"]
 [connection signal="body_exited" from="Frizzer" to="Frizzer" method="_on_body_exited"]
-[connection signal="body_entered" from="TestKey" to="TestKey" method="_on_body_entered"]
-[connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]
-[connection signal="body_entered" from="TestNote" to="TestNote" method="_on_body_entered"]
-[connection signal="body_exited" from="TestNote" to="TestNote" method="_on_body_exited"]

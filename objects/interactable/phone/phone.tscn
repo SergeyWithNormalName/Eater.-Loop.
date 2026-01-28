@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dg7nf0g5v4gr5"]
+
+[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://objects/interactable/phone/phone.gd" id="1_5ict8"]
+[ext_resource type="Texture2D" uid="uid://brqwkolpp0pql" path="res://objects/interactable/phone/phone.png" id="1_kfybd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ict8"]
+size = Vector2(326.0703, 205.022)
+
+[node name="Phone" type="Area2D"]
+script = ExtResource("1_5ict8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5439453, -1.3512573)
+scale = Vector2(0.9999998, 1)
+shape = SubResource("RectangleShape2D_5ict8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 7
+scale = Vector2(0.32518005, 0.32518)
+texture = ExtResource("1_kfybd")

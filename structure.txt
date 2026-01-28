@@ -394,34 +394,6 @@
 │   └── TypeSilentHill.wav.import
 ├── objects
 │   ├── environment
-│   │   ├── allrooms
-│   │   │   ├── windows
-│   │   │   │   ├── Window1.png
-│   │   │   │   ├── Window1.png.import
-│   │   │   │   ├── Window2.png
-│   │   │   │   ├── Window2.png.import
-│   │   │   │   ├── Window3.png
-│   │   │   │   ├── Window3.png.import
-│   │   │   │   ├── WindowKilled1.png
-│   │   │   │   ├── WindowKilled1.png.import
-│   │   │   │   ├── WindowKilled2.png
-│   │   │   │   ├── WindowKilled2.png.import
-│   │   │   │   ├── WindowKilled3.png
-│   │   │   │   ├── WindowKilled3.png.import
-│   │   │   │   ├── WindowWithMonster.png
-│   │   │   │   └── WindowWithMonster.png.import
-│   │   │   ├── Balka.png
-│   │   │   ├── Balka.png.import
-│   │   │   ├── On-offer.png
-│   │   │   ├── On-offer.png.import
-│   │   │   ├── OpenShtora.png
-│   │   │   ├── OpenShtora.png.import
-│   │   │   ├── Pozetka.png
-│   │   │   ├── Pozetka.png.import
-│   │   │   ├── Shtora.png
-│   │   │   ├── Shtora.png.import
-│   │   │   ├── WallBOK.png
-│   │   │   └── WallBOK.png.import
 │   │   ├── background
 │   │   │   ├── decals
 │   │   │   │   ├── HoleInWall1.png
@@ -452,7 +424,42 @@
 │   │   │   ├── TilesFloor1.png.import
 │   │   │   ├── ToiletTiles.png
 │   │   │   └── ToiletTiles.png.import
+│   │   ├── smart
+│   │   │   └── world_clock
+│   │   │       ├── Clock.png
+│   │   │       ├── Clock.png.import
+│   │   │       ├── world_clock.gd
+│   │   │       ├── world_clock.gd.uid
+│   │   │       └── world_clock.tscn
 │   │   ├── sprites
+│   │   │   ├── allrooms
+│   │   │   │   ├── windows
+│   │   │   │   │   ├── Window1.png
+│   │   │   │   │   ├── Window1.png.import
+│   │   │   │   │   ├── Window2.png
+│   │   │   │   │   ├── Window2.png.import
+│   │   │   │   │   ├── Window3.png
+│   │   │   │   │   ├── Window3.png.import
+│   │   │   │   │   ├── WindowKilled1.png
+│   │   │   │   │   ├── WindowKilled1.png.import
+│   │   │   │   │   ├── WindowKilled2.png
+│   │   │   │   │   ├── WindowKilled2.png.import
+│   │   │   │   │   ├── WindowKilled3.png
+│   │   │   │   │   ├── WindowKilled3.png.import
+│   │   │   │   │   ├── WindowWithMonster.png
+│   │   │   │   │   └── WindowWithMonster.png.import
+│   │   │   │   ├── Balka.png
+│   │   │   │   ├── Balka.png.import
+│   │   │   │   ├── On-offer.png
+│   │   │   │   ├── On-offer.png.import
+│   │   │   │   ├── OpenShtora.png
+│   │   │   │   ├── OpenShtora.png.import
+│   │   │   │   ├── Pozetka.png
+│   │   │   │   ├── Pozetka.png.import
+│   │   │   │   ├── Shtora.png
+│   │   │   │   ├── Shtora.png.import
+│   │   │   │   ├── WallBOK.png
+│   │   │   │   └── WallBOK.png.import
 │   │   │   ├── bedroom
 │   │   │   │   ├── ChairBedroom.png
 │   │   │   │   ├── ChairBedroom.png.import
@@ -520,18 +527,10 @@
 │   │   │   │   ├── Chair_2.png.import
 │   │   │   │   ├── CookingGas.png
 │   │   │   │   ├── CookingGas.png.import
-│   │   │   │   ├── Fridge.png
-│   │   │   │   ├── Fridge.png.import
-│   │   │   │   ├── FridgeOnChain.png
-│   │   │   │   ├── FridgeOnChain.png.import
-│   │   │   │   ├── Frizzer.png
-│   │   │   │   ├── Frizzer.png.import
 │   │   │   │   ├── High_kitchen.png
 │   │   │   │   ├── High_kitchen.png.import
 │   │   │   │   ├── Kitchen_garn.png
 │   │   │   │   ├── Kitchen_garn.png.import
-│   │   │   │   ├── LockedFridge.png
-│   │   │   │   ├── LockedFridge.png.import
 │   │   │   │   ├── Table.png
 │   │   │   │   ├── Table.png.import
 │   │   │   │   ├── Urna.png
@@ -555,12 +554,9 @@
 │   │   │       ├── Yorhic.png.import
 │   │   │       ├── bath.png
 │   │   │       └── bath.png.import
-│   │   └── world_clock
-│   │       ├── Clock.png
-│   │       ├── Clock.png.import
-│   │       ├── world_clock.gd
-│   │       ├── world_clock.gd.uid
-│   │       └── world_clock.tscn
+│   │   └── walls
+│   │       ├── wall_horizontal.tscn
+│   │       └── wall_vertical.tscn
 │   └── interactable
 │       ├── bed
 │       │   ├── Bed.png
@@ -602,10 +598,20 @@
 │       │   │   ├── FridgeNoizeE.wav.import
 │       │   │   ├── OpenFridgeE.wav
 │       │   │   └── OpenFridgeE.wav.import
+│       │   ├── sprites
+│       │   │   ├── ClosedFridge.png
+│       │   │   ├── ClosedFridge.png.import
+│       │   │   ├── FridgeOnChain.png
+│       │   │   ├── FridgeOnChain.png.import
+│       │   │   ├── LockedFridge.png
+│       │   │   ├── LockedFridge.png.import
+│       │   │   ├── OpenFridge.png
+│       │   │   └── OpenFridge.png.import
 │       │   ├── code_lock.gd
 │       │   ├── code_lock.gd.uid
 │       │   ├── fridge.gd
-│       │   └── fridge.gd.uid
+│       │   ├── fridge.gd.uid
+│       │   └── fridge.tscn
 │       ├── generator
 │       │   ├── generator.gd
 │       │   ├── generator.gd.uid
@@ -632,7 +638,8 @@
 │       │   ├── NotebookOn.png
 │       │   ├── NotebookOn.png.import
 │       │   ├── laptop.gd
-│       │   └── laptop.gd.uid
+│       │   ├── laptop.gd.uid
+│       │   └── laptop.tscn
 │       ├── obstacle
 │       │   ├── obstacle.gd
 │       │   ├── obstacle.gd.uid
@@ -641,7 +648,10 @@
 │       │   ├── JokeAboutChicken.wav
 │       │   ├── JokeAboutChicken.wav.import
 │       │   ├── phone.gd
-│       │   └── phone.gd.uid
+│       │   ├── phone.gd.uid
+│       │   ├── phone.png
+│       │   ├── phone.png.import
+│       │   └── phone.tscn
 │       ├── search_spot
 │       │   ├── search_spot.gd
 │       │   └── search_spot.gd.uid
@@ -727,4 +737,4 @@
 ├── project.godot
 └── structure.txt
 
-76 directories, 652 files
+79 directories, 659 files

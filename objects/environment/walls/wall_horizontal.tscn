@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://6b386xyyuk64"]
+
+[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/sprites/allrooms/WallBOK.png" id="1_urc66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_to5iu"]
+size = Vector2(111.6167, 966.4249)
+
+[node name="Wall" type="StaticBody2D"]
+scale = Vector2(1.239, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+shape = SubResource("RectangleShape2D_to5iu")
+
+[node name="WallBok" type="Sprite2D" parent="."]
+light_mask = 2
+rotation = 1.5707964
+scale = Vector2(0.38524616, 0.6557377)
+texture = ExtResource("1_urc66")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cundvm73iemvc"]
 
-[ext_resource type="Script" uid="uid://c3qey37gk0k76" path="res://objects/environment/world_clock/world_clock.gd" id="1_wcqiv"]
+[ext_resource type="Script" uid="uid://c3qey37gk0k76" path="res://objects/environment/smart/world_clock/world_clock.gd" id="1_wcqiv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wcqiv"]
 font_size = 48
