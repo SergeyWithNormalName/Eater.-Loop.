@@ -553,7 +553,8 @@
 │   │   │       ├── Yorhic.png
 │   │   │       ├── Yorhic.png.import
 │   │   │       ├── bath.png
-│   │   │       └── bath.png.import
+│   │   │       ├── bath.png.import
+│   │   │       └── wash.tscn
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
@@ -737,4 +738,4 @@
 ├── project.godot
 └── structure.txt
 
-79 directories, 659 files
+79 directories, 660 files

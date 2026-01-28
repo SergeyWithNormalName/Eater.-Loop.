@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dly158l2vtanl"]
+
+[ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://objects/environment/sprites/toilet and bathroom/bath.png" id="1_1jrxb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_88ulv"]
+size = Vector2(547.3623, 503.50735)
+
+[node name="Wash" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+scale = Vector2(0.616, 0.616)
+texture = ExtResource("1_1jrxb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.4355469, 45.47809)
+scale = Vector2(0.616, 0.616)
+shape = SubResource("RectangleShape2D_88ulv")

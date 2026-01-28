@@ -1,11 +1,9 @@
-extends "res://objects/interactable/interactive_object.gd"
-## Сообщение, если нет электричества.
-@export_multiline var no_power_message: String = "Нет электричества."
+extends InteractiveObject # Убедись, что наследуешься от обновленного класса
 
 @export_group("Lamp Settings")
 ## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
-## Включена ли лампа при старте.
+## Включена ли лампа при старте (если есть электричество).
 @export var start_on: bool = false
 ## Звук включения лампы.
 @export var turn_on_sfx: AudioStream
@@ -46,15 +44,16 @@ extends "res://objects/interactable/interactive_object.gd"
 ## Текстура включенной лампы.
 @export var on_texture: Texture2D
 
+# Внутренние переменные
 var _is_on: bool = false
+var _has_power: bool = false # <-- Новая переменная вместо GameState
 var _light: PointLight2D = null
 var _sfx_player: AudioStreamPlayer2D
 var _sprite: Sprite2D = null
 
 func _ready() -> void:
-	super._ready()
-	input_pickable = false
-
+	super._ready() # Вызов ready базового класса (важно для Area2D)
+	
 	_light = get_node_or_null(light_node) as PointLight2D
 	if _light:
 		_apply_light_settings()
@@ -65,9 +64,6 @@ func _ready() -> void:
 	if _sprite and off_texture == null:
 		off_texture = _sprite.texture
 
-	_is_on = start_on
-	_update_light_enabled(false)
-
 	_sfx_player = AudioStreamPlayer2D.new()
 	_sfx_player.bus = "Sounds"
 	_sfx_player.volume_db = turn_on_volume_db
@@ -77,21 +73,52 @@ func _ready() -> void:
 		add_to_group("bedroom_lamp")
 	if not is_in_group("lamp"):
 		add_to_group("lamp")
+	
+	# По умолчанию электричества нет, пока генератор не включит
+	_update_light_enabled(false) 
 
-	if GameState and GameState.has_signal("electricity_changed"):
-		GameState.electricity_changed.connect(_on_electricity_changed)
+# --- ЭТОТ МЕТОД ВЫЗЫВАЕТ ГЕНЕРАТОР ---
+func turn_on() -> void:
+	_has_power = true
+	_is_on = true # Сразу включаем, когда дали ток
+	_update_light_enabled(true) # true = проиграть звук
 
 func _get_interact_action() -> String:
-	return "lamp_switch"
+	# Если у тебя в Input Map настроено действие "lamp_switch", оставь как есть.
+	# Если нет, используй стандартный "interact"
+	return "lamp_switch" 
 
 func _on_interact() -> void:
 	_toggle()
 
-func _process(_delta: float) -> void:
-	if _light == null:
+func _toggle() -> void:
+	# Если нет питания — выводим сообщение из InteractiveObject
+	if not _has_power:
+		# Можно использовать встроенный locked_message базового класса,
+		# но у тебя тут кастомное сообщение было, оставим его вызов через UIMessage
+		if UIMessage:
+			UIMessage.show_message("Нет электричества.")
 		return
-	if not _light.enabled:
+
+	_is_on = !_is_on
+	_update_light_enabled(true)
+	_update_prompt()
+
+func _update_light_enabled(play_sound: bool) -> void:
+	var should_enable = _is_on and _has_power
+	var was_enabled = false
+	if _light != null:
+		was_enabled = _light.enabled
+		_light.enabled = should_enable
 		_reset_light_energy()
+		# Играем звук только если состояние реально изменилось
+		if play_sound and was_enabled != should_enable:
+			_play_switch_sound()
+	_update_sprite(should_enable)
+	_update_prompt()
+
+func _process(_delta: float) -> void:
+	if _light == null or not _light.enabled:
 		return
 	if not flicker_enabled:
 		_reset_light_energy()
@@ -118,43 +145,9 @@ func _hide_prompt() -> void:
 		InteractionPrompts.hide_lamp(self)
 
 func _get_lamp_prompt_text() -> String:
-	if InteractionPrompts:
+	if InteractionPrompts and InteractionPrompts.has_method("get_default_lamp_text"):
 		return InteractionPrompts.get_default_lamp_text(_is_on)
 	return "Q — выключить свет" if _is_on else "Q — включить свет"
-
-func _toggle() -> void:
-	if _is_on:
-		_is_on = false
-		_update_light_enabled(false)
-		_play_switch_sound()
-		_update_prompt()
-		return
-
-	if not _has_power():
-		UIMessage.show_text(no_power_message)
-		return
-
-	_is_on = true
-	_update_light_enabled(true)
-	_play_switch_sound()
-	_update_prompt()
-
-func _has_power() -> bool:
-	if GameState == null:
-		return true
-	return GameState.electricity_on
-
-func _update_light_enabled(play_sound: bool) -> void:
-	var should_enable = _is_on and _has_power()
-	var was_enabled = false
-	if _light != null:
-		was_enabled = _light.enabled
-		_light.enabled = should_enable
-		_reset_light_energy()
-		if play_sound and was_enabled != should_enable:
-			_play_switch_sound()
-	_update_sprite(should_enable)
-	_update_prompt()
 
 func _play_switch_sound() -> void:
 	if turn_on_sfx == null:
@@ -174,20 +167,15 @@ func _apply_light_settings() -> void:
 	_update_light_range()
 
 func _update_light_range() -> void:
-	if _light == null:
-		return
-	if _light.texture == null:
+	if _light == null or _light.texture == null:
 		return
 	var base_radius = max(_light.texture.get_width(), _light.texture.get_height()) * 0.5
-	if base_radius <= 0.0:
-		return
+	if base_radius <= 0.0: return
 	var range_val = max(1.0, light_range)
 	_light.texture_scale = range_val / base_radius
 
 func _reset_light_energy() -> void:
-	if _light == null:
-		return
-	if _light.energy != light_energy:
+	if _light != null and _light.energy != light_energy:
 		_light.energy = light_energy
 
 func _update_sprite(is_lit: bool) -> void:
@@ -198,13 +186,8 @@ func _update_sprite(is_lit: bool) -> void:
 	elif off_texture != null:
 		_sprite.texture = off_texture
 
-func _on_electricity_changed(_electricity_on: bool) -> void:
-	_update_light_enabled(true)
-
-func is_light_active() -> bool:
-	return _light != null and _light.enabled
-
 func _update_prompt() -> void:
-	if not is_player_in_range():
-		return
-	_show_prompt()
+	if is_player_in_range():
+		_show_prompt()
+		
+		

@@ -8,6 +8,7 @@ class_name PropertyChange
 @export_enum(
 	"is_locked",
 	"locked_message",
+	"door_locked_message",
 	"visible",
 	"enabled",
 	"energy",

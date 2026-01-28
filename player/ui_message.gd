@@ -280,6 +280,9 @@ func show_text(text: String, duration: float = -1.0) -> void:
 	_label.visible = true
 	_timer.start(duration if duration > 0.0 else default_duration)
 
+func show_message(text: String, duration: float = -1.0) -> void:
+	show_text(text, duration)
+
 func show_subtitle(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":

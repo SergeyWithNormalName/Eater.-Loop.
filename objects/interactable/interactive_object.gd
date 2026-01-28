@@ -1,38 +1,82 @@
 extends Area2D
+class_name InteractiveObject
 
-## Базовый класс для интерактивных объектов.
-##
-## Реализует:
-## - обработку зоны взаимодействия
-## - отображение подсказки
-## - базовую обработку ввода
-##
-## Переопределите:
-## - _on_interact() для действия
-## - _get_interact_action() для другой кнопки
-## - _show_prompt() / _hide_prompt() для кастомных подсказок
+# --- СИГНАЛЫ ---
+signal player_entered(player: Node)
+signal player_exited(player: Node)
+signal interaction_requested(player: Node)
+signal interaction_finished # <--- НОВЫЙ СИГНАЛ: для цепочек событий
 
+# --- НАСТРОЙКИ ВЗАИМОДЕЙСТВИЯ (СТАРЫЕ) ---
 @export_group("Interaction")
 ## Узел Area2D для зоны взаимодействия (пусто — использовать сам объект).
 @export var interact_area_node: NodePath = NodePath("")
-## Текст подсказки взаимодействия (если пусто — дефолтный текст).
+## Текст подсказки взаимодействия.
 @export var prompt_text: String = ""
 ## Показывать подсказку автоматически при входе в зону.
 @export var auto_prompt: bool = true
 ## Обрабатывать ввод автоматически.
 @export var handle_input: bool = true
 
-signal player_entered(player: Node)
-signal player_exited(player: Node)
-signal interaction_requested(player: Node)
+# --- НОВЫЕ НАСТРОЙКИ (ЗАВИСИМОСТИ) ---
+@export_group("Dependency System")
+## Если true, объект помечается выполненным после первого использования
+@export var one_shot: bool = false
+## Объект, который должен быть выполнен перед использованием этого
+@export var dependency_object: InteractiveObject 
+## Сообщение, если зависимость не выполнена
+@export var locked_message: String = "Сначала нужно сделать что-то другое..."
 
+# --- ВНУТРЕННИЕ ПЕРЕМЕННЫЕ ---
 var _interact_area: Area2D = null
 var _player_in_range: Node = null
 var _prompts_enabled: bool = true
+var is_completed: bool = false # <--- ФЛАГ: Выполнен объект или нет
 
 func _ready() -> void:
 	input_pickable = false
 	_setup_interaction_area()
+
+# --- ЛОГИКА ВЗАИМОДЕЙСТВИЯ ---
+
+# Этот метод вызывает движок при нажатии кнопки (из _unhandled_input)
+func request_interact() -> void:
+	if not _can_interact():
+		return
+	
+	# 1. ПРОВЕРКА ЗАВИСИМОСТИ (НОВАЯ ЧАСТЬ)
+	if dependency_object != null:
+		if not dependency_object.is_completed:
+			# Если зависимость не выполнена, показываем ошибку и выходим
+			_show_locked_message()
+			return
+
+	# 2. ЕСЛИ ВСЁ ОК — ЗАПУСКАЕМ ДЕЙСТВИЕ
+	interaction_requested.emit(_player_in_range)
+	_on_interact()
+	
+	# 3. ЕСЛИ ОБЪЕКТ ОДНОРАЗОВЫЙ
+	if one_shot:
+		complete_interaction()
+
+# Вызывай это в дочерних скриптах, когда действие успешно завершено
+func complete_interaction() -> void:
+	is_completed = true
+	interaction_finished.emit()
+
+# Переопределяй этот метод в наследниках (Frizzer, Generator, Laptop)
+func _on_interact() -> void:
+	pass
+
+# Показ сообщения о блокировке
+func _show_locked_message() -> void:
+	# Используем твою систему UIMessage
+	if UIMessage and UIMessage.has_method("show_message"):
+		UIMessage.show_message(locked_message)
+	else:
+		print("LOCKED: " + locked_message)
+
+# --- ИНФРАСТРУКТУРА (ОСТАВЛЯЕМ БЕЗ ИЗМЕНЕНИЙ) ---
 
 func _setup_interaction_area() -> void:
 	_interact_area = get_node_or_null(interact_area_node) as Area2D
@@ -52,17 +96,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(_get_interact_action()):
 		request_interact()
 
-func request_interact() -> void:
-	if not _can_interact():
-		return
-	interaction_requested.emit(_player_in_range)
-	_on_interact()
-
 func _can_interact() -> bool:
 	return true
-
-func _on_interact() -> void:
-	pass
 
 func _get_interact_action() -> String:
 	return "interact"
@@ -115,3 +150,5 @@ func set_prompts_enabled(enabled: bool) -> void:
 		_hide_prompt()
 	elif _player_in_range != null:
 		_show_prompt()
+		
+		

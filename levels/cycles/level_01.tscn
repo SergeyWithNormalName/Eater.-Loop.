@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=80 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_bij4o"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="13_bij4o"]
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://objects/interactable/door/sprites/DoorExit.png" id="14_m3n5y"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="15_qr0f4"]
+[ext_resource type="PackedScene" uid="uid://dly158l2vtanl" path="res://objects/environment/sprites/toilet and bathroom/wash.tscn" id="16_1u7l1"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://objects/interactable/door/sprites/DoorToiletInside.png" id="16_4cwao"]
 [ext_resource type="PackedScene" uid="uid://cuhcdtpyoi3mu" path="res://levels/minigames/feeding/food/cookie/food_cookie_2.tscn" id="16_j5rey"]
 [ext_resource type="PackedScene" uid="uid://bx5bjpmgnq1d5" path="res://levels/minigames/feeding/food/cookie/food_cookie_1.tscn" id="16_luqlq"]
@@ -32,7 +33,6 @@
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://objects/interactable/fridge/audio/FridgeNoizeE.wav" id="28_g1wwn"]
 [ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="29_ndvd2"]
 [ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="37_75rkc"]
-[ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://objects/environment/sprites/toilet and bathroom/bath.png" id="44_aotug"]
 [ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://objects/environment/sprites/kitchen/Chair_1.png" id="45_4cwao"]
 [ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://objects/environment/sprites/kitchen/Chair_2.png" id="46_kmmfc"]
 [ext_resource type="Texture2D" uid="uid://bsol5jiwykiso" path="res://objects/environment/sprites/kitchen/High_kitchen.png" id="47_aotug"]
@@ -44,7 +44,6 @@
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="54_mn4je"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="55_tgt7k"]
 [ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="56_tgt7k"]
-[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/sprites/allrooms/WallBOK.png" id="57_pgutp"]
 [ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="59_lty6u"]
 [ext_resource type="PackedScene" uid="uid://c06wvx5ppi7g7" path="res://objects/environment/walls/wall_vertical.tscn" id="60_3lcwr"]
 [ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="60_gklq2"]
@@ -80,15 +79,6 @@ shader = ExtResource("18_wnv1a")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2g1e"]
-size = Vector2(111.6167, 1199.4946)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nshje"]
-size = Vector2(547.3623, 503.50735)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgutp"]
-size = Vector2(111.6167, 966.4249)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cr2eh"]
 size = Vector2(187.5, 370.36243)
@@ -153,77 +143,29 @@ texture = ExtResource("68_s5d4v")
 
 [node name="Walls" type="Node2D" parent="Bathroom"]
 
-[node name="WallRoof20" type="StaticBody2D" parent="Bathroom/Walls"]
-position = Vector2(13909, -275)
-rotation = -1.5707964
-scale = Vector2(0.385, 0.46)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom/Walls/WallRoof20"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Bathroom/Walls/WallRoof20"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallRoof22" type="StaticBody2D" parent="Bathroom/Walls"]
-position = Vector2(14445, -275)
-rotation = -1.5707964
-scale = Vector2(0.385, 0.46)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom/Walls/WallRoof22"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Bathroom/Walls/WallRoof22"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallRoof21" type="StaticBody2D" parent="Bathroom/Walls"]
-position = Vector2(13909, 398.99994)
-rotation = -1.5707964
-scale = Vector2(0.385, 0.46)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom/Walls/WallRoof21"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Bathroom/Walls/WallRoof21"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallRoof23" type="StaticBody2D" parent="Bathroom/Walls"]
-position = Vector2(14447, 399)
-rotation = -1.5707964
-scale = Vector2(0.385, 0.46)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom/Walls/WallRoof23"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Bathroom/Walls/WallRoof23"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallLeft3" parent="Bathroom/Walls" instance=ExtResource("60_3lcwr")]
+[node name="WallRight" parent="Bathroom/Walls" instance=ExtResource("60_3lcwr")]
 z_index = 10
 position = Vector2(14666, 63.860657)
 
-[node name="WallLeft2" parent="Bathroom/Walls" instance=ExtResource("60_3lcwr")]
+[node name="WallLeft" parent="Bathroom/Walls" instance=ExtResource("60_3lcwr")]
 z_index = 10
-position = Vector2(13615, 63.860657)
+position = Vector2(13614, 64)
+
+[node name="WallAbove_1" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(14347, -271)
+scale = Vector2(1.065, 1)
+
+[node name="WallAbove_2" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(13931, -271)
+scale = Vector2(1.065, 1)
+
+[node name="WallAbove_3" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(14347, 400)
+scale = Vector2(1.065, 1)
+
+[node name="WallAbove_4" parent="Bathroom/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(13931, 400)
+scale = Vector2(1.065, 1)
 
 [node name="Sprites" type="Node2D" parent="Bathroom"]
 
@@ -260,24 +202,25 @@ position = Vector2(13906, 46.879997)
 scale = Vector2(0.18251042, 0.18251051)
 texture = ExtResource("66_ompdt")
 
-[node name="Wash" type="StaticBody2D" parent="Bathroom/Sprites"]
+[node name="Wash" parent="Bathroom/Sprites" instance=ExtResource("16_1u7l1")]
 position = Vector2(14479, 196)
-scale = Vector2(0.61568123, 0.61568123)
-
-[node name="Sprite2D" type="Sprite2D" parent="Bathroom/Sprites/Wash"]
-z_index = -2
-texture = ExtResource("44_aotug")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bathroom/Sprites/Wash"]
-position = Vector2(-2.4355469, 45.47809)
-shape = SubResource("RectangleShape2D_nshje")
 
 [node name="InteractableObjects" type="Node2D" parent="Bathroom"]
 
 [node name="Door(InBathroom)" parent="Bathroom/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(14127.999, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBathroom)")
+use_scene_change = null
 door_texture = ExtResource("16_4cwao")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Toilet" type="Node2D" parent="."]
 position = Vector2(9294, 0)
@@ -310,61 +253,21 @@ texture = ExtResource("68_s5d4v")
 
 [node name="Walls" type="Node2D" parent="Toilet"]
 
-[node name="WallEnd5" type="StaticBody2D" parent="Toilet/Walls"]
-position = Vector2(17008, 63.860657)
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
+[node name="WallLeft" parent="Toilet/Walls" instance=ExtResource("60_3lcwr")]
+z_index = 10
+position = Vector2(16371, 64)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Toilet/Walls/WallEnd5"]
-shape = SubResource("RectangleShape2D_pgutp")
+[node name="WallRight" parent="Toilet/Walls" instance=ExtResource("60_3lcwr")]
+z_index = 10
+position = Vector2(17006, 64)
 
-[node name="WallBok" type="Sprite2D" parent="Toilet/Walls/WallEnd5"]
-light_mask = 2
-texture = ExtResource("57_pgutp")
+[node name="WallBelow" parent="Toilet/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(16688, 400)
+scale = Vector2(1.065, 1)
 
-[node name="WallRoof18" type="StaticBody2D" parent="Toilet/Walls"]
-position = Vector2(16735, -275)
-rotation = -1.5707964
-scale = Vector2(0.385, 0.562)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Toilet/Walls/WallRoof18"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Toilet/Walls/WallRoof18"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallRoof19" type="StaticBody2D" parent="Toilet/Walls"]
-position = Vector2(16735, 399)
-rotation = -1.5707964
-scale = Vector2(0.485, 0.562)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Toilet/Walls/WallRoof19"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_w2g1e")
-
-[node name="WallBok" type="Sprite2D" parent="Toilet/Walls/WallRoof19"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("57_pgutp")
-
-[node name="WallEnd6" type="StaticBody2D" parent="Toilet/Walls"]
-position = Vector2(16372, 63.860657)
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Toilet/Walls/WallEnd6"]
-shape = SubResource("RectangleShape2D_pgutp")
-
-[node name="WallBok" type="Sprite2D" parent="Toilet/Walls/WallEnd6"]
-light_mask = 2
-texture = ExtResource("57_pgutp")
+[node name="WallAbove" parent="Toilet/Walls" instance=ExtResource("61_rr8bk")]
+position = Vector2(16688, -271)
+scale = Vector2(1.065, 1)
 
 [node name="Sprites" type="Node2D" parent="Toilet"]
 
@@ -398,8 +301,18 @@ texture = ExtResource("60_gklq2")
 
 [node name="Door(InToilet)" parent="Toilet/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(16825, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToToilet)")
+use_scene_change = null
 door_texture = ExtResource("16_4cwao")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Hall" type="Node2D" parent="."]
 
@@ -784,27 +697,76 @@ bus = &"Sounds"
 
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(8434.125, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
 target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
+use_scene_change = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(8818.125, 83)
 is_locked = true
-locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+target_marker = null
+use_scene_change = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(6699, 83)
 is_locked = true
-locked_message = "Мне незачем выходить на улицу"
+door_locked_message = "Мне незачем выходить на улицу"
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+target_marker = null
+use_scene_change = null
 door_texture = ExtResource("14_m3n5y")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(7515.125, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+target_marker = null
+use_scene_change = null
 door_texture = ExtResource("15_qr0f4")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(7832.125, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
 target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
+use_scene_change = null
 door_texture = ExtResource("15_qr0f4")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Bedroom" type="Node2D" parent="."]
 
@@ -1020,7 +982,17 @@ texture = SubResource("GradientTexture2D_pgutp")
 
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(-1581, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
+use_scene_change = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("74_goh1n")]
 position = Vector2(-2420, 226)

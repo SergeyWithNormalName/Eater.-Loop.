@@ -1,76 +1,59 @@
-extends "res://objects/interactable/interactive_object.gd"
+extends InteractiveObject
 
-@export_group("Minigame")
-## Сцена мини-игры.
+@export_group("Minigame (Feeding)")
+## Сцена мини-игры (еда).
 @export var minigame_scene: PackedScene
 ## Сцена еды (для мини-игры).
 @export var food_scene: PackedScene
-## Набор сцен еды (если задан, используется вместо одиночной сцены).
+## Набор сцен еды (альтернатива одиночной сцене).
 @export var food_scenes: Array[PackedScene] = []
 ## Текстура лица Андрея.
 @export var andrey_face: Texture2D
-## Количество еды в мини-игре.
+## Количество еды.
 @export var food_count: int = 5
-## Фоновая музыка мини-игры.
+## Музыка и звуки.
 @export var bg_music: AudioStream
-## Звук победы.
 @export var win_sound: AudioStream
-## Звук поедания.
 @export var eat_sound: AudioStream
-## Текстура фона мини-игры.
 @export var background_texture: Texture2D
 
-@export_group("Access")
-## Требовать завершения лабораторной работы.
-@export var require_lab_completion: bool = false
-## ID требуемой лабораторной.
-@export var required_lab_id: String = ""
-## Сообщение, если доступ закрыт.
-@export_multiline var locked_message: String = "Точно! Сначала я должен доделать лабораторную работу"
+@export_group("Security")
 ## Требовать ввод кода доступа.
 @export var require_access_code: bool = false
 ## Код доступа.
 @export var access_code: String = "1234"
-## Показывать подсказку при первой попытке ввода кода.
-@export var show_access_code_hint_once: bool = false
-## Текст подсказки (субтитры Андрея) перед вводом кода.
-@export_multiline var access_code_hint_text: String = ""
+## Сцена мини-игры "Кодовый замок".
+@export var code_lock_scene: PackedScene 
+
+@export_group("Lab Requirement")
+## Запретить еду, пока не сдана лабораторная.
+@export var require_lab_completion: bool = false
+## ID лабораторной работы, которая должна быть выполнена.
+@export var required_lab_id: String = ""
 
 @export_group("Teleport")
-## Включить телепорт после взаимодействия.
 @export var enable_teleport: bool = false
-## Маркер телепорта.
 @export var teleport_target: NodePath
 
-@export_group("Sounds")
-## Звук открытия холодильника.
-@export var open_sound: AudioStream # Сюда перетащите звук открытия двери
-
-@export_group("Visuals")
-## Текстура холодильника, когда он недоступен.
+@export_group("Visuals & Audio")
+@export var open_sound: AudioStream 
 @export var locked_sprite: Texture2D
-## Текстура холодильника, когда он доступен.
 @export var available_sprite: Texture2D
-## Узел со спрайтом холодильника.
 @export var sprite_node: NodePath = NodePath("Sprite2D")
-## Узел подсветки доступности (основной).
 @export var available_light_node: NodePath
-## Узел подсветки доступности (дополнительный).
 @export var available_light_node_secondary: NodePath
 
+# Внутренние переменные
 var _is_interacting: bool = false
 var _current_minigame: Node = null
 var _sfx_player: AudioStreamPlayer
-var _code_unlocked: bool = false
-var _code_canvas: CanvasLayer = null
+var _code_unlocked: bool = false # Флаг, открыт ли замок
 var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
-var _access_hint_shown: bool = false
 
 func _ready() -> void:
-	super._ready()
-	input_pickable = false
+	super._ready() # Важно вызвать ready родителя!
 	
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.bus = "Sounds"
@@ -79,201 +62,177 @@ func _ready() -> void:
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
+	
 	_update_visuals()
-	if GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(_on_lab_completed)
+	
+	if require_lab_completion and GameState.has_signal("lab_completed"):
+		GameState.lab_completed.connect(func(_id): _update_visuals())
 
-func _on_lab_completed(_id: String) -> void:
-	_update_visuals()
-
+# --- ОСНОВНАЯ ТОЧКА ВХОДА ---
 func _on_interact() -> void:
 	if _is_interacting:
 		return
-	_try_interact()
 
-func _try_interact() -> void:
-	if _is_chase_active():
-		UIMessage.show_text("Нельзя есть на бегу")
+	# 0. Проверка: лабораторная не завершена
+	if require_lab_completion and required_lab_id != "" and not GameState.completed_labs.has(required_lab_id):
+		_show_locked_message()
 		return
-	if GameState.has_method("mark_fridge_interacted"):
-		GameState.mark_fridge_interacted()
 
+	# 1. Проверка: уже ел?
 	if GameState.ate_this_cycle:
 		UIMessage.show_text("Я уже поел.")
 		return
+	
+	# 2. Проверка: погоня?
+	if _is_chase_active():
+		UIMessage.show_text("Нельзя есть на бегу!")
+		return
 
-	if _is_locked_by_lab():
-		UIMessage.show_text(locked_message)
+	# 3. Если замок закрыт — запускаем взлом
+	if require_access_code and not _code_unlocked:
+		_start_code_lock()
 		return
-	if _is_locked_by_code():
-		if _should_show_access_code_hint():
-			_show_access_code_hint()
-			return
-		_open_code_lock()
+
+	# 4. Если всё ок (замок открыт или не нужен) — ЕДИМ
+	_start_feeding_process()
+
+# --- ЛОГИКА КОДОВОГО ЗАМКА ---
+func _start_code_lock() -> void:
+	if code_lock_scene == null:
+		push_warning("Frizzer: Не назначена сцена Code Lock!")
 		return
 	
+	# 1. Создаем экземпляр (Node) из PackedScene
+	var lock_instance = code_lock_scene.instantiate()
+	_current_minigame = lock_instance
+	
+	# 2. Настраиваем пароль (как в твоем старом скрипте)
+	if "code_value" in lock_instance:
+		lock_instance.code_value = access_code
+	elif "target_code" in lock_instance:
+		lock_instance.target_code = access_code
+	
+	# 3. Подключаем сигнал успеха
+	if lock_instance.has_signal("unlocked"):
+		lock_instance.unlocked.connect(_on_unlock_success)
+	
+	# Добавляем обработку закрытия (чтобы разблокировать игрока, если он нажал отмену)
+	lock_instance.tree_exited.connect(func(): _is_interacting = false)
+
+	# 4. Добавляем замок на сцену (в корень, чтобы был поверх всего)
+	get_tree().root.add_child(lock_instance)
+	
+	# 5. Теперь передаем ГОТОВЫЙ NODE в контроллер
+	if MinigameController:
+		_is_interacting = true
+		MinigameController.start_minigame(lock_instance, {
+			"pause_game": true,
+			"enable_gamepad_cursor": true
+		})
+	else:
+		push_error("MinigameController не найден!")
+
+func _on_unlock_success() -> void:
+	_code_unlocked = true
+	_is_interacting = false
+	UIMessage.show_text("Замок открыт.")
+	_update_visuals()
+	
+	# Сразу после взлома можно предложить поесть или заставить нажать Е еще раз.
+	# Давай заставим нажать Е еще раз, чтобы игрок увидел открытую дверь.
+
+func _on_unlock_cancel() -> void:
+	_is_interacting = false
+
+# --- ЛОГИКА ЕДЫ ---
+func _start_feeding_process() -> void:
 	_is_interacting = true
-	_set_prompts_enabled(false)
 	
+	# Звук открытия
 	if open_sound:
 		_sfx_player.stream = open_sound
 		_sfx_player.play()
 	
+	# Проверка наличия еды
 	var has_food := food_scene != null or not food_scenes.is_empty()
 	if minigame_scene == null or not has_food:
-		push_warning("Frizzer: Minigame scene or food scene(s) is missing!")
-		_complete_feeding()
-		_is_interacting = false
-		_set_prompts_enabled(true)
+		push_warning("Frizzer: Нет сцены мини-игры или еды!")
+		_finish_feeding_logic()
 		return
 	
+	# Запуск игры
 	await UIMessage.fade_out(0.3)
-	_start_minigame()
-	await UIMessage.fade_in(0.3)
-
-func _start_minigame() -> void:
+	
 	var game = minigame_scene.instantiate()
 	_current_minigame = game
 	get_tree().root.add_child(game)
 	
+	# Передаем параметры (как в твоем старом скрипте)
 	if game.has_method("setup_game"):
 		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
 	
-	game.minigame_finished.connect(_on_minigame_finished)
+	game.minigame_finished.connect(_on_feeding_finished)
+	await UIMessage.fade_in(0.3)
 
-func _on_minigame_finished() -> void:
+func _on_feeding_finished() -> void:
 	await UIMessage.fade_out(0.4)
 	
 	if _current_minigame != null:
 		_current_minigame.queue_free()
 		_current_minigame = null
 	
-	_complete_feeding()
-	_teleport_player_if_needed()
+	_finish_feeding_logic()
 	
 	await UIMessage.fade_in(0.4)
 	_is_interacting = false
-	_set_prompts_enabled(true)
 
-func _complete_feeding() -> void:
+func _finish_feeding_logic() -> void:
 	GameState.mark_ate()
 	UIMessage.show_text("Вкуснятина")
 	
+	if GameState.has_method("mark_fridge_interacted"):
+		GameState.mark_fridge_interacted()
+
 	var current_level = get_tree().current_scene
 	if current_level.has_method("on_fed_andrey"):
 		current_level.on_fed_andrey()
 
+	# ВАЖНО: Помечаем объект выполненным только ПОСЛЕ еды.
+	# Теперь Ноутбук (зависящий от Холодильника) станет доступен.
+	complete_interaction() 
+	
+	_teleport_player_if_needed()
+
+# --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
 func _is_chase_active() -> bool:
-	if MusicManager == null:
-		return false
-	if MusicManager.has_method("is_chase_active"):
+	if MusicManager and MusicManager.has_method("is_chase_active"):
 		return MusicManager.is_chase_active()
 	return false
 
-func _is_locked_by_lab() -> bool:
-	if not require_lab_completion:
-		return false
-	if required_lab_id == "":
-		return true
-	return not GameState.completed_labs.has(required_lab_id)
-
-func _is_locked_by_code() -> bool:
-	return require_access_code and not _code_unlocked
-
 func _update_visuals() -> void:
-	var is_available := not _is_locked_by_lab() and not _is_locked_by_code()
-	if is_available:
+	# Доступен, если не требуется код/лаба ИЛИ условия выполнены
+	var is_unlocked := (not require_access_code or _code_unlocked)
+	if require_lab_completion and required_lab_id != "" and not GameState.completed_labs.has(required_lab_id):
+		is_unlocked = false
+	
+	if is_unlocked:
 		if _sprite and available_sprite:
 			_sprite.texture = available_sprite
-		if _available_light:
-			_available_light.visible = true
-		if _available_light_secondary:
-			_available_light_secondary.visible = true
+		if _available_light: _available_light.visible = true
+		if _available_light_secondary: _available_light_secondary.visible = true
 	else:
 		if _sprite and locked_sprite:
 			_sprite.texture = locked_sprite
-		if _available_light:
-			_available_light.visible = false
-		if _available_light_secondary:
-			_available_light_secondary.visible = false
-
-func _open_code_lock() -> void:
-	if _is_interacting:
-		return
-	_is_interacting = true
-	_set_prompts_enabled(false)
-	
-	var code_scene := load("res://levels/minigames/ui/code_lock.tscn") as PackedScene
-	if code_scene == null:
-		push_warning("Frizzer: code_lock.tscn не найден.")
-		_is_interacting = false
-		_set_prompts_enabled(true)
-		return
-	
-	var lock = code_scene.instantiate()
-	lock.code_value = access_code
-	lock.unlocked.connect(_on_code_unlocked)
-	lock.tree_exited.connect(_on_code_closed)
-	
-	var canvas = CanvasLayer.new()
-	canvas.layer = 100
-	canvas.add_child(lock)
-	get_tree().root.add_child(canvas)
-	_code_canvas = canvas
-
-func _on_code_unlocked() -> void:
-	_code_unlocked = true
-	UIMessage.show_text("Замок открыт.")
-	_update_visuals()
-	_access_hint_shown = true
-
-func _on_code_closed() -> void:
-	_is_interacting = false
-	_set_prompts_enabled(true)
-	if _code_canvas != null:
-		_code_canvas.queue_free()
-		_code_canvas = null
+		if _available_light: _available_light.visible = false
+		if _available_light_secondary: _available_light_secondary.visible = false
 
 func _teleport_player_if_needed() -> void:
-	if not enable_teleport:
+	if not enable_teleport or teleport_target.is_empty():
 		return
-	if teleport_target.is_empty():
-		push_warning("Frizzer: teleport_target не задан.")
-		return
-	
-	var marker := get_node_or_null(teleport_target)
-	if marker == null:
-		push_warning("Frizzer: teleport_target не найден.")
-		return
-	
-	var player := get_tree().get_first_node_in_group("player")
-	if player and player.has_method("set_physics_process"):
-		player.set_physics_process(false)
-	if player:
-		player.global_position = marker.global_position
-	await get_tree().create_timer(0.1).timeout
-	if player and player.has_method("set_physics_process"):
-		player.set_physics_process(true)
-
-func _set_prompts_enabled(enabled: bool) -> void:
-	if InteractionPrompts == null:
-		return
-	if InteractionPrompts.has_method("set_prompts_enabled"):
-		InteractionPrompts.set_prompts_enabled(enabled)
-	elif enabled:
-		if is_player_in_range():
-			_show_prompt()
-	else:
-		_hide_prompt()
-
-func _should_show_access_code_hint() -> bool:
-	if not show_access_code_hint_once:
-		return false
-	if _access_hint_shown:
-		return false
-	return access_code_hint_text.strip_edges() != ""
-
-func _show_access_code_hint() -> void:
-	_access_hint_shown = true
-	if UIMessage:
-		UIMessage.show_subtitle(access_code_hint_text)
+	var marker = get_node_or_null(teleport_target)
+	if marker:
+		var player = get_tree().get_first_node_in_group("player")
+		if player:
+			player.global_position = marker.global_position
+			
+			

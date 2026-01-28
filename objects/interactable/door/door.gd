@@ -4,7 +4,7 @@ extends "res://objects/interactable/interactive_object.gd"
 ## Дверь закрыта и требует ключ или сообщение.
 @export var is_locked: bool = false
 ## Сообщение, когда дверь заперта.
-@export_multiline var locked_message: String = "Дверь закрыта."
+@export_multiline var door_locked_message: String = "Дверь закрыта."
 ## ID ключа, который открывает дверь (пусто — не нужен).
 @export var required_key_id: String = ""         
 ## Название ключа для текста подсказки.
@@ -73,14 +73,14 @@ func _try_use_door() -> void:
 				return
 			else:
 				if required_key_name != "":
-					UIMessage.show_text("%s\nНужен: %s." % [locked_message, required_key_name])
+					UIMessage.show_text("%s\nНужен: %s." % [door_locked_message, required_key_name])
 				else:
-					UIMessage.show_text(locked_message)
+					UIMessage.show_text(door_locked_message)
 				
 				_play_sound(sfx_locked) # ЗВУК: Дверь заперта
 				return
 
-		UIMessage.show_text(locked_message)
+		UIMessage.show_text(door_locked_message)
 		_play_sound(sfx_locked) # ЗВУК: Дверь заперта (без ключа)
 		return
 
