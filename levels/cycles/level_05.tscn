@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://u32e5100pijl"]
+[gd_scene load_steps=115 format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -57,7 +57,7 @@
 [ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://objects/environment/sprites/hall/Shkaf1.png" id="71_aurte"]
 [ext_resource type="PackedScene" path="res://objects/interactable/search_spot/search_spot.tscn" id="71_n1ykf"]
 [ext_resource type="Texture2D" uid="uid://casdt22d3vom4" path="res://levels/minigames/search_key/Key.png" id="72_0tyn5"]
-[ext_resource type="PackedScene" path="res://levels/minigames/search_key/urna/urna_search_minigame.tscn" id="72_1a77e"]
+[ext_resource type="PackedScene" uid="uid://c1fvvtyd2txip" path="res://levels/minigames/search_key/urna/urna_search_minigame.tscn" id="72_1a77e"]
 [ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://objects/environment/sprites/hall/BootsBoard.png" id="72_2g3o0"]
 [ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://objects/environment/sprites/hall/Boots1.png" id="73_6dg2p"]
 [ext_resource type="Texture2D" uid="uid://bb6h2rva5iy2" path="res://levels/minigames/search_key/urna/sprites/Trash_1.png" id="73_gi8lt"]
@@ -86,12 +86,18 @@
 [ext_resource type="Texture2D" uid="uid://7xdxupxgxl1d" path="res://levels/minigames/search_key/urna/sprites/Trash_14.png" id="86_gcsrh"]
 [ext_resource type="Texture2D" uid="uid://c6bu82di6ng0d" path="res://levels/minigames/search_key/urna/sprites/Trash_15.png" id="87_n4r6u"]
 [ext_resource type="Texture2D" uid="uid://chqjxafw6gmv3" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_1.png" id="89_1cnqi"]
+[ext_resource type="Texture2D" uid="uid://idbsuf2eipjc" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_1.png" id="89_8p2yw"]
+[ext_resource type="Texture2D" uid="uid://yc7xdi4y6hqm" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_2.png" id="90_hf4yt"]
 [ext_resource type="Texture2D" uid="uid://dhg2avxqf7ano" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_2.png" id="90_yq54k"]
 [ext_resource type="Texture2D" uid="uid://c7acaxjl8o5km" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_3.png" id="91_cbfl4"]
+[ext_resource type="Texture2D" uid="uid://camars2h80dy4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_3.png" id="91_hmnjb"]
+[ext_resource type="Texture2D" uid="uid://dir8k4goevkmg" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_4.png" id="92_gfyg2"]
 [ext_resource type="Texture2D" uid="uid://c834eaedjfw5d" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_4.png" id="92_y3he8"]
+[ext_resource type="Texture2D" uid="uid://3dvv2qnxssb4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_5.png" id="93_1opjp"]
 [ext_resource type="Texture2D" uid="uid://demqelnrdfni8" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_5.png" id="93_5iojm"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="93_xwm2s"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="94_4xwr8"]
+[ext_resource type="Texture2D" uid="uid://ea2aqm07dq1v" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_6.png" id="94_6rsar"]
 [ext_resource type="Texture2D" uid="uid://ckerdoixhbll0" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_6.png" id="94_hes2s"]
 [ext_resource type="Texture2D" uid="uid://dqghu5rryf68a" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_7.png" id="95_8p2yw"]
 [ext_resource type="Texture2D" uid="uid://dmv5hqipiyh2f" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_8.png" id="96_hf4yt"]
@@ -103,6 +109,7 @@
 [ext_resource type="Texture2D" uid="uid://qybb4lkjsap2" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_14.png" id="102_130pq"]
 [ext_resource type="Texture2D" uid="uid://divj68263y2js" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_15.png" id="103_1gxe7"]
 [ext_resource type="Texture2D" uid="uid://dcixupjbbmhou" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_16.png" id="104_pcuui"]
+[ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_hf4yt"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
@@ -967,6 +974,8 @@ trash_max = 20
 position = Vector2(9557, 190)
 scale = Vector2(2.0907319, 2.904042)
 key_texture = ExtResource("72_0tyn5")
+trash_textures = Array[Texture2D]([ExtResource("89_8p2yw"), ExtResource("90_hf4yt"), ExtResource("91_hmnjb"), ExtResource("92_gfyg2"), ExtResource("93_1opjp"), ExtResource("94_6rsar")])
+trash_max = 7
 
 [node name="SearchSpot3" parent="." instance=ExtResource("71_n1ykf")]
 position = Vector2(19318, 189)
@@ -980,3 +989,7 @@ trash_max = 14
 position = Vector2(6323, 124)
 scale = Vector2(7.410693, 6.4640417)
 key_texture = ExtResource("72_0tyn5")
+
+[node name="SearchKeyManager" type="Node2D" parent="."]
+script = ExtResource("111_hf4yt")
+search_spots = Array[NodePath]([NodePath("../SearchSpot"), NodePath("../SearchSpot2"), NodePath("../SearchSpot3"), NodePath("../SearchSpot4")])

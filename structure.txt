@@ -336,6 +336,20 @@
 │   │   │       ├── sql_minigame.gd.uid
 │   │   │       └── sql_minigame.tscn
 │   │   ├── search_key
+│   │   │   ├── rakovina
+│   │   │   │   └── sprites
+│   │   │   │       ├── Posuda_1.png
+│   │   │   │       ├── Posuda_1.png.import
+│   │   │   │       ├── Posuda_2.png
+│   │   │   │       ├── Posuda_2.png.import
+│   │   │   │       ├── Posuda_3.png
+│   │   │   │       ├── Posuda_3.png.import
+│   │   │   │       ├── Posuda_4.png
+│   │   │   │       ├── Posuda_4.png.import
+│   │   │   │       ├── Posuda_5.png
+│   │   │   │       ├── Posuda_5.png.import
+│   │   │   │       ├── Posuda_6.png
+│   │   │   │       └── Posuda_6.png.import
 │   │   │   ├── stiralka
 │   │   │   │   └── sprites
 │   │   │   │       ├── Clear_Cloth_1.png
@@ -402,6 +416,8 @@
 │   │   │   │   │   ├── Trash_8.png.import
 │   │   │   │   │   ├── Trash_9.png
 │   │   │   │   │   └── Trash_9.png.import
+│   │   │   │   ├── BackgroundUrna.png
+│   │   │   │   ├── BackgroundUrna.png.import
 │   │   │   │   └── urna_search_minigame.tscn
 │   │   │   ├── Key.png
 │   │   │   ├── Key.png.import
@@ -813,4 +829,4 @@
 ├── project.godot
 └── structure.txt
 
-84 directories, 730 files
+86 directories, 744 files
