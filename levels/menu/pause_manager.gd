@@ -17,6 +17,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if _is_open:
 		return
+	if _is_search_key_minigame_active():
+		return
 	if get_tree().paused and not _is_minigame_active():
 		return
 	_open_menu()
@@ -74,6 +76,22 @@ func _is_minigame_active() -> bool:
 			return true
 		if node.is_inside_tree():
 			return true
+	return false
+
+func _is_search_key_minigame_active() -> bool:
+	var nodes := get_tree().get_nodes_in_group("search_key_minigame")
+	for node in nodes:
+		if node == null or not is_instance_valid(node):
+			continue
+		if MinigameController and MinigameController.has_method("is_active"):
+			if MinigameController.is_active(node):
+				return true
+			continue
+		if not node.is_inside_tree():
+			continue
+		if node is CanvasItem and not node.visible:
+			continue
+		return true
 	return false
 
 func is_pause_menu_open() -> bool:

@@ -17,6 +17,7 @@ var _setup_done: bool = false
 
 func _ready() -> void:
 	add_to_group("minigame_ui")
+	add_to_group("search_key_minigame")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_rng.randomize()
 

@@ -336,9 +336,75 @@
 │   │   │       ├── sql_minigame.gd.uid
 │   │   │       └── sql_minigame.tscn
 │   │   ├── search_key
-│   │   │   ├── sprites
-│   │   │   │   ├── Key.png
-│   │   │   │   └── Key.png.import
+│   │   │   ├── stiralka
+│   │   │   │   └── sprites
+│   │   │   │       ├── Clear_Cloth_1.png
+│   │   │   │       ├── Clear_Cloth_1.png.import
+│   │   │   │       ├── Clear_Cloth_10.png
+│   │   │   │       ├── Clear_Cloth_10.png.import
+│   │   │   │       ├── Clear_Cloth_11.png
+│   │   │   │       ├── Clear_Cloth_11.png.import
+│   │   │   │       ├── Clear_Cloth_12.png
+│   │   │   │       ├── Clear_Cloth_12.png.import
+│   │   │   │       ├── Clear_Cloth_13.png
+│   │   │   │       ├── Clear_Cloth_13.png.import
+│   │   │   │       ├── Clear_Cloth_14.png
+│   │   │   │       ├── Clear_Cloth_14.png.import
+│   │   │   │       ├── Clear_Cloth_15.png
+│   │   │   │       ├── Clear_Cloth_15.png.import
+│   │   │   │       ├── Clear_Cloth_16.png
+│   │   │   │       ├── Clear_Cloth_16.png.import
+│   │   │   │       ├── Clear_Cloth_2.png
+│   │   │   │       ├── Clear_Cloth_2.png.import
+│   │   │   │       ├── Clear_Cloth_3.png
+│   │   │   │       ├── Clear_Cloth_3.png.import
+│   │   │   │       ├── Clear_Cloth_4.png
+│   │   │   │       ├── Clear_Cloth_4.png.import
+│   │   │   │       ├── Clear_Cloth_5.png
+│   │   │   │       ├── Clear_Cloth_5.png.import
+│   │   │   │       ├── Clear_Cloth_6.png
+│   │   │   │       ├── Clear_Cloth_6.png.import
+│   │   │   │       ├── Clear_Cloth_7.png
+│   │   │   │       ├── Clear_Cloth_7.png.import
+│   │   │   │       ├── Clear_Cloth_8.png
+│   │   │   │       ├── Clear_Cloth_8.png.import
+│   │   │   │       ├── Clear_Cloth_9.png
+│   │   │   │       └── Clear_Cloth_9.png.import
+│   │   │   ├── urna
+│   │   │   │   ├── sprites
+│   │   │   │   │   ├── Trash_1.png
+│   │   │   │   │   ├── Trash_1.png.import
+│   │   │   │   │   ├── Trash_10.png
+│   │   │   │   │   ├── Trash_10.png.import
+│   │   │   │   │   ├── Trash_11.png
+│   │   │   │   │   ├── Trash_11.png.import
+│   │   │   │   │   ├── Trash_12.png
+│   │   │   │   │   ├── Trash_12.png.import
+│   │   │   │   │   ├── Trash_13.png
+│   │   │   │   │   ├── Trash_13.png.import
+│   │   │   │   │   ├── Trash_14.png
+│   │   │   │   │   ├── Trash_14.png.import
+│   │   │   │   │   ├── Trash_15.png
+│   │   │   │   │   ├── Trash_15.png.import
+│   │   │   │   │   ├── Trash_2.png
+│   │   │   │   │   ├── Trash_2.png.import
+│   │   │   │   │   ├── Trash_3.png
+│   │   │   │   │   ├── Trash_3.png.import
+│   │   │   │   │   ├── Trash_4.png
+│   │   │   │   │   ├── Trash_4.png.import
+│   │   │   │   │   ├── Trash_5.png
+│   │   │   │   │   ├── Trash_5.png.import
+│   │   │   │   │   ├── Trash_6.png
+│   │   │   │   │   ├── Trash_6.png.import
+│   │   │   │   │   ├── Trash_7.png
+│   │   │   │   │   ├── Trash_7.png.import
+│   │   │   │   │   ├── Trash_8.png
+│   │   │   │   │   ├── Trash_8.png.import
+│   │   │   │   │   ├── Trash_9.png
+│   │   │   │   │   └── Trash_9.png.import
+│   │   │   │   └── urna_search_minigame.tscn
+│   │   │   ├── Key.png
+│   │   │   ├── Key.png.import
 │   │   │   ├── draggable_trash.gd
 │   │   │   ├── draggable_trash.gd.uid
 │   │   │   ├── search_key_manager.gd
@@ -747,4 +813,4 @@
 ├── project.godot
 └── structure.txt
 
-81 directories, 667 files
+84 directories, 730 files
