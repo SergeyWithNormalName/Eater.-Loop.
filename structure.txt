@@ -280,6 +280,8 @@
 │   │   │   │   ├── krilishki
 │   │   │   │   │   ├── Krilishko.png
 │   │   │   │   │   ├── Krilishko.png.import
+│   │   │   │   │   ├── Krilishko_2.png
+│   │   │   │   │   ├── Krilishko_2.png.import
 │   │   │   │   │   └── food_krilishki.tscn
 │   │   │   │   ├── meet
 │   │   │   │   │   ├── MeetSteak.png
@@ -334,6 +336,9 @@
 │   │   │       ├── sql_minigame.gd.uid
 │   │   │       └── sql_minigame.tscn
 │   │   ├── search_key
+│   │   │   ├── sprites
+│   │   │   │   ├── Key.png
+│   │   │   │   └── Key.png.import
 │   │   │   ├── draggable_trash.gd
 │   │   │   ├── draggable_trash.gd.uid
 │   │   │   ├── search_key_manager.gd
@@ -658,7 +663,8 @@
 │       │   └── phone.tscn
 │       ├── search_spot
 │       │   ├── search_spot.gd
-│       │   └── search_spot.gd.uid
+│       │   ├── search_spot.gd.uid
+│       │   └── search_spot.tscn
 │       ├── trigger
 │       │   ├── property_change.gd
 │       │   ├── property_change.gd.uid
@@ -741,4 +747,4 @@
 ├── project.godot
 └── structure.txt
 
-80 directories, 662 files
+81 directories, 667 files

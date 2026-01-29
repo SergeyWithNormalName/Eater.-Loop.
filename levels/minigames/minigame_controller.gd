@@ -30,6 +30,8 @@ signal minigame_time_expired(minigame: Node)
 
 @export var default_music_fade_time: float = 0.3
 @export var default_cursor_speed: float = 800.0
+## Слой для контейнера мини-игр (должен быть ниже меню паузы).
+@export var default_minigame_layer: int = 75
 
 var _active_minigame: Node = null
 var _time_limit: float = -1.0
@@ -46,9 +48,53 @@ var _block_player_movement: bool = true
 var _prompts_prev_enabled: bool = true
 var _prompts_suspended: bool = false
 var _prompts_restore_target: Node = null
+var _pause_menu_open: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	if get_tree() and get_tree().has_signal("scene_changed"):
+		get_tree().scene_changed.connect(_on_scene_changed)
+
+func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> void:
+	if minigame == null:
+		return
+	if minigame.get_parent() != null:
+		if minigame is CanvasLayer:
+			var existing_layer := minigame as CanvasLayer
+			existing_layer.layer = _resolve_minigame_layer(layer_override)
+		return
+
+	var parent := parent_override
+	if parent == null:
+		parent = get_tree().current_scene
+	if parent == null:
+		parent = get_tree().root
+	if parent == null:
+		return
+
+	var target_layer := _resolve_minigame_layer(layer_override)
+	if minigame is CanvasLayer:
+		var canvas := minigame as CanvasLayer
+		canvas.layer = target_layer
+		parent.add_child(canvas)
+		return
+
+	var wrapper := CanvasLayer.new()
+	wrapper.name = "MinigameLayer"
+	wrapper.layer = target_layer
+	wrapper.process_mode = Node.PROCESS_MODE_ALWAYS
+	parent.add_child(wrapper)
+	wrapper.add_child(minigame)
+	minigame.tree_exited.connect(func():
+		if is_instance_valid(wrapper):
+			wrapper.queue_free()
+	)
+
+func set_pause_menu_open(is_open: bool) -> void:
+	_pause_menu_open = is_open
+
+func is_pause_menu_open() -> bool:
+	return _pause_menu_open
 
 func start_minigame(minigame: Node, config: Dictionary = {}) -> void:
 	if minigame == null:
@@ -125,6 +171,11 @@ func should_block_player_movement() -> bool:
 	return _active_minigame != null and _block_player_movement
 
 func _process(delta: float) -> void:
+	if _active_minigame != null and not is_instance_valid(_active_minigame):
+		_force_clear_active_state()
+		return
+	if _pause_menu_open:
+		return
 	_update_timer(delta)
 	_update_gamepad_cursor(delta)
 
@@ -255,3 +306,39 @@ func _restore_music() -> void:
 		MusicManager.stop_music(_music_fade_time)
 	MusicManager.pop_music(_music_fade_time)
 	_music_pushed = false
+
+func _resolve_minigame_layer(override_layer: int) -> int:
+	return default_minigame_layer if override_layer < 0 else override_layer
+
+func _on_scene_changed(scene: Node = null) -> void:
+	_cleanup_orphaned_minigames(scene)
+
+func _cleanup_orphaned_minigames(scene: Node) -> void:
+	var current_scene := scene
+	if current_scene == null and get_tree():
+		current_scene = get_tree().current_scene
+
+	var nodes := get_tree().get_nodes_in_group("minigame_ui")
+	for node in nodes:
+		if node == null or not is_instance_valid(node):
+			continue
+		if current_scene != null and current_scene.is_ancestor_of(node):
+			continue
+		if node == _active_minigame:
+			finish_minigame(node, false)
+		node.queue_free()
+
+	if _active_minigame != null and not is_instance_valid(_active_minigame):
+		_force_clear_active_state()
+
+func _force_clear_active_state() -> void:
+	if _active_minigame == null:
+		return
+	_active_minigame = null
+	_restore_music()
+	_restore_cursor()
+	_restore_pause()
+	_clear_prompt_restore_target()
+	_restore_prompts_if_safe()
+	_clear_timer()
+	_block_player_movement = false

@@ -285,7 +285,10 @@ func _update_overlay_layer() -> void:
 	if _overlay_layer == null:
 		return
 	var target_layer := 90
-	if get_tree() and get_tree().paused and not _minigame_active:
+	var pause_menu_open := false
+	if PauseManager and PauseManager.has_method("is_pause_menu_open"):
+		pause_menu_open = PauseManager.is_pause_menu_open()
+	if pause_menu_open or (get_tree() and get_tree().paused and not _minigame_active):
 		target_layer = 70
 	if _overlay_layer.layer != target_layer:
 		_overlay_layer.layer = target_layer

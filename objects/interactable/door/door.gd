@@ -5,20 +5,19 @@ extends "res://objects/interactable/interactive_object.gd"
 @export var is_locked: bool = false
 ## Сообщение, когда дверь заперта.
 @export_multiline var door_locked_message: String = "Дверь закрыта."
+
+# --- Настройки перехода ---
+## Маркер, куда телепортировать игрока.
+@export var target_marker: NodePath
+
+# --- Настройки внешнего вида ---
+@export_group("Key")
 ## ID ключа, который открывает дверь (пусто — не нужен).
 @export var required_key_id: String = ""         
 ## Название ключа для текста подсказки.
 @export var required_key_name: String = ""       
 ## Удалять ключ из инвентаря при открытии.
 @export var consume_key_on_unlock: bool = false
-
-# --- Настройки перехода ---
-## Маркер, куда телепортировать игрока (если переход без смены сцены).
-@export var target_marker: NodePath
-## Сцена, куда переключаться при переходе.
-@export var target_scene: PackedScene
-## Если включено — делает смену сцены, иначе телепорт на маркер.
-@export var use_scene_change: bool = false
 
 # --- Настройки внешнего вида ---
 @export_group("Visual")
@@ -99,42 +98,31 @@ func _perform_transition() -> void:
 	if player.has_method("set_physics_process"):
 		player.set_physics_process(false)
 	
-	if use_scene_change:
-		if target_scene == null:
-			push_warning("Door: target_scene не задан.")
-			if is_instance_valid(player): player.set_physics_process(true)
-			_is_transitioning = false
-			return
-		
-		# Звук успеет проиграться во время затемнения
-		await UIMessage.change_scene_with_fade(target_scene)
-		
-	else:
-		if target_marker.is_empty():
-			push_warning("Door: target_marker не задан.")
-			if is_instance_valid(player): player.set_physics_process(true)
-			_is_transitioning = false
-			return
-			
-		var marker := get_node_or_null(target_marker)
-		if marker == null:
-			push_warning("Door: target_marker не найден.")
-			if is_instance_valid(player): player.set_physics_process(true)
-			_is_transitioning = false
-			return
-		
-		await UIMessage.fade_out(0.4)
-		
-		if is_instance_valid(player):
-			player.global_position = marker.global_position
-		
-		await get_tree().create_timer(0.1).timeout
-		await UIMessage.fade_in(0.4)
-		
-		if is_instance_valid(player) and player.has_method("set_physics_process"):
-			player.set_physics_process(true)
-		
+	if target_marker.is_empty():
+		push_warning("Door: target_marker не задан.")
+		if is_instance_valid(player): player.set_physics_process(true)
 		_is_transitioning = false
+		return
+		
+	var marker := get_node_or_null(target_marker)
+	if marker == null:
+		push_warning("Door: target_marker не найден.")
+		if is_instance_valid(player): player.set_physics_process(true)
+		_is_transitioning = false
+		return
+	
+	await UIMessage.fade_out(0.4)
+	
+	if is_instance_valid(player):
+		player.global_position = marker.global_position
+	
+	await get_tree().create_timer(0.1).timeout
+	await UIMessage.fade_in(0.4)
+	
+	if is_instance_valid(player) and player.has_method("set_physics_process"):
+		player.set_physics_process(true)
+	
+	_is_transitioning = false
 
 func _stop_chase_for_transition() -> void:
 	get_tree().call_group("enemies", "force_stop_chase")

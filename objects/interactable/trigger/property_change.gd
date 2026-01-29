@@ -16,9 +16,7 @@ class_name PropertyChange
 	"scale",
 	"modulate",
 	"z_index",
-	"target_marker",
-	"target_scene",
-	"use_scene_change"
+	"target_marker"
 ) var property_preset: String = "is_locked"
 ## Имя свойства для изменения.
 @export var property_name: String

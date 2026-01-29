@@ -115,8 +115,8 @@ func _start_code_lock() -> void:
 	# Добавляем обработку закрытия (чтобы разблокировать игрока, если он нажал отмену)
 	lock_instance.tree_exited.connect(func(): _is_interacting = false)
 
-	# 4. Добавляем замок на сцену (в корень, чтобы был поверх всего)
-	get_tree().root.add_child(lock_instance)
+	# 4. Добавляем замок на сцену (поверх всего, но внутри текущей сцены)
+	_add_minigame_to_scene(lock_instance)
 	
 	# 5. Теперь передаем ГОТОВЫЙ NODE в контроллер
 	if MinigameController:
@@ -161,7 +161,7 @@ func _start_feeding_process() -> void:
 	
 	var game = minigame_scene.instantiate()
 	_current_minigame = game
-	get_tree().root.add_child(game)
+	_add_minigame_to_scene(game)
 	
 	# Передаем параметры (как в твоем старом скрипте)
 	if game.has_method("setup_game"):
@@ -230,5 +230,15 @@ func _teleport_player_if_needed() -> void:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
 			player.global_position = marker.global_position
-			
-			
+
+func _add_minigame_to_scene(minigame: Node) -> void:
+	if minigame == null:
+		return
+	if MinigameController and MinigameController.has_method("attach_minigame"):
+		MinigameController.attach_minigame(minigame)
+		return
+	var parent := get_tree().current_scene
+	if parent == null:
+		parent = get_tree().root
+	if parent:
+		parent.add_child(minigame)

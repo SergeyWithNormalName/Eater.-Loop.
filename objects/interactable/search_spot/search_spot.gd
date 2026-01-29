@@ -36,7 +36,7 @@ func _on_interact() -> void:
 
 	var minigame = minigame_scene.instantiate()
 	_current_minigame = minigame
-	get_tree().root.add_child(minigame)
+	_add_minigame_to_scene(minigame)
 
 	if minigame.has_method("setup"):
 		minigame.setup({
@@ -69,3 +69,15 @@ func _on_minigame_finished(minigame: Node, success: bool) -> void:
 	if success and has_key:
 		has_key = false
 		is_searched_empty = true
+
+func _add_minigame_to_scene(minigame: Node) -> void:
+	if minigame == null:
+		return
+	if MinigameController and MinigameController.has_method("attach_minigame"):
+		MinigameController.attach_minigame(minigame)
+		return
+	var parent := get_tree().current_scene
+	if parent == null:
+		parent = get_tree().root
+	if parent:
+		parent.add_child(minigame)

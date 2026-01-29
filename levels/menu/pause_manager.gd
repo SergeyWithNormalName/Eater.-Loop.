@@ -31,12 +31,16 @@ func _open_menu() -> void:
 		_pause_menu.call("open_menu")
 	get_tree().paused = true
 	_is_open = true
+	if MinigameController and MinigameController.has_method("set_pause_menu_open"):
+		MinigameController.set_pause_menu_open(true)
 
 func _request_resume() -> void:
 	if _pause_menu and _pause_menu.has_method("close_menu"):
 		_pause_menu.call("close_menu")
 	get_tree().paused = _prev_paused_state
 	_is_open = false
+	if MinigameController and MinigameController.has_method("set_pause_menu_open"):
+		MinigameController.set_pause_menu_open(false)
 
 func _ensure_menu_instance() -> void:
 	if is_instance_valid(_pause_menu_layer):
@@ -53,6 +57,8 @@ func _ensure_menu_instance() -> void:
 		_pause_menu_layer = null
 		_pause_menu = null
 		_is_open = false
+		if MinigameController and MinigameController.has_method("set_pause_menu_open"):
+			MinigameController.set_pause_menu_open(false)
 	)
 
 func _is_menu_scene() -> bool:
@@ -69,3 +75,6 @@ func _is_minigame_active() -> bool:
 		if node.is_inside_tree():
 			return true
 	return false
+
+func is_pause_menu_open() -> bool:
+	return _is_open

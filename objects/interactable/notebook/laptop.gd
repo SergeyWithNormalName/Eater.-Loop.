@@ -41,7 +41,6 @@ var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
-var _minigame_layer: CanvasLayer = null
 var _is_ready: bool = false
 var _is_enabled: bool = true
 
@@ -95,16 +94,7 @@ func _start_lab_minigame() -> void:
 	if "penalty_time" in game: game.penalty_time = penalty_time
 	
 	# Добавляем на сцену (в отдельный CanvasLayer, чтобы UI не терялся из-за CanvasModulate/оверлеев)
-	var root := get_tree().root
-	if root == null:
-		return
-	if game is CanvasLayer:
-		root.add_child(game)
-	else:
-		_minigame_layer = CanvasLayer.new()
-		_minigame_layer.layer = 95
-		root.add_child(_minigame_layer)
-		_minigame_layer.add_child(game)
+	_add_minigame_to_scene(game)
 	
 	# Запускаем через контроллер (для паузы, курсора и таймера)
 	if MinigameController:
@@ -121,9 +111,6 @@ func _start_lab_minigame() -> void:
 
 func _on_minigame_closed() -> void:
 	_current_minigame = null
-	if _minigame_layer != null and is_instance_valid(_minigame_layer):
-		_minigame_layer.queue_free()
-	_minigame_layer = null
 	_update_visuals()
 	
 	# Если после игры лаба появилась в списке выполненных — успех
@@ -174,5 +161,15 @@ func _apply_enabled_state() -> void:
 
 func _is_lab_completed() -> bool:
 	return GameState.lab_done
-		
-		
+	
+func _add_minigame_to_scene(minigame: Node) -> void:
+	if minigame == null:
+		return
+	if MinigameController and MinigameController.has_method("attach_minigame"):
+		MinigameController.attach_minigame(minigame)
+		return
+	var parent := get_tree().current_scene
+	if parent == null:
+		parent = get_tree().root
+	if parent:
+		parent.add_child(minigame)
