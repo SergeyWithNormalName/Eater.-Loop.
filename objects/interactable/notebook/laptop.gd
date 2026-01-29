@@ -41,6 +41,7 @@ var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
+var _minigame_layer: CanvasLayer = null
 var _is_ready: bool = false
 var _is_enabled: bool = true
 
@@ -77,6 +78,8 @@ func _on_interact() -> void:
 	_start_lab_minigame()
 
 func _start_lab_minigame() -> void:
+	if _current_minigame != null:
+		return
 	if minigame_scene == null:
 		push_warning("Laptop: Не назначена сцена мини-игры!")
 		return
@@ -84,21 +87,33 @@ func _start_lab_minigame() -> void:
 	# Создаем игру
 	var game = minigame_scene.instantiate()
 	_current_minigame = game
+	if game is Node:
+		game.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	# Настраиваем параметры (как в твоем старом коде)
 	if "time_limit" in game: game.time_limit = time_limit
 	if "penalty_time" in game: game.penalty_time = penalty_time
 	
-	# Добавляем на сцену
-	get_tree().root.add_child(game)
+	# Добавляем на сцену (в отдельный CanvasLayer, чтобы UI не терялся из-за CanvasModulate/оверлеев)
+	var root := get_tree().root
+	if root == null:
+		return
+	if game is CanvasLayer:
+		root.add_child(game)
+	else:
+		_minigame_layer = CanvasLayer.new()
+		_minigame_layer.layer = 95
+		root.add_child(_minigame_layer)
+		_minigame_layer.add_child(game)
 	
 	# Запускаем через контроллер (для паузы, курсора и таймера)
 	if MinigameController:
 		MinigameController.start_minigame(game, {
-			"pause_game": true,         # Ставим игру на паузу
-			"enable_gamepad_cursor": true, # Включаем курсор
+			"pause_game": false,            # Не ставим паузу, чтобы цикл продолжал тикать
+			"enable_gamepad_cursor": true,  # Включаем курсор
+			"block_player_movement": true,  # Блокируем движение игрока на время лабы
 			"time_limit": time_limit,   # Передаем лимит времени контроллеру
-			"auto_finish_on_timeout": true # Если время выйдет — проигрыш
+			"auto_finish_on_timeout": false # Лаба сама обработает таймаут
 		})
 	
 	# Ловим момент закрытия игры
@@ -106,6 +121,9 @@ func _start_lab_minigame() -> void:
 
 func _on_minigame_closed() -> void:
 	_current_minigame = null
+	if _minigame_layer != null and is_instance_valid(_minigame_layer):
+		_minigame_layer.queue_free()
+	_minigame_layer = null
 	_update_visuals()
 	
 	# Если после игры лаба появилась в списке выполненных — успех
@@ -129,6 +147,8 @@ func _update_visuals() -> void:
 	if dependency_object and not dependency_object.is_completed:
 		is_unlocked = false
 	if not _is_enabled:
+		is_unlocked = false
+	if _is_lab_completed():
 		is_unlocked = false
 	
 	if is_unlocked:

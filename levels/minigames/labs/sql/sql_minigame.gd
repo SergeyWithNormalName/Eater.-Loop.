@@ -180,18 +180,22 @@ func _start_minigame_session() -> void:
 		_update_status_label()
 		return
 	_ensure_lab_music_loop()
-	MinigameController.start_minigame(self, {
-		"pause_game": true,
-		"enable_gamepad_cursor": true,
-		"time_limit": time_limit,
-		"music_stream": LAB_MUSIC_STREAM,
-		"music_fade_time": 0.0,
-		"auto_finish_on_timeout": false
-	})
+	if not MinigameController.is_active(self):
+		MinigameController.start_minigame(self, {
+			"pause_game": false,
+			"enable_gamepad_cursor": true,
+			"block_player_movement": true,
+			"time_limit": time_limit,
+			"music_stream": LAB_MUSIC_STREAM,
+			"music_fade_time": 0.0,
+			"auto_finish_on_timeout": false
+		})
 	current_time = time_limit
 	_update_status_label()
-	MinigameController.minigame_time_updated.connect(_on_time_updated)
-	MinigameController.minigame_time_expired.connect(_on_time_expired)
+	if not MinigameController.minigame_time_updated.is_connected(_on_time_updated):
+		MinigameController.minigame_time_updated.connect(_on_time_updated)
+	if not MinigameController.minigame_time_expired.is_connected(_on_time_expired):
+		MinigameController.minigame_time_expired.connect(_on_time_expired)
 
 func _on_time_updated(minigame: Node, time_left: float, _time_limit: float) -> void:
 	if minigame != self:

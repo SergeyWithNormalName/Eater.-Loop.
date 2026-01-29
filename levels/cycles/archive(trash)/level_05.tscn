@@ -86,7 +86,7 @@
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="87_j1ifr"]
 [ext_resource type="Texture2D" uid="uid://byt2rs4n15wun" path="res://objects/environment/sprites/hall/Sofa.png" id="88_0i8n6"]
 [ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://music/MusicForBasicMonster.wav" id="88_j1ifr"]
-[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive/level_05_corridor_distortion.gd" id="88_ky05d"]
+[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="88_ky05d"]
 [ext_resource type="Texture2D" uid="uid://bps1urucw0afw" path="res://objects/environment/sprites/hall/tv_2.png" id="89_v8753"]
 [ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://objects/environment/sprites/hall/Armchair.png" id="90_shxk8"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="93_xwm2s"]

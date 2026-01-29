@@ -87,6 +87,7 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Level" type="Node2D"]
 position = Vector2(16, 0)
 script = ExtResource("1_ugb3i")
+cycle_number = 2
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
@@ -949,4 +950,4 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("73_e64qk")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://dtm55gxtfvbo2"
+next_level_path = "uid://r7k3dupn14tx"

@@ -178,8 +178,7 @@
 │   └── Иконка_предварительно.ico
 ├── levels
 │   ├── cycles
-│   │   ├── archive
-│   │   │   ├── level_03.tscn
+│   │   ├── archive(trash)
 │   │   │   ├── level_04.tscn
 │   │   │   ├── level_05.tscn
 │   │   │   ├── level_05_corridor_distortion.gd
@@ -196,6 +195,8 @@
 │   │   ├── level_01.tscn
 │   │   ├── level_02.tscn
 │   │   ├── level_03.tscn
+│   │   ├── level_04.tscn
+│   │   ├── level_05.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── texture_distortion_manager.gd
@@ -740,4 +741,4 @@
 ├── project.godot
 └── structure.txt
 
-80 directories, 661 files
+80 directories, 662 files
