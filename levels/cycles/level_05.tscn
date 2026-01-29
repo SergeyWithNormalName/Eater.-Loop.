@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://u32e5100pijl"]
+[gd_scene load_steps=114 format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -57,7 +57,6 @@
 [ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://objects/environment/sprites/hall/Shkaf1.png" id="71_aurte"]
 [ext_resource type="PackedScene" path="res://objects/interactable/search_spot/search_spot.tscn" id="71_n1ykf"]
 [ext_resource type="Texture2D" uid="uid://casdt22d3vom4" path="res://levels/minigames/search_key/Key.png" id="72_0tyn5"]
-[ext_resource type="PackedScene" uid="uid://c1fvvtyd2txip" path="res://levels/minigames/search_key/urna/urna_search_minigame.tscn" id="72_1a77e"]
 [ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://objects/environment/sprites/hall/BootsBoard.png" id="72_2g3o0"]
 [ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://objects/environment/sprites/hall/Boots1.png" id="73_6dg2p"]
 [ext_resource type="Texture2D" uid="uid://bb6h2rva5iy2" path="res://levels/minigames/search_key/urna/sprites/Trash_1.png" id="73_gi8lt"]
@@ -964,7 +963,6 @@ next_level_path = "uid://dtm55gxtfvbo2"
 [node name="SearchSpot" parent="." instance=ExtResource("71_n1ykf")]
 position = Vector2(9192, 190)
 scale = Vector2(2.0907319, 2.904042)
-minigame_scene = ExtResource("72_1a77e")
 key_texture = ExtResource("72_0tyn5")
 trash_textures = Array[Texture2D]([ExtResource("73_gi8lt"), ExtResource("74_1a77e"), ExtResource("75_txi3s"), ExtResource("76_jbvp5"), ExtResource("77_aq55d"), ExtResource("78_regrg"), ExtResource("79_4frmj"), ExtResource("80_jba5y"), ExtResource("81_d6bs6"), ExtResource("82_54fuk"), ExtResource("83_g26w8"), ExtResource("84_kthad"), ExtResource("85_mrxdo"), ExtResource("86_gcsrh"), ExtResource("87_n4r6u")])
 trash_min = 15

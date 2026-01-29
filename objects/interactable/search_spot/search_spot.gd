@@ -17,6 +17,7 @@ var has_key: bool = false
 var is_searched_empty: bool = false
 
 var _current_minigame: Node = null
+var _layout_state: Dictionary = {}
 
 func set_has_key(value: bool) -> void:
 	has_key = value
@@ -39,12 +40,16 @@ func _on_interact() -> void:
 	_add_minigame_to_scene(minigame)
 
 	if minigame.has_method("setup"):
+		var layout_payload: Dictionary = {}
+		if not _layout_state.is_empty():
+			layout_payload = _layout_state.duplicate(true)
 		minigame.setup({
 			"has_key": has_key,
 			"key_id": key_id,
 			"key_texture": key_texture,
 			"trash_range": Vector2i(trash_min, trash_max),
-			"trash_textures": trash_textures
+			"trash_textures": trash_textures,
+			"layout_state": layout_payload
 		})
 
 	set_prompts_enabled(false)
@@ -65,6 +70,9 @@ func _on_minigame_finished(minigame: Node, success: bool) -> void:
 		MinigameController.minigame_finished.disconnect(_on_minigame_finished)
 	_current_minigame = null
 	set_prompts_enabled(true)
+
+	if is_instance_valid(minigame) and minigame.has_method("get_layout_state"):
+		_layout_state = minigame.get_layout_state()
 
 	if success and has_key:
 		has_key = false
