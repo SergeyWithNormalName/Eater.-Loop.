@@ -3,9 +3,7 @@ extends InteractiveObject
 @export_group("Minigame (Feeding)")
 ## Сцена мини-игры (еда).
 @export var minigame_scene: PackedScene
-## Сцена еды (для мини-игры).
-@export var food_scene: PackedScene
-## Набор сцен еды (альтернатива одиночной сцене).
+## Набор сцен еды.
 @export var food_scenes: Array[PackedScene] = []
 ## Текстура лица Андрея.
 @export var andrey_face: Texture2D
@@ -28,8 +26,6 @@ extends InteractiveObject
 @export_group("Lab Requirement")
 ## Запретить еду, пока не сдана лабораторная.
 @export var require_lab_completion: bool = false
-## ID лабораторной работы, которая должна быть выполнена.
-@export var required_lab_id: String = ""
 
 @export_group("Teleport")
 @export var enable_teleport: bool = false
@@ -66,7 +62,7 @@ func _ready() -> void:
 	_update_visuals()
 	
 	if require_lab_completion and GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(func(_id): _update_visuals())
+		GameState.lab_completed.connect(_update_visuals)
 
 # --- ОСНОВНАЯ ТОЧКА ВХОДА ---
 func _on_interact() -> void:
@@ -74,7 +70,7 @@ func _on_interact() -> void:
 		return
 
 	# 0. Проверка: лабораторная не завершена
-	if require_lab_completion and required_lab_id != "" and not GameState.completed_labs.has(required_lab_id):
+	if require_lab_completion and not GameState.lab_done:
 		_show_locked_message()
 		return
 
@@ -154,7 +150,7 @@ func _start_feeding_process() -> void:
 		_sfx_player.play()
 	
 	# Проверка наличия еды
-	var has_food := food_scene != null or not food_scenes.is_empty()
+	var has_food := not food_scenes.is_empty()
 	if minigame_scene == null or not has_food:
 		push_warning("Frizzer: Нет сцены мини-игры или еды!")
 		_finish_feeding_logic()
@@ -169,7 +165,7 @@ func _start_feeding_process() -> void:
 	
 	# Передаем параметры (как в твоем старом скрипте)
 	if game.has_method("setup_game"):
-		game.setup_game(andrey_face, food_scene, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
+		game.setup_game(andrey_face, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
 	
 	game.minigame_finished.connect(_on_feeding_finished)
 	await UIMessage.fade_in(0.3)
@@ -212,7 +208,7 @@ func _is_chase_active() -> bool:
 func _update_visuals() -> void:
 	# Доступен, если не требуется код/лаба ИЛИ условия выполнены
 	var is_unlocked := (not require_access_code or _code_unlocked)
-	if require_lab_completion and required_lab_id != "" and not GameState.completed_labs.has(required_lab_id):
+	if require_lab_completion and not GameState.lab_done:
 		is_unlocked = false
 	
 	if is_unlocked:

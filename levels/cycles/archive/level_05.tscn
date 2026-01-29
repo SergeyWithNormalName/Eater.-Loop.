@@ -86,7 +86,7 @@
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="87_j1ifr"]
 [ext_resource type="Texture2D" uid="uid://byt2rs4n15wun" path="res://objects/environment/sprites/hall/Sofa.png" id="88_0i8n6"]
 [ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://music/MusicForBasicMonster.wav" id="88_j1ifr"]
-[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/level_05_corridor_distortion.gd" id="88_ky05d"]
+[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive/level_05_corridor_distortion.gd" id="88_ky05d"]
 [ext_resource type="Texture2D" uid="uid://bps1urucw0afw" path="res://objects/environment/sprites/hall/tv_2.png" id="89_v8753"]
 [ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://objects/environment/sprites/hall/Armchair.png" id="90_shxk8"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="93_xwm2s"]
@@ -375,7 +375,6 @@ position = Vector2(9809.79, 121)
 rotation = 0.002391043
 script = ExtResource("21_tnagf")
 minigame_scene = ExtResource("22_xxec8")
-food_scene = ExtResource("19_4xwr8")
 andrey_face = ExtResource("24_augq3")
 enable_teleport = true
 teleport_target = NodePath("../Frizzer2/Node2D")
@@ -1592,7 +1591,6 @@ position = Vector2(13790.08, 3065.4902)
 rotation = 0.002391043
 script = ExtResource("21_tnagf")
 minigame_scene = ExtResource("22_xxec8")
-food_scene = ExtResource("23_8d7c5")
 andrey_face = ExtResource("24_augq3")
 open_sound = ExtResource("25_jklwv")
 prompt_text = "Поесть"

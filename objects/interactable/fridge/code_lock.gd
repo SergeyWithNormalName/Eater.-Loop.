@@ -51,7 +51,7 @@ func _on_button_pressed(value: String) -> void:
 func _on_ok_pressed() -> void:
 	if _current_input == code_value:
 		unlocked.emit()
-		_close()
+		_close(true)
 	else:
 		info_label.text = "Неверный код"
 		_current_input = ""
@@ -63,14 +63,14 @@ func _on_clear_pressed() -> void:
 	_update_display()
 
 func _on_cancel_pressed() -> void:
-	_close()
+	_close(false)
 
 func _update_display() -> void:
 	display_label.text = _current_input
 
-func _close() -> void:
+func _close(success: bool) -> void:
 	if MinigameController:
-		MinigameController.finish_minigame(self, true)
+		MinigameController.finish_minigame(self, success)
 	queue_free()
 
 func _exit_tree() -> void:

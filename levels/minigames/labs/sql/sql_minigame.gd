@@ -5,7 +5,6 @@ signal task_completed(success: bool)
 # --- Настройки ---
 @export var time_limit: float = 60.0
 @export var penalty_time: float = 15.0
-@export var quest_id: String = ""
 
 # --- Данные заданий ---
 var tasks = [
@@ -63,6 +62,9 @@ func _update_status_label() -> void:
 		timer_label.text = STATUS_TEMPLATE % max(0.0, current_time)
 
 func load_task(index):
+	if index < 0 or index >= tasks.size():
+		push_warning("SqlMinigame: неверный индекс задания %d." % index)
+		return
 	current_task_index = index
 	var data = tasks[index]
 	
@@ -139,16 +141,9 @@ func check_answer(_arg = null):
 			if slot_text == data["correct"][i]:
 				correct_matches += 1
 	
-	# Отладка в консоль (поможет понять, что происходит)
-	print("Проверка: Слотов %d, Заполнено %d, Верно %d" % [slots.size(), filled_count, correct_matches])
-	
 	# Если ВСЕ слоты заполнены И ВСЕ верны — победа
 	if correct_matches == slots.size() and slots.size() > 0:
-		print(">> Уровень пройден!")
 		next_level()
-	elif filled_count == slots.size():
-		# Все заполнили, но есть ошибки
-		print(">> Ошибка в ответе")
 
 func next_level():
 	if current_task_index + 1 < tasks.size():
@@ -172,11 +167,10 @@ func finish_game(success: bool):
 		if gd:
 			gd.reduce_time(penalty_time)
 
-	if success and quest_id != "":
+	if success:
 		var gs = get_node_or_null("/root/GameState")
-		if gs and not gs.completed_labs.has(quest_id):
-			gs.completed_labs.append(quest_id)
-			gs.emit_signal("lab_completed", quest_id)
+		if gs and gs.has_method("mark_lab_completed"):
+			gs.mark_lab_completed()
 
 	queue_free()
 

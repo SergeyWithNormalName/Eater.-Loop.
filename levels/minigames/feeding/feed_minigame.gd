@@ -64,7 +64,7 @@ func _ready() -> void:
 	)
 	_apply_background_layout()
 
-func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null, food_scenes: Array[PackedScene] = []) -> void:
+func setup_game(andrey_texture: Texture2D, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null, food_scenes: Array[PackedScene] = []) -> void:
 	if andrey_texture:
 		andrey_sprite.texture = andrey_texture
 	
@@ -95,8 +95,6 @@ func setup_game(andrey_texture: Texture2D, food_scene: PackedScene, count: int, 
 	for scene in food_scenes:
 		if scene != null:
 			available_scenes.append(scene)
-	if available_scenes.is_empty() and food_scene != null:
-		available_scenes.append(food_scene)
 	if available_scenes.is_empty():
 		push_error("FeedMinigame: не заданы сцены еды.")
 		return

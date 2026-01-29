@@ -9,8 +9,6 @@ signal task_completed(success: bool)
 @export var time_limit: float = 60.0
 ## Штраф по времени за провал (сек).
 @export var penalty_time: float = 15.0
-## ID квеста для LogicManager/GameState.
-@export var quest_id: String = ""
 ## Насколько заполняется прогресс за один клик (0.1 = 10%).
 @export var progress_per_click: float = 0.1
 
@@ -125,12 +123,10 @@ func finish_game(success: bool) -> void:
 		if get_tree().root.has_node("GameDirector"):
 			get_tree().root.get_node("GameDirector").reduce_time(penalty_time)
 
-	if success and quest_id != "":
-		if get_tree().root.has_node("GameState"):
-			var gs = get_tree().root.get_node("GameState")
-			if not gs.completed_labs.has(quest_id):
-				gs.completed_labs.append(quest_id)
-				gs.emit_signal("lab_completed", quest_id)
+	if success and get_tree().root.has_node("GameState"):
+		var gs = get_tree().root.get_node("GameState")
+		if gs and gs.has_method("mark_lab_completed"):
+			gs.mark_lab_completed()
 
 	queue_free()
 

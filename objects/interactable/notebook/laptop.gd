@@ -41,7 +41,6 @@ var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
-var _quest_id_cache: String = ""
 var _is_ready: bool = false
 var _is_enabled: bool = true
 
@@ -52,7 +51,6 @@ func _ready() -> void:
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	
-	_quest_id_cache = _resolve_quest_id()
 	_is_ready = true
 	_apply_enabled_state()
 	
@@ -64,7 +62,7 @@ func _ready() -> void:
 	
 	# Следим за завершением лаб через GameState
 	if GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(func(_id): _update_visuals())
+		GameState.lab_completed.connect(_update_visuals)
 
 # --- ВЗАИМОДЕЙСТВИЕ ---
 func _on_interact() -> void:
@@ -154,26 +152,7 @@ func _apply_enabled_state() -> void:
 	set_prompts_enabled(_is_enabled)
 	_update_visuals()
 
-func _resolve_quest_id() -> String:
-	if minigame_scene == null:
-		return ""
-	var state := minigame_scene.get_state()
-	if state == null or not state.has_method("get_node_property_count"):
-		return ""
-	var root_index := 0
-	var prop_count := int(state.get_node_property_count(root_index))
-	for i in range(prop_count):
-		if str(state.get_node_property_name(root_index, i)) == "quest_id":
-			return str(state.get_node_property_value(root_index, i))
-	return ""
-
-func _get_quest_id() -> String:
-	if _quest_id_cache == "":
-		_quest_id_cache = _resolve_quest_id()
-	return _quest_id_cache
-
 func _is_lab_completed() -> bool:
-	var quest_id := _get_quest_id()
-	return quest_id != "" and GameState.completed_labs.has(quest_id)
+	return GameState.lab_done
 		
 		

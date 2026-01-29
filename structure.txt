@@ -178,6 +178,15 @@
 │   └── Иконка_предварительно.ico
 ├── levels
 │   ├── cycles
+│   │   ├── archive
+│   │   │   ├── level_03.tscn
+│   │   │   ├── level_04.tscn
+│   │   │   ├── level_05.tscn
+│   │   │   ├── level_05_corridor_distortion.gd
+│   │   │   ├── level_05_corridor_distortion.gd.uid
+│   │   │   ├── level_06.tscn
+│   │   │   ├── level_test_enemies.tscn
+│   │   │   └── level_test_enemies2.tscn
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
@@ -187,15 +196,8 @@
 │   │   ├── level_01.tscn
 │   │   ├── level_02.tscn
 │   │   ├── level_03.tscn
-│   │   ├── level_04.tscn
-│   │   ├── level_05.tscn
-│   │   ├── level_05_corridor_distortion.gd
-│   │   ├── level_05_corridor_distortion.gd.uid
-│   │   ├── level_06.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
-│   │   ├── level_test_enemies.tscn
-│   │   ├── level_test_enemies2.tscn
 │   │   ├── texture_distortion_manager.gd
 │   │   └── texture_distortion_manager.gd.uid
 │   ├── menu
@@ -738,4 +740,4 @@
 ├── project.godot
 └── structure.txt
 
-79 directories, 660 files
+80 directories, 661 files

@@ -35,6 +35,7 @@ var _modules: Dictionary = {}
 var _note_bg: ColorRect
 var _note_image: TextureRect
 var _is_viewing_note: bool = false
+var _note_prev_paused: bool = false
 
 # --- Переменные для подсказок ---
 var _hint_bg: ColorRect
@@ -198,18 +199,22 @@ func _setup_hint_viewer() -> void:
 	vbox.add_child(_hint_label)
 
 func show_note(texture: Texture2D) -> void:
-	if texture == null: return
+	if texture == null:
+		return
 	_is_viewing_note = true
 	_note_image.texture = texture
 	_note_bg.visible = true
 	_note_image.visible = true
+	_note_prev_paused = get_tree().paused
 	get_tree().paused = true
 
 func hide_note() -> void:
+	if not _is_viewing_note:
+		return
 	_is_viewing_note = false
 	_note_bg.visible = false
 	_note_image.visible = false
-	get_tree().paused = false
+	get_tree().paused = _note_prev_paused
 
 func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true) -> void:
 	var t := text.strip_edges()

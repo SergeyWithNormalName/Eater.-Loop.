@@ -1,89 +1,81 @@
-[gd_scene load_steps=104 format=4 uid="uid://sdmle35lsdig"]
+[gd_scene load_steps=96 format=4 uid="uid://cg7m3pj06yxts"]
 
-[ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_j5jbj"]
-[ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
-[ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="2_7eav4"]
-[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://objects/interactable/door/door.gd" id="11_uthrx"]
-[ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://objects/interactable/door/audio/door_locked1.wav" id="12_dklpa"]
-[ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://objects/interactable/door/audio/door_open1.wav" id="13_lasqn"]
-[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="14_247hy"]
-[ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://objects/interactable/door/sprites/DoorExit.png" id="15_cnjqr"]
-[ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="16_n0klf"]
-[ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://objects/interactable/door/sprites/DoorToiletInside.png" id="17_rc80n"]
-[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://objects/interactable/bed/bed.gd" id="18_nk8an"]
-[ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://objects/interactable/bed/Bed.png" id="19_vbetb"]
-[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="20_106yh"]
-[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="21_ps58k"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="22_76lwr"]
-[ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="23_anfs3"]
-[ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="24_42xd2"]
-[ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://objects/interactable/fridge/sprites/LockedFridge.png" id="25_h6aah"]
-[ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="27_ui7uc"]
-[ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="28_0f4oq"]
-[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="29_iptbn"]
-[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://objects/interactable/key/key.gd" id="30_jo8rr"]
-[ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="31_0vyli"]
-[ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://objects/interactable/note/note_object.gd" id="32_46nnu"]
-[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="33_mdo08"]
-[ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://objects/environment/sprites/kitchen/Kitchen_garn.png" id="34_wxo28"]
-[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="35_8s8vv"]
-[ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://objects/environment/sprites/kitchen/Table.png" id="36_lr5a3"]
-[ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://objects/interactable/notebook/laptop.gd" id="37_xe867"]
-[ext_resource type="PackedScene" uid="uid://cdumkmia83xpc" path="res://levels/minigames/labs/sql/sql_minigame.tscn" id="38_le2t6"]
-[ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="39_vbm7i"]
-[ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://objects/interactable/notebook/NotebookOn.png" id="40_2ii75"]
-[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://objects/interactable/phone/phone.gd" id="41_y5xcj"]
-[ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="42_rnsmf"]
-[ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="43_d0fn0"]
-[ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://objects/environment/sprites/toilet and bathroom/Rakovina.png" id="44_fu053"]
-[ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="45_nohlj"]
-[ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://objects/environment/sprites/toilet and bathroom/Toilet.png" id="46_d64aq"]
-[ext_resource type="Texture2D" uid="uid://kcpbktla5vc1" path="res://objects/environment/sprites/toilet and bathroom/Yorhic.png" id="47_y66bm"]
-[ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="48_d35qo"]
-[ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://objects/environment/sprites/toilet and bathroom/bath.png" id="49_shqfx"]
-[ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://objects/environment/sprites/kitchen/Chair_1.png" id="50_e34kh"]
-[ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://objects/environment/sprites/kitchen/Chair_2.png" id="51_pts8l"]
-[ext_resource type="Texture2D" uid="uid://bsol5jiwykiso" path="res://objects/environment/sprites/kitchen/High_kitchen.png" id="52_6x3iq"]
-[ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="53_qa5h3"]
-[ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="54_s01p5"]
-[ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="55_w0s5i"]
-[ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="56_rfyxr"]
-[ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_dtolq"]
-[ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_cne4r"]
-[ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_soj0c"]
-[ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="60_nsye0"]
-[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/sprites/allrooms/WallBOK.png" id="61_pvnfl"]
-[ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="62_35v6e"]
-[ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="63_qilx3"]
-[ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="64_3wd2r"]
-[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/sprites/allrooms/OpenShtora.png" id="65_uyig3"]
-[ext_resource type="Texture2D" uid="uid://dn0h8y0pxtrr3" path="res://objects/environment/sprites/toilet and bathroom/ToothPolka.png" id="66_bhsw6"]
-[ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://objects/environment/background/TilesFloor1.png" id="67_t8p3l"]
-[ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="68_qhoba"]
-[ext_resource type="Texture2D" uid="uid://bbdgtswvtauqi" path="res://objects/environment/sprites/hall/PictureOne.png" id="69_10h7x"]
-[ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://objects/environment/sprites/hall/Shkaf1.png" id="70_ko7i6"]
-[ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://objects/environment/sprites/hall/BootsBoard.png" id="71_1ttwx"]
-[ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://objects/environment/sprites/hall/Boots1.png" id="72_px6hj"]
-[ext_resource type="Texture2D" uid="uid://ch5p5j701ivi0" path="res://objects/environment/sprites/hall/Boots3.png" id="73_xsbd7"]
-[ext_resource type="Texture2D" uid="uid://b32dbypa4avi4" path="res://objects/environment/sprites/hall/Boots4.png" id="74_bddgk"]
-[ext_resource type="Texture2D" uid="uid://xgjccvayabbh" path="res://objects/environment/sprites/hall/Boots5.png" id="75_0a7ki"]
-[ext_resource type="Texture2D" uid="uid://db4r1172wlmmj" path="res://objects/environment/sprites/hall/Boots2.png" id="76_h6a1m"]
-[ext_resource type="AudioStream" uid="uid://cloagxjbd1mt3" path="res://enemies/runner/audio/BigStep_1V.wav" id="77_nlubh"]
-[ext_resource type="PackedScene" uid="uid://bpeloj4upnwn1" path="res://enemies/runner/enemy_runner.tscn" id="77_vpq6w"]
-[ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://objects/environment/sprites/hall/Boots6.png" id="77_y0ton"]
-[ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://objects/environment/sprites/kitchen/Urna.png" id="78_ug0bd"]
-[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://levels/cycles/texture_distortion_manager.gd" id="79_2r2n3"]
-[ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="79_kqa0o"]
-[ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://objects/environment/background/decals/HoleInWall6.png" id="80_0fedf"]
-[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="80_3pht0"]
-[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://objects/environment/background/FloorDistorted.png" id="81_sho1l"]
-[ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://objects/environment/sprites/toilet and bathroom/Mirror.png" id="81_wwm0w"]
-[ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="82_r1utm"]
-[ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="82_tu4sr"]
-[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="83_yr25g"]
-[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="84_5dg1s"]
-[ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="85_3pht0"]
-[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_oojkp"]
+[ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="2_jrd2g"]
+[ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="3_epoe0"]
+[ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="4_4ul2e"]
+[ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://objects/interactable/door/door.gd" id="5_3fmjr"]
+[ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://objects/interactable/door/audio/door_locked1.wav" id="6_crech"]
+[ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://objects/interactable/door/audio/door_open1.wav" id="7_erj1k"]
+[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="8_3qc5h"]
+[ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://objects/interactable/door/sprites/DoorExit.png" id="9_ee484"]
+[ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="10_upm7w"]
+[ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://objects/interactable/door/sprites/DoorToiletInside.png" id="11_pespi"]
+[ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://objects/interactable/bed/bed.gd" id="12_51inv"]
+[ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://objects/interactable/bed/Bed.png" id="13_g2cii"]
+[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="14_7glhr"]
+[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="15_c2k4q"]
+[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="16_ja7gp"]
+[ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="17_wl3kh"]
+[ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="18_h4py2"]
+[ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://objects/interactable/fridge/sprites/LockedFridge.png" id="19_wud5o"]
+[ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="20_8wui0"]
+[ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="21_32e8q"]
+[ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="22_q4v7k"]
+[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://objects/interactable/key/key.gd" id="23_8jxq3"]
+[ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="24_0w27f"]
+[ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://objects/interactable/note/note_object.gd" id="25_dhg3j"]
+[ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="26_o52pp"]
+[ext_resource type="Texture2D" uid="uid://bbws6f8me4k3o" path="res://objects/environment/sprites/kitchen/Kitchen_garn.png" id="27_7aove"]
+[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="28_vtpmx"]
+[ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://objects/environment/sprites/kitchen/Table.png" id="29_jqg3g"]
+[ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://objects/interactable/notebook/laptop.gd" id="30_fc34f"]
+[ext_resource type="PackedScene" uid="uid://cdumkmia83xpc" path="res://levels/minigames/labs/sql/sql_minigame.tscn" id="31_vd5jx"]
+[ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="32_665xv"]
+[ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://objects/interactable/notebook/NotebookOn.png" id="33_4c5ub"]
+[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://objects/interactable/phone/phone.gd" id="34_kleyh"]
+[ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="35_m3kac"]
+[ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="36_j1q2l"]
+[ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://objects/environment/sprites/toilet and bathroom/Rakovina.png" id="37_pcfys"]
+[ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="38_co585"]
+[ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://objects/environment/sprites/toilet and bathroom/Toilet.png" id="39_0gxis"]
+[ext_resource type="Texture2D" uid="uid://kcpbktla5vc1" path="res://objects/environment/sprites/toilet and bathroom/Yorhic.png" id="40_j7vkp"]
+[ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="41_50pn1"]
+[ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://objects/environment/sprites/toilet and bathroom/bath.png" id="42_ye7kp"]
+[ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://objects/environment/sprites/kitchen/Chair_1.png" id="43_63fcu"]
+[ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://objects/environment/sprites/kitchen/Chair_2.png" id="44_fp554"]
+[ext_resource type="Texture2D" uid="uid://bsol5jiwykiso" path="res://objects/environment/sprites/kitchen/High_kitchen.png" id="45_lrrtv"]
+[ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="46_ao0l1"]
+[ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="47_0wfqg"]
+[ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="48_qpeoy"]
+[ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="49_3c2th"]
+[ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="50_7imjf"]
+[ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="51_sevkp"]
+[ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="52_2n8yt"]
+[ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="53_r136s"]
+[ext_resource type="Texture2D" uid="uid://byviqmju3y1gd" path="res://objects/environment/sprites/allrooms/WallBOK.png" id="54_23ofj"]
+[ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="55_kgf1k"]
+[ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="56_h3vfo"]
+[ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="57_d8q4i"]
+[ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/sprites/allrooms/OpenShtora.png" id="58_d2odf"]
+[ext_resource type="Texture2D" uid="uid://dn0h8y0pxtrr3" path="res://objects/environment/sprites/toilet and bathroom/ToothPolka.png" id="59_qsdi2"]
+[ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://objects/environment/background/TilesFloor1.png" id="60_nrhl0"]
+[ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="61_83jhg"]
+[ext_resource type="Texture2D" uid="uid://bbdgtswvtauqi" path="res://objects/environment/sprites/hall/PictureOne.png" id="62_q1lbn"]
+[ext_resource type="Texture2D" uid="uid://c2kap2nbmglxg" path="res://objects/environment/sprites/hall/Shkaf1.png" id="63_8ofjy"]
+[ext_resource type="Texture2D" uid="uid://cbjcagjxqv38" path="res://objects/environment/sprites/hall/BootsBoard.png" id="64_aoqk7"]
+[ext_resource type="Texture2D" uid="uid://b6171else4qx1" path="res://objects/environment/sprites/hall/Boots1.png" id="65_82o4p"]
+[ext_resource type="Texture2D" uid="uid://ch5p5j701ivi0" path="res://objects/environment/sprites/hall/Boots3.png" id="66_lg1vn"]
+[ext_resource type="Texture2D" uid="uid://b32dbypa4avi4" path="res://objects/environment/sprites/hall/Boots4.png" id="67_m7s86"]
+[ext_resource type="Texture2D" uid="uid://xgjccvayabbh" path="res://objects/environment/sprites/hall/Boots5.png" id="68_ue0mk"]
+[ext_resource type="Texture2D" uid="uid://db4r1172wlmmj" path="res://objects/environment/sprites/hall/Boots2.png" id="69_tigsv"]
+[ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://objects/environment/sprites/hall/Boots6.png" id="70_r7ok5"]
+[ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://objects/environment/sprites/kitchen/Urna.png" id="71_ogjed"]
+[ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="72_717hr"]
+[ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://objects/environment/background/decals/HoleInWall6.png" id="73_jiowu"]
+[ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://objects/environment/sprites/toilet and bathroom/Mirror.png" id="74_3sfph"]
+[ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="75_m25wu"]
+[ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="76_q6fvy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
@@ -106,7 +98,7 @@ data = PackedByteArray("cW9hZgAraIABAKxEFAAIGAAAAAAAAAAAAAAAAOAAQAB3qA000QGASlYV
 format = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
-shader = ExtResource("28_0f4oq")
+shader = ExtResource("21_32e8q")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -154,14 +146,13 @@ size = Vector2(111.6167, 1199.4946)
 
 [node name="Level2" type="Node2D"]
 position = Vector2(16, 0)
-script = ExtResource("level_settings")
-timer_duration = 3.0
+script = ExtResource("1_oojkp")
 
 [node name="WallBack_Hall" type="Sprite2D" parent="."]
 z_index = -5
 texture_repeat = 2
 position = Vector2(8352, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
@@ -169,7 +160,7 @@ region_rect = Rect2(0, 0, 4500, 550)
 z_index = -5
 texture_repeat = 2
 position = Vector2(12783, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
@@ -177,7 +168,7 @@ region_rect = Rect2(0, 0, 4500, 550)
 z_index = -5
 texture_repeat = 2
 position = Vector2(-1913, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 1500, 550)
 
@@ -185,9 +176,9 @@ region_rect = Rect2(0, 0, 1500, 550)
 z_index = -4
 position = Vector2(-2360, -12.000001)
 scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("2_7eav4")
+texture = ExtResource("3_epoe0")
 
-[node name="Player" parent="." instance=ExtResource("1_plrscn")]
+[node name="Player" parent="." instance=ExtResource("4_4ul2e")]
 z_index = 3
 position = Vector2(-2366, 96)
 run_speed_multiplier = 1.8
@@ -196,10 +187,10 @@ stamina_max = 30.0
 [node name="Door(In Bedroom)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(-1581, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 target_marker = NodePath("../Door(To Bedroom)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bedroom)"]
@@ -212,15 +203,15 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(In Bedroom)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("14_247hy")
+texture = ExtResource("8_3qc5h")
 
 [node name="Door(To Bedroom)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(8123, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 target_marker = NodePath("../Door(In Bedroom)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bedroom)"]
@@ -233,16 +224,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(To Bedroom)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("14_247hy")
+texture = ExtResource("8_3qc5h")
 
 [node name="Door(To Parents)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(8523, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Parents)"]
@@ -255,16 +246,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(To Parents)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("14_247hy")
+texture = ExtResource("8_3qc5h")
 
 [node name="Door(To Exit)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(6699, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Exit)"]
@@ -277,16 +268,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(To Exit)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.8562749, 0.8975009)
-texture = ExtResource("15_cnjqr")
+texture = ExtResource("9_ee484")
 
 [node name="Door(To Toilet)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(7651, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 door_locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(In Toilet)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Toilet)"]
@@ -299,16 +290,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(To Toilet)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("16_n0klf")
+texture = ExtResource("10_upm7w")
 
 [node name="Door(To Bathroom)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(7334, 83)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 door_locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(In Bathroom)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bathroom)"]
@@ -321,16 +312,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(To Bathroom)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("16_n0klf")
+texture = ExtResource("10_upm7w")
 
 [node name="Door(In Bathroom)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(14090.726, 2338.8599)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 door_locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(To Bathroom)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bathroom)"]
@@ -343,16 +334,16 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(In Bathroom)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("17_rc80n")
+texture = ExtResource("11_pespi")
 
 [node name="Door(In Toilet)" type="Area2D" parent="."]
 z_index = -2
 position = Vector2(16842.371, 2338.8599)
-script = ExtResource("11_uthrx")
+script = ExtResource("5_3fmjr")
 door_locked_message = "Кто, блять, запер дверь в туалет?"
 target_marker = NodePath("../Door(To Toilet)/Marker2D")
-sfx_locked = ExtResource("12_dklpa")
-sfx_open = ExtResource("13_lasqn")
+sfx_locked = ExtResource("6_crech")
+sfx_open = ExtResource("7_erj1k")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Toilet)"]
@@ -365,14 +356,15 @@ position = Vector2(0.25, 0.8960724)
 [node name="Sprite2D" type="Sprite2D" parent="Door(In Toilet)"]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
-texture = ExtResource("17_rc80n")
+texture = ExtResource("11_pespi")
 
 [node name="Bed" type="Area2D" parent="."]
 z_index = -1
 position = Vector2(-2420, 226)
-script = ExtResource("18_nk8an")
+script = ExtResource("12_51inv")
 next_level_path = "res://levels/cycles/level_01.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
+sleep_message_template = ""
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -382,18 +374,17 @@ shape = SubResource("RectangleShape2D_akavt")
 [node name="Sprite2D" type="Sprite2D" parent="Bed"]
 position = Vector2(-1.0320587, 0.2812729)
 scale = Vector2(0.5486593, 0.54865927)
-texture = ExtResource("19_vbetb")
+texture = ExtResource("13_g2cii")
 
 [node name="Frizzer" type="Area2D" parent="."]
 z_index = -1
 position = Vector2(9809.79, 121)
 rotation = 0.002391043
-script = ExtResource("20_106yh")
-minigame_scene = ExtResource("21_ps58k")
-food_scene = ExtResource("22_76lwr")
-andrey_face = ExtResource("23_anfs3")
+script = ExtResource("14_7glhr")
+minigame_scene = ExtResource("15_c2k4q")
+andrey_face = ExtResource("17_wl3kh")
 require_access_code = true
-open_sound = ExtResource("24_42xd2")
+open_sound = ExtResource("18_h4py2")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]
@@ -403,7 +394,7 @@ shape = SubResource("RectangleShape2D_2yfbk")
 [node name="Sprite2D" type="Sprite2D" parent="Frizzer"]
 position = Vector2(1.000001, 0.15893745)
 scale = Vector2(0.7364341, 0.73643416)
-texture = ExtResource("25_h6aah")
+texture = ExtResource("19_wud5o")
 
 [node name="PointLight2D" type="PointLight2D" parent="Frizzer"]
 visible = false
@@ -430,13 +421,13 @@ stream = SubResource("AudioStreamWAV_nlubh")
 volume_db = -18.0
 autoplay = true
 
-[node name="WorldClock2" parent="." instance=ExtResource("27_ui7uc")]
+[node name="WorldClock2" parent="." instance=ExtResource("20_8wui0")]
 position = Vector2(9236, -756)
 start_game_time = "0:07"
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
-color = Color(0.28082654, 0.28089628, 0.33698675, 1)
+color = Color(0.015686275, 0.015686275, 0.019607844, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -452,88 +443,82 @@ metadata/_edit_use_anchors_ = true
 [node name="OnOffer1" type="Sprite2D" parent="."]
 position = Vector2(-1735.2787, 29)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("29_iptbn")
+texture = ExtResource("22_q4v7k")
 
 [node name="TestKey" type="Area2D" parent="."]
 position = Vector2(3702, -536)
-script = ExtResource("30_jo8rr")
-key_id = null
-key_name = null
-pickup_message = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
+script = ExtResource("23_8jxq3")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey"]
 shape = SubResource("RectangleShape2D_aqck0")
 
 [node name="Sprite2D" type="Sprite2D" parent="TestKey"]
-texture = ExtResource("31_0vyli")
+texture = ExtResource("24_0w27f")
 
 [node name="TestNote" type="Area2D" parent="."]
 position = Vector2(7082, -533)
-script = ExtResource("32_46nnu")
+script = ExtResource("25_dhg3j")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote"]
 shape = SubResource("RectangleShape2D_aqck0")
 
 [node name="Sprite2D" type="Sprite2D" parent="TestNote"]
-texture = ExtResource("31_0vyli")
+texture = ExtResource("24_0w27f")
 
 [node name="Rozetka1" type="Sprite2D" parent="."]
 z_index = -3
 position = Vector2(-2467.875, 173)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("33_mdo08")
+texture = ExtResource("26_o52pp")
 
 [node name="OnOffer2" type="Sprite2D" parent="."]
 position = Vector2(7512.875, 29)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("29_iptbn")
+texture = ExtResource("22_q4v7k")
 
 [node name="OnOffer5" type="Sprite2D" parent="."]
 position = Vector2(6861, 29)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("29_iptbn")
+texture = ExtResource("22_q4v7k")
 
 [node name="OnOffer4" type="Sprite2D" parent="."]
 position = Vector2(8980, 29)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("29_iptbn")
+texture = ExtResource("22_q4v7k")
 
 [node name="OnOffer3" type="Sprite2D" parent="."]
 position = Vector2(7474.875, 29)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("29_iptbn")
+texture = ExtResource("22_q4v7k")
 
 [node name="KitchenFurniture" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(9479.546, 176.75)
 scale = Vector2(0.65167105, 0.6516709)
-texture = ExtResource("34_wxo28")
+texture = ExtResource("27_7aove")
 
 [node name="Window2" type="Sprite2D" parent="."]
 z_index = -4
 position = Vector2(10323, -12.000001)
 scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("35_8s8vv")
+texture = ExtResource("28_vtpmx")
 
 [node name="KitchenTable" type="Sprite2D" parent="."]
 z_index = 7
 position = Vector2(10163.37, 276.23898)
 scale = Vector2(0.9169747, 0.91697466)
-texture = ExtResource("36_lr5a3")
+texture = ExtResource("29_jqg3g")
 
 [node name="TableForLab" type="Area2D" parent="."]
 position = Vector2(-1857.0001, 165)
 scale = Vector2(0.9169747, 0.91697466)
-script = ExtResource("37_xe867")
-minigame_scene = ExtResource("38_le2t6")
-locked_sprite = ExtResource("39_vbm7i")
-available_sprite = ExtResource("40_2ii75")
+script = ExtResource("30_fc34f")
+minigame_scene = ExtResource("31_vd5jx")
+dependency_object = NodePath("../Frizzer")
+locked_sprite = ExtResource("32_665xv")
+available_sprite = ExtResource("33_4c5ub")
 sprite_node = NodePath("NotebookOff2")
 available_light_node = NodePath("PointLight2D")
 available_light_node_secondary = NodePath("PointLight2D2")
@@ -548,7 +533,7 @@ shape = SubResource("RectangleShape2D_nyxq3")
 z_index = 1
 position = Vector2(19.629883, -86.15288)
 scale = Vector2(0.26368898, 0.263689)
-texture = ExtResource("40_2ii75")
+texture = ExtResource("33_4c5ub")
 
 [node name="PointLight2D" type="PointLight2D" parent="TableForLab"]
 position = Vector2(18.539358, -62.16093)
@@ -563,12 +548,7 @@ texture = SubResource("GradientTexture2D_r2tj0")
 [node name="Phone" type="Area2D" parent="."]
 position = Vector2(7976, -502)
 scale = Vector2(0.9169747, 0.91697466)
-script = ExtResource("41_y5xcj")
-ring_interval = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
+script = ExtResource("34_kleyh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phone"]
 position = Vector2(0.5439453, -1.3511658)
@@ -578,32 +558,32 @@ shape = SubResource("RectangleShape2D_tw5p7")
 [node name="Sprite2D" type="Sprite2D" parent="Phone"]
 z_index = 7
 scale = Vector2(0.99999994, 1)
-texture = ExtResource("36_lr5a3")
+texture = ExtResource("29_jqg3g")
 
 [node name="WashMachine" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(13740.602, 2453.1492)
 scale = Vector2(0.61568123, 0.61568123)
-texture = ExtResource("42_rnsmf")
+texture = ExtResource("35_m3kac")
 
 [node name="CookingGas" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(9993.2, 200.70374)
 scale = Vector2(0.2942373, 0.2942373)
-texture = ExtResource("43_d0fn0")
+texture = ExtResource("36_j1q2l")
 
 [node name="Rakovina" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(13906.001, 2456.8596)
 scale = Vector2(0.536, 0.536)
-texture = ExtResource("44_fu053")
+texture = ExtResource("37_pcfys")
 
 [node name="WallBack_Toilet" type="Sprite2D" parent="."]
 z_index = -5
 texture_repeat = 2
 position = Vector2(16690.602, 2274.8599)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("45_nohlj")
+texture = ExtResource("38_co585")
 region_enabled = true
 region_rect = Rect2(0, 0, 2400, 2200)
 
@@ -612,7 +592,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(14139, 2274.8599)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("45_nohlj")
+texture = ExtResource("38_co585")
 region_enabled = true
 region_rect = Rect2(0, 0, 4100, 2200)
 
@@ -620,19 +600,19 @@ region_rect = Rect2(0, 0, 4100, 2200)
 z_index = -2
 position = Vector2(16536, 2436.8599)
 scale = Vector2(0.61568123, 0.61568123)
-texture = ExtResource("46_d64aq")
+texture = ExtResource("39_0gxis")
 
 [node name="Yorhic" type="Sprite2D" parent="."]
 position = Vector2(16446, 2483.8599)
 scale = Vector2(0.27, 0.27)
-texture = ExtResource("47_y66bm")
+texture = ExtResource("40_j7vkp")
 
 [node name="FloorBedroom" type="Sprite2D" parent="."]
 z_index = -5
 texture_repeat = 2
 position = Vector2(-1913.0001, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 6840, 500)
 
@@ -641,7 +621,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(8351.001, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -650,7 +630,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(12784, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -658,7 +638,7 @@ region_rect = Rect2(0, 0, 20500, 500)
 z_index = -5
 texture_repeat = 2
 position = Vector2(17272, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
@@ -667,7 +647,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(17273, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -675,7 +655,7 @@ region_rect = Rect2(0, 0, 20500, 500)
 z_index = -5
 texture_repeat = 2
 position = Vector2(21702, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
@@ -684,7 +664,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(21703, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -692,7 +672,7 @@ region_rect = Rect2(0, 0, 20500, 500)
 z_index = -5
 texture_repeat = 2
 position = Vector2(26166, 19)
-texture = ExtResource("1_j5jbj")
+texture = ExtResource("2_jrd2g")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
@@ -701,7 +681,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(26167, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -710,7 +690,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(14139, 2581.8599)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 4650, 500)
 
@@ -719,7 +699,7 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(16690.602, 2581.8599)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("48_d35qo")
+texture = ExtResource("41_50pn1")
 region_enabled = true
 region_rect = Rect2(0, 0, 2750, 500)
 
@@ -729,7 +709,7 @@ scale = Vector2(0.61568123, 0.61568123)
 
 [node name="Wash" type="Sprite2D" parent="StaticBody2D"]
 z_index = -2
-texture = ExtResource("49_shqfx")
+texture = ExtResource("42_ye7kp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-2.4355469, 45.47809)
@@ -739,46 +719,46 @@ shape = SubResource("RectangleShape2D_rdh85")
 z_index = 6
 position = Vector2(10442, 245)
 scale = Vector2(0.35, 0.35)
-texture = ExtResource("50_e34kh")
+texture = ExtResource("43_63fcu")
 
 [node name="Chair2" type="Sprite2D" parent="."]
 z_index = 3
 position = Vector2(10252, 230)
 scale = Vector2(0.35, 0.35)
-texture = ExtResource("51_pts8l")
+texture = ExtResource("44_fp554")
 
 [node name="Chair3" type="Sprite2D" parent="."]
 z_index = 3
 position = Vector2(10092.369, 229.99998)
 scale = Vector2(0.35, 0.35)
-texture = ExtResource("51_pts8l")
+texture = ExtResource("44_fp554")
 
 [node name="HighKitchen" type="Sprite2D" parent="."]
 position = Vector2(9477, -103.999985)
 scale = Vector2(0.31, 0.31)
-texture = ExtResource("52_6x3iq")
+texture = ExtResource("45_lrrtv")
 
 [node name="Comode" type="Sprite2D" parent="."]
 position = Vector2(-1323.5944, 189)
 scale = Vector2(0.32872525, 0.32872525)
-texture = ExtResource("53_qa5h3")
+texture = ExtResource("46_ao0l1")
 
 [node name="Comode2" type="Sprite2D" parent="."]
 position = Vector2(-1857.2787, 190.00002)
 scale = Vector2(0.3389674, 0.33896744)
-texture = ExtResource("54_s01p5")
+texture = ExtResource("47_0wfqg")
 
 [node name="Tumbochka2" type="Sprite2D" parent="."]
 position = Vector2(-2112.125, 238)
 scale = Vector2(0.21, 0.21)
-texture = ExtResource("55_w0s5i")
+texture = ExtResource("48_qpeoy")
 
 [node name="Clock" type="Sprite2D" parent="."]
 position = Vector2(-2124, 150)
 scale = Vector2(0.18, 0.18)
-texture = ExtResource("56_rfyxr")
+texture = ExtResource("49_3c2th")
 
-[node name="WorldClock" parent="." instance=ExtResource("27_ui7uc")]
+[node name="WorldClock" parent="." instance=ExtResource("20_8wui0")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
 start_game_time = "1:03"
@@ -792,50 +772,50 @@ texture = SubResource("GradientTexture2D_f1xxx")
 [node name="SteamDeck" type="Sprite2D" parent="."]
 position = Vector2(-1258.5944, 55.96)
 scale = Vector2(0.24, 0.24)
-texture = ExtResource("57_dtolq")
+texture = ExtResource("50_7imjf")
 
 [node name="NotebookOff" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(-1839, 86)
 scale = Vector2(0.24179614, 0.24179614)
-texture = ExtResource("39_vbm7i")
+texture = ExtResource("32_665xv")
 
 [node name="Plakat1" type="Sprite2D" parent="."]
 z_index = -5
 position = Vector2(-2091, 37)
 scale = Vector2(0.18294117, 0.18294117)
-texture = ExtResource("58_cne4r")
+texture = ExtResource("51_sevkp")
 
 [node name="Plakat2" type="Sprite2D" parent="."]
 z_index = -4
 position = Vector2(-1353, -46)
 scale = Vector2(0.1879456, 0.1879456)
-texture = ExtResource("59_soj0c")
+texture = ExtResource("52_2n8yt")
 
 [node name="Lamp1" type="Sprite2D" parent="."]
 position = Vector2(-1898.9999, -214)
 scale = Vector2(0.28, 0.28)
-texture = ExtResource("60_nsye0")
+texture = ExtResource("53_r136s")
 
 [node name="Lamp4" type="Sprite2D" parent="."]
 position = Vector2(9814, -214)
 scale = Vector2(0.28, 0.28)
-texture = ExtResource("60_nsye0")
+texture = ExtResource("53_r136s")
 
 [node name="Lamp5" type="Sprite2D" parent="."]
 position = Vector2(6699, -214)
 scale = Vector2(0.28, 0.28)
-texture = ExtResource("60_nsye0")
+texture = ExtResource("53_r136s")
 
 [node name="Lamp2" type="Sprite2D" parent="."]
 position = Vector2(14165, 2047.8599)
 scale = Vector2(0.28, 0.28)
-texture = ExtResource("60_nsye0")
+texture = ExtResource("53_r136s")
 
 [node name="Lamp3" type="Sprite2D" parent="."]
 position = Vector2(16701, 2046.8599)
 scale = Vector2(0.28, 0.28)
-texture = ExtResource("60_nsye0")
+texture = ExtResource("53_r136s")
 
 [node name="WallEnd" type="StaticBody2D" parent="."]
 position = Vector2(-1151.5, 63.860657)
@@ -847,7 +827,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof" type="StaticBody2D" parent="."]
 position = Vector2(-1450.9999, -275)
@@ -863,7 +843,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof2" type="StaticBody2D" parent="."]
 position = Vector2(-2252, -275)
@@ -879,7 +859,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof3" type="StaticBody2D" parent="."]
 position = Vector2(-1450.9999, 399)
@@ -895,7 +875,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof4" type="StaticBody2D" parent="."]
 position = Vector2(-2252, 399)
@@ -911,7 +891,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd2" type="StaticBody2D" parent="."]
 position = Vector2(-2680, 63.860657)
@@ -923,7 +903,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd2"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd5" type="StaticBody2D" parent="."]
 position = Vector2(17008, 2319.7205)
@@ -935,7 +915,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd5"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof18" type="StaticBody2D" parent="."]
 position = Vector2(16735, 1980.8596)
@@ -951,7 +931,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof19" type="StaticBody2D" parent="."]
 position = Vector2(16735, 2654.8599)
@@ -967,7 +947,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd6" type="StaticBody2D" parent="."]
 position = Vector2(16372, 2319.7205)
@@ -979,7 +959,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd6"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd7" type="StaticBody2D" parent="."]
 position = Vector2(14666, 2319.7205)
@@ -991,7 +971,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd7"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof20" type="StaticBody2D" parent="."]
 position = Vector2(13909, 1980.8596)
@@ -1007,7 +987,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof22" type="StaticBody2D" parent="."]
 position = Vector2(14445, 1980.8596)
@@ -1023,7 +1003,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof21" type="StaticBody2D" parent="."]
 position = Vector2(13909, 2654.8596)
@@ -1039,7 +1019,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof23" type="StaticBody2D" parent="."]
 position = Vector2(14447, 2654.8596)
@@ -1055,7 +1035,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd8" type="StaticBody2D" parent="."]
 position = Vector2(13615, 2319.7205)
@@ -1067,7 +1047,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd8"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd3" type="StaticBody2D" parent="."]
 position = Vector2(28409, 65)
@@ -1079,7 +1059,7 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd3"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof5" type="StaticBody2D" parent="."]
 position = Vector2(10321, -275)
@@ -1095,7 +1075,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof6" type="StaticBody2D" parent="."]
 position = Vector2(6517, -275)
@@ -1111,7 +1091,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof7" type="StaticBody2D" parent="."]
 position = Vector2(10321, 399)
@@ -1127,7 +1107,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof9" type="StaticBody2D" parent="."]
 position = Vector2(9540, -275)
@@ -1143,7 +1123,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof10" type="StaticBody2D" parent="."]
 position = Vector2(9540, 399)
@@ -1159,7 +1139,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof17" type="StaticBody2D" parent="."]
 position = Vector2(11099.999, 398.99997)
@@ -1175,7 +1155,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof24" type="StaticBody2D" parent="."]
 position = Vector2(11873, 398.99997)
@@ -1191,7 +1171,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof25" type="StaticBody2D" parent="."]
 position = Vector2(12643.999, 398.99997)
@@ -1207,7 +1187,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof26" type="StaticBody2D" parent="."]
 position = Vector2(13411.999, 399)
@@ -1223,7 +1203,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof27" type="StaticBody2D" parent="."]
 position = Vector2(14181.999, 398.99997)
@@ -1239,7 +1219,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof28" type="StaticBody2D" parent="."]
 position = Vector2(14955, 399)
@@ -1255,7 +1235,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof29" type="StaticBody2D" parent="."]
 position = Vector2(15728.001, 399)
@@ -1271,7 +1251,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof30" type="StaticBody2D" parent="."]
 position = Vector2(16499, 399)
@@ -1287,7 +1267,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof31" type="StaticBody2D" parent="."]
 position = Vector2(17267, 399.00003)
@@ -1303,7 +1283,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof32" type="StaticBody2D" parent="."]
 position = Vector2(18037, 399)
@@ -1319,7 +1299,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof33" type="StaticBody2D" parent="."]
 position = Vector2(18801, 399)
@@ -1335,7 +1315,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof34" type="StaticBody2D" parent="."]
 position = Vector2(19574, 399)
@@ -1351,7 +1331,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof35" type="StaticBody2D" parent="."]
 position = Vector2(20345, 399)
@@ -1367,7 +1347,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof36" type="StaticBody2D" parent="."]
 position = Vector2(21113, 399.00003)
@@ -1383,7 +1363,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof37" type="StaticBody2D" parent="."]
 position = Vector2(21883, 399)
@@ -1399,7 +1379,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof38" type="StaticBody2D" parent="."]
 position = Vector2(22641, 399)
@@ -1415,7 +1395,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof39" type="StaticBody2D" parent="."]
 position = Vector2(23414, 399)
@@ -1431,7 +1411,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof40" type="StaticBody2D" parent="."]
 position = Vector2(24185, 399)
@@ -1447,7 +1427,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof41" type="StaticBody2D" parent="."]
 position = Vector2(24953, 399.00003)
@@ -1463,7 +1443,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof42" type="StaticBody2D" parent="."]
 position = Vector2(25723, 399)
@@ -1479,7 +1459,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof43" type="StaticBody2D" parent="."]
 position = Vector2(26490, 399)
@@ -1495,7 +1475,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof44" type="StaticBody2D" parent="."]
 position = Vector2(27258, 399.00003)
@@ -1511,7 +1491,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof45" type="StaticBody2D" parent="."]
 position = Vector2(28028, 399)
@@ -1527,7 +1507,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof11" type="StaticBody2D" parent="."]
 position = Vector2(8757, -275)
@@ -1543,7 +1523,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof12" type="StaticBody2D" parent="."]
 position = Vector2(8757, 399)
@@ -1559,7 +1539,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof13" type="StaticBody2D" parent="."]
 position = Vector2(7977, -275)
@@ -1575,7 +1555,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof14" type="StaticBody2D" parent="."]
 position = Vector2(7977, 399)
@@ -1591,7 +1571,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof15" type="StaticBody2D" parent="."]
 position = Vector2(7292, -275)
@@ -1607,7 +1587,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof16" type="StaticBody2D" parent="."]
 position = Vector2(7292, 399)
@@ -1623,7 +1603,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallRoof8" type="StaticBody2D" parent="."]
 position = Vector2(6517, 399)
@@ -1639,7 +1619,7 @@ shape = SubResource("RectangleShape2D_dwgmq")
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="WallEnd4" type="StaticBody2D" parent="."]
 position = Vector2(6089, 63.860657)
@@ -1651,65 +1631,65 @@ shape = SubResource("RectangleShape2D_o12kx")
 
 [node name="WallBok" type="Sprite2D" parent="WallEnd4"]
 light_mask = 2
-texture = ExtResource("61_pvnfl")
+texture = ExtResource("54_23ofj")
 
 [node name="ToiletPaper" type="Sprite2D" parent="."]
 position = Vector2(16640, 2405.8599)
 scale = Vector2(0.08124997, 0.081249975)
-texture = ExtResource("62_35v6e")
+texture = ExtResource("55_kgf1k")
 
 [node name="Vent" type="Sprite2D" parent="."]
 position = Vector2(16550, 2095.8596)
 scale = Vector2(0.15588242, 0.1558824)
-texture = ExtResource("63_qilx3")
+texture = ExtResource("56_h3vfo")
 
 [node name="Vent2" type="Sprite2D" parent="."]
 position = Vector2(13849.999, 2095.8596)
 scale = Vector2(0.15588242, 0.1558824)
-texture = ExtResource("63_qilx3")
+texture = ExtResource("56_h3vfo")
 
 [node name="ChairBedroom" type="Sprite2D" parent="."]
 light_mask = 2
 z_index = 2
 position = Vector2(-1840.9999, 221.99998)
 scale = Vector2(0.29, 0.29)
-texture = ExtResource("64_3wd2r")
+texture = ExtResource("57_d8q4i")
 
 [node name="OpenShtora" type="Sprite2D" parent="."]
 z_index = -3
 position = Vector2(-2362, 54)
 scale = Vector2(0.59296346, 0.59296346)
-texture = ExtResource("65_uyig3")
+texture = ExtResource("58_d2odf")
 
 [node name="OpenShtora2" type="Sprite2D" parent="."]
 z_index = -3
 position = Vector2(10323, 54)
 scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("65_uyig3")
+texture = ExtResource("58_d2odf")
 
 [node name="ToothPolka" type="Sprite2D" parent="."]
 position = Vector2(13906, 2302.7397)
 scale = Vector2(0.18251042, 0.18251051)
-texture = ExtResource("66_bhsw6")
+texture = ExtResource("59_qsdi2")
 
 [node name="TilesFloor1" type="Sprite2D" parent="."]
 z_index = -5
 position = Vector2(16691.934, 2582.86)
 scale = Vector2(0.3938595, 0.39385954)
-texture = ExtResource("67_t8p3l")
+texture = ExtResource("60_nrhl0")
 
 [node name="TilesFloor2" type="Sprite2D" parent="."]
 z_index = -5
 position = Vector2(13981.504, 2587.2974)
 scale = Vector2(0.45307007, 0.45307013)
-texture = ExtResource("67_t8p3l")
+texture = ExtResource("60_nrhl0")
 
 [node name="Sweets" type="Sprite2D" parent="."]
 position = Vector2(-1959.9788, 114.54161)
 rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
 skew = -0.5637413
-texture = ExtResource("68_qhoba")
+texture = ExtResource("61_83jhg")
 metadata/_edit_group_ = true
 
 [node name="Sweets2" type="Sprite2D" parent="."]
@@ -1717,65 +1697,65 @@ position = Vector2(-1972.4827, 114.3853)
 rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
 skew = -0.5637413
-texture = ExtResource("68_qhoba")
+texture = ExtResource("61_83jhg")
 metadata/_edit_group_ = true
 
 [node name="PictureOne" type="Sprite2D" parent="."]
 position = Vector2(9131, -15)
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("69_10h7x")
+texture = ExtResource("62_q1lbn")
 
 [node name="Shkaf1" type="Sprite2D" parent="."]
 position = Vector2(6333.0005, 44)
 scale = Vector2(0.7199503, 0.7199504)
-texture = ExtResource("70_ko7i6")
+texture = ExtResource("63_8ofjy")
 
 [node name="BootsBoard" type="Sprite2D" parent="."]
 position = Vector2(6954.0005, 249)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("71_1ttwx")
+texture = ExtResource("64_aoqk7")
 
 [node name="Boots1" type="Sprite2D" parent="."]
 position = Vector2(6877, 180)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("72_px6hj")
+texture = ExtResource("65_82o4p")
 
 [node name="Boots3" type="Sprite2D" parent="."]
 position = Vector2(6951, 239)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("73_xsbd7")
+texture = ExtResource("66_lg1vn")
 
 [node name="Boots4" type="Sprite2D" parent="."]
 position = Vector2(6878, 240)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("74_bddgk")
+texture = ExtResource("67_m7s86")
 
 [node name="Boots5" type="Sprite2D" parent="."]
 position = Vector2(7024, 240)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("75_0a7ki")
+texture = ExtResource("68_ue0mk")
 
 [node name="Boots2" type="Sprite2D" parent="."]
 position = Vector2(6949, 184)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("76_h6a1m")
+texture = ExtResource("69_tigsv")
 
 [node name="Boots6" type="Sprite2D" parent="."]
 position = Vector2(7028, 178)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("77_y0ton")
+texture = ExtResource("70_r7ok5")
 
 [node name="Urna" type="Sprite2D" parent="."]
 position = Vector2(9198, 227)
 scale = Vector2(0.14, 0.14)
-texture = ExtResource("78_ug0bd")
+texture = ExtResource("71_ogjed")
 
 [node name="Powerbank2" type="Sprite2D" parent="."]
 position = Vector2(-1310.9999, 39.999996)
 rotation = -0.061086524
 scale = Vector2(0.23, 0.26)
 skew = 0.10646509
-texture = ExtResource("79_kqa0o")
+texture = ExtResource("72_717hr")
 
 [node name="Kover" type="Sprite2D" parent="."]
 z_index = -5
@@ -1786,13 +1766,13 @@ scale = Vector2(0.19589221, 0.19589221)
 z_index = -5
 position = Vector2(6557, -1)
 scale = Vector2(0.27, 0.27)
-texture = ExtResource("80_0fedf")
+texture = ExtResource("73_jiowu")
 
 [node name="Mirror" type="Sprite2D" parent="."]
 z_index = -2
 position = Vector2(13907, 2247.7397)
 scale = Vector2(0.16, 0.16)
-texture = ExtResource("81_wwm0w")
+texture = ExtResource("74_3sfph")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 
@@ -1801,31 +1781,22 @@ position = Vector2(-1754.9999, 107.99999)
 rotation = -0.061086524
 scale = Vector2(0.04193877, 0.052643225)
 skew = 0.08726646
-texture = ExtResource("82_tu4sr")
+texture = ExtResource("75_m25wu")
 
-[node name="EnemyRunner" parent="." instance=ExtResource("77_vpq6w")]
-position = Vector2(6675, 120)
-step_sounds = Array[AudioStream]([ExtResource("77_nlubh")])
-step_volume_db = -6.0
-walk_frame_time = 0.117
-walk_loop_start_index = 4
-walk_loop_end_index = 19
-step_frame_indices = Array[int]([6, 10, 14, 18])
-camera_shake_intensity = 19.0
-kill_on_attack = true
+[node name="EnemyLightOnly" parent="." instance=ExtResource("76_q6fvy")]
+position = Vector2(11127, 111)
 
-[node name="EnemyLightSensitive" parent="." instance=ExtResource("85_3pht0")]
-position = Vector2(13077, 134)
+[node name="EnemyLightOnly2" parent="." instance=ExtResource("76_q6fvy")]
+position = Vector2(11822, 111)
 
-[node name="TextureDistortionManager" type="Node" parent="."]
-script = ExtResource("79_2r2n3")
-texture_map = {
-ExtResource("1_j5jbj"): ExtResource("80_3pht0"),
-ExtResource("48_d35qo"): ExtResource("81_sho1l"),
-ExtResource("14_247hy"): ExtResource("82_r1utm")
-}
-distortion_music = ExtResource("83_yr25g")
-distortion_sfx = ExtResource("84_5dg1s")
+[node name="EnemyLightOnly3" parent="." instance=ExtResource("76_q6fvy")]
+position = Vector2(12936, 111)
+
+[node name="EnemyLightOnly4" parent="." instance=ExtResource("76_q6fvy")]
+position = Vector2(13551, 106)
+
+[node name="EnemyLightOnly5" parent="." instance=ExtResource("76_q6fvy")]
+position = Vector2(14461, 106)
 
 [connection signal="body_entered" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Door(In Bedroom)" to="Door(In Bedroom)" method="_on_body_exited"]

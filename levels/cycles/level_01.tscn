@@ -1,11 +1,10 @@
-[gd_scene load_steps=80 format=3 uid="uid://cc6ehxxoauhyn"]
+[gd_scene load_steps=78 format=3 uid="uid://cc6ehxxoauhyn"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_bij4o"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="11_3555j"]
 [ext_resource type="Texture2D" uid="uid://kcpbktla5vc1" path="res://objects/environment/sprites/toilet and bathroom/Yorhic.png" id="11_w2g1e"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="12_bvnc7"]
-[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="13_3jwi8"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="13_bij4o"]
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://objects/interactable/door/sprites/DoorExit.png" id="14_m3n5y"]
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="15_qr0f4"]
@@ -14,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://cuhcdtpyoi3mu" path="res://levels/minigames/feeding/food/cookie/food_cookie_2.tscn" id="16_j5rey"]
 [ext_resource type="PackedScene" uid="uid://bx5bjpmgnq1d5" path="res://levels/minigames/feeding/food/cookie/food_cookie_1.tscn" id="16_luqlq"]
 [ext_resource type="PackedScene" uid="uid://dt0ylyekbtppr" path="res://levels/minigames/feeding/food/cookie/food_cookie_3.tscn" id="17_4a5ua"]
-[ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://objects/interactable/fridge/sprites/OpenFridge.png" id="17_84kq6"]
 [ext_resource type="PackedScene" uid="uid://b2wokl832lofw" path="res://levels/minigames/feeding/food/cookie/food_cookie_4.tscn" id="18_3fmbd"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="18_wnv1a"]
 [ext_resource type="PackedScene" uid="uid://dolp7h1gyk6t5" path="res://levels/minigames/feeding/food/cookie/food_cookie_5.tscn" id="19_5lo1f"]
@@ -25,15 +23,14 @@
 [ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="23_3jwi8"]
 [ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://objects/environment/sprites/toilet and bathroom/Toilet.png" id="25_bvnc7"]
 [ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://objects/environment/sprites/toilet and bathroom/Rakovina.png" id="26_45wr0"]
-[ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="26_gklq2"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="26_m068l"]
 [ext_resource type="Texture2D" uid="uid://c7ssns4hfdtva" path="res://objects/environment/sprites/kitchen/Table.png" id="26_nl6wm"]
 [ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="27_84kq6"]
 [ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="28_bvnc7"]
-[ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://objects/interactable/fridge/audio/FridgeNoizeE.wav" id="28_g1wwn"]
 [ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="29_ndvd2"]
 [ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="37_75rkc"]
 [ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://objects/environment/sprites/kitchen/Chair_1.png" id="45_4cwao"]
+[ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="46_7kpgv"]
 [ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://objects/environment/sprites/kitchen/Chair_2.png" id="46_kmmfc"]
 [ext_resource type="Texture2D" uid="uid://bsol5jiwykiso" path="res://objects/environment/sprites/kitchen/High_kitchen.png" id="47_aotug"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="48_o43pb"]
@@ -41,9 +38,13 @@
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="50_3x6hr"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="51_kmqpk"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="52_7vbk0"]
+[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="54_1u7l1"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="54_mn4je"]
+[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="55_goh1n"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="55_tgt7k"]
+[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="56_oph48"]
 [ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="56_tgt7k"]
+[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="57_vebv3"]
 [ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="59_lty6u"]
 [ext_resource type="PackedScene" uid="uid://c06wvx5ppi7g7" path="res://objects/environment/walls/wall_vertical.tscn" id="60_3lcwr"]
 [ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="60_gklq2"]
@@ -79,16 +80,6 @@ shader = ExtResource("18_wnv1a")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cr2eh"]
-size = Vector2(187.5, 370.36243)
-
-[sub_resource type="Gradient" id="Gradient_84kq6"]
-offsets = PackedFloat32Array(0, 0.8534202, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ww2c2"]
-gradient = SubResource("Gradient_84kq6")
 
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -649,52 +640,6 @@ texture = ExtResource("74_pgbjj")
 
 [node name="InteractableObjects" type="Node2D" parent="Hall"]
 
-[node name="Frizzer" type="Area2D" parent="Hall/InteractableObjects"]
-z_index = -1
-position = Vector2(9809.79, 115.749985)
-rotation = 0.002391043
-script = ExtResource("13_3jwi8")
-minigame_scene = ExtResource("11_3555j")
-food_scenes = Array[PackedScene]([ExtResource("16_luqlq"), ExtResource("16_j5rey"), ExtResource("17_4a5ua"), ExtResource("18_3fmbd"), ExtResource("19_5lo1f"), ExtResource("20_v5xqk")])
-andrey_face = ExtResource("12_bvnc7")
-food_count = 6
-open_sound = ExtResource("26_gklq2")
-prompt_text = "Поесть"
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall/InteractableObjects/Frizzer"]
-position = Vector2(0.25, -0.22574615)
-shape = SubResource("RectangleShape2D_cr2eh")
-
-[node name="Sprite2D" type="Sprite2D" parent="Hall/InteractableObjects/Frizzer"]
-position = Vector2(1.000001, 0.15893745)
-scale = Vector2(0.7364341, 0.73643416)
-texture = ExtResource("17_84kq6")
-
-[node name="PointLight2D" type="PointLight2D" parent="Hall/InteractableObjects/Frizzer"]
-position = Vector2(-72.01596, -0.6028094)
-scale = Vector2(0.75128275, 5.546401)
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_ww2c2")
-
-[node name="PointLight2D2" type="PointLight2D" parent="Hall/InteractableObjects/Frizzer"]
-light_mask = 3
-visibility_layer = 3
-position = Vector2(-135.00371, -1.4271885)
-scale = Vector2(0.7293383, 5.756114)
-energy = 0.3
-range_item_cull_mask = 3
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_ww2c2")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Hall/InteractableObjects/Frizzer"]
-stream = ExtResource("28_g1wwn")
-volume_db = -18.0
-autoplay = true
-bus = &"Sounds"
-
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("82_5lo1f")]
 position = Vector2(8434.125, 83)
 is_locked = null
@@ -767,6 +712,21 @@ interact_area_node = null
 auto_prompt = null
 handle_input = null
 one_shot = null
+
+[node name="Fridge" parent="Hall/InteractableObjects" instance=ExtResource("46_7kpgv")]
+position = Vector2(9809.79, 115.749985)
+minigame_scene = ExtResource("11_3555j")
+food_scenes = Array[PackedScene]([ExtResource("16_luqlq"), ExtResource("16_j5rey"), ExtResource("17_4a5ua"), ExtResource("18_3fmbd"), ExtResource("19_5lo1f"), ExtResource("20_v5xqk")])
+andrey_face = ExtResource("12_bvnc7")
+food_count = 6
+bg_music = ExtResource("54_1u7l1")
+win_sound = ExtResource("55_goh1n")
+eat_sound = ExtResource("56_oph48")
+background_texture = ExtResource("57_vebv3")
+metadata/_edit_group_ = true
+
+[node name="FridgeMarker" type="Marker2D" parent="Hall/InteractableObjects/Fridge"]
+position = Vector2(0.20996094, -32.749985)
 
 [node name="Bedroom" type="Node2D" parent="."]
 
@@ -907,7 +867,6 @@ rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
 skew = -0.56374145
 texture = ExtResource("69_1v4n6")
-metadata/_edit_group_ = true
 
 [node name="Sweets2" type="Sprite2D" parent="Bedroom/Sprites"]
 position = Vector2(-1972.4827, 114.3853)
@@ -915,7 +874,6 @@ rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
 skew = -0.56374145
 texture = ExtResource("69_1v4n6")
-metadata/_edit_group_ = true
 
 [node name="Powerbank2" type="Sprite2D" parent="Bedroom/Sprites"]
 position = Vector2(-1310.9999, 39.999996)
@@ -996,6 +954,4 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("74_goh1n")]
 position = Vector2(-2420, 226)
-
-[connection signal="body_entered" from="Hall/InteractableObjects/Frizzer" to="Hall/InteractableObjects/Frizzer" method="_on_body_entered"]
-[connection signal="body_exited" from="Hall/InteractableObjects/Frizzer" to="Hall/InteractableObjects/Frizzer" method="_on_body_exited"]
+next_level_path = "uid://dtm55gxtfvbo2"

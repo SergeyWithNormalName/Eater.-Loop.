@@ -1,7 +1,7 @@
 extends Node
 
 @warning_ignore("unused_signal")
-signal lab_completed(quest_id: String)
+signal lab_completed
 signal phone_picked_changed
 signal fridge_interacted_changed
 signal electricity_changed(is_on: bool)
@@ -12,7 +12,7 @@ const SAVE_PATH := "user://run_save.cfg"
 
 var phase: Phase = Phase.NORMAL # Было просто phase
 var ate_this_cycle: bool = false
-var completed_labs: Array[String] = []
+var lab_done: bool = false
 var phone_picked: bool = false
 var fridge_interacted: bool = false
 var pending_sleep_spawn: bool = false
@@ -74,7 +74,7 @@ func reset_cycle_state() -> void:
 
 func reset_run() -> void:
 	ate_this_cycle = false
-	completed_labs = []
+	lab_done = false
 	phone_picked = false
 	fridge_interacted = false
 	pending_sleep_spawn = false
@@ -90,7 +90,7 @@ func _save_run_state() -> void:
 	var config := ConfigFile.new()
 	config.set_value("run", "last_scene_path", last_scene_path)
 	config.set_value("run", "has_active_run", has_active_run)
-	config.set_value("run", "completed_labs", completed_labs)
+	config.set_value("run", "lab_done", lab_done)
 	config.set_value("run", "phone_picked", phone_picked)
 	config.set_value("run", "fridge_interacted", fridge_interacted)
 	config.set_value("run", "ate_this_cycle", ate_this_cycle)
@@ -105,13 +105,24 @@ func _load_run_state() -> void:
 		return
 	last_scene_path = str(config.get_value("run", "last_scene_path", last_scene_path))
 	has_active_run = bool(config.get_value("run", "has_active_run", has_active_run))
-	completed_labs = _coerce_string_array(config.get_value("run", "completed_labs", completed_labs))
+	lab_done = bool(config.get_value("run", "lab_done", lab_done))
+	var legacy_completed = config.get_value("run", "completed_labs", null)
+	if legacy_completed != null and not lab_done:
+		var legacy_list := _coerce_string_array(legacy_completed)
+		if not legacy_list.is_empty():
+			lab_done = true
 	phone_picked = bool(config.get_value("run", "phone_picked", phone_picked))
 	fridge_interacted = bool(config.get_value("run", "fridge_interacted", fridge_interacted))
 	ate_this_cycle = bool(config.get_value("run", "ate_this_cycle", ate_this_cycle))
 	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
 	pending_sleep_spawn = false
 	set_phase(Phase.NORMAL)
+
+func mark_lab_completed() -> void:
+	if lab_done:
+		return
+	lab_done = true
+	lab_completed.emit()
 
 func _coerce_string_array(value: Variant) -> Array[String]:
 	var result: Array[String] = []
