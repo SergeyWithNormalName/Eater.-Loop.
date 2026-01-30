@@ -7,6 +7,7 @@ extends "res://objects/interactable/interactive_object.gd"
 @export var trash_textures: Array[Texture2D] = []
 @export var trash_min: int = 5
 @export var trash_max: int = 15
+@export var searched_empty_message: String = "Теперь не нечего тут искать"
 
 @export_group("Minigame Session")
 @export var pause_game: bool = false
@@ -24,12 +25,17 @@ func set_has_key(value: bool) -> void:
 	if value:
 		is_searched_empty = false
 
+func set_searched_empty(value: bool) -> void:
+	is_searched_empty = value
+	if value:
+		has_key = false
+
 func _on_interact() -> void:
 	if _current_minigame != null:
 		return
 	if is_searched_empty:
 		if UIMessage:
-			UIMessage.show_text("Тут больше ничего нет.")
+			UIMessage.show_text(searched_empty_message)
 		return
 	if minigame_scene == null:
 		push_warning("SearchSpot: minigame_scene не задан.")
@@ -77,6 +83,14 @@ func _on_minigame_finished(minigame: Node, success: bool) -> void:
 	if success and has_key:
 		has_key = false
 		is_searched_empty = true
+		_mark_all_spots_searched_empty()
+
+func _mark_all_spots_searched_empty() -> void:
+	var manager := get_tree().get_first_node_in_group("search_key_manager")
+	if manager == null:
+		return
+	if manager.has_method("mark_all_spots_searched_empty"):
+		manager.mark_all_spots_searched_empty()
 
 func _add_minigame_to_scene(minigame: Node) -> void:
 	if minigame == null:

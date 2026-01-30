@@ -1473,7 +1473,7 @@ texture = ExtResource("43_cmq65")
 
 [node name="InteractableObjects" type="Node2D" parent="Hall2"]
 
-[node name="Door(ToBedroom)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
+[node name="Door(ToParents)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8434.125, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
@@ -1486,7 +1486,7 @@ auto_prompt = null
 handle_input = null
 one_shot = null
 
-[node name="Door(ToParents)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
+[node name="Door(ToBedroom)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8818.125, 83)
 door_locked_message = ""
 target_marker = NodePath("../../../Bedroom2/InteractableObjects/Door(InBedroom)")
@@ -1770,7 +1770,7 @@ texture = SubResource("GradientTexture2D_pgutp")
 position = Vector2(-1581, 83)
 is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToBedroom)")
+target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToParents)")
 required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null

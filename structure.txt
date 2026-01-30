@@ -197,6 +197,7 @@
 │   │   ├── level_03.tscn
 │   │   ├── level_04.tscn
 │   │   ├── level_05.tscn
+│   │   ├── level_06.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── texture_distortion_manager.gd
@@ -829,4 +830,4 @@
 ├── project.godot
 └── structure.txt
 
-86 directories, 744 files
+86 directories, 745 files

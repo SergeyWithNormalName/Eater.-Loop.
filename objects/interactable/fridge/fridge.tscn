@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bifi1qeublh82"]
+[gd_scene load_steps=10 format=3 uid="uid://bifi1qeublh82"]
 
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="1_w83lr"]
 [ext_resource type="Texture2D" uid="uid://dk25q3reeyq1p" path="res://objects/interactable/fridge/sprites/ClosedFridge.png" id="2_fpbeo"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="2_lv756"]
+[ext_resource type="PackedScene" uid="uid://ck7hxh6s4dxr5" path="res://levels/minigames/ui/code_lock.tscn" id="2_s32oc"]
 [ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://objects/interactable/fridge/sprites/OpenFridge.png" id="2_w83lr"]
 [ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://objects/interactable/fridge/audio/FridgeNoizeE.wav" id="3_lv756"]
 
@@ -18,6 +19,7 @@ gradient = SubResource("Gradient_5lqof")
 
 [node name="Fridge" type="Area2D"]
 script = ExtResource("1_w83lr")
+code_lock_scene = ExtResource("2_s32oc")
 open_sound = ExtResource("2_lv756")
 locked_sprite = ExtResource("2_fpbeo")
 available_sprite = ExtResource("2_w83lr")

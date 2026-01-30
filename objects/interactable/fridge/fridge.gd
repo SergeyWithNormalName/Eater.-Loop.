@@ -26,6 +26,8 @@ extends InteractiveObject
 @export_group("Lab Requirement")
 ## Запретить еду, пока не сдана лабораторная.
 @export var require_lab_completion: bool = false
+## Сообщение, если лабораторная еще не выполнена.
+@export var lab_required_message: String = "Сначала нужно сделать лабораторную работу."
 
 @export_group("Teleport")
 @export var enable_teleport: bool = false
@@ -198,6 +200,15 @@ func _finish_feeding_logic() -> void:
 	complete_interaction() 
 	
 	_teleport_player_if_needed()
+
+func _show_locked_message() -> void:
+	if require_lab_completion and not GameState.lab_done:
+		if UIMessage and UIMessage.has_method("show_message"):
+			UIMessage.show_message(lab_required_message)
+		else:
+			print("LOCKED: " + lab_required_message)
+		return
+	super._show_locked_message()
 
 # --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
 func _is_chase_active() -> bool:
