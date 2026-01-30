@@ -124,11 +124,11 @@ shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_tgt7k"]
+[sub_resource type="Gradient" id="Gradient_130pq"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pgutp"]
-gradient = SubResource("Gradient_tgt7k")
+gradient = SubResource("Gradient_130pq")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -961,7 +961,7 @@ texture = SubResource("GradientTexture2D_pgutp")
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" instance=ExtResource("15_va0mn")]
 position = Vector2(-1581, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToParents)")
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("69_v5563")]
 position = Vector2(-2420, 226)
