@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3qadgg85phau"]
+
+[ext_resource type="Script" uid="uid://gygsji0chilg" path="res://levels/minigames/feeding/food/food_item.gd" id="1_y7yux"]
+[ext_resource type="Texture2D" uid="uid://c3e8cbxpxlkyj" path="res://levels/minigames/feeding/food/burger/Burger.png" id="2_y7yux"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b7uvd"]
+size = Vector2(1041.0608, 1017.1496)
+
+[node name="FoodItem" type="Area2D"]
+script = ExtResource("1_y7yux")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5440809, 0.54408056)
+texture = ExtResource("2_y7yux")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.0000001, -5)
+rotation = -0.016356468
+scale = Vector2(0.205021, 0.20502092)
+shape = SubResource("RectangleShape2D_b7uvd")

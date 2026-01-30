@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://f48xld52w63j"]
+
+[ext_resource type="Script" uid="uid://gygsji0chilg" path="res://levels/minigames/feeding/food/food_item.gd" id="1_0n28y"]
+[ext_resource type="Texture2D" uid="uid://dfu3a45pjuwrr" path="res://levels/minigames/feeding/food/shaurma/Shaurma.png" id="2_0n28y"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1a4a"]
+radius = 391.27417
+height = 1650.0283
+
+[node name="FoodItem" type="Area2D"]
+script = ExtResource("1_0n28y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.55217427, 0.5521739)
+texture = ExtResource("2_0n28y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.93595344
+scale = Vector2(0.205021, 0.20502092)
+shape = SubResource("CapsuleShape2D_q1a4a")

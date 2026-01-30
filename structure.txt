@@ -180,7 +180,6 @@
 │   ├── cycles
 │   │   ├── archive(trash)
 │   │   │   ├── level_04.tscn
-│   │   │   ├── level_05.tscn
 │   │   │   ├── level_05_corridor_distortion.gd
 │   │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   │   ├── level_06.tscn
@@ -198,6 +197,8 @@
 │   │   ├── level_04.tscn
 │   │   ├── level_05.tscn
 │   │   ├── level_06.tscn
+│   │   ├── level_07.tscn
+│   │   ├── level_end.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── texture_distortion_manager.gd
@@ -235,20 +236,14 @@
 │   │   │   │   └── VeryBadEat.png.import
 │   │   │   ├── food
 │   │   │   │   ├── 1_textures
-│   │   │   │   │   ├── Burger.png
-│   │   │   │   │   ├── Burger.png.import
 │   │   │   │   │   ├── Fish.png
 │   │   │   │   │   ├── Fish.png.import
-│   │   │   │   │   ├── Hachapuri.png
-│   │   │   │   │   ├── Hachapuri.png.import
-│   │   │   │   │   ├── HotDog.png
-│   │   │   │   │   ├── HotDog.png.import
 │   │   │   │   │   ├── RawMeet.png
-│   │   │   │   │   ├── RawMeet.png.import
-│   │   │   │   │   ├── Shaurma.png
-│   │   │   │   │   ├── Shaurma.png.import
-│   │   │   │   │   ├── Tort.png
-│   │   │   │   │   └── Tort.png.import
+│   │   │   │   │   └── RawMeet.png.import
+│   │   │   │   ├── burger
+│   │   │   │   │   ├── Burger.png
+│   │   │   │   │   ├── Burger.png.import
+│   │   │   │   │   └── food_burger.tscn
 │   │   │   │   ├── chiken
 │   │   │   │   │   ├── Chicken.png
 │   │   │   │   │   ├── Chicken.png.import
@@ -277,7 +272,13 @@
 │   │   │   │   │   ├── Dumpling.png.import
 │   │   │   │   │   └── food_dumpling.tscn
 │   │   │   │   ├── hachapuri
+│   │   │   │   │   ├── Hachapuri.png
+│   │   │   │   │   ├── Hachapuri.png.import
 │   │   │   │   │   └── food_hachapuri.tscn
+│   │   │   │   ├── hotdog
+│   │   │   │   │   ├── HotDog.png
+│   │   │   │   │   ├── HotDog.png.import
+│   │   │   │   │   └── food_hotdog.tscn
 │   │   │   │   ├── krilishki
 │   │   │   │   │   ├── Krilishko.png
 │   │   │   │   │   ├── Krilishko.png.import
@@ -296,11 +297,19 @@
 │   │   │   │   │   ├── plate.png
 │   │   │   │   │   ├── plate.png.import
 │   │   │   │   │   └── plate.tscn
+│   │   │   │   ├── shaurma
+│   │   │   │   │   ├── Shaurma.png
+│   │   │   │   │   ├── Shaurma.png.import
+│   │   │   │   │   └── food_shaurma.tscn
 │   │   │   │   ├── sushi
 │   │   │   │   │   ├── Sushi.png
 │   │   │   │   │   ├── Sushi.png.import
 │   │   │   │   │   ├── food_sushi.tscn
 │   │   │   │   │   └── food_sushi_2.tscn
+│   │   │   │   ├── tort
+│   │   │   │   │   ├── Tort.png
+│   │   │   │   │   ├── Tort.png.import
+│   │   │   │   │   └── food_tort.tscn
 │   │   │   │   ├── food_item.gd
 │   │   │   │   └── food_item.gd.uid
 │   │   │   ├── sounds
@@ -832,4 +841,4 @@
 ├── project.godot
 └── structure.txt
 
-86 directories, 747 files
+90 directories, 752 files

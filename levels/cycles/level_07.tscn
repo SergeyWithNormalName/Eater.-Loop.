@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=107 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -11,19 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="16_fojdr"]
 [ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://objects/interactable/door/sprites/DoorToiletInside.png" id="17_cle1j"]
 [ext_resource type="Script" uid="uid://b6y6n70dxg1af" path="res://objects/interactable/bed/bed.gd" id="18_xj310"]
-[ext_resource type="PackedScene" uid="uid://b24a61wf6w2m" path="res://levels/minigames/feeding/food/sushi/food_sushi.tscn" id="19_4xwr8"]
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://objects/interactable/bed/Bed.png" id="20_tmjb6"]
-[ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="21_tnagf"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="22_xxec8"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="23_8d7c5"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="24_augq3"]
-[ext_resource type="Texture2D" uid="uid://ck6tq35q10qce" path="res://objects/interactable/fridge/sprites/OpenFridge.png" id="25_fa34t"]
-[ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="25_jklwv"]
-[ext_resource type="AudioStream" uid="uid://bedg28hlpja2w" path="res://objects/interactable/fridge/audio/FridgeNoizeE.wav" id="27_wnhsn"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="28_ow03l"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="29_e0b7i"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="30_8124a"]
-[ext_resource type="Script" uid="uid://c3no1nmmxh58f" path="res://objects/interactable/key/key.gd" id="31_rc0oa"]
 [ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="32_a3siv"]
 [ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://objects/interactable/note/note_object.gd" id="33_k78b2"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="34_ql7cc"]
@@ -33,7 +26,6 @@
 [ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://objects/interactable/notebook/laptop.gd" id="38_7bnod"]
 [ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="40_x01w4"]
 [ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://objects/interactable/notebook/NotebookOn.png" id="41_ces63"]
-[ext_resource type="Script" uid="uid://vhm74fs506gi" path="res://objects/interactable/phone/phone.gd" id="42_fs7ni"]
 [ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="43_1u7wu"]
 [ext_resource type="Texture2D" uid="uid://c67skqwubk1am" path="res://objects/environment/sprites/kitchen/CookingGas.png" id="44_aai51"]
 [ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://objects/environment/sprites/toilet and bathroom/Rakovina.png" id="45_d10kp"]
@@ -43,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="49_hw0rt"]
 [ext_resource type="Texture2D" uid="uid://cr3xms0tb2b1v" path="res://objects/environment/sprites/toilet and bathroom/bath.png" id="50_tr3mw"]
 [ext_resource type="Texture2D" uid="uid://odl4xo260qna" path="res://objects/environment/sprites/kitchen/Chair_1.png" id="51_ni3hi"]
+[ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="52_jbtxb"]
 [ext_resource type="Texture2D" uid="uid://b8fielqgmmhlw" path="res://objects/environment/sprites/kitchen/Chair_2.png" id="52_wipjl"]
 [ext_resource type="Texture2D" uid="uid://bsol5jiwykiso" path="res://objects/environment/sprites/kitchen/High_kitchen.png" id="53_dylqi"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="54_5m5ji"]
@@ -89,9 +82,14 @@
 [ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="88_ky05d"]
 [ext_resource type="Texture2D" uid="uid://bps1urucw0afw" path="res://objects/environment/sprites/hall/tv_2.png" id="89_v8753"]
 [ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://objects/environment/sprites/hall/Armchair.png" id="90_shxk8"]
+[ext_resource type="PackedScene" uid="uid://bs2yhxdctsyia" path="res://levels/minigames/feeding/food/hotdog/food_hotdog.tscn" id="91_oltb2"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="93_xwm2s"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="94_4xwr8"]
 [ext_resource type="Texture2D" uid="uid://cywegfh3onok4" path="res://objects/environment/sprites/hall/PictureThree.png" id="95_3rylc"]
+[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="95_murco"]
+[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="96_l0nrl"]
+[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="97_lq7xs"]
+[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="98_cw66x"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
@@ -100,24 +98,8 @@ shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqck0"]
-size = Vector2(130, 130)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tw5p7"]
-size = Vector2(509.28296, 205.022)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fh42t"]
 size = Vector2(209.5, 383)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yfbk"]
-size = Vector2(187.5, 370.36243)
-
-[sub_resource type="Gradient" id="Gradient_5lqof"]
-offsets = PackedFloat32Array(0, 0.8534202, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xddf6"]
-gradient = SubResource("Gradient_5lqof")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o12kx"]
 size = Vector2(111.6167, 966.4249)
@@ -160,14 +142,14 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rdh85"]
 size = Vector2(547.3623, 503.50735)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqck0"]
+size = Vector2(130, 130)
+
 [node name="Level2" type="Node2D"]
 position = Vector2(16, 0)
 script = ExtResource("level_settings")
-cycle_number = 5
-
-[node name="WorldClock2" parent="." instance=ExtResource("28_ow03l")]
-position = Vector2(9236, -756)
-start_game_time = "0:07"
+cycle_number = 7
+timer_duration = 180.0
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
@@ -183,60 +165,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="TestKey" type="Area2D" parent="."]
-position = Vector2(3702, -536)
-script = ExtResource("31_rc0oa")
-key_id = null
-key_name = null
-pickup_message = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey"]
-shape = SubResource("RectangleShape2D_aqck0")
-
-[node name="Sprite2D" type="Sprite2D" parent="TestKey"]
-texture = ExtResource("32_a3siv")
-
-[node name="TestNote" type="Area2D" parent="."]
-position = Vector2(7082, -533)
-script = ExtResource("33_k78b2")
-interact_message = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote"]
-shape = SubResource("RectangleShape2D_aqck0")
-
-[node name="Sprite2D" type="Sprite2D" parent="TestNote"]
-texture = ExtResource("32_a3siv")
-
-[node name="Phone" type="Area2D" parent="."]
-position = Vector2(7976, -502)
-scale = Vector2(0.9169747, 0.91697466)
-script = ExtResource("42_fs7ni")
-ring_interval = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone"]
-position = Vector2(0.5439453, -1.3511658)
-scale = Vector2(0.9999999, 1)
-shape = SubResource("RectangleShape2D_tw5p7")
-
-[node name="Sprite2D" type="Sprite2D" parent="Phone"]
-z_index = 7
-scale = Vector2(0.99999994, 1)
-texture = ExtResource("37_o4572")
 
 [node name="NotebookOff" type="Sprite2D" parent="."]
 visible = false
@@ -368,51 +296,6 @@ position = Vector2(0.25, 0.8960724)
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("16_fojdr")
-
-[node name="Frizzer" type="Area2D" parent="Hall1"]
-z_index = -1
-position = Vector2(9809.79, 121)
-rotation = 0.002391043
-script = ExtResource("21_tnagf")
-minigame_scene = ExtResource("22_xxec8")
-andrey_face = ExtResource("24_augq3")
-enable_teleport = true
-teleport_target = NodePath("../Frizzer2/Node2D")
-open_sound = ExtResource("25_jklwv")
-prompt_text = "Поесть"
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/Frizzer"]
-position = Vector2(0.25, -0.22574615)
-shape = SubResource("RectangleShape2D_2yfbk")
-
-[node name="Sprite2D" type="Sprite2D" parent="Hall1/Frizzer"]
-position = Vector2(1.000001, 0.15893745)
-scale = Vector2(0.7364341, 0.73643416)
-texture = ExtResource("25_fa34t")
-
-[node name="PointLight2D" type="PointLight2D" parent="Hall1/Frizzer"]
-position = Vector2(-72.01596, -0.6028094)
-scale = Vector2(0.75128275, 5.546401)
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_xddf6")
-
-[node name="PointLight2D2" type="PointLight2D" parent="Hall1/Frizzer"]
-light_mask = 3
-visibility_layer = 3
-position = Vector2(-135.00371, -1.4271885)
-scale = Vector2(0.7293383, 5.756114)
-energy = 0.3
-range_item_cull_mask = 3
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_xddf6")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Hall1/Frizzer"]
-stream = ExtResource("27_wnhsn")
-volume_db = -18.0
-autoplay = true
 
 [node name="OnOffer2" type="Sprite2D" parent="Hall1"]
 position = Vector2(7512.875, 29)
@@ -1047,7 +930,7 @@ texture = ExtResource("81_hptho")
 position = Vector2(9126, 0)
 script = ExtResource("88_ky05d")
 trigger_path = NodePath("../Trigger")
-kitchen_nodes = Array[NodePath]([NodePath("../Frizzer"), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna")])
+kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
 kitchen_move = Vector2(4000, 0)
 kitchen_duration = 12.0
 kitchen_ease = 1
@@ -1584,52 +1467,6 @@ position = Vector2(0.25, 0.8960724)
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("16_fojdr")
-
-[node name="Frizzer2" type="Area2D" parent="Hall1"]
-z_index = -1
-position = Vector2(13790.08, 3065.4902)
-rotation = 0.002391043
-script = ExtResource("21_tnagf")
-minigame_scene = ExtResource("22_xxec8")
-andrey_face = ExtResource("24_augq3")
-open_sound = ExtResource("25_jklwv")
-prompt_text = "Поесть"
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/Frizzer2"]
-position = Vector2(0.25, -0.22574615)
-shape = SubResource("RectangleShape2D_2yfbk")
-
-[node name="Sprite2D" type="Sprite2D" parent="Hall1/Frizzer2"]
-position = Vector2(1.000001, 0.15893745)
-scale = Vector2(0.7364341, 0.73643416)
-texture = ExtResource("25_fa34t")
-
-[node name="PointLight2D" type="PointLight2D" parent="Hall1/Frizzer2"]
-position = Vector2(-72.01596, -0.6028094)
-scale = Vector2(0.75128275, 5.546401)
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_xddf6")
-
-[node name="PointLight2D2" type="PointLight2D" parent="Hall1/Frizzer2"]
-light_mask = 3
-visibility_layer = 3
-position = Vector2(-135.00371, -1.4271885)
-scale = Vector2(0.7293383, 5.756114)
-energy = 0.3
-range_item_cull_mask = 3
-shadow_enabled = true
-shadow_filter_smooth = 24.4
-texture = SubResource("GradientTexture2D_xddf6")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Hall1/Frizzer2"]
-stream = ExtResource("27_wnhsn")
-volume_db = -18.0
-autoplay = true
-
-[node name="Node2D" type="Node2D" parent="Hall1/Frizzer2"]
-position = Vector2(-0.17928272, -41.489925)
 
 [node name="OnOffer6" type="Sprite2D" parent="Hall1"]
 position = Vector2(7512.875, 2973)
@@ -2264,7 +2101,7 @@ texture = ExtResource("81_hptho")
 position = Vector2(9126, 2944)
 script = ExtResource("88_ky05d")
 trigger_path = NodePath("../Trigger")
-kitchen_nodes = Array[NodePath]([NodePath("../Frizzer"), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna")])
+kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna")])
 kitchen_move = Vector2(4000, 0)
 kitchen_duration = 12.0
 kitchen_ease = 1
@@ -2451,7 +2288,7 @@ texture = ExtResource("57_t86id")
 [node name="WorldClock" parent="Bedroom1" instance=ExtResource("28_ow03l")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
-start_game_time = "1:03"
+start_game_time = "2:14"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom1/WorldClock"]
@@ -3252,7 +3089,7 @@ position = Vector2(14013, 119)
 stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
-kill_on_attack = true
+time_penalty = 80.0
 chase_music = ExtResource("88_j1ifr")
 chase_music_fade_out_time = 5.0
 
@@ -3263,11 +3100,13 @@ scale = Vector2(0.53352284, 0.53352284)
 texture = ExtResource("88_0i8n6")
 
 [node name="Tv2" type="Sprite2D" parent="."]
+z_index = -4
 position = Vector2(11151, 88)
 scale = Vector2(0.5350467, 0.53504676)
 texture = ExtResource("89_v8753")
 
 [node name="Armchair" type="Sprite2D" parent="."]
+z_index = -3
 position = Vector2(10650.001, 203)
 scale = Vector2(0.46985453, 0.5219123)
 texture = ExtResource("90_shxk8")
@@ -3609,31 +3448,10 @@ scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("94_4xwr8")
 
 [node name="PictureThree" type="Sprite2D" parent="."]
+z_index = -4
 position = Vector2(10674, -32)
 scale = Vector2(0.52642274, 0.52642274)
 texture = ExtResource("95_3rylc")
-
-[node name="WorldClock3" parent="." instance=ExtResource("28_ow03l")]
-position = Vector2(9236, 2188)
-start_game_time = "0:07"
-
-[node name="TestKey2" type="Area2D" parent="."]
-position = Vector2(3702, 2408)
-script = ExtResource("31_rc0oa")
-key_id = null
-key_name = null
-pickup_message = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey2"]
-shape = SubResource("RectangleShape2D_aqck0")
-
-[node name="Sprite2D" type="Sprite2D" parent="TestKey2"]
-texture = ExtResource("32_a3siv")
 
 [node name="TestNote2" type="Area2D" parent="."]
 position = Vector2(7082, 2411)
@@ -3650,26 +3468,6 @@ shape = SubResource("RectangleShape2D_aqck0")
 
 [node name="Sprite2D" type="Sprite2D" parent="TestNote2"]
 texture = ExtResource("32_a3siv")
-
-[node name="Phone2" type="Area2D" parent="."]
-position = Vector2(7976, 2442)
-scale = Vector2(0.9169747, 0.91697466)
-script = ExtResource("42_fs7ni")
-ring_interval = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone2"]
-position = Vector2(0.5439453, -1.3511658)
-scale = Vector2(0.9999999, 1)
-shape = SubResource("RectangleShape2D_tw5p7")
-
-[node name="Sprite2D" type="Sprite2D" parent="Phone2"]
-z_index = 7
-scale = Vector2(0.99999994, 1)
-texture = ExtResource("37_o4572")
 
 [node name="Lamp2" parent="." instance=ExtResource("85_o4yqd")]
 z_index = -1
@@ -4008,10 +3806,42 @@ position = Vector2(10674, 2912)
 scale = Vector2(0.52642274, 0.52642274)
 texture = ExtResource("95_3rylc")
 
-[connection signal="body_entered" from="TestKey" to="TestKey" method="_on_body_entered"]
-[connection signal="body_exited" from="TestKey" to="TestKey" method="_on_body_exited"]
-[connection signal="body_entered" from="TestNote" to="TestNote" method="_on_body_entered"]
-[connection signal="body_exited" from="TestNote" to="TestNote" method="_on_body_exited"]
+[node name="Fridge" parent="." instance=ExtResource("52_jbtxb")]
+z_index = -2
+position = Vector2(9809.79, 115.749985)
+minigame_scene = ExtResource("22_xxec8")
+food_scenes = Array[PackedScene]([ExtResource("91_oltb2")])
+andrey_face = ExtResource("24_augq3")
+food_count = 6
+bg_music = ExtResource("95_murco")
+win_sound = ExtResource("96_l0nrl")
+eat_sound = ExtResource("97_lq7xs")
+background_texture = ExtResource("98_cw66x")
+enable_teleport = true
+teleport_target = NodePath("../Fridge2/FridgeMarker")
+metadata/_edit_group_ = true
+
+[node name="FridgeMarker" type="Marker2D" parent="Fridge"]
+position = Vector2(0.20996094, -32.749985)
+
+[node name="Fridge2" parent="." instance=ExtResource("52_jbtxb")]
+z_index = -2
+position = Vector2(13790.08, 3065.4902)
+minigame_scene = ExtResource("22_xxec8")
+food_scenes = Array[PackedScene]([ExtResource("91_oltb2")])
+andrey_face = ExtResource("24_augq3")
+food_count = 6
+bg_music = ExtResource("95_murco")
+win_sound = ExtResource("96_l0nrl")
+eat_sound = ExtResource("97_lq7xs")
+background_texture = ExtResource("98_cw66x")
+enable_teleport = true
+teleport_target = NodePath("FridgeMarker")
+metadata/_edit_group_ = true
+
+[node name="FridgeMarker" type="Marker2D" parent="Fridge2"]
+position = Vector2(0.20996094, -32.749985)
+
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Parents)" to="Hall1/Door(To Parents)" method="_on_body_entered"]
@@ -4022,8 +3852,6 @@ texture = ExtResource("95_3rylc")
 [connection signal="body_exited" from="Hall1/Door(To Toilet)" to="Hall1/Door(To Toilet)" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Bathroom)" to="Hall1/Door(To Bathroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bathroom)" to="Hall1/Door(To Bathroom)" method="_on_body_exited"]
-[connection signal="body_entered" from="Hall1/Frizzer" to="Hall1/Frizzer" method="_on_body_entered"]
-[connection signal="body_exited" from="Hall1/Frizzer" to="Hall1/Frizzer" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Trigger" to="Hall1/Trigger" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Trigger" to="Hall1/Trigger" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)2" to="Hall1/Door(To Bedroom)2" method="_on_body_entered"]
@@ -4036,8 +3864,6 @@ texture = ExtResource("95_3rylc")
 [connection signal="body_exited" from="Hall1/Door(To Toilet)2" to="Hall1/Door(To Toilet)2" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Bathroom)2" to="Hall1/Door(To Bathroom)2" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bathroom)2" to="Hall1/Door(To Bathroom)2" method="_on_body_exited"]
-[connection signal="body_entered" from="Hall1/Frizzer2" to="Hall1/Frizzer2" method="_on_body_entered"]
-[connection signal="body_exited" from="Hall1/Frizzer2" to="Hall1/Frizzer2" method="_on_body_exited"]
 [connection signal="body_entered" from="Bedroom1/Door(In Bedroom)" to="Bedroom1/Door(In Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Bedroom1/Door(In Bedroom)" to="Bedroom1/Door(In Bedroom)" method="_on_body_exited"]
 [connection signal="body_entered" from="Bedroom1/Bed" to="Bedroom1/Bed" method="_on_body_entered"]
@@ -4050,7 +3876,5 @@ texture = ExtResource("95_3rylc")
 [connection signal="body_exited" from="Bathroom2/Door(In Bathroom)" to="Bathroom2/Door(In Bathroom)" method="_on_body_exited"]
 [connection signal="body_entered" from="Toilet2/Door(In Toilet)" to="Toilet2/Door(In Toilet)" method="_on_body_entered"]
 [connection signal="body_exited" from="Toilet2/Door(In Toilet)" to="Toilet2/Door(In Toilet)" method="_on_body_exited"]
-[connection signal="body_entered" from="TestKey2" to="TestKey2" method="_on_body_entered"]
-[connection signal="body_exited" from="TestKey2" to="TestKey2" method="_on_body_exited"]
 [connection signal="body_entered" from="TestNote2" to="TestNote2" method="_on_body_entered"]
 [connection signal="body_exited" from="TestNote2" to="TestNote2" method="_on_body_exited"]

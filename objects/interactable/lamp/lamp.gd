@@ -3,7 +3,7 @@ extends InteractiveObject # Убедись, что наследуешься от
 @export_group("Lamp Settings")
 ## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
-## Включена ли лампа при старте (если есть электричество).
+## Включена ли лампа при старте (автоматически дает электричество).
 @export var start_on: bool = false
 ## Звук включения лампы.
 @export var turn_on_sfx: AudioStream
@@ -74,8 +74,16 @@ func _ready() -> void:
 	if not is_in_group("lamp"):
 		add_to_group("lamp")
 	
-	# По умолчанию электричества нет, пока генератор не включит
-	_update_light_enabled(false) 
+	# ИСПРАВЛЕНИЕ: Логика инициализации состояния
+	if start_on:
+		_has_power = true
+		_is_on = true
+	else:
+		_has_power = false
+		_is_on = false
+		
+	# Применяем состояние (false = без звука при старте)
+	_update_light_enabled(false)
 
 # --- ЭТОТ МЕТОД ВЫЗЫВАЕТ ГЕНЕРАТОР ---
 func turn_on() -> void:
