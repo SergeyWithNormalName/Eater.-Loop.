@@ -68,6 +68,7 @@ var _walk_loop_end: int = 0
 var _stamina: float = 0.0
 var _time_since_run: float = 0.0
 var _adjusting_frame: bool = false
+var _movement_blocked: bool = false
 
 # Переменные для аудио
 var _flashlight_player: AudioStreamPlayer
@@ -110,6 +111,23 @@ func _ready() -> void:
 	
 	_stamina = stamina_max
 	_apply_facing()
+	_connect_minigame_controller()
+
+func _connect_minigame_controller() -> void:
+	if MinigameController == null:
+		return
+	if MinigameController.has_signal("minigame_started") and not MinigameController.minigame_started.is_connected(_on_minigame_state_changed):
+		MinigameController.minigame_started.connect(_on_minigame_state_changed)
+	if MinigameController.has_signal("minigame_finished") and not MinigameController.minigame_finished.is_connected(_on_minigame_state_changed):
+		MinigameController.minigame_finished.connect(_on_minigame_state_changed)
+	if MinigameController.has_method("should_block_player_movement"):
+		_movement_blocked = bool(MinigameController.should_block_player_movement())
+
+func _on_minigame_state_changed(_minigame: Node, _success: bool = true) -> void:
+	if MinigameController and MinigameController.has_method("should_block_player_movement"):
+		_movement_blocked = bool(MinigameController.should_block_player_movement())
+	else:
+		_movement_blocked = false
 
 func _physics_process(delta: float) -> void:
 	if _is_movement_blocked():
@@ -141,9 +159,7 @@ func _physics_process(delta: float) -> void:
 	_update_walk_animation(delta, direction)
 
 func _is_movement_blocked() -> bool:
-	if MinigameController and MinigameController.has_method("should_block_player_movement"):
-		return bool(MinigameController.should_block_player_movement())
-	return false
+	return _movement_blocked
 
 func _is_screen_dark() -> bool:
 	if UIMessage == null:

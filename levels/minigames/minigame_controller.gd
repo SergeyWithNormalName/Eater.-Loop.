@@ -10,15 +10,7 @@ extends Node
 ##
 ## Использование:
 ## 1) В мини-игре вызвать:
-##    MinigameController.start_minigame(self, {
-##      "pause_game": true,
-##      "enable_gamepad_cursor": true,
-##      "time_limit": 60.0,
-##      "music_stream": some_stream,
-##      "music_volume_db": -12.0,
-##      "music_fade_time": 0.3,
-##      "auto_finish_on_timeout": false
-##    })
+##    MinigameController.start_minigame(self, MinigameSettings.new())
 ## 2) Подписаться на сигналы minigame_time_updated / minigame_time_expired.
 ## 3) По завершению вызвать:
 ##    MinigameController.finish_minigame(self, success)
@@ -27,6 +19,8 @@ signal minigame_started(minigame: Node)
 signal minigame_finished(minigame: Node, success: bool)
 signal minigame_time_updated(minigame: Node, time_left: float, time_limit: float)
 signal minigame_time_expired(minigame: Node)
+signal minigame_pause_menu_allowed_changed(allowed: bool)
+signal minigame_cancel_allowed_changed(allowed: bool)
 
 @export var default_music_fade_time: float = 0.3
 @export var default_cursor_speed: float = 800.0
@@ -49,11 +43,22 @@ var _prompts_prev_enabled: bool = true
 var _prompts_suspended: bool = false
 var _prompts_restore_target: Node = null
 var _pause_menu_open: bool = false
+var _allow_pause_menu: bool = true
+var _allow_cancel_action: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if get_tree() and get_tree().has_signal("scene_changed"):
 		get_tree().scene_changed.connect(_on_scene_changed)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _active_minigame == null:
+		return
+	if not _allow_cancel_action:
+		return
+	if event.is_action_pressed("mg_cancel"):
+		_handle_cancel_request()
+		get_viewport().set_input_as_handled()
 
 func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> void:
 	if minigame == null:
@@ -96,32 +101,47 @@ func set_pause_menu_open(is_open: bool) -> void:
 func is_pause_menu_open() -> bool:
 	return _pause_menu_open
 
-func start_minigame(minigame: Node, config: Dictionary = {}) -> void:
+func get_active_minigame_layer() -> int:
+	if _active_minigame == null:
+		return default_minigame_layer
+	if _active_minigame is CanvasLayer:
+		return (_active_minigame as CanvasLayer).layer
+	var parent := _active_minigame.get_parent()
+	if parent is CanvasLayer:
+		return (parent as CanvasLayer).layer
+	return default_minigame_layer
+
+func start_minigame(minigame: Node, config: Variant = null) -> void:
 	if minigame == null:
 		return
 	if _active_minigame != null and _active_minigame != minigame:
 		finish_minigame(_active_minigame, false)
 
 	_active_minigame = minigame
-	_pause_requested = bool(config.get("pause_game", true))
-	_cursor_enabled = bool(config.get("enable_gamepad_cursor", true))
-	_cursor_speed = float(config.get("gamepad_cursor_speed", default_cursor_speed))
-	_music_fade_time = float(config.get("music_fade_time", default_music_fade_time))
-	_music_stop_on_finish = bool(config.get("stop_music_on_finish", false))
-	_auto_finish_on_timeout = bool(config.get("auto_finish_on_timeout", false))
-	_block_player_movement = bool(config.get("block_player_movement", true))
+	var settings := _resolve_settings(config)
+	_pause_requested = settings.pause_game
+	_cursor_enabled = settings.enable_gamepad_cursor
+	_cursor_speed = settings.gamepad_cursor_speed
+	_music_fade_time = settings.music_fade_time
+	_music_stop_on_finish = settings.stop_music_on_finish
+	_auto_finish_on_timeout = settings.auto_finish_on_timeout
+	_block_player_movement = settings.block_player_movement
+	_allow_pause_menu = settings.allow_pause_menu
+	_allow_cancel_action = settings.allow_cancel_action
 
 	_setup_pause()
 	_setup_cursor()
 	_setup_prompts()
-	_setup_timer(config.get("time_limit", -1.0))
+	_setup_timer(settings.time_limit)
 	_setup_music(
-		config.get("music_stream", null),
-		float(config.get("music_volume_db", 999.0)),
-		bool(config.get("suspend_music", false))
+		settings.music_stream,
+		settings.music_volume_db,
+		settings.suspend_music
 	)
 
 	minigame_started.emit(minigame)
+	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
+	minigame_cancel_allowed_changed.emit(_allow_cancel_action)
 
 func finish_minigame(minigame: Node, success: bool = true) -> void:
 	if minigame == null:
@@ -135,7 +155,11 @@ func finish_minigame(minigame: Node, success: bool = true) -> void:
 	_schedule_prompt_restore(minigame)
 	_clear_timer()
 	_block_player_movement = false
+	_allow_pause_menu = true
+	_allow_cancel_action = false
 	minigame_finished.emit(minigame, success)
+	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
+	minigame_cancel_allowed_changed.emit(_allow_cancel_action)
 
 func stop_minigame_music(fade_time: float = -1.0) -> void:
 	if MusicManager == null:
@@ -169,6 +193,12 @@ func is_active(minigame: Node) -> bool:
 
 func should_block_player_movement() -> bool:
 	return _active_minigame != null and _block_player_movement
+
+func is_pause_menu_allowed() -> bool:
+	return _active_minigame == null or _allow_pause_menu
+
+func is_cancel_action_allowed() -> bool:
+	return _active_minigame != null and _allow_cancel_action
 
 func _process(delta: float) -> void:
 	if _active_minigame != null and not is_instance_valid(_active_minigame):
@@ -342,3 +372,49 @@ func _force_clear_active_state() -> void:
 	_restore_prompts_if_safe()
 	_clear_timer()
 	_block_player_movement = false
+	_allow_pause_menu = true
+	_allow_cancel_action = false
+
+func _handle_cancel_request() -> void:
+	if _active_minigame == null:
+		return
+	if _active_minigame.has_method("on_minigame_cancel"):
+		_active_minigame.call("on_minigame_cancel")
+		return
+	var minigame := _active_minigame
+	finish_minigame(minigame, false)
+	if minigame != null and is_instance_valid(minigame) and minigame.is_inside_tree():
+		minigame.queue_free()
+
+func _resolve_settings(config: Variant) -> MinigameSettings:
+	if config is MinigameSettings:
+		return config
+	var settings := MinigameSettings.new()
+	if config is Dictionary:
+		if config.has("pause_game"):
+			settings.pause_game = bool(config.get("pause_game"))
+		if config.has("enable_gamepad_cursor"):
+			settings.enable_gamepad_cursor = bool(config.get("enable_gamepad_cursor"))
+		if config.has("gamepad_cursor_speed"):
+			settings.gamepad_cursor_speed = float(config.get("gamepad_cursor_speed"))
+		if config.has("time_limit"):
+			settings.time_limit = float(config.get("time_limit"))
+		if config.has("music_stream"):
+			settings.music_stream = config.get("music_stream")
+		if config.has("music_volume_db"):
+			settings.music_volume_db = float(config.get("music_volume_db"))
+		if config.has("music_fade_time"):
+			settings.music_fade_time = float(config.get("music_fade_time"))
+		if config.has("suspend_music"):
+			settings.suspend_music = bool(config.get("suspend_music"))
+		if config.has("auto_finish_on_timeout"):
+			settings.auto_finish_on_timeout = bool(config.get("auto_finish_on_timeout"))
+		if config.has("stop_music_on_finish"):
+			settings.stop_music_on_finish = bool(config.get("stop_music_on_finish"))
+		if config.has("block_player_movement"):
+			settings.block_player_movement = bool(config.get("block_player_movement"))
+		if config.has("allow_pause_menu"):
+			settings.allow_pause_menu = bool(config.get("allow_pause_menu"))
+		if config.has("allow_cancel_action"):
+			settings.allow_cancel_action = bool(config.get("allow_cancel_action"))
+	return settings

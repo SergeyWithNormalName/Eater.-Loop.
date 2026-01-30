@@ -98,13 +98,13 @@ func _start_lab_minigame() -> void:
 	
 	# Запускаем через контроллер (для паузы, курсора и таймера)
 	if MinigameController:
-		MinigameController.start_minigame(game, {
-			"pause_game": false,            # Не ставим паузу, чтобы цикл продолжал тикать
-			"enable_gamepad_cursor": true,  # Включаем курсор
-			"block_player_movement": true,  # Блокируем движение игрока на время лабы
-			"time_limit": time_limit,   # Передаем лимит времени контроллеру
-			"auto_finish_on_timeout": false # Лаба сама обработает таймаут
-		})
+		var settings := MinigameSettings.new()
+		settings.pause_game = false
+		settings.enable_gamepad_cursor = true
+		settings.block_player_movement = true
+		settings.time_limit = time_limit
+		settings.auto_finish_on_timeout = false
+		MinigameController.start_minigame(game, settings)
 	
 	# Ловим момент закрытия игры
 	game.tree_exited.connect(_on_minigame_closed)

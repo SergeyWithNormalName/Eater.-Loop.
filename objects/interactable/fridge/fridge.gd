@@ -123,10 +123,13 @@ func _start_code_lock() -> void:
 	# 5. Теперь передаем ГОТОВЫЙ NODE в контроллер
 	if MinigameController:
 		_is_interacting = true
-		MinigameController.start_minigame(lock_instance, {
-			"pause_game": true,
-			"enable_gamepad_cursor": true
-		})
+		var settings := MinigameSettings.new()
+		settings.pause_game = false
+		settings.enable_gamepad_cursor = true
+		settings.block_player_movement = true
+		settings.allow_pause_menu = false
+		settings.allow_cancel_action = true
+		MinigameController.start_minigame(lock_instance, settings)
 	else:
 		push_error("MinigameController не найден!")
 

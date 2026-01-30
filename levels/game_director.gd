@@ -290,6 +290,8 @@ func _update_overlay_layer() -> void:
 		pause_menu_open = PauseManager.is_pause_menu_open()
 	if pause_menu_open or (get_tree() and get_tree().paused and not _minigame_active):
 		target_layer = 70
+	elif _minigame_active and MinigameController and MinigameController.has_method("get_active_minigame_layer"):
+		target_layer = clampi(MinigameController.get_active_minigame_layer() - 1, 0, 89)
 	if _overlay_layer.layer != target_layer:
 		_overlay_layer.layer = target_layer
 
@@ -321,12 +323,12 @@ func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
 
 func _minigame_allows_distortion(minigame: Node) -> bool:
 	if minigame == null:
-		return false
+		return true
 	if minigame.has_method("allows_distortion_overlay"):
 		return bool(minigame.allows_distortion_overlay())
 	if minigame.has_meta("allow_distortion_overlay"):
 		return bool(minigame.get_meta("allow_distortion_overlay"))
-	return false
+	return true
 
 func get_cycle_number() -> int:
 	return _current_cycle_number

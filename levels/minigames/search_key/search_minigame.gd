@@ -187,9 +187,12 @@ func _on_key_pressed() -> void:
 	_close_minigame(true)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("mg_cancel") or event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("mg_cancel"):
 		_close_minigame(false)
 		get_viewport().set_input_as_handled()
+
+func on_minigame_cancel() -> void:
+	_close_minigame(false)
 
 func _close_minigame(success: bool) -> void:
 	if MinigameController:

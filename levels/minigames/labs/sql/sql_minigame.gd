@@ -181,15 +181,15 @@ func _start_minigame_session() -> void:
 		return
 	_ensure_lab_music_loop()
 	if not MinigameController.is_active(self):
-		MinigameController.start_minigame(self, {
-			"pause_game": false,
-			"enable_gamepad_cursor": true,
-			"block_player_movement": true,
-			"time_limit": time_limit,
-			"music_stream": LAB_MUSIC_STREAM,
-			"music_fade_time": 0.0,
-			"auto_finish_on_timeout": false
-		})
+		var settings := MinigameSettings.new()
+		settings.pause_game = false
+		settings.enable_gamepad_cursor = true
+		settings.block_player_movement = true
+		settings.time_limit = time_limit
+		settings.music_stream = LAB_MUSIC_STREAM
+		settings.music_fade_time = 0.0
+		settings.auto_finish_on_timeout = false
+		MinigameController.start_minigame(self, settings)
 	current_time = time_limit
 	_update_status_label()
 	if not MinigameController.minigame_time_updated.is_connected(_on_time_updated):

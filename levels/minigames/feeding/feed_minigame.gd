@@ -198,14 +198,15 @@ func _exit_tree() -> void:
 func _start_minigame_session() -> void:
 	if MinigameController == null:
 		return
-	MinigameController.start_minigame(self, {
-		"pause_game": true,
-		"enable_gamepad_cursor": true,
-		"gamepad_cursor_speed": gamepad_cursor_speed,
-		"music_stream": _selected_music,
-		"music_volume_db": music_volume_db,
-		"music_fade_time": music_suspend_fade_time,
-		"auto_finish_on_timeout": false,
-		"stop_music_on_finish": false
-	})
+	var settings := MinigameSettings.new()
+	settings.pause_game = false
+	settings.enable_gamepad_cursor = true
+	settings.gamepad_cursor_speed = gamepad_cursor_speed
+	settings.music_stream = _selected_music
+	settings.music_volume_db = music_volume_db
+	settings.music_fade_time = music_suspend_fade_time
+	settings.auto_finish_on_timeout = false
+	settings.stop_music_on_finish = false
+	settings.block_player_movement = true
+	MinigameController.start_minigame(self, settings)
 		

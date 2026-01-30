@@ -107,11 +107,17 @@ func _apply_theme() -> void:
 func _start_minigame_session() -> void:
 	if MinigameController == null:
 		return
-	MinigameController.start_minigame(self, {
-		"pause_game": true,
-		"enable_gamepad_cursor": true,
-		"gamepad_cursor_speed": 800.0
-	})
+	var settings := MinigameSettings.new()
+	settings.pause_game = false
+	settings.enable_gamepad_cursor = true
+	settings.gamepad_cursor_speed = 800.0
+	settings.block_player_movement = true
+	settings.allow_pause_menu = false
+	settings.allow_cancel_action = true
+	MinigameController.start_minigame(self, settings)
+
+func on_minigame_cancel() -> void:
+	_close(false)
 
 func _is_grab_pressed(event: InputEvent) -> bool:
 	return event.is_action_pressed("mg_grab")

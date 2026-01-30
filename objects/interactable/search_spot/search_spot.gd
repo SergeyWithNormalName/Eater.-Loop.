@@ -10,7 +10,6 @@ extends "res://objects/interactable/interactive_object.gd"
 @export var searched_empty_message: String = "Теперь не нечего тут искать"
 
 @export_group("Minigame Session")
-@export var pause_game: bool = false
 @export var enable_gamepad_cursor: bool = true
 @export var gamepad_cursor_speed: float = 800.0
 
@@ -62,12 +61,14 @@ func _on_interact() -> void:
 	if MinigameController and MinigameController.has_signal("minigame_finished"):
 		MinigameController.minigame_finished.connect(_on_minigame_finished)
 	if MinigameController:
-		MinigameController.start_minigame(minigame, {
-			"pause_game": pause_game,
-			"enable_gamepad_cursor": enable_gamepad_cursor,
-			"gamepad_cursor_speed": gamepad_cursor_speed,
-			"block_player_movement": true
-		})
+		var settings := MinigameSettings.new()
+		settings.pause_game = false
+		settings.enable_gamepad_cursor = enable_gamepad_cursor
+		settings.gamepad_cursor_speed = gamepad_cursor_speed
+		settings.block_player_movement = true
+		settings.allow_pause_menu = false
+		settings.allow_cancel_action = true
+		MinigameController.start_minigame(minigame, settings)
 
 func _on_minigame_finished(minigame: Node, success: bool) -> void:
 	if minigame != _current_minigame:
