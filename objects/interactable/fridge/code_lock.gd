@@ -1,5 +1,7 @@
 extends Control
 
+const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
+
 signal unlocked
 
 ## Код, который нужно ввести.

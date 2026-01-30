@@ -438,7 +438,9 @@
 │   │   ├── cursor_manager.gd
 │   │   ├── cursor_manager.gd.uid
 │   │   ├── minigame_controller.gd
-│   │   └── minigame_controller.gd.uid
+│   │   ├── minigame_controller.gd.uid
+│   │   ├── minigame_settings.gd
+│   │   └── minigame_settings.gd.uid
 │   ├── ui
 │   │   ├── prompts
 │   │   │   ├── prompt_interact_default.tscn
@@ -830,4 +832,4 @@
 ├── project.godot
 └── structure.txt
 
-86 directories, 745 files
+86 directories, 747 files

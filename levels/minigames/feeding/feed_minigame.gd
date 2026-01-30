@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
+
 signal minigame_finished
 
 ## Сколько еды нужно скормить для победы.

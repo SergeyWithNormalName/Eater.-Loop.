@@ -1,5 +1,7 @@
 extends Node
 
+const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
+
 ## Центральный контроллер мини-игр.
 ##
 ## Назначение:

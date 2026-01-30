@@ -1,5 +1,7 @@
 extends InteractiveObject
 
+const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
+
 @export_group("Minigame (Feeding)")
 ## Сцена мини-игры (еда).
 @export var minigame_scene: PackedScene

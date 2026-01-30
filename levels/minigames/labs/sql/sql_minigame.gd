@@ -1,5 +1,7 @@
 extends Control
 
+const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
+
 signal task_completed(success: bool)
 
 # --- Настройки ---
