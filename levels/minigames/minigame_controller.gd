@@ -47,6 +47,7 @@ var _prompts_restore_target: Node = null
 var _pause_menu_open: bool = false
 var _allow_pause_menu: bool = true
 var _allow_cancel_action: bool = false
+var _synthetic_grab_active: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -55,6 +56,9 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _active_minigame == null:
+		return
+	if _handle_minigame_pointer_action(event):
+		get_viewport().set_input_as_handled()
 		return
 	if not _allow_cancel_action:
 		return
@@ -120,6 +124,7 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 		finish_minigame(_active_minigame, false)
 
 	_active_minigame = minigame
+	_synthetic_grab_active = false
 	var settings := _resolve_settings(config)
 	_pause_requested = settings.pause_game
 	_cursor_enabled = settings.enable_gamepad_cursor
@@ -151,6 +156,7 @@ func finish_minigame(minigame: Node, success: bool = true) -> void:
 	if minigame != _active_minigame:
 		return
 	_active_minigame = null
+	_synthetic_grab_active = false
 	_restore_music()
 	_restore_cursor()
 	_restore_pause()
@@ -367,6 +373,7 @@ func _force_clear_active_state() -> void:
 	if _active_minigame == null:
 		return
 	_active_minigame = null
+	_synthetic_grab_active = false
 	_restore_music()
 	_restore_cursor()
 	_restore_pause()
@@ -387,6 +394,44 @@ func _handle_cancel_request() -> void:
 	finish_minigame(minigame, false)
 	if minigame != null and is_instance_valid(minigame) and minigame.is_inside_tree():
 		minigame.queue_free()
+
+func _handle_minigame_pointer_action(event: InputEvent) -> bool:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		return false
+	var pressed := event.is_action_pressed("mg_grab") or event.is_action_pressed("interact")
+	var released := event.is_action_released("mg_grab") or event.is_action_released("interact")
+	if not pressed and not released:
+		return false
+
+	if pressed:
+		var hovered := get_viewport().gui_get_hovered_control()
+		if hovered == null or not _is_node_in_active_minigame(hovered):
+			return false
+		_synthetic_grab_active = true
+		_inject_mouse_button(get_viewport().get_mouse_position(), true)
+		return true
+
+	if released and _synthetic_grab_active:
+		_synthetic_grab_active = false
+		_inject_mouse_button(get_viewport().get_mouse_position(), false)
+		return true
+
+	return false
+
+func _inject_mouse_button(mouse_pos: Vector2, is_pressed: bool) -> void:
+	var mouse_event := InputEventMouseButton.new()
+	mouse_event.button_index = MOUSE_BUTTON_LEFT
+	mouse_event.pressed = is_pressed
+	mouse_event.position = mouse_pos
+	mouse_event.global_position = mouse_pos
+	Input.parse_input_event(mouse_event)
+
+func _is_node_in_active_minigame(node: Node) -> bool:
+	if node == null or _active_minigame == null:
+		return false
+	if node == _active_minigame:
+		return true
+	return _active_minigame.is_ancestor_of(node)
 
 func _resolve_settings(config: Variant) -> MinigameSettings:
 	if config is MinigameSettings:

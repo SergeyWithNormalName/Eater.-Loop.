@@ -73,6 +73,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _settings_panel.visible:
 			_hide_settings()
 			get_viewport().set_input_as_handled()
+			return
+	super._unhandled_input(event)
 
 func _connect_buttons() -> void:
 	_new_game_button.pressed.connect(_on_new_game_pressed)

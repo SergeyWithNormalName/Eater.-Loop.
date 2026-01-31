@@ -32,6 +32,9 @@ func _ready() -> void:
 	_wire_buttons()
 	_update_cursor_request()
 
+func _unhandled_input(event: InputEvent) -> void:
+	_handle_interact_activation(event)
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_VISIBILITY_CHANGED or what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		_update_cursor_request()
@@ -97,6 +100,20 @@ func _on_button_unhover(button: Button) -> void:
 
 func _on_button_pressed(_button: Button) -> void:
 	_play_sfx(click_sfx, click_sfx_volume_db)
+
+func _handle_interact_activation(event: InputEvent) -> void:
+	if not event.is_action_pressed("interact"):
+		return
+	if InputMap.has_action("ui_accept") and event.is_action_pressed("ui_accept"):
+		return
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused == null:
+		return
+	var button := focused as Button
+	if button == null or button.disabled:
+		return
+	button.emit_signal("pressed")
+	get_viewport().set_input_as_handled()
 
 func _tween_button(button: Button, target_scale: float, target_tint: Color) -> void:
 	var tween: Tween = null

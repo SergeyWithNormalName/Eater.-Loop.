@@ -149,14 +149,6 @@ func _shake_button() -> void:
 		tween.tween_property(generate_button, "position:x", orig_pos - 5, 0.05)
 	tween.tween_property(generate_button, "position:x", orig_pos, 0.05)
 
-func _input(event: InputEvent) -> void:
-	if _is_finished:
-		return
-	if event.is_action_pressed("mg_grab"):
-		var hovered = get_viewport().gui_get_hovered_control()
-		if hovered == generate_button:
-			_on_generate_pressed()
-
 func _start_minigame_session() -> void:
 	if MinigameController == null:
 		return

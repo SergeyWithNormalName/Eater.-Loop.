@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://sdmle35lsdig"]
+[gd_scene load_steps=103 format=4 uid="uid://sdmle35lsdig"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_j5jbj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bfph65g52ypxj" path="res://objects/interactable/bed/Bed.png" id="19_vbetb"]
 [ext_resource type="Script" uid="uid://cu5ad7tdqmepr" path="res://objects/interactable/fridge/fridge.gd" id="20_106yh"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="21_ps58k"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="22_76lwr"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="23_anfs3"]
 [ext_resource type="AudioStream" uid="uid://cxl0npdtqanaw" path="res://objects/interactable/fridge/audio/OpenFridgeE.wav" id="24_42xd2"]
 [ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://objects/interactable/fridge/sprites/LockedFridge.png" id="25_h6aah"]

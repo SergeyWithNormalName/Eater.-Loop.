@@ -56,6 +56,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		_resume()
 		get_viewport().set_input_as_handled()
+		return
+	super._unhandled_input(event)
 
 func open_menu() -> void:
 	visible = true

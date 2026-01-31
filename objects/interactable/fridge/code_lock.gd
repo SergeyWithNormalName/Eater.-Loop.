@@ -36,14 +36,6 @@ func _ready() -> void:
 	clear_button.pressed.connect(_on_clear_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton or event is InputEventScreenTouch:
-		return
-	if _is_grab_pressed(event):
-		var hovered := get_viewport().gui_get_hovered_control()
-		if hovered is Button:
-			hovered.emit_signal("pressed")
-
 func _on_button_pressed(value: String) -> void:
 	if _current_input.length() >= code_value.length():
 		return
@@ -120,9 +112,6 @@ func _start_minigame_session() -> void:
 
 func on_minigame_cancel() -> void:
 	_close(false)
-
-func _is_grab_pressed(event: InputEvent) -> bool:
-	return event.is_action_pressed("mg_grab")
 
 func allows_distortion_overlay() -> bool:
 	return true
