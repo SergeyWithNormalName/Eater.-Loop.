@@ -15,6 +15,14 @@ signal distortion_started
 ## Сила сплющивания камеры в переходном эффекте.
 @export_range(0.0, 0.2, 0.005) var distortion_transition_squash_amount: float = 0.25
 
+@export_group("Damage Flash")
+## Длительность резкого эффекта от урона (сек).
+@export_range(0.01, 1.0, 0.01) var damage_flash_duration: float = 0.15
+## Интенсивность резкого эффекта от урона.
+@export_range(0.0, 1.0, 0.05) var damage_flash_intensity: float = 1.0
+## Сплющивание в резком эффекте от урона.
+@export_range(0.0, 0.2, 0.005) var damage_flash_squash_amount: float = 0.2
+
 var _timer: Timer
 var _overlay_layer: CanvasLayer
 var _distortion_rect: ColorRect
@@ -29,6 +37,7 @@ var _distortion_progress: float = 0.0
 var _transition_active: bool = false
 var _transition_progress: float = 0.0
 var _flash_active: bool = false
+var _damage_flash_active: bool = false
 var _minigame_active: bool = false
 var _minigame_blocks_distortion: bool = false
 var _in_game_scene: bool = false
@@ -91,7 +100,7 @@ func start_normal_phase(timer_duration: float = -1.0) -> void:
 		current_max_time = 0.0 
 		print("GameDirector: Таймер отключен для уровня.")
 
-func reduce_time(amount: float) -> void:
+func reduce_time(amount: float, damage_flash: bool = false) -> void:
 	# Если таймер не запущен (бесконечное время), урон по времени не наносится
 	if _timer.is_stopped() or current_max_time <= 0.0: 
 		return
@@ -102,7 +111,10 @@ func reduce_time(amount: float) -> void:
 		_on_distortion_timeout()
 	else:
 		_timer.start(new_time)
-		_flash_red()
+		if damage_flash:
+			_flash_damage()
+		else:
+			_flash_red()
 
 func _on_distortion_timeout() -> void:
 	GameState.set_phase(GameState.Phase.DISTORTED)
@@ -169,6 +181,25 @@ func _flash_red() -> void:
 			_set_distortion_intensity(0.0)
 			_set_distortion_squash(0.0)
 		_flash_active = false
+	)
+
+func _flash_damage() -> void:
+	if _transition_rect == null or _transition_material == null:
+		return
+	if _transition_active or _damage_flash_active:
+		return
+	if not _is_distortion_allowed():
+		return
+	_damage_flash_active = true
+	_transition_rect.visible = true
+	_set_transition_intensity(damage_flash_intensity)
+	_set_transition_squash(damage_flash_squash_amount)
+	get_tree().create_timer(damage_flash_duration).timeout.connect(func():
+		if not _transition_active:
+			_transition_rect.visible = false
+			_set_transition_intensity(0.0)
+			_set_transition_squash(0.0)
+		_damage_flash_active = false
 	)
 
 func _on_scene_changed(scene: Node = null) -> void:

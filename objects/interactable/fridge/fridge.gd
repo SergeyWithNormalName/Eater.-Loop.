@@ -22,6 +22,8 @@ const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
 @export var require_access_code: bool = false
 ## Код доступа.
 @export var access_code: String = "1234"
+## Сообщение, если код не введен или неверный.
+@export var access_code_failed_message: String = ""
 ## Сцена мини-игры "Кодовый замок".
 @export var code_lock_scene: PackedScene 
 
@@ -117,7 +119,11 @@ func _start_code_lock() -> void:
 		lock_instance.unlocked.connect(_on_unlock_success)
 	
 	# Добавляем обработку закрытия (чтобы разблокировать игрока, если он нажал отмену)
-	lock_instance.tree_exited.connect(func(): _is_interacting = false)
+	lock_instance.tree_exited.connect(func():
+		_is_interacting = false
+		if require_access_code and not _code_unlocked:
+			_show_access_code_failed_message()
+	)
 
 	# 4. Добавляем замок на сцену (поверх всего, но внутри текущей сцены)
 	_add_minigame_to_scene(lock_instance)
@@ -214,6 +220,13 @@ func _show_locked_message() -> void:
 			print("LOCKED: " + lab_required_message)
 		return
 	super._show_locked_message()
+
+func _show_access_code_failed_message() -> void:
+	var message := access_code_failed_message.strip_edges()
+	if message == "":
+		return
+	if UIMessage and UIMessage.has_method("show_text"):
+		UIMessage.show_text(message)
 
 # --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
 func _is_chase_active() -> bool:

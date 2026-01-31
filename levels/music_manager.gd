@@ -187,6 +187,16 @@ func pop_music(fade_time: float = -1.0) -> void:
 func clear_stack() -> void:
 	_stack.clear()
 
+func get_current_stream() -> AudioStream:
+	return _current_stream
+
+func remove_music_from_stack(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	for i in range(_stack.size() - 1, -1, -1):
+		if _stack[i].get("stream", null) == stream:
+			_stack.remove_at(i)
+
 func set_chase_music_source(source: Object, active: bool, stream: AudioStream = null, volume_db: float = 999.0, fade_out_time: float = -1.0) -> void:
 	if source == null:
 		return

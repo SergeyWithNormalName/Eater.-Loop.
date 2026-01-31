@@ -119,8 +119,7 @@ func _attack_player() -> void:
 		get_tree().call_deferred("reload_current_scene")
 		return
 	# ИСПРАВЛЕНО: Теперь функция будет существовать в GameDirector
-	GameDirector.reduce_time(time_penalty)
-	UIMessage.show_text("Время потеряно! -%.1f с" % time_penalty)
+	GameDirector.reduce_time(time_penalty, true)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
 	call_deferred("queue_free")

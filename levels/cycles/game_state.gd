@@ -35,6 +35,7 @@ func _ready() -> void:
 func next_cycle() -> void:
 	ate_this_cycle = false
 	fridge_interacted = false
+	lab_done = false
 	set_phase(Phase.NORMAL)
 	_save_run_state()
 
@@ -68,6 +69,7 @@ func reset_cycle_state() -> void:
 	ate_this_cycle = false
 	fridge_interacted = false
 	phone_picked = false
+	lab_done = false
 	pending_sleep_spawn = false
 	set_phase(Phase.NORMAL)
 	_save_run_state()

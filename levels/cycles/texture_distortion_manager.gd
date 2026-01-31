@@ -16,14 +16,19 @@ extends Node
 var _targets: Array[Dictionary] = []
 var _texture_map_by_path: Dictionary = {}
 var _sfx_player: AudioStreamPlayer
+var _distortion_music_active: bool = false
 
 func _ready() -> void:
 	_build_texture_path_cache()
 	_cache_targets()
 	_setup_sfx_player()
 	_connect_to_game_director()
+	_connect_to_minigame_controller()
 	if GameState and GameState.phase == GameState.Phase.DISTORTED:
 		_on_distortion_started()
+
+func _exit_tree() -> void:
+	_stop_distortion_music()
 
 func _build_texture_path_cache() -> void:
 	_texture_map_by_path.clear()
@@ -78,6 +83,12 @@ func _connect_to_game_director() -> void:
 	if game_director.has_signal("distortion_started") and not game_director.distortion_started.is_connected(_on_distortion_started):
 		game_director.distortion_started.connect(_on_distortion_started)
 
+func _connect_to_minigame_controller() -> void:
+	if MinigameController == null:
+		return
+	if MinigameController.has_signal("minigame_finished") and not MinigameController.minigame_finished.is_connected(_on_minigame_finished):
+		MinigameController.minigame_finished.connect(_on_minigame_finished)
+
 func _on_distortion_started() -> void:
 	_apply_texture_distortion()
 	_play_distortion_music()
@@ -95,7 +106,39 @@ func _play_distortion_music() -> void:
 		return
 	if MusicManager == null:
 		return
-	MusicManager.play_music(distortion_music, distortion_music_fade_time, distortion_music_volume_db)
+	if _is_minigame_music_active():
+		return
+	if _distortion_music_active:
+		return
+	_distortion_music_active = true
+	MusicManager.push_music(distortion_music, distortion_music_fade_time, distortion_music_volume_db)
+
+func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
+	if GameState == null:
+		return
+	if GameState.phase != GameState.Phase.DISTORTED:
+		return
+	_play_distortion_music()
+
+func _stop_distortion_music() -> void:
+	if not _distortion_music_active:
+		return
+	if MusicManager == null:
+		_distortion_music_active = false
+		return
+	if MusicManager.has_method("get_current_stream") and MusicManager.get_current_stream() == distortion_music:
+		MusicManager.pop_music(distortion_music_fade_time)
+	else:
+		if MusicManager.has_method("remove_music_from_stack"):
+			MusicManager.remove_music_from_stack(distortion_music)
+	_distortion_music_active = false
+
+func _is_minigame_music_active() -> bool:
+	if MinigameController == null:
+		return false
+	if MinigameController.has_method("should_block_player_movement"):
+		return MinigameController.should_block_player_movement()
+	return false
 
 func _play_distortion_sfx() -> void:
 	if distortion_sfx == null:

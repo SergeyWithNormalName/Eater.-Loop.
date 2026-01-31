@@ -3,6 +3,8 @@ extends "res://levels/menu/menu_base.gd"
 @export_group("Сцены")
 ## Сцена, которая запускается при новой игре.
 @export var new_game_scene: PackedScene
+## Звук сна при старте новой игры.
+@export var new_game_sleep_sfx: AudioStream = preload("res://objects/interactable/bed/OutOfBed.wav")
 
 @export_group("Музыка")
 ## Музыка главного меню.
@@ -133,8 +135,17 @@ func _start_new_game() -> void:
 	if GameState:
 		GameState.reset_run()
 		GameState.set_current_scene_path(new_game_scene.resource_path)
+		GameState.pending_sleep_spawn = true
 	_stop_menu_music()
-	await UIMessage.change_scene_with_fade(new_game_scene)
+	await UIMessage.change_scene_with_fade_delay(new_game_scene, 0.4, _get_sleep_sfx_delay())
+
+func _get_sleep_sfx_delay() -> float:
+	if new_game_sleep_sfx == null:
+		return 0.0
+	var length := new_game_sleep_sfx.get_length()
+	if length <= 0.0:
+		return 1.0
+	return length
 
 func _start_continue() -> void:
 	if GameState == null:
