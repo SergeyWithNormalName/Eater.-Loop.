@@ -1,6 +1,5 @@
 extends Control
 
-const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
 
 signal task_completed(success: bool)
 
@@ -125,7 +124,7 @@ func check_answer(_arg = null):
 			slots.append(child)
 	
 	var correct_matches = 0
-	var filled_count = 0
+	var _filled_count = 0
 	
 	# Проверяем содержимое слотов
 	for i in range(slots.size()):
@@ -136,7 +135,7 @@ func check_answer(_arg = null):
 			slot_text = slot.current_text
 		
 		if slot_text != "":
-			filled_count += 1
+			_filled_count += 1
 		
 		# Сравниваем с правильным ответом
 		if i < data["correct"].size():

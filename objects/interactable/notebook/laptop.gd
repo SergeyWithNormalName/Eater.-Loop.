@@ -1,6 +1,5 @@
 extends InteractiveObject
 
-const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
 
 @export_group("Lab Settings")
 ## Сцена мини-игры (sql_minigame.tscn).

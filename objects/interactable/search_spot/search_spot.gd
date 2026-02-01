@@ -1,6 +1,5 @@
 extends "res://objects/interactable/interactive_object.gd"
 
-const MinigameSettings = preload("res://levels/minigames/minigame_settings.gd")
 
 @export_group("Search Settings")
 @export var minigame_scene: PackedScene

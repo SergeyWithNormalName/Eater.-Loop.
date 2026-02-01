@@ -199,6 +199,7 @@
 │   │   ├── level_06.tscn
 │   │   ├── level_07.tscn
 │   │   ├── level_08.tscn
+│   │   ├── level_NSTU_test.tscn
 │   │   ├── level_end.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
@@ -496,7 +497,9 @@
 │   ├── TimerForLabs_DEMO.wav
 │   ├── TimerForLabs_DEMO.wav.import
 │   ├── TypeSilentHill.wav
-│   └── TypeSilentHill.wav.import
+│   ├── TypeSilentHill.wav.import
+│   ├── UniversityMusic.wav
+│   └── UniversityMusic.wav.import
 ├── objects
 │   ├── environment
 │   │   ├── background
@@ -660,6 +663,19 @@
 │   │   │       ├── bath.png
 │   │   │       ├── bath.png.import
 │   │   │       └── wash.tscn
+│   │   ├── university
+│   │   │   ├── BackWallsUn.png
+│   │   │   ├── BackWallsUn.png.import
+│   │   │   ├── Exit.png
+│   │   │   ├── Exit.png.import
+│   │   │   ├── FireWash.png
+│   │   │   ├── FireWash.png.import
+│   │   │   ├── Lift.png
+│   │   │   ├── Lift.png.import
+│   │   │   ├── STU_OnWallDecor_1.png
+│   │   │   ├── STU_OnWallDecor_1.png.import
+│   │   │   ├── SofaSTU.png
+│   │   │   └── SofaSTU.png.import
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
@@ -687,6 +703,10 @@
 │       │   │   ├── DoorBasic_Distorted.png.import
 │       │   │   ├── DoorExit.png
 │       │   │   ├── DoorExit.png.import
+│       │   │   ├── DoorNSTU_highevel.png
+│       │   │   ├── DoorNSTU_highevel.png.import
+│       │   │   ├── DoorStairs.png
+│       │   │   ├── DoorStairs.png.import
 │       │   │   ├── DoorToiletInside.png
 │       │   │   ├── DoorToiletInside.png.import
 │       │   │   ├── DoorToiletOutside.png
@@ -697,7 +717,8 @@
 │       │   │   └── Door_Opened_2.png.import
 │       │   ├── door.gd
 │       │   ├── door.gd.uid
-│       │   └── door.tscn
+│       │   ├── door.tscn
+│       │   └── door_university.tscn
 │       ├── fridge
 │       │   ├── audio
 │       │   │   ├── FridgeNoizeE.wav
@@ -844,4 +865,4 @@
 ├── project.godot
 └── structure.txt
 
-90 directories, 755 files
+91 directories, 775 files

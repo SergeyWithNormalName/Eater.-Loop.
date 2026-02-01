@@ -725,6 +725,7 @@ win_sound = ExtResource("51_or2ql")
 eat_sound = ExtResource("52_nnv0x")
 background_texture = ExtResource("53_jvjon")
 require_access_code = true
+access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
 locked_sprite = ExtResource("54_musk4")
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
@@ -941,23 +942,6 @@ scale = Vector2(2.0000002, 2.0000002)
 start_game_time = "1:58"
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock"]
-position = Vector2(47.222225, 38.88893)
-scale = Vector2(2.9513855, 1.1284723)
-texture = SubResource("GradientTexture2D_pgutp")
-
-[node name="Clock2" type="Sprite2D" parent="Bedroom/InteractableObjects"]
-position = Vector2(-1405, 60.999996)
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("67_ucmgk")
-metadata/_edit_group_ = true
-
-[node name="WorldClock" parent="Bedroom/InteractableObjects/Clock2" instance=ExtResource("68_4kun7")]
-position = Vector2(-94.444336, -61.111206)
-rotation = 0.002830834
-scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:58"
-
-[node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock2/WorldClock"]
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_pgutp")

@@ -132,12 +132,12 @@ func _coerce_position(pos: Variant) -> Vector2:
 func _get_control_size(control: Control, fallback: Vector2) -> Vector2:
 	if control == null:
 		return fallback
-	var size := control.size
-	if size.x <= 0.0 or size.y <= 0.0:
-		size = control.get_combined_minimum_size()
-	if size.x <= 0.0 or size.y <= 0.0:
-		size = fallback
-	return size
+	var control_size := control.size
+	if control_size.x <= 0.0 or control_size.y <= 0.0:
+		control_size = control.get_combined_minimum_size()
+	if control_size.x <= 0.0 or control_size.y <= 0.0:
+		control_size = fallback
+	return control_size
 
 func _resolve_trash_texture(item: Dictionary) -> Texture2D:
 	if item.has("texture_index"):

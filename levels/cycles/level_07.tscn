@@ -151,10 +151,6 @@ script = ExtResource("level_settings")
 cycle_number = 7
 timer_duration = 180.0
 
-[node name="Darkness" type="CanvasModulate" parent="."]
-rotation = 0.009666472
-color = Color(0.12941177, 0.12941177, 0.15294118, 1)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
@@ -3841,6 +3837,10 @@ metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Fridge2"]
 position = Vector2(0.20996094, -32.749985)
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+rotation = 0.009666472
+color = Color(0.3137255, 0.3137255, 0.36862746, 1)
 
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]
