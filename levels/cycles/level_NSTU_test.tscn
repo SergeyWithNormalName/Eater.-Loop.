@@ -864,7 +864,6 @@ texture = ExtResource("55_tj0re")
 z_index = 15
 position = Vector2(10604, 322)
 floor_texture = ExtResource("24_oevlm")
-perspective_amount = 5.2
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]

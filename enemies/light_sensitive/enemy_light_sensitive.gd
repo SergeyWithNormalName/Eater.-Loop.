@@ -136,7 +136,7 @@ func _start_knockback() -> void:
 	else:
 		_knockback_dir = Vector2.LEFT
 
-func _update_stun_motion(delta: float) -> void:
+func _update_stun_motion(_delta: float) -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
 

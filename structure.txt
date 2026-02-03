@@ -7,21 +7,164 @@
 │   │   ├── enemy_ceiling.gd.uid
 │   │   └── enemy_ceiling.tscn
 │   ├── light_only
+│   │   ├── sprites
+│   │   │   ├── Denis.png
+│   │   │   ├── Denis.png.import
+│   │   │   ├── Max.png
+│   │   │   ├── Max.png.import
+│   │   │   ├── Nikita.png
+│   │   │   ├── Nikita.png.import
+│   │   │   ├── Serega.png
+│   │   │   ├── Serega.png.import
+│   │   │   ├── Slava.png
+│   │   │   ├── Slava.png.import
+│   │   │   ├── Tolya.png
+│   │   │   └── Tolya.png.import
 │   │   ├── enemy_light_only.gd
 │   │   ├── enemy_light_only.gd.uid
 │   │   └── enemy_light_only.tscn
 │   ├── light_sensitive
+│   │   ├── animations
+│   │   │   ├── Flashlight
+│   │   │   │   ├── ezgif-frame-001.png
+│   │   │   │   ├── ezgif-frame-001.png.import
+│   │   │   │   ├── ezgif-frame-002.png
+│   │   │   │   ├── ezgif-frame-002.png.import
+│   │   │   │   ├── ezgif-frame-003.png
+│   │   │   │   ├── ezgif-frame-003.png.import
+│   │   │   │   ├── ezgif-frame-004.png
+│   │   │   │   ├── ezgif-frame-004.png.import
+│   │   │   │   ├── ezgif-frame-005.png
+│   │   │   │   ├── ezgif-frame-005.png.import
+│   │   │   │   ├── ezgif-frame-006.png
+│   │   │   │   ├── ezgif-frame-006.png.import
+│   │   │   │   ├── ezgif-frame-007.png
+│   │   │   │   ├── ezgif-frame-007.png.import
+│   │   │   │   ├── ezgif-frame-008.png
+│   │   │   │   ├── ezgif-frame-008.png.import
+│   │   │   │   ├── ezgif-frame-009.png
+│   │   │   │   ├── ezgif-frame-009.png.import
+│   │   │   │   ├── ezgif-frame-010.png
+│   │   │   │   ├── ezgif-frame-010.png.import
+│   │   │   │   ├── ezgif-frame-011.png
+│   │   │   │   ├── ezgif-frame-011.png.import
+│   │   │   │   ├── ezgif-frame-012.png
+│   │   │   │   ├── ezgif-frame-012.png.import
+│   │   │   │   ├── ezgif-frame-013.png
+│   │   │   │   ├── ezgif-frame-013.png.import
+│   │   │   │   ├── ezgif-frame-014.png
+│   │   │   │   ├── ezgif-frame-014.png.import
+│   │   │   │   ├── ezgif-frame-015.png
+│   │   │   │   ├── ezgif-frame-015.png.import
+│   │   │   │   ├── ezgif-frame-016.png
+│   │   │   │   ├── ezgif-frame-016.png.import
+│   │   │   │   ├── ezgif-frame-017.png
+│   │   │   │   ├── ezgif-frame-017.png.import
+│   │   │   │   ├── ezgif-frame-018.png
+│   │   │   │   ├── ezgif-frame-018.png.import
+│   │   │   │   ├── ezgif-frame-019.png
+│   │   │   │   ├── ezgif-frame-019.png.import
+│   │   │   │   ├── ezgif-frame-020.png
+│   │   │   │   └── ezgif-frame-020.png.import
+│   │   │   ├── LampReact
+│   │   │   │   ├── ezgif-frame-001.png
+│   │   │   │   ├── ezgif-frame-001.png.import
+│   │   │   │   ├── ezgif-frame-002.png
+│   │   │   │   ├── ezgif-frame-002.png.import
+│   │   │   │   ├── ezgif-frame-003.png
+│   │   │   │   ├── ezgif-frame-003.png.import
+│   │   │   │   ├── ezgif-frame-004.png
+│   │   │   │   ├── ezgif-frame-004.png.import
+│   │   │   │   ├── ezgif-frame-005.png
+│   │   │   │   ├── ezgif-frame-005.png.import
+│   │   │   │   ├── ezgif-frame-006.png
+│   │   │   │   ├── ezgif-frame-006.png.import
+│   │   │   │   ├── ezgif-frame-007.png
+│   │   │   │   ├── ezgif-frame-007.png.import
+│   │   │   │   ├── ezgif-frame-008.png
+│   │   │   │   ├── ezgif-frame-008.png.import
+│   │   │   │   ├── ezgif-frame-009.png
+│   │   │   │   ├── ezgif-frame-009.png.import
+│   │   │   │   ├── ezgif-frame-010.png
+│   │   │   │   ├── ezgif-frame-010.png.import
+│   │   │   │   ├── ezgif-frame-011.png
+│   │   │   │   ├── ezgif-frame-011.png.import
+│   │   │   │   ├── ezgif-frame-012.png
+│   │   │   │   ├── ezgif-frame-012.png.import
+│   │   │   │   ├── ezgif-frame-013.png
+│   │   │   │   ├── ezgif-frame-013.png.import
+│   │   │   │   ├── ezgif-frame-014.png
+│   │   │   │   └── ezgif-frame-014.png.import
+│   │   │   └── LampStan
+│   │   │       ├── ezgif-frame-001.png
+│   │   │       ├── ezgif-frame-001.png.import
+│   │   │       ├── ezgif-frame-002.png
+│   │   │       ├── ezgif-frame-002.png.import
+│   │   │       ├── ezgif-frame-003.png
+│   │   │       └── ezgif-frame-003.png.import
+│   │   ├── Monster_2.png
+│   │   ├── Monster_2.png.import
 │   │   ├── enemy_light_sensitive.gd
 │   │   ├── enemy_light_sensitive.gd.uid
 │   │   └── enemy_light_sensitive.tscn
 │   ├── runner
+│   │   ├── animations
+│   │   │   ├── ezgif-frame-001.png
+│   │   │   ├── ezgif-frame-001.png.import
+│   │   │   ├── ezgif-frame-002.png
+│   │   │   ├── ezgif-frame-002.png.import
+│   │   │   ├── ezgif-frame-003.png
+│   │   │   ├── ezgif-frame-003.png.import
+│   │   │   ├── ezgif-frame-004.png
+│   │   │   ├── ezgif-frame-004.png.import
+│   │   │   ├── ezgif-frame-005.png
+│   │   │   ├── ezgif-frame-005.png.import
+│   │   │   ├── ezgif-frame-006.png
+│   │   │   ├── ezgif-frame-006.png.import
+│   │   │   ├── ezgif-frame-007.png
+│   │   │   ├── ezgif-frame-007.png.import
+│   │   │   ├── ezgif-frame-008.png
+│   │   │   ├── ezgif-frame-008.png.import
+│   │   │   ├── ezgif-frame-009.png
+│   │   │   ├── ezgif-frame-009.png.import
+│   │   │   ├── ezgif-frame-010.png
+│   │   │   ├── ezgif-frame-010.png.import
+│   │   │   ├── ezgif-frame-011.png
+│   │   │   ├── ezgif-frame-011.png.import
+│   │   │   ├── ezgif-frame-012.png
+│   │   │   ├── ezgif-frame-012.png.import
+│   │   │   ├── ezgif-frame-013.png
+│   │   │   ├── ezgif-frame-013.png.import
+│   │   │   ├── ezgif-frame-014.png
+│   │   │   ├── ezgif-frame-014.png.import
+│   │   │   ├── ezgif-frame-015.png
+│   │   │   ├── ezgif-frame-015.png.import
+│   │   │   ├── ezgif-frame-016.png
+│   │   │   ├── ezgif-frame-016.png.import
+│   │   │   ├── ezgif-frame-017.png
+│   │   │   ├── ezgif-frame-017.png.import
+│   │   │   ├── ezgif-frame-018.png
+│   │   │   ├── ezgif-frame-018.png.import
+│   │   │   ├── ezgif-frame-019.png
+│   │   │   ├── ezgif-frame-019.png.import
+│   │   │   ├── ezgif-frame-020.png
+│   │   │   ├── ezgif-frame-020.png.import
+│   │   │   ├── ezgif-frame-021.png
+│   │   │   └── ezgif-frame-021.png.import
+│   │   ├── audio
+│   │   │   ├── BigStep_1V.wav
+│   │   │   └── BigStep_1V.wav.import
+│   │   ├── Monster.png
+│   │   ├── Monster.png.import
 │   │   ├── enemy_runner.gd
 │   │   ├── enemy_runner.gd.uid
 │   │   └── enemy_runner.tscn
 │   ├── stalker
 │   │   ├── enemy_stalker.gd
 │   │   ├── enemy_stalker.gd.uid
-│   │   └── enemy_stalker.tscn
+│   │   ├── enemy_stalker.tscn
+│   │   ├── sprite.png
+│   │   └── sprite.png.import
 │   ├── enemy.gd
 │   ├── enemy.gd.uid
 │   ├── enemy.tscn
@@ -30,8 +173,13 @@
 ├── global
 │   ├── fonts
 │   │   ├── AmaticSC-Bold.ttf
+│   │   ├── AmaticSC-Bold.ttf.import
 │   │   ├── AmaticSC-Regular.ttf
+│   │   ├── AmaticSC-Regular.ttf.import
 │   │   └── OFL.txt
+│   ├── export_presets.cfg
+│   ├── iconofgame.png
+│   ├── iconofgame.png.import
 │   ├── Иконка_предварительно.icns
 │   └── Иконка_предварительно.ico
 ├── levels
@@ -66,6 +214,8 @@
 │   │   ├── texture_distortion_manager.gd
 │   │   └── texture_distortion_manager.gd.uid
 │   ├── menu
+│   │   ├── MainMenuBackground.png
+│   │   ├── MainMenuBackground.png.import
 │   │   ├── main_menu.gd
 │   │   ├── main_menu.gd.uid
 │   │   ├── main_menu.tscn
@@ -83,12 +233,44 @@
 │   │   └── settings_panel.tscn
 │   ├── minigames
 │   │   ├── feeding
+│   │   │   ├── andreys_faces
+│   │   │   │   ├── BadEat.png
+│   │   │   │   ├── BadEat.png.import
+│   │   │   │   ├── BasicEat.png
+│   │   │   │   ├── BasicEat.png.import
+│   │   │   │   ├── HappyEat.png
+│   │   │   │   ├── HappyEat.png.import
+│   │   │   │   ├── SadEat.png
+│   │   │   │   ├── SadEat.png.import
+│   │   │   │   ├── VeryBadEat.png
+│   │   │   │   └── VeryBadEat.png.import
 │   │   │   ├── food
+│   │   │   │   ├── 1_textures
+│   │   │   │   │   ├── Fish.png
+│   │   │   │   │   ├── Fish.png.import
+│   │   │   │   │   ├── RawMeet.png
+│   │   │   │   │   └── RawMeet.png.import
 │   │   │   │   ├── burger
+│   │   │   │   │   ├── Burger.png
+│   │   │   │   │   ├── Burger.png.import
 │   │   │   │   │   └── food_burger.tscn
 │   │   │   │   ├── chiken
+│   │   │   │   │   ├── Chicken.png
+│   │   │   │   │   ├── Chicken.png.import
 │   │   │   │   │   └── food_chicken.tscn
 │   │   │   │   ├── cookie
+│   │   │   │   │   ├── Cookie_1.png
+│   │   │   │   │   ├── Cookie_1.png.import
+│   │   │   │   │   ├── Cookie_2.png
+│   │   │   │   │   ├── Cookie_2.png.import
+│   │   │   │   │   ├── Cookie_3.png
+│   │   │   │   │   ├── Cookie_3.png.import
+│   │   │   │   │   ├── Cookie_4.png
+│   │   │   │   │   ├── Cookie_4.png.import
+│   │   │   │   │   ├── Cookie_5.png
+│   │   │   │   │   ├── Cookie_5.png.import
+│   │   │   │   │   ├── Cookie_6.png
+│   │   │   │   │   ├── Cookie_6.png.import
 │   │   │   │   │   ├── food_cookie_1.tscn
 │   │   │   │   │   ├── food_cookie_2.tscn
 │   │   │   │   │   ├── food_cookie_3.tscn
@@ -96,33 +278,72 @@
 │   │   │   │   │   ├── food_cookie_5.tscn
 │   │   │   │   │   └── food_cookie_6.tscn
 │   │   │   │   ├── dumpling
+│   │   │   │   │   ├── Dumpling.png
+│   │   │   │   │   ├── Dumpling.png.import
 │   │   │   │   │   └── food_dumpling.tscn
 │   │   │   │   ├── hachapuri
+│   │   │   │   │   ├── Hachapuri.png
+│   │   │   │   │   ├── Hachapuri.png.import
 │   │   │   │   │   └── food_hachapuri.tscn
 │   │   │   │   ├── hotdog
+│   │   │   │   │   ├── HotDog.png
+│   │   │   │   │   ├── HotDog.png.import
 │   │   │   │   │   └── food_hotdog.tscn
 │   │   │   │   ├── krilishki
+│   │   │   │   │   ├── Krilishko.png
+│   │   │   │   │   ├── Krilishko.png.import
+│   │   │   │   │   ├── Krilishko_2.png
+│   │   │   │   │   ├── Krilishko_2.png.import
 │   │   │   │   │   └── food_krilishki.tscn
 │   │   │   │   ├── meet
+│   │   │   │   │   ├── MeetSteak.png
+│   │   │   │   │   ├── MeetSteak.png.import
 │   │   │   │   │   └── food_meet.tscn
 │   │   │   │   ├── naggets
+│   │   │   │   │   ├── Naggets.png
+│   │   │   │   │   ├── Naggets.png.import
 │   │   │   │   │   └── food_naggets.tscn
 │   │   │   │   ├── plate
+│   │   │   │   │   ├── plate.png
+│   │   │   │   │   ├── plate.png.import
 │   │   │   │   │   └── plate.tscn
 │   │   │   │   ├── shaurma
+│   │   │   │   │   ├── Shaurma.png
+│   │   │   │   │   ├── Shaurma.png.import
 │   │   │   │   │   └── food_shaurma.tscn
 │   │   │   │   ├── sushi
+│   │   │   │   │   ├── Sushi.png
+│   │   │   │   │   ├── Sushi.png.import
 │   │   │   │   │   ├── food_sushi.tscn
 │   │   │   │   │   └── food_sushi_2.tscn
 │   │   │   │   ├── tort
+│   │   │   │   │   ├── Tort.png
+│   │   │   │   │   ├── Tort.png.import
 │   │   │   │   │   └── food_tort.tscn
 │   │   │   │   ├── food_item.gd
 │   │   │   │   └── food_item.gd.uid
+│   │   │   ├── sounds
+│   │   │   │   ├── DushuProdat.wav
+│   │   │   │   ├── DushuProdat.wav.import
+│   │   │   │   ├── Nam-nam_1.wav
+│   │   │   │   ├── Nam-nam_1.wav.import
+│   │   │   │   ├── Ohuenno.wav
+│   │   │   │   ├── Ohuenno.wav.import
+│   │   │   │   ├── Pizdato.wav
+│   │   │   │   ├── Pizdato.wav.import
+│   │   │   │   ├── Poel_1.wav
+│   │   │   │   ├── Poel_1.wav.import
+│   │   │   │   ├── Upitanaya_Bitch.wav
+│   │   │   │   └── Upitanaya_Bitch.wav.import
+│   │   │   ├── BackgroundBasic.png
+│   │   │   ├── BackgroundBasic.png.import
 │   │   │   ├── feed_minigame.gd
 │   │   │   ├── feed_minigame.gd.uid
 │   │   │   └── feed_minigame.tscn
 │   │   ├── labs
 │   │   │   ├── LLM
+│   │   │   │   ├── background.png
+│   │   │   │   ├── background.png.import
 │   │   │   │   ├── llm_minigame.gd
 │   │   │   │   ├── llm_minigame.gd.uid
 │   │   │   │   └── llm_minigame.tscn
@@ -135,8 +356,91 @@
 │   │   │       ├── sql_minigame.gd.uid
 │   │   │       └── sql_minigame.tscn
 │   │   ├── search_key
+│   │   │   ├── rakovina
+│   │   │   │   └── sprites
+│   │   │   │       ├── Posuda_1.png
+│   │   │   │       ├── Posuda_1.png.import
+│   │   │   │       ├── Posuda_2.png
+│   │   │   │       ├── Posuda_2.png.import
+│   │   │   │       ├── Posuda_3.png
+│   │   │   │       ├── Posuda_3.png.import
+│   │   │   │       ├── Posuda_4.png
+│   │   │   │       ├── Posuda_4.png.import
+│   │   │   │       ├── Posuda_5.png
+│   │   │   │       ├── Posuda_5.png.import
+│   │   │   │       ├── Posuda_6.png
+│   │   │   │       └── Posuda_6.png.import
+│   │   │   ├── stiralka
+│   │   │   │   └── sprites
+│   │   │   │       ├── Clear_Cloth_1.png
+│   │   │   │       ├── Clear_Cloth_1.png.import
+│   │   │   │       ├── Clear_Cloth_10.png
+│   │   │   │       ├── Clear_Cloth_10.png.import
+│   │   │   │       ├── Clear_Cloth_11.png
+│   │   │   │       ├── Clear_Cloth_11.png.import
+│   │   │   │       ├── Clear_Cloth_12.png
+│   │   │   │       ├── Clear_Cloth_12.png.import
+│   │   │   │       ├── Clear_Cloth_13.png
+│   │   │   │       ├── Clear_Cloth_13.png.import
+│   │   │   │       ├── Clear_Cloth_14.png
+│   │   │   │       ├── Clear_Cloth_14.png.import
+│   │   │   │       ├── Clear_Cloth_15.png
+│   │   │   │       ├── Clear_Cloth_15.png.import
+│   │   │   │       ├── Clear_Cloth_16.png
+│   │   │   │       ├── Clear_Cloth_16.png.import
+│   │   │   │       ├── Clear_Cloth_2.png
+│   │   │   │       ├── Clear_Cloth_2.png.import
+│   │   │   │       ├── Clear_Cloth_3.png
+│   │   │   │       ├── Clear_Cloth_3.png.import
+│   │   │   │       ├── Clear_Cloth_4.png
+│   │   │   │       ├── Clear_Cloth_4.png.import
+│   │   │   │       ├── Clear_Cloth_5.png
+│   │   │   │       ├── Clear_Cloth_5.png.import
+│   │   │   │       ├── Clear_Cloth_6.png
+│   │   │   │       ├── Clear_Cloth_6.png.import
+│   │   │   │       ├── Clear_Cloth_7.png
+│   │   │   │       ├── Clear_Cloth_7.png.import
+│   │   │   │       ├── Clear_Cloth_8.png
+│   │   │   │       ├── Clear_Cloth_8.png.import
+│   │   │   │       ├── Clear_Cloth_9.png
+│   │   │   │       └── Clear_Cloth_9.png.import
 │   │   │   ├── urna
+│   │   │   │   ├── sprites
+│   │   │   │   │   ├── Trash_1.png
+│   │   │   │   │   ├── Trash_1.png.import
+│   │   │   │   │   ├── Trash_10.png
+│   │   │   │   │   ├── Trash_10.png.import
+│   │   │   │   │   ├── Trash_11.png
+│   │   │   │   │   ├── Trash_11.png.import
+│   │   │   │   │   ├── Trash_12.png
+│   │   │   │   │   ├── Trash_12.png.import
+│   │   │   │   │   ├── Trash_13.png
+│   │   │   │   │   ├── Trash_13.png.import
+│   │   │   │   │   ├── Trash_14.png
+│   │   │   │   │   ├── Trash_14.png.import
+│   │   │   │   │   ├── Trash_15.png
+│   │   │   │   │   ├── Trash_15.png.import
+│   │   │   │   │   ├── Trash_2.png
+│   │   │   │   │   ├── Trash_2.png.import
+│   │   │   │   │   ├── Trash_3.png
+│   │   │   │   │   ├── Trash_3.png.import
+│   │   │   │   │   ├── Trash_4.png
+│   │   │   │   │   ├── Trash_4.png.import
+│   │   │   │   │   ├── Trash_5.png
+│   │   │   │   │   ├── Trash_5.png.import
+│   │   │   │   │   ├── Trash_6.png
+│   │   │   │   │   ├── Trash_6.png.import
+│   │   │   │   │   ├── Trash_7.png
+│   │   │   │   │   ├── Trash_7.png.import
+│   │   │   │   │   ├── Trash_8.png
+│   │   │   │   │   ├── Trash_8.png.import
+│   │   │   │   │   ├── Trash_9.png
+│   │   │   │   │   └── Trash_9.png.import
+│   │   │   │   ├── BackgroundUrna.png
+│   │   │   │   ├── BackgroundUrna.png.import
 │   │   │   │   └── urna_search_minigame.tscn
+│   │   │   ├── Key.png
+│   │   │   ├── Key.png.import
 │   │   │   ├── draggable_trash.gd
 │   │   │   ├── draggable_trash.gd.uid
 │   │   │   ├── search_key_manager.gd
@@ -161,6 +465,10 @@
 │   │   │   ├── prompt_interact_default.tscn
 │   │   │   └── prompt_lamp_default.tscn
 │   │   └── interaction_prompts.tscn
+│   ├── Hahaha.wav
+│   ├── Hahaha.wav.import
+│   ├── ScaryStepsAndDoor.mp3
+│   ├── ScaryStepsAndDoor.mp3.import
 │   ├── game_director.gd
 │   ├── game_director.gd.uid
 │   ├── interaction_prompts.gd
@@ -169,8 +477,69 @@
 │   ├── music_manager.gd.uid
 │   ├── prompt_view.gd
 │   └── prompt_view.gd.uid
+├── music
+│   ├── AlienSounds.wav
+│   ├── AlienSounds.wav.import
+│   ├── CreepyAmbient.wav
+│   ├── CreepyAmbient.wav.import
+│   ├── DrainMusic.wav
+│   ├── DrainMusic.wav.import
+│   ├── GlitchedHorrorHit.wav
+│   ├── GlitchedHorrorHit.wav.import
+│   ├── InsideAmbient.wav
+│   ├── InsideAmbient.wav.import
+│   ├── MusicForBasicMonster.wav
+│   ├── MusicForBasicMonster.wav.import
+│   ├── MusicForEat.mp3
+│   ├── MusicForEat.mp3.import
+│   ├── MyHorrorHit_1.wav
+│   ├── MyHorrorHit_1.wav.import
+│   ├── MyHorrorHit_2.wav
+│   ├── MyHorrorHit_2.wav.import
+│   ├── MyHorrorHit_3.wav
+│   ├── MyHorrorHit_3.wav.import
+│   ├── RunnerHARDMUSIC.wav
+│   ├── RunnerHARDMUSIC.wav.import
+│   ├── StressMusic.wav
+│   ├── StressMusic.wav.import
+│   ├── TimerForLabs_DEMO.wav
+│   ├── TimerForLabs_DEMO.wav.import
+│   ├── TypeSilentHill.wav
+│   ├── TypeSilentHill.wav.import
+│   ├── UniversityMusic.wav
+│   └── UniversityMusic.wav.import
 ├── objects
 │   ├── environment
+│   │   ├── background
+│   │   │   ├── decals
+│   │   │   │   ├── HoleInWall1.png
+│   │   │   │   ├── HoleInWall1.png.import
+│   │   │   │   ├── HoleInWall2.png
+│   │   │   │   ├── HoleInWall2.png.import
+│   │   │   │   ├── HoleInWall3.png
+│   │   │   │   ├── HoleInWall3.png.import
+│   │   │   │   ├── HoleInWall4.png
+│   │   │   │   ├── HoleInWall4.png.import
+│   │   │   │   ├── HoleInWall5.png
+│   │   │   │   ├── HoleInWall5.png.import
+│   │   │   │   ├── HoleInWall6.png
+│   │   │   │   ├── HoleInWall6.png.import
+│   │   │   │   ├── HoleInWall7.png
+│   │   │   │   └── HoleInWall7.png.import
+│   │   │   ├── BackWalls.png
+│   │   │   ├── BackWalls.png.import
+│   │   │   ├── BackWallsDistorted.png
+│   │   │   ├── BackWallsDistorted.png.import
+│   │   │   ├── Floor.png
+│   │   │   ├── Floor.png.import
+│   │   │   ├── FloorDistorted.png
+│   │   │   ├── FloorDistorted.png.import
+│   │   │   ├── Plintus.png
+│   │   │   ├── Plintus.png.import
+│   │   │   ├── TilesFloor1.png
+│   │   │   ├── TilesFloor1.png.import
+│   │   │   ├── ToiletTiles.png
+│   │   │   └── ToiletTiles.png.import
 │   │   ├── floor
 │   │   │   ├── floor.gd
 │   │   │   ├── floor.gd.uid
@@ -179,69 +548,331 @@
 │   │   │   └── floor_perspective.gdshader.uid
 │   │   ├── smart
 │   │   │   └── world_clock
+│   │   │       ├── Clock.png
+│   │   │       ├── Clock.png.import
 │   │   │       ├── world_clock.gd
 │   │   │       ├── world_clock.gd.uid
 │   │   │       └── world_clock.tscn
 │   │   ├── sprites
+│   │   │   ├── allrooms
+│   │   │   │   ├── windows
+│   │   │   │   │   ├── Window1.png
+│   │   │   │   │   ├── Window1.png.import
+│   │   │   │   │   ├── Window2.png
+│   │   │   │   │   ├── Window2.png.import
+│   │   │   │   │   ├── Window3.png
+│   │   │   │   │   ├── Window3.png.import
+│   │   │   │   │   ├── WindowKilled1.png
+│   │   │   │   │   ├── WindowKilled1.png.import
+│   │   │   │   │   ├── WindowKilled2.png
+│   │   │   │   │   ├── WindowKilled2.png.import
+│   │   │   │   │   ├── WindowKilled3.png
+│   │   │   │   │   ├── WindowKilled3.png.import
+│   │   │   │   │   ├── WindowWithMonster.png
+│   │   │   │   │   └── WindowWithMonster.png.import
+│   │   │   │   ├── Balka.png
+│   │   │   │   ├── Balka.png.import
+│   │   │   │   ├── On-offer.png
+│   │   │   │   ├── On-offer.png.import
+│   │   │   │   ├── OpenShtora.png
+│   │   │   │   ├── OpenShtora.png.import
+│   │   │   │   ├── Pozetka.png
+│   │   │   │   ├── Pozetka.png.import
+│   │   │   │   ├── Shtora.png
+│   │   │   │   ├── Shtora.png.import
+│   │   │   │   ├── WallBOK.png
+│   │   │   │   └── WallBOK.png.import
+│   │   │   ├── bedroom
+│   │   │   │   ├── ChairBedroom.png
+│   │   │   │   ├── ChairBedroom.png.import
+│   │   │   │   ├── Comode2.png
+│   │   │   │   ├── Comode2.png.import
+│   │   │   │   ├── Plakat1.png
+│   │   │   │   ├── Plakat1.png.import
+│   │   │   │   ├── Plakat2.png
+│   │   │   │   ├── Plakat2.png.import
+│   │   │   │   ├── Powerbank2.png
+│   │   │   │   ├── Powerbank2.png.import
+│   │   │   │   ├── SteamDeck.png
+│   │   │   │   ├── SteamDeck.png.import
+│   │   │   │   ├── Sweets.png
+│   │   │   │   ├── Sweets.png.import
+│   │   │   │   ├── TableForPC.png
+│   │   │   │   ├── TableForPC.png.import
+│   │   │   │   ├── Tumbochka2.png
+│   │   │   │   ├── Tumbochka2.png.import
+│   │   │   │   ├── UsedFood.png
+│   │   │   │   └── UsedFood.png.import
+│   │   │   ├── hall
+│   │   │   │   ├── Aquarium.png
+│   │   │   │   ├── Aquarium.png.import
+│   │   │   │   ├── Armchair.png
+│   │   │   │   ├── Armchair.png.import
+│   │   │   │   ├── Battery.png
+│   │   │   │   ├── Battery.png.import
+│   │   │   │   ├── Boots1.png
+│   │   │   │   ├── Boots1.png.import
+│   │   │   │   ├── Boots2.png
+│   │   │   │   ├── Boots2.png.import
+│   │   │   │   ├── Boots3.png
+│   │   │   │   ├── Boots3.png.import
+│   │   │   │   ├── Boots4.png
+│   │   │   │   ├── Boots4.png.import
+│   │   │   │   ├── Boots5.png
+│   │   │   │   ├── Boots5.png.import
+│   │   │   │   ├── Boots6.png
+│   │   │   │   ├── Boots6.png.import
+│   │   │   │   ├── BootsBoard.png
+│   │   │   │   ├── BootsBoard.png.import
+│   │   │   │   ├── CoverOnWall_1.png
+│   │   │   │   ├── CoverOnWall_1.png.import
+│   │   │   │   ├── Kover.png
+│   │   │   │   ├── Kover.png.import
+│   │   │   │   ├── PictureOne.png
+│   │   │   │   ├── PictureOne.png.import
+│   │   │   │   ├── PictureThree.png
+│   │   │   │   ├── PictureThree.png.import
+│   │   │   │   ├── PictureTwo.png
+│   │   │   │   ├── PictureTwo.png.import
+│   │   │   │   ├── Shkaf1.png
+│   │   │   │   ├── Shkaf1.png.import
+│   │   │   │   ├── Sofa.png
+│   │   │   │   ├── Sofa.png.import
+│   │   │   │   ├── tv_1.png
+│   │   │   │   ├── tv_1.png.import
+│   │   │   │   ├── tv_2.png
+│   │   │   │   └── tv_2.png.import
+│   │   │   ├── kitchen
+│   │   │   │   ├── Chair_1.png
+│   │   │   │   ├── Chair_1.png.import
+│   │   │   │   ├── Chair_2.png
+│   │   │   │   ├── Chair_2.png.import
+│   │   │   │   ├── CookingGas.png
+│   │   │   │   ├── CookingGas.png.import
+│   │   │   │   ├── High_kitchen.png
+│   │   │   │   ├── High_kitchen.png.import
+│   │   │   │   ├── Kitchen_garn.png
+│   │   │   │   ├── Kitchen_garn.png.import
+│   │   │   │   ├── Table.png
+│   │   │   │   ├── Table.png.import
+│   │   │   │   ├── Urna.png
+│   │   │   │   └── Urna.png.import
 │   │   │   └── toilet and bathroom
+│   │   │       ├── Mirror.png
+│   │   │       ├── Mirror.png.import
+│   │   │       ├── Rakovina.png
+│   │   │       ├── Rakovina.png.import
+│   │   │       ├── Toilet.png
+│   │   │       ├── Toilet.png.import
+│   │   │       ├── ToiletPaper.png
+│   │   │       ├── ToiletPaper.png.import
+│   │   │       ├── ToothPolka.png
+│   │   │       ├── ToothPolka.png.import
+│   │   │       ├── Vent.png
+│   │   │       ├── Vent.png.import
+│   │   │       ├── WaterMachine.png
+│   │   │       ├── WaterMachine.png.import
+│   │   │       ├── Yorhic.png
+│   │   │       ├── Yorhic.png.import
+│   │   │       ├── bath.png
+│   │   │       ├── bath.png.import
 │   │   │       └── wash.tscn
+│   │   ├── university
+│   │   │   ├── BackWallsUn.png
+│   │   │   ├── BackWallsUn.png.import
+│   │   │   ├── ElevatorButtons.png
+│   │   │   ├── ElevatorButtons.png.import
+│   │   │   ├── Exit.png
+│   │   │   ├── Exit.png.import
+│   │   │   ├── FireButton.png
+│   │   │   ├── FireButton.png.import
+│   │   │   ├── FireWash.png
+│   │   │   ├── FireWash.png.import
+│   │   │   ├── FloorU.png
+│   │   │   ├── FloorU.png.import
+│   │   │   ├── Lift.png
+│   │   │   ├── Lift.png.import
+│   │   │   ├── PlanOfLevel7.png
+│   │   │   ├── PlanOfLevel7.png.import
+│   │   │   ├── PlantU.png
+│   │   │   ├── PlantU.png.import
+│   │   │   ├── STU_OnWallDecor_1.png
+│   │   │   ├── STU_OnWallDecor_1.png.import
+│   │   │   ├── SofaSTU.png
+│   │   │   ├── SofaSTU.png.import
+│   │   │   ├── TestFloorVertU.png
+│   │   │   └── TestFloorVertU.png.import
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
-│   └── interactable
-│       ├── bed
-│       │   ├── bed.gd
-│       │   ├── bed.gd.uid
-│       │   └── bed.tscn
-│       ├── door
-│       │   ├── door.gd
-│       │   ├── door.gd.uid
-│       │   ├── door.tscn
-│       │   └── door_university.tscn
-│       ├── fridge
-│       │   ├── code_lock.gd
-│       │   ├── code_lock.gd.uid
-│       │   ├── fridge.gd
-│       │   ├── fridge.gd.uid
-│       │   └── fridge.tscn
-│       ├── generator
-│       │   ├── generator.gd
-│       │   ├── generator.gd.uid
-│       │   └── generator.tscn
-│       ├── key
-│       │   ├── key.gd
-│       │   └── key.gd.uid
-│       ├── lamp
-│       │   ├── lamp.gd
-│       │   ├── lamp.gd.uid
-│       │   └── lamp.tscn
-│       ├── note
-│       │   ├── note_object.gd
-│       │   └── note_object.gd.uid
-│       ├── notebook
-│       │   ├── laptop.gd
-│       │   ├── laptop.gd.uid
-│       │   └── laptop.tscn
-│       ├── obstacle
-│       │   ├── obstacle.gd
-│       │   ├── obstacle.gd.uid
-│       │   └── obstacle.tscn
-│       ├── phone
-│       │   ├── phone.gd
-│       │   ├── phone.gd.uid
-│       │   └── phone.tscn
-│       ├── search_spot
-│       │   ├── search_spot.gd
-│       │   ├── search_spot.gd.uid
-│       │   └── search_spot.tscn
-│       ├── trigger
-│       │   ├── property_change.gd
-│       │   ├── property_change.gd.uid
-│       │   ├── trigger_set_property.gd
-│       │   └── trigger_set_property.gd.uid
-│       ├── interactive_object.gd
-│       └── interactive_object.gd.uid
+│   ├── interactable
+│   │   ├── bed
+│   │   │   ├── Bed.png
+│   │   │   ├── Bed.png.import
+│   │   │   ├── OutOfBed.wav
+│   │   │   ├── OutOfBed.wav.import
+│   │   │   ├── bed.gd
+│   │   │   ├── bed.gd.uid
+│   │   │   └── bed.tscn
+│   │   ├── door
+│   │   │   ├── audio
+│   │   │   │   ├── door_locked1.wav
+│   │   │   │   ├── door_locked1.wav.import
+│   │   │   │   ├── door_open1.wav
+│   │   │   │   ├── door_open1.wav.import
+│   │   │   │   ├── door_unlocked.wav
+│   │   │   │   └── door_unlocked.wav.import
+│   │   │   ├── sprites
+│   │   │   │   ├── DoorBasic.png
+│   │   │   │   ├── DoorBasic.png.import
+│   │   │   │   ├── DoorBasic_Distorted.png
+│   │   │   │   ├── DoorBasic_Distorted.png.import
+│   │   │   │   ├── DoorExit.png
+│   │   │   │   ├── DoorExit.png.import
+│   │   │   │   ├── DoorNSTU_highevel.png
+│   │   │   │   ├── DoorNSTU_highevel.png.import
+│   │   │   │   ├── DoorStairs.png
+│   │   │   │   ├── DoorStairs.png.import
+│   │   │   │   ├── DoorToiletInside.png
+│   │   │   │   ├── DoorToiletInside.png.import
+│   │   │   │   ├── DoorToiletOutside.png
+│   │   │   │   ├── DoorToiletOutside.png.import
+│   │   │   │   ├── Door_Opened_1.png
+│   │   │   │   ├── Door_Opened_1.png.import
+│   │   │   │   ├── Door_Opened_2.png
+│   │   │   │   └── Door_Opened_2.png.import
+│   │   │   ├── door.gd
+│   │   │   ├── door.gd.uid
+│   │   │   ├── door.tscn
+│   │   │   └── door_university.tscn
+│   │   ├── fridge
+│   │   │   ├── audio
+│   │   │   │   ├── FridgeNoizeE.wav
+│   │   │   │   ├── FridgeNoizeE.wav.import
+│   │   │   │   ├── OpenFridgeE.wav
+│   │   │   │   └── OpenFridgeE.wav.import
+│   │   │   ├── sprites
+│   │   │   │   ├── ClosedFridge.png
+│   │   │   │   ├── ClosedFridge.png.import
+│   │   │   │   ├── FridgeOnChain.png
+│   │   │   │   ├── FridgeOnChain.png.import
+│   │   │   │   ├── LockedFridge.png
+│   │   │   │   ├── LockedFridge.png.import
+│   │   │   │   ├── OpenFridge.png
+│   │   │   │   └── OpenFridge.png.import
+│   │   │   ├── code_lock.gd
+│   │   │   ├── code_lock.gd.uid
+│   │   │   ├── fridge.gd
+│   │   │   ├── fridge.gd.uid
+│   │   │   └── fridge.tscn
+│   │   ├── generator
+│   │   │   ├── generator.gd
+│   │   │   ├── generator.gd.uid
+│   │   │   └── generator.tscn
+│   │   ├── key
+│   │   │   ├── key.gd
+│   │   │   └── key.gd.uid
+│   │   ├── lamp
+│   │   │   ├── Lamp1.png
+│   │   │   ├── Lamp1.png.import
+│   │   │   ├── LampOn1.png
+│   │   │   ├── LampOn1.png.import
+│   │   │   ├── lamp.gd
+│   │   │   ├── lamp.gd.uid
+│   │   │   ├── lamp.tscn
+│   │   │   ├── lamp.wav
+│   │   │   └── lamp.wav.import
+│   │   ├── note
+│   │   │   ├── note_object.gd
+│   │   │   └── note_object.gd.uid
+│   │   ├── notebook
+│   │   │   ├── NotebookOff.png
+│   │   │   ├── NotebookOff.png.import
+│   │   │   ├── NotebookOn.png
+│   │   │   ├── NotebookOn.png.import
+│   │   │   ├── laptop.gd
+│   │   │   ├── laptop.gd.uid
+│   │   │   └── laptop.tscn
+│   │   ├── obstacle
+│   │   │   ├── obstacle.gd
+│   │   │   ├── obstacle.gd.uid
+│   │   │   └── obstacle.tscn
+│   │   ├── phone
+│   │   │   ├── JokeAboutChicken.wav
+│   │   │   ├── JokeAboutChicken.wav.import
+│   │   │   ├── phone.gd
+│   │   │   ├── phone.gd.uid
+│   │   │   ├── phone.png
+│   │   │   ├── phone.png.import
+│   │   │   └── phone.tscn
+│   │   ├── search_spot
+│   │   │   ├── search_spot.gd
+│   │   │   ├── search_spot.gd.uid
+│   │   │   └── search_spot.tscn
+│   │   ├── trigger
+│   │   │   ├── property_change.gd
+│   │   │   ├── property_change.gd.uid
+│   │   │   ├── trigger_set_property.gd
+│   │   │   └── trigger_set_property.gd.uid
+│   │   ├── interactive_object.gd
+│   │   └── interactive_object.gd.uid
+│   └── markers
+│       ├── stalker_spawn_marker.gd
+│       ├── stalker_spawn_marker.gd.uid
+│       └── stalker_spawn_marker.tscn
 ├── player
+│   ├── animations
+│   │   └── walking
+│   │       ├── ezgif-frame-001.png
+│   │       ├── ezgif-frame-001.png.import
+│   │       ├── ezgif-frame-002.png
+│   │       ├── ezgif-frame-002.png.import
+│   │       ├── ezgif-frame-003.png
+│   │       ├── ezgif-frame-003.png.import
+│   │       ├── ezgif-frame-004.png
+│   │       ├── ezgif-frame-004.png.import
+│   │       ├── ezgif-frame-005.png
+│   │       ├── ezgif-frame-005.png.import
+│   │       ├── ezgif-frame-006.png
+│   │       ├── ezgif-frame-006.png.import
+│   │       ├── ezgif-frame-007.png
+│   │       ├── ezgif-frame-007.png.import
+│   │       ├── ezgif-frame-008.png
+│   │       ├── ezgif-frame-008.png.import
+│   │       ├── ezgif-frame-009.png
+│   │       ├── ezgif-frame-009.png.import
+│   │       ├── ezgif-frame-010.png
+│   │       ├── ezgif-frame-010.png.import
+│   │       ├── ezgif-frame-011.png
+│   │       ├── ezgif-frame-011.png.import
+│   │       ├── ezgif-frame-012.png
+│   │       ├── ezgif-frame-012.png.import
+│   │       ├── ezgif-frame-013.png
+│   │       ├── ezgif-frame-013.png.import
+│   │       ├── ezgif-frame-014.png
+│   │       ├── ezgif-frame-014.png.import
+│   │       ├── ezgif-frame-015.png
+│   │       ├── ezgif-frame-015.png.import
+│   │       ├── ezgif-frame-016.png
+│   │       └── ezgif-frame-016.png.import
+│   ├── audio
+│   │   ├── steps
+│   │   │   ├── steps1.wav
+│   │   │   ├── steps1.wav.import
+│   │   │   ├── steps2.wav
+│   │   │   ├── steps2.wav.import
+│   │   │   ├── steps3.wav
+│   │   │   ├── steps3.wav.import
+│   │   │   ├── steps4.wav
+│   │   │   └── steps4.wav.import
+│   │   ├── FlashlightOnOff.wav
+│   │   ├── FlashlightOnOff.wav.import
+│   │   ├── HeartBeat_1.wav
+│   │   └── HeartBeat_1.wav.import
+│   ├── Andry.png
+│   ├── Andry.png.import
+│   ├── AndryWithFlashlight.png
+│   ├── AndryWithFlashlight.png.import
 │   ├── flashlight.gd
 │   ├── flashlight.gd.uid
 │   ├── player.gd
@@ -258,10 +889,11 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
+├── tests
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-61 directories, 204 files
+95 directories, 802 files

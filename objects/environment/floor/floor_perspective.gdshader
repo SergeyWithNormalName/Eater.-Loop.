@@ -14,34 +14,26 @@ uniform vec2 tiling = vec2(5.0, 3.0);
 uniform vec2 offset = vec2(0.0, 0.0);
 
 // Конец пола по глубине (в условных единицах глубины)
-uniform float max_distance : hint_range(1.0, 80.0) = 8.0;
+uniform float max_distance : hint_range(1.0, 80.0) = 10.0;
 
 void fragment() {
     vec2 uv = UV;
 
     float y = clamp(uv.y, 0.0, 1.0);
-    float y_h = clamp((y - horizon) / max(0.001, 1.0 - horizon), 0.0, 1.0);
+    float y_h = clamp((y - horizon) / max(0.001, 1.0 - horizon), 0.001, 1.0);
 
-    // 1.0 внизу, растет к горизонту
-    float inv = 1.0 / max(0.001, y_h);
-    float depth_unclamped = mix(1.0, inv, perspective_amount);
-    if (depth_unclamped > max_distance) {
+    // Ровная плоскость: 1/y_h с возможностью ослабить перспективу
+    float y_adj = mix(1.0, y_h, perspective_amount);
+    float depth = 1.0 / y_adj;
+
+    if (depth > max_distance) {
         COLOR = vec4(0.0);
         return;
     }
 
-    float depth = depth_unclamped;
     float u = (uv.x - vanish_x) * depth * x_scale + vanish_x;
     float v = depth;
 
-    if (v > max_distance) {
-        COLOR = vec4(0.0);
-        return;
-    }
-    vec2 sample_uv_raw = vec2(u, v) * tiling + offset;
-    vec2 sample_uv = fract(sample_uv_raw);
-
-    vec4 col = texture(TEXTURE, sample_uv);
-
-    COLOR = col;
+    vec2 sample_uv = fract(vec2(u, v) * tiling + offset);
+    COLOR = texture(TEXTURE, sample_uv);
 }

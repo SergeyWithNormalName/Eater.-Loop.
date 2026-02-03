@@ -15,6 +15,10 @@ signal distortion_started
 ## Сила сплющивания камеры в переходном эффекте.
 @export_range(0.0, 0.2, 0.005) var distortion_transition_squash_amount: float = 0.25
 
+@export_group("Stalker Spawn")
+## Сцена сталкера для спавна по окончанию таймера.
+@export var stalker_scene: PackedScene = preload("res://enemies/stalker/enemy_stalker.tscn")
+
 @export_group("Damage Flash")
 ## Длительность резкого эффекта от урона (сек).
 @export_range(0.01, 1.0, 0.01) var damage_flash_duration: float = 0.15
@@ -41,6 +45,9 @@ var _damage_flash_active: bool = false
 var _minigame_active: bool = false
 var _minigame_blocks_distortion: bool = false
 var _in_game_scene: bool = false
+var _stalker_spawned: bool = false
+
+const STALKER_SPAWN_GROUP := "stalker_spawn"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -83,6 +90,7 @@ func start_normal_phase(timer_duration: float = -1.0) -> void:
 	_transition_active = false
 	_transition_progress = 0.0
 	_flash_active = false
+	_stalker_spawned = false
 	_hide_distortion_overlays()
 	
 	var time_to_set: float = timer_duration
@@ -127,6 +135,7 @@ func _on_distortion_timeout() -> void:
 	_transition_rect.visible = _is_distortion_allowed()
 	_apply_distortion_progress(0.0)
 	_apply_transition_strength(1.0)
+	_spawn_stalker_if_needed()
 	distortion_started.emit()
 
 func get_time_ratio() -> float:
@@ -222,6 +231,7 @@ func _update_for_scene(scene: Node) -> void:
 	_transition_active = false
 	_transition_progress = 0.0
 	_flash_active = false
+	_stalker_spawned = false
 	_hide_distortion_overlays()
 	if GameState:
 		GameState.set_phase(GameState.Phase.NORMAL)
@@ -335,6 +345,34 @@ func _hide_distortion_overlays() -> void:
 	_set_distortion_squash(0.0)
 	_set_transition_intensity(0.0)
 	_set_transition_squash(0.0)
+
+func _spawn_stalker_if_needed() -> void:
+	if _stalker_spawned:
+		return
+	if not _in_game_scene:
+		return
+	if stalker_scene == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var spawn := _find_stalker_spawn(scene)
+	if spawn == null:
+		return
+	var stalker := stalker_scene.instantiate()
+	if stalker == null:
+		return
+	scene.add_child(stalker)
+	if stalker is Node2D:
+		(stalker as Node2D).global_position = spawn.global_position
+	_stalker_spawned = true
+
+func _find_stalker_spawn(scene: Node) -> Node2D:
+	var nodes := get_tree().get_nodes_in_group(STALKER_SPAWN_GROUP)
+	for node in nodes:
+		if node is Node2D and scene.is_ancestor_of(node):
+			return node
+	return null
 
 func _connect_minigame_controller() -> void:
 	if MinigameController == null:

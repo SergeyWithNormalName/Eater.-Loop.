@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://u32e5100pijl"]
+[gd_scene load_steps=123 format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -117,6 +117,7 @@
 [ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="115_dyvqb"]
 [ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="116_u1l8b"]
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="117_jebss"]
+[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="119_pcuui"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
@@ -1013,3 +1014,6 @@ distortion_sfx = ExtResource("117_jebss")
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
+
+[node name="StalkerSpawnMarker" parent="." instance=ExtResource("119_pcuui")]
+position = Vector2(6540, 90)

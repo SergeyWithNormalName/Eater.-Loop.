@@ -57,9 +57,9 @@ func _follow_door_route() -> void:
 
 	var door_pos := door.global_position
 	if global_position.distance_to(door_pos) <= door_reach_distance:
-		var exit_pos := _get_door_exit_pos(door)
-		if exit_pos != null:
-			global_position = exit_pos
+		var exit_node: Node2D = _get_door_exit_node(door)
+		if exit_node != null:
+			global_position = exit_node.global_position
 		_door_route.pop_front()
 		_route_timer = 0.0
 		return
@@ -88,20 +88,22 @@ func _has_line_of_sight(from_pos: Vector2, to_pos: Vector2) -> bool:
 	return result.get("collider") == _player
 
 func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
+	var empty_route: Array[Node] = []
 	if _has_line_of_sight(start_pos, target_pos):
-		return []
+		return empty_route
 
 	var doors := _get_doors()
 	if doors.is_empty():
-		return []
+		return empty_route
 
-	var max_hops := max(0, max_door_hops)
+	var max_hops: int = maxi(0, max_door_hops)
 	var queue: Array[Dictionary] = []
-	queue.append({"pos": start_pos, "route": []})
+	var initial_route: Array[Node] = []
+	queue.append({"pos": start_pos, "route": initial_route})
 
 	while not queue.is_empty():
-		var state := queue.pop_front()
-		var route: Array = state["route"]
+		var state: Dictionary = queue.pop_front()
+		var route := state["route"] as Array[Node]
 		if route.size() >= max_hops:
 			continue
 
@@ -110,18 +112,19 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 				continue
 			if not _has_line_of_sight(state["pos"], door.global_position):
 				continue
-			var exit_pos := _get_door_exit_pos(door)
-			if exit_pos == null:
+			var exit_node: Node2D = _get_door_exit_node(door)
+			if exit_node == null:
 				continue
+			var exit_pos := exit_node.global_position
 
-			var new_route := route.duplicate()
+			var new_route: Array[Node] = route.duplicate()
 			new_route.append(door)
 			if _has_line_of_sight(exit_pos, target_pos):
 				return new_route
 
 			queue.append({"pos": exit_pos, "route": new_route})
 
-	return []
+	return empty_route
 
 func _get_doors() -> Array[Node]:
 	var nodes := get_tree().get_nodes_in_group("doors")
@@ -131,7 +134,7 @@ func _get_doors() -> Array[Node]:
 			doors.append(node)
 	return doors
 
-func _get_door_exit_pos(door: Node) -> Variant:
+func _get_door_exit_node(door: Node) -> Node2D:
 	if door == null:
 		return null
 	var target_path = door.get("target_marker")
@@ -143,5 +146,5 @@ func _get_door_exit_pos(door: Node) -> Variant:
 	if target_node == null:
 		return null
 	if target_node is Node2D:
-		return target_node.global_position
+		return target_node
 	return null
