@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://belav28byue60"]
+[gd_scene load_steps=75 format=3 uid="uid://belav28byue60"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_i2ojm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_2bxq4"]
@@ -69,6 +69,8 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_siwla"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_p4ir0"]
 [ext_resource type="PackedScene" uid="uid://phdu5uudp1p0" path="res://levels/minigames/feeding/food/krilishki/food_krilishki.tscn" id="70_2bxq4"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
+[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -1782,3 +1784,7 @@ one_shot = null
 [node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_p4ir0")]
 position = Vector2(-2420, 226)
 next_level_path = "uid://u32e5100pijl"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")

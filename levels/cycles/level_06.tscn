@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://dv71cfad0bsy8"]
+[gd_scene load_steps=80 format=3 uid="uid://dv71cfad0bsy8"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_dh4es"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_ic6y1"]
@@ -72,6 +72,8 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_ucmgk"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_4kun7"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_npe2g"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
+[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_ic6y1")
@@ -1244,3 +1246,7 @@ start_game_time = "1:31"
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_wci2k")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=3 uid="uid://u32e5100pijl"]
+[gd_scene load_steps=122 format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -86,9 +86,11 @@
 [ext_resource type="Texture2D" uid="uid://chqjxafw6gmv3" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_1.png" id="89_1cnqi"]
 [ext_resource type="Texture2D" uid="uid://idbsuf2eipjc" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_1.png" id="89_8p2yw"]
 [ext_resource type="Texture2D" uid="uid://yc7xdi4y6hqm" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_2.png" id="90_hf4yt"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Texture2D" uid="uid://dhg2avxqf7ano" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_2.png" id="90_yq54k"]
 [ext_resource type="Texture2D" uid="uid://c7acaxjl8o5km" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_3.png" id="91_cbfl4"]
 [ext_resource type="Texture2D" uid="uid://camars2h80dy4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_3.png" id="91_hmnjb"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="Texture2D" uid="uid://dir8k4goevkmg" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_4.png" id="92_gfyg2"]
 [ext_resource type="Texture2D" uid="uid://c834eaedjfw5d" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_4.png" id="92_y3he8"]
 [ext_resource type="Texture2D" uid="uid://3dvv2qnxssb4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_5.png" id="93_1opjp"]
@@ -1007,3 +1009,7 @@ ExtResource("114_mxjf2"): ExtResource("115_dyvqb")
 }
 distortion_music = ExtResource("116_u1l8b")
 distortion_sfx = ExtResource("117_jebss")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")

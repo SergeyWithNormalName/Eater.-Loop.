@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ddrjoe11x5ccx"]
+[gd_scene load_steps=64 format=3 uid="uid://ddrjoe11x5ccx"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
@@ -23,8 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://b2782n7l58ug2" path="res://objects/environment/university/BackWallsUn.png" id="21_85201"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="21_e6c1t"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="22_rsn48"]
+[ext_resource type="Shader" uid="uid://dxu1t171q3cm5" path="res://levels/cycles/floor_shader.gdshader" id="23_ih4cm"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="23_l5gbn"]
 [ext_resource type="Texture2D" uid="uid://byhcxlafbrrlk" path="res://objects/interactable/door/sprites/DoorStairs.png" id="24_len77"]
+[ext_resource type="Texture2D" uid="uid://dt3pok3fuwl60" path="res://objects/environment/university/TestFloorVertU.png" id="24_oevlm"]
 [ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/sprites/allrooms/OpenShtora.png" id="42_804te"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="43_kvf2v"]
 [ext_resource type="Texture2D" uid="uid://dtgbdcabf02m1" path="res://objects/environment/university/Lift.png" id="46_vpjmh"]
@@ -32,7 +34,11 @@
 [ext_resource type="Texture2D" uid="uid://ugreplk1tcnh" path="res://objects/environment/university/FireWash.png" id="48_6wu78"]
 [ext_resource type="Texture2D" uid="uid://o0qgy0jrqgdl" path="res://objects/environment/university/Exit.png" id="49_wpukm"]
 [ext_resource type="Texture2D" uid="uid://gihmyggs20wa" path="res://objects/environment/university/STU_OnWallDecor_1.png" id="50_6wu78"]
+[ext_resource type="Texture2D" uid="uid://c8lotufuqy7o6" path="res://objects/environment/university/FireButton.png" id="51_k0vht"]
+[ext_resource type="Texture2D" uid="uid://csdljvppyx0cp" path="res://objects/environment/university/ElevatorButtons.png" id="52_igvqd"]
+[ext_resource type="Texture2D" uid="uid://dxajg4eii577a" path="res://objects/environment/university/PlanOfLevel7.png" id="53_ji2ax"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="54_qtdw6"]
+[ext_resource type="Texture2D" uid="uid://c44pip1w574dp" path="res://objects/environment/university/PlantU.png" id="55_tj0re"]
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="55_wfflm"]
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="56_r6e22"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_xjdrn"]
@@ -48,12 +54,25 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_v7j2m"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
+[ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_85201")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ik0j"]
+shader = ExtResource("23_ih4cm")
+shader_parameter/perspective_depth = 1.0
+shader_parameter/trapezoid_width = 0.5
+shader_parameter/perspective_start = 0.55
+shader_parameter/perspective_end = 1.0
+shader_parameter/perspective_curve = 2.5
+shader_parameter/depth_strength = 0.9
+shader_parameter/tiling = Vector2(5, 1)
+shader_parameter/scroll_offset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_len77"]
 size = Vector2(339.5, 464.79214)
@@ -65,6 +84,16 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_6wu78"]
+offsets = PackedFloat32Array(0.0036101083, 1)
+colors = PackedColorArray(1, 1, 0.8627451, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k0vht"]
+gradient = SubResource("Gradient_6wu78")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.78846157, 0.17948718)
 
 [node name="Level" type="Node2D"]
 position = Vector2(16, 0)
@@ -297,7 +326,17 @@ z_index = -5
 texture_repeat = 2
 position = Vector2(8351.001, 326)
 scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("17_dymop")
+texture = ExtResource("24_oevlm")
+region_enabled = true
+region_rect = Rect2(0, 0, 20500, 500)
+
+[node name="FloorKitchen3" type="Sprite2D" parent="Hall/Background"]
+z_index = -5
+texture_repeat = 2
+material = SubResource("ShaderMaterial_2ik0j")
+position = Vector2(8351.001, 700)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("24_oevlm")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
@@ -434,7 +473,20 @@ scale = Vector2(0.19589221, 0.19589221)
 [node name="InteractableObjects" type="Node2D" parent="Hall"]
 
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_scqts")]
-position = Vector2(12755, 83)
+position = Vector2(12888, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(ToBedroom)2" parent="Hall/InteractableObjects" instance=ExtResource("15_scqts")]
+position = Vector2(11467, 83)
 is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
@@ -752,44 +804,78 @@ position = Vector2(-2420, 226)
 next_level_path = "uid://r7k3dupn14tx"
 
 [node name="Lift" type="Sprite2D" parent="."]
-position = Vector2(10398.605, 66.36769)
+position = Vector2(10044.605, 66.36769)
 scale = Vector2(0.52001953, 0.56001955)
 texture = ExtResource("46_vpjmh")
 
 [node name="Lift2" type="Sprite2D" parent="."]
-position = Vector2(11040.605, 66.36769)
+position = Vector2(10686.605, 66.36769)
 scale = Vector2(0.52001953, 0.56001955)
 texture = ExtResource("46_vpjmh")
 
 [node name="SofaStu" type="Sprite2D" parent="."]
-position = Vector2(10721, 205.00002)
-scale = Vector2(0.3599609, 0.3599609)
-texture = ExtResource("47_wpukm")
-
-[node name="SofaStu2" type="Sprite2D" parent="."]
-position = Vector2(10074.001, 205.00002)
-scale = Vector2(0.3599609, 0.3599609)
-texture = ExtResource("47_wpukm")
-
-[node name="SofaStu3" type="Sprite2D" parent="."]
-position = Vector2(11361, 205.00002)
+position = Vector2(10367, 205.00002)
 scale = Vector2(0.3599609, 0.3599609)
 texture = ExtResource("47_wpukm")
 
 [node name="FireWash" type="Sprite2D" parent="."]
-position = Vector2(7782, 18)
-scale = Vector2(0.23998046, 0.23998046)
+position = Vector2(7834, 18.000002)
+scale = Vector2(0.27998045, 0.27998045)
 texture = ExtResource("48_6wu78")
 
 [node name="Exit" type="Sprite2D" parent="."]
 position = Vector2(7326, -170)
 scale = Vector2(0.07999998, 0.07999998)
 texture = ExtResource("49_wpukm")
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Exit"]
+scale = Vector2(17.187548, 5.859378)
+texture = SubResource("GradientTexture2D_k0vht")
+
+[node name="Exit2" type="Sprite2D" parent="."]
+position = Vector2(13849.001, -170)
+scale = Vector2(0.07999998, 0.07999998)
+texture = ExtResource("49_wpukm")
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Exit2"]
+scale = Vector2(17.187548, 5.859378)
+texture = SubResource("GradientTexture2D_k0vht")
 
 [node name="StuOnWallDecor1" type="Sprite2D" parent="."]
 position = Vector2(9427, 10)
 scale = Vector2(0.24000001, 0.24000001)
 texture = ExtResource("50_6wu78")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_university_music")
+script = ExtResource("91_level_music")
+
+[node name="FireButton" type="Sprite2D" parent="."]
+position = Vector2(7619, 14)
+scale = Vector2(0.29850745, 0.29850736)
+texture = ExtResource("51_k0vht")
+
+[node name="ElevatorButtons" type="Sprite2D" parent="."]
+position = Vector2(10221, 43.000004)
+scale = Vector2(0.14569673, 0.14569671)
+texture = ExtResource("52_igvqd")
+
+[node name="ElevatorButtons2" type="Sprite2D" parent="."]
+position = Vector2(10520, 43)
+scale = Vector2(0.14569673, 0.14569671)
+texture = ExtResource("52_igvqd")
+
+[node name="PlanOfLevel7" type="Sprite2D" parent="."]
+position = Vector2(6987.9995, 13)
+scale = Vector2(0.18935785, 0.18935782)
+texture = ExtResource("53_ji2ax")
+
+[node name="PlantU" type="Sprite2D" parent="."]
+position = Vector2(14374.999, 167)
+scale = Vector2(0.7186147, 0.7186149)
+texture = ExtResource("55_tj0re")
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]

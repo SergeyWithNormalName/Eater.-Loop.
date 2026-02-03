@@ -159,6 +159,9 @@
 │   │   ├── enemy_runner.gd
 │   │   ├── enemy_runner.gd.uid
 │   │   └── enemy_runner.tscn
+│   ├── stalker
+│   │   ├── sprite.png
+│   │   └── sprite.png.import
 │   ├── enemy.gd
 │   ├── enemy.gd.uid
 │   ├── enemy.tscn
@@ -185,6 +188,8 @@
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
+│   │   ├── floor_shader.gdshader
+│   │   ├── floor_shader.gdshader.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
@@ -532,6 +537,12 @@
 │   │   │   ├── TilesFloor1.png.import
 │   │   │   ├── ToiletTiles.png
 │   │   │   └── ToiletTiles.png.import
+│   │   ├── floor
+│   │   │   ├── floor.gd
+│   │   │   ├── floor.gd.uid
+│   │   │   ├── floor.tscn
+│   │   │   ├── floor_perspective.gdshader
+│   │   │   └── floor_perspective.gdshader.uid
 │   │   ├── smart
 │   │   │   └── world_clock
 │   │   │       ├── Clock.png
@@ -666,16 +677,28 @@
 │   │   ├── university
 │   │   │   ├── BackWallsUn.png
 │   │   │   ├── BackWallsUn.png.import
+│   │   │   ├── ElevatorButtons.png
+│   │   │   ├── ElevatorButtons.png.import
 │   │   │   ├── Exit.png
 │   │   │   ├── Exit.png.import
+│   │   │   ├── FireButton.png
+│   │   │   ├── FireButton.png.import
 │   │   │   ├── FireWash.png
 │   │   │   ├── FireWash.png.import
+│   │   │   ├── FloorU.png
+│   │   │   ├── FloorU.png.import
 │   │   │   ├── Lift.png
 │   │   │   ├── Lift.png.import
+│   │   │   ├── PlanOfLevel7.png
+│   │   │   ├── PlanOfLevel7.png.import
+│   │   │   ├── PlantU.png
+│   │   │   ├── PlantU.png.import
 │   │   │   ├── STU_OnWallDecor_1.png
 │   │   │   ├── STU_OnWallDecor_1.png.import
 │   │   │   ├── SofaSTU.png
-│   │   │   └── SofaSTU.png.import
+│   │   │   ├── SofaSTU.png.import
+│   │   │   ├── TestFloorVertU.png
+│   │   │   └── TestFloorVertU.png.import
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
@@ -859,10 +882,11 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
+├── tests
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-91 directories, 775 files
+94 directories, 796 files
