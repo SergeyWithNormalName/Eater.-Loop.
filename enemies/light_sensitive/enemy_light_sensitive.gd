@@ -15,6 +15,8 @@ extends "res://enemies/enemy_flashlight_base.gd"
 @export var stun_duration: float = 2.0
 ## Перезарядка стана.
 @export var stun_cooldown: float = 6.0
+## Замедление после стана, если фонарик продолжает светить (1.0 = без замедления).
+@export_range(1.0, 3.0, 0.1) var flashlight_slow_factor: float = 1.5
 ## Дистанция отступления при стане.
 @export var knockback_distance: float = 60.0
 ## Скорость отступления при стане.
@@ -88,10 +90,11 @@ func _physics_process(delta: float) -> void:
 	if _stun_timer > 0.0:
 		_update_stun_motion(delta)
 		return
+	if flashlight_hit and _try_stun():
+		_update_stun_motion(delta)
+		return
 
-	super._physics_process(delta)
-	if flashlight_hit:
-		_try_stun()
+	_apply_chase_motion(flashlight_hit)
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -134,13 +137,26 @@ func _start_knockback() -> void:
 		_knockback_dir = Vector2.LEFT
 
 func _update_stun_motion(delta: float) -> void:
-	if _knockback_remaining > 0.0 and knockback_speed > 0.0:
-		velocity = _knockback_dir * knockback_speed
-		var step = knockback_speed * delta
-		_knockback_remaining = max(0.0, _knockback_remaining - step)
-	else:
-		velocity = Vector2.ZERO
+	velocity = Vector2.ZERO
 	move_and_slide()
+
+func _apply_chase_motion(flashlight_hit: bool) -> void:
+	if not chase_player or _player == null:
+		velocity = Vector2.ZERO
+		return
+
+	var delta_pos := _player.global_position - global_position
+	if abs(delta_pos.x) < 1.0:
+		velocity = Vector2.ZERO
+	else:
+		var speed_multiplier := 1.0
+		if flashlight_hit and _stun_cooldown_timer > 0.0:
+			speed_multiplier = max(1.0, flashlight_slow_factor)
+		var applied_speed := speed / speed_multiplier
+		velocity = Vector2(sign(delta_pos.x) * applied_speed, 0.0)
+
+	move_and_slide()
+	_update_facing_from_velocity()
 
 func _update_stun_timers(delta: float) -> void:
 	if _stun_timer > 0.0:

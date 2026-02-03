@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://ddrjoe11x5ccx"]
+[gd_scene load_steps=65 format=3 uid="uid://ddrjoe11x5ccx"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
@@ -41,6 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://c44pip1w574dp" path="res://objects/environment/university/PlantU.png" id="55_tj0re"]
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="55_wfflm"]
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="56_r6e22"]
+[ext_resource type="PackedScene" uid="uid://d1s4s5v3yq4m4" path="res://objects/environment/floor/floor.tscn" id="57_ih4cm"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_xjdrn"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_ylru2"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_mtis6"]
@@ -321,15 +322,6 @@ texture = ExtResource("21_85201")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="FloorKitchen" type="Sprite2D" parent="Hall/Background"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8351.001, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("24_oevlm")
-region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
-
 [node name="FloorKitchen3" type="Sprite2D" parent="Hall/Background"]
 z_index = -5
 texture_repeat = 2
@@ -347,15 +339,6 @@ position = Vector2(12849, 19)
 texture = ExtResource("21_85201")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
-
-[node name="FloorKitchen2" type="Sprite2D" parent="Hall/Background"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12848.001, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("17_dymop")
-region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
 
 [node name="Walls" type="Node2D" parent="Hall"]
 
@@ -876,6 +859,12 @@ texture = ExtResource("53_ji2ax")
 position = Vector2(14374.999, 167)
 scale = Vector2(0.7186147, 0.7186149)
 texture = ExtResource("55_tj0re")
+
+[node name="Floor" parent="." instance=ExtResource("57_ih4cm")]
+z_index = 15
+position = Vector2(10604, 322)
+floor_texture = ExtResource("24_oevlm")
+perspective_amount = 5.2
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]
