@@ -856,14 +856,20 @@ scale = Vector2(0.18935785, 0.18935782)
 texture = ExtResource("53_ji2ax")
 
 [node name="PlantU" type="Sprite2D" parent="."]
-position = Vector2(14374.999, 167)
+position = Vector2(14376, 179)
 scale = Vector2(0.7186147, 0.7186149)
 texture = ExtResource("55_tj0re")
 
 [node name="Floor" parent="." instance=ExtResource("57_ih4cm")]
-z_index = 15
-position = Vector2(10604, 322)
+z_index = -5
+position = Vector2(10604, 321)
 floor_texture = ExtResource("24_oevlm")
+size = Vector2(9000, 120)
+tiling = Vector2(7, 3)
+perspective_amount = 1.2
+horizon = -3.35
+center_width = 0.1
+edge_end = 1.5
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]
