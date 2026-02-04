@@ -18,6 +18,10 @@ signal interaction_finished # <--- НОВЫЙ СИГНАЛ: для цепоче�
 ## Обрабатывать ввод автоматически.
 @export var handle_input: bool = true
 
+@export_group("Prompt Indicator")
+## Смещение спрайта подсказки относительно центра объекта.
+@export var prompt_offset: Vector2 = Vector2.ZERO
+
 # --- НОВЫЕ НАСТРОЙКИ (ЗАВИСИМОСТИ) ---
 @export_group("Dependency System")
 ## Если true, объект помечается выполненным после первого использования
@@ -137,6 +141,12 @@ func _hide_prompt() -> void:
 
 func _get_prompt_text() -> String:
 	return prompt_text
+
+func get_prompt_world_position() -> Vector2:
+	var anchor := _interact_area
+	if anchor == null:
+		return to_global(prompt_offset)
+	return anchor.to_global(prompt_offset)
 
 func get_interacting_player() -> Node:
 	return _player_in_range

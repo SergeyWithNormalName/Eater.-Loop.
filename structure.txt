@@ -919,6 +919,8 @@
 │   ├── Andry.png.import
 │   ├── AndryWithFlashlight.png
 │   ├── AndryWithFlashlight.png.import
+│   ├── UI_Button_Sprite.png
+│   ├── UI_Button_Sprite.png.import
 │   ├── flashlight.gd
 │   ├── flashlight.gd.uid
 │   ├── player.gd
@@ -935,10 +937,30 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
+├── tests
+│   ├── cases
+│   │   ├── test_autoloads.gd
+│   │   ├── test_autoloads.gd.uid
+│   │   ├── test_input_actions.gd
+│   │   ├── test_input_actions.gd.uid
+│   │   ├── test_project_config.gd
+│   │   ├── test_project_config.gd.uid
+│   │   ├── test_scenes_load.gd
+│   │   ├── test_scenes_load.gd.uid
+│   │   ├── test_scripts_compile.gd
+│   │   └── test_scripts_compile.gd.uid
+│   ├── README.md
+│   ├── run_tests.gd
+│   ├── run_tests.gd.uid
+│   ├── run_tests.sh
+│   ├── test_case.gd
+│   ├── test_case.gd.uid
+│   ├── test_utils.gd
+│   └── test_utils.gd.uid
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-95 directories, 847 files
+97 directories, 867 files

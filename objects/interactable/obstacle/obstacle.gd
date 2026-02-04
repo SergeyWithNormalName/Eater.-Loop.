@@ -22,6 +22,10 @@ enum ClearMode { HOLD, PRESS }
 ## Сообщение после очистки (пусто = не показывать).
 @export var cleared_message: String = ""
 
+@export_group("Prompt Indicator")
+## Смещение спрайта подсказки относительно зоны взаимодействия.
+@export var prompt_offset: Vector2 = Vector2.ZERO
+
 @onready var _interact_area: Area2D = $InteractArea
 var _player_in_range: Node = null
 var _hold_time: float = 0.0
@@ -118,6 +122,11 @@ func _hide_prompt() -> void:
 	if InteractionPrompts:
 		InteractionPrompts.hide_interact(self)
 	_last_prompt_text = ""
+
+func get_prompt_world_position() -> Vector2:
+	if _interact_area != null:
+		return _interact_area.to_global(prompt_offset)
+	return to_global(prompt_offset)
 
 func _clear_obstacle() -> void:
 	_hide_prompt()
