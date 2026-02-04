@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8fkenwlt4hfv"]
+[gd_scene load_steps=5 format=3 uid="uid://c8fkenwlt4hfv"]
 
 [ext_resource type="Script" uid="uid://tcl6ubqwjrxh" path="res://enemies/stalker/enemy_stalker.gd" id="1_stalker"]
-[ext_resource type="Texture2D" uid="uid://20lacw2by324" path="res://enemies/stalker/sprite.png" id="2_stalker_sprite"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(2620, 1272)
@@ -14,7 +13,7 @@ size = Vector2(1232, 1184)
 
 [node name="EnemyStalker" type="CharacterBody2D"]
 script = ExtResource("1_stalker")
-speed = 40.0
+speed = 90.0
 keep_chasing_outside_detection = true
 enable_chase_music = false
 

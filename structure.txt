@@ -161,20 +161,6 @@
 │   │   └── enemy_runner.tscn
 │   ├── stalker
 │   │   ├── walking_animation
-│   │   │   ├── ezgif-frame-001.png
-│   │   │   ├── ezgif-frame-001.png.import
-│   │   │   ├── ezgif-frame-002.png
-│   │   │   ├── ezgif-frame-002.png.import
-│   │   │   ├── ezgif-frame-003.png
-│   │   │   ├── ezgif-frame-003.png.import
-│   │   │   ├── ezgif-frame-004.png
-│   │   │   ├── ezgif-frame-004.png.import
-│   │   │   ├── ezgif-frame-005.png
-│   │   │   ├── ezgif-frame-005.png.import
-│   │   │   ├── ezgif-frame-006.png
-│   │   │   ├── ezgif-frame-006.png.import
-│   │   │   ├── ezgif-frame-007.png
-│   │   │   ├── ezgif-frame-007.png.import
 │   │   │   ├── ezgif-frame-008.png
 │   │   │   ├── ezgif-frame-008.png.import
 │   │   │   ├── ezgif-frame-009.png
@@ -216,7 +202,9 @@
 │   │   │   ├── ezgif-frame-027.png
 │   │   │   ├── ezgif-frame-027.png.import
 │   │   │   ├── ezgif-frame-028.png
-│   │   │   └── ezgif-frame-028.png.import
+│   │   │   ├── ezgif-frame-028.png.import
+│   │   │   ├── ezgif-frame-029.png
+│   │   │   └── ezgif-frame-029.png.import
 │   │   ├── enemy_stalker.gd
 │   │   ├── enemy_stalker.gd.uid
 │   │   ├── enemy_stalker.tscn
@@ -248,6 +236,7 @@
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
+│   │   ├── TextureDistortionManager.tscn
 │   │   ├── floor_shader.gdshader
 │   │   ├── floor_shader.gdshader.uid
 │   │   ├── game_state.gd
@@ -952,4 +941,4 @@
 ├── project.godot
 └── structure.txt
 
-95 directories, 858 files
+95 directories, 847 files

@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://ddrjoe11x5ccx"]
+[gd_scene load_steps=73 format=3 uid="uid://ddrjoe11x5ccx"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
@@ -45,12 +45,19 @@
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_xjdrn"]
 [ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="58_oevlm"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_ylru2"]
+[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://levels/cycles/texture_distortion_manager.gd" id="59_1m845"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_mtis6"]
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="60_c8avo"]
+[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="60_yevtl"]
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="61_33cun"]
+[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://objects/environment/background/FloorDistorted.png" id="61_norj7"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="62_e25ne"]
+[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="62_unon8"]
+[ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="63_0ohhm"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="63_33lmj"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_4bftp"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="64_85201"]
+[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="65_b056n"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_fk20i"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_olugs"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_v7j2m"]
@@ -875,6 +882,16 @@ edge_end = 1.5
 
 [node name="StalkerSpawnMarker" parent="." instance=ExtResource("58_oevlm")]
 position = Vector2(12178, 80)
+
+[node name="TextureDistortionManager" type="Node" parent="."]
+script = ExtResource("59_1m845")
+texture_map = {
+ExtResource("21_e6c1t"): ExtResource("60_yevtl"),
+ExtResource("17_dymop"): ExtResource("61_norj7"),
+ExtResource("62_unon8"): ExtResource("63_0ohhm")
+}
+distortion_music = ExtResource("64_85201")
+distortion_sfx = ExtResource("65_b056n")
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]

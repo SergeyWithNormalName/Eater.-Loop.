@@ -1,0 +1,21 @@
+[gd_scene load_steps=10 format=3 uid="uid://b7v0dt08jwi1j"]
+
+[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://levels/cycles/texture_distortion_manager.gd" id="1_s7arj"]
+[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="2_1w3im"]
+[ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="2_sl7v2"]
+[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="3_e4iwb"]
+[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="3_qqp8v"]
+[ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="4_jlgyr"]
+[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://objects/environment/background/FloorDistorted.png" id="5_8bg8t"]
+[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="6_o1b5p"]
+[ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="7_ipr5v"]
+
+[node name="TextureDistortionManager" type="Node2D"]
+script = ExtResource("1_s7arj")
+texture_map = {
+ExtResource("2_sl7v2"): ExtResource("3_e4iwb"),
+ExtResource("4_jlgyr"): ExtResource("5_8bg8t"),
+ExtResource("6_o1b5p"): ExtResource("7_ipr5v")
+}
+distortion_music = ExtResource("2_1w3im")
+distortion_sfx = ExtResource("3_qqp8v")

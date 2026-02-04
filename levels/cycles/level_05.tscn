@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=3 uid="uid://u32e5100pijl"]
+[gd_scene load_steps=117 format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -109,14 +109,8 @@
 [ext_resource type="Texture2D" uid="uid://qybb4lkjsap2" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_14.png" id="102_130pq"]
 [ext_resource type="Texture2D" uid="uid://divj68263y2js" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_15.png" id="103_1gxe7"]
 [ext_resource type="Texture2D" uid="uid://dcixupjbbmhou" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_16.png" id="104_pcuui"]
-[ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://levels/cycles/texture_distortion_manager.gd" id="111_130pq"]
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_hf4yt"]
-[ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="112_1gxe7"]
-[ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://objects/environment/background/FloorDistorted.png" id="113_pcuui"]
-[ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="114_mxjf2"]
-[ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="115_dyvqb"]
-[ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="116_u1l8b"]
-[ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="117_jebss"]
+[ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_gfyg2"]
 [ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="119_pcuui"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
@@ -138,7 +132,7 @@ fill_from = Vector2(0.5, 0.5)
 position = Vector2(16, 0)
 script = ExtResource("level_settings")
 cycle_number = 5
-timer_duration = 150.0
+timer_duration = 80.0
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
@@ -1001,19 +995,12 @@ key_texture = ExtResource("72_0tyn5")
 script = ExtResource("111_hf4yt")
 search_spots = Array[NodePath]([NodePath("../SearchSpot"), NodePath("../SearchSpot2"), NodePath("../SearchSpot3"), NodePath("../SearchSpot4")])
 
-[node name="TextureDistortionManager" type="Node" parent="."]
-script = ExtResource("111_130pq")
-texture_map = {
-ExtResource("1_hi6qj"): ExtResource("112_1gxe7"),
-ExtResource("49_hw0rt"): ExtResource("113_pcuui"),
-ExtResource("114_mxjf2"): ExtResource("115_dyvqb")
-}
-distortion_music = ExtResource("116_u1l8b")
-distortion_sfx = ExtResource("117_jebss")
-
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
 
 [node name="StalkerSpawnMarker" parent="." instance=ExtResource("119_pcuui")]
 position = Vector2(6540, 90)
+
+[node name="TextureDistortionManager" parent="." instance=ExtResource("113_gfyg2")]
+position = Vector2(6221, 1481)

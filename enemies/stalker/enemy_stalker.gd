@@ -19,7 +19,8 @@ extends "res://enemies/enemy.gd"
 @export var walk_frame_time: float = 0.08
 
 const WALK_FRAME_PATTERN := "res://enemies/stalker/walking_animation/ezgif-frame-%03d.png"
-const WALK_FRAME_COUNT := 26
+const WALK_FRAME_START := 8
+const WALK_FRAME_END := 29
 const IDLE_TEXTURE_PATH := "res://enemies/stalker/sprite.png"
 
 var _route_timer: float = 0.0
@@ -179,7 +180,7 @@ func _setup_walk_animation() -> void:
 	var frames := _animated_sprite.sprite_frames
 	if not frames.has_animation(walk_animation):
 		frames.add_animation(walk_animation)
-		for i in range(1, WALK_FRAME_COUNT + 1):
+		for i in range(WALK_FRAME_START, WALK_FRAME_END + 1):
 			var texture := load(WALK_FRAME_PATTERN % i) as Texture2D
 			if texture != null:
 				frames.add_frame(walk_animation, texture)
