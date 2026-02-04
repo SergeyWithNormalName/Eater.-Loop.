@@ -114,12 +114,12 @@ func _ensure_material() -> void:
 	if sprite == null:
 		return
 	var mat := sprite.material
+	var shader_mat: ShaderMaterial = null
 	if mat == null or not (mat is ShaderMaterial):
-		var shader_mat := ShaderMaterial.new()
-		shader_mat.shader = FLOOR_SHADER
+		shader_mat = ShaderMaterial.new()
 		sprite.material = shader_mat
-		return
-	var shader_mat := mat as ShaderMaterial
+	else:
+		shader_mat = mat as ShaderMaterial
 	if shader_mat.shader != FLOOR_SHADER:
 		shader_mat.shader = FLOOR_SHADER
 

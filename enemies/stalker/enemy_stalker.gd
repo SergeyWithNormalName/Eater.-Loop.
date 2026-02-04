@@ -10,19 +10,40 @@ extends "res://enemies/enemy.gd"
 ## Collision mask for navigation rays (0 = use current collision_mask).
 @export var nav_collision_mask: int = 0
 
+@export_group("Animation")
+## Имя анимации ходьбы.
+@export var walk_animation: StringName = &"walk"
+## Имя анимации покоя.
+@export var idle_animation: StringName = &"idle"
+## Длительность кадра ходьбы в секундах.
+@export var walk_frame_time: float = 0.08
+
+const WALK_FRAME_PATTERN := "res://enemies/stalker/walking_animation/ezgif-frame-%03d.png"
+const WALK_FRAME_COUNT := 26
+const IDLE_TEXTURE_PATH := "res://enemies/stalker/sprite.png"
+
 var _route_timer: float = 0.0
 var _door_route: Array[Node] = []
+var _animated_sprite: AnimatedSprite2D = null
 
 func _ready() -> void:
 	super._ready()
 	enable_chase_music = false
 	keep_chasing_outside_detection = true
 	chase_player = true
+	_animated_sprite = _sprite as AnimatedSprite2D
+	if _animated_sprite == null:
+		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if _animated_sprite != null:
+			_sprite = _animated_sprite
+	_setup_walk_animation()
+	_update_animation()
 
 func _physics_process(delta: float) -> void:
 	_ensure_player()
 	if _player == null:
 		velocity = Vector2.ZERO
+		_update_animation()
 		return
 
 	_route_timer -= delta
@@ -41,6 +62,7 @@ func _physics_process(delta: float) -> void:
 		_follow_door_route()
 	else:
 		_move_towards(_player.global_position)
+	_update_animation()
 
 func _ensure_player() -> void:
 	if _player != null and is_instance_valid(_player):
@@ -148,3 +170,40 @@ func _get_door_exit_node(door: Node) -> Node2D:
 	if target_node is Node2D:
 		return target_node
 	return null
+
+func _setup_walk_animation() -> void:
+	if _animated_sprite == null:
+		return
+	if _animated_sprite.sprite_frames == null:
+		_animated_sprite.sprite_frames = SpriteFrames.new()
+	var frames := _animated_sprite.sprite_frames
+	if not frames.has_animation(walk_animation):
+		frames.add_animation(walk_animation)
+		for i in range(1, WALK_FRAME_COUNT + 1):
+			var texture := load(WALK_FRAME_PATTERN % i) as Texture2D
+			if texture != null:
+				frames.add_frame(walk_animation, texture)
+	if frames.has_animation(walk_animation):
+		if walk_frame_time > 0.0:
+			frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
+		frames.set_animation_loop(walk_animation, true)
+	if idle_animation != StringName() and not frames.has_animation(idle_animation):
+		var idle_texture := load(IDLE_TEXTURE_PATH) as Texture2D
+		if idle_texture != null:
+			frames.add_animation(idle_animation)
+			frames.add_frame(idle_animation, idle_texture)
+			frames.set_animation_loop(idle_animation, true)
+
+func _update_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	var moving: bool = absf(velocity.x) > 0.1
+	var target_anim := walk_animation if moving else idle_animation
+	if target_anim != StringName() and _animated_sprite.sprite_frames.has_animation(target_anim):
+		if _animated_sprite.animation != target_anim or not _animated_sprite.is_playing():
+			_animated_sprite.play(target_anim)
+	elif moving and _animated_sprite.sprite_frames.has_animation(walk_animation):
+		_animated_sprite.play(walk_animation)
+	else:
+		_animated_sprite.stop()
+		_animated_sprite.frame = 0

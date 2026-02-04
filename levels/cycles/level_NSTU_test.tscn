@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ddrjoe11x5ccx"]
+[gd_scene load_steps=66 format=3 uid="uid://ddrjoe11x5ccx"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
@@ -43,6 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="56_r6e22"]
 [ext_resource type="PackedScene" uid="uid://d1s4s5v3yq4m4" path="res://objects/environment/floor/floor.tscn" id="57_ih4cm"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_xjdrn"]
+[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="58_oevlm"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_ylru2"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_mtis6"]
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="60_c8avo"]
@@ -100,6 +101,7 @@ fill_to = Vector2(0.78846157, 0.17948718)
 position = Vector2(16, 0)
 script = ExtResource("1_0ohhm")
 cycle_number = 2
+timer_duration = 12.0
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
@@ -867,9 +869,12 @@ floor_texture = ExtResource("24_oevlm")
 size = Vector2(9000, 120)
 tiling = Vector2(7, 3)
 perspective_amount = 1.2
-horizon = -3.35
+horizon = -3.12
 center_width = 0.1
 edge_end = 1.5
+
+[node name="StalkerSpawnMarker" parent="." instance=ExtResource("58_oevlm")]
+position = Vector2(12178, 80)
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]

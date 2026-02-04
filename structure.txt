@@ -160,6 +160,63 @@
 │   │   ├── enemy_runner.gd.uid
 │   │   └── enemy_runner.tscn
 │   ├── stalker
+│   │   ├── walking_animation
+│   │   │   ├── ezgif-frame-001.png
+│   │   │   ├── ezgif-frame-001.png.import
+│   │   │   ├── ezgif-frame-002.png
+│   │   │   ├── ezgif-frame-002.png.import
+│   │   │   ├── ezgif-frame-003.png
+│   │   │   ├── ezgif-frame-003.png.import
+│   │   │   ├── ezgif-frame-004.png
+│   │   │   ├── ezgif-frame-004.png.import
+│   │   │   ├── ezgif-frame-005.png
+│   │   │   ├── ezgif-frame-005.png.import
+│   │   │   ├── ezgif-frame-006.png
+│   │   │   ├── ezgif-frame-006.png.import
+│   │   │   ├── ezgif-frame-007.png
+│   │   │   ├── ezgif-frame-007.png.import
+│   │   │   ├── ezgif-frame-008.png
+│   │   │   ├── ezgif-frame-008.png.import
+│   │   │   ├── ezgif-frame-009.png
+│   │   │   ├── ezgif-frame-009.png.import
+│   │   │   ├── ezgif-frame-010.png
+│   │   │   ├── ezgif-frame-010.png.import
+│   │   │   ├── ezgif-frame-011.png
+│   │   │   ├── ezgif-frame-011.png.import
+│   │   │   ├── ezgif-frame-012.png
+│   │   │   ├── ezgif-frame-012.png.import
+│   │   │   ├── ezgif-frame-013.png
+│   │   │   ├── ezgif-frame-013.png.import
+│   │   │   ├── ezgif-frame-014.png
+│   │   │   ├── ezgif-frame-014.png.import
+│   │   │   ├── ezgif-frame-015.png
+│   │   │   ├── ezgif-frame-015.png.import
+│   │   │   ├── ezgif-frame-016.png
+│   │   │   ├── ezgif-frame-016.png.import
+│   │   │   ├── ezgif-frame-017.png
+│   │   │   ├── ezgif-frame-017.png.import
+│   │   │   ├── ezgif-frame-018.png
+│   │   │   ├── ezgif-frame-018.png.import
+│   │   │   ├── ezgif-frame-019.png
+│   │   │   ├── ezgif-frame-019.png.import
+│   │   │   ├── ezgif-frame-020.png
+│   │   │   ├── ezgif-frame-020.png.import
+│   │   │   ├── ezgif-frame-021.png
+│   │   │   ├── ezgif-frame-021.png.import
+│   │   │   ├── ezgif-frame-022.png
+│   │   │   ├── ezgif-frame-022.png.import
+│   │   │   ├── ezgif-frame-023.png
+│   │   │   ├── ezgif-frame-023.png.import
+│   │   │   ├── ezgif-frame-024.png
+│   │   │   ├── ezgif-frame-024.png.import
+│   │   │   ├── ezgif-frame-025.png
+│   │   │   ├── ezgif-frame-025.png.import
+│   │   │   ├── ezgif-frame-026.png
+│   │   │   ├── ezgif-frame-026.png.import
+│   │   │   ├── ezgif-frame-027.png
+│   │   │   ├── ezgif-frame-027.png.import
+│   │   │   ├── ezgif-frame-028.png
+│   │   │   └── ezgif-frame-028.png.import
 │   │   ├── enemy_stalker.gd
 │   │   ├── enemy_stalker.gd.uid
 │   │   ├── enemy_stalker.tscn
@@ -889,11 +946,10 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
-├── tests
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-95 directories, 802 files
+95 directories, 858 files
