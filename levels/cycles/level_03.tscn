@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://r7k3dupn14tx"]
+[gd_scene load_steps=76 format=3 uid="uid://r7k3dupn14tx"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_nyxq3"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -70,6 +70,8 @@
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="82_8u1p6"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="82_nyxq3"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
+[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("30_gcw8w")
@@ -1180,3 +1182,7 @@ one_shot = null
 [node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_fnco1")]
 position = Vector2(-2420, 226)
 next_level_path = "uid://belav28byue60"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")

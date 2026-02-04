@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=109 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -91,6 +91,8 @@
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="97_lq7xs"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="98_cw66x"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
+[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
 shader = ExtResource("29_e0b7i")
@@ -3878,3 +3880,7 @@ color = Color(0.3137255, 0.3137255, 0.36862746, 1)
 [connection signal="body_exited" from="Toilet2/Door(In Toilet)" to="Toilet2/Door(In Toilet)" method="_on_body_exited"]
 [connection signal="body_entered" from="TestNote2" to="TestNote2" method="_on_body_entered"]
 [connection signal="body_exited" from="TestNote2" to="TestNote2" method="_on_body_exited"]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")

@@ -37,6 +37,8 @@ var _sprite: Sprite2D
 
 func _ready() -> void:
 	super._ready()
+	if not is_in_group("doors"):
+		add_to_group("doors")
 	input_pickable = false 
 	_sprite = get_node_or_null("Sprite2D")
 	_apply_door_texture()

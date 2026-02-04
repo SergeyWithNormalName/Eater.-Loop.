@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1s4s5v3yq4m4"]
+
+[ext_resource type="Script" path="res://objects/environment/floor/floor.gd" id="1_g7xk0"]
+[ext_resource type="Shader" path="res://objects/environment/floor/floor_perspective.gdshader" id="2_6xtke"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3x1f3"]
+shader = ExtResource("2_6xtke")
+shader_parameter/perspective_amount = 0.6
+shader_parameter/vanish_x = 0.5
+shader_parameter/horizon = 0.0
+shader_parameter/x_scale = 1.0
+shader_parameter/tiling = Vector2(5, 3)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/max_distance = 10.0
+
+[node name="Floor" type="Node2D"]
+script = ExtResource("1_g7xk0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3x1f3")

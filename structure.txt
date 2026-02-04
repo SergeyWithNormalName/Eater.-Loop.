@@ -159,6 +159,12 @@
 │   │   ├── enemy_runner.gd
 │   │   ├── enemy_runner.gd.uid
 │   │   └── enemy_runner.tscn
+│   ├── stalker
+│   │   ├── enemy_stalker.gd
+│   │   ├── enemy_stalker.gd.uid
+│   │   ├── enemy_stalker.tscn
+│   │   ├── sprite.png
+│   │   └── sprite.png.import
 │   ├── enemy.gd
 │   ├── enemy.gd.uid
 │   ├── enemy.tscn
@@ -185,6 +191,8 @@
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
+│   │   ├── floor_shader.gdshader
+│   │   ├── floor_shader.gdshader.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
@@ -532,6 +540,12 @@
 │   │   │   ├── TilesFloor1.png.import
 │   │   │   ├── ToiletTiles.png
 │   │   │   └── ToiletTiles.png.import
+│   │   ├── floor
+│   │   │   ├── floor.gd
+│   │   │   ├── floor.gd.uid
+│   │   │   ├── floor.tscn
+│   │   │   ├── floor_perspective.gdshader
+│   │   │   └── floor_perspective.gdshader.uid
 │   │   ├── smart
 │   │   │   └── world_clock
 │   │   │       ├── Clock.png
@@ -666,130 +680,146 @@
 │   │   ├── university
 │   │   │   ├── BackWallsUn.png
 │   │   │   ├── BackWallsUn.png.import
+│   │   │   ├── ElevatorButtons.png
+│   │   │   ├── ElevatorButtons.png.import
 │   │   │   ├── Exit.png
 │   │   │   ├── Exit.png.import
+│   │   │   ├── FireButton.png
+│   │   │   ├── FireButton.png.import
 │   │   │   ├── FireWash.png
 │   │   │   ├── FireWash.png.import
+│   │   │   ├── FloorU.png
+│   │   │   ├── FloorU.png.import
 │   │   │   ├── Lift.png
 │   │   │   ├── Lift.png.import
+│   │   │   ├── PlanOfLevel7.png
+│   │   │   ├── PlanOfLevel7.png.import
+│   │   │   ├── PlantU.png
+│   │   │   ├── PlantU.png.import
 │   │   │   ├── STU_OnWallDecor_1.png
 │   │   │   ├── STU_OnWallDecor_1.png.import
 │   │   │   ├── SofaSTU.png
-│   │   │   └── SofaSTU.png.import
+│   │   │   ├── SofaSTU.png.import
+│   │   │   ├── TestFloorVertU.png
+│   │   │   └── TestFloorVertU.png.import
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
-│   └── interactable
-│       ├── bed
-│       │   ├── Bed.png
-│       │   ├── Bed.png.import
-│       │   ├── OutOfBed.wav
-│       │   ├── OutOfBed.wav.import
-│       │   ├── bed.gd
-│       │   ├── bed.gd.uid
-│       │   └── bed.tscn
-│       ├── door
-│       │   ├── audio
-│       │   │   ├── door_locked1.wav
-│       │   │   ├── door_locked1.wav.import
-│       │   │   ├── door_open1.wav
-│       │   │   ├── door_open1.wav.import
-│       │   │   ├── door_unlocked.wav
-│       │   │   └── door_unlocked.wav.import
-│       │   ├── sprites
-│       │   │   ├── DoorBasic.png
-│       │   │   ├── DoorBasic.png.import
-│       │   │   ├── DoorBasic_Distorted.png
-│       │   │   ├── DoorBasic_Distorted.png.import
-│       │   │   ├── DoorExit.png
-│       │   │   ├── DoorExit.png.import
-│       │   │   ├── DoorNSTU_highevel.png
-│       │   │   ├── DoorNSTU_highevel.png.import
-│       │   │   ├── DoorStairs.png
-│       │   │   ├── DoorStairs.png.import
-│       │   │   ├── DoorToiletInside.png
-│       │   │   ├── DoorToiletInside.png.import
-│       │   │   ├── DoorToiletOutside.png
-│       │   │   ├── DoorToiletOutside.png.import
-│       │   │   ├── Door_Opened_1.png
-│       │   │   ├── Door_Opened_1.png.import
-│       │   │   ├── Door_Opened_2.png
-│       │   │   └── Door_Opened_2.png.import
-│       │   ├── door.gd
-│       │   ├── door.gd.uid
-│       │   ├── door.tscn
-│       │   └── door_university.tscn
-│       ├── fridge
-│       │   ├── audio
-│       │   │   ├── FridgeNoizeE.wav
-│       │   │   ├── FridgeNoizeE.wav.import
-│       │   │   ├── OpenFridgeE.wav
-│       │   │   └── OpenFridgeE.wav.import
-│       │   ├── sprites
-│       │   │   ├── ClosedFridge.png
-│       │   │   ├── ClosedFridge.png.import
-│       │   │   ├── FridgeOnChain.png
-│       │   │   ├── FridgeOnChain.png.import
-│       │   │   ├── LockedFridge.png
-│       │   │   ├── LockedFridge.png.import
-│       │   │   ├── OpenFridge.png
-│       │   │   └── OpenFridge.png.import
-│       │   ├── code_lock.gd
-│       │   ├── code_lock.gd.uid
-│       │   ├── fridge.gd
-│       │   ├── fridge.gd.uid
-│       │   └── fridge.tscn
-│       ├── generator
-│       │   ├── generator.gd
-│       │   ├── generator.gd.uid
-│       │   └── generator.tscn
-│       ├── key
-│       │   ├── key.gd
-│       │   └── key.gd.uid
-│       ├── lamp
-│       │   ├── Lamp1.png
-│       │   ├── Lamp1.png.import
-│       │   ├── LampOn1.png
-│       │   ├── LampOn1.png.import
-│       │   ├── lamp.gd
-│       │   ├── lamp.gd.uid
-│       │   ├── lamp.tscn
-│       │   ├── lamp.wav
-│       │   └── lamp.wav.import
-│       ├── note
-│       │   ├── note_object.gd
-│       │   └── note_object.gd.uid
-│       ├── notebook
-│       │   ├── NotebookOff.png
-│       │   ├── NotebookOff.png.import
-│       │   ├── NotebookOn.png
-│       │   ├── NotebookOn.png.import
-│       │   ├── laptop.gd
-│       │   ├── laptop.gd.uid
-│       │   └── laptop.tscn
-│       ├── obstacle
-│       │   ├── obstacle.gd
-│       │   ├── obstacle.gd.uid
-│       │   └── obstacle.tscn
-│       ├── phone
-│       │   ├── JokeAboutChicken.wav
-│       │   ├── JokeAboutChicken.wav.import
-│       │   ├── phone.gd
-│       │   ├── phone.gd.uid
-│       │   ├── phone.png
-│       │   ├── phone.png.import
-│       │   └── phone.tscn
-│       ├── search_spot
-│       │   ├── search_spot.gd
-│       │   ├── search_spot.gd.uid
-│       │   └── search_spot.tscn
-│       ├── trigger
-│       │   ├── property_change.gd
-│       │   ├── property_change.gd.uid
-│       │   ├── trigger_set_property.gd
-│       │   └── trigger_set_property.gd.uid
-│       ├── interactive_object.gd
-│       └── interactive_object.gd.uid
+│   ├── interactable
+│   │   ├── bed
+│   │   │   ├── Bed.png
+│   │   │   ├── Bed.png.import
+│   │   │   ├── OutOfBed.wav
+│   │   │   ├── OutOfBed.wav.import
+│   │   │   ├── bed.gd
+│   │   │   ├── bed.gd.uid
+│   │   │   └── bed.tscn
+│   │   ├── door
+│   │   │   ├── audio
+│   │   │   │   ├── door_locked1.wav
+│   │   │   │   ├── door_locked1.wav.import
+│   │   │   │   ├── door_open1.wav
+│   │   │   │   ├── door_open1.wav.import
+│   │   │   │   ├── door_unlocked.wav
+│   │   │   │   └── door_unlocked.wav.import
+│   │   │   ├── sprites
+│   │   │   │   ├── DoorBasic.png
+│   │   │   │   ├── DoorBasic.png.import
+│   │   │   │   ├── DoorBasic_Distorted.png
+│   │   │   │   ├── DoorBasic_Distorted.png.import
+│   │   │   │   ├── DoorExit.png
+│   │   │   │   ├── DoorExit.png.import
+│   │   │   │   ├── DoorNSTU_highevel.png
+│   │   │   │   ├── DoorNSTU_highevel.png.import
+│   │   │   │   ├── DoorStairs.png
+│   │   │   │   ├── DoorStairs.png.import
+│   │   │   │   ├── DoorToiletInside.png
+│   │   │   │   ├── DoorToiletInside.png.import
+│   │   │   │   ├── DoorToiletOutside.png
+│   │   │   │   ├── DoorToiletOutside.png.import
+│   │   │   │   ├── Door_Opened_1.png
+│   │   │   │   ├── Door_Opened_1.png.import
+│   │   │   │   ├── Door_Opened_2.png
+│   │   │   │   └── Door_Opened_2.png.import
+│   │   │   ├── door.gd
+│   │   │   ├── door.gd.uid
+│   │   │   ├── door.tscn
+│   │   │   └── door_university.tscn
+│   │   ├── fridge
+│   │   │   ├── audio
+│   │   │   │   ├── FridgeNoizeE.wav
+│   │   │   │   ├── FridgeNoizeE.wav.import
+│   │   │   │   ├── OpenFridgeE.wav
+│   │   │   │   └── OpenFridgeE.wav.import
+│   │   │   ├── sprites
+│   │   │   │   ├── ClosedFridge.png
+│   │   │   │   ├── ClosedFridge.png.import
+│   │   │   │   ├── FridgeOnChain.png
+│   │   │   │   ├── FridgeOnChain.png.import
+│   │   │   │   ├── LockedFridge.png
+│   │   │   │   ├── LockedFridge.png.import
+│   │   │   │   ├── OpenFridge.png
+│   │   │   │   └── OpenFridge.png.import
+│   │   │   ├── code_lock.gd
+│   │   │   ├── code_lock.gd.uid
+│   │   │   ├── fridge.gd
+│   │   │   ├── fridge.gd.uid
+│   │   │   └── fridge.tscn
+│   │   ├── generator
+│   │   │   ├── generator.gd
+│   │   │   ├── generator.gd.uid
+│   │   │   └── generator.tscn
+│   │   ├── key
+│   │   │   ├── key.gd
+│   │   │   └── key.gd.uid
+│   │   ├── lamp
+│   │   │   ├── Lamp1.png
+│   │   │   ├── Lamp1.png.import
+│   │   │   ├── LampOn1.png
+│   │   │   ├── LampOn1.png.import
+│   │   │   ├── lamp.gd
+│   │   │   ├── lamp.gd.uid
+│   │   │   ├── lamp.tscn
+│   │   │   ├── lamp.wav
+│   │   │   └── lamp.wav.import
+│   │   ├── note
+│   │   │   ├── note_object.gd
+│   │   │   └── note_object.gd.uid
+│   │   ├── notebook
+│   │   │   ├── NotebookOff.png
+│   │   │   ├── NotebookOff.png.import
+│   │   │   ├── NotebookOn.png
+│   │   │   ├── NotebookOn.png.import
+│   │   │   ├── laptop.gd
+│   │   │   ├── laptop.gd.uid
+│   │   │   └── laptop.tscn
+│   │   ├── obstacle
+│   │   │   ├── obstacle.gd
+│   │   │   ├── obstacle.gd.uid
+│   │   │   └── obstacle.tscn
+│   │   ├── phone
+│   │   │   ├── JokeAboutChicken.wav
+│   │   │   ├── JokeAboutChicken.wav.import
+│   │   │   ├── phone.gd
+│   │   │   ├── phone.gd.uid
+│   │   │   ├── phone.png
+│   │   │   ├── phone.png.import
+│   │   │   └── phone.tscn
+│   │   ├── search_spot
+│   │   │   ├── search_spot.gd
+│   │   │   ├── search_spot.gd.uid
+│   │   │   └── search_spot.tscn
+│   │   ├── trigger
+│   │   │   ├── property_change.gd
+│   │   │   ├── property_change.gd.uid
+│   │   │   ├── trigger_set_property.gd
+│   │   │   └── trigger_set_property.gd.uid
+│   │   ├── interactive_object.gd
+│   │   └── interactive_object.gd.uid
+│   └── markers
+│       ├── stalker_spawn_marker.gd
+│       ├── stalker_spawn_marker.gd.uid
+│       └── stalker_spawn_marker.tscn
 ├── player
 │   ├── animations
 │   │   └── walking
@@ -859,10 +889,11 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
+├── tests
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-91 directories, 775 files
+95 directories, 802 files
