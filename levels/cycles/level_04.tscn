@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://belav28byue60"]
+[gd_scene load_steps=118 format=3 uid="uid://belav28byue60"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_i2ojm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_2bxq4"]
@@ -69,8 +69,49 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_siwla"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_p4ir0"]
 [ext_resource type="PackedScene" uid="uid://phdu5uudp1p0" path="res://levels/minigames/feeding/food/krilishki/food_krilishki.tscn" id="70_2bxq4"]
+[ext_resource type="PackedScene" path="res://objects/interactable/search_spot/search_spot.tscn" id="72_hr46p"]
+[ext_resource type="Texture2D" uid="uid://casdt22d3vom4" path="res://levels/minigames/search_key/Key.png" id="73_cmq65"]
+[ext_resource type="Texture2D" uid="uid://chqjxafw6gmv3" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_1.png" id="74_5wshx"]
+[ext_resource type="Texture2D" uid="uid://dhg2avxqf7ano" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_2.png" id="75_wtad1"]
+[ext_resource type="Texture2D" uid="uid://c7acaxjl8o5km" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_3.png" id="76_51mve"]
+[ext_resource type="Texture2D" uid="uid://c834eaedjfw5d" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_4.png" id="77_quj25"]
+[ext_resource type="Texture2D" uid="uid://demqelnrdfni8" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_5.png" id="78_qbtv6"]
+[ext_resource type="Texture2D" uid="uid://ckerdoixhbll0" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_6.png" id="79_wy8lh"]
+[ext_resource type="Texture2D" uid="uid://dqghu5rryf68a" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_7.png" id="80_4wpj2"]
+[ext_resource type="Texture2D" uid="uid://dmv5hqipiyh2f" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_8.png" id="81_2hh7m"]
+[ext_resource type="Texture2D" uid="uid://b1421lowk4a5p" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_9.png" id="82_unttk"]
+[ext_resource type="Texture2D" uid="uid://1rcveohtrlgq" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_10.png" id="83_l6n8o"]
+[ext_resource type="Texture2D" uid="uid://c7lysx0mb5bbb" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_11.png" id="84_s81hl"]
+[ext_resource type="Texture2D" uid="uid://wpsl1gy4q7yq" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_12.png" id="85_b1egb"]
+[ext_resource type="Texture2D" uid="uid://clgpqxesmx7xw" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_13.png" id="86_gn8yf"]
+[ext_resource type="Texture2D" uid="uid://qybb4lkjsap2" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_14.png" id="87_y123b"]
+[ext_resource type="Texture2D" uid="uid://divj68263y2js" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_15.png" id="88_ssrxx"]
+[ext_resource type="Texture2D" uid="uid://dcixupjbbmhou" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_16.png" id="89_mmu7e"]
+[ext_resource type="Texture2D" uid="uid://bb6h2rva5iy2" path="res://levels/minigames/search_key/urna/sprites/Trash_1.png" id="90_6qsug"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Texture2D" uid="uid://dectkrmeb7456" path="res://levels/minigames/search_key/urna/sprites/Trash_2.png" id="91_rm4nf"]
+[ext_resource type="Texture2D" uid="uid://djibdcc0bmtmv" path="res://levels/minigames/search_key/urna/sprites/Trash_3.png" id="92_8fgma"]
+[ext_resource type="Texture2D" uid="uid://chf6xwsaudpwd" path="res://levels/minigames/search_key/urna/sprites/Trash_4.png" id="93_yc2j2"]
+[ext_resource type="Texture2D" uid="uid://dcgntl6o831tp" path="res://levels/minigames/search_key/urna/sprites/Trash_5.png" id="94_vs8ya"]
+[ext_resource type="Texture2D" uid="uid://bd81nascvh6q6" path="res://levels/minigames/search_key/urna/sprites/Trash_6.png" id="95_5ye2y"]
+[ext_resource type="Texture2D" uid="uid://dh3eh46fb0fuh" path="res://levels/minigames/search_key/urna/sprites/Trash_7.png" id="96_xgqo3"]
+[ext_resource type="Texture2D" uid="uid://vgj380p1mvgw" path="res://levels/minigames/search_key/urna/sprites/Trash_8.png" id="97_bar5d"]
+[ext_resource type="Texture2D" uid="uid://lswjymejk25b" path="res://levels/minigames/search_key/urna/sprites/Trash_9.png" id="98_siwla"]
+[ext_resource type="Texture2D" uid="uid://c5ta6lx45hy5i" path="res://levels/minigames/search_key/urna/sprites/Trash_10.png" id="99_p4ir0"]
+[ext_resource type="Texture2D" uid="uid://bg7t54fmhmul6" path="res://levels/minigames/search_key/urna/sprites/Trash_11.png" id="100_s24v6"]
+[ext_resource type="Texture2D" uid="uid://bwki7ju7wh1vb" path="res://levels/minigames/search_key/urna/sprites/Trash_12.png" id="101_vs84s"]
+[ext_resource type="Texture2D" uid="uid://bsq70k33g6msq" path="res://levels/minigames/search_key/urna/sprites/Trash_13.png" id="102_l44aq"]
+[ext_resource type="Texture2D" uid="uid://7xdxupxgxl1d" path="res://levels/minigames/search_key/urna/sprites/Trash_14.png" id="103_7a55g"]
+[ext_resource type="Texture2D" uid="uid://c6bu82di6ng0d" path="res://levels/minigames/search_key/urna/sprites/Trash_15.png" id="104_nnmjy"]
+[ext_resource type="Texture2D" uid="uid://idbsuf2eipjc" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_1.png" id="105_1i4bq"]
+[ext_resource type="Texture2D" uid="uid://yc7xdi4y6hqm" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_2.png" id="106_jqnsi"]
+[ext_resource type="Texture2D" uid="uid://camars2h80dy4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_3.png" id="107_uo057"]
+[ext_resource type="Texture2D" uid="uid://dir8k4goevkmg" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_4.png" id="108_np76i"]
+[ext_resource type="Texture2D" uid="uid://3dvv2qnxssb4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_5.png" id="109_mu543"]
+[ext_resource type="Texture2D" uid="uid://ea2aqm07dq1v" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_6.png" id="110_foxbh"]
+[ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_cmq65"]
+[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="112_5wshx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -86,10 +127,19 @@ gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_130pq"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmq65"]
+gradient = SubResource("Gradient_130pq")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Level" type="Node2D"]
 position = Vector2(16, 0)
 script = ExtResource("1_i2ojm")
 cycle_number = 4
+timer_duration = 140.0
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 rotation = 0.009666472
@@ -1490,9 +1540,10 @@ one_shot = null
 
 [node name="Door(ToBedroom)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8818.125, 83)
-door_locked_message = ""
+is_locked = true
+door_locked_message = "Заперто... Нужно найти ключ."
 target_marker = NodePath("../../../Bedroom2/InteractableObjects/Door(InBedroom)")
-required_key_id = null
+required_key_id = "door_key"
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
@@ -1788,3 +1839,72 @@ next_level_path = "uid://u32e5100pijl"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
+
+[node name="SearchSpot3" parent="." instance=ExtResource("72_hr46p")]
+position = Vector2(19322, 2993)
+scale = Vector2(2.8508883, 4.0245605)
+key_texture = ExtResource("73_cmq65")
+trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
+trash_min = 9
+trash_max = 14
+
+[node name="SearchSpot" parent="." instance=ExtResource("72_hr46p")]
+position = Vector2(9198, 3028)
+scale = Vector2(2.0907319, 2.904042)
+key_texture = ExtResource("73_cmq65")
+trash_textures = Array[Texture2D]([ExtResource("90_6qsug"), ExtResource("91_rm4nf"), ExtResource("92_8fgma"), ExtResource("93_yc2j2"), ExtResource("94_vs8ya"), ExtResource("95_5ye2y"), ExtResource("96_xgqo3"), ExtResource("97_bar5d"), ExtResource("98_siwla"), ExtResource("99_p4ir0"), ExtResource("100_s24v6"), ExtResource("101_vs84s"), ExtResource("102_l44aq"), ExtResource("103_7a55g"), ExtResource("104_nnmjy")])
+trash_min = 15
+trash_max = 20
+
+[node name="SearchSpot4" parent="." instance=ExtResource("72_hr46p")]
+position = Vector2(9548, 2899)
+scale = Vector2(2.0907319, 2.904042)
+key_texture = ExtResource("73_cmq65")
+trash_textures = Array[Texture2D]([ExtResource("105_1i4bq"), ExtResource("106_jqnsi"), ExtResource("107_uo057"), ExtResource("108_np76i"), ExtResource("109_mu543"), ExtResource("110_foxbh")])
+trash_max = 7
+
+[node name="SearchSpot2" parent="." instance=ExtResource("72_hr46p")]
+position = Vector2(6323, 2927.9998)
+scale = Vector2(7.410693, 6.4640417)
+key_texture = ExtResource("73_cmq65")
+
+[node name="SearchKeyManager" type="Node2D" parent="."]
+script = ExtResource("111_cmq65")
+search_spots = Array[NodePath]([NodePath("../SearchSpot3"), NodePath("../SearchSpot"), NodePath("../SearchSpot4"), NodePath("../SearchSpot2")])
+
+[node name="Clock2" type="Sprite2D" parent="."]
+position = Vector2(9432, 109)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("67_bar5d")
+
+[node name="WorldClock" parent="Clock2" instance=ExtResource("68_siwla")]
+position = Vector2(-94.444336, -61.111206)
+rotation = 0.002830834
+scale = Vector2(2.0000002, 2.0000002)
+start_game_time = "1:08"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock2/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_cmq65")
+
+[node name="Clock3" type="Sprite2D" parent="."]
+position = Vector2(9432, 2911)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("67_bar5d")
+
+[node name="WorldClock" parent="Clock3" instance=ExtResource("68_siwla")]
+position = Vector2(-94.444336, -61.111206)
+rotation = 0.002830834
+scale = Vector2(2.0000002, 2.0000002)
+start_game_time = "1:08"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Clock3/WorldClock"]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_cmq65")
+
+[node name="StalkerSpawnMarker" parent="." instance=ExtResource("112_5wshx")]
+position = Vector2(10428, 2969)
