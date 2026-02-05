@@ -233,6 +233,7 @@
 │   │   │   ├── level_04.tscn
 │   │   │   ├── level_05_corridor_distortion.gd
 │   │   │   ├── level_05_corridor_distortion.gd.uid
+│   │   │   ├── level_05_keystests.tscn
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
@@ -247,11 +248,11 @@
 │   │   ├── level_02_basic.tscn
 │   │   ├── level_03_deepseek.tscn
 │   │   ├── level_04_findkey.tscn
-│   │   ├── level_05.tscn
-│   │   ├── level_06.tscn
+│   │   ├── level_05_sql.tscn
 │   │   ├── level_07.tscn
 │   │   ├── level_08_doors.tscn
 │   │   ├── level_09_PT.tscn
+│   │   ├── level_11_crazy.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_end.tscn
 │   │   ├── level_music.gd
@@ -287,6 +288,8 @@
 │   │   │   │   ├── HappyEat.png.import
 │   │   │   │   ├── SadEat.png
 │   │   │   │   ├── SadEat.png.import
+│   │   │   │   ├── TheBadestEat.png
+│   │   │   │   ├── TheBadestEat.png.import
 │   │   │   │   ├── VeryBadEat.png
 │   │   │   │   └── VeryBadEat.png.import
 │   │   │   ├── food
@@ -800,7 +803,9 @@
 │   │   │   │   ├── FridgeNoizeE.wav
 │   │   │   │   ├── FridgeNoizeE.wav.import
 │   │   │   │   ├── OpenFridgeE.wav
-│   │   │   │   └── OpenFridgeE.wav.import
+│   │   │   │   ├── OpenFridgeE.wav.import
+│   │   │   │   ├── PigsScream.wav
+│   │   │   │   └── PigsScream.wav.import
 │   │   │   ├── sprites
 │   │   │   │   ├── ClosedFridge.png
 │   │   │   │   ├── ClosedFridge.png.import
@@ -832,6 +837,13 @@
 │   │   │   ├── lamp.tscn
 │   │   │   ├── lamp.wav
 │   │   │   └── lamp.wav.import
+│   │   ├── lebedka
+│   │   │   ├── Lebedka.png
+│   │   │   ├── Lebedka.png.import
+│   │   │   ├── LebedkaBezRuchki.png
+│   │   │   ├── LebedkaBezRuchki.png.import
+│   │   │   ├── RuchkaOtLebedki.png
+│   │   │   └── RuchkaOtLebedki.png.import
 │   │   ├── note
 │   │   │   ├── note_object.gd
 │   │   │   └── note_object.gd.uid
@@ -967,4 +979,4 @@
 ├── project.godot
 └── structure.txt
 
-97 directories, 871 files
+98 directories, 882 files

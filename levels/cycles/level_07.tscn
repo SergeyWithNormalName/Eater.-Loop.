@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://c3s82ewvaot7t"]
+[gd_scene load_steps=105 format=3 uid="uid://c3s82ewvaot7t"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -77,22 +77,18 @@
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://objects/environment/background/decals/HoleInWall3.png" id="86_fa34t"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://objects/interactable/trigger/trigger_set_property.gd" id="87_7c4ho"]
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="87_j1ifr"]
-[ext_resource type="Texture2D" uid="uid://byt2rs4n15wun" path="res://objects/environment/sprites/hall/Sofa.png" id="88_0i8n6"]
 [ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://music/MusicForBasicMonster.wav" id="88_j1ifr"]
 [ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="88_ky05d"]
-[ext_resource type="Texture2D" uid="uid://bps1urucw0afw" path="res://objects/environment/sprites/hall/tv_2.png" id="89_v8753"]
-[ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://objects/environment/sprites/hall/Armchair.png" id="90_shxk8"]
+[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://bs2yhxdctsyia" path="res://levels/minigames/feeding/food/hotdog/food_hotdog.tscn" id="91_oltb2"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="93_xwm2s"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="94_4xwr8"]
-[ext_resource type="Texture2D" uid="uid://cywegfh3onok4" path="res://objects/environment/sprites/hall/PictureThree.png" id="95_3rylc"]
 [ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="95_murco"]
 [ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="96_l0nrl"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="97_lq7xs"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="98_cw66x"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
-[ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
-[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
 shader = ExtResource("29_e0b7i")
@@ -335,13 +331,13 @@ texture = ExtResource("66_wjkrl")
 
 [node name="Window3" type="Sprite2D" parent="Hall1"]
 z_index = -4
-position = Vector2(14312, -45.508)
+position = Vector2(13312, -45.508)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("36_bf5co")
 
 [node name="OpenShtora3" type="Sprite2D" parent="Hall1"]
 z_index = -3
-position = Vector2(14312, 20.492)
+position = Vector2(13312, 20.492)
 scale = Vector2(0.66074157, 0.59296346)
 texture = ExtResource("66_wjkrl")
 
@@ -369,7 +365,8 @@ region_rect = Rect2(0, 0, 20500, 500)
 [node name="WallBack_Hall2" type="Sprite2D" parent="Hall1"]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12849, 19)
+position = Vector2(12351.5, 19)
+scale = Vector2(0.7788889, 1)
 texture = ExtResource("1_hi6qj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
@@ -377,8 +374,8 @@ region_rect = Rect2(0, 0, 4500, 550)
 [node name="FloorKitchen2" type="Sprite2D" parent="Hall1"]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12847.412, 326)
-scale = Vector2(0.2194548, 0.21939737)
+position = Vector2(12358, 326)
+scale = Vector2(0.17170732, 0.21939737)
 texture = ExtResource("49_hw0rt")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
@@ -406,18 +403,13 @@ position = Vector2(9477, -103.999985)
 scale = Vector2(0.31, 0.31)
 texture = ExtResource("53_dylqi")
 
-[node name="Lamp4" type="Sprite2D" parent="Hall1"]
-position = Vector2(9814, -214)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("61_a0psa")
-
 [node name="Lamp5" type="Sprite2D" parent="Hall1"]
 position = Vector2(6699, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("61_a0psa")
 
 [node name="WallEnd3" type="StaticBody2D" parent="Hall1"]
-position = Vector2(15113.001, 63.999996)
+position = Vector2(14113, 64)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
@@ -589,7 +581,7 @@ scale = Vector2(1, 1.230417)
 texture = ExtResource("62_lrwde")
 
 [node name="WallRoof31" type="StaticBody2D" parent="Hall1"]
-position = Vector2(14123, -275)
+position = Vector2(13812.999, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
@@ -604,24 +596,8 @@ position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("62_lrwde")
 
-[node name="WallRoof32" type="StaticBody2D" parent="Hall1"]
-position = Vector2(14816, -275)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof32"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof32"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
 [node name="WallRoof35" type="StaticBody2D" parent="Hall1"]
-position = Vector2(14123, 399)
+position = Vector2(13812.999, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
@@ -631,22 +607,6 @@ position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
 [node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof35"]
-light_mask = 2
-position = Vector2(0, -113.01953)
-scale = Vector2(1, 1.230417)
-texture = ExtResource("62_lrwde")
-
-[node name="WallRoof36" type="StaticBody2D" parent="Hall1"]
-position = Vector2(14816, 399)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/WallRoof36"]
-position = Vector2(0, -108.873535)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/WallRoof36"]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
@@ -929,8 +889,9 @@ position = Vector2(9126, 0)
 script = ExtResource("88_ky05d")
 trigger_path = NodePath("../Trigger")
 kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
-kitchen_move = Vector2(4000, 0)
-kitchen_duration = 12.0
+kitchen_move = Vector2(3000, 0)
+kitchen_duration = 7.0
+kitchen_trans = 4
 kitchen_ease = 1
 back_nodes = Array[NodePath]([NodePath("../Door(To Bedroom)"), NodePath("../Door(To Parents)"), NodePath("../Door(To Toilet)"), NodePath("../Door(To Bathroom)"), NodePath("../Door(To Exit)"), NodePath("../Lamp5"), NodePath("../Kover"), NodePath("../Shkaf1"), NodePath("../BootsBoard"), NodePath("../HoleInWall6"), NodePath("../HoleInWall2"), NodePath("../HoleInWall4"), NodePath("../HoleInWall1"), NodePath("../HoleInWall3"), NodePath("../Boots1"), NodePath("../Boots2"), NodePath("../Boots3"), NodePath("../Boots4"), NodePath("../Boots5"), NodePath("../Boots6"), NodePath("../OnOffer5"), NodePath("../OnOffer3"), NodePath("../OnOffer2")])
 back_move = Vector2(-4450, 0)
@@ -2095,61 +2056,6 @@ rotation = -0.9530855
 scale = Vector2(0.27256876, 0.27256882)
 texture = ExtResource("81_hptho")
 
-[node name="CorridorDistortion2" type="Node2D" parent="Hall1"]
-position = Vector2(9126, 2944)
-script = ExtResource("88_ky05d")
-trigger_path = NodePath("../Trigger")
-kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna")])
-kitchen_move = Vector2(4000, 0)
-kitchen_duration = 12.0
-kitchen_ease = 1
-back_nodes = Array[NodePath]([NodePath("../Door(To Bedroom)"), NodePath("../Door(To Parents)"), NodePath("../Door(To Toilet)"), NodePath("../Door(To Bathroom)"), NodePath("../Door(To Exit)"), NodePath("../Lamp5"), NodePath("../Kover"), NodePath("../Shkaf1"), NodePath("../BootsBoard"), NodePath("../HoleInWall6"), NodePath("../HoleInWall2"), NodePath("../HoleInWall4"), NodePath("../HoleInWall1"), NodePath("../HoleInWall3"), NodePath("../Boots1"), NodePath("../Boots2"), NodePath("../Boots3"), NodePath("../Boots4"), NodePath("../Boots5"), NodePath("../Boots6"), NodePath("../OnOffer5"), NodePath("../OnOffer3"), NodePath("../OnOffer2")])
-back_move = Vector2(-4450, 0)
-back_duration = 12.0
-back_ease = 1
-disable_nodes = Array[NodePath]([NodePath("../WallEnd4")])
-stop_kitchen_audio = false
-new_corridor_path = NodePath("NewCorridor")
-new_corridor_offset = Vector2(-650, 0)
-camera_path = NodePath("../../Bedroom1/Player/Camera2D")
-camera_squash_zoom_mult = Vector2(1.15, 0.83)
-camera_hold = 0.3
-camera_recover_duration = 1.0
-
-[node name="NewCorridor" type="Node2D" parent="Hall1/CorridorDistortion2"]
-
-[node name="WallRoofLeftTop2" type="StaticBody2D" parent="Hall1/CorridorDistortion2/NewCorridor"]
-position = Vector2(-11609, -275)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion2/NewCorridor/WallRoofLeftTop2"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion2/NewCorridor/WallRoofLeftTop2"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("62_lrwde")
-
-[node name="WallRoofLeftBottom2" type="StaticBody2D" parent="Hall1/CorridorDistortion2/NewCorridor"]
-position = Vector2(-11609, 399)
-rotation = -1.5707964
-scale = Vector2(0.38524616, 0.6557377)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hall1/CorridorDistortion2/NewCorridor/WallRoofLeftBottom2"]
-position = Vector2(0, -85.822266)
-shape = SubResource("RectangleShape2D_dwgmq")
-
-[node name="WallBok" type="Sprite2D" parent="Hall1/CorridorDistortion2/NewCorridor/WallRoofLeftBottom2"]
-light_mask = 2
-position = Vector2(0, -81.81008)
-scale = Vector2(1, 1.2386152)
-texture = ExtResource("62_lrwde")
-
 [node name="Bedroom1" type="Node2D" parent="."]
 
 [node name="WallBack_Bedroom" type="Sprite2D" parent="Bedroom1"]
@@ -3073,7 +2979,7 @@ texture = ExtResource("68_61vya")
 
 [node name="Lamp" parent="." instance=ExtResource("85_o4yqd")]
 z_index = -1
-position = Vector2(11132, -214)
+position = Vector2(9806, -214)
 start_on = true
 turn_on_sfx = ExtResource("86_7c4ho")
 light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
@@ -3083,31 +2989,13 @@ flicker_chance = 0.04
 flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." instance=ExtResource("87_j1ifr")]
-position = Vector2(14013, 119)
+position = Vector2(13013, 119)
 stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
 time_penalty = 80.0
 chase_music = ExtResource("88_j1ifr")
 chase_music_fade_out_time = 5.0
-
-[node name="Sofa" type="Sprite2D" parent="."]
-z_index = 10
-position = Vector2(11155.339, 265)
-scale = Vector2(0.53352284, 0.53352284)
-texture = ExtResource("88_0i8n6")
-
-[node name="Tv2" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(11151, 88)
-scale = Vector2(0.5350467, 0.53504676)
-texture = ExtResource("89_v8753")
-
-[node name="Armchair" type="Sprite2D" parent="."]
-z_index = -3
-position = Vector2(10650.001, 203)
-scale = Vector2(0.46985453, 0.5219123)
-texture = ExtResource("90_shxk8")
 
 [node name="Battery" type="Sprite2D" parent="."]
 z_index = -4
@@ -3123,7 +3011,7 @@ texture = ExtResource("93_xwm2s")
 
 [node name="Battery2" type="Sprite2D" parent="."]
 z_index = -4
-position = Vector2(14314, 210)
+position = Vector2(13314, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("93_xwm2s")
 
@@ -3379,42 +3267,6 @@ position = Vector2(14014, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("94_4xwr8")
 
-[node name="Plintus34" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(14210, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
-[node name="Plintus35" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(14411.999, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
-[node name="Plintus36" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(14526, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
-[node name="Plintus37" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(14728.999, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
-[node name="Plintus38" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(14932, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
-[node name="Plintus39" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(15005, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("94_4xwr8")
-
 [node name="Plintus2" type="Sprite2D" parent="."]
 z_index = -5
 position = Vector2(-1275, 266)
@@ -3444,12 +3296,6 @@ z_index = -5
 position = Vector2(-2562.0002, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("94_4xwr8")
-
-[node name="PictureThree" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(10674, -32)
-scale = Vector2(0.52642274, 0.52642274)
-texture = ExtResource("95_3rylc")
 
 [node name="TestNote2" type="Area2D" parent="."]
 position = Vector2(7082, 2411)
@@ -3485,24 +3331,6 @@ keep_chasing_outside_detection = true
 kill_on_attack = true
 chase_music = ExtResource("88_j1ifr")
 chase_music_fade_out_time = 5.0
-
-[node name="Sofa2" type="Sprite2D" parent="."]
-z_index = 10
-position = Vector2(11155.339, 3209)
-scale = Vector2(0.53352284, 0.53352284)
-texture = ExtResource("88_0i8n6")
-
-[node name="Tv3" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(11151, 3032)
-scale = Vector2(0.5350467, 0.53504676)
-texture = ExtResource("89_v8753")
-
-[node name="Armchair2" type="Sprite2D" parent="."]
-z_index = -3
-position = Vector2(10650.001, 3147)
-scale = Vector2(0.46985453, 0.5219123)
-texture = ExtResource("90_shxk8")
 
 [node name="Battery4" type="Sprite2D" parent="."]
 z_index = -4
@@ -3798,12 +3626,6 @@ position = Vector2(15005, 3209.9998)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("94_4xwr8")
 
-[node name="PictureThree2" type="Sprite2D" parent="."]
-z_index = -4
-position = Vector2(10674, 2912)
-scale = Vector2(0.52642274, 0.52642274)
-texture = ExtResource("95_3rylc")
-
 [node name="Fridge" parent="." instance=ExtResource("52_jbtxb")]
 z_index = -2
 position = Vector2(9809.79, 115.749985)
@@ -3844,6 +3666,10 @@ position = Vector2(0.20996094, -32.749985)
 rotation = 0.009666472
 color = Color(0.3137255, 0.3137255, 0.36862746, 1)
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("90_inside_ambient")
+script = ExtResource("91_level_music")
+
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]
 [connection signal="body_entered" from="Hall1/Door(To Parents)" to="Hall1/Door(To Parents)" method="_on_body_entered"]
@@ -3880,7 +3706,3 @@ color = Color(0.3137255, 0.3137255, 0.36862746, 1)
 [connection signal="body_exited" from="Toilet2/Door(In Toilet)" to="Toilet2/Door(In Toilet)" method="_on_body_exited"]
 [connection signal="body_entered" from="TestNote2" to="TestNote2" method="_on_body_entered"]
 [connection signal="body_exited" from="TestNote2" to="TestNote2" method="_on_body_exited"]
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("90_inside_ambient")
-script = ExtResource("91_level_music")

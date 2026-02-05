@@ -457,7 +457,7 @@ door_locked_message = "Сначала нужно сделать что-то др
 target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
 
 [node name="Door(StairsLeft)" parent="Hall/InteractableObjects" instance=ExtResource("15_scqts")]
-position = Vector2(7321, 83)
+position = Vector2(7321, 81)
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -470,7 +470,7 @@ scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("24_len77")
 
 [node name="Door(StairsLeft)2" parent="Hall/InteractableObjects" instance=ExtResource("15_scqts")]
-position = Vector2(13843, 83)
+position = Vector2(13843, 81)
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -777,9 +777,9 @@ texture = ExtResource("55_tj0re")
 
 [node name="Floor" parent="." instance=ExtResource("57_ih4cm")]
 z_index = -5
-position = Vector2(10604, 321)
+position = Vector2(10604, 326)
 floor_texture = ExtResource("24_oevlm")
-size = Vector2(9000, 120)
+size = Vector2(9000, 110)
 tiling = Vector2(7, 3)
 perspective_amount = 1.75
 horizon = -3.74
@@ -787,6 +787,8 @@ edge_strength = 0.22
 edge_power = 0.55
 center_width = 0.0
 edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
 
 [node name="StalkerSpawnMarker" parent="." instance=ExtResource("58_oevlm")]
 position = Vector2(12178, 80)

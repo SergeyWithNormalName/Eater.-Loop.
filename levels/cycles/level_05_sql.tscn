@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://dv71cfad0bsy8"]
+[gd_scene load_steps=79 format=3 uid="uid://dv71cfad0bsy8"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_dh4es"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_ic6y1"]
@@ -67,7 +67,6 @@
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_b0328"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_fc88j"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_dgki2"]
-[ext_resource type="PackedScene" uid="uid://cdumkmia83xpc" path="res://levels/minigames/labs/sql/sql_minigame.tscn" id="67_ic6y1"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="67_musk4"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_ucmgk"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_4kun7"]
@@ -635,7 +634,7 @@ texture = ExtResource("43_ua0uk")
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_abash")]
 position = Vector2(8818.125, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Bedroom2/InteractableObjects/Door(InBedroom)")
+target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" instance=ExtResource("15_abash")]
 position = Vector2(8434.125, 83)
@@ -673,6 +672,7 @@ background_texture = ExtResource("53_jvjon")
 require_access_code = true
 access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
 locked_sprite = ExtResource("54_musk4")
+one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
 
@@ -866,7 +866,7 @@ texture = ExtResource("65_fc88j")
 
 [node name="InteractableObjects" type="Node2D" parent="Bedroom"]
 
-[node name="Laptop" parent="Bedroom/InteractableObjects" instance=ExtResource("66_dgki2")]
+[node name="Laptop" parent="Bedroom/InteractableObjects" node_paths=PackedStringArray("dependency_object") instance=ExtResource("66_dgki2")]
 z_index = -1
 position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
@@ -874,6 +874,7 @@ minigame_scene = ExtResource("67_musk4")
 time_limit = 60.0
 is_enabled = false
 completed_message = "Я уже сделал эту работу"
+dependency_object = NodePath("../../../Hall/InteractableObjects/Fridge")
 
 [node name="Clock" type="Sprite2D" parent="Bedroom/InteractableObjects"]
 position = Vector2(-2124, 150)
@@ -898,228 +899,6 @@ door_locked_message = "Сначала нужно сделать что-то др
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("69_npe2g")]
-position = Vector2(-2420, 226)
-next_level_path = "uid://c3s82ewvaot7t"
-
-[node name="Bedroom2" type="Node2D" parent="."]
-position = Vector2(0, 1991)
-
-[node name="Background" type="Node2D" parent="Bedroom2"]
-
-[node name="WallBack_Bedroom" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(-1913, 19)
-texture = ExtResource("21_m1rcm")
-region_enabled = true
-region_rect = Rect2(0, 0, 1500, 550)
-
-[node name="FloorBedroom" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-texture_repeat = 2
-position = Vector2(-1913.0001, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("17_7lbwy")
-region_enabled = true
-region_rect = Rect2(0, 0, 6840, 500)
-
-[node name="Plintus" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-1377, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Plintus2" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-1275, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Plintus3" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-1784, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Plintus4" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-1990, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Plintus5" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-2159, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Plintus6" type="Sprite2D" parent="Bedroom2/Background"]
-z_index = -5
-position = Vector2(-2562.0002, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("22_majhd")
-
-[node name="Walls" type="Node2D" parent="Bedroom2"]
-
-[node name="WallLeft" parent="Bedroom2/Walls" instance=ExtResource("6_7ll84")]
-z_index = 10
-position = Vector2(-2680, 64.86066)
-
-[node name="WallRight" parent="Bedroom2/Walls" instance=ExtResource("6_7ll84")]
-z_index = 10
-position = Vector2(-1151.5, 64.86066)
-
-[node name="WallBelow_1" parent="Bedroom2/Walls" instance=ExtResource("7_fgnwv")]
-z_index = 10
-position = Vector2(-2307.0002, 400)
-
-[node name="WallBelow_2" parent="Bedroom2/Walls" instance=ExtResource("7_fgnwv")]
-z_index = 10
-position = Vector2(-1525, 400)
-
-[node name="WallAbove_1" parent="Bedroom2/Walls" instance=ExtResource("7_fgnwv")]
-z_index = 10
-position = Vector2(-2307, -271)
-
-[node name="WallAbove_2" parent="Bedroom2/Walls" instance=ExtResource("7_fgnwv")]
-z_index = 10
-position = Vector2(-1525, -271)
-
-[node name="Sprites" type="Node2D" parent="Bedroom2"]
-
-[node name="OnOffer1" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1735.2787, 29)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("23_tuwef")
-
-[node name="Comode" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1323.5944, 189)
-scale = Vector2(0.32872525, 0.32872525)
-texture = ExtResource("54_i0aid")
-
-[node name="Table" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1857.2787, 190.00002)
-scale = Vector2(0.3389674, 0.33896744)
-texture = ExtResource("55_uer02")
-
-[node name="Tumbochka" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-2112.125, 238)
-scale = Vector2(0.21, 0.21)
-texture = ExtResource("56_g3s0w")
-
-[node name="SteamDeck" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1258.5944, 55.96)
-scale = Vector2(0.24, 0.24)
-texture = ExtResource("57_hh8hs")
-
-[node name="Plakat1" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -5
-position = Vector2(-2091, 37)
-scale = Vector2(0.18294117, 0.18294117)
-texture = ExtResource("58_nmwvo")
-
-[node name="Plakat2" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -4
-position = Vector2(-1353, -46)
-scale = Vector2(0.1879456, 0.1879456)
-texture = ExtResource("59_4nowt")
-
-[node name="Lamp1" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1898.9999, -214)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("11_px05n")
-
-[node name="ChairBedroom" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = 1
-position = Vector2(-1840.9999, 221.99998)
-scale = Vector2(0.29, 0.29)
-texture = ExtResource("60_gskbi")
-
-[node name="Sweets" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1959.9788, 114.54161)
-rotation = -0.12217305
-scale = Vector2(0.02, 0.02)
-skew = -0.56374145
-texture = ExtResource("61_21fap")
-
-[node name="Sweets2" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1972.4827, 114.3853)
-rotation = -0.12217305
-scale = Vector2(0.02, 0.02)
-skew = -0.56374145
-texture = ExtResource("61_21fap")
-
-[node name="Powerbank2" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1310.9999, 39.999996)
-rotation = -0.061086528
-scale = Vector2(0.22999999, 0.26)
-skew = 0.1064651
-texture = ExtResource("62_lrk51")
-
-[node name="UsedFood" type="Sprite2D" parent="Bedroom2/Sprites"]
-position = Vector2(-1754.9999, 107.99999)
-rotation = -0.061086524
-scale = Vector2(0.04193877, 0.05264323)
-skew = 0.087266445
-texture = ExtResource("63_k4b3c")
-
-[node name="Battery3" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -4
-position = Vector2(-2373, 210)
-scale = Vector2(0.48396507, 0.48396507)
-texture = ExtResource("43_ua0uk")
-
-[node name="OpenShtora" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -3
-position = Vector2(-2361.8748, 13.491882)
-scale = Vector2(0.59296346, 0.59296346)
-texture = ExtResource("42_ujgdl")
-
-[node name="Window1" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -4
-position = Vector2(-2359.8748, -52.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("64_b0328")
-
-[node name="Rozetka1" type="Sprite2D" parent="Bedroom2/Sprites"]
-z_index = -3
-position = Vector2(-2574, 129)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("65_fc88j")
-
-[node name="InteractableObjects" type="Node2D" parent="Bedroom2"]
-
-[node name="Laptop" parent="Bedroom2/InteractableObjects" instance=ExtResource("66_dgki2")]
-z_index = -1
-position = Vector2(-1853, 76)
-scale = Vector2(0.96, 0.96)
-minigame_scene = ExtResource("67_ic6y1")
-time_limit = 60.0
-completed_message = "Я уже сделал эту работу"
-
-[node name="Clock" type="Sprite2D" parent="Bedroom2/InteractableObjects"]
-position = Vector2(-2124, 150)
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("67_ucmgk")
-
-[node name="WorldClock" parent="Bedroom2/InteractableObjects/Clock" instance=ExtResource("68_4kun7")]
-position = Vector2(-94.444336, -61.111206)
-rotation = 0.002830834
-scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "0:42"
-metadata/_edit_group_ = true
-
-[node name="PointLight2D" type="PointLight2D" parent="Bedroom2/InteractableObjects/Clock/WorldClock"]
-position = Vector2(47.222225, 38.88893)
-scale = Vector2(2.9513855, 1.1284723)
-texture = SubResource("GradientTexture2D_pgutp")
-
-[node name="Door(InBedroom)" parent="Bedroom2/InteractableObjects" instance=ExtResource("15_abash")]
-position = Vector2(-1581, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
-
-[node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_npe2g")]
 position = Vector2(-2420, 226)
 next_level_path = "uid://c3s82ewvaot7t"
 
