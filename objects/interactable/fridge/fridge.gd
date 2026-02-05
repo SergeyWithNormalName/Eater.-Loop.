@@ -159,17 +159,9 @@ func _start_code_lock() -> void:
 	# 4. Добавляем замок на сцену (поверх всего, но внутри текущей сцены)
 	_add_minigame_to_scene(lock_instance)
 	
-	# 5. Теперь передаем ГОТОВЫЙ NODE в контроллер
-	if MinigameController:
-		_is_interacting = true
-		var settings := MinigameSettings.new()
-		settings.pause_game = false
-		settings.enable_gamepad_cursor = true
-		settings.block_player_movement = true
-		settings.allow_pause_menu = false
-		settings.allow_cancel_action = true
-		MinigameController.start_minigame(lock_instance, settings)
-	else:
+	# 5. Активируем режим взаимодействия (старт мини-игры обрабатывает сам замок)
+	_is_interacting = true
+	if MinigameController == null:
 		push_error("MinigameController не найден!")
 
 func _on_unlock_success() -> void:
@@ -201,8 +193,6 @@ func _start_feeding_process() -> void:
 		return
 	
 	# Запуск игры
-	await UIMessage.fade_out(0.3)
-	
 	var game = minigame_scene.instantiate()
 	_current_minigame = game
 	_add_minigame_to_scene(game)
@@ -212,18 +202,14 @@ func _start_feeding_process() -> void:
 		game.setup_game(andrey_face, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
 	
 	game.minigame_finished.connect(_on_feeding_finished)
-	await UIMessage.fade_in(0.3)
 
 func _on_feeding_finished() -> void:
-	await UIMessage.fade_out(0.4)
-	
 	if _current_minigame != null:
 		_current_minigame.queue_free()
 		_current_minigame = null
 	
 	_finish_feeding_logic()
 	
-	await UIMessage.fade_in(0.4)
 	_is_interacting = false
 
 func _finish_feeding_logic() -> void:

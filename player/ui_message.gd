@@ -28,6 +28,7 @@ var _subtitle_label: Label
 var _timer: Timer
 var _subtitle_timer: Timer
 var _fade_rect: ColorRect
+var _fade_tween: Tween
 var _sfx_player: AudioStreamPlayer
 var _modules: Dictionary = {}
 
@@ -353,6 +354,31 @@ func fade_in(duration: float = 0.5) -> void:
 	var tween = create_tween()
 	await tween.tween_property(_fade_rect, "color:a", 0.0, duration).finished
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func play_fade_sequence(fade_out_duration: float, fade_in_duration: float, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
+	if _fade_rect == null:
+		if on_black.is_valid():
+			on_black.call()
+		if on_finished.is_valid():
+			on_finished.call()
+		return
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	var out_time: float = max(0.0, float(fade_out_duration))
+	var in_time: float = max(0.0, float(fade_in_duration))
+	_fade_tween = create_tween()
+	_fade_tween.tween_property(_fade_rect, "color:a", 1.0, out_time)
+	_fade_tween.tween_callback(func():
+		if on_black.is_valid():
+			on_black.call()
+	)
+	_fade_tween.tween_property(_fade_rect, "color:a", 0.0, in_time)
+	_fade_tween.tween_callback(func():
+		_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if on_finished.is_valid():
+			on_finished.call()
+	)
 
 func is_screen_dark(threshold: float = 0.01) -> bool:
 	if _fade_rect == null:

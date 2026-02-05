@@ -961,7 +961,6 @@ eat_sound = ExtResource("52_w2mig")
 background_texture = ExtResource("53_q015q")
 require_lab_completion = true
 lab_required_message = "Я не буду есть, пока не сделаю лабораторную работу"
-noise_sound = ExtResource("54_d4hxy")
 locked_sprite = ExtResource("54_4qouy")
 rocking_cycle_duration = 4.0
 rocking_strength_degrees = 2.0
@@ -970,5 +969,11 @@ rocking_sound = ExtResource("72_fcrek")
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
 
+[node name="AudioStreamPlayer2D" parent="Fridge" index="4"]
+stream = ExtResource("54_d4hxy")
+volume_db = -2.5
+
 [node name="FridgeMarker" type="Marker2D" parent="Fridge"]
 position = Vector2(0.20996094, -32.749985)
+
+[editable path="Fridge"]

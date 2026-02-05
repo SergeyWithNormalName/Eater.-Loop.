@@ -71,8 +71,11 @@ func _update_display() -> void:
 
 func _close(success: bool) -> void:
 	if MinigameController:
-		MinigameController.finish_minigame(self, success)
-	queue_free()
+		MinigameController.finish_minigame_with_fade(self, success, func():
+			queue_free()
+		)
+	else:
+		queue_free()
 
 func _exit_tree() -> void:
 	if MinigameController:
@@ -115,7 +118,8 @@ func _start_minigame_session() -> void:
 	settings.block_player_movement = true
 	settings.allow_pause_menu = false
 	settings.allow_cancel_action = true
-	MinigameController.start_minigame(self, settings)
+	if not MinigameController.is_active(self):
+		MinigameController.start_minigame(self, settings)
 
 func on_minigame_cancel() -> void:
 	_close(false)

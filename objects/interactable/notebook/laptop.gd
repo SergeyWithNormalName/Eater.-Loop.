@@ -18,6 +18,8 @@ extends InteractiveObject
 			_apply_enabled_state()
 	get:
 		return _is_enabled
+## Разблокировать ноутбук после попытки взаимодействия с зависимым объектом.
+@export var unlock_on_dependency_interaction: bool = false
 
 @export_group("Completed Visuals")
 ## Показывать записку после выполнения вместо повторного запуска?
@@ -44,6 +46,7 @@ var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
 var _is_ready: bool = false
 var _is_enabled: bool = true
+var _dependency_override: bool = false
 
 func _ready() -> void:
 	super._ready() # Важно для работы базового класса
@@ -60,6 +63,9 @@ func _ready() -> void:
 	if dependency_object:
 		if not dependency_object.interaction_finished.is_connected(_on_dependency_finished):
 			dependency_object.interaction_finished.connect(_on_dependency_finished)
+		if unlock_on_dependency_interaction:
+			if not dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
+				dependency_object.interaction_requested.connect(_on_dependency_interaction_requested)
 	
 	# Следим за завершением лаб через GameState
 	if GameState.has_signal("lab_completed"):
@@ -98,7 +104,7 @@ func _start_lab_minigame() -> void:
 	_add_minigame_to_scene(game)
 	
 	# Запускаем через контроллер (для паузы, курсора и таймера)
-	if MinigameController:
+	if MinigameController and not MinigameController.is_active(game):
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
 		settings.enable_gamepad_cursor = true
@@ -128,11 +134,19 @@ func _handle_completed_interaction() -> void:
 func _on_dependency_finished() -> void:
 	_update_visuals()
 
+func _on_dependency_interaction_requested(_player: Node = null) -> void:
+	if not unlock_on_dependency_interaction:
+		return
+	_dependency_override = true
+	if not _is_enabled:
+		is_enabled = true
+	_update_visuals()
+
 func _update_visuals() -> void:
 	# Ноутбук "доступен" (светится), если зависимость выполнена.
 	# (Базовый класс сам проверит зависимость при клике, но нам нужно обновить спрайт)
 	var is_unlocked = true
-	if dependency_object and not dependency_object.is_completed:
+	if dependency_object and not dependency_object.is_completed and not _dependency_override:
 		is_unlocked = false
 	if not _is_enabled:
 		is_unlocked = false
@@ -162,6 +176,13 @@ func _apply_enabled_state() -> void:
 
 func _is_lab_completed() -> bool:
 	return GameState.lab_done
+
+func _is_dependency_satisfied() -> bool:
+	if _dependency_override:
+		return true
+	if dependency_object == null:
+		return true
+	return dependency_object.is_completed
 	
 func _add_minigame_to_scene(minigame: Node) -> void:
 	if minigame == null:

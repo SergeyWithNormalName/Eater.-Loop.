@@ -157,7 +157,25 @@ func finish_game(success: bool):
 		return
 	_is_finished = true
 	if MinigameController:
-		MinigameController.finish_minigame(self, success)
+		MinigameController.finish_minigame_with_fade(self, success, func():
+			task_completed.emit(success)
+			
+			if success:
+				print("Лабораторная выполнена!")
+			else:
+				print("Время вышло! Штраф.")
+				var gd = get_node_or_null("/root/GameDirector")
+				if gd:
+					gd.reduce_time(penalty_time)
+
+			if success:
+				var gs = get_node_or_null("/root/GameState")
+				if gs and gs.has_method("mark_lab_completed"):
+					gs.mark_lab_completed()
+
+			queue_free()
+		)
+		return
 	task_completed.emit(success)
 	
 	if success:

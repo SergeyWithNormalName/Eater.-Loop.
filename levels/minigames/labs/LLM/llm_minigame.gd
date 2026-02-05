@@ -106,8 +106,14 @@ func finish_game(success: bool) -> void:
 		return
 	_is_finished = true
 	if MinigameController:
-		MinigameController.finish_minigame(self, success)
+		MinigameController.finish_minigame_with_fade(self, success, func():
+			_finalize_finish(success)
+		)
+		return
 
+	_finalize_finish(success)
+
+func _finalize_finish(success: bool) -> void:
 	if success:
 		generate_button.text = TEXT_DONE
 		var style = generate_button.get_theme_stylebox("normal").duplicate()
@@ -116,20 +122,20 @@ func finish_game(success: bool) -> void:
 	else:
 		_shake_button()
 
-	await get_tree().create_timer(0.5).timeout
+	get_tree().create_timer(0.5).timeout.connect(func():
+		task_completed.emit(success)
 
-	task_completed.emit(success)
+		if not success:
+			if get_tree().root.has_node("GameDirector"):
+				get_tree().root.get_node("GameDirector").reduce_time(penalty_time)
 
-	if not success:
-		if get_tree().root.has_node("GameDirector"):
-			get_tree().root.get_node("GameDirector").reduce_time(penalty_time)
+		if success and get_tree().root.has_node("GameState"):
+			var gs = get_tree().root.get_node("GameState")
+			if gs and gs.has_method("mark_lab_completed"):
+				gs.mark_lab_completed()
 
-	if success and get_tree().root.has_node("GameState"):
-		var gs = get_tree().root.get_node("GameState")
-		if gs and gs.has_method("mark_lab_completed"):
-			gs.mark_lab_completed()
-
-	queue_free()
+		queue_free()
+	)
 
 func _exit_tree() -> void:
 	if MinigameController:

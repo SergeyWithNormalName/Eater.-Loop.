@@ -186,8 +186,11 @@ func _win() -> void:
 
 func _close_game() -> void:
 	if MinigameController:
-		MinigameController.finish_minigame(self, true)
-	minigame_finished.emit()
+		MinigameController.finish_minigame_with_fade(self, true, func():
+			minigame_finished.emit()
+		)
+	else:
+		minigame_finished.emit()
 	
 func _exit_tree() -> void:
 	if MinigameController:

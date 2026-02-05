@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://dv71cfad0bsy8"]
+[gd_scene load_steps=81 format=3 uid="uid://dv71cfad0bsy8"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_dh4es"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_ic6y1"]
@@ -71,6 +71,8 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_ucmgk"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_4kun7"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_npe2g"]
+[ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="74_44y35"]
+[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="75_lcg63"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
@@ -873,6 +875,7 @@ scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_musk4")
 time_limit = 60.0
 is_enabled = false
+unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
 dependency_object = NodePath("../../../Hall/InteractableObjects/Fridge")
 
@@ -940,3 +943,9 @@ texture = SubResource("GradientTexture2D_wci2k")
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
+
+[node name="TextureDistortionManager" parent="." instance=ExtResource("74_44y35")]
+position = Vector2(6965, -363)
+
+[node name="StalkerSpawnMarker" parent="." instance=ExtResource("75_lcg63")]
+position = Vector2(6443, 158)

@@ -592,6 +592,8 @@
 │   │   │   ├── ToiletTiles.png
 │   │   │   └── ToiletTiles.png.import
 │   │   ├── floor
+│   │   │   ├── FloorWood.png
+│   │   │   ├── FloorWood.png.import
 │   │   │   ├── floor.gd
 │   │   │   ├── floor.gd.uid
 │   │   │   ├── floor.tscn
@@ -979,4 +981,4 @@
 ├── project.godot
 └── structure.txt
 
-98 directories, 882 files
+98 directories, 884 files

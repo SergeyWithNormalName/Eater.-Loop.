@@ -27,6 +27,9 @@ signal minigame_cancel_allowed_changed(allowed: bool)
 @export var default_cursor_speed: float = 800.0
 ## Слой для контейнера мини-игр (должен быть ниже меню паузы).
 @export var default_minigame_layer: int = 75
+@export var minigame_transition_enabled: bool = true
+@export_range(0.0, 5.0, 0.05) var minigame_start_fade_time: float = 0.3
+@export_range(0.0, 5.0, 0.05) var minigame_finish_fade_time: float = 0.4
 
 const CHASE_MUSIC_PAUSE_FADE_TIME := 0.1
 
@@ -49,6 +52,8 @@ var _prompts_restore_target: Node = null
 var _pause_menu_open: bool = false
 var _allow_pause_menu: bool = true
 var _allow_cancel_action: bool = false
+var _transition_active: bool = false
+var _transition_queue: Array = []
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -148,26 +153,32 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 	minigame_started.emit(minigame)
 	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
 	minigame_cancel_allowed_changed.emit(_allow_cancel_action)
+	_request_start_transition(minigame)
 
 func finish_minigame(minigame: Node, success: bool = true) -> void:
+	_finalize_minigame_finish(minigame, success)
+
+func finish_minigame_with_fade(minigame: Node, success: bool = true, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
 	if minigame == null:
 		return
 	if minigame != _active_minigame:
 		return
-	_active_minigame = null
-	_restore_music()
-	if MusicManager:
-		MusicManager.resume_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
-	_restore_cursor()
-	_restore_pause()
-	_schedule_prompt_restore(minigame)
-	_clear_timer()
-	_block_player_movement = false
-	_allow_pause_menu = true
-	_allow_cancel_action = false
-	minigame_finished.emit(minigame, success)
-	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
-	minigame_cancel_allowed_changed.emit(_allow_cancel_action)
+	if not _can_run_transition(minigame_finish_fade_time):
+		_finalize_minigame_finish(minigame, success)
+		if on_black.is_valid():
+			on_black.call()
+		if on_finished.is_valid():
+			on_finished.call()
+		return
+	_enqueue_transition(minigame_finish_fade_time, func():
+		_finalize_minigame_finish(minigame, success)
+		_set_minigame_visible(minigame, false)
+		if on_black.is_valid():
+			on_black.call()
+	, func():
+		if on_finished.is_valid():
+			on_finished.call()
+	)
 
 func stop_minigame_music(fade_time: float = -1.0) -> void:
 	if MusicManager == null:
@@ -362,6 +373,93 @@ func _restore_music() -> void:
 func _resolve_minigame_layer(override_layer: int) -> int:
 	return default_minigame_layer if override_layer < 0 else override_layer
 
+func _request_start_transition(minigame: Node) -> void:
+	if not _can_run_transition(minigame_start_fade_time):
+		return
+	_set_minigame_visible(minigame, false)
+	_enqueue_transition(minigame_start_fade_time, func():
+		_set_minigame_visible(minigame, true)
+	)
+
+func _request_finish_transition(minigame: Node) -> void:
+	if not _can_run_transition(minigame_finish_fade_time):
+		return
+	_enqueue_transition(minigame_finish_fade_time, func():
+		_set_minigame_visible(minigame, false)
+	)
+
+func _enqueue_transition(duration: float, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
+	_transition_queue.append({"duration": duration, "on_black": on_black, "on_finished": on_finished})
+	if _transition_active:
+		return
+	_play_next_transition()
+
+func _play_next_transition() -> void:
+	if _transition_queue.is_empty():
+		_transition_active = false
+		return
+	_transition_active = true
+	var entry: Dictionary = _transition_queue.pop_front()
+	var duration := float(entry.get("duration", 0.0))
+	var on_black: Callable = entry.get("on_black", Callable())
+	var on_finished: Callable = entry.get("on_finished", Callable())
+	if duration <= 0.0:
+		if on_black.is_valid():
+			on_black.call()
+		if on_finished.is_valid():
+			on_finished.call()
+		_transition_active = false
+		_play_next_transition()
+		return
+	if UIMessage and UIMessage.has_method("play_fade_sequence"):
+		UIMessage.play_fade_sequence(duration, duration, on_black, func():
+			if on_finished.is_valid():
+				on_finished.call()
+			_transition_active = false
+			_play_next_transition()
+		)
+	else:
+		_transition_active = false
+		_play_next_transition()
+
+func _set_minigame_visible(minigame: Node, visible: bool) -> void:
+	if minigame == null or not is_instance_valid(minigame):
+		return
+	if minigame is CanvasItem:
+		(minigame as CanvasItem).visible = visible
+		return
+	if minigame.has_method("set_visible"):
+		minigame.call("set_visible", visible)
+
+func _can_run_transition(duration: float) -> bool:
+	if not minigame_transition_enabled:
+		return false
+	if duration <= 0.0:
+		return false
+	if UIMessage == null:
+		return false
+	return UIMessage.has_method("play_fade_sequence")
+
+func _finalize_minigame_finish(minigame: Node, success: bool) -> void:
+	if minigame == null:
+		return
+	if minigame != _active_minigame:
+		return
+	_active_minigame = null
+	_restore_music()
+	if MusicManager:
+		MusicManager.resume_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
+	_restore_cursor()
+	_restore_pause()
+	_schedule_prompt_restore(minigame)
+	_clear_timer()
+	_block_player_movement = false
+	_allow_pause_menu = true
+	_allow_cancel_action = false
+	minigame_finished.emit(minigame, success)
+	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
+	minigame_cancel_allowed_changed.emit(_allow_cancel_action)
+
 func _on_scene_changed(scene: Node = null) -> void:
 	_cleanup_orphaned_minigames(scene)
 
@@ -404,9 +502,10 @@ func _handle_cancel_request() -> void:
 		_active_minigame.call("on_minigame_cancel")
 		return
 	var minigame := _active_minigame
-	finish_minigame(minigame, false)
-	if minigame != null and is_instance_valid(minigame) and minigame.is_inside_tree():
-		minigame.queue_free()
+	finish_minigame_with_fade(minigame, false, func():
+		if minigame != null and is_instance_valid(minigame) and minigame.is_inside_tree():
+			minigame.queue_free()
+	)
 
 func _resolve_settings(config: Variant) -> MinigameSettings:
 	if config is MinigameSettings:

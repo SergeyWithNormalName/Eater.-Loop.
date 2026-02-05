@@ -196,8 +196,11 @@ func on_minigame_cancel() -> void:
 
 func _close_minigame(success: bool) -> void:
 	if MinigameController:
-		MinigameController.finish_minigame(self, success)
-	queue_free()
+		MinigameController.finish_minigame_with_fade(self, success, func():
+			queue_free()
+		)
+	else:
+		queue_free()
 
 func _exit_tree() -> void:
 	if MinigameController and MinigameController.is_active(self):
