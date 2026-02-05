@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MusicMixSettings" load_steps=2 format=3 uid="uid://bq5fsie4m61be"]
+
+[ext_resource type="Script" uid="uid://bqr6m1maitahn" path="res://levels/music_mix_settings.gd" id="1_y1y3u"]
+
+[resource]
+script = ExtResource("1_y1y3u")
+ambient_db_offset = -12.0

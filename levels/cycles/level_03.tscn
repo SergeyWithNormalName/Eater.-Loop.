@@ -69,9 +69,9 @@
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="82_1nen6"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="82_8u1p6"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="82_nyxq3"]
-[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
-[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("30_gcw8w")
@@ -199,17 +199,9 @@ position = Vector2(14479, 196)
 
 [node name="Door(InBathroom)" parent="Bathroom/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(14127.999, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("17_cdarl")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Toilet" type="Node2D" parent="."]
 position = Vector2(9294, 0)
@@ -290,17 +282,9 @@ texture = ExtResource("63_4gcof")
 
 [node name="Door(InToilet)" parent="Toilet/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(16825, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("17_cdarl")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Hall" type="Node2D" parent="."]
 
@@ -639,71 +623,31 @@ texture = ExtResource("81_8u1p6")
 
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(8434.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bedroom2/InteractableObjects/Door(InBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(8818.125, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(6699, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("15_tw5p7")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(7515.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_rdh85")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(7832.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_rdh85")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Fridge" parent="Hall/InteractableObjects" instance=ExtResource("46_yv753")]
 position = Vector2(9809.79, 115.749985)
@@ -912,7 +856,7 @@ texture = ExtResource("35_msdij")
 
 [node name="Laptop" parent="Bedroom/InteractableObjects" instance=ExtResource("66_t1g82")]
 z_index = -1
-position = Vector2(-1865, 165.00002)
+position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("82_nyxq3")
 time_limit = 60.0
@@ -938,16 +882,8 @@ texture = SubResource("GradientTexture2D_pgutp")
 
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(-1581, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("69_fnco1")]
 position = Vector2(-2420, 226)
@@ -1141,14 +1077,6 @@ texture = ExtResource("35_msdij")
 
 [node name="InteractableObjects" type="Node2D" parent="Bedroom2"]
 
-[node name="Laptop" parent="Bedroom2/InteractableObjects" instance=ExtResource("66_t1g82")]
-z_index = -1
-position = Vector2(-1865, 165.00002)
-scale = Vector2(0.96, 0.96)
-minigame_scene = ExtResource("82_nyxq3")
-time_limit = 60.0
-completed_message = "Я уже сделал эту работу"
-
 [node name="Clock" type="Sprite2D" parent="Bedroom2/InteractableObjects"]
 position = Vector2(-2124, 150)
 scale = Vector2(0.18, 0.18)
@@ -1168,16 +1096,8 @@ texture = SubResource("GradientTexture2D_pgutp")
 
 [node name="Door(InBedroom)" parent="Bedroom2/InteractableObjects" instance=ExtResource("15_nlfbw")]
 position = Vector2(-1581, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_fnco1")]
 position = Vector2(-2420, 226)
@@ -1186,3 +1106,11 @@ next_level_path = "uid://belav28byue60"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
+
+[node name="Laptop" parent="." instance=ExtResource("66_t1g82")]
+z_index = -1
+position = Vector2(-1853, 2067)
+scale = Vector2(0.96, 0.96)
+minigame_scene = ExtResource("82_nyxq3")
+time_limit = 60.0
+completed_message = "Я уже сделал эту работу"

@@ -70,7 +70,7 @@
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_p4ir0"]
 [ext_resource type="PackedScene" uid="uid://phdu5uudp1p0" path="res://levels/minigames/feeding/food/krilishki/food_krilishki.tscn" id="70_2bxq4"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
-[ext_resource type="Script" uid="uid://p9t2q7x6v1m8c" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -910,7 +910,7 @@ texture = ExtResource("65_5ye2y")
 
 [node name="Laptop" parent="Bedroom/InteractableObjects" instance=ExtResource("66_xgqo3")]
 z_index = -1
-position = Vector2(-1865, 165.00002)
+position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 is_enabled = false
 
@@ -1747,7 +1747,7 @@ texture = ExtResource("65_5ye2y")
 
 [node name="Laptop" parent="Bedroom2/InteractableObjects" instance=ExtResource("66_xgqo3")]
 z_index = -1
-position = Vector2(-1865, 165.00002)
+position = Vector2(-1853, 75.00012)
 scale = Vector2(0.96, 0.96)
 is_enabled = false
 

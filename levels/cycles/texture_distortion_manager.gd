@@ -111,7 +111,7 @@ func _play_distortion_music() -> void:
 	if _distortion_music_active:
 		return
 	_distortion_music_active = true
-	MusicManager.push_music(distortion_music, distortion_music_fade_time, distortion_music_volume_db)
+	MusicManager.start_distortion_music(self, distortion_music, distortion_music_fade_time, distortion_music_volume_db)
 
 func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
 	if GameState == null:
@@ -126,11 +126,7 @@ func _stop_distortion_music() -> void:
 	if MusicManager == null:
 		_distortion_music_active = false
 		return
-	if MusicManager.has_method("get_current_stream") and MusicManager.get_current_stream() == distortion_music:
-		MusicManager.pop_music(distortion_music_fade_time)
-	else:
-		if MusicManager.has_method("remove_music_from_stack"):
-			MusicManager.remove_music_from_stack(distortion_music)
+	MusicManager.stop_distortion_music(self, distortion_music_fade_time)
 	_distortion_music_active = false
 
 func _is_minigame_music_active() -> bool:

@@ -11,7 +11,7 @@ signal resume_requested
 @export var menu_music: AudioStream
 ## Громкость музыки меню (дБ).
 @export_range(-80.0, 6.0, 0.1) var menu_music_volume_db: float = -12.0
-## Длительность плавного перехода (сек).
+## Длительность быстрого затухания остальной музыки (сек).
 @export_range(0.0, 10.0, 0.1) var menu_music_fade_time: float = 1.0
 ## Длительность возврата музыки погони после паузы (сек).
 @export_range(0.0, 10.0, 0.1) var chase_music_resume_fade_time: float = 0.1
@@ -86,7 +86,6 @@ func _show_main() -> void:
 
 func _resume() -> void:
 	_restore_menu_music()
-	_resume_chase_music()
 	emit_signal("resume_requested")
 
 func _on_settings_pressed() -> void:
@@ -153,15 +152,12 @@ func _restore_panel_after_confirm() -> void:
 func _play_menu_music() -> void:
 	if MusicManager == null:
 		return
-	MusicManager.pause_chase_music(menu_music_fade_time)
-	if menu_music == null:
-		return
-	MusicManager.push_music(menu_music, menu_music_fade_time, menu_music_volume_db)
+	MusicManager.start_pause_menu_music(menu_music, menu_music_fade_time, menu_music_volume_db)
 
 func _restore_menu_music() -> void:
 	if MusicManager == null:
 		return
-	MusicManager.pop_music(menu_music_fade_time)
+	MusicManager.stop_pause_menu_music(chase_music_resume_fade_time)
 
 func _stop_menu_music() -> void:
 	if MusicManager == null:
@@ -169,8 +165,3 @@ func _stop_menu_music() -> void:
 	MusicManager.clear_stack()
 	MusicManager.stop_music(menu_music_fade_time)
 	MusicManager.clear_chase_music_sources(menu_music_fade_time)
-
-func _resume_chase_music() -> void:
-	if MusicManager == null:
-		return
-	MusicManager.resume_chase_music(chase_music_resume_fade_time)

@@ -521,6 +521,8 @@
 │   ├── interaction_prompts.gd.uid
 │   ├── music_manager.gd
 │   ├── music_manager.gd.uid
+│   ├── music_mix_settings.gd
+│   ├── music_mix_settings.gd.uid
 │   ├── prompt_view.gd
 │   └── prompt_view.gd.uid
 ├── music
@@ -553,7 +555,8 @@
 │   ├── TypeSilentHill.wav
 │   ├── TypeSilentHill.wav.import
 │   ├── UniversityMusic.wav
-│   └── UniversityMusic.wav.import
+│   ├── UniversityMusic.wav.import
+│   └── music_mix_settings.tres
 ├── objects
 │   ├── environment
 │   │   ├── background
@@ -963,4 +966,4 @@
 ├── project.godot
 └── structure.txt
 
-97 directories, 867 files
+97 directories, 870 files

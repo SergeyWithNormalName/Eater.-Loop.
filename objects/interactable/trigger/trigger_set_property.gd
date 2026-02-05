@@ -38,15 +38,17 @@ extends Area2D
 ## Включить управление музыкой через триггер.
 @export var music_enabled: bool = false
 ## Действие с музыкой при входе.
-@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить") var music_on_enter: int = 0
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку") var music_on_enter: int = 0
 ## Действие с музыкой при выходе.
-@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить") var music_on_exit: int = 0
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку") var music_on_exit: int = 0
 ## Музыка для подмены.
 @export var music_stream: AudioStream
 ## Громкость музыки (дБ).
 @export_range(-80.0, 6.0, 0.1) var music_volume_db: float = 0.0
 ## Длительность плавного перехода (сек).
 @export_range(0.0, 10.0, 0.1) var music_fade_time: float = 1.0
+## Длительность плавного затухания при остановке приоритетной музыки (сек).
+@export_range(0.0, 10.0, 0.1) var music_fade_out_time: float = 1.0
 
 var _has_fired: bool = false
 
@@ -54,6 +56,10 @@ const MUSIC_ACTION_NONE := 0
 const MUSIC_ACTION_REPLACE := 1
 const MUSIC_ACTION_DUCK := 2
 const MUSIC_ACTION_RESTORE := 3
+const MUSIC_ACTION_EVENT_START := 4
+const MUSIC_ACTION_EVENT_STOP := 5
+const MUSIC_ACTION_PAUSE_ALL := 6
+const MUSIC_ACTION_RESUME_ALL := 7
 
 func _ready() -> void:
 	input_pickable = false
@@ -138,6 +144,14 @@ func _apply_music(is_exit: bool) -> void:
 			MusicManager.duck_music(music_fade_time)
 		MUSIC_ACTION_RESTORE:
 			MusicManager.restore_music_volume(music_fade_time)
+		MUSIC_ACTION_EVENT_START:
+			MusicManager.start_event_music(self, music_stream, music_fade_time, music_volume_db, music_fade_out_time)
+		MUSIC_ACTION_EVENT_STOP:
+			MusicManager.stop_event_music(self, music_fade_out_time)
+		MUSIC_ACTION_PAUSE_ALL:
+			MusicManager.pause_all_music(music_fade_time)
+		MUSIC_ACTION_RESUME_ALL:
+			MusicManager.resume_all_music(music_fade_time)
 		_:
 			return
 

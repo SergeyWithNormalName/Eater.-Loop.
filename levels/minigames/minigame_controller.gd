@@ -28,6 +28,8 @@ signal minigame_cancel_allowed_changed(allowed: bool)
 ## Слой для контейнера мини-игр (должен быть ниже меню паузы).
 @export var default_minigame_layer: int = 75
 
+const CHASE_MUSIC_PAUSE_FADE_TIME := 0.1
+
 var _active_minigame: Node = null
 var _time_limit: float = -1.0
 var _time_left: float = 0.0
@@ -37,6 +39,7 @@ var _pause_prev: bool = false
 var _cursor_enabled: bool = true
 var _cursor_speed: float = 800.0
 var _music_pushed: bool = false
+var _music_is_stream: bool = false
 var _music_stop_on_finish: bool = false
 var _music_fade_time: float = 0.3
 var _block_player_movement: bool = true
@@ -139,6 +142,8 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 		settings.music_volume_db,
 		settings.suspend_music
 	)
+	if MusicManager:
+		MusicManager.pause_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
 
 	minigame_started.emit(minigame)
 	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
@@ -151,6 +156,8 @@ func finish_minigame(minigame: Node, success: bool = true) -> void:
 		return
 	_active_minigame = null
 	_restore_music()
+	if MusicManager:
+		MusicManager.resume_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
 	_restore_cursor()
 	_restore_pause()
 	_schedule_prompt_restore(minigame)
@@ -167,6 +174,9 @@ func stop_minigame_music(fade_time: float = -1.0) -> void:
 		return
 	if not _music_pushed:
 		return
+	if _music_is_stream:
+		MusicManager.stop_minigame_music()
+		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
 	MusicManager.stop_music(target_fade)
 
@@ -176,12 +186,14 @@ func update_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_t
 	if _active_minigame == null:
 		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
-	var target_volume := volume_db
 	if not _music_pushed:
 		_music_pushed = true
-		MusicManager.push_music(stream, target_fade, target_volume)
+		_music_is_stream = true
+		MusicManager.start_minigame_music(stream, volume_db)
 		return
-	MusicManager.play_music(stream, target_fade, target_volume)
+	var base_volume := MusicManager._resolve_volume(volume_db)
+	var mixed_volume := MusicManager._apply_mix(MusicManager.MIX_MINIGAME, base_volume)
+	MusicManager.play_music(stream, target_fade, mixed_volume, 0.0, 999.0, MusicManager.SOURCE_MINIGAME)
 
 func get_time_left() -> float:
 	return _time_left
@@ -320,23 +332,32 @@ func _clear_timer() -> void:
 
 func _setup_music(stream: AudioStream, volume_db: float, suspend_music: bool) -> void:
 	if MusicManager == null:
+		_music_is_stream = false
 		return
+	_music_is_stream = stream != null
 	if stream == null and not suspend_music:
 		return
-	var target_fade := _music_fade_time
-	var target_volume := volume_db
 	_music_pushed = true
-	MusicManager.push_music(stream, target_fade, target_volume)
+	if stream != null:
+		MusicManager.start_minigame_music(stream, volume_db)
+		return
+	MusicManager.push_music(null, _music_fade_time)
 
 func _restore_music() -> void:
 	if MusicManager == null:
 		return
 	if not _music_pushed:
 		return
+	if _music_is_stream:
+		MusicManager.pop_music(0.0)
+		_music_pushed = false
+		_music_is_stream = false
+		return
 	if _music_stop_on_finish:
 		MusicManager.stop_music(_music_fade_time)
 	MusicManager.pop_music(_music_fade_time)
 	_music_pushed = false
+	_music_is_stream = false
 
 func _resolve_minigame_layer(override_layer: int) -> int:
 	return default_minigame_layer if override_layer < 0 else override_layer

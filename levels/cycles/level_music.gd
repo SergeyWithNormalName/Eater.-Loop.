@@ -5,6 +5,8 @@ extends AudioStreamPlayer
 @export var play_on_ready: bool = true
 ## Длительность плавного перехода.
 @export_range(0.0, 10.0, 0.1) var fade_time: float = 1.0
+## Продолжать музыку после смены уровня.
+@export var continue_on_level_change: bool = true
 
 func _ready() -> void:
 	autoplay = false
@@ -13,4 +15,10 @@ func _ready() -> void:
 	if stream == null:
 		return
 	if MusicManager:
-		MusicManager.play_music(stream, fade_time, volume_db)
+		MusicManager.play_ambient_music(stream, fade_time, volume_db)
+
+func _exit_tree() -> void:
+	if continue_on_level_change:
+		return
+	if MusicManager:
+		MusicManager.stop_ambient_music(stream, fade_time)
