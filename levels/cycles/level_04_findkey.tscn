@@ -1724,6 +1724,7 @@ key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
 trash_min = 9
 trash_max = 14
+searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
@@ -1733,6 +1734,7 @@ key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("90_6qsug"), ExtResource("91_rm4nf"), ExtResource("92_8fgma"), ExtResource("93_yc2j2"), ExtResource("94_vs8ya"), ExtResource("95_5ye2y"), ExtResource("96_xgqo3"), ExtResource("97_bar5d"), ExtResource("98_siwla"), ExtResource("99_p4ir0"), ExtResource("100_s24v6"), ExtResource("101_vs84s"), ExtResource("102_l44aq"), ExtResource("103_7a55g"), ExtResource("104_nnmjy")])
 trash_min = 15
 trash_max = 20
+searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot4" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
@@ -1741,12 +1743,14 @@ scale = Vector2(2.0907319, 2.904042)
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("105_1i4bq"), ExtResource("106_jqnsi"), ExtResource("107_uo057"), ExtResource("108_np76i"), ExtResource("109_mu543"), ExtResource("110_foxbh")])
 trash_max = 7
+searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot2" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(6323, 2927.9998)
 scale = Vector2(7.410693, 6.4640417)
 key_texture = ExtResource("73_cmq65")
+searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchKeyManager" type="Node2D" parent="."]

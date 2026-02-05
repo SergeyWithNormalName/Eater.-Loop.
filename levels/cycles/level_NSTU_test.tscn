@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://ddrjoe11x5ccx"]
+[gd_scene load_steps=71 format=3 uid="uid://ddrjoe11x5ccx"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
@@ -23,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://b2782n7l58ug2" path="res://objects/environment/university/BackWallsUn.png" id="21_85201"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="21_e6c1t"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="22_rsn48"]
-[ext_resource type="Shader" uid="uid://dxu1t171q3cm5" path="res://levels/cycles/floor_shader.gdshader" id="23_ih4cm"]
 [ext_resource type="Texture2D" uid="uid://b14sex2a21kpw" path="res://objects/environment/sprites/allrooms/On-offer.png" id="23_l5gbn"]
 [ext_resource type="Texture2D" uid="uid://byhcxlafbrrlk" path="res://objects/interactable/door/sprites/DoorStairs.png" id="24_len77"]
 [ext_resource type="Texture2D" uid="uid://dt3pok3fuwl60" path="res://objects/environment/university/TestFloorVertU.png" id="24_oevlm"]
@@ -71,17 +70,6 @@ shader = ExtResource("2_85201")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ik0j"]
-shader = ExtResource("23_ih4cm")
-shader_parameter/perspective_depth = 1.0
-shader_parameter/trapezoid_width = 0.5
-shader_parameter/perspective_start = 0.55
-shader_parameter/perspective_end = 1.0
-shader_parameter/perspective_curve = 2.5
-shader_parameter/depth_strength = 0.9
-shader_parameter/tiling = Vector2(5, 1)
-shader_parameter/scroll_offset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_len77"]
 size = Vector2(339.5, 464.79214)
@@ -314,16 +302,6 @@ position = Vector2(8352, 19)
 texture = ExtResource("21_85201")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
-
-[node name="FloorKitchen3" type="Sprite2D" parent="Hall/Background"]
-z_index = -5
-texture_repeat = 2
-material = SubResource("ShaderMaterial_2ik0j")
-position = Vector2(8351.001, 700)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("24_oevlm")
-region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
 
 [node name="WallBack2" type="Sprite2D" parent="Hall/Background"]
 z_index = -5
@@ -803,8 +781,8 @@ position = Vector2(10604, 321)
 floor_texture = ExtResource("24_oevlm")
 size = Vector2(9000, 120)
 tiling = Vector2(7, 3)
-perspective_amount = 1.2
-horizon = -3.45
+perspective_amount = 1.75
+horizon = -3.74
 edge_strength = 0.22
 edge_power = 0.55
 center_width = 0.0
