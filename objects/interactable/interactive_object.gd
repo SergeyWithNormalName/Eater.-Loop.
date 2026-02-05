@@ -18,13 +18,17 @@ signal interaction_finished # <--- НОВЫЙ СИГНАЛ: для цепоче�
 ## Обрабатывать ввод автоматически.
 @export var handle_input: bool = true
 
+@export_group("Prompt Indicator")
+## Смещение спрайта подсказки относительно центра объекта.
+@export var prompt_offset: Vector2 = Vector2.ZERO
+
 # --- НОВЫЕ НАСТРОЙКИ (ЗАВИСИМОСТИ) ---
 @export_group("Dependency System")
 ## Если true, объект помечается выполненным после первого использования
 @export var one_shot: bool = false
 ## Объект, который должен быть выполнен перед использованием этого
 @export var dependency_object: InteractiveObject 
-## Сообщение, если зависимость не выполнена
+## Сообщение при блокировке (если показывать вручную)
 @export var locked_message: String = "Сначала нужно сделать что-то другое..."
 
 # --- ВНУТРЕННИЕ ПЕРЕМЕННЫЕ ---
@@ -36,6 +40,7 @@ var is_completed: bool = false # <--- ФЛАГ: Выполнен объект и
 func _ready() -> void:
 	input_pickable = false
 	_setup_interaction_area()
+	_setup_dependency_listener()
 
 # --- ЛОГИКА ВЗАИМОДЕЙСТВИЯ ---
 
@@ -43,13 +48,8 @@ func _ready() -> void:
 func request_interact() -> void:
 	if not _can_interact():
 		return
-	
-	# 1. ПРОВЕРКА ЗАВИСИМОСТИ (НОВАЯ ЧАСТЬ)
-	if dependency_object != null:
-		if not dependency_object.is_completed:
-			# Если зависимость не выполнена, показываем ошибку и выходим
-			_show_locked_message()
-			return
+	if not _is_dependency_satisfied():
+		return
 
 	# 2. ЕСЛИ ВСЁ ОК — ЗАПУСКАЕМ ДЕЙСТВИЕ
 	interaction_requested.emit(_player_in_range)
@@ -116,14 +116,16 @@ func _on_interact_area_body_exited(body: Node) -> void:
 
 func _on_player_entered(_player: Node) -> void:
 	player_entered.emit(_player)
-	if _prompts_enabled and auto_prompt:
-		_show_prompt()
+	_refresh_prompt_state()
 
 func _on_player_exited(_player: Node) -> void:
 	player_exited.emit(_player)
 	_hide_prompt()
 
 func _show_prompt() -> void:
+	if not _allow_prompt_display():
+		_hide_prompt()
+		return
 	if UIMessage:
 		UIMessage.show_interact_prompt(self, _get_prompt_text())
 	elif InteractionPrompts:
@@ -138,6 +140,12 @@ func _hide_prompt() -> void:
 func _get_prompt_text() -> String:
 	return prompt_text
 
+func get_prompt_world_position() -> Vector2:
+	var anchor := _interact_area
+	if anchor == null:
+		return to_global(prompt_offset)
+	return anchor.to_global(prompt_offset)
+
 func get_interacting_player() -> Node:
 	return _player_in_range
 
@@ -146,9 +154,41 @@ func is_player_in_range() -> bool:
 
 func set_prompts_enabled(enabled: bool) -> void:
 	_prompts_enabled = enabled
-	if not enabled:
+	_refresh_prompt_state()
+
+func _setup_dependency_listener() -> void:
+	if dependency_object == null:
+		return
+	if not is_instance_valid(dependency_object):
+		return
+	if not dependency_object.interaction_finished.is_connected(_on_dependency_finished):
+		dependency_object.interaction_finished.connect(_on_dependency_finished)
+
+func _on_dependency_finished() -> void:
+	_refresh_prompt_state()
+
+func _is_dependency_satisfied() -> bool:
+	if dependency_object == null:
+		return true
+	return dependency_object.is_completed
+
+func _is_interaction_available() -> bool:
+	if not _can_interact():
+		return false
+	if not _is_dependency_satisfied():
+		return false
+	return true
+
+func _allow_prompt_display() -> bool:
+	if not _prompts_enabled:
+		return false
+	return _is_interaction_available()
+
+func _refresh_prompt_state() -> void:
+	if _player_in_range == null:
 		_hide_prompt()
-	elif _player_in_range != null:
+		return
+	if auto_prompt and _allow_prompt_display():
 		_show_prompt()
-		
-		
+	else:
+		_hide_prompt()

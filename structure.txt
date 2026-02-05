@@ -161,20 +161,6 @@
 │   │   └── enemy_runner.tscn
 │   ├── stalker
 │   │   ├── walking_animation
-│   │   │   ├── ezgif-frame-001.png
-│   │   │   ├── ezgif-frame-001.png.import
-│   │   │   ├── ezgif-frame-002.png
-│   │   │   ├── ezgif-frame-002.png.import
-│   │   │   ├── ezgif-frame-003.png
-│   │   │   ├── ezgif-frame-003.png.import
-│   │   │   ├── ezgif-frame-004.png
-│   │   │   ├── ezgif-frame-004.png.import
-│   │   │   ├── ezgif-frame-005.png
-│   │   │   ├── ezgif-frame-005.png.import
-│   │   │   ├── ezgif-frame-006.png
-│   │   │   ├── ezgif-frame-006.png.import
-│   │   │   ├── ezgif-frame-007.png
-│   │   │   ├── ezgif-frame-007.png.import
 │   │   │   ├── ezgif-frame-008.png
 │   │   │   ├── ezgif-frame-008.png.import
 │   │   │   ├── ezgif-frame-009.png
@@ -216,7 +202,9 @@
 │   │   │   ├── ezgif-frame-027.png
 │   │   │   ├── ezgif-frame-027.png.import
 │   │   │   ├── ezgif-frame-028.png
-│   │   │   └── ezgif-frame-028.png.import
+│   │   │   ├── ezgif-frame-028.png.import
+│   │   │   ├── ezgif-frame-029.png
+│   │   │   └── ezgif-frame-029.png.import
 │   │   ├── enemy_stalker.gd
 │   │   ├── enemy_stalker.gd.uid
 │   │   ├── enemy_stalker.tscn
@@ -245,25 +233,26 @@
 │   │   │   ├── level_04.tscn
 │   │   │   ├── level_05_corridor_distortion.gd
 │   │   │   ├── level_05_corridor_distortion.gd.uid
+│   │   │   ├── level_05_keystests.tscn
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
-│   │   ├── floor_shader.gdshader
-│   │   ├── floor_shader.gdshader.uid
+│   │   ├── TextureDistortionManager.tscn
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
 │   │   ├── level.gd.uid
 │   │   ├── level_01.gdshader
 │   │   ├── level_01.gdshader.uid
-│   │   ├── level_01.tscn
-│   │   ├── level_02.tscn
-│   │   ├── level_03.tscn
-│   │   ├── level_04.tscn
-│   │   ├── level_05.tscn
-│   │   ├── level_06.tscn
+│   │   ├── level_01_start.tscn
+│   │   ├── level_02_basic.tscn
+│   │   ├── level_03_deepseek.tscn
+│   │   ├── level_04_findkey.tscn
+│   │   ├── level_05_sql.tscn
 │   │   ├── level_07.tscn
-│   │   ├── level_08.tscn
+│   │   ├── level_08_doors.tscn
+│   │   ├── level_09_PT.tscn
+│   │   ├── level_11_crazy.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_end.tscn
 │   │   ├── level_music.gd
@@ -299,6 +288,8 @@
 │   │   │   │   ├── HappyEat.png.import
 │   │   │   │   ├── SadEat.png
 │   │   │   │   ├── SadEat.png.import
+│   │   │   │   ├── TheBadestEat.png
+│   │   │   │   ├── TheBadestEat.png.import
 │   │   │   │   ├── VeryBadEat.png
 │   │   │   │   └── VeryBadEat.png.import
 │   │   │   ├── food
@@ -532,6 +523,8 @@
 │   ├── interaction_prompts.gd.uid
 │   ├── music_manager.gd
 │   ├── music_manager.gd.uid
+│   ├── music_mix_settings.gd
+│   ├── music_mix_settings.gd.uid
 │   ├── prompt_view.gd
 │   └── prompt_view.gd.uid
 ├── music
@@ -564,7 +557,8 @@
 │   ├── TypeSilentHill.wav
 │   ├── TypeSilentHill.wav.import
 │   ├── UniversityMusic.wav
-│   └── UniversityMusic.wav.import
+│   ├── UniversityMusic.wav.import
+│   └── music_mix_settings.tres
 ├── objects
 │   ├── environment
 │   │   ├── background
@@ -804,10 +798,14 @@
 │   │   │   └── door_university.tscn
 │   │   ├── fridge
 │   │   │   ├── audio
+│   │   │   │   ├── FridgeCreaking.wav
+│   │   │   │   ├── FridgeCreaking.wav.import
 │   │   │   │   ├── FridgeNoizeE.wav
 │   │   │   │   ├── FridgeNoizeE.wav.import
 │   │   │   │   ├── OpenFridgeE.wav
-│   │   │   │   └── OpenFridgeE.wav.import
+│   │   │   │   ├── OpenFridgeE.wav.import
+│   │   │   │   ├── PigsScream.wav
+│   │   │   │   └── PigsScream.wav.import
 │   │   │   ├── sprites
 │   │   │   │   ├── ClosedFridge.png
 │   │   │   │   ├── ClosedFridge.png.import
@@ -839,6 +837,13 @@
 │   │   │   ├── lamp.tscn
 │   │   │   ├── lamp.wav
 │   │   │   └── lamp.wav.import
+│   │   ├── lebedka
+│   │   │   ├── Lebedka.png
+│   │   │   ├── Lebedka.png.import
+│   │   │   ├── LebedkaBezRuchki.png
+│   │   │   ├── LebedkaBezRuchki.png.import
+│   │   │   ├── RuchkaOtLebedki.png
+│   │   │   └── RuchkaOtLebedki.png.import
 │   │   ├── note
 │   │   │   ├── note_object.gd
 │   │   │   └── note_object.gd.uid
@@ -930,6 +935,8 @@
 │   ├── Andry.png.import
 │   ├── AndryWithFlashlight.png
 │   ├── AndryWithFlashlight.png.import
+│   ├── UI_Button_Sprite.png
+│   ├── UI_Button_Sprite.png.import
 │   ├── flashlight.gd
 │   ├── flashlight.gd.uid
 │   ├── player.gd
@@ -946,10 +953,30 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   └── distortion_transition.gdshader.uid
+├── tests
+│   ├── cases
+│   │   ├── test_autoloads.gd
+│   │   ├── test_autoloads.gd.uid
+│   │   ├── test_input_actions.gd
+│   │   ├── test_input_actions.gd.uid
+│   │   ├── test_project_config.gd
+│   │   ├── test_project_config.gd.uid
+│   │   ├── test_scenes_load.gd
+│   │   ├── test_scenes_load.gd.uid
+│   │   ├── test_scripts_compile.gd
+│   │   └── test_scripts_compile.gd.uid
+│   ├── README.md
+│   ├── run_tests.gd
+│   ├── run_tests.gd.uid
+│   ├── run_tests.sh
+│   ├── test_case.gd
+│   ├── test_case.gd.uid
+│   ├── test_utils.gd
+│   └── test_utils.gd.uid
 ├── default_bus_layout.tres
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-95 directories, 858 files
+98 directories, 882 files

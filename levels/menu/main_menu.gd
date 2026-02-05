@@ -204,7 +204,7 @@ func _play_menu_music() -> void:
 	if MusicManager == null or menu_music == null:
 		return
 	MusicManager.clear_stack()
-	MusicManager.play_music(menu_music, menu_music_fade_time, menu_music_volume_db)
+	MusicManager.play_menu_music(menu_music, menu_music_fade_time, menu_music_volume_db)
 
 func _stop_menu_music() -> void:
 	if MusicManager == null:

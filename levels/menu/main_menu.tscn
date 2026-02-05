@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://player/audio/FlashlightOnOff.wav" id="3_click_sfx"]
 [ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://player/audio/steps/steps1.wav" id="4_hover_sfx"]
 [ext_resource type="AudioStream" uid="uid://bkxfm51r6vlro" path="res://music/StressMusic.wav" id="5_menu_music"]
-[ext_resource type="PackedScene" uid="uid://cc6ehxxoauhyn" path="res://levels/cycles/level_01.tscn" id="6_level_01"]
+[ext_resource type="PackedScene" uid="uid://cc6ehxxoauhyn" path="res://levels/cycles/level_01_start.tscn" id="6_level_01"]
 [ext_resource type="Texture2D" uid="uid://cqt3na311ltmq" path="res://levels/menu/MainMenuBackground.png" id="7_menu_bg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]

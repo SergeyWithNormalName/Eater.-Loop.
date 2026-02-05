@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="2_xiu3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qx3ec"]
-size = Vector2(131.97206, 262.2273)
+size = Vector2(131.97206, 136)
 
 [sub_resource type="Gradient" id="Gradient_8u1p6"]
 colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0, 0, 0, 1)
@@ -32,22 +32,21 @@ available_light_node_secondary = NodePath("PointLight2D2")
 prompt_text = "Сделать лабораторную"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(17.98601, -4.1136475)
 scale = Vector2(0.99999964, 1)
 shape = SubResource("RectangleShape2D_qx3ec")
 
 [node name="NotebookOff2" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(19.629883, -86.15288)
+position = Vector2(0.9481888, 5.7399445)
 scale = Vector2(0.26368898, 0.263689)
 texture = ExtResource("1_j6lc8")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(18.539358, -62.16093)
+position = Vector2(-0.14233589, 29.7319)
 scale = Vector2(2.526802, 1.3489764)
 texture = SubResource("GradientTexture2D_xiu3k")
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
-position = Vector2(19.084557, -94.877205)
+position = Vector2(0.40286064, -2.984375)
 scale = Vector2(1.686933, 0.88606596)
 texture = SubResource("GradientTexture2D_0t4v3")

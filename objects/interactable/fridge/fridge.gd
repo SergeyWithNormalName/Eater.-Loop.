@@ -38,11 +38,29 @@ extends InteractiveObject
 
 @export_group("Visuals & Audio")
 @export var open_sound: AudioStream 
+## Фоновый шум холодильника.
+@export var noise_sound: AudioStream
+## Громкость шума холодильника (dB).
+@export var noise_volume_db: float = -18.0
+## Узел проигрывателя шума.
+@export var noise_player_node: NodePath = NodePath("AudioStreamPlayer2D")
 @export var locked_sprite: Texture2D
 @export var available_sprite: Texture2D
 @export var sprite_node: NodePath = NodePath("Sprite2D")
 @export var available_light_node: NodePath
 @export var available_light_node_secondary: NodePath
+
+@export_group("Idle Rocking")
+## Длительность одного полного цикла (сек). Меньше = быстрее.
+@export var rocking_cycle_duration: float = 2.0
+## Сила покачивания в градусах.
+@export var rocking_strength_degrees: float = 0.0
+## Точка подвеса: 0 = по центру (обычные холодильники), 1 = подвес сверху.
+@export_enum("Centered", "Hanging") var rocking_pivot_mode: int = 0
+## Доп. смещение точки подвеса (пиксели, до масштаба).
+@export var rocking_pivot_offset: Vector2 = Vector2.ZERO
+## Звук покачивания.
+@export var rocking_sound: AudioStream
 
 # Внутренние переменные
 var _is_interacting: bool = false
@@ -52,9 +70,16 @@ var _code_unlocked: bool = false # Флаг, открыт ли замок
 var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
+var _noise_player: AudioStreamPlayer2D = null
+var _rocking_active: bool = false
+var _rocking_elapsed: float = 0.0
+var _rocking_base_rotation: float = 0.0
+var _rocking_sound_player: AudioStreamPlayer2D = null
+var _rocking_sound_connected: bool = false
 
 func _ready() -> void:
 	super._ready() # Важно вызвать ready родителя!
+	set_process(false)
 	
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.bus = "Sounds"
@@ -63,8 +88,15 @@ func _ready() -> void:
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
+	_noise_player = get_node_or_null(noise_player_node) as AudioStreamPlayer2D
+	if _noise_player:
+		if noise_sound:
+			_noise_player.stream = noise_sound
+		_noise_player.volume_db = noise_volume_db
 	
 	_update_visuals()
+	_update_rocking_pivot()
+	_start_rocking_if_configured()
 	
 	if require_lab_completion and GameState.has_signal("lab_completed"):
 		GameState.lab_completed.connect(_update_visuals)
@@ -249,6 +281,7 @@ func _update_visuals() -> void:
 			_sprite.texture = locked_sprite
 		if _available_light: _available_light.visible = false
 		if _available_light_secondary: _available_light_secondary.visible = false
+	_update_rocking_pivot()
 
 func _teleport_player_if_needed() -> void:
 	if not enable_teleport or teleport_target.is_empty():
@@ -258,6 +291,63 @@ func _teleport_player_if_needed() -> void:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
 			player.global_position = marker.global_position
+
+func _update_rocking_pivot() -> void:
+	if _sprite == null or _sprite.texture == null:
+		return
+	if rocking_pivot_mode == 1:
+		var tex_size := _sprite.texture.get_size()
+		# Поворот вокруг верхней кромки (эффект подвешенности).
+		_sprite.centered = false
+		_sprite.offset = Vector2(-tex_size.x * 0.5, 0.0) + rocking_pivot_offset
+	else:
+		# Стандартная центрированная отрисовка.
+		_sprite.centered = true
+		_sprite.offset = Vector2.ZERO
+
+func _start_rocking_if_configured() -> void:
+	if rocking_strength_degrees <= 0.0:
+		return
+	if _sprite == null:
+		return
+	if _rocking_active:
+		return
+	_rocking_active = true
+	_rocking_elapsed = 0.0
+	_rocking_base_rotation = _sprite.rotation
+	if rocking_sound:
+		if _rocking_sound_player == null:
+			_rocking_sound_player = AudioStreamPlayer2D.new()
+			_rocking_sound_player.bus = "Sounds"
+			_rocking_sound_player.volume_db = -12.0
+			add_child(_rocking_sound_player)
+			_rocking_sound_connected = false
+		_rocking_sound_player.stream = rocking_sound
+		_rocking_sound_player.play()
+		if not _rocking_sound_connected:
+			_rocking_sound_player.finished.connect(_on_rocking_sound_finished)
+			_rocking_sound_connected = true
+	set_process(true)
+
+func _process(delta: float) -> void:
+	if not _rocking_active or _sprite == null:
+		return
+	_rocking_elapsed += delta
+	var cycle: float = max(0.05, float(rocking_cycle_duration))
+	var angle := sin(_rocking_elapsed * TAU / cycle) * deg_to_rad(rocking_strength_degrees)
+	_sprite.rotation = _rocking_base_rotation + angle
+
+func _stop_rocking() -> void:
+	_rocking_active = false
+	if _sprite:
+		_sprite.rotation = _rocking_base_rotation
+	if _rocking_sound_player:
+		_rocking_sound_player.stop()
+	set_process(false)
+
+func _on_rocking_sound_finished() -> void:
+	if _rocking_active and _rocking_sound_player:
+		_rocking_sound_player.play()
 
 func _add_minigame_to_scene(minigame: Node) -> void:
 	if minigame == null:
