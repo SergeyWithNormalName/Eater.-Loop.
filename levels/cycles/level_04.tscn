@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://belav28byue60"]
+[gd_scene load_steps=119 format=3 uid="uid://belav28byue60"]
 
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_i2ojm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_2bxq4"]
@@ -112,6 +112,7 @@
 [ext_resource type="Texture2D" uid="uid://ea2aqm07dq1v" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_6.png" id="110_foxbh"]
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_cmq65"]
 [ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="112_5wshx"]
+[ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_wtad1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -248,17 +249,9 @@ position = Vector2(14479, 196)
 
 [node name="Door(InBathroom)" parent="Bathroom/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(14127.999, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_at06m")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Toilet" type="Node2D" parent="."]
 position = Vector2(9294, 0)
@@ -339,17 +332,9 @@ texture = ExtResource("12_dm44v")
 
 [node name="Door(InToilet)" parent="Toilet/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(16825, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_at06m")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Hall" type="Node2D" parent="."]
 
@@ -688,71 +673,31 @@ texture = ExtResource("43_cmq65")
 
 [node name="Door(ToBedroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8434.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8818.125, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(6699, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("44_5wshx")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(7515.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("45_wtad1")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(7832.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("45_wtad1")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Fridge" parent="Hall/InteractableObjects" instance=ExtResource("46_51mve")]
 position = Vector2(9809.79, 115.749985)
@@ -983,16 +928,8 @@ texture = SubResource("GradientTexture2D_pgutp")
 
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(-1581, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" instance=ExtResource("69_p4ir0")]
 position = Vector2(-2420, 226)
@@ -1086,17 +1023,9 @@ position = Vector2(14479, 196)
 
 [node name="Door(InBathroom)" parent="Bathroom2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(14127.999, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_at06m")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Toilet2" type="Node2D" parent="."]
 position = Vector2(9294, 2802)
@@ -1177,17 +1106,9 @@ texture = ExtResource("12_dm44v")
 
 [node name="Door(InToilet)" parent="Toilet2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(16825, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("16_at06m")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Hall2" type="Node2D" parent="."]
 position = Vector2(0, 2802)
@@ -1530,13 +1451,6 @@ position = Vector2(8434.125, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToBedroom)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(8818.125, 83)
@@ -1544,54 +1458,25 @@ is_locked = true
 door_locked_message = "Заперто... Нужно найти ключ."
 target_marker = NodePath("../../../Bedroom2/InteractableObjects/Door(InBedroom)")
 required_key_id = "door_key"
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
+one_shot = true
 
 [node name="Door(Exit)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(6699, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("44_5wshx")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(7515.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Bathroom2/InteractableObjects/Door(InBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("45_wtad1")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(7832.125, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Toilet2/InteractableObjects/Door(InToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
 door_texture = ExtResource("45_wtad1")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Fridge" parent="Hall2/InteractableObjects" instance=ExtResource("46_51mve")]
 position = Vector2(9809.79, 115.749985)
@@ -1821,16 +1706,8 @@ texture = SubResource("GradientTexture2D_pgutp")
 
 [node name="Door(InBedroom)" parent="Bedroom2/InteractableObjects" instance=ExtResource("15_ui823")]
 position = Vector2(-1581, 83)
-is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
 
 [node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_p4ir0")]
 position = Vector2(-2420, 226)
@@ -1840,33 +1717,37 @@ next_level_path = "uid://u32e5100pijl"
 stream = ExtResource("90_inside_ambient")
 script = ExtResource("91_level_music")
 
-[node name="SearchSpot3" parent="." instance=ExtResource("72_hr46p")]
+[node name="SearchSpot3" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(19322, 2993)
 scale = Vector2(2.8508883, 4.0245605)
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
 trash_min = 9
 trash_max = 14
+dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
-[node name="SearchSpot" parent="." instance=ExtResource("72_hr46p")]
+[node name="SearchSpot" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(9198, 3028)
 scale = Vector2(2.0907319, 2.904042)
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("90_6qsug"), ExtResource("91_rm4nf"), ExtResource("92_8fgma"), ExtResource("93_yc2j2"), ExtResource("94_vs8ya"), ExtResource("95_5ye2y"), ExtResource("96_xgqo3"), ExtResource("97_bar5d"), ExtResource("98_siwla"), ExtResource("99_p4ir0"), ExtResource("100_s24v6"), ExtResource("101_vs84s"), ExtResource("102_l44aq"), ExtResource("103_7a55g"), ExtResource("104_nnmjy")])
 trash_min = 15
 trash_max = 20
+dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
-[node name="SearchSpot4" parent="." instance=ExtResource("72_hr46p")]
+[node name="SearchSpot4" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(9548, 2899)
 scale = Vector2(2.0907319, 2.904042)
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("105_1i4bq"), ExtResource("106_jqnsi"), ExtResource("107_uo057"), ExtResource("108_np76i"), ExtResource("109_mu543"), ExtResource("110_foxbh")])
 trash_max = 7
+dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
-[node name="SearchSpot2" parent="." instance=ExtResource("72_hr46p")]
+[node name="SearchSpot2" parent="." node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(6323, 2927.9998)
 scale = Vector2(7.410693, 6.4640417)
 key_texture = ExtResource("73_cmq65")
+dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchKeyManager" type="Node2D" parent="."]
 script = ExtResource("111_cmq65")
@@ -1908,3 +1789,6 @@ texture = SubResource("GradientTexture2D_cmq65")
 
 [node name="StalkerSpawnMarker" parent="." instance=ExtResource("112_5wshx")]
 position = Vector2(10428, 2969)
+
+[node name="TextureDistortionManager" parent="." instance=ExtResource("113_wtad1")]
+position = Vector2(7696, 1988)
