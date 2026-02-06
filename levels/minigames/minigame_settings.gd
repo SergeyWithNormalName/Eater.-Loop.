@@ -2,8 +2,9 @@ class_name MinigameSettings
 extends Resource
 
 @export var pause_game: bool = false
-@export var enable_gamepad_cursor: bool = true
-@export var gamepad_cursor_speed: float = 800.0
+## Показывать системный курсор во время мини-игры.
+## Схема геймпад-управления настраивается через MinigameController.set_gamepad_scheme().
+@export var show_mouse_cursor: bool = true
 @export var time_limit: float = -1.0
 @export var music_stream: AudioStream
 @export var music_volume_db: float = 999.0

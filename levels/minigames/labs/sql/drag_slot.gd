@@ -17,4 +17,10 @@ func set_word(word_text: String) -> void:
 	current_text = word_text
 	label.text = current_text
 	word_dropped.emit()
-	
+
+func clear_word() -> void:
+	if current_text == "":
+		return
+	current_text = ""
+	label.text = ""
+	word_dropped.emit()

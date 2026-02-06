@@ -49,6 +49,7 @@ func _ready() -> void:
 
 	_update_ui_state()
 	generate_button.pressed.connect(_on_generate_pressed)
+	_register_gamepad_scheme()
 	if MinigameController == null:
 		_update_timer_label()
 
@@ -139,6 +140,7 @@ func _finalize_finish(success: bool) -> void:
 
 func _exit_tree() -> void:
 	if MinigameController:
+		MinigameController.clear_gamepad_scheme(self)
 		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
 			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
 		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
@@ -154,14 +156,6 @@ func _shake_button() -> void:
 		tween.tween_property(generate_button, "position:x", orig_pos - 5, 0.05)
 	tween.tween_property(generate_button, "position:x", orig_pos, 0.05)
 
-func _input(event: InputEvent) -> void:
-	if _is_finished:
-		return
-	if event.is_action_pressed("mg_grab"):
-		var hovered = get_viewport().gui_get_hovered_control()
-		if hovered == generate_button:
-			_on_generate_pressed()
-
 func _start_minigame_session() -> void:
 	if MinigameController == null:
 		return
@@ -169,7 +163,7 @@ func _start_minigame_session() -> void:
 	if not MinigameController.is_active(self):
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
-		settings.enable_gamepad_cursor = true
+		settings.show_mouse_cursor = true
 		settings.block_player_movement = true
 		settings.time_limit = time_limit
 		settings.music_stream = LAB_MUSIC_STREAM
@@ -213,3 +207,23 @@ func _ensure_lab_music_loop() -> void:
 	if stream is AudioStreamMP3:
 		var mp3 := stream as AudioStreamMP3
 		mp3.loop = true
+
+func _register_gamepad_scheme() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.set_gamepad_scheme(self, {
+		"mode": "focus",
+		"focus_nodes": [generate_button],
+		"enable_highlighter": false,
+		"on_confirm": Callable(self, "_on_gamepad_confirm"),
+		"hints": {
+			"confirm": "Сгенерировать",
+			"cancel": "Выход"
+		}
+	})
+
+func _on_gamepad_confirm(active: Node, _context: Dictionary) -> bool:
+	if active != generate_button:
+		return false
+	_on_generate_pressed()
+	return true

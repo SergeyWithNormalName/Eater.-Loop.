@@ -11,8 +11,7 @@ extends "res://objects/interactable/interactive_object.gd"
 @export var searched_empty_message: String = "Теперь не нечего тут искать"
 
 @export_group("Minigame Session")
-@export var enable_gamepad_cursor: bool = true
-@export var gamepad_cursor_speed: float = 800.0
+@export var show_mouse_cursor: bool = true
 
 var has_key: bool = false
 var is_searched_empty: bool = false
@@ -61,11 +60,9 @@ func _on_interact() -> void:
 	set_prompts_enabled(false)
 	if MinigameController and MinigameController.has_signal("minigame_finished"):
 		MinigameController.minigame_finished.connect(_on_minigame_finished)
-	if MinigameController:
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
-		settings.enable_gamepad_cursor = enable_gamepad_cursor
-		settings.gamepad_cursor_speed = gamepad_cursor_speed
+		settings.show_mouse_cursor = show_mouse_cursor
 		settings.block_player_movement = true
 		settings.allow_pause_menu = false
 		settings.allow_cancel_action = true

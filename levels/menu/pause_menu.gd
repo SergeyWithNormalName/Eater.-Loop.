@@ -45,17 +45,26 @@ func _ready() -> void:
 	_show_main()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		if _confirm_panel.visible:
-			_hide_confirm()
-			get_viewport().set_input_as_handled()
-			return
-		if _settings_panel.visible:
-			_hide_settings()
-			get_viewport().set_input_as_handled()
-			return
-		_resume()
+	var pause_requested := event.is_action_pressed("pause_menu")
+	var escape_requested := event.is_action_pressed("ui_cancel") and _is_keyboard_escape_event(event)
+	if not pause_requested and not escape_requested:
+		return
+	if _confirm_panel.visible:
+		_hide_confirm()
 		get_viewport().set_input_as_handled()
+		return
+	if _settings_panel.visible:
+		_hide_settings()
+		get_viewport().set_input_as_handled()
+		return
+	_resume()
+	get_viewport().set_input_as_handled()
+
+func _is_keyboard_escape_event(event: InputEvent) -> bool:
+	if not (event is InputEventKey):
+		return false
+	var key_event := event as InputEventKey
+	return key_event.physical_keycode == KEY_ESCAPE or key_event.keycode == KEY_ESCAPE
 
 func open_menu() -> void:
 	visible = true

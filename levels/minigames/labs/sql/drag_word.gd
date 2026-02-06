@@ -20,15 +20,19 @@ func set_drag_context(drag_layer: Control) -> void:
 	_drag_layer = drag_layer
 
 func _input(event: InputEvent) -> void:
-	if _is_grab_pressed(event):
-		if is_any_dragging or _drag_layer == null:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.button_index != MOUSE_BUTTON_LEFT:
 			return
-		
-		var mouse_pos = get_global_mouse_position()
-		if _is_point_over_self(mouse_pos):
-			_start_drag(mouse_pos)
-	elif _is_grab_released(event) and _is_dragging:
-		_end_drag()
+		if mouse_event.pressed:
+			if is_any_dragging or _drag_layer == null:
+				return
+			var mouse_pos = get_global_mouse_position()
+			if _is_point_over_self(mouse_pos):
+				_start_drag(mouse_pos)
+			return
+		if _is_dragging:
+			_end_drag()
 
 func _process(_delta: float) -> void:
 	if _is_dragging and _ghost:
@@ -73,12 +77,6 @@ func _find_drop_slot() -> Node:
 			return node
 		node = node.get_parent()
 	return null
-
-func _is_grab_pressed(event: InputEvent) -> bool:
-	return event.is_action_pressed("mg_grab")
-
-func _is_grab_released(event: InputEvent) -> bool:
-	return event.is_action_released("mg_grab")
 
 func _exit_tree() -> void:
 	if _is_dragging:

@@ -29,19 +29,16 @@ func _ready() -> void:
 	
 	for button in keypad_grid.get_children():
 		if button is Button:
+			button.focus_mode = Control.FOCUS_NONE
 			button.pressed.connect(func(): _on_button_pressed(button.text))
 	
+	ok_button.focus_mode = Control.FOCUS_NONE
+	clear_button.focus_mode = Control.FOCUS_NONE
+	cancel_button.focus_mode = Control.FOCUS_NONE
 	ok_button.pressed.connect(_on_ok_pressed)
 	clear_button.pressed.connect(_on_clear_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton or event is InputEventScreenTouch:
-		return
-	if _is_grab_pressed(event):
-		var hovered := get_viewport().gui_get_hovered_control()
-		if hovered is Button:
-			hovered.emit_signal("pressed")
+	_register_gamepad_scheme()
 
 func _on_button_pressed(value: String) -> void:
 	if _current_input.length() >= code_value.length():
@@ -79,6 +76,7 @@ func _close(success: bool) -> void:
 
 func _exit_tree() -> void:
 	if MinigameController:
+		MinigameController.clear_gamepad_scheme(self)
 		if MinigameController.is_active(self):
 			MinigameController.finish_minigame(self, false)
 
@@ -113,8 +111,7 @@ func _start_minigame_session() -> void:
 		return
 	var settings := MinigameSettings.new()
 	settings.pause_game = false
-	settings.enable_gamepad_cursor = true
-	settings.gamepad_cursor_speed = 800.0
+	settings.show_mouse_cursor = true
 	settings.block_player_movement = true
 	settings.allow_pause_menu = false
 	settings.allow_cancel_action = true
@@ -124,8 +121,42 @@ func _start_minigame_session() -> void:
 func on_minigame_cancel() -> void:
 	_close(false)
 
-func _is_grab_pressed(event: InputEvent) -> bool:
-	return event.is_action_pressed("mg_grab")
-
 func allows_distortion_overlay() -> bool:
+	return true
+
+func _register_gamepad_scheme() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.set_gamepad_scheme(self, {
+		"mode": "focus",
+		"focus_provider": Callable(self, "_get_gamepad_focus_nodes"),
+		"on_confirm": Callable(self, "_on_gamepad_confirm"),
+		"on_secondary": Callable(self, "_on_gamepad_secondary"),
+		"nav_repeat_delay": 0.42,
+		"nav_repeat_interval": 0.20,
+		"hints": {
+			"confirm": "Нажать",
+			"cancel": "Отмена",
+			"secondary": "Очистить"
+		}
+	})
+
+func _get_gamepad_focus_nodes() -> Array[Node]:
+	var nodes: Array[Node] = []
+	for button in keypad_grid.get_children():
+		if button is Button:
+			nodes.append(button)
+	nodes.append(ok_button)
+	nodes.append(clear_button)
+	nodes.append(cancel_button)
+	return nodes
+
+func _on_gamepad_confirm(active: Node, _context: Dictionary) -> bool:
+	if not active is Button:
+		return false
+	(active as Button).emit_signal("pressed")
+	return true
+
+func _on_gamepad_secondary(_active: Node, _context: Dictionary) -> bool:
+	_on_clear_pressed()
 	return true

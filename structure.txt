@@ -1,6 +1,7 @@
 .
 ├── docs
-│   └── audio_system.md
+│   ├── audio_system.md
+│   └── minigame_gamepad_system.md
 ├── enemies
 │   ├── light_ceiling
 │   │   ├── enemy_ceiling.gd
@@ -388,6 +389,15 @@
 │   │   │   ├── feed_minigame.gd
 │   │   │   ├── feed_minigame.gd.uid
 │   │   │   └── feed_minigame.tscn
+│   │   ├── gamepad
+│   │   │   ├── gamepad_highlighter.gd
+│   │   │   ├── gamepad_highlighter.gd.uid
+│   │   │   ├── gamepad_hint_bar.gd
+│   │   │   ├── gamepad_hint_bar.gd.uid
+│   │   │   ├── gamepad_runtime.gd
+│   │   │   ├── gamepad_runtime.gd.uid
+│   │   │   ├── gamepad_spatial_nav.gd
+│   │   │   └── gamepad_spatial_nav.gd.uid
 │   │   ├── labs
 │   │   │   ├── LLM
 │   │   │   │   ├── background.png
@@ -762,6 +772,8 @@
 │   │   ├── bed
 │   │   │   ├── Bed.png
 │   │   │   ├── Bed.png.import
+│   │   │   ├── BigBed.png
+│   │   │   ├── BigBed.png.import
 │   │   │   ├── OutOfBed.wav
 │   │   │   ├── OutOfBed.wav.import
 │   │   │   ├── bed.gd
@@ -939,6 +951,10 @@
 │   ├── AndryWithFlashlight.png.import
 │   ├── UI_Button_Sprite.png
 │   ├── UI_Button_Sprite.png.import
+│   ├── UI_Button_Sprite_Dualsense.png
+│   ├── UI_Button_Sprite_Dualsense.png.import
+│   ├── UI_Button_Sprite_Xbox.png
+│   ├── UI_Button_Sprite_Xbox.png.import
 │   ├── flashlight.gd
 │   ├── flashlight.gd.uid
 │   ├── player.gd
@@ -959,8 +975,14 @@
 │   ├── cases
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
+│   │   ├── test_gamepad_pick_place_flow.gd
+│   │   ├── test_gamepad_pick_place_flow.gd.uid
+│   │   ├── test_gamepad_runtime_navigation.gd
+│   │   ├── test_gamepad_runtime_navigation.gd.uid
 │   │   ├── test_input_actions.gd
 │   │   ├── test_input_actions.gd.uid
+│   │   ├── test_minigame_gamepad_bindings.gd
+│   │   ├── test_minigame_gamepad_bindings.gd.uid
 │   │   ├── test_project_config.gd
 │   │   ├── test_project_config.gd.uid
 │   │   ├── test_scenes_load.gd
@@ -981,4 +1003,4 @@
 ├── project.godot
 └── structure.txt
 
-98 directories, 884 files
+99 directories, 905 files

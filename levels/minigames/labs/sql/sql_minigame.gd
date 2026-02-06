@@ -32,6 +32,7 @@ var tasks = [
 var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
+var _gamepad_selected_word: String = ""
 
 const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
@@ -57,6 +58,7 @@ func _ready():
 
 	_start_minigame_session()
 	load_task(0)
+	_register_gamepad_scheme()
 
 func _update_status_label() -> void:
 	if timer_label:
@@ -67,6 +69,7 @@ func load_task(index):
 		push_warning("SqlMinigame: неверный индекс задания %d." % index)
 		return
 	current_task_index = index
+	_gamepad_selected_word = ""
 	var data = tasks[index]
 	
 	task_label.text = data["description"]
@@ -107,6 +110,7 @@ func load_task(index):
 		if word.has_method("set_drag_context"):
 			word.set_drag_context(drag_layer)
 		pool_container.add_child(word)
+	_register_gamepad_scheme()
 		
 # Основная функция проверки
 func check_answer(_arg = null):
@@ -202,7 +206,7 @@ func _start_minigame_session() -> void:
 	if not MinigameController.is_active(self):
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
-		settings.enable_gamepad_cursor = true
+		settings.show_mouse_cursor = true
 		settings.block_player_movement = true
 		settings.time_limit = time_limit
 		settings.music_stream = LAB_MUSIC_STREAM
@@ -250,11 +254,101 @@ func _ensure_lab_music_loop() -> void:
 
 func _exit_tree() -> void:
 	if MinigameController:
+		MinigameController.clear_gamepad_scheme(self)
 		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
 			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
 		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
 			MinigameController.minigame_time_expired.disconnect(_on_time_expired)
 		if MinigameController.is_active(self):
 			MinigameController.finish_minigame(self, false)
-		
-		
+
+func _register_gamepad_scheme() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.set_gamepad_scheme(self, {
+		"mode": "pick_place",
+		"source_provider": Callable(self, "_get_gamepad_source_nodes"),
+		"target_provider": Callable(self, "_get_gamepad_target_nodes"),
+		"on_pick": Callable(self, "_on_gamepad_pick"),
+		"on_cancel_pick": Callable(self, "_on_gamepad_cancel_pick"),
+		"on_place": Callable(self, "_on_gamepad_place"),
+		"on_placed": Callable(self, "_on_gamepad_placed"),
+		"on_secondary": Callable(self, "_on_gamepad_secondary"),
+		"hints": {
+			"confirm": "Выбор / вставка",
+			"cancel": "Выход",
+			"secondary": "Очистить слот",
+			"tab_left": "Секция",
+			"tab_right": "Секция"
+		}
+	})
+
+func _get_gamepad_source_nodes() -> Array[Node]:
+	var nodes: Array[Node] = []
+	for child in pool_container.get_children():
+		if child == null or child.is_queued_for_deletion():
+			continue
+		if child is Button:
+			nodes.append(child)
+	return nodes
+
+func _get_gamepad_target_nodes() -> Array[Node]:
+	var slots := _get_all_gamepad_target_slots()
+	if _gamepad_selected_word == "":
+		return slots
+	var nodes: Array[Node] = []
+	for slot in slots:
+		if slot.has_method("can_accept_word") and bool(slot.call("can_accept_word", _gamepad_selected_word)):
+			nodes.append(slot)
+	return nodes
+
+func _get_all_gamepad_target_slots() -> Array[Node]:
+	var nodes: Array[Node] = []
+	for child in query_container.get_children():
+		if child == null or child.is_queued_for_deletion():
+			continue
+		if child.has_method("set_word") and child.has_method("can_accept_word"):
+			nodes.append(child)
+	return nodes
+
+func _on_gamepad_pick(source: Node, _context: Dictionary) -> void:
+	_gamepad_selected_word = _extract_word_from_source(source)
+
+func _on_gamepad_cancel_pick(_source: Node, _context: Dictionary) -> void:
+	_gamepad_selected_word = ""
+
+func _on_gamepad_place(source: Node, target: Node, _context: Dictionary) -> bool:
+	if source == null or target == null:
+		return false
+	if not target.has_method("can_accept_word") or not target.has_method("set_word"):
+		return false
+	var word_text := _extract_word_from_source(source)
+	if word_text == "":
+		return false
+	if not target.can_accept_word(word_text):
+		return false
+	target.set_word(word_text)
+	_gamepad_selected_word = ""
+	check_answer()
+	return true
+
+func _on_gamepad_placed(_source: Node, _target: Node, _context: Dictionary) -> void:
+	_gamepad_selected_word = ""
+
+func _on_gamepad_secondary(active: Node, _context: Dictionary) -> bool:
+	if active == null:
+		return false
+	if not active.has_method("clear_word"):
+		return false
+	active.clear_word()
+	check_answer()
+	return true
+
+func _extract_word_from_source(source: Node) -> String:
+	if source == null:
+		return ""
+	if "text_value" in source:
+		return String(source.text_value)
+	if source is Button:
+		return String((source as Button).text)
+	return ""
