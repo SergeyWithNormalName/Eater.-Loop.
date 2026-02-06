@@ -1711,7 +1711,7 @@ target_marker = NodePath("../../../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="Bed" parent="Bedroom2/InteractableObjects" instance=ExtResource("69_p4ir0")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://u32e5100pijl"
+next_level_path = "uid://dv71cfad0bsy8"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("90_inside_ambient")

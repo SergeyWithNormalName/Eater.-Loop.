@@ -591,6 +591,8 @@
 │   │   │   ├── BackWalls.png.import
 │   │   │   ├── BackWallsDistorted.png
 │   │   │   ├── BackWallsDistorted.png.import
+│   │   │   ├── BackWallsParents.png
+│   │   │   ├── BackWallsParents.png.import
 │   │   │   ├── Floor.png
 │   │   │   ├── Floor.png.import
 │   │   │   ├── FloorDistorted.png
@@ -635,6 +637,10 @@
 │   │   │   │   │   └── WindowWithMonster.png.import
 │   │   │   │   ├── Balka.png
 │   │   │   │   ├── Balka.png.import
+│   │   │   │   ├── BigChain.png
+│   │   │   │   ├── BigChain.png.import
+│   │   │   │   ├── Chain.png
+│   │   │   │   ├── Chain.png.import
 │   │   │   │   ├── On-offer.png
 │   │   │   │   ├── On-offer.png.import
 │   │   │   │   ├── OpenShtora.png
@@ -805,7 +811,9 @@
 │   │   │   │   ├── Door_Opened_1.png
 │   │   │   │   ├── Door_Opened_1.png.import
 │   │   │   │   ├── Door_Opened_2.png
-│   │   │   │   └── Door_Opened_2.png.import
+│   │   │   │   ├── Door_Opened_2.png.import
+│   │   │   │   ├── Door_With_Monster.png
+│   │   │   │   └── Door_With_Monster.png.import
 │   │   │   ├── door.gd
 │   │   │   ├── door.gd.uid
 │   │   │   ├── door.tscn
@@ -1003,4 +1011,4 @@
 ├── project.godot
 └── structure.txt
 
-99 directories, 905 files
+99 directories, 913 files
