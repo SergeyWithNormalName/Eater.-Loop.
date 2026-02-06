@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://cofhuj16gko6n" path="res://objects/environment/smart/markers/stalker_spawn_marker.gd" id="1"]
+
+[node name="StalkerSpawnMarker" type="Marker2D"]
+script = ExtResource("1")

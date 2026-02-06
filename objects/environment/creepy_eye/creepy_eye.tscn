@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://objects/environment/creepy_eye/creepy_eye.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://player/UI_Button_Sprite.png" id="2_eye_plane_tex"]
+[ext_resource type="Shader" path="res://objects/environment/creepy_eye/creepy_eye.gdshader" id="3_eye_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eye"]
+shader = ExtResource("3_eye_shader")
+shader_parameter/pupil_size = 0.18
+shader_parameter/eye_offset = Vector2(0, 0)
+shader_parameter/horror_intensity = 1.2
+shader_parameter/vein_speed = 1.8
+shader_parameter/writhing_lines_enabled = true
+shader_parameter/writhing_lines_intensity = 1.0
+shader_parameter/writhing_lines_speed = 2.4
+shader_parameter/writhing_lines_thickness = 0.34
+shader_parameter/writhing_lines_distortion = 0.28
+shader_parameter/eye_width = 1.22
+shader_parameter/eye_height = 0.86
+shader_parameter/upper_lid_offset = 0.28
+shader_parameter/lower_lid_offset = -0.25
+shader_parameter/lid_curve = 0.18
+shader_parameter/lid_softness = 0.035
+shader_parameter/corner_narrowing = 0.0
+
+[node name="CreepyEye" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="EyeSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_eye_plane_tex")
+material = SubResource("ShaderMaterial_eye")
+scale = Vector2(3, 2)

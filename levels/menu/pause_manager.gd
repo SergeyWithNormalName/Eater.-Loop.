@@ -16,7 +16,10 @@ func _input(event: InputEvent) -> void:
 	if not pause_requested and not keyboard_escape_requested:
 		return
 	if _is_open:
-		_request_resume()
+		if _pause_menu and _pause_menu.has_method("request_resume"):
+			_pause_menu.call("request_resume")
+		else:
+			_request_resume()
 		get_viewport().set_input_as_handled()
 		return
 	if keyboard_escape_requested and _should_defer_to_minigame_cancel(event):

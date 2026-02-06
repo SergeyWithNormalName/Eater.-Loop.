@@ -603,6 +603,12 @@
 │   │   │   ├── TilesFloor1.png.import
 │   │   │   ├── ToiletTiles.png
 │   │   │   └── ToiletTiles.png.import
+│   │   ├── creepy_eye
+│   │   │   ├── creepy_eye.gd
+│   │   │   ├── creepy_eye.gd.uid
+│   │   │   ├── creepy_eye.gdshader
+│   │   │   ├── creepy_eye.gdshader.uid
+│   │   │   └── creepy_eye.tscn
 │   │   ├── floor
 │   │   │   ├── FloorWood.png
 │   │   │   ├── FloorWood.png.import
@@ -612,6 +618,10 @@
 │   │   │   ├── floor_perspective.gdshader
 │   │   │   └── floor_perspective.gdshader.uid
 │   │   ├── smart
+│   │   │   ├── markers
+│   │   │   │   ├── stalker_spawn_marker.gd
+│   │   │   │   ├── stalker_spawn_marker.gd.uid
+│   │   │   │   └── stalker_spawn_marker.tscn
 │   │   │   └── world_clock
 │   │   │       ├── Clock.png
 │   │   │       ├── Clock.png.import
@@ -726,6 +736,13 @@
 │   │   │   │   ├── Table.png.import
 │   │   │   │   ├── Urna.png
 │   │   │   │   └── Urna.png.import
+│   │   │   ├── kladovka
+│   │   │   │   ├── PolkaWithHlam.png
+│   │   │   │   ├── PolkaWithHlam.png.import
+│   │   │   │   ├── PolkaWithHlam2.png
+│   │   │   │   ├── PolkaWithHlam2.png.import
+│   │   │   │   ├── Shvabra.png
+│   │   │   │   └── Shvabra.png.import
 │   │   │   └── toilet and bathroom
 │   │   │       ├── Mirror.png
 │   │   │       ├── Mirror.png.import
@@ -774,136 +791,132 @@
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
-│   ├── interactable
-│   │   ├── bed
-│   │   │   ├── Bed.png
-│   │   │   ├── Bed.png.import
-│   │   │   ├── BigBed.png
-│   │   │   ├── BigBed.png.import
-│   │   │   ├── OutOfBed.wav
-│   │   │   ├── OutOfBed.wav.import
-│   │   │   ├── bed.gd
-│   │   │   ├── bed.gd.uid
-│   │   │   └── bed.tscn
-│   │   ├── door
-│   │   │   ├── audio
-│   │   │   │   ├── door_locked1.wav
-│   │   │   │   ├── door_locked1.wav.import
-│   │   │   │   ├── door_open1.wav
-│   │   │   │   ├── door_open1.wav.import
-│   │   │   │   ├── door_unlocked.wav
-│   │   │   │   └── door_unlocked.wav.import
-│   │   │   ├── sprites
-│   │   │   │   ├── DoorBasic.png
-│   │   │   │   ├── DoorBasic.png.import
-│   │   │   │   ├── DoorBasic_Distorted.png
-│   │   │   │   ├── DoorBasic_Distorted.png.import
-│   │   │   │   ├── DoorExit.png
-│   │   │   │   ├── DoorExit.png.import
-│   │   │   │   ├── DoorNSTU_highevel.png
-│   │   │   │   ├── DoorNSTU_highevel.png.import
-│   │   │   │   ├── DoorStairs.png
-│   │   │   │   ├── DoorStairs.png.import
-│   │   │   │   ├── DoorToiletInside.png
-│   │   │   │   ├── DoorToiletInside.png.import
-│   │   │   │   ├── DoorToiletOutside.png
-│   │   │   │   ├── DoorToiletOutside.png.import
-│   │   │   │   ├── Door_Opened_1.png
-│   │   │   │   ├── Door_Opened_1.png.import
-│   │   │   │   ├── Door_Opened_2.png
-│   │   │   │   ├── Door_Opened_2.png.import
-│   │   │   │   ├── Door_With_Monster.png
-│   │   │   │   └── Door_With_Monster.png.import
-│   │   │   ├── door.gd
-│   │   │   ├── door.gd.uid
-│   │   │   ├── door.tscn
-│   │   │   └── door_university.tscn
-│   │   ├── fridge
-│   │   │   ├── audio
-│   │   │   │   ├── FridgeCreaking.wav
-│   │   │   │   ├── FridgeCreaking.wav.import
-│   │   │   │   ├── FridgeNoizeE.wav
-│   │   │   │   ├── FridgeNoizeE.wav.import
-│   │   │   │   ├── OpenFridgeE.wav
-│   │   │   │   ├── OpenFridgeE.wav.import
-│   │   │   │   ├── PigsScream.wav
-│   │   │   │   └── PigsScream.wav.import
-│   │   │   ├── sprites
-│   │   │   │   ├── ClosedFridge.png
-│   │   │   │   ├── ClosedFridge.png.import
-│   │   │   │   ├── FridgeOnChain.png
-│   │   │   │   ├── FridgeOnChain.png.import
-│   │   │   │   ├── LockedFridge.png
-│   │   │   │   ├── LockedFridge.png.import
-│   │   │   │   ├── OpenFridge.png
-│   │   │   │   └── OpenFridge.png.import
-│   │   │   ├── code_lock.gd
-│   │   │   ├── code_lock.gd.uid
-│   │   │   ├── fridge.gd
-│   │   │   ├── fridge.gd.uid
-│   │   │   └── fridge.tscn
-│   │   ├── generator
-│   │   │   ├── generator.gd
-│   │   │   ├── generator.gd.uid
-│   │   │   └── generator.tscn
-│   │   ├── key
-│   │   │   ├── key.gd
-│   │   │   └── key.gd.uid
-│   │   ├── lamp
-│   │   │   ├── Lamp1.png
-│   │   │   ├── Lamp1.png.import
-│   │   │   ├── LampOn1.png
-│   │   │   ├── LampOn1.png.import
-│   │   │   ├── lamp.gd
-│   │   │   ├── lamp.gd.uid
-│   │   │   ├── lamp.tscn
-│   │   │   ├── lamp.wav
-│   │   │   └── lamp.wav.import
-│   │   ├── lebedka
-│   │   │   ├── Lebedka.png
-│   │   │   ├── Lebedka.png.import
-│   │   │   ├── LebedkaBezRuchki.png
-│   │   │   ├── LebedkaBezRuchki.png.import
-│   │   │   ├── RuchkaOtLebedki.png
-│   │   │   └── RuchkaOtLebedki.png.import
-│   │   ├── note
-│   │   │   ├── note_object.gd
-│   │   │   └── note_object.gd.uid
-│   │   ├── notebook
-│   │   │   ├── NotebookOff.png
-│   │   │   ├── NotebookOff.png.import
-│   │   │   ├── NotebookOn.png
-│   │   │   ├── NotebookOn.png.import
-│   │   │   ├── laptop.gd
-│   │   │   ├── laptop.gd.uid
-│   │   │   └── laptop.tscn
-│   │   ├── obstacle
-│   │   │   ├── obstacle.gd
-│   │   │   ├── obstacle.gd.uid
-│   │   │   └── obstacle.tscn
-│   │   ├── phone
-│   │   │   ├── JokeAboutChicken.wav
-│   │   │   ├── JokeAboutChicken.wav.import
-│   │   │   ├── phone.gd
-│   │   │   ├── phone.gd.uid
-│   │   │   ├── phone.png
-│   │   │   ├── phone.png.import
-│   │   │   └── phone.tscn
-│   │   ├── search_spot
-│   │   │   ├── search_spot.gd
-│   │   │   ├── search_spot.gd.uid
-│   │   │   └── search_spot.tscn
-│   │   ├── trigger
-│   │   │   ├── property_change.gd
-│   │   │   ├── property_change.gd.uid
-│   │   │   ├── trigger_set_property.gd
-│   │   │   └── trigger_set_property.gd.uid
-│   │   ├── interactive_object.gd
-│   │   └── interactive_object.gd.uid
-│   └── markers
-│       ├── stalker_spawn_marker.gd
-│       ├── stalker_spawn_marker.gd.uid
-│       └── stalker_spawn_marker.tscn
+│   └── interactable
+│       ├── bed
+│       │   ├── Bed.png
+│       │   ├── Bed.png.import
+│       │   ├── BigBed.png
+│       │   ├── BigBed.png.import
+│       │   ├── OutOfBed.wav
+│       │   ├── OutOfBed.wav.import
+│       │   ├── bed.gd
+│       │   ├── bed.gd.uid
+│       │   └── bed.tscn
+│       ├── door
+│       │   ├── audio
+│       │   │   ├── door_locked1.wav
+│       │   │   ├── door_locked1.wav.import
+│       │   │   ├── door_open1.wav
+│       │   │   ├── door_open1.wav.import
+│       │   │   ├── door_unlocked.wav
+│       │   │   └── door_unlocked.wav.import
+│       │   ├── sprites
+│       │   │   ├── DoorBasic.png
+│       │   │   ├── DoorBasic.png.import
+│       │   │   ├── DoorBasic_Distorted.png
+│       │   │   ├── DoorBasic_Distorted.png.import
+│       │   │   ├── DoorExit.png
+│       │   │   ├── DoorExit.png.import
+│       │   │   ├── DoorNSTU_highevel.png
+│       │   │   ├── DoorNSTU_highevel.png.import
+│       │   │   ├── DoorStairs.png
+│       │   │   ├── DoorStairs.png.import
+│       │   │   ├── DoorToiletInside.png
+│       │   │   ├── DoorToiletInside.png.import
+│       │   │   ├── DoorToiletOutside.png
+│       │   │   ├── DoorToiletOutside.png.import
+│       │   │   ├── Door_Opened_1.png
+│       │   │   ├── Door_Opened_1.png.import
+│       │   │   ├── Door_Opened_2.png
+│       │   │   ├── Door_Opened_2.png.import
+│       │   │   ├── Door_With_Monster.png
+│       │   │   └── Door_With_Monster.png.import
+│       │   ├── door.gd
+│       │   ├── door.gd.uid
+│       │   ├── door.tscn
+│       │   └── door_university.tscn
+│       ├── fridge
+│       │   ├── audio
+│       │   │   ├── FridgeCreaking.wav
+│       │   │   ├── FridgeCreaking.wav.import
+│       │   │   ├── FridgeNoizeE.wav
+│       │   │   ├── FridgeNoizeE.wav.import
+│       │   │   ├── OpenFridgeE.wav
+│       │   │   ├── OpenFridgeE.wav.import
+│       │   │   ├── PigsScream.wav
+│       │   │   └── PigsScream.wav.import
+│       │   ├── sprites
+│       │   │   ├── ClosedFridge.png
+│       │   │   ├── ClosedFridge.png.import
+│       │   │   ├── FridgeOnChain.png
+│       │   │   ├── FridgeOnChain.png.import
+│       │   │   ├── LockedFridge.png
+│       │   │   ├── LockedFridge.png.import
+│       │   │   ├── OpenFridge.png
+│       │   │   └── OpenFridge.png.import
+│       │   ├── code_lock.gd
+│       │   ├── code_lock.gd.uid
+│       │   ├── fridge.gd
+│       │   ├── fridge.gd.uid
+│       │   └── fridge.tscn
+│       ├── generator
+│       │   ├── generator.gd
+│       │   ├── generator.gd.uid
+│       │   └── generator.tscn
+│       ├── key
+│       │   ├── key.gd
+│       │   └── key.gd.uid
+│       ├── lamp
+│       │   ├── Lamp1.png
+│       │   ├── Lamp1.png.import
+│       │   ├── LampOn1.png
+│       │   ├── LampOn1.png.import
+│       │   ├── lamp.gd
+│       │   ├── lamp.gd.uid
+│       │   ├── lamp.tscn
+│       │   ├── lamp.wav
+│       │   └── lamp.wav.import
+│       ├── lebedka
+│       │   ├── Lebedka.png
+│       │   ├── Lebedka.png.import
+│       │   ├── LebedkaBezRuchki.png
+│       │   ├── LebedkaBezRuchki.png.import
+│       │   ├── RuchkaOtLebedki.png
+│       │   └── RuchkaOtLebedki.png.import
+│       ├── note
+│       │   ├── note_object.gd
+│       │   └── note_object.gd.uid
+│       ├── notebook
+│       │   ├── NotebookOff.png
+│       │   ├── NotebookOff.png.import
+│       │   ├── NotebookOn.png
+│       │   ├── NotebookOn.png.import
+│       │   ├── laptop.gd
+│       │   ├── laptop.gd.uid
+│       │   └── laptop.tscn
+│       ├── obstacle
+│       │   ├── obstacle.gd
+│       │   ├── obstacle.gd.uid
+│       │   └── obstacle.tscn
+│       ├── phone
+│       │   ├── JokeAboutChicken.wav
+│       │   ├── JokeAboutChicken.wav.import
+│       │   ├── phone.gd
+│       │   ├── phone.gd.uid
+│       │   ├── phone.png
+│       │   ├── phone.png.import
+│       │   └── phone.tscn
+│       ├── search_spot
+│       │   ├── search_spot.gd
+│       │   ├── search_spot.gd.uid
+│       │   └── search_spot.tscn
+│       ├── trigger
+│       │   ├── property_change.gd
+│       │   ├── property_change.gd.uid
+│       │   ├── trigger_set_property.gd
+│       │   └── trigger_set_property.gd.uid
+│       ├── interactive_object.gd
+│       └── interactive_object.gd.uid
 ├── player
 │   ├── animations
 │   │   └── walking
@@ -1011,4 +1024,4 @@
 ├── project.godot
 └── structure.txt
 
-99 directories, 913 files
+101 directories, 924 files

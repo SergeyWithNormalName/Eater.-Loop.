@@ -74,7 +74,7 @@
 [ext_resource type="Texture2D" uid="uid://cfo0t6jewdn7w" path="res://objects/interactable/bed/BigBed.png" id="72_bk7w3"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="72_gp7cx"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="74_44y35"]
-[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="75_lcg63"]
+[ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="75_lcg63"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 

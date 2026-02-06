@@ -76,6 +76,9 @@ func close_menu() -> void:
 	_hide_confirm()
 	_hide_settings()
 
+func request_resume() -> void:
+	_resume()
+
 func _connect_buttons() -> void:
 	_resume_button.pressed.connect(_resume)
 	_settings_button.pressed.connect(_on_settings_pressed)
