@@ -907,7 +907,7 @@ texture = ExtResource("65_51ai1")
 
 [node name="Laptop" parent="Bedroom/InteractableObjects" unique_id=1919299909 instance=ExtResource("66_q2t52")]
 z_index = 6
-position = Vector2(10266.001, 240)
+position = Vector2(10289.001, 154)
 scale = Vector2(0.96, 0.96)
 
 [node name="Clock" type="Sprite2D" parent="Bedroom/InteractableObjects" unique_id=1810619233]

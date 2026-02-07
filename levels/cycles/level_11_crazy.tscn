@@ -72,6 +72,7 @@
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="70_lkwaq"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="71_yio8e"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="72_n4kuk"]
+[ext_resource type="Script" uid="uid://cd5eygyioofn4" path="res://levels/cycles/crazy_level_event.gd" id="73_crazy_event"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_n4kuk")
@@ -953,3 +954,18 @@ script = ExtResource("71_yio8e")
 
 [node name="TextureDistortionManager" parent="." unique_id=140455183 instance=ExtResource("72_n4kuk")]
 position = Vector2(1052, 1473)
+distortion_sfx = null
+
+[node name="CrazyLevelEvent" type="Node" parent="." unique_id=904144688]
+script = ExtResource("73_crazy_event")
+start_delay = 2.5
+effect_duration = 3.0
+distortion_intensity = 0.75
+shader_color_bleeding = 0.12
+timer_collapse_duration = 2.4
+timer_collapse_power = 1.2000000000000002
+fallback_time_if_timer_disabled = 90.0
+camera_path = NodePath("../Player/Camera2D")
+pulse_count = 6
+pulse_half_duration = 0.25
+pulse_strength = 0.07

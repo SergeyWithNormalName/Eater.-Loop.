@@ -71,10 +71,12 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_ucmgk"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_4kun7"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_npe2g"]
-[ext_resource type="Texture2D" uid="uid://cfo0t6jewdn7w" path="res://objects/interactable/bed/BigBed.png" id="72_bk7w3"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="72_gp7cx"]
+[ext_resource type="Texture2D" uid="uid://dwpnebdi0x2gp" path="res://objects/environment/sprites/parents/ShkafParents.png" id="73_72fc3"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="74_44y35"]
+[ext_resource type="Texture2D" uid="uid://brnubvnj46o8t" path="res://objects/environment/sprites/parents/BedParents.png" id="74_72fc3"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="75_lcg63"]
+[ext_resource type="Texture2D" uid="uid://chn3rccvjeyw1" path="res://objects/environment/sprites/hall/Armchair.png" id="78_0abij"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 
@@ -1385,22 +1387,6 @@ position = Vector2(-1735.2787, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("23_tuwef")
 
-[node name="Tumbochka" type="Sprite2D" parent="ParentsRoom/Sprites" unique_id=1903732771]
-position = Vector2(-2112.125, 238)
-scale = Vector2(0.21, 0.21)
-texture = ExtResource("56_g3s0w")
-
-[node name="Lamp1" type="Sprite2D" parent="ParentsRoom/Sprites" unique_id=712898408]
-position = Vector2(-1898.9999, -214)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("11_px05n")
-
-[node name="ChairBedroom" type="Sprite2D" parent="ParentsRoom/Sprites" unique_id=896829039]
-z_index = 1
-position = Vector2(-1316.9998, 231.99998)
-scale = Vector2(0.29, 0.29)
-texture = ExtResource("60_gskbi")
-
 [node name="Battery3" type="Sprite2D" parent="ParentsRoom/Sprites" unique_id=2002177343]
 z_index = -4
 position = Vector2(-2373, 210)
@@ -1425,10 +1411,15 @@ position = Vector2(-2574, 129)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("65_fc88j")
 
+[node name="ShkafParents" type="Sprite2D" parent="ParentsRoom/Sprites" unique_id=604183628]
+position = Vector2(-1891, 39.999996)
+scale = Vector2(0.42511064, 0.42511073)
+texture = ExtResource("73_72fc3")
+
 [node name="InteractableObjects" type="Node2D" parent="ParentsRoom" unique_id=1246244048]
 
 [node name="Clock" type="Sprite2D" parent="ParentsRoom/InteractableObjects" unique_id=364090272]
-position = Vector2(-2124, 150)
+position = Vector2(-1995, -166)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("67_ucmgk")
 metadata/_edit_group_ = true
@@ -1437,7 +1428,7 @@ metadata/_edit_group_ = true
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:58"
+start_game_time = "0:21"
 
 [node name="PointLight2D" type="PointLight2D" parent="ParentsRoom/InteractableObjects/Clock/WorldClock" unique_id=1596740941]
 position = Vector2(47.222225, 38.88893)
@@ -1447,15 +1438,19 @@ texture = SubResource("GradientTexture2D_pgutp")
 [node name="Door(InParents)" parent="ParentsRoom/InteractableObjects" unique_id=1580027259 instance=ExtResource("15_abash")]
 position = Vector2(-1581, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBedroom)")
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToParents)")
 
 [node name="Bed" parent="ParentsRoom/InteractableObjects" unique_id=2110072670 instance=ExtResource("69_npe2g")]
-position = Vector2(-2422, 226)
+position = Vector2(-2374, 246.00002)
+scale = Vector2(1.2, 1.2)
 next_level_path = "uid://c3s82ewvaot7t"
+require_light_for_sleep = true
+no_bedroom_light_message = "Это кровать родителей. Я не собираюсь на ней спать..."
 
 [node name="Sprite2D" parent="ParentsRoom/InteractableObjects/Bed" index="1"]
-position = Vector2(2.0001678, 30.999992)
-texture = ExtResource("72_bk7w3")
+position = Vector2(-2.5001574, -9.166682)
+scale = Vector2(0.46391755, 0.4639175)
+texture = ExtResource("74_72fc3")
 
 [node name="Clock2" type="Sprite2D" parent="." unique_id=1363863798]
 position = Vector2(9432, 109)
@@ -1501,5 +1496,10 @@ position = Vector2(6965, -363)
 
 [node name="StalkerSpawnMarker" parent="." unique_id=926869165 instance=ExtResource("75_lcg63")]
 position = Vector2(6443, 158)
+
+[node name="Armchair" type="Sprite2D" parent="." unique_id=178526120]
+position = Vector2(-9044.001, 200.00002)
+scale = Vector2(0.45816737, 0.4581673)
+texture = ExtResource("78_0abij")
 
 [editable path="ParentsRoom/InteractableObjects/Bed"]

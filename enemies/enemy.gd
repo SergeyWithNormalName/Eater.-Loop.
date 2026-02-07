@@ -8,8 +8,18 @@ extends CharacterBody2D
 @export var keep_chasing_outside_detection: bool = false
 ## Сколько секунд отнимает при касании.
 @export var time_penalty: float = 5.0
-## Убивает игрока сразу (перезагрузка сцены).
+## Убивает игрока сразу (через экран смерти).
 @export var kill_on_attack: bool = false
+
+@export_group("Attack SFX")
+## Звук атаки.
+@export var attack_sfx: AudioStream = preload("res://music/MyHorrorHit_1.wav")
+## Громкость звука атаки (дБ).
+@export_range(-80.0, 6.0, 0.1) var attack_sfx_volume_db: float = -2.0
+## Минимальный питч звука атаки.
+@export_range(0.1, 3.0, 0.01) var attack_sfx_pitch_min: float = 0.95
+## Максимальный питч звука атаки.
+@export_range(0.1, 3.0, 0.01) var attack_sfx_pitch_max: float = 1.05
 
 @export_group("Chase Music")
 ## Включить музыку погони.
@@ -110,16 +120,40 @@ func _set_chase_music_suppressed(suppressed: bool) -> void:
 		return
 	MusicManager.set_chase_music_suppressed(self, suppressed)
 
-func _attack_player() -> void:
-	# ИСПРАВЛЕНО: phase вместо current_phase
-	if kill_on_attack or GameState.phase == GameState.Phase.DISTORTED:
-		UIMessage.show_text("Тебя поглотили.")
-		if GameState:
-			GameState.reset_cycle_state()
-		get_tree().call_deferred("reload_current_scene")
+func _play_attack_sfx() -> void:
+	if attack_sfx == null:
 		return
-	# ИСПРАВЛЕНО: Теперь функция будет существовать в GameDirector
-	GameDirector.reduce_time(time_penalty, true)
+	var pitch_min := minf(attack_sfx_pitch_min, attack_sfx_pitch_max)
+	var pitch_max := maxf(attack_sfx_pitch_min, attack_sfx_pitch_max)
+	var pitch := randf_range(pitch_min, pitch_max)
+	if UIMessage and UIMessage.has_method("play_sfx"):
+		UIMessage.play_sfx(attack_sfx, attack_sfx_volume_db, pitch)
+		return
+	if get_tree() == null:
+		return
+	var fallback_player := AudioStreamPlayer.new()
+	fallback_player.bus = "Sounds"
+	fallback_player.stream = attack_sfx
+	fallback_player.volume_db = attack_sfx_volume_db
+	fallback_player.pitch_scale = pitch
+	get_tree().root.add_child(fallback_player)
+	fallback_player.finished.connect(func():
+		fallback_player.queue_free()
+	)
+	fallback_player.play()
+
+func _attack_player() -> void:
+	_play_attack_sfx()
+	if kill_on_attack or GameState.phase == GameState.Phase.DISTORTED:
+		if GameDirector and GameDirector.has_method("trigger_death_screen"):
+			GameDirector.trigger_death_screen()
+		else:
+			if GameState:
+				GameState.reset_cycle_state()
+			get_tree().call_deferred("reload_current_scene")
+		return
+	if GameDirector and GameDirector.has_method("reduce_time"):
+		GameDirector.reduce_time(time_penalty, true)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
 	call_deferred("queue_free")

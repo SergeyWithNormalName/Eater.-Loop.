@@ -77,7 +77,6 @@
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://objects/environment/background/decals/HoleInWall3.png" id="86_fa34t"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://objects/interactable/trigger/trigger_set_property.gd" id="87_7c4ho"]
 [ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="87_j1ifr"]
-[ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://music/MusicForBasicMonster.wav" id="88_j1ifr"]
 [ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="88_ky05d"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="90_r0fvw"]
@@ -2995,7 +2994,7 @@ stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
 time_penalty = 80.0
-chase_music = ExtResource("88_j1ifr")
+attack_sfx = ExtResource("70_hi6qj")
 chase_music_fade_out_time = 5.0
 
 [node name="Battery" type="Sprite2D" parent="." unique_id=2027180943]
@@ -3330,7 +3329,6 @@ stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
 kill_on_attack = true
-chase_music = ExtResource("88_j1ifr")
 chase_music_fade_out_time = 5.0
 
 [node name="Battery4" type="Sprite2D" parent="." unique_id=1489461216]

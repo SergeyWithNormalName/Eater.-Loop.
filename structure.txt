@@ -239,6 +239,8 @@
 │   │   │   ├── level_test_enemies.tscn
 │   │   │   └── level_test_enemies2.tscn
 │   │   ├── TextureDistortionManager.tscn
+│   │   ├── crazy_level_event.gd
+│   │   ├── crazy_level_event.gd.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
@@ -743,6 +745,11 @@
 │   │   │   │   ├── PolkaWithHlam2.png.import
 │   │   │   │   ├── Shvabra.png
 │   │   │   │   └── Shvabra.png.import
+│   │   │   ├── parents
+│   │   │   │   ├── BedParents.png
+│   │   │   │   ├── BedParents.png.import
+│   │   │   │   ├── ShkafParents.png
+│   │   │   │   └── ShkafParents.png.import
 │   │   │   └── toilet and bathroom
 │   │   │       ├── Mirror.png
 │   │   │       ├── Mirror.png.import
@@ -1024,4 +1031,4 @@
 ├── project.godot
 └── structure.txt
 
-101 directories, 924 files
+102 directories, 930 files

@@ -220,17 +220,19 @@ func _coerce_nodes(raw_nodes: Variant) -> Array[Node]:
 	return result
 
 func _resolve_node(entry: Variant) -> Node:
-	if entry is Node:
-		return entry
-	if entry is NodePath:
+	var entry_type := typeof(entry)
+	if entry_type == TYPE_OBJECT:
+		var direct_node := _as_valid_node(entry)
+		if direct_node != null:
+			return direct_node
+		var weak := entry as WeakRef
+		if weak == null:
+			return null
+		return _as_valid_node(weak.get_ref())
+	if entry_type == TYPE_NODE_PATH:
 		if _active_minigame == null:
 			return null
 		return _active_minigame.get_node_or_null(entry)
-	if entry is WeakRef:
-		var weak := entry as WeakRef
-		var ref = weak.get_ref()
-		if ref is Node:
-			return ref
 	return null
 
 func _is_node_focusable(node: Node) -> bool:
@@ -541,12 +543,19 @@ func _set_gamepad_hint_visibility(visible: bool) -> void:
 	_hint_bar.set_hint_mode(visible)
 
 func _as_valid_node(value: Variant) -> Node:
-	if not (value is Node):
+	if value == null:
 		return null
-	var node := value as Node
+	if typeof(value) != TYPE_OBJECT:
+		return null
+	var object_value := value as Object
+	if object_value == null:
+		return null
+	if not is_instance_valid(object_value):
+		return null
+	if not (object_value is Node):
+		return null
+	var node := object_value as Node
 	if node == null:
-		return null
-	if not is_instance_valid(node):
 		return null
 	if node.is_queued_for_deletion():
 		return null

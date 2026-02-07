@@ -1201,7 +1201,7 @@ region_rect = Rect2(0, 0, 4500, 550)
 [node name="FloorKitchen2" type="Sprite2D" parent="Hall2/Background" unique_id=1620357960]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12880.589, 326)
+position = Vector2(12880, 326)
 scale = Vector2(0.22374743, 0.21939737)
 texture = ExtResource("17_jsy42")
 region_enabled = true
@@ -1243,39 +1243,69 @@ position = Vector2(7313, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
+[node name="Plintus46" type="Sprite2D" parent="Hall2/Background" unique_id=1758244813]
+z_index = -5
+position = Vector2(7516.9995, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
 [node name="Plintus13" type="Sprite2D" parent="Hall2/Background" unique_id=1763766485]
 z_index = -5
-position = Vector2(7680, 266)
+position = Vector2(7723, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus14" type="Sprite2D" parent="Hall2/Background" unique_id=486047192]
 z_index = -5
-position = Vector2(8034, 266)
+position = Vector2(7928.0005, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus15" type="Sprite2D" parent="Hall2/Background" unique_id=1590877985]
 z_index = -5
-position = Vector2(8239, 266)
+position = Vector2(8133.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus47" type="Sprite2D" parent="Hall2/Background" unique_id=2031525516]
+z_index = -5
+position = Vector2(8338, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus16" type="Sprite2D" parent="Hall2/Background" unique_id=2034257511]
 z_index = -5
-position = Vector2(8625.001, 266)
+position = Vector2(8542, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus48" type="Sprite2D" parent="Hall2/Background" unique_id=1512688343]
+z_index = -5
+position = Vector2(8746.001, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus17" type="Sprite2D" parent="Hall2/Background" unique_id=483577870]
 z_index = -5
-position = Vector2(9018, 266)
+position = Vector2(8952, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus18" type="Sprite2D" parent="Hall2/Background" unique_id=2063536408]
 z_index = -5
-position = Vector2(9218, 266)
+position = Vector2(9157, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus49" type="Sprite2D" parent="Hall2/Background" unique_id=570449942]
+z_index = -5
+position = Vector2(9364.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus50" type="Sprite2D" parent="Hall2/Background" unique_id=1607181441]
+z_index = -5
+position = Vector2(9567, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
@@ -1293,13 +1323,13 @@ texture = ExtResource("22_ubq2u")
 
 [node name="Plintus21" type="Sprite2D" parent="Hall2/Background" unique_id=2002926738]
 z_index = -5
-position = Vector2(10162, 266)
+position = Vector2(10150, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus22" type="Sprite2D" parent="Hall2/Background" unique_id=1714526795]
 z_index = -5
-position = Vector2(10366.001, 266)
+position = Vector2(10359.001, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
@@ -1739,32 +1769,6 @@ texture = ExtResource("77_6gd7j")
 
 [node name="InteractableObjects" type="Node2D" parent="Hall2" unique_id=147364260]
 
-[node name="Door(ToBedroom)" parent="Hall2/InteractableObjects" unique_id=1950216138 instance=ExtResource("15_xph0r")]
-position = Vector2(8434.125, 83)
-is_locked = null
-door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
-
-[node name="Door(ToParents)" parent="Hall2/InteractableObjects" unique_id=531875666 instance=ExtResource("15_xph0r")]
-position = Vector2(8818.125, 83)
-is_locked = true
-door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = null
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
-
 [node name="Door(ToParents)3" parent="Hall2/InteractableObjects" unique_id=533879101 instance=ExtResource("15_xph0r")]
 position = Vector2(13707, 83)
 is_locked = true
@@ -1800,34 +1804,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_5kg7j")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
-
-[node name="Door(ToBathroom)" parent="Hall2/InteractableObjects" unique_id=1237401201 instance=ExtResource("15_xph0r")]
-position = Vector2(7515.125, 83)
-is_locked = null
-door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-door_texture = ExtResource("45_w5m2t")
-interact_area_node = null
-auto_prompt = null
-handle_input = null
-one_shot = null
-
-[node name="Door(ToToilet)" parent="Hall2/InteractableObjects" unique_id=96563853 instance=ExtResource("15_xph0r")]
-position = Vector2(7832.125, 83)
-is_locked = null
-door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
-required_key_id = null
-required_key_name = null
-consume_key_on_unlock = null
-door_texture = ExtResource("45_w5m2t")
 interact_area_node = null
 auto_prompt = null
 handle_input = null
