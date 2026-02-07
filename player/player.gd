@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal player_made_sound
+signal flashlight_recharged
 
 ## Скорость движения игрока.
 @export var speed: float = 415.0
@@ -28,6 +29,8 @@ signal player_made_sound
 @export var step_volume: float = -10.0
 ## Звук включения/выключения фонарика.
 @export var flashlight_sound: AudioStream
+## Звук полной зарядки фонарика (опционально).
+@export var flashlight_recharged_sound: AudioStream
 
 @export_group("Фонарик")
 ## Время непрерывной работы фонарика при полном заряде (сек).
@@ -82,6 +85,7 @@ var _movement_blocked: bool = false
 
 # Переменные для аудио
 var _flashlight_player: AudioStreamPlayer
+var _flashlight_recharged_player: AudioStreamPlayer
 
 func _ready() -> void:
 	add_to_group("player")
@@ -90,6 +94,9 @@ func _ready() -> void:
 	_flashlight_player = AudioStreamPlayer.new()
 	_flashlight_player.bus = "Sounds"
 	add_child(_flashlight_player)
+	_flashlight_recharged_player = AudioStreamPlayer.new()
+	_flashlight_recharged_player.bus = "Sounds"
+	add_child(_flashlight_recharged_player)
 	# -----------------------
 	
 	# Инициализация узлов
@@ -264,11 +271,17 @@ func _update_flashlight_charge(delta: float) -> void:
 		return
 
 	if flashlight_recharge_duration <= 0.0:
+		var was_below_full_instant := _flashlight_charge < max_charge
 		_flashlight_charge = max_charge
+		if was_below_full_instant:
+			_emit_flashlight_recharged()
 		return
 
+	var prev_charge: float = _flashlight_charge
 	var recharge_rate: float = max_charge / flashlight_recharge_duration
 	_flashlight_charge = minf(max_charge, _flashlight_charge + recharge_rate * delta)
+	if prev_charge < max_charge and _flashlight_charge >= max_charge:
+		_emit_flashlight_recharged()
 
 func _toggle_flashlight() -> void:
 	if flashlight == null:
@@ -300,6 +313,16 @@ func _play_flashlight_toggle_sound() -> void:
 	_flashlight_player.volume_db = 0.0
 	_flashlight_player.pitch_scale = 1.0
 	_flashlight_player.play()
+	player_made_sound.emit()
+
+func _emit_flashlight_recharged() -> void:
+	flashlight_recharged.emit()
+	if flashlight_recharged_sound == null:
+		return
+	_flashlight_recharged_player.stream = flashlight_recharged_sound
+	_flashlight_recharged_player.volume_db = 0.0
+	_flashlight_recharged_player.pitch_scale = 1.0
+	_flashlight_recharged_player.play()
 	player_made_sound.emit()
 
 func _apply_facing() -> void:
