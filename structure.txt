@@ -901,7 +901,10 @@
 │       │   ├── LebedkaBezRuchki.png
 │       │   ├── LebedkaBezRuchki.png.import
 │       │   ├── RuchkaOtLebedki.png
-│       │   └── RuchkaOtLebedki.png.import
+│       │   ├── RuchkaOtLebedki.png.import
+│       │   ├── lebedka.gd
+│       │   ├── lebedka.gd.uid
+│       │   └── lebedka.tscn
 │       ├── note
 │       │   ├── note.tscn
 │       │   ├── note_object.gd
@@ -995,6 +998,17 @@
 │   │   ├── FlashlightOnOff.wav.import
 │   │   ├── HeartBeat_1.wav
 │   │   └── HeartBeat_1.wav.import
+│   ├── ui
+│   │   ├── FlashlightDrawing.png
+│   │   ├── FlashlightDrawing.png.import
+│   │   ├── FlashlightWithoutSpotlight.png
+│   │   ├── FlashlightWithoutSpotlight.png.import
+│   │   ├── FullFlashlight.png
+│   │   ├── FullFlashlight.png.import
+│   │   ├── OnlySpotlight.png
+│   │   ├── OnlySpotlight.png.import
+│   │   ├── PouringFlashlight.png
+│   │   └── PouringFlashlight.png.import
 │   ├── Andry.png
 │   ├── Andry.png.import
 │   ├── AndryWithFlashlight.png
@@ -1007,6 +1021,8 @@
 │   ├── UI_Button_Sprite_Xbox.png.import
 │   ├── flashlight.gd
 │   ├── flashlight.gd.uid
+│   ├── flashlight_bar.gd
+│   ├── flashlight_bar.gd.uid
 │   ├── player.gd
 │   ├── player.gd.uid
 │   ├── player.tscn
@@ -1054,4 +1070,4 @@
 ├── project.godot
 └── structure.txt
 
-103 directories, 952 files
+104 directories, 967 files

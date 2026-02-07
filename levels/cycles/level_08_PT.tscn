@@ -88,6 +88,7 @@
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://objects/environment/background/decals/HoleInWall1.png" id="86_tffym"]
 [ext_resource type="Texture2D" uid="uid://cjehover4qj3p" path="res://objects/environment/sprites/kladovka/Shvabra.png" id="87_r4str"]
 [ext_resource type="Texture2D" uid="uid://billd8fqj85yd" path="res://objects/environment/sprites/kladovka/PolkaWithHlam2.png" id="88_h4cxk"]
+[ext_resource type="PackedScene" path="res://objects/interactable/lebedka/lebedka.tscn" id="89_pe4dr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_fbsxc")
@@ -127,6 +128,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Player" parent="." unique_id=2088255384 instance=ExtResource("3_5p11p")]
 position = Vector2(-2366, 96)
 allow_running = false
+flashlight_use_duration = 2.0
+flashlight_recharge_duration = 20.0
+flashlight_recharge_delay = 15.0
 
 [node name="Bathroom" type="Node2D" parent="." unique_id=244481532]
 position = Vector2(5579, 0)
@@ -1045,7 +1049,6 @@ one_shot = null
 
 [node name="Door(ToParents)2" parent="Hall/InteractableObjects" unique_id=1555384058 instance=ExtResource("15_xph0r")]
 position = Vector2(11939, 83)
-is_locked = true
 door_locked_message = "Эта дверь заперта на ключ"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)")
 required_key_id = "lebedka_key"
@@ -1136,7 +1139,7 @@ win_sound = ExtResource("51_2e7ln")
 eat_sound = ExtResource("52_w2mig")
 background_texture = ExtResource("53_q015q")
 require_lab_completion = true
-lab_required_message = "Я не буду есть, пока не сделаю лабораторную работу"
+lab_required_message = "Я подвесил холодильник, чтобы не есть"
 locked_sprite = ExtResource("54_4qouy")
 rocking_cycle_duration = 4.0
 rocking_strength_degrees = 2.0
@@ -1185,29 +1188,29 @@ region_rect = Rect2(0, 0, 20500, 500)
 [node name="WallBack3" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1525900943]
 z_index = -5
 texture_repeat = 2
-position = Vector2(11976.056, 19)
+position = Vector2(12373.667, 16)
 scale = Vector2(1.0188888, 1)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 3500, 550)
+region_rect = Rect2(0, 0, 4250, 550)
 
 [node name="WallBack4" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1756804133]
 z_index = -5
 texture_repeat = 2
-position = Vector2(11978.556, -531)
+position = Vector2(12376.167, -534)
 scale = Vector2(1.02, 1)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 3500, 550)
+region_rect = Rect2(0, 0, 4250, 550)
 
 [node name="FloorKitchen2" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1620357960]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12082, 326)
+position = Vector2(12521, 326)
 scale = Vector2(0.22374743, 0.21939737)
 texture = ExtResource("17_jsy42")
 region_enabled = true
-region_rect = Rect2(0, 0, 15000, 500)
+region_rect = Rect2(0, 0, 18000, 500)
 
 [node name="Plintus7" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1248236180]
 z_index = -5
@@ -1431,6 +1434,30 @@ position = Vector2(13658.485, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
+[node name="Plintus39" type="Sprite2D" parent="HallLebedka1/Background" unique_id=2101619406]
+z_index = -5
+position = Vector2(13862.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus40" type="Sprite2D" parent="HallLebedka1/Background" unique_id=273364426]
+z_index = -5
+position = Vector2(14067.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus41" type="Sprite2D" parent="HallLebedka1/Background" unique_id=580214320]
+z_index = -5
+position = Vector2(14247.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus42" type="Sprite2D" parent="HallLebedka1/Background" unique_id=330424338]
+z_index = -5
+position = Vector2(14452.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
 [node name="HoleInWall2" type="Sprite2D" parent="HallLebedka1/Background" unique_id=615932967]
 z_index = -4
 position = Vector2(9950.001, 112)
@@ -1544,9 +1571,17 @@ position = Vector2(12605, -825)
 z_index = 10
 position = Vector2(13386, -825)
 
+[node name="WallBelow_11" parent="HallLebedka1/Walls" unique_id=2057945107 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(14169, 400)
+
+[node name="WallAbove_11" parent="HallLebedka1/Walls" unique_id=168701775 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(14169, -825)
+
 [node name="WallLeft" parent="HallLebedka1/Walls" unique_id=1850634647 instance=ExtResource("6_ik2bq")]
 z_index = 10
-position = Vector2(13759, 63.860657)
+position = Vector2(14542, 63.860657)
 
 [node name="WallRight" parent="HallLebedka1/Walls" unique_id=913972552 instance=ExtResource("6_ik2bq")]
 z_index = 10
@@ -1554,7 +1589,7 @@ position = Vector2(6089, 63.860657)
 
 [node name="WallLeft2" parent="HallLebedka1/Walls" unique_id=816026982 instance=ExtResource("6_ik2bq")]
 z_index = 10
-position = Vector2(13759, -528)
+position = Vector2(14542, -528)
 
 [node name="WallRight2" parent="HallLebedka1/Walls" unique_id=922841457 instance=ExtResource("6_ik2bq")]
 z_index = 10
@@ -1684,25 +1719,37 @@ scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("43_hk0qu")
 
 [node name="Chain" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=287246128]
-position = Vector2(13199.993, -191.62543)
+position = Vector2(13279.993, 9.541061)
 rotation = 1.1241062
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain2" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1645171468]
-position = Vector2(13102.463, -395.00082)
+position = Vector2(13182.463, -193.83434)
+rotation = 1.1241062
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain5" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=596895606]
+position = Vector2(13085, -397.00034)
 rotation = 1.1241062
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain3" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1936994857]
-position = Vector2(13208.725, -193.45851)
+position = Vector2(13288.725, 7.7080226)
 rotation = 1.1616184
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain4" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1003178900]
-position = Vector2(13121.462, -397.00027)
+position = Vector2(13201.462, -195.83374)
+rotation = 1.1616184
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain6" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1977068297]
+position = Vector2(13111.999, -402.00073)
 rotation = 1.1616184
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
@@ -1780,7 +1827,6 @@ one_shot = null
 
 [node name="Door(Lebedka)2" parent="HallLebedka1/InteractableObjects" unique_id=359245110 instance=ExtResource("15_xph0r")]
 position = Vector2(8525, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)2")
 required_key_id = null
@@ -1793,7 +1839,6 @@ one_shot = null
 
 [node name="Door(Lebedka)3" parent="HallLebedka1/InteractableObjects" unique_id=699660232 instance=ExtResource("15_xph0r")]
 position = Vector2(9753, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)3")
 required_key_id = null
@@ -1806,7 +1851,6 @@ one_shot = null
 
 [node name="Door(Lebedka)4" parent="HallLebedka1/InteractableObjects" unique_id=846977662 instance=ExtResource("15_xph0r")]
 position = Vector2(10963, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)4")
 required_key_id = null
@@ -1819,7 +1863,6 @@ one_shot = null
 
 [node name="Door(Lebedka)5" parent="HallLebedka1/InteractableObjects" unique_id=803609167 instance=ExtResource("15_xph0r")]
 position = Vector2(12134, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)5")
 required_key_id = null
@@ -1828,6 +1871,25 @@ consume_key_on_unlock = null
 interact_area_node = null
 auto_prompt = null
 handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)6" parent="HallLebedka1/InteractableObjects" unique_id=1438485508 instance=ExtResource("15_xph0r")]
+position = Vector2(14004, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)6")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Lebedka" parent="HallLebedka1/InteractableObjects" unique_id=1292910143 instance=ExtResource("89_pe4dr")]
+position = Vector2(13344, 228)
+fridge_path = NodePath("../../../Hall/InteractableObjects/Fridge")
+fridge_target_global_position = Vector2(9810, 110)
+used_sprite = null
 one_shot = null
 
 [node name="HallLebedka2" type="Node2D" parent="." unique_id=1652488699]
@@ -2362,25 +2424,25 @@ scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("43_hk0qu")
 
 [node name="Chain" type="Sprite2D" parent="HallLebedka2/Sprites" unique_id=2070677429]
-position = Vector2(13199.993, -191.62543)
+position = Vector2(13402.993, -191.62543)
 rotation = 1.1241062
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain2" type="Sprite2D" parent="HallLebedka2/Sprites" unique_id=131397372]
-position = Vector2(13102.463, -395.00082)
+position = Vector2(13305.463, -395.00082)
 rotation = 1.1241062
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain3" type="Sprite2D" parent="HallLebedka2/Sprites" unique_id=693064117]
-position = Vector2(13208.725, -193.45851)
+position = Vector2(13411.725, -193.45851)
 rotation = 1.1616184
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
 
 [node name="Chain4" type="Sprite2D" parent="HallLebedka2/Sprites" unique_id=359807152]
-position = Vector2(13121.462, -397.00027)
+position = Vector2(13324.462, -397.00027)
 rotation = 1.1616184
 scale = Vector2(0.1513916, 0.1513916)
 texture = ExtResource("76_hq6el")
@@ -2458,7 +2520,6 @@ one_shot = null
 
 [node name="Door(Lebedka)2" parent="HallLebedka2/InteractableObjects" unique_id=2115787854 instance=ExtResource("15_xph0r")]
 position = Vector2(8525, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)2")
 required_key_id = null
@@ -2471,7 +2532,6 @@ one_shot = null
 
 [node name="Door(Lebedka)3" parent="HallLebedka2/InteractableObjects" unique_id=1463351492 instance=ExtResource("15_xph0r")]
 position = Vector2(9753, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)3")
 required_key_id = null
@@ -2484,7 +2544,6 @@ one_shot = null
 
 [node name="Door(Lebedka)4" parent="HallLebedka2/InteractableObjects" unique_id=970487280 instance=ExtResource("15_xph0r")]
 position = Vector2(10963, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)4")
 required_key_id = null
@@ -2497,9 +2556,20 @@ one_shot = null
 
 [node name="Door(Lebedka)5" parent="HallLebedka2/InteractableObjects" unique_id=1130902487 instance=ExtResource("15_xph0r")]
 position = Vector2(12134, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)5")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)6" parent="HallLebedka2/InteractableObjects" unique_id=1072427281 instance=ExtResource("15_xph0r")]
+position = Vector2(13532, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)6")
 required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
@@ -2885,5 +2955,20 @@ script = ExtResource("71_1c5xg")
 
 [node name="TextureDistortionManager" parent="." unique_id=1596938394 instance=ExtResource("78_1iu6x")]
 position = Vector2(9165, 1278)
+
+[node name="EnemyLightSensitive" parent="." unique_id=307833949 instance=ExtResource("79_3debg")]
+position = Vector2(10816, 5313)
+speed = 360.0
+time_penalty = 28.0
+
+[node name="EnemyLightSensitive4" parent="." unique_id=1161412119 instance=ExtResource("79_3debg")]
+position = Vector2(11824, 10619)
+speed = 360.0
+time_penalty = 28.0
+
+[node name="EnemyLightSensitive2" parent="." unique_id=549764709 instance=ExtResource("79_3debg")]
+position = Vector2(7246, 10610)
+speed = 420.0
+time_penalty = 28.0
 
 [editable path="Hall/InteractableObjects/Fridge"]

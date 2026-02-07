@@ -29,6 +29,14 @@ signal player_made_sound
 ## Звук включения/выключения фонарика.
 @export var flashlight_sound: AudioStream
 
+@export_group("Фонарик")
+## Время непрерывной работы фонарика при полном заряде (сек).
+@export var flashlight_use_duration: float = 5.0
+## Время полной перезарядки фонарика (сек).
+@export var flashlight_recharge_duration: float = 5.0
+## Задержка перед началом перезарядки фонарика (сек).
+@export var flashlight_recharge_delay: float = 1.0
+
 @export_group("Walk Animation")
 ## Имя анимации ходьбы в AnimatedSprite2D.
 @export var walk_animation: StringName = &"walk"
@@ -66,6 +74,8 @@ var _sprite_under_pivot: bool = false
 var _walk_loop_start: int = 0
 var _walk_loop_end: int = 0
 var _stamina: float = 0.0
+var _flashlight_charge: float = 0.0
+var _time_since_flashlight_use: float = 0.0
 var _time_since_run: float = 0.0
 var _adjusting_frame: bool = false
 var _movement_blocked: bool = false
@@ -110,6 +120,8 @@ func _ready() -> void:
 		flashlight.enabled = false 
 	
 	_stamina = stamina_max
+	_flashlight_charge = max(0.0, flashlight_use_duration)
+	_time_since_flashlight_use = max(0.0, flashlight_recharge_delay)
 	_apply_facing()
 	_connect_minigame_controller()
 
@@ -135,6 +147,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		_update_walk_animation(delta, 0.0)
+		_update_flashlight_charge(delta)
 		return
 	var direction := Input.get_axis("move_left", "move_right")
 	if _is_screen_dark():
@@ -157,6 +170,7 @@ func _physics_process(delta: float) -> void:
 
 	# Обновление анимации
 	_update_walk_animation(delta, direction)
+	_update_flashlight_charge(delta)
 
 func _is_movement_blocked() -> bool:
 	return _movement_blocked
@@ -218,8 +232,75 @@ func get_stamina_ratio() -> float:
 		return 1.0
 	return clamp(_stamina / stamina_max, 0.0, 1.0)
 
+func get_flashlight_charge_ratio() -> float:
+	if flashlight_use_duration <= 0.0:
+		return 1.0
+	return clampf(_flashlight_charge / flashlight_use_duration, 0.0, 1.0)
+
 func is_running() -> bool:
 	return _is_running
+
+func is_flashlight_enabled() -> bool:
+	return flashlight != null and flashlight.enabled
+
+func _update_flashlight_charge(delta: float) -> void:
+	if flashlight == null:
+		return
+
+	var max_charge: float = maxf(0.0, flashlight_use_duration)
+	_flashlight_charge = clampf(_flashlight_charge, 0.0, max_charge)
+	if max_charge <= 0.0:
+		return
+
+	if flashlight.enabled:
+		_time_since_flashlight_use = 0.0
+		_flashlight_charge = maxf(0.0, _flashlight_charge - delta)
+		if _flashlight_charge <= 0.0:
+			_set_flashlight_enabled(false)
+		return
+
+	_time_since_flashlight_use += delta
+	if _time_since_flashlight_use < maxf(0.0, flashlight_recharge_delay):
+		return
+
+	if flashlight_recharge_duration <= 0.0:
+		_flashlight_charge = max_charge
+		return
+
+	var recharge_rate: float = max_charge / flashlight_recharge_duration
+	_flashlight_charge = minf(max_charge, _flashlight_charge + recharge_rate * delta)
+
+func _toggle_flashlight() -> void:
+	if flashlight == null:
+		return
+	if flashlight.enabled:
+		_set_flashlight_enabled(false)
+		return
+	if _can_enable_flashlight():
+		_set_flashlight_enabled(true)
+
+func _can_enable_flashlight() -> bool:
+	if flashlight_use_duration <= 0.0:
+		return true
+	var max_charge: float = maxf(0.0, flashlight_use_duration)
+	return _flashlight_charge >= max_charge
+
+func _set_flashlight_enabled(enabled_state: bool) -> void:
+	if flashlight == null:
+		return
+	if flashlight.enabled == enabled_state:
+		return
+	flashlight.enabled = enabled_state
+	_play_flashlight_toggle_sound()
+
+func _play_flashlight_toggle_sound() -> void:
+	if flashlight_sound == null:
+		return
+	_flashlight_player.stream = flashlight_sound
+	_flashlight_player.volume_db = 0.0
+	_flashlight_player.pitch_scale = 1.0
+	_flashlight_player.play()
+	player_made_sound.emit()
 
 func _apply_facing() -> void:
 	if pivot:
@@ -352,15 +433,7 @@ func _resolve_step_audio_component() -> StepAudioComponent:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_flashlight"):
-		if flashlight:
-			flashlight.enabled = !flashlight.enabled
-			
-			if flashlight_sound:
-				_flashlight_player.stream = flashlight_sound
-				_flashlight_player.volume_db = 0.0
-				_flashlight_player.pitch_scale = 1.0
-				_flashlight_player.play()
-				player_made_sound.emit()
+		_toggle_flashlight()
 
 # ===== Работа с ключами =====
 func add_key(key_id: String) -> void:
