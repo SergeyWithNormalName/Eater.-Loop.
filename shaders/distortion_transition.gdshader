@@ -12,6 +12,7 @@ uniform float color_bleeding : hint_range(0.0, 0.5) = 0.05; // Сила расс
 uniform float glitch_lines : hint_range(0.0, 100.0) = 50.0; // Количество полос глитча
 uniform float vignette_intensity : hint_range(0.0, 2.0) = 0.8; // Темнота по краям
 uniform float noise_quality : hint_range(100.0, 500.0) = 250.0; // Зернистость
+uniform float desaturation : hint_range(0.0, 1.0) = 0.0; // Обесцвечивание
 
 float rand(vec2 co) {
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
@@ -64,9 +65,12 @@ void fragment() {
 		final_color = mix(final_color, vec3(1.0) - final_color, flash * rand(vec2(TIME)));
 	}
 
+	// 6. Обесцвечивание для специальных событий
+	float luma = dot(final_color, vec3(0.299, 0.587, 0.114));
+	final_color = mix(final_color, vec3(luma), clamp(desaturation * intensity, 0.0, 1.0));
+
 	// ИСПРАВЛЕНИЕ: Используем intensity как Alpha канал.
 	// Когда эффект ослабевает (intensity -> 0), этот слой становится прозрачным,
 	// и становится виден нижний слой (постоянное искажение).
 	COLOR = vec4(final_color, intensity);
 }
-

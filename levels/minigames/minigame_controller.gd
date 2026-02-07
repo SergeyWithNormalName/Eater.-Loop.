@@ -1,12 +1,13 @@
 extends Node
 
+const GamepadRuntimeClass = preload("res://levels/minigames/gamepad/gamepad_runtime.gd")
 
 ## Центральный контроллер мини-игр.
 ##
 ## Назначение:
 ## - единая логика паузы и курсора
 ## - управление фоновой музыкой мини-игры через MusicManager
-## - обработка геймпадного курсора
+## - обработка геймпадных схем управления
 ## - общий таймер мини-игры
 ##
 ## Использование:
@@ -24,7 +25,6 @@ signal minigame_pause_menu_allowed_changed(allowed: bool)
 signal minigame_cancel_allowed_changed(allowed: bool)
 
 @export var default_music_fade_time: float = 0.3
-@export var default_cursor_speed: float = 800.0
 ## Слой для контейнера мини-игр (должен быть ниже меню паузы).
 @export var default_minigame_layer: int = 75
 @export var minigame_transition_enabled: bool = true
@@ -39,8 +39,7 @@ var _time_left: float = 0.0
 var _auto_finish_on_timeout: bool = false
 var _pause_requested: bool = true
 var _pause_prev: bool = false
-var _cursor_enabled: bool = true
-var _cursor_speed: float = 800.0
+var _show_mouse_cursor: bool = true
 var _music_pushed: bool = false
 var _music_is_stream: bool = false
 var _music_stop_on_finish: bool = false
@@ -54,19 +53,32 @@ var _allow_pause_menu: bool = true
 var _allow_cancel_action: bool = false
 var _transition_active: bool = false
 var _transition_queue: Array = []
+var _gamepad_runtime = null
+var _gamepad_schemes: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_gamepad_runtime = GamepadRuntimeClass.new()
 	if get_tree() and get_tree().has_signal("scene_changed"):
 		get_tree().scene_changed.connect(_on_scene_changed)
+
+func _input(event: InputEvent) -> void:
+	if _active_minigame == null:
+		return
+	if _gamepad_runtime and _gamepad_runtime.has_method("observe_input_device"):
+		_gamepad_runtime.observe_input_device(event)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _active_minigame == null:
 		return
-	if not _allow_cancel_action:
-		return
-	if event.is_action_pressed("mg_cancel"):
+	if event.is_action_pressed("mg_cancel") and _allow_cancel_action:
+		if _gamepad_runtime and _gamepad_runtime.handle_cancel():
+			get_viewport().set_input_as_handled()
+			return
 		_handle_cancel_request()
+		get_viewport().set_input_as_handled()
+		return
+	if _gamepad_runtime and _gamepad_runtime.handle_input(event):
 		get_viewport().set_input_as_handled()
 
 func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> void:
@@ -120,6 +132,25 @@ func get_active_minigame_layer() -> int:
 		return (parent as CanvasLayer).layer
 	return default_minigame_layer
 
+func set_gamepad_scheme(minigame: Node, scheme: Dictionary) -> void:
+	if minigame == null:
+		return
+	var id := minigame.get_instance_id()
+	_gamepad_schemes[id] = {
+		"ref": weakref(minigame),
+		"scheme": scheme.duplicate(true)
+	}
+	_cleanup_gamepad_schemes()
+	if minigame == _active_minigame:
+		_apply_registered_gamepad_scheme(minigame)
+
+func clear_gamepad_scheme(minigame: Node) -> void:
+	if minigame == null:
+		return
+	_gamepad_schemes.erase(minigame.get_instance_id())
+	if _active_minigame == minigame and _gamepad_runtime:
+		_gamepad_runtime.clear_scheme(minigame)
+
 func start_minigame(minigame: Node, config: Variant = null) -> void:
 	if minigame == null:
 		return
@@ -129,8 +160,7 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 	_active_minigame = minigame
 	var settings := _resolve_settings(config)
 	_pause_requested = settings.pause_game
-	_cursor_enabled = settings.enable_gamepad_cursor
-	_cursor_speed = settings.gamepad_cursor_speed
+	_show_mouse_cursor = settings.show_mouse_cursor
 	_music_fade_time = settings.music_fade_time
 	_music_stop_on_finish = settings.stop_music_on_finish
 	_auto_finish_on_timeout = settings.auto_finish_on_timeout
@@ -139,7 +169,7 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 	_allow_cancel_action = settings.allow_cancel_action
 
 	_setup_pause()
-	_setup_cursor()
+	_setup_mouse_cursor()
 	_setup_prompts()
 	_setup_timer(settings.time_limit)
 	_setup_music(
@@ -149,6 +179,7 @@ func start_minigame(minigame: Node, config: Variant = null) -> void:
 	)
 	if MusicManager:
 		MusicManager.pause_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
+	_apply_registered_gamepad_scheme(minigame)
 
 	minigame_started.emit(minigame)
 	minigame_pause_menu_allowed_changed.emit(_allow_pause_menu)
@@ -231,7 +262,8 @@ func _process(delta: float) -> void:
 	if _pause_menu_open:
 		return
 	_update_timer(delta)
-	_update_gamepad_cursor(delta)
+	if _gamepad_runtime:
+		_gamepad_runtime.process(delta)
 
 func _update_timer(delta: float) -> void:
 	if _active_minigame == null:
@@ -245,21 +277,6 @@ func _update_timer(delta: float) -> void:
 		if _auto_finish_on_timeout:
 			finish_minigame(_active_minigame, false)
 
-func _update_gamepad_cursor(delta: float) -> void:
-	if _active_minigame == null:
-		return
-	if not _cursor_enabled:
-		return
-	var joy_vector = Input.get_vector("mg_cursor_left", "mg_cursor_right", "mg_cursor_up", "mg_cursor_down")
-	if joy_vector.length() <= 0.1:
-		return
-	var current_mouse = get_viewport().get_mouse_position()
-	var new_pos = current_mouse + joy_vector * _cursor_speed * delta
-	var screen_rect = get_viewport().get_visible_rect().size
-	new_pos.x = clamp(new_pos.x, 0, screen_rect.x)
-	new_pos.y = clamp(new_pos.y, 0, screen_rect.y)
-	get_viewport().warp_mouse(new_pos)
-
 func _setup_pause() -> void:
 	if not _pause_requested:
 		return
@@ -271,14 +288,14 @@ func _restore_pause() -> void:
 		return
 	get_tree().paused = _pause_prev
 
-func _setup_cursor() -> void:
-	if not _cursor_enabled:
+func _setup_mouse_cursor() -> void:
+	if not _show_mouse_cursor:
 		return
 	if CursorManager:
 		CursorManager.request_visible(self)
 
-func _restore_cursor() -> void:
-	if not _cursor_enabled:
+func _restore_mouse_cursor() -> void:
+	if not _show_mouse_cursor:
 		return
 	if CursorManager:
 		CursorManager.release_visible(self)
@@ -449,7 +466,9 @@ func _finalize_minigame_finish(minigame: Node, success: bool) -> void:
 	_restore_music()
 	if MusicManager:
 		MusicManager.resume_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
-	_restore_cursor()
+	if _gamepad_runtime:
+		_gamepad_runtime.clear()
+	_restore_mouse_cursor()
 	_restore_pause()
 	_schedule_prompt_restore(minigame)
 	_clear_timer()
@@ -476,6 +495,7 @@ func _cleanup_orphaned_minigames(scene: Node) -> void:
 			continue
 		if node == _active_minigame:
 			finish_minigame(node, false)
+		clear_gamepad_scheme(node)
 		node.queue_free()
 
 	if _active_minigame != null and not is_instance_valid(_active_minigame):
@@ -486,7 +506,9 @@ func _force_clear_active_state() -> void:
 		return
 	_active_minigame = null
 	_restore_music()
-	_restore_cursor()
+	if _gamepad_runtime:
+		_gamepad_runtime.clear()
+	_restore_mouse_cursor()
 	_restore_pause()
 	_clear_prompt_restore_target()
 	_restore_prompts_if_safe()
@@ -514,10 +536,10 @@ func _resolve_settings(config: Variant) -> MinigameSettings:
 	if config is Dictionary:
 		if config.has("pause_game"):
 			settings.pause_game = bool(config.get("pause_game"))
+		if config.has("show_mouse_cursor"):
+			settings.show_mouse_cursor = bool(config.get("show_mouse_cursor"))
 		if config.has("enable_gamepad_cursor"):
-			settings.enable_gamepad_cursor = bool(config.get("enable_gamepad_cursor"))
-		if config.has("gamepad_cursor_speed"):
-			settings.gamepad_cursor_speed = float(config.get("gamepad_cursor_speed"))
+			settings.show_mouse_cursor = bool(config.get("enable_gamepad_cursor"))
 		if config.has("time_limit"):
 			settings.time_limit = float(config.get("time_limit"))
 		if config.has("music_stream"):
@@ -539,3 +561,41 @@ func _resolve_settings(config: Variant) -> MinigameSettings:
 		if config.has("allow_cancel_action"):
 			settings.allow_cancel_action = bool(config.get("allow_cancel_action"))
 	return settings
+
+func _apply_registered_gamepad_scheme(minigame: Node) -> void:
+	if _gamepad_runtime == null:
+		return
+	var scheme := _get_registered_scheme(minigame)
+	if scheme.is_empty():
+		_gamepad_runtime.clear()
+		return
+	if _gamepad_runtime.is_active_for(minigame):
+		_gamepad_runtime.set_scheme(minigame, scheme)
+		return
+	_gamepad_runtime.start(minigame, scheme)
+
+func _get_registered_scheme(minigame: Node) -> Dictionary:
+	if minigame == null:
+		return {}
+	var id := minigame.get_instance_id()
+	if not _gamepad_schemes.has(id):
+		return {}
+	var entry: Dictionary = _gamepad_schemes[id]
+	var ref: WeakRef = entry.get("ref", null)
+	if ref == null or ref.get_ref() != minigame:
+		_gamepad_schemes.erase(id)
+		return {}
+	var scheme: Variant = entry.get("scheme", {})
+	if scheme is Dictionary:
+		return (scheme as Dictionary).duplicate(true)
+	return {}
+
+func _cleanup_gamepad_schemes() -> void:
+	var stale_ids: Array[int] = []
+	for id in _gamepad_schemes.keys():
+		var entry: Dictionary = _gamepad_schemes[id]
+		var ref: WeakRef = entry.get("ref", null)
+		if ref == null or ref.get_ref() == null:
+			stale_ids.append(id)
+	for id in stale_ids:
+		_gamepad_schemes.erase(id)

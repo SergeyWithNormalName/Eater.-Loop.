@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://u32e5100pijl"]
+[gd_scene format=3 uid="uid://u32e5100pijl"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_hi6qj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -111,7 +111,7 @@
 [ext_resource type="Texture2D" uid="uid://dcixupjbbmhou" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_16.png" id="104_pcuui"]
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_hf4yt"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_gfyg2"]
-[ext_resource type="PackedScene" path="res://objects/markers/stalker_spawn_marker.tscn" id="119_pcuui"]
+[ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="119_pcuui"]
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="level_settings"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]

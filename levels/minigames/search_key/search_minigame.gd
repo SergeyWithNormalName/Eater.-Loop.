@@ -27,6 +27,7 @@ func _ready() -> void:
 	key_button.mouse_filter = Control.MOUSE_FILTER_STOP
 	key_button.pressed.connect(_on_key_pressed)
 	_apply_key_texture()
+	_register_gamepad_scheme()
 
 	if not _setup_done:
 		call_deferred("_spawn_content")
@@ -71,6 +72,7 @@ func _spawn_content() -> void:
 		_spawn_trash_from_state(_layout_state.get("trash_items"))
 	else:
 		_spawn_trash(area_size)
+	_register_gamepad_scheme()
 
 func _apply_key_texture() -> void:
 	if key_texture:
@@ -203,5 +205,95 @@ func _close_minigame(success: bool) -> void:
 		queue_free()
 
 func _exit_tree() -> void:
-	if MinigameController and MinigameController.is_active(self):
-		MinigameController.finish_minigame(self, false)
+	if MinigameController:
+		MinigameController.clear_gamepad_scheme(self)
+		if MinigameController.is_active(self):
+			MinigameController.finish_minigame(self, false)
+
+func _register_gamepad_scheme() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.set_gamepad_scheme(self, {
+		"mode": "focus",
+		"focus_provider": Callable(self, "_get_gamepad_focus_nodes"),
+		"on_confirm": Callable(self, "_on_gamepad_confirm"),
+		"hints": {
+			"confirm": "Сдвинуть / взять ключ",
+			"cancel": "Выход"
+		}
+	})
+
+func _get_gamepad_focus_nodes() -> Array[Node]:
+	var nodes: Array[Node] = []
+	for child in trash_container.get_children():
+		if not child is Control:
+			continue
+		if child.is_queued_for_deletion():
+			continue
+		if child.has_meta("gamepad_inactive") and bool(child.get_meta("gamepad_inactive")):
+			continue
+		nodes.append(child)
+	if key_button.visible and _can_pick_key():
+		nodes.append(key_button)
+	return nodes
+
+func _on_gamepad_confirm(active: Node, _context: Dictionary) -> bool:
+	if active == null:
+		return false
+	if active == key_button:
+		if not _can_pick_key():
+			return false
+		_on_key_pressed()
+		return true
+	if active is Control and active.get_parent() == trash_container:
+		_sweep_all_trash_to_corner()
+		return true
+	return false
+
+func _can_pick_key() -> bool:
+	if key_button == null or not key_button.visible:
+		return false
+	var key_rect := key_button.get_global_rect()
+	for child in trash_container.get_children():
+		if not child is Control:
+			continue
+		var trash := child as Control
+		if not trash.visible:
+			continue
+		if trash.is_queued_for_deletion():
+			continue
+		var trash_rect := trash.get_global_rect()
+		if key_rect.intersects(trash_rect, true):
+			return false
+	return true
+
+func _sweep_all_trash_to_corner() -> void:
+	var area_size := search_area.size
+	if area_size.x <= 0.0 or area_size.y <= 0.0:
+		return
+	var key_size := _get_control_size(key_button, Vector2(64, 64))
+	var key_center := key_button.position + key_size * 0.5
+	var corners: Array[Vector2] = [
+		Vector2(16.0, 16.0),
+		Vector2(area_size.x - 16.0, 16.0),
+		Vector2(16.0, area_size.y - 16.0),
+		Vector2(area_size.x - 16.0, area_size.y - 16.0)
+	]
+	var pile_point := corners[0]
+	var best_distance := -INF
+	for corner in corners:
+		var dist := corner.distance_squared_to(key_center)
+		if dist > best_distance:
+			best_distance = dist
+			pile_point = corner
+
+	for child in trash_container.get_children():
+		if not child is Control:
+			continue
+		var trash := child as Control
+		if trash.is_queued_for_deletion():
+			continue
+		trash.set_meta("gamepad_inactive", true)
+		trash.move_to_front()
+		var tween := create_tween()
+		tween.tween_property(trash, "position", pile_point, 0.24).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" uid="uid://jpv1t41r04yh" path="res://objects/interactable/note/note_object.gd" id="1_note_script"]
+[ext_resource type="Texture2D" uid="uid://nmh1qly3bkah" path="res://icon.svg" id="2_note_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_note"]
+size = Vector2(130, 130)
+
+[node name="Note" type="Area2D"]
+script = ExtResource("1_note_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_note")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_note_texture")

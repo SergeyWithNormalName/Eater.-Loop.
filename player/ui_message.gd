@@ -131,9 +131,10 @@ func _setup_note_viewer() -> void:
 	add_child(_note_bg)
 	
 	_note_image = TextureRect.new()
-	_note_image.set_anchors_preset(Control.PRESET_CENTER)
-	_note_image.expand_mode = TextureRect.EXPAND_KEEP_SIZE
+	_note_image.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_note_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_note_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_note_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_note_image.visible = false
 	add_child(_note_image)
 

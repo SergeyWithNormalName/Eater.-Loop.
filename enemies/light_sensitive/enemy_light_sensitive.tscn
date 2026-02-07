@@ -1,6 +1,7 @@
-[gd_scene load_steps=44 format=3 uid="uid://t48uttt1m656"]
+[gd_scene format=3 uid="uid://t48uttt1m656"]
 
 [ext_resource type="Script" uid="uid://b14oqxr6ywytt" path="res://enemies/light_sensitive/enemy_light_sensitive.gd" id="1_light_sensitive"]
+[ext_resource type="AudioStream" uid="uid://l5fq28fdxqhi" path="res://music/MusicForBasicMonster.wav" id="2_x3an5"]
 [ext_resource type="Texture2D" uid="uid://cm6c126i05u23" path="res://enemies/light_sensitive/Monster_2.png" id="2_yagbc"]
 [ext_resource type="Texture2D" uid="uid://cpjjlbqlx0ms7" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-001.png" id="3_flashlight_001"]
 [ext_resource type="Texture2D" uid="uid://b36sp48l6m1h3" path="res://enemies/light_sensitive/animations/Flashlight/ezgif-frame-002.png" id="4_flashlight_002"]
@@ -186,29 +187,31 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
 size = Vector2(520, 870)
 
-[node name="EnemyLightSensitive" type="CharacterBody2D"]
+[node name="EnemyLightSensitive" type="CharacterBody2D" unique_id=307833949]
 light_mask = 2
 script = ExtResource("1_light_sensitive")
+speed = 370.0
+chase_music = ExtResource("2_x3an5")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1148313789]
 scale = Vector2(0.5, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1574905207]
 shape = SubResource("RectangleShape2D_nb6gf")
 
-[node name="HitboxArea" type="Area2D" parent="."]
+[node name="HitboxArea" type="Area2D" parent="." unique_id=811074674]
 scale = Vector2(0.5, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=1624870301]
 shape = SubResource("RectangleShape2D_lu5c6")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=990090021]
 light_mask = 2
 scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_light_sensitive")
 animation = &"lamp_stan"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1663006032]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_8e3ao")
 disabled = true

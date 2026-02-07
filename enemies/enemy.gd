@@ -8,8 +8,18 @@ extends CharacterBody2D
 @export var keep_chasing_outside_detection: bool = false
 ## Сколько секунд отнимает при касании.
 @export var time_penalty: float = 5.0
-## Убивает игрока сразу (перезагрузка сцены).
+## Убивает игрока сразу (через экран смерти).
 @export var kill_on_attack: bool = false
+
+@export_group("Attack SFX")
+## Звук атаки.
+@export var attack_sfx: AudioStream = preload("res://music/MyHorrorHit_1.wav")
+## Громкость звука атаки (дБ).
+@export_range(-80.0, 6.0, 0.1) var attack_sfx_volume_db: float = -2.0
+## Минимальный питч звука атаки.
+@export_range(0.1, 3.0, 0.01) var attack_sfx_pitch_min: float = 0.95
+## Максимальный питч звука атаки.
+@export_range(0.1, 3.0, 0.01) var attack_sfx_pitch_max: float = 1.05
 
 @export_group("Chase Music")
 ## Включить музыку погони.
@@ -25,11 +35,14 @@ var _player: Node2D = null
 @onready var _sprite: Node2D = _resolve_visual_node()
 var _sprite_base_scale: Vector2 = Vector2.ONE
 var _chase_music_started: bool = false
+const DEATH_SCREAMS_DIR := "res://player/audio/screams"
+var _death_screams: Array[AudioStream] = []
 
 func _ready() -> void:
 	add_to_group("enemies")
 	if _sprite:
 		_sprite_base_scale = _sprite.scale
+	_load_death_screams()
 
 func _physics_process(_delta: float) -> void:
 	if chase_player and _player != null:
@@ -110,16 +123,61 @@ func _set_chase_music_suppressed(suppressed: bool) -> void:
 		return
 	MusicManager.set_chase_music_suppressed(self, suppressed)
 
-func _attack_player() -> void:
-	# ИСПРАВЛЕНО: phase вместо current_phase
-	if kill_on_attack or GameState.phase == GameState.Phase.DISTORTED:
-		UIMessage.show_text("Тебя поглотили.")
-		if GameState:
-			GameState.reset_cycle_state()
-		get_tree().call_deferred("reload_current_scene")
+func _load_death_screams() -> void:
+	_death_screams.clear()
+	var dir := DirAccess.open(DEATH_SCREAMS_DIR)
+	if dir == null:
 		return
-	# ИСПРАВЛЕНО: Теперь функция будет существовать в GameDirector
-	GameDirector.reduce_time(time_penalty, true)
+	for file_name in dir.get_files():
+		var ext := file_name.get_extension().to_lower()
+		if ext != "wav" and ext != "ogg" and ext != "mp3":
+			continue
+		var stream := load("%s/%s" % [DEATH_SCREAMS_DIR, file_name]) as AudioStream
+		if stream != null:
+			_death_screams.append(stream)
+
+func _pick_random_death_scream() -> AudioStream:
+	if _death_screams.is_empty():
+		return null
+	return _death_screams[randi() % _death_screams.size()]
+
+func _play_attack_sfx(stream_override: AudioStream = null) -> void:
+	var stream := stream_override if stream_override != null else attack_sfx
+	if stream == null:
+		return
+	var pitch_min := minf(attack_sfx_pitch_min, attack_sfx_pitch_max)
+	var pitch_max := maxf(attack_sfx_pitch_min, attack_sfx_pitch_max)
+	var pitch := randf_range(pitch_min, pitch_max)
+	if UIMessage and UIMessage.has_method("play_sfx"):
+		UIMessage.play_sfx(stream, attack_sfx_volume_db, pitch)
+		return
+	if get_tree() == null:
+		return
+	var fallback_player := AudioStreamPlayer.new()
+	fallback_player.bus = "Sounds"
+	fallback_player.stream = stream
+	fallback_player.volume_db = attack_sfx_volume_db
+	fallback_player.pitch_scale = pitch
+	get_tree().root.add_child(fallback_player)
+	fallback_player.finished.connect(func():
+		fallback_player.queue_free()
+	)
+	fallback_player.play()
+
+func _attack_player() -> void:
+	var is_lethal := kill_on_attack or GameState.phase == GameState.Phase.DISTORTED
+	if is_lethal:
+		_play_attack_sfx(_pick_random_death_scream())
+		if GameDirector and GameDirector.has_method("trigger_death_screen"):
+			GameDirector.trigger_death_screen()
+		else:
+			if GameState:
+				GameState.reset_cycle_state()
+			get_tree().call_deferred("reload_current_scene")
+		return
+	_play_attack_sfx()
+	if GameDirector and GameDirector.has_method("reduce_time"):
+		GameDirector.reduce_time(time_penalty, true)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
 	call_deferred("queue_free")

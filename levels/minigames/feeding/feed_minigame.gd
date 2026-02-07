@@ -7,8 +7,6 @@ signal minigame_finished
 @export var food_needed: int = 5
 ## Задержка перед завершением мини-игры.
 @export var finish_delay: float = 2.0
-## Скорость курсора геймпада.
-@export var gamepad_cursor_speed: float = 800.0
 ## Небольшая рандомизация поворота еды (в градусах).
 @export_range(0.0, 20.0, 0.1) var food_rotation_jitter_deg: float = 10.0
 ## Звук поедания.
@@ -58,6 +56,7 @@ func _ready() -> void:
 
 	_selected_music = DEFAULT_MUSIC
 	_start_minigame_session()
+	_register_gamepad_scheme()
 	
 	_base_viewport = Vector2(
 		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
@@ -131,6 +130,7 @@ func setup_game(andrey_texture: Texture2D, count: int, music: AudioStream, win_s
 			food.set_target_mouth(mouth_area)
 			
 		food.eaten.connect(_on_food_eaten)
+	_register_gamepad_scheme()
 
 func _process(_delta: float) -> void:
 	pass
@@ -194,6 +194,7 @@ func _close_game() -> void:
 	
 func _exit_tree() -> void:
 	if MinigameController:
+		MinigameController.clear_gamepad_scheme(self)
 		if MinigameController.is_active(self):
 			MinigameController.finish_minigame(self, false)
 	if GameState.has_method("reset_dragging"):
@@ -204,8 +205,7 @@ func _start_minigame_session() -> void:
 		return
 	var settings := MinigameSettings.new()
 	settings.pause_game = false
-	settings.enable_gamepad_cursor = true
-	settings.gamepad_cursor_speed = gamepad_cursor_speed
+	settings.show_mouse_cursor = true
 	settings.music_stream = _selected_music
 	settings.music_volume_db = music_volume_db
 	settings.music_fade_time = music_suspend_fade_time
@@ -213,4 +213,71 @@ func _start_minigame_session() -> void:
 	settings.stop_music_on_finish = false
 	settings.block_player_movement = true
 	MinigameController.start_minigame(self, settings)
-		
+
+func _register_gamepad_scheme() -> void:
+	if MinigameController == null:
+		return
+	MinigameController.set_gamepad_scheme(self, {
+		"mode": "focus",
+		"focus_provider": Callable(self, "_get_gamepad_focus_nodes"),
+		"on_confirm": Callable(self, "_on_gamepad_confirm"),
+		"hints": {
+			"confirm": "Скормить",
+			"cancel": "Выход"
+		}
+	})
+
+func _get_gamepad_food_sources() -> Array[Node]:
+	var nodes: Array[Node] = []
+	for child in food_container.get_children():
+		if child == null or child.is_queued_for_deletion():
+			continue
+		if child.has_method("feed_to_mouth"):
+			nodes.append(child)
+	return nodes
+
+func _get_gamepad_focus_nodes() -> Array[Node]:
+	var next_food := _get_auto_food_source()
+	if next_food == null:
+		return []
+	return [next_food]
+
+func _get_auto_food_source() -> Node:
+	var foods := _get_gamepad_food_sources()
+	if foods.is_empty():
+		return null
+	var mouth_point := _resolve_mouth_point()
+	var best: Node = foods[0]
+	var best_distance := _node_distance_sq_to_point(best, mouth_point)
+	for i in range(1, foods.size()):
+		var candidate := foods[i]
+		var dist := _node_distance_sq_to_point(candidate, mouth_point)
+		if dist < best_distance:
+			best = candidate
+			best_distance = dist
+	return best
+
+func _resolve_mouth_point() -> Vector2:
+	if mouth_area == null:
+		return Vector2.ZERO
+	for child in mouth_area.get_children():
+		if not child is CollisionShape2D:
+			continue
+		var collision := child as CollisionShape2D
+		if collision.shape == null:
+			continue
+		return collision.global_position
+	return mouth_area.global_position
+
+func _node_distance_sq_to_point(node: Node, point: Vector2) -> float:
+	if node is Node2D:
+		return (node as Node2D).global_position.distance_squared_to(point)
+	return INF
+
+func _on_gamepad_confirm(active: Node, _context: Dictionary) -> bool:
+	if active == null or mouth_area == null:
+		return false
+	if not active.has_method("feed_to_mouth"):
+		return false
+	active.feed_to_mouth(mouth_area)
+	return true

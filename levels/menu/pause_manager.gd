@@ -11,11 +11,20 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _input(event: InputEvent) -> void:
-	if not event.is_action_pressed("ui_cancel"):
-		return
-	if _is_menu_scene():
+	var pause_requested := event.is_action_pressed("pause_menu")
+	var keyboard_escape_requested := event.is_action_pressed("ui_cancel") and _is_keyboard_escape_event(event)
+	if not pause_requested and not keyboard_escape_requested:
 		return
 	if _is_open:
+		if _pause_menu and _pause_menu.has_method("request_resume"):
+			_pause_menu.call("request_resume")
+		else:
+			_request_resume()
+		get_viewport().set_input_as_handled()
+		return
+	if keyboard_escape_requested and _should_defer_to_minigame_cancel(event):
+		return
+	if _is_menu_scene():
 		return
 	if _is_minigame_pause_blocked():
 		return
@@ -82,6 +91,24 @@ func _is_minigame_pause_blocked() -> bool:
 	if MinigameController and MinigameController.has_method("is_pause_menu_allowed"):
 		return not MinigameController.is_pause_menu_allowed()
 	return false
+
+func _is_minigame_cancel_allowed() -> bool:
+	if MinigameController and MinigameController.has_method("is_cancel_action_allowed"):
+		return MinigameController.is_cancel_action_allowed()
+	return false
+
+func _is_keyboard_escape_event(event: InputEvent) -> bool:
+	if not (event is InputEventKey):
+		return false
+	var key_event := event as InputEventKey
+	return key_event.physical_keycode == KEY_ESCAPE or key_event.keycode == KEY_ESCAPE
+
+func _should_defer_to_minigame_cancel(event: InputEvent) -> bool:
+	if not _is_keyboard_escape_event(event):
+		return false
+	if not _is_minigame_active():
+		return false
+	return _is_minigame_cancel_allowed()
 
 func is_pause_menu_open() -> bool:
 	return _is_open

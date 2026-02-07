@@ -87,6 +87,8 @@ var _base_pause_reasons: Dictionary = {}
 var _base_pause_active: bool = false
 var _base_pause_player: AudioStreamPlayer
 var _base_pause_restore_db: float = 0.0
+var _base_pause_stream: AudioStream
+var _base_pause_position: float = 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -401,7 +403,7 @@ func pause_chase_music(fade_time: float = -1.0) -> void:
 		return
 	_runner_global_paused = true
 	var target_fade := _resolve_fade_time(fade_time)
-	_pause_runner_music(target_fade)
+	_pause_runner_music(target_fade, true)
 	_sync_chase_base_mute()
 
 func resume_chase_music(fade_time: float = -1.0) -> void:
@@ -412,7 +414,7 @@ func resume_chase_music(fade_time: float = -1.0) -> void:
 		return
 	var target_fade := _resolve_fade_time(fade_time)
 	if _runner_paused:
-		_resume_runner_music(target_fade)
+		_resume_runner_music(target_fade, true)
 	elif _runner_player == null or not _runner_player.playing:
 		_start_runner_music()
 	_sync_chase_base_mute()
@@ -452,7 +454,7 @@ func _update_runner_music_state() -> void:
 	_runner_active = should_play
 	if _runner_global_paused:
 		if _runner_player != null and _runner_player.playing:
-			_pause_runner_music(runner_music_fade_time)
+			_pause_runner_music(runner_music_fade_time, true)
 		return
 	if should_play:
 		if _runner_paused:
@@ -461,7 +463,7 @@ func _update_runner_music_state() -> void:
 			_start_runner_music()
 	else:
 		if _runner_player != null and _runner_player.playing:
-			_pause_runner_music(_get_runner_fade_out_time())
+			_pause_runner_music(_get_runner_fade_out_time(), false)
 		if _runner_sources.is_empty():
 			_runner_pause_position = 0.0
 			_runner_paused = false
@@ -530,19 +532,50 @@ func _stop_runner_music() -> void:
 		return
 	_fade_runner_volume(-80.0, runner_music_fade_time, true)
 
-func _pause_runner_music(fade_time: float) -> void:
+func _pause_runner_music(fade_time: float, pause_stream_only: bool = false) -> void:
 	if _runner_player == null:
 		_runner_paused = true
 		return
 	if _runner_player.playing:
 		_runner_pause_position = _runner_player.get_playback_position()
 		_runner_paused = true
+		if pause_stream_only:
+			if _runner_fade_tween and _runner_fade_tween.is_running():
+				_runner_fade_tween.kill()
+			if fade_time <= 0.0:
+				_runner_player.volume_db = -80.0
+				_runner_player.stream_paused = true
+				return
+			_runner_fade_tween = create_tween()
+			_runner_fade_tween.tween_property(_runner_player, "volume_db", -80.0, fade_time)
+			_runner_fade_tween.tween_callback(func():
+				if is_instance_valid(_runner_player):
+					_runner_player.stream_paused = true
+			)
+			return
 		_fade_runner_volume(-80.0, fade_time, true)
 	else:
 		_runner_paused = true
 
-func _resume_runner_music(_fade_time: float) -> void:
+func _resume_runner_music(fade_time: float, resume_stream_only: bool = false) -> void:
 	if _runner_player == null:
+		return
+	if resume_stream_only:
+		if _runner_fade_tween and _runner_fade_tween.is_running():
+			_runner_fade_tween.kill()
+		_runner_paused = false
+		_runner_player.stream_paused = false
+		var target_volume := _apply_mix(MIX_CHASE, runner_music_volume_db)
+		if _runner_player.playing:
+			if fade_time <= 0.0:
+				_runner_player.volume_db = target_volume
+				return
+			_fade_runner_volume(target_volume, fade_time, false)
+			return
+		if _runner_pause_position <= 0.0:
+			_start_runner_music()
+			return
+		_start_runner_music(_runner_pause_position)
 		return
 	var start_pos := _runner_pause_position
 	_runner_paused = false
@@ -702,14 +735,18 @@ func _request_base_pause(reason: String, fade_time: float) -> void:
 	if _base_pause_active:
 		return
 	var player := _resolve_playing_player()
-	if player == null or not player.playing:
+	if player == null:
 		_base_pause_active = true
 		_base_pause_player = player
 		return
 	_kill_fade_tween()
 	_base_pause_player = player
+	_base_pause_stream = player.stream
+	_base_pause_position = _get_playback_position(player)
 	_base_pause_restore_db = player.volume_db
 	_base_pause_active = true
+	if not player.playing:
+		return
 	if fade_time <= 0.0:
 		player.volume_db = -80.0
 		player.stream_paused = true
@@ -718,6 +755,7 @@ func _request_base_pause(reason: String, fade_time: float) -> void:
 	_fade_tween.tween_property(player, "volume_db", -80.0, fade_time)
 	_fade_tween.tween_callback(func():
 		if is_instance_valid(player):
+			_base_pause_position = _get_playback_position(player)
 			player.stream_paused = true
 	)
 
@@ -732,10 +770,23 @@ func _request_base_resume(reason: String, fade_time: float) -> void:
 		return
 	_base_pause_active = false
 	var player := _base_pause_player
+	var resume_stream := _base_pause_stream
+	var resume_position := _base_pause_position
 	_base_pause_player = null
-	if player == null or not player.playing:
+	_base_pause_stream = null
+	_base_pause_position = 0.0
+	if player == null:
 		return
-	player.stream_paused = false
+	if resume_stream != null and player.stream != resume_stream:
+		player.stream = resume_stream
+	if player.playing:
+		player.stream_paused = false
+	else:
+		if player.stream == null:
+			return
+		player.volume_db = -80.0 if fade_time > 0.0 else _base_pause_restore_db
+		player.play()
+		_seek_if_possible(player, resume_position)
 	if fade_time <= 0.0:
 		player.volume_db = _base_pause_restore_db
 		return

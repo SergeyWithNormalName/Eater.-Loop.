@@ -107,7 +107,7 @@ func _start_lab_minigame() -> void:
 	if MinigameController and not MinigameController.is_active(game):
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
-		settings.enable_gamepad_cursor = true
+		settings.show_mouse_cursor = true
 		settings.block_player_movement = true
 		settings.time_limit = time_limit
 		settings.auto_finish_on_timeout = false
