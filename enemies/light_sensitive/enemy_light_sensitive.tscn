@@ -190,6 +190,7 @@ size = Vector2(520, 870)
 [node name="EnemyLightSensitive" type="CharacterBody2D" unique_id=307833949]
 light_mask = 2
 script = ExtResource("1_light_sensitive")
+speed = 370.0
 chase_music = ExtResource("2_x3an5")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1148313789]

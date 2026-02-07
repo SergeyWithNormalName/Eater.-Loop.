@@ -24,6 +24,8 @@ extends CanvasLayer
 @export var smoothing_speed: float = 16.0
 ## Длительность показа лучиков после полной зарядки.
 @export var ready_show_time: float = 0.45
+## Длительность показа иконки при попытке включить незаряженный фонарик.
+@export var denied_show_time: float = 0.45
 
 @export_group("Затухание")
 ## Задержка перед скрытием в состоянии покоя (сек).
@@ -42,6 +44,7 @@ var _ratio: float = 1.0
 var _fade_alpha: float = 0.0
 var _idle_time: float = 0.0
 var _ready_time_left: float = 0.0
+var _denied_time_left: float = 0.0
 var _was_visible: bool = false
 var _bound_player: Node = null
 
@@ -58,12 +61,13 @@ func _process(delta: float) -> void:
 		_idle_time = 0.0
 		_fade_alpha = 0.0
 		_ready_time_left = 0.0
+		_denied_time_left = 0.0
 		_apply_fade()
 		return
 
 	_bind_player_if_needed()
 	_update_ratio(delta)
-	_update_ready_timer(delta)
+	_update_feedback_timers(delta)
 	_update_fade(delta)
 	_apply_layout()
 	_apply_fill_clip()
@@ -120,16 +124,23 @@ func _bind_player_if_needed() -> void:
 	if player == _bound_player:
 		return
 
-	var callback := Callable(self, "_on_player_flashlight_recharged")
+	var callback_recharged := Callable(self, "_on_player_flashlight_recharged")
+	var callback_denied := Callable(self, "_on_player_flashlight_activation_denied")
 	if _bound_player != null and _bound_player.has_signal(&"flashlight_recharged"):
-		if _bound_player.is_connected(&"flashlight_recharged", callback):
-			_bound_player.disconnect(&"flashlight_recharged", callback)
+		if _bound_player.is_connected(&"flashlight_recharged", callback_recharged):
+			_bound_player.disconnect(&"flashlight_recharged", callback_recharged)
+	if _bound_player != null and _bound_player.has_signal(&"flashlight_activation_denied"):
+		if _bound_player.is_connected(&"flashlight_activation_denied", callback_denied):
+			_bound_player.disconnect(&"flashlight_activation_denied", callback_denied)
 
 	_bound_player = player
 
 	if _bound_player != null and _bound_player.has_signal(&"flashlight_recharged"):
-		if not _bound_player.is_connected(&"flashlight_recharged", callback):
-			_bound_player.connect(&"flashlight_recharged", callback)
+		if not _bound_player.is_connected(&"flashlight_recharged", callback_recharged):
+			_bound_player.connect(&"flashlight_recharged", callback_recharged)
+	if _bound_player != null and _bound_player.has_signal(&"flashlight_activation_denied"):
+		if not _bound_player.is_connected(&"flashlight_activation_denied", callback_denied):
+			_bound_player.connect(&"flashlight_activation_denied", callback_denied)
 
 func _update_ratio(delta: float) -> void:
 	var player := _get_player()
@@ -143,10 +154,15 @@ func _update_ratio(delta: float) -> void:
 	var weight: float = clampf(delta * smoothing_speed, 0.0, 1.0)
 	_ratio = lerpf(_ratio, target_ratio, weight)
 
-func _update_ready_timer(delta: float) -> void:
+func _update_feedback_timers(delta: float) -> void:
 	if _ready_time_left <= 0.0:
-		return
-	_ready_time_left = maxf(0.0, _ready_time_left - delta)
+		_ready_time_left = 0.0
+	else:
+		_ready_time_left = maxf(0.0, _ready_time_left - delta)
+	if _denied_time_left <= 0.0:
+		_denied_time_left = 0.0
+	else:
+		_denied_time_left = maxf(0.0, _denied_time_left - delta)
 
 func _update_fade(delta: float) -> void:
 	var player := _get_player()
@@ -154,7 +170,7 @@ func _update_fade(delta: float) -> void:
 	if player != null and player.has_method("is_flashlight_enabled"):
 		flashlight_on = bool(player.is_flashlight_enabled())
 
-	var is_active := flashlight_on or _ready_time_left > 0.0
+	var is_active := flashlight_on or _ready_time_left > 0.0 or _denied_time_left > 0.0
 	var target_alpha := 1.0
 	if is_active:
 		_idle_time = 0.0
@@ -234,3 +250,9 @@ func _on_player_flashlight_recharged() -> void:
 	_idle_time = 0.0
 	_fade_alpha = 1.0
 	_ratio = 1.0
+
+func _on_player_flashlight_activation_denied(charge_ratio: float) -> void:
+	_denied_time_left = maxf(0.0, denied_show_time)
+	_idle_time = 0.0
+	_fade_alpha = 1.0
+	_ratio = clampf(charge_ratio, 0.0, 1.0)

@@ -128,9 +128,6 @@ metadata/_edit_use_anchors_ = true
 [node name="Player" parent="." unique_id=2088255384 instance=ExtResource("3_5p11p")]
 position = Vector2(-2366, 96)
 allow_running = false
-flashlight_use_duration = 3.0
-flashlight_recharge_duration = 8.0
-flashlight_recharge_delay = 22.0
 
 [node name="Bathroom" type="Node2D" parent="." unique_id=244481532]
 position = Vector2(5579, 0)
@@ -2772,7 +2769,7 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=490067309 instance=ExtResource("69_rg3cs")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://d0k8ip78yrplx"
 
 [node name="Kladovka" type="Node2D" parent="." unique_id=48974067]
 position = Vector2(15837, -5390)
@@ -2921,5 +2918,8 @@ time_penalty = 28.0
 position = Vector2(7246, 10623)
 speed = 420.0
 time_penalty = 28.0
+
+[node name="EnemyLightSensitive3" parent="." unique_id=994297192 instance=ExtResource("79_3debg")]
+position = Vector2(14744, 103)
 
 [editable path="Hall/InteractableObjects/Fridge"]

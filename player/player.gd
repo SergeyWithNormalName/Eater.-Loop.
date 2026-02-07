@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal player_made_sound
 signal flashlight_recharged
+signal flashlight_activation_denied(charge_ratio: float)
 
 ## Скорость движения игрока.
 @export var speed: float = 415.0
@@ -31,6 +32,8 @@ signal flashlight_recharged
 @export var flashlight_sound: AudioStream
 ## Звук полной зарядки фонарика (опционально).
 @export var flashlight_recharged_sound: AudioStream
+## Звук попытки включить незаряженный фонарик (опционально).
+@export var flashlight_denied_sound: AudioStream
 
 @export_group("Фонарик")
 ## Время непрерывной работы фонарика при полном заряде (сек).
@@ -86,6 +89,7 @@ var _movement_blocked: bool = false
 # Переменные для аудио
 var _flashlight_player: AudioStreamPlayer
 var _flashlight_recharged_player: AudioStreamPlayer
+var _flashlight_denied_player: AudioStreamPlayer
 
 func _ready() -> void:
 	add_to_group("player")
@@ -97,6 +101,9 @@ func _ready() -> void:
 	_flashlight_recharged_player = AudioStreamPlayer.new()
 	_flashlight_recharged_player.bus = "Sounds"
 	add_child(_flashlight_recharged_player)
+	_flashlight_denied_player = AudioStreamPlayer.new()
+	_flashlight_denied_player.bus = "Sounds"
+	add_child(_flashlight_denied_player)
 	# -----------------------
 	
 	# Инициализация узлов
@@ -291,6 +298,8 @@ func _toggle_flashlight() -> void:
 		return
 	if _can_enable_flashlight():
 		_set_flashlight_enabled(true)
+		return
+	_emit_flashlight_activation_denied()
 
 func _can_enable_flashlight() -> bool:
 	if flashlight_use_duration <= 0.0:
@@ -323,6 +332,16 @@ func _emit_flashlight_recharged() -> void:
 	_flashlight_recharged_player.volume_db = 0.0
 	_flashlight_recharged_player.pitch_scale = 1.0
 	_flashlight_recharged_player.play()
+	player_made_sound.emit()
+
+func _emit_flashlight_activation_denied() -> void:
+	flashlight_activation_denied.emit(get_flashlight_charge_ratio())
+	if flashlight_denied_sound == null:
+		return
+	_flashlight_denied_player.stream = flashlight_denied_sound
+	_flashlight_denied_player.volume_db = 0.0
+	_flashlight_denied_player.pitch_scale = 1.0
+	_flashlight_denied_player.play()
 	player_made_sound.emit()
 
 func _apply_facing() -> void:

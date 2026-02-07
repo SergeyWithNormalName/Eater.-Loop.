@@ -1341,7 +1341,7 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=524060109 instance=ExtResource("69_fmo1c")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://bigm5i4m0iohg"
 
 [node name="TextureDistortionManager" parent="." unique_id=446203845 instance=ExtResource("70_nxyv4")]
 position = Vector2(7755, 1129)

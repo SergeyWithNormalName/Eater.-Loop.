@@ -946,7 +946,7 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=5177339 instance=ExtResource("69_0ti5d")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://ddrjoe11x5ccx"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1771280544]
 stream = ExtResource("70_lkwaq")
@@ -961,7 +961,9 @@ script = ExtResource("73_crazy_event")
 start_delay = 2.5
 effect_duration = 3.0
 distortion_intensity = 0.75
+shader_shake_power = 0.06
 shader_color_bleeding = 0.12
+shader_glitch_lines = 58.0
 timer_collapse_duration = 2.4
 timer_collapse_power = 1.2000000000000002
 fallback_time_if_timer_disabled = 90.0

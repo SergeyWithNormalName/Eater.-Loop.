@@ -2057,6 +2057,7 @@ scale = Vector2(0.27256876, 0.27256882)
 texture = ExtResource("33_vuvb0")
 
 [node name="Bedroom1" type="Node2D" parent="." unique_id=1430866481]
+position = Vector2(-3313, 0)
 
 [node name="WallBack_Bedroom" type="Sprite2D" parent="Bedroom1" unique_id=149107072]
 z_index = -5
@@ -2102,7 +2103,7 @@ texture = ExtResource("8_jiqp2")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("44_cu3tb")
-next_level_path = "uid://b0rhqem0xcvbc"
+next_level_path = "uid://c86dahwda6kcq"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
@@ -2352,6 +2353,48 @@ rotation = -0.061086524
 scale = Vector2(0.04193877, 0.05264323)
 skew = 0.087266445
 texture = ExtResource("60_whyxa")
+
+[node name="Plintus" type="Sprite2D" parent="Bedroom1" unique_id=1728588334]
+z_index = -5
+position = Vector2(-1377, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Plintus2" type="Sprite2D" parent="Bedroom1" unique_id=995450895]
+z_index = -5
+position = Vector2(-1275, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Plintus3" type="Sprite2D" parent="Bedroom1" unique_id=328616335]
+z_index = -5
+position = Vector2(-1784, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Plintus4" type="Sprite2D" parent="Bedroom1" unique_id=715329321]
+z_index = -5
+position = Vector2(-1990, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Plintus5" type="Sprite2D" parent="Bedroom1" unique_id=404105831]
+z_index = -5
+position = Vector2(-2159, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Plintus6" type="Sprite2D" parent="Bedroom1" unique_id=585810322]
+z_index = -5
+position = Vector2(-2562.0002, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("39_3jki4")
+
+[node name="Battery3" type="Sprite2D" parent="Bedroom1" unique_id=199381328]
+z_index = -4
+position = Vector2(-2373, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("76_gufev")
 
 [node name="Bathroom1" type="Node2D" parent="." unique_id=1980300144]
 
@@ -3003,23 +3046,11 @@ position = Vector2(10324, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("76_gufev")
 
-[node name="Battery3" type="Sprite2D" parent="." unique_id=199381328]
-z_index = -4
-position = Vector2(-2373, 210)
-scale = Vector2(0.48396507, 0.48396507)
-texture = ExtResource("76_gufev")
-
 [node name="Battery2" type="Sprite2D" parent="." unique_id=2096992923]
 z_index = -4
 position = Vector2(13314, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("76_gufev")
-
-[node name="Plintus" type="Sprite2D" parent="." unique_id=1728588334]
-z_index = -5
-position = Vector2(-1377, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
 
 [node name="Plintus7" type="Sprite2D" parent="." unique_id=138330700]
 z_index = -5
@@ -3264,36 +3295,6 @@ texture = ExtResource("39_3jki4")
 [node name="Plintus33" type="Sprite2D" parent="." unique_id=748043631]
 z_index = -5
 position = Vector2(14014, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
-
-[node name="Plintus2" type="Sprite2D" parent="." unique_id=995450895]
-z_index = -5
-position = Vector2(-1275, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
-
-[node name="Plintus3" type="Sprite2D" parent="." unique_id=328616335]
-z_index = -5
-position = Vector2(-1784, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
-
-[node name="Plintus4" type="Sprite2D" parent="." unique_id=715329321]
-z_index = -5
-position = Vector2(-1990, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
-
-[node name="Plintus5" type="Sprite2D" parent="." unique_id=404105831]
-z_index = -5
-position = Vector2(-2159, 266)
-scale = Vector2(0.2433336, 0.2433336)
-texture = ExtResource("39_3jki4")
-
-[node name="Plintus6" type="Sprite2D" parent="." unique_id=585810322]
-z_index = -5
-position = Vector2(-2562.0002, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("39_3jki4")
 
