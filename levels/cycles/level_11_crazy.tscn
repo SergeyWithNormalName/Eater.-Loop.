@@ -91,7 +91,7 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Level" type="Node2D" unique_id=1803939616]
 position = Vector2(16, 0)
 script = ExtResource("1_3bgxd")
-cycle_number = 2
+cycle_number = 11
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1848366554]
 rotation = 0.009666472
@@ -923,7 +923,7 @@ texture = ExtResource("67_4dijk")
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "0:24"
+start_game_time = "4:47"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock" unique_id=864635275]

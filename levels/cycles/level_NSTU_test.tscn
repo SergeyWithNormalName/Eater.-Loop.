@@ -3,23 +3,15 @@
 [ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_0ohhm"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_85201"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="3_b056n"]
-[ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="4_acem0"]
-[ext_resource type="Texture2D" uid="uid://cpcoeptqyufpa" path="res://objects/environment/background/TilesFloor1.png" id="5_bhex2"]
+[ext_resource type="Texture2D" uid="uid://demxlu5htbc2y" path="res://objects/environment/university/ToiletTiles2.png" id="4_c8otf"]
 [ext_resource type="PackedScene" uid="uid://c06wvx5ppi7g7" path="res://objects/environment/walls/wall_vertical.tscn" id="6_1eex3"]
 [ext_resource type="PackedScene" uid="uid://6b386xyyuk64" path="res://objects/environment/walls/wall_horizontal.tscn" id="7_6wj6m"]
-[ext_resource type="Texture2D" uid="uid://djkndwd77snyg" path="res://objects/environment/sprites/toilet and bathroom/Mirror.png" id="8_ao3ix"]
-[ext_resource type="Texture2D" uid="uid://byt7ynqrn81mo" path="res://objects/environment/sprites/toilet and bathroom/WaterMachine.png" id="9_rj2k8"]
 [ext_resource type="Texture2D" uid="uid://j2tc42n5cf6r" path="res://objects/environment/sprites/toilet and bathroom/Rakovina.png" id="10_ghctl"]
+[ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="11_3ckxr"]
 [ext_resource type="Texture2D" uid="uid://d3n6wexvdd8xp" path="res://objects/interactable/lamp/Lamp1.png" id="11_m33w3"]
 [ext_resource type="Texture2D" uid="uid://bryvsd8s0sihr" path="res://objects/environment/sprites/toilet and bathroom/Vent.png" id="12_3xoh4"]
-[ext_resource type="Texture2D" uid="uid://dn0h8y0pxtrr3" path="res://objects/environment/sprites/toilet and bathroom/ToothPolka.png" id="13_62tjv"]
-[ext_resource type="PackedScene" uid="uid://dly158l2vtanl" path="res://objects/environment/sprites/toilet and bathroom/wash.tscn" id="14_p88na"]
 [ext_resource type="PackedScene" uid="uid://clugl41qemjcd" path="res://objects/interactable/door/door.tscn" id="15_scqts"]
-[ext_resource type="Texture2D" uid="uid://mwre7sp7mhp3" path="res://objects/interactable/door/sprites/DoorToiletInside.png" id="16_wgjac"]
 [ext_resource type="Texture2D" uid="uid://ca30auysyocpw" path="res://objects/environment/background/Floor.png" id="17_dymop"]
-[ext_resource type="Texture2D" uid="uid://cwi80flmvwi5u" path="res://objects/environment/sprites/toilet and bathroom/Toilet.png" id="18_kveu6"]
-[ext_resource type="Texture2D" uid="uid://kcpbktla5vc1" path="res://objects/environment/sprites/toilet and bathroom/Yorhic.png" id="19_frmy1"]
-[ext_resource type="Texture2D" uid="uid://no52qdpxj4jr" path="res://objects/environment/sprites/toilet and bathroom/ToiletPaper.png" id="20_k7hnr"]
 [ext_resource type="Texture2D" uid="uid://b2782n7l58ug2" path="res://objects/environment/university/BackWallsUn.png" id="21_85201"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="21_e6c1t"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="22_rsn48"]
@@ -31,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://dtgbdcabf02m1" path="res://objects/environment/university/Lift.png" id="46_vpjmh"]
 [ext_resource type="Texture2D" uid="uid://dpm6jewdeeqtl" path="res://objects/environment/university/SofaSTU.png" id="47_wpukm"]
 [ext_resource type="Texture2D" uid="uid://ugreplk1tcnh" path="res://objects/environment/university/FireWash.png" id="48_6wu78"]
+[ext_resource type="Texture2D" uid="uid://l1an20jq1o0f" path="res://objects/environment/university/STU_OnWallDecor_2.png" id="49_1m845"]
 [ext_resource type="Texture2D" uid="uid://o0qgy0jrqgdl" path="res://objects/environment/university/Exit.png" id="49_wpukm"]
 [ext_resource type="Texture2D" uid="uid://gihmyggs20wa" path="res://objects/environment/university/STU_OnWallDecor_1.png" id="50_6wu78"]
 [ext_resource type="Texture2D" uid="uid://c8lotufuqy7o6" path="res://objects/environment/university/FireButton.png" id="51_k0vht"]
@@ -49,16 +42,23 @@
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="60_c8avo"]
 [ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="60_yevtl"]
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="61_33cun"]
+[ext_resource type="Texture2D" uid="uid://ccy2ol4ffgive" path="res://objects/environment/university/MirrorToilet.png" id="61_56u4h"]
 [ext_resource type="Texture2D" uid="uid://cnrdr0d0m0on6" path="res://objects/environment/background/FloorDistorted.png" id="61_norj7"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="62_e25ne"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="62_unon8"]
 [ext_resource type="Texture2D" uid="uid://bwfdnfyfbejyr" path="res://objects/interactable/door/sprites/DoorBasic_Distorted.png" id="63_0ohhm"]
+[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="63_1m845"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="63_33lmj"]
+[ext_resource type="PackedScene" path="res://objects/environment/creepy_eye/creepy_eye.tscn" id="64_3ckxr"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_4bftp"]
 [ext_resource type="AudioStream" uid="uid://bw2i4dg2ggrog" path="res://music/CreepyAmbient.wav" id="64_85201"]
+[ext_resource type="Texture2D" uid="uid://bfvddyduwm4s5" path="res://objects/environment/university/RadiatorU.png" id="64_yevtl"]
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="65_b056n"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_fk20i"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_olugs"]
+[ext_resource type="Texture2D" uid="uid://dwwfwqjpknnn4" path="res://objects/environment/university/DownStairs.png" id="66_yevtl"]
+[ext_resource type="Texture2D" uid="uid://bc43tlh7lqpky" path="res://objects/environment/university/UpStairs.png" id="67_norj7"]
+[ext_resource type="PackedScene" path="res://objects/interactable/note/note.tscn" id="67_unon8"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_v7j2m"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
@@ -124,172 +124,85 @@ position = Vector2(5579, 0)
 [node name="WallBack_Bathroom" type="Sprite2D" parent="Bathroom/Background" unique_id=2136798553]
 z_index = -5
 texture_repeat = 2
-position = Vector2(14139, 19)
+position = Vector2(14142, 19)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_acem0")
+texture = ExtResource("4_c8otf")
 region_enabled = true
-region_rect = Rect2(0, 0, 4100, 2200)
-
-[node name="TilesFloor2" type="Sprite2D" parent="Bathroom/Background" unique_id=909671864]
-z_index = -5
-position = Vector2(13981.504, 331.4375)
-scale = Vector2(0.45307007, 0.45307013)
-texture = ExtResource("5_bhex2")
+region_rect = Rect2(0, 0, 7900, 2200)
 
 [node name="Walls" type="Node2D" parent="Bathroom" unique_id=881287473]
 
 [node name="WallRight" parent="Bathroom/Walls" unique_id=1493198834 instance=ExtResource("6_1eex3")]
 z_index = 10
-position = Vector2(14666, 63.860657)
+position = Vector2(15148, 64)
 
 [node name="WallLeft" parent="Bathroom/Walls" unique_id=483795194 instance=ExtResource("6_1eex3")]
 z_index = 10
-position = Vector2(13614, 64)
+position = Vector2(13144, 64)
 
 [node name="WallAbove_1" parent="Bathroom/Walls" unique_id=1418621843 instance=ExtResource("7_6wj6m")]
-position = Vector2(13931, -271)
+position = Vector2(13459, -271)
 scale = Vector2(1.065, 1)
 
 [node name="WallAbove_2" parent="Bathroom/Walls" unique_id=1212786489 instance=ExtResource("7_6wj6m")]
-position = Vector2(14347, -271)
+position = Vector2(13875, -271)
 scale = Vector2(1.065, 1)
 
 [node name="WallBelow_1" parent="Bathroom/Walls" unique_id=973527555 instance=ExtResource("7_6wj6m")]
-position = Vector2(13931, 400)
+position = Vector2(13459, 400)
 scale = Vector2(1.065, 1)
 
 [node name="WallBelow_2" parent="Bathroom/Walls" unique_id=1900319457 instance=ExtResource("7_6wj6m")]
-position = Vector2(14347, 400)
+position = Vector2(13875, 400)
+scale = Vector2(1.065, 1)
+
+[node name="WallAbove_3" parent="Bathroom/Walls" unique_id=149723601 instance=ExtResource("7_6wj6m")]
+position = Vector2(14414, -271)
+scale = Vector2(1.065, 1)
+
+[node name="WallAbove_4" parent="Bathroom/Walls" unique_id=1915396040 instance=ExtResource("7_6wj6m")]
+position = Vector2(14830, -271)
+scale = Vector2(1.065, 1)
+
+[node name="WallBelow_3" parent="Bathroom/Walls" unique_id=982397661 instance=ExtResource("7_6wj6m")]
+position = Vector2(14414, 400)
+scale = Vector2(1.065, 1)
+
+[node name="WallBelow_4" parent="Bathroom/Walls" unique_id=28748779 instance=ExtResource("7_6wj6m")]
+position = Vector2(14830, 400)
 scale = Vector2(1.065, 1)
 
 [node name="Sprites" type="Node2D" parent="Bathroom" unique_id=1607820063]
 
-[node name="Mirror" type="Sprite2D" parent="Bathroom/Sprites" unique_id=1835673783]
-z_index = -2
-position = Vector2(13907, -8.120003)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("8_ao3ix")
-
-[node name="WashMachine" type="Sprite2D" parent="Bathroom/Sprites" unique_id=426477087]
-z_index = -2
-position = Vector2(13740.602, 197.2892)
-scale = Vector2(0.61568123, 0.61568123)
-texture = ExtResource("9_rj2k8")
-
 [node name="Rakovina" type="Sprite2D" parent="Bathroom/Sprites" unique_id=1259514485]
 z_index = -2
-position = Vector2(13906.001, 201.00002)
+position = Vector2(14494.999, 201.00002)
 scale = Vector2(0.536, 0.536)
 texture = ExtResource("10_ghctl")
 
-[node name="Lamp2" type="Sprite2D" parent="Bathroom/Sprites" unique_id=1393939540]
-position = Vector2(14165, -208)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("11_m33w3")
+[node name="Rakovina2" type="Sprite2D" parent="Bathroom/Sprites" unique_id=371452554]
+z_index = -2
+position = Vector2(14297.999, 201.00002)
+scale = Vector2(0.536, 0.536)
+texture = ExtResource("10_ghctl")
 
 [node name="Vent2" type="Sprite2D" parent="Bathroom/Sprites" unique_id=875443170]
-position = Vector2(13849.999, -160)
+position = Vector2(14721.999, -160)
 scale = Vector2(0.15588242, 0.1558824)
 texture = ExtResource("12_3xoh4")
-
-[node name="ToothPolka" type="Sprite2D" parent="Bathroom/Sprites" unique_id=1705562993]
-position = Vector2(13906, 46.879997)
-scale = Vector2(0.18251042, 0.18251051)
-texture = ExtResource("13_62tjv")
-
-[node name="Wash" parent="Bathroom/Sprites" unique_id=840477230 instance=ExtResource("14_p88na")]
-position = Vector2(14479, 196)
 
 [node name="InteractableObjects" type="Node2D" parent="Bathroom" unique_id=1496685356]
 
 [node name="Door(InBathroom)" parent="Bathroom/InteractableObjects" unique_id=2112611109 instance=ExtResource("15_scqts")]
-position = Vector2(14127.999, 83)
+position = Vector2(14930.999, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBathroom)")
-door_texture = ExtResource("16_wgjac")
 
-[node name="Toilet" type="Node2D" parent="." unique_id=240441170]
-position = Vector2(9294, 0)
-
-[node name="Background" type="Node2D" parent="Toilet" unique_id=2096435884]
-
-[node name="WallBack_Toilet" type="Sprite2D" parent="Toilet/Background" unique_id=1944495791]
-z_index = -5
-texture_repeat = 2
-position = Vector2(16690.602, 19)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_acem0")
-region_enabled = true
-region_rect = Rect2(0, 0, 2400, 2200)
-
-[node name="FloorToilet" type="Sprite2D" parent="Toilet/Background" unique_id=1300803886]
-z_index = -5
-texture_repeat = 2
-position = Vector2(16690.602, 326)
-scale = Vector2(0.21939737, 0.21939737)
-texture = ExtResource("17_dymop")
-region_enabled = true
-region_rect = Rect2(0, 0, 2750, 500)
-
-[node name="TilesFloor1" type="Sprite2D" parent="Toilet/Background" unique_id=1591617783]
-z_index = -5
-position = Vector2(16691.934, 327)
-scale = Vector2(0.3938595, 0.39385954)
-texture = ExtResource("5_bhex2")
-
-[node name="Walls" type="Node2D" parent="Toilet" unique_id=1378367286]
-
-[node name="WallLeft" parent="Toilet/Walls" unique_id=214783845 instance=ExtResource("6_1eex3")]
-z_index = 10
-position = Vector2(16371, 64)
-
-[node name="WallRight" parent="Toilet/Walls" unique_id=816577578 instance=ExtResource("6_1eex3")]
-z_index = 10
-position = Vector2(17006, 64)
-
-[node name="WallBelow" parent="Toilet/Walls" unique_id=335872967 instance=ExtResource("7_6wj6m")]
-position = Vector2(16688, 400)
-scale = Vector2(1.065, 1)
-
-[node name="WallAbove" parent="Toilet/Walls" unique_id=635563997 instance=ExtResource("7_6wj6m")]
-position = Vector2(16688, -271)
-scale = Vector2(1.065, 1)
-
-[node name="Sprites" type="Node2D" parent="Toilet" unique_id=571151355]
-
-[node name="Toilet" type="Sprite2D" parent="Toilet/Sprites" unique_id=728043611]
-z_index = -2
-position = Vector2(16536, 181)
-scale = Vector2(0.61568123, 0.61568123)
-texture = ExtResource("18_kveu6")
-
-[node name="Yorhic" type="Sprite2D" parent="Toilet/Sprites" unique_id=166187627]
-position = Vector2(16446, 228)
-scale = Vector2(0.27, 0.27)
-texture = ExtResource("19_frmy1")
-
-[node name="Lamp3" type="Sprite2D" parent="Toilet/Sprites" unique_id=2053319136]
-position = Vector2(16701, -209)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("11_m33w3")
-
-[node name="ToiletPaper" type="Sprite2D" parent="Toilet/Sprites" unique_id=665168639]
-position = Vector2(16640, 150)
-scale = Vector2(0.08124997, 0.081249975)
-texture = ExtResource("20_k7hnr")
-
-[node name="Vent" type="Sprite2D" parent="Toilet/Sprites" unique_id=371652087]
-position = Vector2(16550, -160)
-scale = Vector2(0.15588242, 0.1558824)
-texture = ExtResource("12_3xoh4")
-
-[node name="InteractableObjects" type="Node2D" parent="Toilet" unique_id=1039919670]
-
-[node name="Door(InToilet)" parent="Toilet/InteractableObjects" unique_id=1081948928 instance=ExtResource("15_scqts")]
-position = Vector2(16825, 83)
+[node name="Door(InBathroom)2" parent="Bathroom/InteractableObjects" unique_id=893897067 instance=ExtResource("15_scqts")]
+position = Vector2(13917.999, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToToilet)")
-door_texture = ExtResource("16_wgjac")
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToBathroom)")
+door_texture = ExtResource("11_3ckxr")
 
 [node name="Hall" type="Node2D" parent="." unique_id=381241113]
 
@@ -454,7 +367,6 @@ target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" unique_id=211962340 instance=ExtResource("15_scqts")]
 position = Vector2(9154, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
 
 [node name="Door(StairsLeft)" parent="Hall/InteractableObjects" unique_id=1912741554 instance=ExtResource("15_scqts")]
 position = Vector2(7321, 81)
@@ -671,7 +583,7 @@ texture = ExtResource("65_fk20i")
 
 [node name="Laptop" parent="Bedroom/InteractableObjects" unique_id=1064930580 instance=ExtResource("66_olugs")]
 z_index = -1
-position = Vector2(-1865, 165.00002)
+position = Vector2(-1850, 76.00002)
 scale = Vector2(0.96, 0.96)
 is_enabled = false
 
@@ -717,7 +629,7 @@ scale = Vector2(0.3599609, 0.3599609)
 texture = ExtResource("47_wpukm")
 
 [node name="FireWash" type="Sprite2D" parent="." unique_id=1764470203]
-position = Vector2(7834, 18.000002)
+position = Vector2(7883, 18.000002)
 scale = Vector2(0.27998045, 0.27998045)
 texture = ExtResource("48_6wu78")
 
@@ -746,12 +658,17 @@ position = Vector2(9427, 10)
 scale = Vector2(0.24000001, 0.24000001)
 texture = ExtResource("50_6wu78")
 
+[node name="StuOnWallDecor2" type="Sprite2D" parent="." unique_id=2071742778]
+position = Vector2(8859, 10)
+scale = Vector2(0.24000001, 0.24000001)
+texture = ExtResource("49_1m845")
+
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=279338492]
 stream = ExtResource("90_university_music")
 script = ExtResource("91_level_music")
 
 [node name="FireButton" type="Sprite2D" parent="." unique_id=1288147803]
-position = Vector2(7619, 14)
+position = Vector2(7580, 14)
 scale = Vector2(0.29850745, 0.29850736)
 texture = ExtResource("51_k0vht")
 
@@ -765,11 +682,6 @@ position = Vector2(10520, 43)
 scale = Vector2(0.14569673, 0.14569671)
 texture = ExtResource("52_igvqd")
 
-[node name="PlanOfLevel7" type="Sprite2D" parent="." unique_id=646106547]
-position = Vector2(6987.9995, 13)
-scale = Vector2(0.18935785, 0.18935782)
-texture = ExtResource("53_ji2ax")
-
 [node name="PlantU" type="Sprite2D" parent="." unique_id=2126716417]
 position = Vector2(14371.999, 168)
 scale = Vector2(0.7186147, 0.7186149)
@@ -781,6 +693,21 @@ position = Vector2(10604, 326)
 floor_texture = ExtResource("24_oevlm")
 size = Vector2(9000, 110)
 tiling = Vector2(7, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.22
+edge_power = 0.55
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Floor2" parent="." unique_id=1843506557 instance=ExtResource("57_ih4cm")]
+z_index = -5
+position = Vector2(19734, 326)
+floor_texture = ExtResource("24_oevlm")
+size = Vector2(2000, 110)
+tiling = Vector2(1.556, 3)
 perspective_amount = 1.75
 horizon = -3.74
 edge_strength = 0.22
@@ -803,5 +730,57 @@ ExtResource("62_unon8"): ExtResource("63_0ohhm")
 distortion_music = ExtResource("64_85201")
 distortion_sfx = ExtResource("65_b056n")
 
+[node name="DownStairs" type="Sprite2D" parent="." unique_id=832003760]
+position = Vector2(13586.001, 14.999999)
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("66_yevtl")
+
+[node name="DownStairs2" type="Sprite2D" parent="." unique_id=719015882]
+position = Vector2(7059, 14.999999)
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("67_norj7")
+
+[node name="Note" parent="." unique_id=842459911 instance=ExtResource("67_unon8")]
+position = Vector2(6851, 22)
+note_texture = ExtResource("53_ji2ax")
+
+[node name="Sprite2D" parent="Note" index="1"]
+scale = Vector2(0.19266059, 0.19266056)
+texture = ExtResource("53_ji2ax")
+
+[node name="MirrorToilet" type="Sprite2D" parent="." unique_id=1880697579]
+position = Vector2(19978.002, -47)
+scale = Vector2(0.32203385, 0.3220339)
+texture = ExtResource("61_56u4h")
+
+[node name="Window2" type="Sprite2D" parent="." unique_id=545669339]
+z_index = -4
+position = Vector2(18989, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("63_1m845")
+
+[node name="RadiatorU" type="Sprite2D" parent="." unique_id=1742975829]
+position = Vector2(18988.002, 197)
+scale = Vector2(0.22939059, 0.22939068)
+texture = ExtResource("64_yevtl")
+
+[node name="CreepyEye" parent="." unique_id=85128106 instance=ExtResource("64_3ckxr")]
+position = Vector2(19972, -55)
+scale = Vector2(0.23968747, 0.23968747)
+show_only_after_cycle_distortion = true
+horror_intensity = 1.1
+vein_speed = 0.63
+writhing_lines_intensity = 6.14
+writhing_lines_speed = 0.19
+writhing_lines_thickness = 2.66
+eye_width = 1.02
+eye_height = 0.99
+upper_lid_offset = 0.76
+lower_lid_offset = -0.65
+lid_curve = 1.1400000000000001
+lid_softness = 0.305
+corner_narrowing = 0.26
+
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsLeft)2"]
+[editable path="Note"]

@@ -40,6 +40,7 @@ var _nav_repeat_delay: float = DEFAULT_NAV_REPEAT_DELAY
 var _nav_repeat_interval: float = DEFAULT_NAV_REPEAT_INTERVAL
 var _show_gamepad_hints: bool = false
 var _confirm_release_gate: bool = false
+var _show_navigation_visuals: bool = false
 
 func start(minigame: Node, scheme: Dictionary) -> void:
 	if minigame == null:
@@ -50,6 +51,7 @@ func start(minigame: Node, scheme: Dictionary) -> void:
 	_show_gamepad_hints = false
 	_hint_bar.set_hint_mode(false)
 	_confirm_release_gate = _is_action_pressed("mg_confirm") or _is_action_pressed("ui_accept")
+	_show_navigation_visuals = false
 	_refresh_state(true)
 
 func clear() -> void:
@@ -71,6 +73,7 @@ func clear() -> void:
 	_nav_repeat_interval = DEFAULT_NAV_REPEAT_INTERVAL
 	_show_gamepad_hints = false
 	_confirm_release_gate = false
+	_show_navigation_visuals = false
 	_highlighter.clear()
 	_hint_bar.clear()
 
@@ -105,13 +108,19 @@ func observe_input_device(event: InputEvent) -> void:
 	if event == null:
 		return
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		_set_navigation_visuals(true)
 		_set_gamepad_hint_visibility(true)
 		return
+	if event is InputEventKey:
+		var key_event := event as InputEventKey
+		if key_event.pressed and not key_event.echo:
+			_set_navigation_visuals(true)
+			_set_gamepad_hint_visibility(false)
+		return
 	if event is InputEventMouseButton or event is InputEventMouseMotion:
+		_set_navigation_visuals(false)
 		_set_gamepad_hint_visibility(false)
 		return
-	if event is InputEventKey:
-		_set_gamepad_hint_visibility(false)
 
 func handle_input(event: InputEvent) -> bool:
 	if _active_minigame == null:
@@ -452,7 +461,7 @@ func _set_active_selection(node: Node) -> void:
 
 func _apply_visual_state() -> void:
 	var active := _get_active_selection()
-	if active is Control:
+	if _show_navigation_visuals and active is Control:
 		var control := active as Control
 		if control.focus_mode != Control.FOCUS_NONE and control.is_inside_tree():
 			control.grab_focus()
@@ -465,7 +474,7 @@ func _apply_visual_state() -> void:
 				dim_nodes.append(source)
 		else:
 			dim_nodes.append_array(_target_nodes)
-	if _is_highlighter_enabled():
+	if _show_navigation_visuals and _is_highlighter_enabled():
 		_highlighter.apply_visuals(active, _selected_source, dim_nodes)
 	else:
 		_highlighter.clear()
@@ -541,6 +550,13 @@ func _set_gamepad_hint_visibility(visible: bool) -> void:
 		return
 	_show_gamepad_hints = visible
 	_hint_bar.set_hint_mode(visible)
+
+func _set_navigation_visuals(visible: bool) -> void:
+	if _show_navigation_visuals == visible:
+		return
+	_show_navigation_visuals = visible
+	if not visible:
+		_highlighter.clear()
 
 func _as_valid_node(value: Variant) -> Node:
 	if value == null:

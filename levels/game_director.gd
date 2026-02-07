@@ -84,11 +84,18 @@ var _death_camera: Camera2D = null
 var _death_camera_base_rotation: float = 0.0
 var _death_camera_base_zoom: Vector2 = Vector2.ONE
 var _death_camera_base_offset: Vector2 = Vector2.ZERO
+var _input_kind: int = 0
+var _death_focus_style_hidden: StyleBoxEmpty
 
 const STALKER_SPAWN_GROUP := "stalker_spawn"
+const INPUT_KIND_KEYBOARD := 0
+const INPUT_KIND_GAMEPAD := 1
+const INPUT_KIND_UNKNOWN := -1
+const JOYPAD_MOTION_DEADZONE := 0.45
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process_input(true)
 	_timer = Timer.new()
 	_timer.one_shot = true
 	_timer.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -100,6 +107,16 @@ func _ready() -> void:
 	if get_tree() and get_tree().has_signal("scene_changed"):
 		get_tree().scene_changed.connect(_on_scene_changed)
 	_update_for_scene(get_tree().current_scene)
+
+func _input(event: InputEvent) -> void:
+	var next_input_kind := _resolve_input_kind(event)
+	if next_input_kind == INPUT_KIND_UNKNOWN:
+		return
+	if next_input_kind == _input_kind:
+		return
+	_input_kind = next_input_kind
+	if _death_sequence_active:
+		_apply_death_input_mode()
 
 func _process(delta: float) -> void:
 	_update_overlay_layer()
@@ -402,14 +419,17 @@ func _create_death_overlay() -> void:
 	_death_retry_button = Button.new()
 	_death_retry_button.text = death_retry_text
 	_death_retry_button.custom_minimum_size = Vector2(420, 92)
+	_death_retry_button.focus_mode = Control.FOCUS_ALL
 	_death_retry_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	_death_retry_button.pressed.connect(_on_death_retry_pressed)
 	content.add_child(_death_retry_button)
+	_death_focus_style_hidden = StyleBoxEmpty.new()
 
 func trigger_death_screen() -> void:
 	if _death_sequence_active:
 		return
 	_death_sequence_active = true
+	_release_death_cursor_request()
 	_timer.stop()
 	_distortion_active = false
 	_distortion_progress = 0.0
@@ -450,8 +470,7 @@ func _on_death_fade_completed() -> void:
 		return
 	if _death_root:
 		_death_root.visible = true
-	if _death_retry_button:
-		_death_retry_button.grab_focus()
+	_apply_death_input_mode()
 	if get_tree():
 		get_tree().paused = true
 
@@ -463,6 +482,7 @@ func _on_death_retry_pressed() -> void:
 	_restore_death_camera()
 	if _death_root:
 		_death_root.visible = false
+	_release_death_cursor_request()
 	if get_tree():
 		get_tree().paused = false
 		get_tree().call_deferred("reload_current_scene")
@@ -475,6 +495,9 @@ func _reset_death_screen_state() -> void:
 	if _death_fade_rect:
 		_death_fade_rect.visible = false
 		_death_fade_rect.color = Color(0, 0, 0, 0)
+	if _death_retry_button:
+		_death_retry_button.remove_theme_stylebox_override("focus")
+	_release_death_cursor_request()
 	if get_tree() and get_tree().paused:
 		get_tree().paused = false
 
@@ -557,6 +580,58 @@ func _resolve_primary_camera() -> Camera2D:
 	if player.has_node("Camera2D"):
 		return player.get_node("Camera2D") as Camera2D
 	return null
+
+func _apply_death_input_mode() -> void:
+	var using_gamepad := _input_kind == INPUT_KIND_GAMEPAD
+	if _death_retry_button:
+		if using_gamepad:
+			if _death_focus_style_hidden == null:
+				_death_focus_style_hidden = StyleBoxEmpty.new()
+			_death_retry_button.add_theme_stylebox_override("focus", _death_focus_style_hidden)
+			_death_retry_button.grab_focus()
+		else:
+			_death_retry_button.remove_theme_stylebox_override("focus")
+			if _death_retry_button.has_focus():
+				_death_retry_button.release_focus()
+	if CursorManager:
+		if using_gamepad:
+			CursorManager.release_visible(self)
+		else:
+			CursorManager.request_visible(self)
+
+func _release_death_cursor_request() -> void:
+	if CursorManager:
+		CursorManager.release_visible(self)
+
+func _resolve_input_kind(event: InputEvent) -> int:
+	if event == null or event.is_echo():
+		return INPUT_KIND_UNKNOWN
+	if event is InputEventJoypadButton:
+		var joy_button := event as InputEventJoypadButton
+		if not joy_button.pressed:
+			return INPUT_KIND_UNKNOWN
+		return INPUT_KIND_GAMEPAD
+	if event is InputEventJoypadMotion:
+		var joy_motion := event as InputEventJoypadMotion
+		if absf(joy_motion.axis_value) < JOYPAD_MOTION_DEADZONE:
+			return INPUT_KIND_UNKNOWN
+		return INPUT_KIND_GAMEPAD
+	if event is InputEventKey:
+		var key_event := event as InputEventKey
+		if not key_event.pressed:
+			return INPUT_KIND_UNKNOWN
+		return INPUT_KIND_KEYBOARD
+	if event is InputEventMouseButton:
+		var mouse_button := event as InputEventMouseButton
+		if not mouse_button.pressed:
+			return INPUT_KIND_UNKNOWN
+		return INPUT_KIND_KEYBOARD
+	if event is InputEventMouseMotion:
+		var mouse_motion := event as InputEventMouseMotion
+		if mouse_motion.relative.length_squared() <= 0.0:
+			return INPUT_KIND_UNKNOWN
+		return INPUT_KIND_KEYBOARD
+	return INPUT_KIND_UNKNOWN
 
 func _apply_distortion_progress(progress: float) -> void:
 	var value: float = float(clamp(progress, 0.0, 1.0))

@@ -252,9 +252,9 @@
 │   │   ├── level_03_deepseek.tscn
 │   │   ├── level_04_findkey.tscn
 │   │   ├── level_05_sql.tscn
-│   │   ├── level_07.tscn
-│   │   ├── level_08_doors.tscn
-│   │   ├── level_09_PT.tscn
+│   │   ├── level_06_corridordistortion.tscn
+│   │   ├── level_07_doors.tscn
+│   │   ├── level_08_PT.tscn
 │   │   ├── level_11_crazy.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_end.tscn
@@ -773,6 +773,8 @@
 │   │   ├── university
 │   │   │   ├── BackWallsUn.png
 │   │   │   ├── BackWallsUn.png.import
+│   │   │   ├── DownStairs.png
+│   │   │   ├── DownStairs.png.import
 │   │   │   ├── ElevatorButtons.png
 │   │   │   ├── ElevatorButtons.png.import
 │   │   │   ├── Exit.png
@@ -785,16 +787,26 @@
 │   │   │   ├── FloorU.png.import
 │   │   │   ├── Lift.png
 │   │   │   ├── Lift.png.import
+│   │   │   ├── MirrorToilet.png
+│   │   │   ├── MirrorToilet.png.import
 │   │   │   ├── PlanOfLevel7.png
 │   │   │   ├── PlanOfLevel7.png.import
 │   │   │   ├── PlantU.png
 │   │   │   ├── PlantU.png.import
+│   │   │   ├── RadiatorU.png
+│   │   │   ├── RadiatorU.png.import
 │   │   │   ├── STU_OnWallDecor_1.png
 │   │   │   ├── STU_OnWallDecor_1.png.import
+│   │   │   ├── STU_OnWallDecor_2.png
+│   │   │   ├── STU_OnWallDecor_2.png.import
 │   │   │   ├── SofaSTU.png
 │   │   │   ├── SofaSTU.png.import
 │   │   │   ├── TestFloorVertU.png
-│   │   │   └── TestFloorVertU.png.import
+│   │   │   ├── TestFloorVertU.png.import
+│   │   │   ├── ToiletTiles2.png
+│   │   │   ├── ToiletTiles2.png.import
+│   │   │   ├── UpStairs.png
+│   │   │   └── UpStairs.png.import
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
@@ -891,6 +903,7 @@
 │       │   ├── RuchkaOtLebedki.png
 │       │   └── RuchkaOtLebedki.png.import
 │       ├── note
+│       │   ├── note.tscn
 │       │   ├── note_object.gd
 │       │   └── note_object.gd.uid
 │       ├── notebook
@@ -960,6 +973,15 @@
 │   │       ├── ezgif-frame-016.png
 │   │       └── ezgif-frame-016.png.import
 │   ├── audio
+│   │   ├── screams
+│   │   │   ├── Scream_1.wav
+│   │   │   ├── Scream_1.wav.import
+│   │   │   ├── Scream_2.wav
+│   │   │   ├── Scream_2.wav.import
+│   │   │   ├── Scream_3.wav
+│   │   │   ├── Scream_3.wav.import
+│   │   │   ├── Scream_4.wav
+│   │   │   └── Scream_4.wav.import
 │   │   ├── steps
 │   │   │   ├── steps1.wav
 │   │   │   ├── steps1.wav.import
@@ -1026,9 +1048,10 @@
 │   ├── test_utils.gd
 │   └── test_utils.gd.uid
 ├── default_bus_layout.tres
+├── export_presets.cfg
 ├── icon.svg
 ├── icon.svg.import
 ├── project.godot
 └── structure.txt
 
-102 directories, 930 files
+103 directories, 952 files

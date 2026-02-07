@@ -117,11 +117,18 @@ func _ensure_material() -> void:
 	var shader_mat: ShaderMaterial = null
 	if mat == null or not (mat is ShaderMaterial):
 		shader_mat = ShaderMaterial.new()
-		sprite.material = shader_mat
 	else:
 		shader_mat = mat as ShaderMaterial
+		if not shader_mat.resource_local_to_scene:
+			shader_mat = shader_mat.duplicate() as ShaderMaterial
+	if shader_mat == null:
+		return
+	if not shader_mat.resource_local_to_scene:
+		shader_mat.resource_local_to_scene = true
 	if shader_mat.shader != FLOOR_SHADER:
 		shader_mat.shader = FLOOR_SHADER
+	if sprite.material != shader_mat:
+		sprite.material = shader_mat
 
 func _sync_texture() -> void:
 	var sprite := _get_sprite()
