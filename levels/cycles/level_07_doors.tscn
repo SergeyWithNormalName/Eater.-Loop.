@@ -70,6 +70,7 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_o8i85"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_fmo1c"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="70_nxyv4"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_1p2jm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_57mof")
@@ -1345,3 +1346,13 @@ next_level_path = "uid://bigm5i4m0iohg"
 
 [node name="TextureDistortionManager" parent="." unique_id=446203845 instance=ExtResource("70_nxyv4")]
 position = Vector2(7755, 1129)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=1583984848 instance=ExtResource("71_1p2jm")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7

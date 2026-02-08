@@ -89,6 +89,7 @@
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="87_3t5ik"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="88_cblsg"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="89_5wh42"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="90_qkwv8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
 shader = ExtResource("2_qkwv8")
@@ -3672,6 +3673,16 @@ script = ExtResource("88_cblsg")
 
 [node name="TextureDistortionManager" parent="." unique_id=628479139 instance=ExtResource("89_5wh42")]
 position = Vector2(6165, -1189)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=1472711866 instance=ExtResource("90_qkwv8")]
+position = Vector2(-5230, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7
 
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]

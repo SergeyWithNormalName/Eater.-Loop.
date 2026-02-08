@@ -255,7 +255,7 @@
 │   │   ├── level_06_corridordistortion.tscn
 │   │   ├── level_07_doors.tscn
 │   │   ├── level_08_PT.tscn
-│   │   ├── level_11_crazy.tscn
+│   │   ├── level_10_crazy.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_end.tscn
 │   │   ├── level_music.gd
@@ -1008,7 +1008,8 @@
 │       │   ├── property_change.gd
 │       │   ├── property_change.gd.uid
 │       │   ├── trigger_set_property.gd
-│       │   └── trigger_set_property.gd.uid
+│       │   ├── trigger_set_property.gd.uid
+│       │   └── trigger_set_property.tscn
 │       ├── interactive_object.gd
 │       └── interactive_object.gd.uid
 ├── player
@@ -1141,4 +1142,4 @@
 ├── project.godot
 └── structure.txt
 
-105 directories, 1037 files
+105 directories, 1038 files

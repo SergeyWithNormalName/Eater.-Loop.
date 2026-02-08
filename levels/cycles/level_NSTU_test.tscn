@@ -67,6 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_v7j2m"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_b056n"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
@@ -789,6 +790,16 @@ ExtResource("62_unon8"): ExtResource("63_0ohhm")
 }
 distortion_music = ExtResource("64_85201")
 distortion_sfx = ExtResource("65_b056n")
+
+[node name="TriggerBedroomSilent" parent="." unique_id=899216315 instance=ExtResource("71_b056n")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsRight)"]

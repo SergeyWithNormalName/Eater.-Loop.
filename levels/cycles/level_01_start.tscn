@@ -68,6 +68,7 @@
 [ext_resource type="Texture2D" uid="uid://db4r1172wlmmj" path="res://objects/environment/sprites/hall/Boots2.png" id="77_4a5ua"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="77_3215i"]
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://objects/environment/sprites/hall/Boots6.png" id="78_3fmbd"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="78_yxhbg"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://objects/environment/sprites/kitchen/Urna.png" id="79_o487h"]
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://objects/environment/background/decals/HoleInWall6.png" id="81_3fmbd"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="81_j5rey"]
@@ -957,3 +958,13 @@ script = ExtResource("91_level_music")
 
 [node name="TextureDistortionManager" parent="." unique_id=531212290 instance=ExtResource("77_3215i")]
 position = Vector2(820, 1637)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=972432853 instance=ExtResource("78_yxhbg")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7

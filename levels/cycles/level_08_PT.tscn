@@ -90,6 +90,7 @@
 [ext_resource type="Texture2D" uid="uid://cjehover4qj3p" path="res://objects/environment/sprites/kladovka/Shvabra.png" id="87_r4str"]
 [ext_resource type="Texture2D" uid="uid://billd8fqj85yd" path="res://objects/environment/sprites/kladovka/PolkaWithHlam2.png" id="88_h4cxk"]
 [ext_resource type="PackedScene" path="res://objects/interactable/lebedka/lebedka.tscn" id="89_pe4dr"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="91_wyrkx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_fbsxc")
@@ -2929,5 +2930,15 @@ time_penalty = 28.0
 
 [node name="EnemyLightSensitive3" parent="." unique_id=994297192 instance=ExtResource("79_3debg")]
 position = Vector2(14744, 103)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=223404332 instance=ExtResource("91_wyrkx")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7
 
 [editable path="Hall/InteractableObjects/Fridge"]

@@ -73,6 +73,7 @@
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="71_s3jat"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="72_i1whk"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="73_brys8"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="74_qxn6o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_brys8")
@@ -1120,3 +1121,13 @@ dependency_object = NodePath("../Hall/InteractableObjects/Fridge")
 
 [node name="TextureDistortionManager" parent="." unique_id=820805389 instance=ExtResource("73_brys8")]
 position = Vector2(-2365, -473)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=1091739183 instance=ExtResource("74_qxn6o")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7

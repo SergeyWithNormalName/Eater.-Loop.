@@ -113,6 +113,7 @@
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_cmq65"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="112_5wshx"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_wtad1"]
+[ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="114_5a25b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -1796,3 +1797,23 @@ position = Vector2(10428, 2969)
 
 [node name="TextureDistortionManager" parent="." unique_id=445744169 instance=ExtResource("113_wtad1")]
 position = Vector2(7696, 1988)
+
+[node name="TriggerBedroomSilent" parent="." unique_id=1489646254 instance=ExtResource("114_5a25b")]
+position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7
+
+[node name="TriggerBedroomSilent2" parent="." unique_id=13077001 instance=ExtResource("114_5a25b")]
+position = Vector2(-1919, 2869)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 6
+music_on_exit = 7
