@@ -6,6 +6,10 @@ extends "res://objects/interactable/interactive_object.gd"
 ## Сообщение, когда дверь заперта.
 @export_multiline var door_locked_message: String = "Дверь закрыта."
 
+# --- Настройки внешнего вида ---
+## Текстура номера для дочернего Sprite2D "Number" (если есть).
+@export var number_texture: Texture2D
+
 # --- Настройки перехода ---
 ## Маркер, куда телепортировать игрока.
 @export var target_marker: NodePath
@@ -19,7 +23,6 @@ extends "res://objects/interactable/interactive_object.gd"
 ## Удалять ключ из инвентаря при открытии.
 @export var consume_key_on_unlock: bool = false
 
-# --- Настройки внешнего вида ---
 @export_group("Visual")
 ## Текстура двери для Sprite2D.
 @export var door_texture: Texture2D
@@ -34,6 +37,7 @@ extends "res://objects/interactable/interactive_object.gd"
 var _is_transitioning: bool = false 
 var _audio_player: AudioStreamPlayer2D # Наш "динамик"
 var _sprite: Sprite2D
+var _number_sprite: Sprite2D
 
 func _ready() -> void:
 	super._ready()
@@ -41,7 +45,9 @@ func _ready() -> void:
 		add_to_group("doors")
 	input_pickable = false 
 	_sprite = get_node_or_null("Sprite2D")
+	_number_sprite = get_node_or_null("Number")
 	_apply_door_texture()
+	_apply_number_texture()
 	
 	# Создаем аудио-плеер программно
 	_audio_player = AudioStreamPlayer2D.new()
@@ -134,6 +140,10 @@ func _stop_chase_for_transition() -> void:
 func _apply_door_texture() -> void:
 	if _sprite != null and door_texture != null:
 		_sprite.texture = door_texture
+
+func _apply_number_texture() -> void:
+	if _number_sprite != null and number_texture != null:
+		_number_sprite.texture = number_texture
 
 # Вспомогательная функция для проигрывания
 func _play_sound(stream: AudioStream) -> void:

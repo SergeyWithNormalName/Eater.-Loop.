@@ -79,25 +79,34 @@ func _apply_winch_effects() -> void:
 	if complete_lab_on_use and GameState and GameState.has_method("mark_lab_completed"):
 		GameState.mark_lab_completed()
 
-	if move_fridge_on_use:
-		_move_fridge_to_target()
+	var fridge := _get_fridge_target()
+	if fridge != null:
+		if move_fridge_on_use:
+			fridge.global_position = fridge_target_global_position
+		_apply_fridge_winch_state(fridge)
 	
 	_is_used = true
 	_apply_used_visual()
 	set_prompts_enabled(false)
 	complete_interaction()
 
-func _move_fridge_to_target() -> void:
+func _get_fridge_target() -> Node2D:
 	if fridge_path.is_empty():
 		push_warning("Lebedka: fridge_path is not assigned.")
-		return
+		return null
 	
 	var fridge := get_node_or_null(fridge_path) as Node2D
 	if fridge == null:
 		push_warning("Lebedka: fridge_path does not point to Node2D.")
-		return
+		return null
 	
-	fridge.global_position = fridge_target_global_position
+	return fridge
+
+func _apply_fridge_winch_state(fridge: Node2D) -> void:
+	if fridge == null:
+		return
+	if fridge.has_method("apply_winch_release_state"):
+		fridge.call("apply_winch_release_state")
 
 func _apply_used_visual() -> void:
 	if _sprite and used_sprite:

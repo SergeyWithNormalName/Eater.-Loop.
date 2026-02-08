@@ -1,30 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://gb3gqxicb00v"]
+[gd_scene format=3 uid="uid://gb3gqxicb00v"]
 
 [ext_resource type="Script" uid="uid://bcelax33cvpsy" path="res://objects/interactable/door/door.gd" id="1_qejh5"]
 [ext_resource type="Texture2D" uid="uid://q1l7xwf3o5nx" path="res://objects/interactable/door/sprites/DoorBasic.png" id="2_4w0nc"]
 [ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://objects/interactable/door/audio/door_locked1.wav" id="3_sdxwa"]
 [ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://objects/interactable/door/audio/door_open1.wav" id="4_61yyf"]
+[ext_resource type="Texture2D" uid="uid://bmu0hvqtf1fwp" path="res://objects/interactable/door/sprites/numbersU/904.jpg" id="5_4w0nc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xm0wp"]
 size = Vector2(209.5, 383)
 
-[node name="Door" type="Area2D"]
+[node name="Door" type="Area2D" unique_id=597792978]
 script = ExtResource("1_qejh5")
 door_texture = ExtResource("2_4w0nc")
+number_texture = ExtResource("5_4w0nc")
 sfx_locked = ExtResource("3_sdxwa")
 sfx_open = ExtResource("4_61yyf")
 prompt_text = "Войти"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1285761195]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_xm0wp")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=616709590]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=788306331]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("2_4w0nc")
 
-[node name="Number" type="Sprite2D" parent="."]
+[node name="Number" type="Sprite2D" parent="." unique_id=1184343537]
+position = Vector2(0, -115)
+scale = Vector2(0.085, 0.085)
+texture = ExtResource("5_4w0nc")

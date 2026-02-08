@@ -958,7 +958,7 @@ distortion_sfx = null
 
 [node name="CrazyLevelEvent" type="Node" parent="." unique_id=904144688]
 script = ExtResource("73_crazy_event")
-start_delay = 2.5
+start_delay = 7.0
 effect_duration = 3.0
 distortion_intensity = 0.75
 shader_shake_power = 0.06
@@ -968,6 +968,6 @@ timer_collapse_duration = 2.4
 timer_collapse_power = 1.2000000000000002
 fallback_time_if_timer_disabled = 90.0
 camera_path = NodePath("../Player/Camera2D")
-pulse_count = 6
-pulse_half_duration = 0.25
+pulse_count = 5
+pulse_half_duration = 0.33
 pulse_strength = 0.07

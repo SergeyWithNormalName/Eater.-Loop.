@@ -76,6 +76,7 @@ var _rocking_elapsed: float = 0.0
 var _rocking_base_rotation: float = 0.0
 var _rocking_sound_player: AudioStreamPlayer2D = null
 var _rocking_sound_connected: bool = false
+var _force_centered_sprite: bool = false
 
 func _ready() -> void:
 	super._ready() # Важно вызвать ready родителя!
@@ -281,6 +282,10 @@ func _teleport_player_if_needed() -> void:
 func _update_rocking_pivot() -> void:
 	if _sprite == null or _sprite.texture == null:
 		return
+	if _force_centered_sprite:
+		_sprite.centered = true
+		_sprite.offset = Vector2.ZERO
+		return
 	if rocking_pivot_mode == 1:
 		var tex_size := _sprite.texture.get_size()
 		# Поворот вокруг верхней кромки (эффект подвешенности).
@@ -334,6 +339,13 @@ func _stop_rocking() -> void:
 func _on_rocking_sound_finished() -> void:
 	if _rocking_active and _rocking_sound_player:
 		_rocking_sound_player.play()
+
+func apply_winch_release_state() -> void:
+	_stop_rocking()
+	_force_centered_sprite = true
+	rocking_strength_degrees = 0.0
+	rocking_pivot_mode = 0
+	_update_rocking_pivot()
 
 func _add_minigame_to_scene(minigame: Node) -> void:
 	if minigame == null:

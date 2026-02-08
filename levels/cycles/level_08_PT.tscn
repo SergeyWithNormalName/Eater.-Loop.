@@ -65,6 +65,7 @@
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="61_dct0y"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="62_t6fgp"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="63_dlfno"]
+[ext_resource type="Texture2D" uid="uid://372dm7yr24yw" path="res://objects/interactable/fridge/sprites/FallenFridge.png" id="64_0ugqs"]
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_2sl01"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_c75j3"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_4migs"]
@@ -1163,12 +1164,22 @@ background_texture = ExtResource("53_q015q")
 require_lab_completion = true
 lab_required_message = "Я подвесил холодильник, чтобы не есть"
 locked_sprite = ExtResource("54_4qouy")
+available_sprite = ExtResource("64_0ugqs")
 rocking_cycle_duration = 4.0
 rocking_strength_degrees = 2.0
 rocking_pivot_mode = 1
 rocking_sound = ExtResource("72_fcrek")
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="Hall/InteractableObjects/Fridge" index="1"]
+texture = ExtResource("64_0ugqs")
+
+[node name="PointLight2D" parent="Hall/InteractableObjects/Fridge" index="2"]
+position = Vector2(-64.67319, -28.980007)
+
+[node name="PointLight2D2" parent="Hall/InteractableObjects/Fridge" index="3"]
+position = Vector2(-127.660934, -29.804386)
 
 [node name="AudioStreamPlayer2D" parent="Hall/InteractableObjects/Fridge" index="4"]
 stream = ExtResource("54_d4hxy")
@@ -1852,9 +1863,8 @@ one_shot = null
 [node name="Lebedka" parent="HallLebedka1/InteractableObjects" unique_id=1292910143 instance=ExtResource("89_pe4dr")]
 position = Vector2(13344, 228)
 fridge_path = NodePath("../../../Hall/InteractableObjects/Fridge")
-fridge_target_global_position = Vector2(9810, 110)
+fridge_target_global_position = Vector2(9810, 120)
 used_sprite = null
-one_shot = null
 
 [node name="HallLebedka2" type="Node2D" parent="." unique_id=1652488699]
 position = Vector2(0, 10511)
@@ -2906,12 +2916,10 @@ position = Vector2(9165, 1278)
 
 [node name="EnemyLightSensitive" parent="." unique_id=307833949 instance=ExtResource("79_3debg")]
 position = Vector2(10816, 5322)
-speed = 370.0
 time_penalty = 28.0
 
 [node name="EnemyLightSensitive4" parent="." unique_id=1161412119 instance=ExtResource("79_3debg")]
 position = Vector2(11824, 10635)
-speed = 370.0
 time_penalty = 28.0
 
 [node name="EnemyLightSensitive2" parent="." unique_id=549764709 instance=ExtResource("79_3debg")]
