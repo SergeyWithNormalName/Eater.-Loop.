@@ -3,6 +3,10 @@ extends "res://enemies/enemy_flashlight_base.gd"
 @export_group("Animation")
 ## Имя анимации простоя.
 @export var idle_animation: StringName = &"idle"
+## Имя анимации ходьбы.
+@export var walk_animation: StringName = &"walk"
+## Длительность кадра анимации ходьбы.
+@export var walk_frame_time: float = 0.08
 ## Имя анимации реакции на фонарик.
 @export var flashlight_animation: StringName = &"flashlight"
 ## Имя анимации реакции на свет лампы.
@@ -34,6 +38,10 @@ var _flashlight_anim_active: bool = false
 var _lamp_anim_active: bool = false
 var _lamp_react_playing: bool = false
 
+const WALK_FRAME_PATTERN := "res://enemies/light_sensitive/animations/walking/ezgif-frame-%03d.png"
+const WALK_FRAME_START: int = 1
+const WALK_FRAME_END: int = 24
+
 func _ready() -> void:
 	super._ready()
 	_animated_sprite = _sprite as AnimatedSprite2D
@@ -44,8 +52,33 @@ func _ready() -> void:
 	if _animated_sprite != null:
 		if not _animated_sprite.animation_finished.is_connected(_on_animation_finished):
 			_animated_sprite.animation_finished.connect(_on_animation_finished)
+	_setup_walk_animation()
 	_set_idle_animation()
 	_sync_light_mask_with_player()
+
+func _setup_walk_animation() -> void:
+	if _animated_sprite == null:
+		return
+	if _animated_sprite.sprite_frames == null:
+		_animated_sprite.sprite_frames = SpriteFrames.new()
+	var frames := _animated_sprite.sprite_frames
+	if walk_animation == StringName():
+		return
+	var should_fill_walk_frames := false
+	if not frames.has_animation(walk_animation):
+		frames.add_animation(walk_animation)
+		should_fill_walk_frames = true
+	elif frames.get_frame_count(walk_animation) == 0:
+		should_fill_walk_frames = true
+	if should_fill_walk_frames:
+		for index in range(WALK_FRAME_START, WALK_FRAME_END + 1):
+			var texture := load(WALK_FRAME_PATTERN % index) as Texture2D
+			if texture != null:
+				frames.add_frame(walk_animation, texture)
+	if frames.has_animation(walk_animation):
+		if walk_frame_time > 0.0:
+			frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
+		frames.set_animation_loop(walk_animation, true)
 
 func _sync_light_mask_with_player() -> void:
 	var player := _player
@@ -143,6 +176,7 @@ func _update_stun_motion(_delta: float) -> void:
 func _apply_chase_motion(flashlight_hit: bool) -> void:
 	if not chase_player or _player == null:
 		velocity = Vector2.ZERO
+		_update_motion_animation()
 		return
 
 	var delta_pos := _player.global_position - global_position
@@ -157,6 +191,19 @@ func _apply_chase_motion(flashlight_hit: bool) -> void:
 
 	move_and_slide()
 	_update_facing_from_velocity()
+	_update_motion_animation()
+
+func _update_motion_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if _lamp_anim_active or _flashlight_anim_active:
+		return
+	var moving := absf(velocity.x) > 0.1
+	if moving and walk_animation != StringName() and _animated_sprite.sprite_frames.has_animation(walk_animation):
+		if _animated_sprite.animation != walk_animation or not _animated_sprite.is_playing():
+			_animated_sprite.play(walk_animation)
+		return
+	_set_idle_animation()
 
 func _update_stun_timers(delta: float) -> void:
 	if _stun_timer > 0.0:
