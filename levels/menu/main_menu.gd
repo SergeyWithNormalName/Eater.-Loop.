@@ -37,11 +37,18 @@ extends "res://levels/menu/menu_base.gd"
 @onready var _confirm_yes: Button = $ConfirmPanel/VBox/Buttons/YesButton
 @onready var _confirm_no: Button = $ConfirmPanel/VBox/Buttons/NoButton
 
+@onready var _difficulty_panel: Control = $DifficultyPanel
+@onready var _difficulty_label: Label = $DifficultyPanel/VBox/Message
+@onready var _difficulty_simplified: Button = $DifficultyPanel/VBox/Buttons/SimplifiedButton
+@onready var _difficulty_hardcore: Button = $DifficultyPanel/VBox/Buttons/HardcoreButton
+@onready var _difficulty_back: Button = $DifficultyPanel/VBox/BackButton
+
 var _confirm_action: Callable
 var _credits_active: bool = false
 const PANEL_MAIN := "main"
 const PANEL_SETTINGS := "settings"
 const PANEL_CREDITS := "credits"
+const PANEL_DIFFICULTY := "difficulty"
 var _active_panel: String = PANEL_MAIN
 var _panel_before_confirm: String = PANEL_MAIN
 
@@ -73,6 +80,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _settings_panel.visible:
 			_hide_settings()
 			get_viewport().set_input_as_handled()
+			return
+		if _difficulty_panel.visible:
+			_hide_difficulty()
+			get_viewport().set_input_as_handled()
 
 func _connect_buttons() -> void:
 	_new_game_button.pressed.connect(_on_new_game_pressed)
@@ -83,6 +94,9 @@ func _connect_buttons() -> void:
 	_credits_back.pressed.connect(_hide_credits)
 	_confirm_yes.pressed.connect(_on_confirm_yes)
 	_confirm_no.pressed.connect(_hide_confirm)
+	_difficulty_simplified.pressed.connect(_on_difficulty_simplified_pressed)
+	_difficulty_hardcore.pressed.connect(_on_difficulty_hardcore_pressed)
+	_difficulty_back.pressed.connect(_hide_difficulty)
 	if _settings_panel.has_signal("closed"):
 		_settings_panel.connect("closed", _hide_settings)
 
@@ -96,12 +110,13 @@ func _show_main() -> void:
 	_settings_panel.visible = false
 	_credits_panel.visible = false
 	_confirm_panel.visible = false
+	_difficulty_panel.visible = false
 	_credits_active = false
 	_update_continue_state()
 	_new_game_button.grab_focus()
 
 func _on_new_game_pressed() -> void:
-	_show_confirm("Точно начать новую игру?", _start_new_game)
+	_show_confirm("Точно начать новую игру?", _show_difficulty_selection)
 
 func _on_continue_pressed() -> void:
 	_start_continue()
@@ -112,6 +127,7 @@ func _on_settings_pressed() -> void:
 	_settings_panel.visible = true
 	_credits_panel.visible = false
 	_confirm_panel.visible = false
+	_difficulty_panel.visible = false
 	if _settings_panel.has_method("focus_default"):
 		_settings_panel.call("focus_default")
 
@@ -120,6 +136,7 @@ func _on_credits_pressed() -> void:
 	_main_panel.visible = false
 	_settings_panel.visible = false
 	_confirm_panel.visible = false
+	_difficulty_panel.visible = false
 	_credits_panel.visible = true
 	_credits_scroll.scroll_vertical = 0
 	_credits_active = true
@@ -128,12 +145,25 @@ func _on_credits_pressed() -> void:
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 
-func _start_new_game() -> void:
+func _show_difficulty_selection() -> void:
+	_active_panel = PANEL_DIFFICULTY
+	_main_panel.visible = false
+	_settings_panel.visible = false
+	_credits_panel.visible = false
+	_confirm_panel.visible = false
+	_credits_active = false
+	_difficulty_panel.visible = true
+	_difficulty_label.text = "Выберите сложность"
+	_difficulty_simplified.grab_focus()
+
+func _start_new_game(difficulty: int) -> void:
 	if new_game_scene == null:
 		push_warning("MainMenu: не назначена сцена для новой игры.")
 		return
 	if GameState:
 		GameState.reset_run()
+		if GameState.has_method("set_difficulty"):
+			GameState.set_difficulty(difficulty)
 		GameState.set_current_scene_path(new_game_scene.resource_path)
 		GameState.pending_sleep_spawn = true
 	_stop_menu_music()
@@ -166,6 +196,7 @@ func _show_confirm(message: String, action: Callable) -> void:
 	_main_panel.visible = false
 	_settings_panel.visible = false
 	_credits_panel.visible = false
+	_difficulty_panel.visible = false
 	_credits_active = false
 	_confirm_panel.visible = true
 	_confirm_yes.grab_focus()
@@ -175,6 +206,9 @@ func _hide_confirm() -> void:
 	_confirm_action = Callable()
 	_restore_panel_after_confirm()
 
+func _hide_difficulty() -> void:
+	_show_main()
+
 func _on_confirm_yes() -> void:
 	_confirm_panel.visible = false
 	var action := _confirm_action
@@ -183,6 +217,12 @@ func _on_confirm_yes() -> void:
 		action.call()
 	else:
 		_restore_panel_after_confirm()
+
+func _on_difficulty_simplified_pressed() -> void:
+	_start_new_game(GameState.Difficulty.SIMPLIFIED)
+
+func _on_difficulty_hardcore_pressed() -> void:
+	_start_new_game(GameState.Difficulty.HARDCORE)
 
 func _hide_settings() -> void:
 	_show_main()
@@ -197,6 +237,8 @@ func _restore_panel_after_confirm() -> void:
 			_on_settings_pressed()
 		PANEL_CREDITS:
 			_on_credits_pressed()
+		PANEL_DIFFICULTY:
+			_show_difficulty_selection()
 		_:
 			_show_main()
 

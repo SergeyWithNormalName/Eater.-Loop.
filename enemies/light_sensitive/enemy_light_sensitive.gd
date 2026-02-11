@@ -31,6 +31,7 @@ var _stun_cooldown_timer: float = 0.0
 var _knockback_remaining: float = 0.0
 var _knockback_dir: Vector2 = Vector2.ZERO
 var _player_in_hitbox: Node2D = null
+var _is_walking: bool = false
 var _was_stunned: bool = false
 var _lamp_frozen: bool = false
 var _animated_sprite: AnimatedSprite2D = null
@@ -38,9 +39,11 @@ var _flashlight_anim_active: bool = false
 var _lamp_anim_active: bool = false
 var _lamp_react_playing: bool = false
 
-const WALK_FRAME_PATTERN := "res://enemies/light_sensitive/animations/walking/ezgif-frame-%03d.png"
-const WALK_FRAME_START: int = 1
-const WALK_FRAME_END: int = 24
+const WALK_FRAMES_DIR := "res://enemies/light_sensitive/animations/walking"
+const WALK_FRAME_PREFIX := "ezgif-frame-"
+const WALK_LOOP_ANIMATION: StringName = &"walk_loop"
+const WALK_LOOP_START_FRAME: int = 5
+const WALK_LOOP_END_FRAME: int = 22
 
 func _ready() -> void:
 	super._ready()
@@ -64,21 +67,76 @@ func _setup_walk_animation() -> void:
 	var frames := _animated_sprite.sprite_frames
 	if walk_animation == StringName():
 		return
-	var should_fill_walk_frames := false
-	if not frames.has_animation(walk_animation):
-		frames.add_animation(walk_animation)
-		should_fill_walk_frames = true
-	elif frames.get_frame_count(walk_animation) == 0:
-		should_fill_walk_frames = true
-	if should_fill_walk_frames:
-		for index in range(WALK_FRAME_START, WALK_FRAME_END + 1):
-			var texture := load(WALK_FRAME_PATTERN % index) as Texture2D
-			if texture != null:
-				frames.add_frame(walk_animation, texture)
+	var frame_numbers := _collect_walk_frame_numbers()
+	if frame_numbers.is_empty():
+		return
 	if frames.has_animation(walk_animation):
-		if walk_frame_time > 0.0:
-			frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
-		frames.set_animation_loop(walk_animation, true)
+		frames.remove_animation(walk_animation)
+	frames.add_animation(walk_animation)
+	for frame_number in frame_numbers:
+		var texture := _load_walk_texture(frame_number)
+		if texture != null:
+			frames.add_frame(walk_animation, texture)
+	if frames.get_frame_count(walk_animation) <= 0:
+		frames.remove_animation(walk_animation)
+		return
+	if walk_frame_time > 0.0:
+		frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
+	frames.set_animation_loop(walk_animation, false)
+	_setup_walk_loop_animation(frames, frame_numbers)
+
+func _setup_walk_loop_animation(frames: SpriteFrames, frame_numbers: Array[int]) -> void:
+	if frames.has_animation(WALK_LOOP_ANIMATION):
+		frames.remove_animation(WALK_LOOP_ANIMATION)
+	if frame_numbers.is_empty():
+		return
+	var loop_numbers: Array[int] = []
+	for frame_number in frame_numbers:
+		if frame_number >= WALK_LOOP_START_FRAME and frame_number <= WALK_LOOP_END_FRAME:
+			loop_numbers.append(frame_number)
+	if loop_numbers.is_empty():
+		loop_numbers = frame_numbers.duplicate()
+	frames.add_animation(WALK_LOOP_ANIMATION)
+	for frame_number in loop_numbers:
+		var texture := _load_walk_texture(frame_number)
+		if texture != null:
+			frames.add_frame(WALK_LOOP_ANIMATION, texture)
+	if frames.get_frame_count(WALK_LOOP_ANIMATION) <= 0:
+		frames.remove_animation(WALK_LOOP_ANIMATION)
+		return
+	if walk_frame_time > 0.0:
+		frames.set_animation_speed(WALK_LOOP_ANIMATION, 1.0 / walk_frame_time)
+	frames.set_animation_loop(WALK_LOOP_ANIMATION, true)
+
+func _collect_walk_frame_numbers() -> Array[int]:
+	var numbers: Array[int] = []
+	var dir := DirAccess.open(WALK_FRAMES_DIR)
+	if dir == null:
+		return numbers
+	for file_name in dir.get_files():
+		if not file_name.ends_with(".png"):
+			continue
+		var frame_number := _extract_walk_frame_number(file_name)
+		if frame_number < 0:
+			continue
+		numbers.append(frame_number)
+	numbers.sort()
+	return numbers
+
+func _extract_walk_frame_number(file_name: String) -> int:
+	if not file_name.begins_with(WALK_FRAME_PREFIX):
+		return -1
+	var suffix := file_name.trim_prefix(WALK_FRAME_PREFIX)
+	if not suffix.ends_with(".png"):
+		return -1
+	var number_str := suffix.trim_suffix(".png")
+	if number_str.is_empty() or not number_str.is_valid_int():
+		return -1
+	return int(number_str)
+
+func _load_walk_texture(frame_number: int) -> Texture2D:
+	var path := "%s/%s%03d.png" % [WALK_FRAMES_DIR, WALK_FRAME_PREFIX, frame_number]
+	return load(path) as Texture2D
 
 func _sync_light_mask_with_player() -> void:
 	var player := _player
@@ -197,13 +255,41 @@ func _update_motion_animation() -> void:
 	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
 		return
 	if _lamp_anim_active or _flashlight_anim_active:
+		_is_walking = false
 		return
 	var moving := absf(velocity.x) > 0.1
-	if moving and walk_animation != StringName() and _animated_sprite.sprite_frames.has_animation(walk_animation):
-		if _animated_sprite.animation != walk_animation or not _animated_sprite.is_playing():
-			_animated_sprite.play(walk_animation)
+	if moving:
+		if not _is_walking:
+			_is_walking = true
+			_start_walk_animation()
+			return
+		if _animated_sprite.animation != walk_animation and _animated_sprite.animation != WALK_LOOP_ANIMATION:
+			_start_walk_animation()
 		return
+	_is_walking = false
 	_set_idle_animation()
+
+func _start_walk_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if walk_animation == StringName() or not _animated_sprite.sprite_frames.has_animation(walk_animation):
+		_set_idle_animation()
+		return
+	if _animated_sprite.animation != walk_animation:
+		_animated_sprite.play(walk_animation)
+	_animated_sprite.frame = 0
+	_animated_sprite.play()
+
+func _start_walk_loop_animation() -> void:
+	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
+		return
+	if _animated_sprite.sprite_frames.has_animation(WALK_LOOP_ANIMATION):
+		if _animated_sprite.animation != WALK_LOOP_ANIMATION:
+			_animated_sprite.play(WALK_LOOP_ANIMATION)
+		_animated_sprite.play()
+		return
+	if walk_animation != StringName() and _animated_sprite.sprite_frames.has_animation(walk_animation):
+		_animated_sprite.play(walk_animation)
 
 func _update_stun_timers(delta: float) -> void:
 	if _stun_timer > 0.0:
@@ -294,12 +380,13 @@ func _start_lamp_stan_animation() -> void:
 	_animated_sprite.play()
 
 func _on_animation_finished() -> void:
-	if not _lamp_anim_active:
-		return
 	if _animated_sprite == null:
 		return
-	if _animated_sprite.animation == lamp_react_animation:
+	if _lamp_anim_active and _animated_sprite.animation == lamp_react_animation:
 		_start_lamp_stan_animation()
+		return
+	if _is_walking and not _lamp_anim_active and not _flashlight_anim_active and _animated_sprite.animation == walk_animation:
+		_start_walk_loop_animation()
 
 func _set_idle_animation() -> void:
 	if _animated_sprite == null or _animated_sprite.sprite_frames == null:
