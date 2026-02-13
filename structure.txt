@@ -297,6 +297,7 @@
 │   │   ├── main_menu.gd
 │   │   ├── main_menu.gd.uid
 │   │   ├── main_menu.tscn
+│   │   ├── main_settings_panel.tscn
 │   │   ├── menu_base.gd
 │   │   ├── menu_base.gd.uid
 │   │   ├── pause_manager.gd
@@ -1171,4 +1172,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1066 files
+106 directories, 1067 files

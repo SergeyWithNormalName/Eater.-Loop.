@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxjrvr1ri8lfh"]
+[gd_scene load_steps=10 format=3 uid="uid://bxjrvr1ri8lfh"]
 
 [ext_resource type="Script" uid="uid://ircg1tjrp7qr" path="res://levels/menu/main_menu.gd" id="1_main_menu_script"]
-[ext_resource type="PackedScene" uid="uid://c84614sy3txek" path="res://levels/menu/settings_panel.tscn" id="2_settings_panel"]
+[ext_resource type="PackedScene" path="res://levels/menu/main_settings_panel.tscn" id="2_settings_panel"]
 [ext_resource type="AudioStream" uid="uid://cuqrh0e25x03t" path="res://player/audio/FlashlightOnOff.wav" id="3_click_sfx"]
 [ext_resource type="AudioStream" uid="uid://de7fbgim83hix" path="res://player/audio/steps/steps1.wav" id="4_hover_sfx"]
 [ext_resource type="AudioStream" uid="uid://bkxfm51r6vlro" path="res://music/StressMusic.wav" id="5_menu_music"]
@@ -9,16 +9,43 @@
 [ext_resource type="Texture2D" uid="uid://cqt3na311ltmq" path="res://levels/menu/MainMenuBackground.png" id="7_menu_bg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-content_margin_left = 26.0
+content_margin_left = 36.0
+content_margin_top = 30.0
+content_margin_right = 36.0
+content_margin_bottom = 30.0
+bg_color = Color(0.02, 0.05, 0.1, 0.74)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.66, 0.8, 1, 0.28)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+anti_aliasing = true
+anti_aliasing_size = 1.0
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 28
+shadow_offset = Vector2(0, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_description"]
+content_margin_left = 22.0
 content_margin_top = 20.0
-content_margin_right = 26.0
+content_margin_right = 22.0
 content_margin_bottom = 20.0
-bg_color = Color(0.08, 0.08, 0.09, 0.8)
-border_color = Color(0.55, 0.45, 0.35, 0.9)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+bg_color = Color(0.02, 0.04, 0.08, 0.68)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.56, 0.71, 0.92, 0.32)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+anti_aliasing = true
+anti_aliasing_size = 1.0
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -30,9 +57,14 @@ grow_vertical = 2
 script = ExtResource("1_main_menu_script")
 new_game_scene = ExtResource("6_level_01")
 menu_music = ExtResource("5_menu_music")
+title_font_size = 108
+button_font_size = 48
+body_font_size = 30
 hover_sfx = ExtResource("4_hover_sfx")
 click_sfx = ExtResource("3_click_sfx")
 hover_sfx_volume_db = -24.0
+hover_scale = 1.02
+hover_tint = Color(0.9, 0.95, 1, 1)
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -45,14 +77,24 @@ texture = ExtResource("7_menu_bg")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Shade" type="ColorRect" parent="."]
+[node name="ColdBloom" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.58
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.45, 0.98, 0.13)
+
+[node name="Vignette" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.25)
+color = Color(0, 0, 0, 0.31)
 
 [node name="MainPanel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -61,16 +103,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -360.0
-offset_top = -260.0
-offset_right = 360.0
-offset_bottom = 260.0
+offset_left = -280.0
+offset_top = -290.0
+offset_right = 440.0
+offset_bottom = 290.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="MainPanel"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 14
 alignment = 1
 
 [node name="Title" type="Label" parent="MainPanel/VBox"]
@@ -80,6 +128,8 @@ horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="MainPanel/VBox"]
 layout_mode = 2
+size_flags_vertical = 3
+separation = 10
 alignment = 1
 
 [node name="NewGameButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
@@ -112,21 +162,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -300.0
-offset_right = 420.0
-offset_bottom = 300.0
+offset_left = -350.0
+offset_top = -310.0
+offset_right = 450.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="CreditsPanel"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 12
 
 [node name="Title" type="Label" parent="CreditsPanel/VBox"]
 layout_mode = 2
 text = "Авторы"
 horizontal_alignment = 1
+
+[node name="Divider" type="HSeparator" parent="CreditsPanel/VBox"]
+layout_mode = 2
 
 [node name="CreditsScroll" type="ScrollContainer" parent="CreditsPanel/VBox"]
 layout_mode = 2
@@ -134,6 +193,7 @@ size_flags_vertical = 3
 
 [node name="CreditsText" type="VBoxContainer" parent="CreditsPanel/VBox/CreditsScroll"]
 layout_mode = 2
+separation = 4
 
 [node name="Line1" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
@@ -167,42 +227,6 @@ text = "Спасибо за игру"
 layout_mode = 2
 text = "Назад"
 
-[node name="ConfirmPanel" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -140.0
-offset_right = 280.0
-offset_bottom = 140.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
-
-[node name="VBox" type="VBoxContainer" parent="ConfirmPanel"]
-layout_mode = 2
-
-[node name="Message" type="Label" parent="ConfirmPanel/VBox"]
-layout_mode = 2
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Buttons" type="HBoxContainer" parent="ConfirmPanel/VBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="YesButton" type="Button" parent="ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
-layout_mode = 2
-text = "Да"
-
-[node name="NoButton" type="Button" parent="ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
-layout_mode = 2
-text = "Нет"
-
 [node name="DifficultyPanel" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 1
@@ -211,38 +235,70 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -180.0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_left = -380.0
+offset_top = -300.0
+offset_right = 480.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="DifficultyPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 14
+
+[node name="Title" type="Label" parent="DifficultyPanel/VBox"]
 layout_mode = 2
+text = "Новая игра"
+horizontal_alignment = 1
 
 [node name="Message" type="Label" parent="DifficultyPanel/VBox"]
 layout_mode = 2
+text = "Выберите сложность"
 horizontal_alignment = 1
 autowrap_mode = 2
-text = "Выберите сложность"
 
-[node name="Buttons" type="VBoxContainer" parent="DifficultyPanel/VBox"]
+[node name="DifficultyButtons" type="HBoxContainer" parent="DifficultyPanel/VBox"]
 layout_mode = 2
-alignment = 1
+separation = 12
 
-[node name="SimplifiedButton" type="Button" parent="DifficultyPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="SimplifiedButton" type="Button" parent="DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
 layout_mode = 2
 text = "Упрощённая"
+toggle_mode = true
 
-[node name="HardcoreButton" type="Button" parent="DifficultyPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="HardcoreButton" type="Button" parent="DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
 layout_mode = 2
-text = "Хардкор"
+text = "Каноническая"
+toggle_mode = true
 
-[node name="BackButton" type="Button" parent="DifficultyPanel/VBox" groups=["menu_button"]]
+[node name="DescriptionPanel" type="PanelContainer" parent="DifficultyPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_description")
+
+[node name="Description" type="Label" parent="DifficultyPanel/VBox/DescriptionPanel"]
+layout_mode = 2
+text = "Выберите сложность, чтобы увидеть её описание."
+autowrap_mode = 2
+
+[node name="BottomRow" type="HBoxContainer" parent="DifficultyPanel/VBox"]
+layout_mode = 2
+separation = 12
+
+[node name="BackButton" type="Button" parent="DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
 layout_mode = 2
 text = "Назад"
+
+[node name="StartButton" type="Button" parent="DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
+layout_mode = 2
+disabled = true
+text = "Начать новую игру"
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Sounds"

@@ -1,0 +1,162 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://levels/menu/settings_panel.gd" id="1_settings_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.02, 0.05, 0.1, 0.74)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.66, 0.8, 1, 0.28)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_left = 22
+corner_radius_bottom_right = 22
+content_margin_left = 34.0
+content_margin_top = 30.0
+content_margin_right = 34.0
+content_margin_bottom = 28.0
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 28
+shadow_offset = Vector2(0, 8)
+anti_aliasing = true
+anti_aliasing_size = 1.0
+
+[node name="SettingsPanel" type="PanelContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -310.0
+offset_right = 470.0
+offset_bottom = 310.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_settings_script")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 16
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Настройки"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 68
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.96)
+
+[node name="Content" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+separation = 10
+
+[node name="SoundTitle" type="Label" parent="VBox/Content"]
+layout_mode = 2
+text = "Звук"
+theme_override_colors/font_color = Color(0.72, 0.82, 0.98, 0.82)
+
+[node name="MasterRow" type="HBoxContainer" parent="VBox/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MasterLabel" type="Label" parent="VBox/Content/MasterRow"]
+layout_mode = 2
+text = "Общая громкость"
+size_flags_horizontal = 3
+
+[node name="MasterSlider" type="HSlider" parent="VBox/Content/MasterRow"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+step = 0.5
+value = -6.0
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(280, 0)
+focus_mode = 2
+
+[node name="MusicRow" type="HBoxContainer" parent="VBox/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MusicLabel" type="Label" parent="VBox/Content/MusicRow"]
+layout_mode = 2
+text = "Музыка"
+size_flags_horizontal = 3
+
+[node name="MusicSlider" type="HSlider" parent="VBox/Content/MusicRow"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+step = 0.5
+value = -10.0
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(280, 0)
+focus_mode = 2
+
+[node name="SfxRow" type="HBoxContainer" parent="VBox/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="SfxLabel" type="Label" parent="VBox/Content/SfxRow"]
+layout_mode = 2
+text = "Звуки"
+size_flags_horizontal = 3
+
+[node name="SfxSlider" type="HSlider" parent="VBox/Content/SfxRow"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+step = 0.5
+value = -8.0
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(280, 0)
+focus_mode = 2
+
+[node name="GraphicsTitle" type="Label" parent="VBox/Content"]
+layout_mode = 2
+text = "Графика"
+theme_override_colors/font_color = Color(0.72, 0.82, 0.98, 0.82)
+
+[node name="FullscreenCheck" type="CheckBox" parent="VBox/Content"]
+layout_mode = 2
+text = "Полноэкранный режим"
+focus_mode = 2
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.89, 0.95, 1, 0.94)
+theme_override_colors/font_focus_color = Color(0.98, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.98, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 1, 1, 1)
+
+[node name="VsyncCheck" type="CheckBox" parent="VBox/Content"]
+layout_mode = 2
+text = "Вертикальная синхронизация"
+focus_mode = 2
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.89, 0.95, 1, 0.94)
+theme_override_colors/font_focus_color = Color(0.98, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.98, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 1, 1, 1)
+
+[node name="Spacer" type="Control" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="VBox" groups=["menu_button"]]
+layout_mode = 2
+text = "Назад"
+size_flags_horizontal = 4
+focus_mode = 2

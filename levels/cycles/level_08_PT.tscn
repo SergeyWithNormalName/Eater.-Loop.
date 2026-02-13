@@ -91,6 +91,7 @@
 [ext_resource type="Texture2D" uid="uid://billd8fqj85yd" path="res://objects/environment/sprites/kladovka/PolkaWithHlam2.png" id="88_h4cxk"]
 [ext_resource type="PackedScene" path="res://objects/interactable/lebedka/lebedka.tscn" id="89_pe4dr"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="91_wyrkx"]
+[ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="92_2nqfd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_fbsxc")
@@ -1867,6 +1868,684 @@ fridge_path = NodePath("../../../Hall/InteractableObjects/Fridge")
 fridge_target_global_position = Vector2(9810, 120)
 used_sprite = null
 
+[node name="HallKey" type="Node2D" parent="." unique_id=153424108]
+position = Vector2(17624, 5204)
+
+[node name="Background" type="Node2D" parent="HallKey" unique_id=1908093945]
+
+[node name="WallBack" type="Sprite2D" parent="HallKey/Background" unique_id=691693743]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, 19)
+texture = ExtResource("21_fea6n")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="WallBack2" type="Sprite2D" parent="HallKey/Background" unique_id=1341592163]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, -531)
+texture = ExtResource("21_fea6n")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="FloorKitchen" type="Sprite2D" parent="HallKey/Background" unique_id=2014803955]
+z_index = -4
+texture_repeat = 2
+position = Vector2(8351.001, 326)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("17_jsy42")
+region_enabled = true
+region_rect = Rect2(0, 0, 20500, 500)
+
+[node name="WallBack3" type="Sprite2D" parent="HallKey/Background" unique_id=1340755090]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12373.667, 16)
+scale = Vector2(1.0188888, 1)
+texture = ExtResource("21_fea6n")
+region_enabled = true
+region_rect = Rect2(0, 0, 4250, 550)
+
+[node name="WallBack4" type="Sprite2D" parent="HallKey/Background" unique_id=582978067]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12376.167, -534)
+scale = Vector2(1.02, 1)
+texture = ExtResource("21_fea6n")
+region_enabled = true
+region_rect = Rect2(0, 0, 4250, 550)
+
+[node name="FloorKitchen2" type="Sprite2D" parent="HallKey/Background" unique_id=88146868]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12521, 326)
+scale = Vector2(0.22374743, 0.21939737)
+texture = ExtResource("17_jsy42")
+region_enabled = true
+region_rect = Rect2(0, 0, 18000, 500)
+
+[node name="Plintus7" type="Sprite2D" parent="HallKey/Background" unique_id=516701895]
+z_index = -5
+position = Vector2(6212, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus8" type="Sprite2D" parent="HallKey/Background" unique_id=959792069]
+z_index = -5
+position = Vector2(6495, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus9" type="Sprite2D" parent="HallKey/Background" unique_id=1592875618]
+z_index = -5
+position = Vector2(6692.9995, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus10" type="Sprite2D" parent="HallKey/Background" unique_id=830702249]
+z_index = -5
+position = Vector2(6898.9995, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus11" type="Sprite2D" parent="HallKey/Background" unique_id=91463869]
+z_index = -5
+position = Vector2(7106, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus12" type="Sprite2D" parent="HallKey/Background" unique_id=1411221029]
+z_index = -5
+position = Vector2(7313, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus46" type="Sprite2D" parent="HallKey/Background" unique_id=1800072711]
+z_index = -5
+position = Vector2(7516.9995, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus13" type="Sprite2D" parent="HallKey/Background" unique_id=92746308]
+z_index = -5
+position = Vector2(7723, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus14" type="Sprite2D" parent="HallKey/Background" unique_id=484372859]
+z_index = -5
+position = Vector2(7928.0005, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus15" type="Sprite2D" parent="HallKey/Background" unique_id=60014069]
+z_index = -5
+position = Vector2(8133.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus47" type="Sprite2D" parent="HallKey/Background" unique_id=1000924739]
+z_index = -5
+position = Vector2(8338, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus16" type="Sprite2D" parent="HallKey/Background" unique_id=577205746]
+z_index = -5
+position = Vector2(8542, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus48" type="Sprite2D" parent="HallKey/Background" unique_id=679853420]
+z_index = -5
+position = Vector2(8746.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus17" type="Sprite2D" parent="HallKey/Background" unique_id=1894916669]
+z_index = -5
+position = Vector2(8952, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus18" type="Sprite2D" parent="HallKey/Background" unique_id=2002740444]
+z_index = -5
+position = Vector2(9157, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus49" type="Sprite2D" parent="HallKey/Background" unique_id=2059908466]
+z_index = -5
+position = Vector2(9364.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus50" type="Sprite2D" parent="HallKey/Background" unique_id=784009670]
+z_index = -5
+position = Vector2(9567, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus19" type="Sprite2D" parent="HallKey/Background" unique_id=606222172]
+z_index = -5
+position = Vector2(9754.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus20" type="Sprite2D" parent="HallKey/Background" unique_id=989340969]
+z_index = -5
+position = Vector2(9945.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus21" type="Sprite2D" parent="HallKey/Background" unique_id=1199414288]
+z_index = -5
+position = Vector2(10150, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus22" type="Sprite2D" parent="HallKey/Background" unique_id=682385596]
+z_index = -5
+position = Vector2(10359.001, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus23" type="Sprite2D" parent="HallKey/Background" unique_id=736908161]
+z_index = -5
+position = Vector2(10522, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus24" type="Sprite2D" parent="HallKey/Background" unique_id=1041355547]
+z_index = -5
+position = Vector2(10727, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus25" type="Sprite2D" parent="HallKey/Background" unique_id=2109397638]
+z_index = -5
+position = Vector2(10934, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus26" type="Sprite2D" parent="HallKey/Background" unique_id=1097270424]
+z_index = -5
+position = Vector2(11139, 266)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus27" type="Sprite2D" parent="HallKey/Background" unique_id=1125153424]
+z_index = -5
+position = Vector2(11344.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus28" type="Sprite2D" parent="HallKey/Background" unique_id=1544590698]
+z_index = -5
+position = Vector2(11551.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus29" type="Sprite2D" parent="HallKey/Background" unique_id=1079336453]
+z_index = -5
+position = Vector2(11756.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus30" type="Sprite2D" parent="HallKey/Background" unique_id=1784726391]
+z_index = -5
+position = Vector2(11961.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus31" type="Sprite2D" parent="HallKey/Background" unique_id=687954214]
+z_index = -5
+position = Vector2(12220.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus32" type="Sprite2D" parent="HallKey/Background" unique_id=1940586588]
+z_index = -5
+position = Vector2(12425.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus33" type="Sprite2D" parent="HallKey/Background" unique_id=1583048148]
+z_index = -5
+position = Vector2(12630.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus34" type="Sprite2D" parent="HallKey/Background" unique_id=2057287492]
+z_index = -5
+position = Vector2(12837.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus35" type="Sprite2D" parent="HallKey/Background" unique_id=536320199]
+z_index = -5
+position = Vector2(13042.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus36" type="Sprite2D" parent="HallKey/Background" unique_id=1742625507]
+z_index = -5
+position = Vector2(13246.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus37" type="Sprite2D" parent="HallKey/Background" unique_id=77340354]
+z_index = -5
+position = Vector2(13453.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus38" type="Sprite2D" parent="HallKey/Background" unique_id=340953363]
+z_index = -5
+position = Vector2(13658.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus39" type="Sprite2D" parent="HallKey/Background" unique_id=1714253480]
+z_index = -5
+position = Vector2(13862.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus40" type="Sprite2D" parent="HallKey/Background" unique_id=1039233891]
+z_index = -5
+position = Vector2(14067.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus41" type="Sprite2D" parent="HallKey/Background" unique_id=2098866194]
+z_index = -5
+position = Vector2(14247.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Plintus42" type="Sprite2D" parent="HallKey/Background" unique_id=1467043782]
+z_index = -5
+position = Vector2(14452.485, 266.125)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_ubq2u")
+
+[node name="Walls" type="Node2D" parent="HallKey" unique_id=649663263]
+
+[node name="WallBelow_1" parent="HallKey/Walls" unique_id=935125253 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(6461, 400)
+
+[node name="WallBelow_2" parent="HallKey/Walls" unique_id=1372191177 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(7243.0005, 400)
+
+[node name="WallBelow_3" parent="HallKey/Walls" unique_id=1924015537 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(8031, 400)
+
+[node name="WallBelow_4" parent="HallKey/Walls" unique_id=362709283 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(8813, 400)
+
+[node name="WallBelow_5" parent="HallKey/Walls" unique_id=950810242 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(9465, 400)
+
+[node name="WallBelow_6" parent="HallKey/Walls" unique_id=1977458659 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(10247, 400)
+
+[node name="WallAbove_1" parent="HallKey/Walls" unique_id=536478586 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(6461, -825)
+
+[node name="WallAbove_2" parent="HallKey/Walls" unique_id=1531166941 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(7243, -825)
+
+[node name="WallAbove_3" parent="HallKey/Walls" unique_id=635778833 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(8032, -825)
+
+[node name="WallAbove_4" parent="HallKey/Walls" unique_id=1760160056 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(8813, -825)
+
+[node name="WallAbove_5" parent="HallKey/Walls" unique_id=1932771398 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(9465, -825)
+
+[node name="WallAbove_6" parent="HallKey/Walls" unique_id=1962551478 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(10247, -825)
+
+[node name="WallBelow_7" parent="HallKey/Walls" unique_id=1958708616 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(11034, 400)
+
+[node name="WallBelow_8" parent="HallKey/Walls" unique_id=1502334807 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(11816, 400)
+
+[node name="WallBelow_9" parent="HallKey/Walls" unique_id=2095746927 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(12604, 400)
+
+[node name="WallBelow_10" parent="HallKey/Walls" unique_id=1836868213 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(13386, 400)
+
+[node name="WallAbove_7" parent="HallKey/Walls" unique_id=454503695 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(11034, -825)
+
+[node name="WallAbove_8" parent="HallKey/Walls" unique_id=897878519 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(11816, -825)
+
+[node name="WallAbove_9" parent="HallKey/Walls" unique_id=1068164158 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(12605, -825)
+
+[node name="WallAbove_10" parent="HallKey/Walls" unique_id=1584935005 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(13386, -825)
+
+[node name="WallBelow_11" parent="HallKey/Walls" unique_id=1074031616 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(14169, 400)
+
+[node name="WallAbove_11" parent="HallKey/Walls" unique_id=570531 instance=ExtResource("7_w7sl4")]
+z_index = 10
+position = Vector2(14169, -825)
+
+[node name="WallLeft" parent="HallKey/Walls" unique_id=52273035 instance=ExtResource("6_ik2bq")]
+z_index = 10
+position = Vector2(14542, 63.860657)
+
+[node name="WallRight" parent="HallKey/Walls" unique_id=742313500 instance=ExtResource("6_ik2bq")]
+z_index = 10
+position = Vector2(6089, 63.860657)
+
+[node name="WallLeft2" parent="HallKey/Walls" unique_id=780422372 instance=ExtResource("6_ik2bq")]
+z_index = 10
+position = Vector2(14542, -528)
+
+[node name="WallRight2" parent="HallKey/Walls" unique_id=2058555595 instance=ExtResource("6_ik2bq")]
+z_index = 10
+position = Vector2(6089, -528)
+
+[node name="Sprites" type="Node2D" parent="HallKey" unique_id=18836998]
+
+[node name="Kover" type="Sprite2D" parent="HallKey/Sprites" unique_id=1515794733]
+z_index = -5
+position = Vector2(6698, 306)
+scale = Vector2(0.19589221, 0.19589221)
+
+[node name="Window2" type="Sprite2D" parent="HallKey/Sprites" unique_id=1788027356]
+z_index = -4
+position = Vector2(10323, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("41_lds08")
+
+[node name="OpenShtora2" type="Sprite2D" parent="HallKey/Sprites" unique_id=455585269]
+z_index = -3
+position = Vector2(10323, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("42_kj8o6")
+
+[node name="Battery" type="Sprite2D" parent="HallKey/Sprites" unique_id=1322408747]
+z_index = -4
+position = Vector2(10324, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("43_hk0qu")
+
+[node name="Window5" type="Sprite2D" parent="HallKey/Sprites" unique_id=1256994605]
+z_index = -4
+position = Vector2(9139, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("41_lds08")
+
+[node name="OpenShtora5" type="Sprite2D" parent="HallKey/Sprites" unique_id=948045369]
+z_index = -3
+position = Vector2(9139, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("42_kj8o6")
+
+[node name="Battery4" type="Sprite2D" parent="HallKey/Sprites" unique_id=300401]
+z_index = -4
+position = Vector2(9140, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("43_hk0qu")
+
+[node name="Window6" type="Sprite2D" parent="HallKey/Sprites" unique_id=1063397163]
+z_index = -4
+position = Vector2(7919.0005, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("41_lds08")
+
+[node name="OpenShtora6" type="Sprite2D" parent="HallKey/Sprites" unique_id=1628934880]
+z_index = -3
+position = Vector2(7919.0005, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("42_kj8o6")
+
+[node name="Battery5" type="Sprite2D" parent="HallKey/Sprites" unique_id=1597286722]
+z_index = -4
+position = Vector2(7920.0005, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("43_hk0qu")
+
+[node name="Window3" type="Sprite2D" parent="HallKey/Sprites" unique_id=46105565]
+z_index = -4
+position = Vector2(11530, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("41_lds08")
+
+[node name="OpenShtora3" type="Sprite2D" parent="HallKey/Sprites" unique_id=941523130]
+z_index = -3
+position = Vector2(11530, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("42_kj8o6")
+
+[node name="Battery2" type="Sprite2D" parent="HallKey/Sprites" unique_id=1815227552]
+z_index = -4
+position = Vector2(11531, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("43_hk0qu")
+
+[node name="Window4" type="Sprite2D" parent="HallKey/Sprites" unique_id=158031991]
+z_index = -4
+position = Vector2(12714, -45.50812)
+scale = Vector2(0.9091287, 0.9091287)
+texture = ExtResource("41_lds08")
+
+[node name="OpenShtora4" type="Sprite2D" parent="HallKey/Sprites" unique_id=474591425]
+z_index = -3
+position = Vector2(12714, 20.491882)
+scale = Vector2(0.66074157, 0.59296346)
+texture = ExtResource("42_kj8o6")
+
+[node name="Battery3" type="Sprite2D" parent="HallKey/Sprites" unique_id=903863699]
+z_index = -4
+position = Vector2(12715, 210)
+scale = Vector2(0.48396507, 0.48396507)
+texture = ExtResource("43_hk0qu")
+
+[node name="Chain" type="Sprite2D" parent="HallKey/Sprites" unique_id=192981966]
+position = Vector2(13279.993, 9.541061)
+rotation = 1.1241062
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain2" type="Sprite2D" parent="HallKey/Sprites" unique_id=1664026412]
+position = Vector2(13182.463, -193.83434)
+rotation = 1.1241062
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain5" type="Sprite2D" parent="HallKey/Sprites" unique_id=774109685]
+position = Vector2(13085, -397.00034)
+rotation = 1.1241062
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain3" type="Sprite2D" parent="HallKey/Sprites" unique_id=2069719785]
+position = Vector2(13288.725, 7.7080226)
+rotation = 1.1616184
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain4" type="Sprite2D" parent="HallKey/Sprites" unique_id=156034467]
+position = Vector2(13201.462, -195.83374)
+rotation = 1.1616184
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="Chain6" type="Sprite2D" parent="HallKey/Sprites" unique_id=1609210005]
+position = Vector2(13111.999, -402.00073)
+rotation = 1.1616184
+scale = Vector2(0.1513916, 0.1513916)
+texture = ExtResource("76_hq6el")
+
+[node name="BigChain2" type="Sprite2D" parent="HallKey/Sprites" unique_id=675709608]
+position = Vector2(10974.926, -416.5)
+scale = Vector2(0.16634049, 0.1663405)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain3" type="Sprite2D" parent="HallKey/Sprites" unique_id=412285866]
+position = Vector2(10393.209, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain4" type="Sprite2D" parent="HallKey/Sprites" unique_id=1665089937]
+position = Vector2(9775, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain10" type="Sprite2D" parent="HallKey/Sprites" unique_id=1035375561]
+position = Vector2(12761.789, -416.5)
+scale = Vector2(0.16634049, 0.1663405)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain11" type="Sprite2D" parent="HallKey/Sprites" unique_id=1480634539]
+position = Vector2(12180.072, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain12" type="Sprite2D" parent="HallKey/Sprites" unique_id=1094626093]
+position = Vector2(11561.863, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain5" type="Sprite2D" parent="HallKey/Sprites" unique_id=938586686]
+position = Vector2(9182.789, -416.5)
+scale = Vector2(0.16634049, 0.1663405)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain6" type="Sprite2D" parent="HallKey/Sprites" unique_id=2110958193]
+position = Vector2(8601.072, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain7" type="Sprite2D" parent="HallKey/Sprites" unique_id=181540879]
+position = Vector2(7982.8633, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain8" type="Sprite2D" parent="HallKey/Sprites" unique_id=2119918687]
+position = Vector2(7375.789, -416.5)
+scale = Vector2(0.16634049, 0.1663405)
+texture = ExtResource("77_6gd7j")
+
+[node name="BigChain9" type="Sprite2D" parent="HallKey/Sprites" unique_id=763581855]
+position = Vector2(6794.0723, -413.5)
+scale = Vector2(0.17808223, 0.17808226)
+texture = ExtResource("77_6gd7j")
+
+[node name="InteractableObjects" type="Node2D" parent="HallKey" unique_id=1037917349]
+
+[node name="Door(Lebedka)" parent="HallKey/InteractableObjects" unique_id=225017330 instance=ExtResource("15_xph0r")]
+position = Vector2(6386, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(ToLebedka)")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+door_texture = ExtResource("44_5kg7j")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)2" parent="HallKey/InteractableObjects" unique_id=121091402 instance=ExtResource("15_xph0r")]
+position = Vector2(8525, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)2")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)3" parent="HallKey/InteractableObjects" unique_id=858653260 instance=ExtResource("15_xph0r")]
+position = Vector2(9753, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)3")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)4" parent="HallKey/InteractableObjects" unique_id=730629514 instance=ExtResource("15_xph0r")]
+position = Vector2(10963, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)4")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)5" parent="HallKey/InteractableObjects" unique_id=49063061 instance=ExtResource("15_xph0r")]
+position = Vector2(12134, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)5")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Lebedka)6" parent="HallKey/InteractableObjects" unique_id=1209472829 instance=ExtResource("15_xph0r")]
+position = Vector2(14004, 83)
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = NodePath("../../../HallLebedka2/InteractableObjects/Door(Lebedka)6")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Lebedka" parent="HallKey/InteractableObjects" unique_id=1039345502 instance=ExtResource("89_pe4dr")]
+position = Vector2(13344, 228)
+fridge_path = NodePath("../../../Hall/InteractableObjects/Fridge")
+fridge_target_global_position = Vector2(9810, 120)
+used_sprite = null
+
 [node name="HallLebedka2" type="Node2D" parent="." unique_id=1652488699]
 position = Vector2(0, 10511)
 
@@ -2940,5 +3619,8 @@ apply_on_ready_if_overlapping = true
 music_enabled = true
 music_on_enter = 6
 music_on_exit = 7
+
+[node name="StalkerSpawnMarker" parent="." unique_id=951244965 instance=ExtResource("92_2nqfd")]
+position = Vector2(14319, 5282)
 
 [editable path="Hall/InteractableObjects/Fridge"]

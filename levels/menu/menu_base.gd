@@ -72,10 +72,12 @@ func apply_title_style(label: Label) -> void:
 	label.add_theme_font_size_override("font_size", title_font_size)
 
 func _wire_buttons() -> void:
-	var buttons := get_tree().get_nodes_in_group("menu_button")
+	var buttons := find_children("*", "Button", true, false)
 	for node in buttons:
 		var button := node as Button
 		if button == null:
+			continue
+		if not button.is_in_group("menu_button"):
 			continue
 		button.focus_mode = Control.FOCUS_ALL
 		button.pivot_offset = button.size * 0.5
@@ -84,7 +86,14 @@ func _wire_buttons() -> void:
 		button.focus_entered.connect(_on_button_hover.bind(button))
 		button.mouse_exited.connect(_on_button_unhover.bind(button))
 		button.focus_exited.connect(_on_button_unhover.bind(button))
-		button.pressed.connect(_on_button_pressed.bind(button))
+		_connect_button_press_sfx(button)
+
+	var all_buttons := find_children("*", "BaseButton", true, false)
+	for node in all_buttons:
+		var button := node as BaseButton
+		if button == null:
+			continue
+		_connect_button_press_sfx(button)
 
 func _on_button_hover(button: Button) -> void:
 	if button.disabled:
@@ -95,8 +104,14 @@ func _on_button_hover(button: Button) -> void:
 func _on_button_unhover(button: Button) -> void:
 	_tween_button(button, 1.0, Color(1, 1, 1, 1))
 
-func _on_button_pressed(_button: Button) -> void:
+func _on_button_pressed(_button: BaseButton) -> void:
 	_play_sfx(click_sfx, click_sfx_volume_db)
+
+func _connect_button_press_sfx(button: BaseButton) -> void:
+	if button.has_meta("menu_press_sfx_connected"):
+		return
+	button.pressed.connect(_on_button_pressed.bind(button))
+	button.set_meta("menu_press_sfx_connected", true)
 
 func _tween_button(button: Button, target_scale: float, target_tint: Color) -> void:
 	var tween: Tween = null
