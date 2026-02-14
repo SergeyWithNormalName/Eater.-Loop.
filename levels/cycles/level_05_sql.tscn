@@ -71,6 +71,7 @@
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_ucmgk"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_4kun7"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_npe2g"]
+[ext_resource type="Texture2D" uid="uid://ur3wgaqhvydx" path="res://objects/interactable/note/1234.jpg" id="69_x6q6p"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="72_gp7cx"]
 [ext_resource type="Texture2D" uid="uid://dwpnebdi0x2gp" path="res://objects/environment/sprites/parents/ShkafParents.png" id="73_72fc3"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="74_44y35"]
@@ -80,24 +81,12 @@
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="80_w4m87"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
-[ext_resource type="Shader" path="res://shaders/torn_right_wallpaper.gdshader" id="92_torn_wall"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_ic6y1")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_torn_wall"]
-shader = ExtResource("92_torn_wall")
-shader_parameter/under_texture = ExtResource("21_m1rcm")
-shader_parameter/tear_width = 0.22
-shader_parameter/edge_roughness = 0.1
-shader_parameter/edge_noise_scale = 24.0
-shader_parameter/hole_density = 0.45
-shader_parameter/hole_noise_scale = 62.0
-shader_parameter/edge_softness = 0.012
-shader_parameter/edge_darkening = 0.26
 
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -1280,6 +1269,8 @@ minigame_scene = ExtResource("67_ic6y1")
 time_limit = 60.0
 is_enabled = false
 unlock_on_dependency_interaction = true
+show_note_on_completed = true
+completed_note_texture = ExtResource("69_x6q6p")
 completed_message = "Я уже сделал эту работу"
 dependency_object = NodePath("../../../Hall/InteractableObjects/Fridge")
 
@@ -1316,7 +1307,6 @@ position = Vector2(-7719, 0)
 
 [node name="WallBack_Bedroom" type="Sprite2D" parent="ParentsRoom/Background" unique_id=500660215]
 z_index = -5
-material = SubResource("ShaderMaterial_torn_wall")
 texture_repeat = 2
 position = Vector2(-1913, 19)
 texture = ExtResource("72_gp7cx")

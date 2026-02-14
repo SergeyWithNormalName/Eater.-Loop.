@@ -1012,6 +1012,8 @@
 │       │   ├── lebedka.gd.uid
 │       │   └── lebedka.tscn
 │       ├── note
+│       │   ├── 1234.jpg
+│       │   ├── 1234.jpg.import
 │       │   ├── note.tscn
 │       │   ├── note_object.gd
 │       │   └── note_object.gd.uid
@@ -1179,4 +1181,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1074 files
+106 directories, 1076 files

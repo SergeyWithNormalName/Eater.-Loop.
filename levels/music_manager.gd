@@ -134,6 +134,9 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 		_base_volume_db = target_volume
 		_is_ducked = false
 		_pre_duck_volume_db = target_volume
+		if _base_pause_active:
+			_apply_base_pause_to_player(_active_player, output_volume, target_fade)
+			return
 		_fade_volume(_active_player, output_volume, target_fade)
 		return
 
@@ -142,10 +145,17 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	_is_ducked = false
 	_pre_duck_volume_db = target_volume
 
+	_inactive_player.stream_paused = false
 	_inactive_player.stream = stream
 	_inactive_player.volume_db = -80.0
 	_inactive_player.play()
 	_seek_if_possible(_inactive_player, start_position)
+	if _base_pause_active:
+		if _active_player != null and _active_player != _inactive_player and _active_player.playing:
+			_active_player.stop()
+		_swap_active_player(_inactive_player)
+		_apply_base_pause_to_player(_active_player, output_volume, 0.0, start_position)
+		return
 
 	_crossfade_players(_active_player, _inactive_player, output_volume, target_fade)
 
@@ -730,21 +740,14 @@ func _get_playback_position(player: AudioStreamPlayer) -> float:
 		return 0.0
 	return player.get_playback_position()
 
-func _request_base_pause(reason: String, fade_time: float) -> void:
-	_base_pause_reasons[reason] = true
-	if _base_pause_active:
-		return
-	var player := _resolve_playing_player()
+func _apply_base_pause_to_player(player: AudioStreamPlayer, resume_volume_db: float, fade_time: float = 0.0, resume_position_override: float = -1.0) -> void:
 	if player == null:
-		_base_pause_active = true
-		_base_pause_player = player
 		return
 	_kill_fade_tween()
 	_base_pause_player = player
 	_base_pause_stream = player.stream
-	_base_pause_position = _get_playback_position(player)
-	_base_pause_restore_db = player.volume_db
-	_base_pause_active = true
+	_base_pause_restore_db = resume_volume_db
+	_base_pause_position = resume_position_override if resume_position_override >= 0.0 else _get_playback_position(player)
 	if not player.playing:
 		return
 	if fade_time <= 0.0:
@@ -758,6 +761,30 @@ func _request_base_pause(reason: String, fade_time: float) -> void:
 			_base_pause_position = _get_playback_position(player)
 			player.stream_paused = true
 	)
+
+func _request_base_pause(reason: String, fade_time: float) -> void:
+	_base_pause_reasons[reason] = true
+	if _base_pause_active:
+		var active_player := _resolve_playing_player()
+		if active_player != null and active_player.playing and not active_player.stream_paused:
+			_apply_base_pause_to_player(active_player, _get_base_target_volume_db(), fade_time)
+		return
+	var player := _resolve_playing_player()
+	_base_pause_active = true
+	if player == null:
+		_base_pause_player = null
+		_base_pause_stream = null
+		_base_pause_position = 0.0
+		_base_pause_restore_db = _get_base_target_volume_db()
+		return
+	if not player.playing:
+		_base_pause_player = player
+		_base_pause_stream = null
+		_base_pause_position = 0.0
+		_base_pause_restore_db = _get_base_target_volume_db()
+		return
+	_base_pause_player = player
+	_apply_base_pause_to_player(player, player.volume_db, fade_time)
 
 func _request_base_resume(reason: String, fade_time: float) -> void:
 	if not _base_pause_reasons.has(reason):

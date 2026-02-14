@@ -60,6 +60,7 @@ const MUSIC_ACTION_EVENT_START := 4
 const MUSIC_ACTION_EVENT_STOP := 5
 const MUSIC_ACTION_PAUSE_ALL := 6
 const MUSIC_ACTION_RESUME_ALL := 7
+const READY_OVERLAP_CHECK_ATTEMPTS := 6
 
 func _ready() -> void:
 	input_pickable = false
@@ -109,10 +110,12 @@ func _apply_if_overlapping() -> void:
 		return
 	if _has_fired and one_shot:
 		return
-	for body in get_overlapping_bodies():
-		if body.is_in_group(player_group):
-			_apply(false)
-			return
+	for _attempt in range(READY_OVERLAP_CHECK_ATTEMPTS):
+		for body in get_overlapping_bodies():
+			if body.is_in_group(player_group):
+				_apply(false)
+				return
+		await get_tree().physics_frame
 
 func _play_sound() -> void:
 	if sfx_stream == null:

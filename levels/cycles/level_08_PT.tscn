@@ -98,6 +98,7 @@
 [ext_resource type="Texture2D" uid="uid://dwpnebdi0x2gp" path="res://objects/environment/sprites/parents/ShkafParents.png" id="96_e33ye"]
 [ext_resource type="Texture2D" uid="uid://brnubvnj46o8t" path="res://objects/environment/sprites/parents/BedParents.png" id="97_560jv"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="98_560jv"]
+[ext_resource type="Shader" uid="uid://b4om5oobvvicb" path="res://shaders/torn_right_wallpaper.gdshader" id="98_qbrbk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_fbsxc")
@@ -120,6 +121,16 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_qbrbk")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wc02g"]
+shader = ExtResource("98_qbrbk")
+shader_parameter/tear_width = 0.24
+shader_parameter/edge_roughness = 0.11
+shader_parameter/edge_noise_scale = 22.0
+shader_parameter/hole_density = 0.48
+shader_parameter/hole_noise_scale = 56.0
+shader_parameter/edge_softness = 0.015
+shader_parameter/edge_darkening = 0.28
 
 [node name="Level" type="Node2D" unique_id=1851398424]
 position = Vector2(16, 0)
@@ -3439,6 +3450,7 @@ texture = ExtResource("97_560jv")
 [node name="WallBack_Bedroom" type="Sprite2D" parent="." unique_id=39818675]
 z_index = -5
 texture_repeat = 2
+material = SubResource("ShaderMaterial_wc02g")
 position = Vector2(25309, 5222)
 texture = ExtResource("98_560jv")
 region_enabled = true
