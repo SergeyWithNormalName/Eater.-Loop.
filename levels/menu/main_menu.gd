@@ -18,31 +18,42 @@ extends "res://levels/menu/menu_base.gd"
 ## Скорость прокрутки титров.
 @export_range(5.0, 200.0, 1.0) var credits_scroll_speed: float = 40.0
 
-@onready var _title_label: Label = $MainPanel/VBox/Title
-@onready var _new_game_button: Button = $MainPanel/VBox/Buttons/NewGameButton
-@onready var _continue_button: Button = $MainPanel/VBox/Buttons/ContinueButton
-@onready var _settings_button: Button = $MainPanel/VBox/Buttons/SettingsButton
-@onready var _credits_button: Button = $MainPanel/VBox/Buttons/CreditsButton
-@onready var _exit_button: Button = $MainPanel/VBox/Buttons/ExitButton
+@export_group("Дисклеймер")
+@export_range(1.0, 60.0, 1.0) var disclaimer_auto_hide_time: float = 15.0
+@export_range(0.1, 3.0, 0.05) var disclaimer_reveal_time: float = 1.05
+@export_range(16, 42, 1) var disclaimer_body_font_size: int = 30
+@export_range(12, 32, 1) var disclaimer_body_font_min_size: int = 20
 
-@onready var _background: TextureRect = $Background
-@onready var _cold_bloom: ColorRect = $ColdBloom
-@onready var _vignette: ColorRect = $Vignette
-@onready var _main_panel: Control = $MainPanel
-@onready var _settings_panel: Control = $SettingsPanel
-@onready var _credits_panel: Control = $CreditsPanel
-@onready var _credits_title: Label = $CreditsPanel/VBox/Title
-@onready var _credits_scroll: ScrollContainer = $CreditsPanel/VBox/CreditsScroll
-@onready var _credits_back: Button = $CreditsPanel/VBox/BackButton
+@onready var _title_label: Label = $MainPanelCenter/MainPanel/VBox/Title
+@onready var _new_game_button: Button = $MainPanelCenter/MainPanel/VBox/Buttons/NewGameButton
+@onready var _continue_button: Button = $MainPanelCenter/MainPanel/VBox/Buttons/ContinueButton
+@onready var _settings_button: Button = $MainPanelCenter/MainPanel/VBox/Buttons/SettingsButton
+@onready var _credits_button: Button = $MainPanelCenter/MainPanel/VBox/Buttons/CreditsButton
+@onready var _exit_button: Button = $MainPanelCenter/MainPanel/VBox/Buttons/ExitButton
 
-@onready var _difficulty_panel: Control = $DifficultyPanel
-@onready var _difficulty_title: Label = $DifficultyPanel/VBox/Title
-@onready var _difficulty_label: Label = $DifficultyPanel/VBox/Message
-@onready var _difficulty_description: Label = $DifficultyPanel/VBox/DescriptionPanel/Description
-@onready var _difficulty_simplified: Button = $DifficultyPanel/VBox/DifficultyButtons/SimplifiedButton
-@onready var _difficulty_hardcore: Button = $DifficultyPanel/VBox/DifficultyButtons/HardcoreButton
-@onready var _difficulty_back: Button = $DifficultyPanel/VBox/BottomRow/BackButton
-@onready var _difficulty_start: Button = $DifficultyPanel/VBox/BottomRow/StartButton
+@onready var _main_panel: Control = $MainPanelCenter/MainPanel
+@onready var _settings_panel: Control = $SettingsPanelCenter/SettingsPanel
+@onready var _credits_panel: Control = $CreditsPanelCenter/CreditsPanel
+@onready var _credits_title: Label = $CreditsPanelCenter/CreditsPanel/VBox/Title
+@onready var _credits_scroll: ScrollContainer = $CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll
+@onready var _credits_back: Button = $CreditsPanelCenter/CreditsPanel/VBox/BackButton
+
+@onready var _difficulty_panel: Control = $DifficultyPanelCenter/DifficultyPanel
+@onready var _difficulty_title: Label = $DifficultyPanelCenter/DifficultyPanel/VBox/Title
+@onready var _difficulty_label: Label = $DifficultyPanelCenter/DifficultyPanel/VBox/Message
+@onready var _difficulty_description: Label = $DifficultyPanelCenter/DifficultyPanel/VBox/DescriptionPanel/Description
+@onready var _difficulty_simplified: Button = $DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons/SimplifiedButton
+@onready var _difficulty_hardcore: Button = $DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons/HardcoreButton
+@onready var _difficulty_back: Button = $DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow/BackButton
+@onready var _difficulty_start: Button = $DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow/StartButton
+
+@onready var _startup_blur_spoiler: ColorRect = $StartupBlurSpoiler
+@onready var _startup_disclaimer: CenterContainer = $StartupDisclaimer
+@onready var _startup_disclaimer_card: PanelContainer = $StartupDisclaimer/StartupCard
+@onready var _startup_disclaimer_title: Label = $StartupDisclaimer/StartupCard/Margin/VBox/Title
+@onready var _startup_disclaimer_subtitle: Label = $StartupDisclaimer/StartupCard/Margin/VBox/Subtitle
+@onready var _startup_disclaimer_text: RichTextLabel = $StartupDisclaimer/StartupCard/Margin/VBox/TextPlate/TextMargin/DisclaimerText
+@onready var _startup_disclaimer_timer: Timer = $StartupDisclaimerTimer
 
 var _credits_active: bool = false
 const PANEL_MAIN := "main"
@@ -50,14 +61,30 @@ const PANEL_SETTINGS := "settings"
 const PANEL_CREDITS := "credits"
 const PANEL_DIFFICULTY := "difficulty"
 const DIFFICULTY_NONE := -1
-const MENU_TRANSITION_META := "menu_intro_from_disclaimer"
+const STARTUP_DISCLAIMER_META := "startup_disclaimer_shown_session"
+const STARTUP_DISCLAIMER_STATE_PATH := "user://startup_state.cfg"
+const STARTUP_DISCLAIMER_SECTION := "ui"
+const STARTUP_DISCLAIMER_KEY := "disclaimer_seen"
+const MENU_SPOILER_SHADER: Shader = preload("res://levels/menu/screen_spoiler_blur.gdshader")
 const DIFFICULTY_DESCRIPTION_DEFAULT := "Выберите сложность, чтобы увидеть её описание."
 const DIFFICULTY_DESCRIPTION_SIMPLIFIED := "В упрощённой сложности противники передвигаются медленнее, способы борьбы с ними более доступны, а цена ошибки — ниже."
 const DIFFICULTY_DESCRIPTION_CANONICAL := "В канонической сложности противники представляют реальную угрозу, цена каждой ошибки высока, а игровые задачи окажутся менее простыми."
+const STARTUP_DISCLAIMER_TEXT := """Данная игра является художественным произведением. Все события, персонажи, образы и ситуации являются вымышленными либо используются в художественной интерпретации. Любые совпадения с реальными лицами, событиями или обстоятельствами являются случайными.
+
+Все графические материалы, анимации и визуальные элементы созданы с использованием технологий генеративного искусственного интеллекта либо иными законными способами. Музыкальные произведения и звуковые эффекты либо созданы автором игры, либо используются на основании лицензии CC0 (Creative Commons Zero) либо иных свободных лицензий, допускающих свободное использование.
+
+Игра может содержать сцены психологического напряжения, тревожные визуальные и звуковые эффекты, скримеры, а также элементы, способные вызвать дискомфорт. Лицам с повышенной чувствительностью, сердечно-сосудистыми заболеваниями, эпилепсией или иными медицинскими противопоказаниями рекомендуется соблюдать осторожность.
+
+Игра не содержит призывов к противоправным действиям, насилию, дискриминации либо иным формам противоправного поведения. Автор не пропагандирует и не одобряет какие-либо формы вредного или опасного поведения.
+
+Использование игры осуществляется пользователем добровольно и на собственный риск. Автор не несёт ответственности за возможный физический, психологический или иной ущерб, возникший в результате использования игры."""
 
 var _active_panel: String = PANEL_MAIN
 var _selected_difficulty: int = DIFFICULTY_NONE
 var _navigation_input_active: bool = false
+var _startup_disclaimer_active: bool = false
+var _startup_disclaimer_transitioning: bool = false
+var _startup_blur_material: ShaderMaterial
 
 func _ready() -> void:
 	super._ready()
@@ -69,9 +96,15 @@ func _ready() -> void:
 	_update_continue_state()
 	_show_main()
 	_play_menu_music()
-	_play_entry_transition_if_needed()
+	_startup_disclaimer_timer.timeout.connect(_on_startup_disclaimer_timeout)
+	_setup_startup_disclaimer()
 
 func _input(event: InputEvent) -> void:
+	if _startup_disclaimer_active:
+		if _is_disclaimer_skip_event(event):
+			get_viewport().set_input_as_handled()
+			_dismiss_startup_disclaimer()
+		return
 	_update_navigation_input_mode(event)
 
 func _process(delta: float) -> void:
@@ -80,7 +113,14 @@ func _process(delta: float) -> void:
 	var max_scroll := _credits_scroll.get_v_scroll_bar().max_value
 	_credits_scroll.scroll_vertical = min(_credits_scroll.scroll_vertical + credits_scroll_speed * delta, max_scroll)
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		call_deferred("_fit_startup_disclaimer_text")
+
 func _unhandled_input(event: InputEvent) -> void:
+	if _startup_disclaimer_active:
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("ui_cancel"):
 		if _credits_panel.visible:
 			_hide_credits()
@@ -376,38 +416,170 @@ func _stop_menu_music() -> void:
 		return
 	MusicManager.stop_music(menu_music_fade_time)
 
-func _play_entry_transition_if_needed() -> void:
+func _setup_startup_disclaimer() -> void:
+	_startup_disclaimer_text.text = STARTUP_DISCLAIMER_TEXT
+	_apply_startup_disclaimer_style()
+	_startup_blur_spoiler.visible = false
+	_startup_disclaimer.visible = false
+	call_deferred("_fit_startup_disclaimer_text")
+	if not _should_show_startup_disclaimer():
+		return
+	_activate_startup_disclaimer()
+
+func _should_show_startup_disclaimer() -> bool:
 	if GameState == null:
+		var unseen_without_gamestate := not _is_startup_disclaimer_seen_persisted()
+		if unseen_without_gamestate:
+			_mark_startup_disclaimer_seen_persisted()
+		return unseen_without_gamestate
+	if GameState.has_meta(STARTUP_DISCLAIMER_META):
+		return false
+	if _is_startup_disclaimer_seen_persisted():
+		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
+		return false
+	GameState.set_meta(STARTUP_DISCLAIMER_META, true)
+	_mark_startup_disclaimer_seen_persisted()
+	return true
+
+func _activate_startup_disclaimer() -> void:
+	_startup_disclaimer_active = true
+	_startup_disclaimer_transitioning = false
+	_startup_disclaimer.visible = true
+	_startup_disclaimer.modulate = Color(1, 1, 1, 1)
+	_startup_disclaimer.mouse_filter = Control.MOUSE_FILTER_STOP
+	_startup_disclaimer_card.scale = Vector2.ONE
+
+	_startup_blur_spoiler.visible = true
+	_startup_blur_spoiler.modulate = Color(1, 1, 1, 1)
+	_startup_blur_spoiler.mouse_filter = Control.MOUSE_FILTER_STOP
+	_startup_blur_material = ShaderMaterial.new()
+	_startup_blur_material.shader = MENU_SPOILER_SHADER
+	_startup_blur_material.set_shader_parameter("blur_strength", 1.0)
+	_startup_blur_material.set_shader_parameter("blur_lod", 2.8)
+	_startup_blur_material.set_shader_parameter("tint_strength", 0.24)
+	_startup_blur_spoiler.material = _startup_blur_material
+
+	_startup_disclaimer_timer.start(disclaimer_auto_hide_time)
+
+func _dismiss_startup_disclaimer() -> void:
+	if not _startup_disclaimer_active or _startup_disclaimer_transitioning:
 		return
-	if not GameState.has_meta(MENU_TRANSITION_META):
-		return
-	GameState.remove_meta(MENU_TRANSITION_META)
+	_startup_disclaimer_transitioning = true
 
-	var transition_overlay := ColorRect.new()
-	transition_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
-	transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	transition_overlay.color = Color(0.01, 0.03, 0.08, 0.56)
-	add_child(transition_overlay)
-	move_child(transition_overlay, get_child_count() - 1)
-
-	var main_panel_start_position: Vector2 = _main_panel.position
-	_main_panel.modulate = Color(1.0, 1.0, 1.0, 0.0)
-	_main_panel.position = main_panel_start_position + Vector2(0.0, 14.0)
-	_main_panel.scale = Vector2(0.985, 0.985)
-
-	_background.modulate = Color(1.0, 1.0, 1.0, 0.9)
-	_cold_bloom.modulate = Color(1.0, 1.0, 1.0, 0.88)
-	_vignette.modulate = Color(1.0, 1.0, 1.0, 0.9)
-
+	var reveal_time: float = maxf(0.1, disclaimer_reveal_time)
+	var text_fade_time: float = minf(reveal_time * 0.75, 0.7)
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(transition_overlay, "color:a", 0.0, 0.42)
-	tween.tween_property(_main_panel, "modulate:a", 1.0, 0.34)
-	tween.tween_property(_main_panel, "position:y", main_panel_start_position.y, 0.34)
-	tween.tween_property(_main_panel, "scale", Vector2.ONE, 0.34)
-	tween.tween_property(_background, "modulate:a", 1.0, 0.45)
-	tween.tween_property(_cold_bloom, "modulate:a", 1.0, 0.45)
-	tween.tween_property(_vignette, "modulate:a", 1.0, 0.45)
-	tween.finished.connect(func(): transition_overlay.queue_free())
+	if _startup_blur_material != null:
+		tween.tween_method(
+			func(value: float): _startup_blur_material.set_shader_parameter("blur_strength", value),
+			1.0,
+			0.0,
+			reveal_time
+		)
+		tween.tween_method(
+			func(value: float): _startup_blur_material.set_shader_parameter("tint_strength", value),
+			0.24,
+			0.0,
+			reveal_time
+		)
+	tween.tween_property(_startup_blur_spoiler, "modulate:a", 0.0, reveal_time)
+	tween.tween_property(_startup_disclaimer, "modulate:a", 0.0, text_fade_time)
+	tween.tween_property(_startup_disclaimer_card, "scale", Vector2(1.01, 1.01), text_fade_time)
+	await tween.finished
+
+	_startup_disclaimer_active = false
+	_startup_disclaimer_transitioning = false
+	_startup_disclaimer_timer.stop()
+	_startup_disclaimer.visible = false
+	_startup_blur_spoiler.visible = false
+	_startup_disclaimer.modulate = Color(1, 1, 1, 1)
+	_startup_blur_spoiler.modulate = Color(1, 1, 1, 1)
+	_startup_disclaimer_card.scale = Vector2.ONE
+	_startup_blur_spoiler.material = null
+	_startup_blur_material = null
+
+func _on_startup_disclaimer_timeout() -> void:
+	if not _startup_disclaimer_active or _startup_disclaimer_transitioning:
+		return
+	_dismiss_startup_disclaimer()
+
+func _is_disclaimer_skip_event(event: InputEvent) -> bool:
+	if event == null or event.is_echo():
+		return false
+	if event is InputEventMouseMotion:
+		return false
+	if event is InputEventKey:
+		return (event as InputEventKey).pressed
+	if event is InputEventMouseButton:
+		return (event as InputEventMouseButton).pressed
+	if event is InputEventJoypadButton:
+		return (event as InputEventJoypadButton).pressed
+	if event is InputEventJoypadMotion:
+		return absf((event as InputEventJoypadMotion).axis_value) >= 0.55
+	if event is InputEventScreenTouch:
+		return (event as InputEventScreenTouch).pressed
+	return false
+
+func _apply_startup_disclaimer_style() -> void:
+	var base_font := SystemFont.new()
+	base_font.font_names = PackedStringArray([
+		"Segoe UI",
+		"Noto Sans",
+		"SF Pro Text",
+		"Roboto",
+		"Arial",
+		"Helvetica",
+		"Liberation Sans",
+		"DejaVu Sans",
+	])
+
+	var ui_font := FontVariation.new()
+	ui_font.base_font = base_font
+	ui_font.spacing_glyph = 0
+
+	_startup_disclaimer_title.add_theme_font_override("font", ui_font)
+	_startup_disclaimer_title.add_theme_font_size_override("font_size", 54)
+	_startup_disclaimer_title.add_theme_color_override("font_color", Color(0.97, 0.98, 1.0, 0.98))
+
+	_startup_disclaimer_subtitle.add_theme_font_override("font", ui_font)
+	_startup_disclaimer_subtitle.add_theme_font_size_override("font_size", 21)
+	_startup_disclaimer_subtitle.add_theme_color_override("font_color", Color(0.77, 0.87, 1.0, 0.9))
+
+	_startup_disclaimer_text.add_theme_font_override("normal_font", ui_font)
+	_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", disclaimer_body_font_size)
+	_startup_disclaimer_text.add_theme_color_override("default_color", Color(0.94, 0.96, 1.0, 0.95))
+
+func _fit_startup_disclaimer_text() -> void:
+	if _startup_disclaimer_text == null:
+		return
+	if _startup_disclaimer_text.size.x <= 0.0:
+		return
+	var available_height: float = _startup_disclaimer_text.size.y
+	if available_height <= 0.0:
+		return
+	var selected_size: int = disclaimer_body_font_min_size
+	var size: int = disclaimer_body_font_size
+	while size >= disclaimer_body_font_min_size:
+		_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", size)
+		var content_height: float = _startup_disclaimer_text.get_content_height()
+		if content_height <= available_height:
+			selected_size = size
+			break
+		size -= 1
+	_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", selected_size)
+	_startup_disclaimer_text.scroll_to_line(0)
+
+func _is_startup_disclaimer_seen_persisted() -> bool:
+	var config := ConfigFile.new()
+	if config.load(STARTUP_DISCLAIMER_STATE_PATH) != OK:
+		return false
+	return bool(config.get_value(STARTUP_DISCLAIMER_SECTION, STARTUP_DISCLAIMER_KEY, false))
+
+func _mark_startup_disclaimer_seen_persisted() -> void:
+	var config := ConfigFile.new()
+	config.load(STARTUP_DISCLAIMER_STATE_PATH)
+	config.set_value(STARTUP_DISCLAIMER_SECTION, STARTUP_DISCLAIMER_KEY, true)
+	config.save(STARTUP_DISCLAIMER_STATE_PATH)

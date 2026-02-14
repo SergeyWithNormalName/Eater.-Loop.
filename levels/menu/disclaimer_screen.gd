@@ -5,7 +5,7 @@ extends Control
 
 @export_group("Анимация")
 @export_range(0.1, 3.0, 0.05) var intro_duration: float = 0.6
-@export_range(0.1, 3.0, 0.05) var outro_duration: float = 0.35
+@export_range(0.1, 3.0, 0.05) var outro_duration: float = 0.5
 @export_range(5.0, 60.0, 1.0) var auto_advance_delay: float = 15.0
 
 @export_group("Макет")
@@ -126,12 +126,12 @@ func _play_intro_animation() -> void:
 func _play_outro_animation() -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(_content, "modulate:a", 0.0, outro_duration)
-	tween.tween_property(_content, "scale", Vector2(1.03, 1.03), outro_duration)
-	tween.tween_property(_content, "position:y", _content_base_y - 12.0, outro_duration)
-	tween.tween_property(_backdrop_tint, "modulate:a", 0.56, outro_duration)
+	tween.tween_property(_content, "scale", Vector2(1.02, 1.02), outro_duration)
+	tween.tween_property(_content, "position:y", _content_base_y - 8.0, outro_duration)
+	tween.tween_property(_backdrop_tint, "modulate:a", 0.64, outro_duration)
 	tween.set_parallel(false)
 	await tween.finished
 

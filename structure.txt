@@ -308,6 +308,8 @@
 │   │   ├── pause_menu.gd
 │   │   ├── pause_menu.gd.uid
 │   │   ├── pause_menu.tscn
+│   │   ├── screen_spoiler_blur.gdshader
+│   │   ├── screen_spoiler_blur.gdshader.uid
 │   │   ├── settings_manager.gd
 │   │   ├── settings_manager.gd.uid
 │   │   ├── settings_panel.gd
@@ -1177,4 +1179,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1072 files
+106 directories, 1074 files

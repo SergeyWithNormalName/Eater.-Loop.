@@ -68,6 +68,14 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_b056n"]
+[ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="72_1eex3"]
+[ext_resource type="PackedScene" uid="uid://c55y41eb0h776" path="res://levels/minigames/feeding/food/tort/food_tort.tscn" id="73_6wj6m"]
+[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="73_ao3ix"]
+[ext_resource type="Texture2D" uid="uid://vue181t7bjua" path="res://levels/minigames/feeding/andreys_faces/TheBadestEat.png" id="74_ao3ix"]
+[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="76_m33w3"]
+[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="77_3xoh4"]
+[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="78_62tjv"]
+[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="79_p88na"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
@@ -800,6 +808,16 @@ apply_on_ready_if_overlapping = true
 music_enabled = true
 music_on_enter = 6
 music_on_exit = 7
+
+[node name="Fridge" parent="." unique_id=2143446070 instance=ExtResource("72_1eex3")]
+position = Vector2(7937, 124)
+minigame_scene = ExtResource("73_ao3ix")
+food_scenes = Array[PackedScene]([ExtResource("73_6wj6m")])
+andrey_face = ExtResource("74_ao3ix")
+bg_music = ExtResource("76_m33w3")
+win_sound = ExtResource("77_3xoh4")
+eat_sound = ExtResource("78_62tjv")
+background_texture = ExtResource("79_p88na")
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsRight)"]

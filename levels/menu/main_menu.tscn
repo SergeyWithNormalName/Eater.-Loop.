@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bxjrvr1ri8lfh"]
+[gd_scene load_steps=12 format=3 uid="uid://bxjrvr1ri8lfh"]
 
 [ext_resource type="Script" uid="uid://ircg1tjrp7qr" path="res://levels/menu/main_menu.gd" id="1_main_menu_script"]
 [ext_resource type="PackedScene" path="res://levels/menu/main_settings_panel.tscn" id="2_settings_panel"]
@@ -40,6 +40,32 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.56, 0.71, 0.92, 0.32)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+anti_aliasing = true
+anti_aliasing_size = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disclaimer_card"]
+bg_color = Color(0.01, 0.03, 0.08, 0.48)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.65, 0.8, 1, 0.2)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+anti_aliasing = true
+anti_aliasing_size = 1.0
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 34
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disclaimer_text_plate"]
+bg_color = Color(0.01, 0.04, 0.09, 0.34)
 corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
@@ -96,22 +122,48 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.31)
 
-[node name="MainPanel" type="PanelContainer" parent="."]
+[node name="MainPanelCenter" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -290.0
-offset_right = 440.0
-offset_bottom = 290.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="SettingsPanelCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CreditsPanelCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DifficultyPanelCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainPanel" type="PanelContainer" parent="MainPanelCenter"]
+layout_mode = 2
+custom_minimum_size = Vector2(720, 580)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="MainPanel"]
+[node name="VBox" type="VBoxContainer" parent="MainPanelCenter/MainPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,56 +173,46 @@ grow_vertical = 2
 separation = 14
 alignment = 1
 
-[node name="Title" type="Label" parent="MainPanel/VBox"]
+[node name="Title" type="Label" parent="MainPanelCenter/MainPanel/VBox"]
 layout_mode = 2
 text = "Едок. Петля."
 horizontal_alignment = 1
 
-[node name="Buttons" type="VBoxContainer" parent="MainPanel/VBox"]
+[node name="Buttons" type="VBoxContainer" parent="MainPanelCenter/MainPanel/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 separation = 10
 alignment = 1
 
-[node name="NewGameButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="NewGameButton" type="Button" parent="MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
 text = "Новая игра"
 
-[node name="ContinueButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="ContinueButton" type="Button" parent="MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
 text = "Продолжить"
 
-[node name="SettingsButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="SettingsButton" type="Button" parent="MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
 text = "Настройки"
 
-[node name="CreditsButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="CreditsButton" type="Button" parent="MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
 text = "Авторы"
 
-[node name="ExitButton" type="Button" parent="MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="ExitButton" type="Button" parent="MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
 text = "Выйти из игры"
 
-[node name="SettingsPanel" parent="." instance=ExtResource("2_settings_panel")]
+[node name="SettingsPanel" parent="SettingsPanelCenter" instance=ExtResource("2_settings_panel")]
 
-[node name="CreditsPanel" type="PanelContainer" parent="."]
+[node name="CreditsPanel" type="PanelContainer" parent="CreditsPanelCenter"]
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -310.0
-offset_right = 450.0
-offset_bottom = 310.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+custom_minimum_size = Vector2(800, 620)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="CreditsPanel"]
+[node name="VBox" type="VBoxContainer" parent="CreditsPanelCenter/CreditsPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -179,71 +221,61 @@ grow_horizontal = 2
 grow_vertical = 2
 separation = 12
 
-[node name="Title" type="Label" parent="CreditsPanel/VBox"]
+[node name="Title" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox"]
 layout_mode = 2
 text = "Авторы"
 horizontal_alignment = 1
 
-[node name="Divider" type="HSeparator" parent="CreditsPanel/VBox"]
+[node name="Divider" type="HSeparator" parent="CreditsPanelCenter/CreditsPanel/VBox"]
 layout_mode = 2
 
-[node name="CreditsScroll" type="ScrollContainer" parent="CreditsPanel/VBox"]
+[node name="CreditsScroll" type="ScrollContainer" parent="CreditsPanelCenter/CreditsPanel/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CreditsText" type="VBoxContainer" parent="CreditsPanel/VBox/CreditsScroll"]
+[node name="CreditsText" type="VBoxContainer" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll"]
 layout_mode = 2
 separation = 4
 
-[node name="Line1" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line1" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "Разработка:"
 
-[node name="Line2" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line2" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "- Имя Фамилия"
 
-[node name="Line3" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line3" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "Арт и визуал:"
 
-[node name="Line4" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line4" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "- Имя Фамилия"
 
-[node name="Line5" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line5" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "Музыка и звук:"
 
-[node name="Line6" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line6" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "- Имя Фамилия"
 
-[node name="Line7" type="Label" parent="CreditsPanel/VBox/CreditsScroll/CreditsText"]
+[node name="Line7" type="Label" parent="CreditsPanelCenter/CreditsPanel/VBox/CreditsScroll/CreditsText"]
 layout_mode = 2
 text = "Спасибо за игру"
 
-[node name="BackButton" type="Button" parent="CreditsPanel/VBox" groups=["menu_button"]]
+[node name="BackButton" type="Button" parent="CreditsPanelCenter/CreditsPanel/VBox" groups=["menu_button"]]
 layout_mode = 2
 text = "Назад"
 
-[node name="DifficultyPanel" type="PanelContainer" parent="."]
+[node name="DifficultyPanel" type="PanelContainer" parent="DifficultyPanelCenter"]
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -380.0
-offset_top = -300.0
-offset_right = 480.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+custom_minimum_size = Vector2(860, 600)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="DifficultyPanel"]
+[node name="VBox" type="VBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -252,53 +284,137 @@ grow_horizontal = 2
 grow_vertical = 2
 separation = 14
 
-[node name="Title" type="Label" parent="DifficultyPanel/VBox"]
+[node name="Title" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
 layout_mode = 2
 text = "Новая игра"
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="DifficultyPanel/VBox"]
+[node name="Message" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
 layout_mode = 2
 text = "Выберите сложность"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="DifficultyButtons" type="HBoxContainer" parent="DifficultyPanel/VBox"]
+[node name="DifficultyButtons" type="HBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
 layout_mode = 2
 separation = 12
 
-[node name="SimplifiedButton" type="Button" parent="DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
+[node name="SimplifiedButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
 layout_mode = 2
 text = "Упрощённая"
 toggle_mode = true
 
-[node name="HardcoreButton" type="Button" parent="DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
+[node name="HardcoreButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
 layout_mode = 2
 text = "Каноническая"
 toggle_mode = true
 
-[node name="DescriptionPanel" type="PanelContainer" parent="DifficultyPanel/VBox"]
+[node name="DescriptionPanel" type="PanelContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_description")
 
-[node name="Description" type="Label" parent="DifficultyPanel/VBox/DescriptionPanel"]
+[node name="Description" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DescriptionPanel"]
 layout_mode = 2
 text = "Выберите сложность, чтобы увидеть её описание."
 autowrap_mode = 2
 
-[node name="BottomRow" type="HBoxContainer" parent="DifficultyPanel/VBox"]
+[node name="BottomRow" type="HBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
 layout_mode = 2
 separation = 12
 
-[node name="BackButton" type="Button" parent="DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
+[node name="BackButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
 layout_mode = 2
 text = "Назад"
 
-[node name="StartButton" type="Button" parent="DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
+[node name="StartButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
 layout_mode = 2
 disabled = true
 text = "Начать новую игру"
+
+[node name="StartupBlurSpoiler" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(1, 1, 1, 1)
+
+[node name="StartupDisclaimer" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="StartupCard" type="PanelContainer" parent="StartupDisclaimer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_minimum_size = Vector2(1400, 840)
+theme_override_styles/panel = SubResource("StyleBoxFlat_disclaimer_card")
+
+[node name="Margin" type="MarginContainer" parent="StartupDisclaimer/StartupCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="StartupDisclaimer/StartupCard/Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="StartupDisclaimer/StartupCard/Margin/VBox"]
+layout_mode = 2
+text = "Перед началом игры"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="StartupDisclaimer/StartupCard/Margin/VBox"]
+layout_mode = 2
+text = "Пожалуйста, ознакомьтесь с информацией перед началом."
+horizontal_alignment = 1
+
+[node name="TextPlate" type="PanelContainer" parent="StartupDisclaimer/StartupCard/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_disclaimer_text_plate")
+
+[node name="TextMargin" type="MarginContainer" parent="StartupDisclaimer/StartupCard/Margin/VBox/TextPlate"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="DisclaimerText" type="RichTextLabel" parent="StartupDisclaimer/StartupCard/Margin/VBox/TextPlate/TextMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = false
+fit_content = false
+scroll_active = false
+scroll_following = false
+scroll_visible = false
+autowrap_mode = 3
+shortcut_keys_enabled = false
+text = ""
+
+[node name="StartupDisclaimerTimer" type="Timer" parent="."]
+one_shot = true
+process_callback = 0
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Sounds"
