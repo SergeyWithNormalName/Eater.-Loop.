@@ -107,6 +107,16 @@ MusicManager.set_chase_music_source(self, false)
 Пока есть хотя бы один активный источник погони, базовая музыка быстро
 приглушается/глушится и возвращается после окончания погони.
 
+### 7) Подавление только ambient (зоны тишины)
+
+```gdscript
+MusicManager.set_ambient_music_suppressed(self, true, fade_time)
+MusicManager.set_ambient_music_suppressed(self, false, fade_time)
+```
+
+Это отключает только базовый `ambient` трек уровня. `distortion`, `event` и
+`minigame` продолжают играть.
+
 ## LevelMusic (музыка уровня)
 
 `res://levels/cycles/level_music.gd` на `_ready()` вызывает:
@@ -145,12 +155,15 @@ MusicManager.play_ambient_music(stream, fade_time, volume_db)
 - `5` Приоритетный трек (стоп) -> `MusicManager.stop_event_music(...)`
 - `6` Пауза всей музыки -> `MusicManager.pause_all_music(...)`
 - `7` Возобновить музыку -> `MusicManager.resume_all_music(...)`
+- `8` Выключить ambient -> `MusicManager.set_ambient_music_suppressed(self, true, fade)`
+- `9` Включить ambient -> `MusicManager.set_ambient_music_suppressed(self, false, fade)`
 
 ### Корректные пары "вход -> выход"
 
 - `2 (Заглушить)` -> `3 (Восстановить)`
 - `4 (Event start)` -> `5 (Event stop)`
 - `6 (Пауза)` -> `7 (Возобновить)`
+- `8 (Выключить ambient)` -> `9 (Включить ambient)`
 
 Неправильная пара (частая ошибка):
 
@@ -167,13 +180,15 @@ MusicManager.play_ambient_music(stream, fade_time, volume_db)
 - `one_shot = false`
 - `apply_on_ready_if_overlapping = true`
 - `music_enabled = true`
-- `music_on_enter = 6` (Пауза всей музыки)
-- `music_on_exit = 7` (Возобновить музыку)
+- `music_on_enter = 8` (Выключить ambient)
+- `music_on_exit = 9` (Включить ambient)
 
 Это гарантирует:
 
-- на старте в спальне музыка не играет;
-- после выхода из спальни музыка возобновляется;
+- на старте в спальне не играет обычный `ambient` уровня;
+- музыка мини-игр (например, лабораторных) продолжает работать в спальне;
+- музыка искажений (`distortion`) продолжает работать в спальне;
+- после выхода из спальни `ambient` возвращается;
 - при повторном входе/выходе поведение сохраняется.
 
 ## Типовые ошибки и диагностика

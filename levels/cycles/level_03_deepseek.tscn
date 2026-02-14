@@ -1129,5 +1129,5 @@ affect_on_exit = true
 one_shot = false
 apply_on_ready_if_overlapping = true
 music_enabled = true
-music_on_enter = 6
-music_on_exit = 7
+music_on_enter = 8
+music_on_exit = 9

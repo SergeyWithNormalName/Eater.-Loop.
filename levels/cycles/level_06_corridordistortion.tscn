@@ -144,7 +144,7 @@ size = Vector2(547.3623, 503.50735)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqck0"]
 size = Vector2(130, 130)
 
-[node name="Level2" type="Node2D" unique_id=854162511]
+[node name="Level3" type="Node2D" unique_id=854162511]
 position = Vector2(16, 0)
 script = ExtResource("1_vnsrs")
 cycle_number = 7
@@ -2104,7 +2104,7 @@ texture = ExtResource("8_jiqp2")
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("44_cu3tb")
-next_level_path = "uid://c86dahwda6kcq"
+next_level_path = "uid://bigm5i4m0iohg"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 prompt_text = "Лечь спать"
 metadata/_edit_group_ = true
@@ -3681,8 +3681,8 @@ affect_on_exit = true
 one_shot = false
 apply_on_ready_if_overlapping = true
 music_enabled = true
-music_on_enter = 6
-music_on_exit = 7
+music_on_enter = 8
+music_on_exit = 9
 
 [connection signal="body_entered" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_entered"]
 [connection signal="body_exited" from="Hall1/Door(To Bedroom)" to="Hall1/Door(To Bedroom)" method="_on_body_exited"]

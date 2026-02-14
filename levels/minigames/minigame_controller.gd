@@ -235,7 +235,7 @@ func update_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_t
 		return
 	var base_volume := MusicManager._resolve_volume(volume_db)
 	var mixed_volume := MusicManager._apply_mix(MusicManager.MIX_MINIGAME, base_volume)
-	MusicManager.play_music(stream, target_fade, mixed_volume, 0.0, 999.0, MusicManager.SOURCE_MINIGAME)
+	MusicManager.play_music(stream, target_fade, mixed_volume, 0.0, 999.0, MusicManager.SOURCE_MINIGAME, MusicManager.SOURCE_KIND_MINIGAME)
 
 func get_time_left() -> float:
 	return _time_left

@@ -1150,6 +1150,8 @@
 │   └── torn_right_wallpaper.gdshader.uid
 ├── tests
 │   ├── cases
+│   │   ├── test_audio_bedroom_music_policy.gd
+│   │   ├── test_audio_bedroom_music_policy.gd.uid
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
@@ -1181,4 +1183,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1076 files
+106 directories, 1078 files

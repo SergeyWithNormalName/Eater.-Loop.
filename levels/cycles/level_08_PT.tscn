@@ -3372,8 +3372,8 @@ affect_on_exit = true
 one_shot = false
 apply_on_ready_if_overlapping = true
 music_enabled = true
-music_on_enter = 6
-music_on_exit = 7
+music_on_enter = 8
+music_on_exit = 9
 
 [node name="StalkerSpawnMarker" parent="." unique_id=951244965 instance=ExtResource("92_2nqfd")]
 position = Vector2(14319, 5282)

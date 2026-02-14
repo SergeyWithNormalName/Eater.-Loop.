@@ -38,9 +38,9 @@ extends Area2D
 ## Включить управление музыкой через триггер.
 @export var music_enabled: bool = false
 ## Действие с музыкой при входе.
-@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку") var music_on_enter: int = 0
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку", "Выключить ambient", "Включить ambient") var music_on_enter: int = 0
 ## Действие с музыкой при выходе.
-@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку") var music_on_exit: int = 0
+@export_enum("Не менять", "Подменить трек", "Заглушить", "Восстановить", "Приоритетный трек (старт)", "Приоритетный трек (стоп)", "Пауза всей музыки", "Возобновить музыку", "Выключить ambient", "Включить ambient") var music_on_exit: int = 0
 ## Музыка для подмены.
 @export var music_stream: AudioStream
 ## Громкость музыки (дБ).
@@ -60,6 +60,8 @@ const MUSIC_ACTION_EVENT_START := 4
 const MUSIC_ACTION_EVENT_STOP := 5
 const MUSIC_ACTION_PAUSE_ALL := 6
 const MUSIC_ACTION_RESUME_ALL := 7
+const MUSIC_ACTION_SUPPRESS_AMBIENT := 8
+const MUSIC_ACTION_RESTORE_AMBIENT := 9
 const READY_OVERLAP_CHECK_ATTEMPTS := 6
 
 func _ready() -> void:
@@ -155,6 +157,10 @@ func _apply_music(is_exit: bool) -> void:
 			MusicManager.pause_all_music(music_fade_time)
 		MUSIC_ACTION_RESUME_ALL:
 			MusicManager.resume_all_music(music_fade_time)
+		MUSIC_ACTION_SUPPRESS_AMBIENT:
+			MusicManager.set_ambient_music_suppressed(self, true, music_fade_time)
+		MUSIC_ACTION_RESTORE_AMBIENT:
+			MusicManager.set_ambient_music_suppressed(self, false, music_fade_time)
 		_:
 			return
 

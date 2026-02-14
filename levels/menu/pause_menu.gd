@@ -174,6 +174,7 @@ func _restore_menu_music() -> void:
 func _stop_menu_music() -> void:
 	if MusicManager == null:
 		return
+	MusicManager.stop_pause_menu_music(chase_music_resume_fade_time)
 	MusicManager.clear_stack()
 	MusicManager.stop_music(menu_music_fade_time)
 	MusicManager.clear_chase_music_sources(menu_music_fade_time)
