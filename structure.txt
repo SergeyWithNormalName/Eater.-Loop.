@@ -294,6 +294,9 @@
 │   ├── menu
 │   │   ├── MainMenuBackground.png
 │   │   ├── MainMenuBackground.png.import
+│   │   ├── disclaimer_screen.gd
+│   │   ├── disclaimer_screen.gd.uid
+│   │   ├── disclaimer_screen.tscn
 │   │   ├── main_menu.gd
 │   │   ├── main_menu.gd.uid
 │   │   ├── main_menu.tscn
@@ -1138,7 +1141,9 @@
 │   ├── distortion_overlay.gdshader
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
-│   └── distortion_transition.gdshader.uid
+│   ├── distortion_transition.gdshader.uid
+│   ├── torn_right_wallpaper.gdshader
+│   └── torn_right_wallpaper.gdshader.uid
 ├── tests
 │   ├── cases
 │   │   ├── test_autoloads.gd
@@ -1172,4 +1177,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1067 files
+106 directories, 1072 files

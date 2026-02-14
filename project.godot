@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Едок. Петля."
-run/main_scene="uid://cc6ehxxoauhyn"
+run/main_scene="res://levels/menu/disclaimer_screen.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://bwxfalfqm6n1r"
 config/macos_native_icon="res://global/Иконка_предварительно.icns"

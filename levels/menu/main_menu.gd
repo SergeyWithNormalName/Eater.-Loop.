@@ -25,6 +25,9 @@ extends "res://levels/menu/menu_base.gd"
 @onready var _credits_button: Button = $MainPanel/VBox/Buttons/CreditsButton
 @onready var _exit_button: Button = $MainPanel/VBox/Buttons/ExitButton
 
+@onready var _background: TextureRect = $Background
+@onready var _cold_bloom: ColorRect = $ColdBloom
+@onready var _vignette: ColorRect = $Vignette
 @onready var _main_panel: Control = $MainPanel
 @onready var _settings_panel: Control = $SettingsPanel
 @onready var _credits_panel: Control = $CreditsPanel
@@ -47,6 +50,7 @@ const PANEL_SETTINGS := "settings"
 const PANEL_CREDITS := "credits"
 const PANEL_DIFFICULTY := "difficulty"
 const DIFFICULTY_NONE := -1
+const MENU_TRANSITION_META := "menu_intro_from_disclaimer"
 const DIFFICULTY_DESCRIPTION_DEFAULT := "Выберите сложность, чтобы увидеть её описание."
 const DIFFICULTY_DESCRIPTION_SIMPLIFIED := "В упрощённой сложности противники передвигаются медленнее, способы борьбы с ними более доступны, а цена ошибки — ниже."
 const DIFFICULTY_DESCRIPTION_CANONICAL := "В канонической сложности противники представляют реальную угрозу, цена каждой ошибки высока, а игровые задачи окажутся менее простыми."
@@ -65,6 +69,7 @@ func _ready() -> void:
 	_update_continue_state()
 	_show_main()
 	_play_menu_music()
+	_play_entry_transition_if_needed()
 
 func _input(event: InputEvent) -> void:
 	_update_navigation_input_mode(event)
@@ -370,3 +375,39 @@ func _stop_menu_music() -> void:
 	if MusicManager == null:
 		return
 	MusicManager.stop_music(menu_music_fade_time)
+
+func _play_entry_transition_if_needed() -> void:
+	if GameState == null:
+		return
+	if not GameState.has_meta(MENU_TRANSITION_META):
+		return
+	GameState.remove_meta(MENU_TRANSITION_META)
+
+	var transition_overlay := ColorRect.new()
+	transition_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	transition_overlay.color = Color(0.01, 0.03, 0.08, 0.56)
+	add_child(transition_overlay)
+	move_child(transition_overlay, get_child_count() - 1)
+
+	var main_panel_start_position: Vector2 = _main_panel.position
+	_main_panel.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	_main_panel.position = main_panel_start_position + Vector2(0.0, 14.0)
+	_main_panel.scale = Vector2(0.985, 0.985)
+
+	_background.modulate = Color(1.0, 1.0, 1.0, 0.9)
+	_cold_bloom.modulate = Color(1.0, 1.0, 1.0, 0.88)
+	_vignette.modulate = Color(1.0, 1.0, 1.0, 0.9)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(transition_overlay, "color:a", 0.0, 0.42)
+	tween.tween_property(_main_panel, "modulate:a", 1.0, 0.34)
+	tween.tween_property(_main_panel, "position:y", main_panel_start_position.y, 0.34)
+	tween.tween_property(_main_panel, "scale", Vector2.ONE, 0.34)
+	tween.tween_property(_background, "modulate:a", 1.0, 0.45)
+	tween.tween_property(_cold_bloom, "modulate:a", 1.0, 0.45)
+	tween.tween_property(_vignette, "modulate:a", 1.0, 0.45)
+	tween.finished.connect(func(): transition_overlay.queue_free())
