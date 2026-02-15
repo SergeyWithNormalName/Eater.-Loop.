@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8fkenwlt4hfv"]
+[gd_scene format=3 uid="uid://c8fkenwlt4hfv"]
 
 [ext_resource type="Script" uid="uid://tcl6ubqwjrxh" path="res://enemies/stalker/enemy_stalker.gd" id="1_stalker"]
 
@@ -11,28 +11,29 @@ size = Vector2(1332, 1208)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
 size = Vector2(1232, 1184)
 
-[node name="EnemyStalker" type="CharacterBody2D"]
+[node name="EnemyStalker" type="CharacterBody2D" unique_id=987572861]
 script = ExtResource("1_stalker")
+max_door_hops = 24
 speed = 90.0
 keep_chasing_outside_detection = true
 enable_chase_music = false
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1218450386]
 scale = Vector2(0.5, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2127254443]
 shape = SubResource("RectangleShape2D_nb6gf")
 
-[node name="HitboxArea" type="Area2D" parent="."]
+[node name="HitboxArea" type="Area2D" parent="." unique_id=669301110]
 scale = Vector2(0.5, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=1821689280]
 shape = SubResource("RectangleShape2D_lu5c6")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034365030]
 scale = Vector2(1.0726826, 1.0726826)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1837516850]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_8e3ao")
 
