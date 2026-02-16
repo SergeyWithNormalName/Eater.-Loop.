@@ -23,14 +23,14 @@ var _fake_success_flash: float = 0.0
 
 const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 
-const TEXT_IDLE_VARIANTS := [
+const TEXT_IDLE_VARIANTS: Array[String] = [
 	"   Сгенерировать отчёт",
 	"   Нажми, если сможешь",
 	"   КНОПКА НЕ ЗДЕСЬ",
 	"   [ERR:BUTTON_MOVED]",
 	"   ПРОГРЕСС? ХА"
 ]
-const TEXT_PROCESSING_VARIANTS := [
+const TEXT_PROCESSING_VARIANTS: Array[String] = [
 	"   Подождите...",
 	"   думаю, но медленно",
 	"   убегаю от курсора",
@@ -154,10 +154,10 @@ func _jump_button_to_chaos(from_mouse_escape: bool = false) -> void:
 	generate_button.text = _pick(TEXT_IDLE_VARIANTS)
 	_schedule_next_jump()
 
-func _pick(list: Array[String]) -> String:
+func _pick(list: Array) -> String:
 	if list.is_empty():
 		return ""
-	return list[_rng.randi_range(0, list.size() - 1)]
+	return String(list[_rng.randi_range(0, list.size() - 1)])
 
 func finish_game(success: bool) -> void:
 	if _is_finished:

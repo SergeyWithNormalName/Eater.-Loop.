@@ -441,7 +441,10 @@
 │   │   │   │   ├── background.png.import
 │   │   │   │   ├── llm_minigame.gd
 │   │   │   │   ├── llm_minigame.gd.uid
-│   │   │   │   └── llm_minigame.tscn
+│   │   │   │   ├── llm_minigame.tscn
+│   │   │   │   ├── llm_minigame_glitch.gd
+│   │   │   │   ├── llm_minigame_glitch.gd.uid
+│   │   │   │   └── llm_minigame_glitch.tscn
 │   │   │   └── sql
 │   │   │       ├── drag_slot.gd
 │   │   │       ├── drag_slot.gd.uid
@@ -449,7 +452,10 @@
 │   │   │       ├── drag_word.gd.uid
 │   │   │       ├── sql_minigame.gd
 │   │   │       ├── sql_minigame.gd.uid
-│   │   │       └── sql_minigame.tscn
+│   │   │       ├── sql_minigame.tscn
+│   │   │       ├── sql_minigame_glitch.gd
+│   │   │       ├── sql_minigame_glitch.gd.uid
+│   │   │       └── sql_minigame_glitch.tscn
 │   │   ├── search_key
 │   │   │   ├── rakovina
 │   │   │   │   └── sprites
@@ -1183,4 +1189,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1078 files
+106 directories, 1084 files

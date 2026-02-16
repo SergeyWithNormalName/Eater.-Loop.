@@ -36,14 +36,14 @@ var _glitch_tick := 0.0
 const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
 const MONO_FONT_NAMES := ["JetBrains Mono", "Menlo", "Consolas", "Courier New", "Courier"]
-const STATUS_GLITCH_VARIANTS := [
+const STATUS_GLITCH_VARIANTS: Array[String] = [
 	" SQL | UTF-8 | ВРЕМЯ: %.1f сек | LN 1, COL 1",
 	" SQЛ | ПАКЕТЫ ПОТЕРЯНЫ | %.1f",
 	" DB PANIC %.1f // friends table missing",
 	" SQLn't | ERROR %.1f",
 	" LN ??? COL ??? T-%.1f"
 ]
-const TASK_GLITCH_SUFFIXES := ["", " [ОШИБКА 0xF00D]", " [задание мутирует]", " [подсказки лгут]", " [таблица сбежала]"]
+const TASK_GLITCH_SUFFIXES: Array[String] = ["", " [ОШИБКА 0xF00D]", " [задание мутирует]", " [подсказки лгут]", " [таблица сбежала]"]
 
 @onready var drag_layer: Control = $DragLayer
 @onready var query_container: HBoxContainer = $Layout/MainContent/EditorArea/QueryEditor/QueryFlow
@@ -365,7 +365,7 @@ func _corrupt_word(word: String) -> String:
 		return "%s%s" % [word.substr(1), word.substr(0, 1)]
 	return "%s_" % word
 
-func _pick(list: Array[String]) -> String:
+func _pick(list: Array) -> String:
 	if list.is_empty():
 		return ""
-	return list[_rng.randi_range(0, list.size() - 1)]
+	return String(list[_rng.randi_range(0, list.size() - 1)])
