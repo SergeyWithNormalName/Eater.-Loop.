@@ -36,6 +36,8 @@ var _player: Node2D = null
 var _sprite_base_scale: Vector2 = Vector2.ONE
 var _chase_music_started: bool = false
 const DEATH_SCREAMS_DIR := "res://player/audio/screams"
+static var _death_screams_cache_ready: bool = false
+static var _death_screams_cache: Array[AudioStream] = []
 var _death_screams: Array[AudioStream] = []
 
 func _ready() -> void:
@@ -124,17 +126,28 @@ func _set_chase_music_suppressed(suppressed: bool) -> void:
 	MusicManager.set_chase_music_suppressed(self, suppressed)
 
 func _load_death_screams() -> void:
-	_death_screams.clear()
+	if _death_screams_cache_ready:
+		_death_screams = _death_screams_cache
+		return
+	var loaded_streams: Array[AudioStream] = []
 	var dir := DirAccess.open(DEATH_SCREAMS_DIR)
 	if dir == null:
+		_death_screams_cache = loaded_streams
+		_death_screams_cache_ready = true
+		_death_screams = _death_screams_cache
 		return
-	for file_name in dir.get_files():
+	var file_names := dir.get_files()
+	file_names.sort()
+	for file_name in file_names:
 		var ext := file_name.get_extension().to_lower()
 		if ext != "wav" and ext != "ogg" and ext != "mp3":
 			continue
 		var stream := load("%s/%s" % [DEATH_SCREAMS_DIR, file_name]) as AudioStream
 		if stream != null:
-			_death_screams.append(stream)
+			loaded_streams.append(stream)
+	_death_screams_cache = loaded_streams
+	_death_screams_cache_ready = true
+	_death_screams = _death_screams_cache
 
 func _pick_random_death_scream() -> AudioStream:
 	if _death_screams.is_empty():

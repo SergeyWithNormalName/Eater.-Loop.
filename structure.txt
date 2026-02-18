@@ -1,5 +1,6 @@
 .
 ├── docs
+│   ├── architecture_overview.md
 │   ├── audio_system.md
 │   └── minigame_gamepad_system.md
 ├── enemies
@@ -1158,6 +1159,8 @@
 │   ├── cases
 │   │   ├── test_audio_bedroom_music_policy.gd
 │   │   ├── test_audio_bedroom_music_policy.gd.uid
+│   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd
+│   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd.uid
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
@@ -1168,6 +1171,10 @@
 │   │   ├── test_input_actions.gd.uid
 │   │   ├── test_minigame_gamepad_bindings.gd
 │   │   ├── test_minigame_gamepad_bindings.gd.uid
+│   │   ├── test_music_crossfade_suppression_runtime.gd
+│   │   ├── test_music_crossfade_suppression_runtime.gd.uid
+│   │   ├── test_musicmanager_private_api_usage.gd
+│   │   ├── test_musicmanager_private_api_usage.gd.uid
 │   │   ├── test_project_config.gd
 │   │   ├── test_project_config.gd.uid
 │   │   ├── test_scenes_load.gd
@@ -1189,4 +1196,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1084 files
+106 directories, 1091 files

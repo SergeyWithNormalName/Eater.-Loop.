@@ -47,6 +47,16 @@
 - отдельные потоки для музыки погони и pause-menu;
 - поддержка duck/pause/resume.
 
+### Инвариант кроссфейда базовой музыки
+
+Во время кроссфейда любые команды синхронизации базовой громкости (например
+`set_ambient_music_suppressed(...)` или внутреннее приглушение из-за погони)
+применяются к фактическому целевому плееру кроссфейда.
+
+Это важно для перехода `main_menu -> level_01_start`: даже если suppression
+включается в середине fade, итоговый ambient-трек не должен остаться слышимым
+в спальне.
+
 ### 1) Базовое воспроизведение
 
 ```gdscript
@@ -78,6 +88,18 @@ MusicManager.pop_music(fade_time)
   `MusicManager.stop_minigame_music()`
 - Pause menu: `MusicManager.start_pause_menu_music(stream, fade_out, volume)` /
   `MusicManager.stop_pause_menu_music(fade_in)`
+
+### 3.1) Публичный расчет итоговой громкости категории
+
+Если внешнему модулю нужно вычислить итоговую громкость для конкретной
+категории микса, используйте публичный метод:
+
+```gdscript
+var volume_db := MusicManager.resolve_mix_volume_db(MusicManager.MIX_MINIGAME, raw_volume_db)
+```
+
+Это заменяет обращение к приватным `MusicManager._resolve_volume(...)` и
+`MusicManager._apply_mix(...)`.
 
 ### 4) Пауза и возобновление всей музыки
 
@@ -190,6 +212,8 @@ MusicManager.play_ambient_music(stream, fade_time, volume_db)
 - музыка искажений (`distortion`) продолжает работать в спальне;
 - после выхода из спальни `ambient` возвращается;
 - при повторном входе/выходе поведение сохраняется.
+- при старте уровня из главного меню ambient не "протекает" через кроссфейд,
+  если игрок уже внутри спальни.
 
 ## Типовые ошибки и диагностика
 
@@ -207,6 +231,14 @@ MusicManager.play_ambient_music(stream, fade_time, volume_db)
 4. Кажется, что команда сработала, но громкость не та:
 - Проверить оффсеты в `MusicMixSettings`.
 - Проверить, какая шина/какой поток реально играет (`Music`, chase, pause, event).
+
+## Changelog
+
+- Исправлена гонка кроссфейда базовой музыки: suppression/duck-sync теперь
+  всегда применяются к фактическому целевому плееру.
+- Добавлен публичный API `MusicManager.resolve_mix_volume_db(...)` для внешних
+  модулей, чтобы не обращаться к приватным методам.
+- Изменения не меняют геймплей и затрагивают только подкапотную логику звука.
 
 ## SFX (звуки)
 

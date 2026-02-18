@@ -42,6 +42,7 @@ func _assert_scene_uses_ambient_suppression(scene_path: String) -> void:
 		var block := _collect_node_block(lines, i)
 		assert_true(block.find("music_on_enter = 8") != -1, "%s: bedroom trigger must set music_on_enter = 8" % scene_path)
 		assert_true(block.find("music_on_exit = 9") != -1, "%s: bedroom trigger must set music_on_exit = 9" % scene_path)
+		assert_true(block.find("apply_on_ready_if_overlapping = true") != -1, "%s: bedroom trigger must enable apply_on_ready_if_overlapping" % scene_path)
 		assert_true(block.find("music_on_enter = 6") == -1, "%s: bedroom trigger must not use pause-all enter action (6)" % scene_path)
 		assert_true(block.find("music_on_exit = 7") == -1, "%s: bedroom trigger must not use resume-all exit action (7)" % scene_path)
 
