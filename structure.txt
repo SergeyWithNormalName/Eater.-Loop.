@@ -261,7 +261,7 @@
 ├── levels
 │   ├── cycles
 │   │   ├── archive(trash)
-│   │   │   ├── level_04.tscn
+│   │   │   ├── level_04_old_trash.tscn
 │   │   │   ├── level_05_corridor_distortion.gd
 │   │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   │   ├── level_05_keystests.tscn
@@ -660,7 +660,11 @@
 │   │   │   ├── floor.gd.uid
 │   │   │   ├── floor.tscn
 │   │   │   ├── floor_perspective.gdshader
-│   │   │   └── floor_perspective.gdshader.uid
+│   │   │   ├── floor_perspective.gdshader.uid
+│   │   │   ├── table_perspective.gd
+│   │   │   ├── table_perspective.gd.uid
+│   │   │   ├── table_perspective.gdshader
+│   │   │   └── table_perspective.gdshader.uid
 │   │   ├── smart
 │   │   │   ├── markers
 │   │   │   │   ├── stalker_spawn_marker.gd
@@ -843,6 +847,8 @@
 │   │   │   ├── STU_OnWallDecor_2.png.import
 │   │   │   ├── SofaSTU.png
 │   │   │   ├── SofaSTU.png.import
+│   │   │   ├── Table.png
+│   │   │   ├── Table.png.import
 │   │   │   ├── TestFloorVertU.png
 │   │   │   ├── TestFloorVertU.png.import
 │   │   │   ├── ToiletTiles2.png
@@ -1196,4 +1202,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1091 files
+106 directories, 1097 files

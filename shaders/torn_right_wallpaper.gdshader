@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D under_texture : source_color;
+uniform bool use_under_texture = false;
 uniform float tear_width : hint_range(0.05, 0.5) = 0.24;
 uniform float edge_roughness : hint_range(0.0, 0.3) = 0.11;
 uniform float edge_noise_scale : hint_range(2.0, 80.0) = 22.0;
@@ -53,11 +54,16 @@ void fragment() {
 	float holes = step(1.0 - hole_density, hole_noise) * near_edge;
 	float reveal = clamp(max(torn_strip, holes), 0.0, 1.0);
 
-	vec3 mixed_color = mix(front.rgb, under.rgb, reveal);
+	vec3 mixed_color = front.rgb;
+	float out_alpha = front.a * (1.0 - reveal);
+	if (use_under_texture) {
+		mixed_color = mix(front.rgb, under.rgb, reveal);
+		out_alpha = front.a;
+	}
 
 	// Darken the paper edge slightly for a torn look.
 	float paper_edge = (1.0 - smoothstep(0.0, edge_softness * 4.0, abs(UV.x - cut_x))) * (1.0 - reveal);
 	mixed_color *= 1.0 - paper_edge * edge_darkening;
 
-	COLOR = vec4(mixed_color, front.a);
+	COLOR = vec4(mixed_color, out_alpha);
 }

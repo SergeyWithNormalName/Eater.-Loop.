@@ -99,6 +99,7 @@
 [ext_resource type="Texture2D" uid="uid://brnubvnj46o8t" path="res://objects/environment/sprites/parents/BedParents.png" id="97_560jv"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="98_560jv"]
 [ext_resource type="Shader" uid="uid://b4om5oobvvicb" path="res://shaders/torn_right_wallpaper.gdshader" id="98_qbrbk"]
+[ext_resource type="Texture2D" uid="uid://cxx0yb2fd50j8" path="res://objects/environment/sprites/hall/CoverOnWall_1.png" id="100_wc02g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_fbsxc")
@@ -124,6 +125,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wc02g"]
 shader = ExtResource("98_qbrbk")
+shader_parameter/use_under_texture = false
 shader_parameter/tear_width = 0.24
 shader_parameter/edge_roughness = 0.11
 shader_parameter/edge_noise_scale = 22.0
@@ -1098,6 +1100,7 @@ one_shot = null
 
 [node name="Door(ToLebedka)" parent="Hall/InteractableObjects" unique_id=1555384058 instance=ExtResource("15_xph0r")]
 position = Vector2(11939, 83)
+is_locked = true
 door_locked_message = "Эта дверь заперта на ключ"
 target_marker = NodePath("../../../HallLebedka1/InteractableObjects/Door(Lebedka)")
 required_key_id = "lebedka_key"
@@ -1111,7 +1114,6 @@ one_shot = null
 
 [node name="Door(ToKeyHall)" parent="Hall/InteractableObjects" unique_id=1095698003 instance=ExtResource("15_xph0r")]
 position = Vector2(13707, 83)
-is_locked = true
 door_locked_message = "Эта дверь заперта"
 target_marker = NodePath("../../../HallKey/InteractableObjects/Door(KeyHall)Right")
 required_key_id = null
@@ -1933,37 +1935,37 @@ region_enabled = true
 region_rect = Rect2(0, 0, 11500, 500)
 
 [node name="Plintus11" type="Sprite2D" parent="HallKey/Background" unique_id=91463869]
-z_index = -5
+z_index = -4
 position = Vector2(7046.4844, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus12" type="Sprite2D" parent="HallKey/Background" unique_id=1411221029]
-z_index = -5
+z_index = -4
 position = Vector2(7253.4844, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus46" type="Sprite2D" parent="HallKey/Background" unique_id=1800072711]
-z_index = -5
+z_index = -4
 position = Vector2(7457.484, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus13" type="Sprite2D" parent="HallKey/Background" unique_id=92746308]
-z_index = -5
+z_index = -4
 position = Vector2(7663.4844, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus14" type="Sprite2D" parent="HallKey/Background" unique_id=484372859]
-z_index = -5
+z_index = -4
 position = Vector2(7868.485, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
 
 [node name="Plintus15" type="Sprite2D" parent="HallKey/Background" unique_id=60014069]
-z_index = -5
+z_index = -4
 position = Vector2(8073.4854, 266.125)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_ubq2u")
@@ -3413,12 +3415,12 @@ scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("64_2sl01")
 
 [node name="ShkafParents" type="Sprite2D" parent="." unique_id=115803945]
-position = Vector2(25388, 5284)
+position = Vector2(25388, 5256.66)
 scale = Vector2(0.42511064, 0.42511073)
 texture = ExtResource("96_e33ye")
 
 [node name="Clock" type="Sprite2D" parent="." unique_id=1735968354]
-position = Vector2(25284.004, 5078.0005)
+position = Vector2(25282.998, 5051)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("67_h2fjm")
 metadata/_edit_group_ = true
@@ -3435,11 +3437,11 @@ scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_wc02g")
 
 [node name="Bed" parent="." unique_id=363519875 instance=ExtResource("69_rg3cs")]
-position = Vector2(24905, 5490)
+position = Vector2(24867, 5446)
 scale = Vector2(1.2, 1.2)
 next_level_path = "uid://c3s82ewvaot7t"
 require_light_for_sleep = true
-no_bedroom_light_message = "Это кровать родителей. Я не собираюсь на ней спать..."
+no_bedroom_light_message = "Не помню, чтобы здесь стояла эта кровать"
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" parent="Bed" index="1"]
@@ -3455,6 +3457,11 @@ position = Vector2(25309, 5222)
 texture = ExtResource("98_560jv")
 region_enabled = true
 region_rect = Rect2(0, 0, 1500, 550)
+
+[node name="CoverOnWall1" type="Sprite2D" parent="." unique_id=590941296]
+position = Vector2(29074, 5198.0005)
+scale = Vector2(0.70437956, 0.70437956)
+texture = ExtResource("100_wc02g")
 
 [editable path="Hall/InteractableObjects/Fridge"]
 [editable path="Bed"]

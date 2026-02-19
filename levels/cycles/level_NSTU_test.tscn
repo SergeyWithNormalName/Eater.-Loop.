@@ -68,17 +68,12 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_b056n"]
-[ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="72_1eex3"]
-[ext_resource type="PackedScene" uid="uid://c55y41eb0h776" path="res://levels/minigames/feeding/food/tort/food_tort.tscn" id="73_6wj6m"]
-[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="73_ao3ix"]
-[ext_resource type="Texture2D" uid="uid://vue181t7bjua" path="res://levels/minigames/feeding/andreys_faces/TheBadestEat.png" id="74_ao3ix"]
-[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="76_m33w3"]
-[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="77_3xoh4"]
-[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="78_62tjv"]
-[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="79_p88na"]
+[ext_resource type="Shader" uid="uid://ced72rp3niub7" path="res://objects/environment/floor/table_perspective.gdshader" id="72_1eex3"]
+[ext_resource type="Texture2D" uid="uid://d2us4mgk53trx" path="res://objects/environment/university/Table.png" id="72_acem0"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
+[ext_resource type="Script" uid="uid://ct16rrh8418o4" path="res://objects/environment/floor/table_perspective.gd" id="93_0tuqj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_85201")
@@ -107,6 +102,34 @@ gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wj6m"]
+resource_local_to_scene = true
+shader = ExtResource("72_1eex3")
+shader_parameter/perspective_amount = 0.55
+shader_parameter/vanish_x = 0.5
+shader_parameter/horizon = -3.73
+shader_parameter/x_scale = 1.0
+shader_parameter/edge_strength = 1.0
+shader_parameter/edge_power = 2.0
+shader_parameter/center_width = 0.0
+shader_parameter/edge_end = 0.5
+shader_parameter/max_distance = 10.0
+shader_parameter/vertical_power = 1.15
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ao3ix"]
+resource_local_to_scene = true
+shader = ExtResource("72_1eex3")
+shader_parameter/perspective_amount = 1.75
+shader_parameter/vanish_x = 0.5
+shader_parameter/horizon = -3.73
+shader_parameter/x_scale = 1.0
+shader_parameter/edge_strength = 1.0
+shader_parameter/edge_power = 2.0
+shader_parameter/center_width = 0.0
+shader_parameter/edge_end = 0.5
+shader_parameter/max_distance = 10.0
+shader_parameter/vertical_power = 1.35
+
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
 script = ExtResource("1_0ohhm")
@@ -129,10 +152,10 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=342093504 instance=ExtResource("3_b056n")]
-position = Vector2(-2366, 96)
+position = Vector2(45436, 96)
 
 [node name="Bathroom" type="Node2D" parent="." unique_id=732665836]
-position = Vector2(19876, 0)
+position = Vector2(14731, 0)
 
 [node name="Background" type="Node2D" parent="Bathroom" unique_id=1834685967]
 
@@ -516,6 +539,7 @@ position = Vector2(6565, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 number_texture = ExtResource("30_yevtl")
+target_marker = NodePath("../../../Laborantskaya/InteractableObjects/Door(In701)")
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" unique_id=1112790018 instance=ExtResource("92_r7f9u")]
 position = Vector2(8232, 83)
@@ -527,6 +551,7 @@ target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)
 position = Vector2(9154, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("31_norj7")
+target_marker = NodePath("../../../Dekanat/InteractableObjects/Door(In702)")
 
 [node name="Door(StairsLeft)" parent="Hall/InteractableObjects" unique_id=1912741554 instance=ExtResource("15_scqts")]
 position = Vector2(7321, 81)
@@ -562,6 +587,315 @@ note_texture = ExtResource("53_ji2ax")
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
 texture = ExtResource("53_ji2ax")
+
+[node name="Hall2" type="Node2D" parent="." unique_id=1191817971]
+position = Vector2(38317, 0)
+
+[node name="Background" type="Node2D" parent="Hall2" unique_id=1783257990]
+
+[node name="WallBack" type="Sprite2D" parent="Hall2/Background" unique_id=876039242]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, 19)
+texture = ExtResource("21_85201")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="WallBack2" type="Sprite2D" parent="Hall2/Background" unique_id=1596007668]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12849, 19)
+texture = ExtResource("21_85201")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="Floor" parent="Hall2/Background" unique_id=2104445222 instance=ExtResource("57_ih4cm")]
+z_index = -5
+position = Vector2(10604, 326)
+floor_texture = ExtResource("24_oevlm")
+size = Vector2(9000, 110)
+tiling = Vector2(7, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.22
+edge_power = 0.55
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Walls" type="Node2D" parent="Hall2" unique_id=1587937209]
+
+[node name="WallBelow_1" parent="Hall2/Walls" unique_id=1661994208 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(6461, 400)
+
+[node name="WallBelow_2" parent="Hall2/Walls" unique_id=1295912016 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(7243.0005, 400)
+
+[node name="WallBelow_3" parent="Hall2/Walls" unique_id=1862465481 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(8031, 400)
+
+[node name="WallBelow_4" parent="Hall2/Walls" unique_id=1688437310 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(8813, 400)
+
+[node name="WallBelow_5" parent="Hall2/Walls" unique_id=1397638398 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(9465, 400)
+
+[node name="WallBelow_6" parent="Hall2/Walls" unique_id=309992418 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(10247, 400)
+
+[node name="WallAbove_1" parent="Hall2/Walls" unique_id=1619429307 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(6461.0005, -271)
+
+[node name="WallAbove_2" parent="Hall2/Walls" unique_id=74757146 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(7243.0005, -271)
+
+[node name="WallAbove_3" parent="Hall2/Walls" unique_id=257121307 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(8031.0005, -271)
+
+[node name="WallAbove_4" parent="Hall2/Walls" unique_id=1912006477 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(8813, -271)
+
+[node name="WallAbove_5" parent="Hall2/Walls" unique_id=22854633 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(9465, -271)
+
+[node name="WallAbove_6" parent="Hall2/Walls" unique_id=1648216687 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(10247, -271)
+
+[node name="WallBelow_7" parent="Hall2/Walls" unique_id=1075049774 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(10958, 400)
+
+[node name="WallBelow_8" parent="Hall2/Walls" unique_id=1964295896 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(11740, 400)
+
+[node name="WallBelow_9" parent="Hall2/Walls" unique_id=181867500 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(12528, 400)
+
+[node name="WallBelow_10" parent="Hall2/Walls" unique_id=1923988406 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13310, 400)
+
+[node name="WallBelow_11" parent="Hall2/Walls" unique_id=472987898 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, 400)
+
+[node name="WallBelow_12" parent="Hall2/Walls" unique_id=1449171909 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, 400)
+
+[node name="WallAbove_7" parent="Hall2/Walls" unique_id=1843930415 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(10958, -271)
+
+[node name="WallAbove_8" parent="Hall2/Walls" unique_id=1199752587 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(11740, -271)
+
+[node name="WallAbove_9" parent="Hall2/Walls" unique_id=1472558876 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(12528, -271)
+
+[node name="WallAbove_10" parent="Hall2/Walls" unique_id=1823527172 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13310, -271)
+
+[node name="WallAbove_11" parent="Hall2/Walls" unique_id=197815395 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, -271)
+
+[node name="WallAbove_12" parent="Hall2/Walls" unique_id=1060419374 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, -271)
+
+[node name="WallLeft" parent="Hall2/Walls" unique_id=1040018210 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(15119, 64)
+
+[node name="WallRight" parent="Hall2/Walls" unique_id=995992405 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(6089, 63.860657)
+
+[node name="Sprites" type="Node2D" parent="Hall2" unique_id=337539218]
+
+[node name="InteractableObjects" type="Node2D" parent="Hall2" unique_id=380320679]
+
+[node name="Door(To703Right)" parent="Hall2/InteractableObjects" unique_id=597792978 instance=ExtResource("92_r7f9u")]
+position = Vector2(12888, 83)
+door_locked_message = "Сначала нужно сделать что-то другое..."
+number_texture = ExtResource("30_unon8")
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(To703Right)")
+
+[node name="Door(To701)" parent="Hall2/InteractableObjects" unique_id=936001253 instance=ExtResource("92_r7f9u")]
+position = Vector2(6888, 83)
+is_locked = true
+door_locked_message = "Мне незачем выходить на улицу"
+number_texture = ExtResource("30_yevtl")
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(To703Left)")
+
+[node name="Dekanat" type="Node2D" parent="." unique_id=1669133303]
+position = Vector2(22995, 0)
+
+[node name="Background" type="Node2D" parent="Dekanat" unique_id=1363885417]
+
+[node name="WallBack2" type="Sprite2D" parent="Dekanat/Background" unique_id=1527486217]
+z_index = -5
+texture_repeat = 2
+position = Vector2(13963, 20)
+texture = ExtResource("21_85201")
+region_enabled = true
+region_rect = Rect2(0, 0, 2300, 550)
+
+[node name="Floor" parent="Dekanat/Background" unique_id=1377286024 instance=ExtResource("57_ih4cm")]
+z_index = -5
+position = Vector2(13962, 323)
+floor_texture = ExtResource("24_oevlm")
+size = Vector2(2300, 110)
+tiling = Vector2(2.75, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.22
+edge_power = 0.55
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Walls" type="Node2D" parent="Dekanat" unique_id=1750587]
+
+[node name="WallBelow_9" parent="Dekanat/Walls" unique_id=1377961746 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13178, 400)
+
+[node name="WallBelow_11" parent="Dekanat/Walls" unique_id=1847079354 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, 400)
+
+[node name="WallBelow_12" parent="Dekanat/Walls" unique_id=62744484 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, 400)
+
+[node name="WallAbove_9" parent="Dekanat/Walls" unique_id=1590864136 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13178, -271)
+
+[node name="WallAbove_11" parent="Dekanat/Walls" unique_id=1417670570 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, -271)
+
+[node name="WallAbove_12" parent="Dekanat/Walls" unique_id=484359279 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, -271)
+
+[node name="WallLeft" parent="Dekanat/Walls" unique_id=1013644487 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(15119, 64)
+
+[node name="WallRight" parent="Dekanat/Walls" unique_id=1258460294 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(12804, 64)
+
+[node name="Sprites" type="Node2D" parent="Dekanat" unique_id=1634852868]
+
+[node name="InteractableObjects" type="Node2D" parent="Dekanat" unique_id=1878417322]
+
+[node name="Door(In702)" parent="Dekanat/InteractableObjects" unique_id=1431399536 instance=ExtResource("92_r7f9u")]
+position = Vector2(14821, 83)
+is_locked = true
+door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+
+[node name="Laborantskaya" type="Node2D" parent="." unique_id=1181699118]
+position = Vector2(7843, 0)
+
+[node name="Background" type="Node2D" parent="Laborantskaya" unique_id=1557542945]
+
+[node name="WallBack2" type="Sprite2D" parent="Laborantskaya/Background" unique_id=1478775781]
+z_index = -5
+texture_repeat = 2
+position = Vector2(13636, 20)
+texture = ExtResource("21_85201")
+region_enabled = true
+region_rect = Rect2(0, 0, 2950, 550)
+
+[node name="Floor" parent="Laborantskaya/Background" unique_id=1402690886 instance=ExtResource("57_ih4cm")]
+z_index = -5
+position = Vector2(13630, 323)
+floor_texture = ExtResource("24_oevlm")
+size = Vector2(2950, 110)
+tiling = Vector2(3.02, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.36
+edge_power = 0.42
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Walls" type="Node2D" parent="Laborantskaya" unique_id=498992330]
+
+[node name="WallBelow_9" parent="Laborantskaya/Walls" unique_id=1774672963 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(12528, 400)
+
+[node name="WallBelow_10" parent="Laborantskaya/Walls" unique_id=1355571476 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13310, 400)
+
+[node name="WallBelow_11" parent="Laborantskaya/Walls" unique_id=289874900 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, 400)
+
+[node name="WallBelow_12" parent="Laborantskaya/Walls" unique_id=684997886 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, 400)
+
+[node name="WallAbove_9" parent="Laborantskaya/Walls" unique_id=546931581 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(12528, -271)
+
+[node name="WallAbove_10" parent="Laborantskaya/Walls" unique_id=513339379 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13310, -271)
+
+[node name="WallAbove_11" parent="Laborantskaya/Walls" unique_id=1202230119 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(13962, -271)
+
+[node name="WallAbove_12" parent="Laborantskaya/Walls" unique_id=707016967 instance=ExtResource("7_6wj6m")]
+z_index = 10
+position = Vector2(14744, -271)
+
+[node name="WallLeft" parent="Laborantskaya/Walls" unique_id=1147590028 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(15119, 64)
+
+[node name="WallRight" parent="Laborantskaya/Walls" unique_id=547394897 instance=ExtResource("6_1eex3")]
+z_index = 10
+position = Vector2(12154, 64)
+
+[node name="Sprites" type="Node2D" parent="Laborantskaya" unique_id=354728719]
+
+[node name="InteractableObjects" type="Node2D" parent="Laborantskaya" unique_id=1470192432]
+
+[node name="Door(In701)" parent="Laborantskaya/InteractableObjects" unique_id=1808271625 instance=ExtResource("92_r7f9u")]
+position = Vector2(14821, 83)
+is_locked = true
+door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 
 [node name="Bedroom" type="Node2D" parent="." unique_id=1627679249]
 
@@ -809,15 +1143,25 @@ music_enabled = true
 music_on_enter = 8
 music_on_exit = 9
 
-[node name="Fridge" parent="." unique_id=2143446070 instance=ExtResource("72_1eex3")]
-position = Vector2(7937, 124)
-minigame_scene = ExtResource("73_ao3ix")
-food_scenes = Array[PackedScene]([ExtResource("73_6wj6m")])
-andrey_face = ExtResource("74_ao3ix")
-bg_music = ExtResource("76_m33w3")
-win_sound = ExtResource("77_3xoh4")
-eat_sound = ExtResource("78_62tjv")
-background_texture = ExtResource("79_p88na")
+[node name="Table" type="Sprite2D" parent="." unique_id=554521703]
+material = SubResource("ShaderMaterial_6wj6m")
+position = Vector2(48106.28, 239)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("72_acem0")
+script = ExtResource("93_0tuqj")
+floor_path = NodePath("Hall/Background/Floor")
+floor_perspective_scale = 0.01
+vertical_power = 1.15
+
+[node name="Table2" type="Sprite2D" parent="." unique_id=2094356613]
+material = SubResource("ShaderMaterial_ao3ix")
+position = Vector2(47830.28, 239)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("72_acem0")
+script = ExtResource("93_0tuqj")
+sync_from_floor = false
+floor_path = NodePath("Hall/Background/Floor")
+perspective_amount = 1.75
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsRight)"]
