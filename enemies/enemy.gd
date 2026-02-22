@@ -189,8 +189,11 @@ func _attack_player() -> void:
 			get_tree().call_deferred("reload_current_scene")
 		return
 	_play_attack_sfx()
-	if GameDirector and GameDirector.has_method("reduce_time"):
-		GameDirector.reduce_time(time_penalty, true)
+	if GameDirector:
+		if GameDirector.has_method("trigger_damage_flash"):
+			GameDirector.trigger_damage_flash()
+		if GameDirector.has_method("reduce_time"):
+			GameDirector.reduce_time(time_penalty)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
 	call_deferred("queue_free")

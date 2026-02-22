@@ -48,8 +48,8 @@ signal distortion_started
 @export_range(0.0, 20.0, 0.1) var death_camera_tilt_deg: float = 5.0
 ## Множитель зума камеры при смерти.
 @export_range(1.0, 2.5, 0.01) var death_camera_zoom_mult: float = 1.08
-## Заголовок на экране смерти.
-@export var death_title_text: String = "Убито"
+## Заголовок после завершения особой цепочки смертей.
+@export var death_title_text: String = "Умер"
 ## Текст кнопки повтора.
 @export var death_retry_text: String = "Попробовать ещё раз"
 
@@ -86,12 +86,26 @@ var _death_camera_base_zoom: Vector2 = Vector2.ONE
 var _death_camera_base_offset: Vector2 = Vector2.ZERO
 var _input_kind: int = 0
 var _death_focus_style_hidden: StyleBoxEmpty
+var _death_title_glitch_material: ShaderMaterial = null
+var _death_title_sequence_index: int = 0
 
 const STALKER_SPAWN_GROUP := "stalker_spawn"
 const INPUT_KIND_KEYBOARD := 0
 const INPUT_KIND_GAMEPAD := 1
 const INPUT_KIND_UNKNOWN := -1
 const JOYPAD_MOTION_DEADZONE := 0.45
+const DEATH_TITLE_GLITCH_SHADER: Shader = preload("res://shaders/death_text_glitch.gdshader")
+const DEATH_TITLE_PENANCE_TEXT := "Никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения"
+const DEATH_TITLE_SEQUENCE: Array[String] = [
+	"Ошибся",
+	"Напортачил",
+	"Оплошал",
+	"Накосячил",
+	"Провинился",
+	"Облажался",
+	"Согрешил",
+	DEATH_TITLE_PENANCE_TEXT,
+]
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -178,9 +192,14 @@ func reduce_time(amount: float, damage_flash: bool = false) -> void:
 	if GameState and GameState.phase != GameState.Phase.NORMAL:
 		return
 	if damage_flash:
-		_flash_damage()
+		trigger_damage_flash()
 	else:
 		_flash_red()
+
+func trigger_damage_flash() -> void:
+	if _death_sequence_active:
+		return
+	_flash_damage()
 
 func _on_distortion_timeout() -> void:
 	if GameState and GameState.phase == GameState.Phase.DISTORTED:
@@ -308,6 +327,8 @@ func _flash_red() -> void:
 func _flash_damage() -> void:
 	if _damage_rect == null or _damage_material == null:
 		return
+	if _death_sequence_active:
+		return
 	if _damage_flash_active:
 		return
 	if not _is_distortion_allowed():
@@ -407,6 +428,8 @@ func _create_death_overlay() -> void:
 	_death_title_label = Label.new()
 	_death_title_label.text = death_title_text
 	_death_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_death_title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_death_title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_death_title_label.add_theme_font_size_override("font_size", 112)
 	var base_font = load("res://global/fonts/AmaticSC-Regular.ttf")
 	if base_font:
@@ -415,6 +438,9 @@ func _create_death_overlay() -> void:
 		font_variation.spacing_glyph = 3
 		_death_title_label.add_theme_font_override("font", font_variation)
 	content.add_child(_death_title_label)
+	_death_title_glitch_material = ShaderMaterial.new()
+	_death_title_glitch_material.shader = DEATH_TITLE_GLITCH_SHADER
+	_apply_death_title(death_title_text, false)
 
 	_death_retry_button = Button.new()
 	_death_retry_button.text = death_retry_text
@@ -443,8 +469,7 @@ func trigger_death_screen() -> void:
 		_death_camera_base_rotation = _death_camera.rotation
 		_death_camera_base_zoom = _death_camera.zoom
 		_death_camera_base_offset = _death_camera.offset
-	if _death_title_label:
-		_death_title_label.text = death_title_text
+	_apply_next_death_title()
 	if _death_retry_button:
 		_death_retry_button.text = death_retry_text
 	if _death_root:
@@ -541,6 +566,46 @@ func _configure_damage_material() -> void:
 	_damage_material.set_shader_parameter("color_bleeding", damage_flash_color_bleeding)
 	_damage_material.set_shader_parameter("glitch_lines", damage_flash_glitch_lines)
 	_damage_material.set_shader_parameter("vignette_intensity", damage_flash_vignette_intensity)
+
+func _apply_next_death_title() -> void:
+	if _death_title_sequence_index < DEATH_TITLE_SEQUENCE.size():
+		var next_index := _death_title_sequence_index
+		_death_title_sequence_index += 1
+		var is_glitch_title := next_index == DEATH_TITLE_SEQUENCE.size() - 1
+		_apply_death_title(DEATH_TITLE_SEQUENCE[next_index], is_glitch_title)
+		return
+	_apply_death_title(death_title_text, false)
+
+func _apply_death_title(text: String, glitchy: bool) -> void:
+	if _death_title_label == null:
+		return
+	_update_death_title_layout()
+	_death_title_label.text = text
+	_death_title_label.rotation = 0.0
+	_death_title_label.scale = Vector2.ONE
+	_death_title_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	_death_title_label.remove_theme_color_override("font_color")
+	_death_title_label.remove_theme_color_override("font_shadow_color")
+	_death_title_label.remove_theme_constant_override("shadow_offset_x")
+	_death_title_label.remove_theme_constant_override("shadow_offset_y")
+	if glitchy:
+		_death_title_label.add_theme_font_size_override("font_size", 36)
+		_death_title_label.add_theme_color_override("font_color", Color(1.0, 0.83, 0.83, 1.0))
+		_death_title_label.add_theme_color_override("font_shadow_color", Color(0.35, 0.0, 0.0, 0.9))
+		_death_title_label.add_theme_constant_override("shadow_offset_x", 2)
+		_death_title_label.add_theme_constant_override("shadow_offset_y", 2)
+		_death_title_label.material = _death_title_glitch_material
+	else:
+		_death_title_label.add_theme_font_size_override("font_size", 112)
+		_death_title_label.material = null
+
+func _update_death_title_layout() -> void:
+	if _death_title_label == null:
+		return
+	var title_width := 1280.0
+	if get_viewport():
+		title_width = maxf(620.0, get_viewport().get_visible_rect().size.x * 0.82)
+	_death_title_label.custom_minimum_size = Vector2(title_width, 0.0)
 
 func _apply_damage_camera_punch() -> void:
 	if damage_flash_duration <= 0.0:

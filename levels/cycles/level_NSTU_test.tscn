@@ -68,12 +68,12 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_b056n"]
-[ext_resource type="Shader" uid="uid://ced72rp3niub7" path="res://objects/environment/floor/table_perspective.gdshader" id="72_1eex3"]
-[ext_resource type="Texture2D" uid="uid://d2us4mgk53trx" path="res://objects/environment/university/Table.png" id="72_acem0"]
+[ext_resource type="Texture2D" uid="uid://cjev23238d5vp" path="res://objects/environment/university/Table_U_PC.png" id="72_acem0"]
+[ext_resource type="Texture2D" uid="uid://crfcxd726bbrc" path="res://objects/environment/university/Table_U_PC_90g.png" id="73_bhex2"]
+[ext_resource type="Texture2D" uid="uid://dj5bifxo4bjpn" path="res://objects/environment/university/Shkaf_U1.png" id="74_1eex3"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
-[ext_resource type="Script" uid="uid://ct16rrh8418o4" path="res://objects/environment/floor/table_perspective.gd" id="93_0tuqj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_85201")
@@ -101,34 +101,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wj6m"]
-resource_local_to_scene = true
-shader = ExtResource("72_1eex3")
-shader_parameter/perspective_amount = 0.55
-shader_parameter/vanish_x = 0.5
-shader_parameter/horizon = -3.73
-shader_parameter/x_scale = 1.0
-shader_parameter/edge_strength = 1.0
-shader_parameter/edge_power = 2.0
-shader_parameter/center_width = 0.0
-shader_parameter/edge_end = 0.5
-shader_parameter/max_distance = 10.0
-shader_parameter/vertical_power = 1.15
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ao3ix"]
-resource_local_to_scene = true
-shader = ExtResource("72_1eex3")
-shader_parameter/perspective_amount = 1.75
-shader_parameter/vanish_x = 0.5
-shader_parameter/horizon = -3.73
-shader_parameter/x_scale = 1.0
-shader_parameter/edge_strength = 1.0
-shader_parameter/edge_power = 2.0
-shader_parameter/center_width = 0.0
-shader_parameter/edge_end = 0.5
-shader_parameter/max_distance = 10.0
-shader_parameter/vertical_power = 1.35
 
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -329,7 +301,7 @@ size = Vector2(9000, 110)
 tiling = Vector2(7, 3)
 perspective_amount = 1.75
 horizon = -3.73
-edge_strength = 0.22
+edge_strength = 0.11
 edge_power = 0.55
 center_width = 0.0
 edge_end = 2.0
@@ -449,6 +421,16 @@ position = Vector2(10367, 205.00002)
 scale = Vector2(0.3599609, 0.3599609)
 texture = ExtResource("47_wpukm")
 
+[node name="SofaStu3" type="Sprite2D" parent="Hall/Sprites" unique_id=441123906]
+position = Vector2(14916, 211.329)
+scale = Vector2(0.3599609, 0.3599609)
+texture = ExtResource("47_wpukm")
+
+[node name="SofaStu2" type="Sprite2D" parent="Hall/Sprites" unique_id=196166672]
+position = Vector2(6295.0005, 211.329)
+scale = Vector2(0.3599609, 0.3599609)
+texture = ExtResource("47_wpukm")
+
 [node name="FireWash" type="Sprite2D" parent="Hall/Sprites" unique_id=1764470203]
 position = Vector2(7883, 18.000002)
 scale = Vector2(0.27998045, 0.27998045)
@@ -500,8 +482,8 @@ scale = Vector2(0.29850745, 0.29850736)
 texture = ExtResource("51_k0vht")
 
 [node name="PlantU" type="Sprite2D" parent="Hall/Sprites" unique_id=2126716417]
-position = Vector2(14371.999, 168)
-scale = Vector2(0.7186147, 0.7186149)
+position = Vector2(14393, 178.18108)
+scale = Vector2(0.64069676, 0.6406969)
 texture = ExtResource("55_tj0re")
 
 [node name="DownStairs" type="Sprite2D" parent="Hall/Sprites" unique_id=832003760]
@@ -601,23 +583,15 @@ texture = ExtResource("21_85201")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="WallBack2" type="Sprite2D" parent="Hall2/Background" unique_id=1596007668]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12849, 19)
-texture = ExtResource("21_85201")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
 [node name="Floor" parent="Hall2/Background" unique_id=2104445222 instance=ExtResource("57_ih4cm")]
 z_index = -5
-position = Vector2(10604, 326)
+position = Vector2(8348, 326)
 floor_texture = ExtResource("24_oevlm")
-size = Vector2(9000, 110)
+size = Vector2(4500, 110)
 tiling = Vector2(7, 3)
 perspective_amount = 1.75
 horizon = -3.73
-edge_strength = 0.22
+edge_strength = 0.07
 edge_power = 0.55
 center_width = 0.0
 edge_end = 2.0
@@ -674,57 +648,9 @@ position = Vector2(9465, -271)
 z_index = 10
 position = Vector2(10247, -271)
 
-[node name="WallBelow_7" parent="Hall2/Walls" unique_id=1075049774 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(10958, 400)
-
-[node name="WallBelow_8" parent="Hall2/Walls" unique_id=1964295896 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(11740, 400)
-
-[node name="WallBelow_9" parent="Hall2/Walls" unique_id=181867500 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(12528, 400)
-
-[node name="WallBelow_10" parent="Hall2/Walls" unique_id=1923988406 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(13310, 400)
-
-[node name="WallBelow_11" parent="Hall2/Walls" unique_id=472987898 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(13962, 400)
-
-[node name="WallBelow_12" parent="Hall2/Walls" unique_id=1449171909 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(14744, 400)
-
-[node name="WallAbove_7" parent="Hall2/Walls" unique_id=1843930415 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(10958, -271)
-
-[node name="WallAbove_8" parent="Hall2/Walls" unique_id=1199752587 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(11740, -271)
-
-[node name="WallAbove_9" parent="Hall2/Walls" unique_id=1472558876 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(12528, -271)
-
-[node name="WallAbove_10" parent="Hall2/Walls" unique_id=1823527172 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(13310, -271)
-
-[node name="WallAbove_11" parent="Hall2/Walls" unique_id=197815395 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(13962, -271)
-
-[node name="WallAbove_12" parent="Hall2/Walls" unique_id=1060419374 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(14744, -271)
-
 [node name="WallLeft" parent="Hall2/Walls" unique_id=1040018210 instance=ExtResource("6_1eex3")]
 z_index = 10
-position = Vector2(15119, 64)
+position = Vector2(10620, 64)
 
 [node name="WallRight" parent="Hall2/Walls" unique_id=995992405 instance=ExtResource("6_1eex3")]
 z_index = 10
@@ -735,13 +661,13 @@ position = Vector2(6089, 63.860657)
 [node name="InteractableObjects" type="Node2D" parent="Hall2" unique_id=380320679]
 
 [node name="Door(To703Right)" parent="Hall2/InteractableObjects" unique_id=597792978 instance=ExtResource("92_r7f9u")]
-position = Vector2(12888, 83)
+position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("30_unon8")
 target_marker = NodePath("../../../Hall/InteractableObjects/Door(To703Right)")
 
 [node name="Door(To701)" parent="Hall2/InteractableObjects" unique_id=936001253 instance=ExtResource("92_r7f9u")]
-position = Vector2(6888, 83)
+position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 number_texture = ExtResource("30_yevtl")
@@ -755,20 +681,20 @@ position = Vector2(22995, 0)
 [node name="WallBack2" type="Sprite2D" parent="Dekanat/Background" unique_id=1527486217]
 z_index = -5
 texture_repeat = 2
-position = Vector2(13963, 20)
+position = Vector2(14053, 20)
 texture = ExtResource("21_85201")
 region_enabled = true
-region_rect = Rect2(0, 0, 2300, 550)
+region_rect = Rect2(0, 0, 2100, 550)
 
 [node name="Floor" parent="Dekanat/Background" unique_id=1377286024 instance=ExtResource("57_ih4cm")]
 z_index = -5
-position = Vector2(13962, 323)
+position = Vector2(14062, 323)
 floor_texture = ExtResource("24_oevlm")
-size = Vector2(2300, 110)
-tiling = Vector2(2.75, 3)
+size = Vector2(2100, 110)
+tiling = Vector2(1.64, 3)
 perspective_amount = 1.75
 horizon = -3.73
-edge_strength = 0.22
+edge_strength = 0.47
 edge_power = 0.55
 center_width = 0.0
 edge_end = 2.0
@@ -779,11 +705,11 @@ fade_length = 0.0
 
 [node name="WallBelow_9" parent="Dekanat/Walls" unique_id=1377961746 instance=ExtResource("7_6wj6m")]
 z_index = 10
-position = Vector2(13178, 400)
+position = Vector2(13369, 400)
 
 [node name="WallBelow_11" parent="Dekanat/Walls" unique_id=1847079354 instance=ExtResource("7_6wj6m")]
 z_index = 10
-position = Vector2(13962, 400)
+position = Vector2(14087, 400)
 
 [node name="WallBelow_12" parent="Dekanat/Walls" unique_id=62744484 instance=ExtResource("7_6wj6m")]
 z_index = 10
@@ -791,11 +717,11 @@ position = Vector2(14744, 400)
 
 [node name="WallAbove_9" parent="Dekanat/Walls" unique_id=1590864136 instance=ExtResource("7_6wj6m")]
 z_index = 10
-position = Vector2(13178, -271)
+position = Vector2(13369, -271)
 
 [node name="WallAbove_11" parent="Dekanat/Walls" unique_id=1417670570 instance=ExtResource("7_6wj6m")]
 z_index = 10
-position = Vector2(13962, -271)
+position = Vector2(14087, -271)
 
 [node name="WallAbove_12" parent="Dekanat/Walls" unique_id=484359279 instance=ExtResource("7_6wj6m")]
 z_index = 10
@@ -807,7 +733,7 @@ position = Vector2(15119, 64)
 
 [node name="WallRight" parent="Dekanat/Walls" unique_id=1258460294 instance=ExtResource("6_1eex3")]
 z_index = 10
-position = Vector2(12804, 64)
+position = Vector2(12995, 64)
 
 [node name="Sprites" type="Node2D" parent="Dekanat" unique_id=1634852868]
 
@@ -817,6 +743,7 @@ position = Vector2(12804, 64)
 position = Vector2(14821, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(To702)")
 
 [node name="Laborantskaya" type="Node2D" parent="." unique_id=1181699118]
 position = Vector2(7843, 0)
@@ -826,17 +753,17 @@ position = Vector2(7843, 0)
 [node name="WallBack2" type="Sprite2D" parent="Laborantskaya/Background" unique_id=1478775781]
 z_index = -5
 texture_repeat = 2
-position = Vector2(13636, 20)
+position = Vector2(14029, 20)
 texture = ExtResource("21_85201")
 region_enabled = true
-region_rect = Rect2(0, 0, 2950, 550)
+region_rect = Rect2(0, 0, 2200, 550)
 
 [node name="Floor" parent="Laborantskaya/Background" unique_id=1402690886 instance=ExtResource("57_ih4cm")]
 z_index = -5
-position = Vector2(13630, 323)
+position = Vector2(14027, 323)
 floor_texture = ExtResource("24_oevlm")
-size = Vector2(2950, 110)
-tiling = Vector2(3.02, 3)
+size = Vector2(2150, 110)
+tiling = Vector2(1.68, 3)
 perspective_amount = 1.75
 horizon = -3.73
 edge_strength = 0.36
@@ -847,10 +774,6 @@ max_distance = 1.99
 fade_length = 0.0
 
 [node name="Walls" type="Node2D" parent="Laborantskaya" unique_id=498992330]
-
-[node name="WallBelow_9" parent="Laborantskaya/Walls" unique_id=1774672963 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(12528, 400)
 
 [node name="WallBelow_10" parent="Laborantskaya/Walls" unique_id=1355571476 instance=ExtResource("7_6wj6m")]
 z_index = 10
@@ -863,10 +786,6 @@ position = Vector2(13962, 400)
 [node name="WallBelow_12" parent="Laborantskaya/Walls" unique_id=684997886 instance=ExtResource("7_6wj6m")]
 z_index = 10
 position = Vector2(14744, 400)
-
-[node name="WallAbove_9" parent="Laborantskaya/Walls" unique_id=546931581 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(12528, -271)
 
 [node name="WallAbove_10" parent="Laborantskaya/Walls" unique_id=513339379 instance=ExtResource("7_6wj6m")]
 z_index = 10
@@ -886,7 +805,7 @@ position = Vector2(15119, 64)
 
 [node name="WallRight" parent="Laborantskaya/Walls" unique_id=547394897 instance=ExtResource("6_1eex3")]
 z_index = 10
-position = Vector2(12154, 64)
+position = Vector2(12936, 64)
 
 [node name="Sprites" type="Node2D" parent="Laborantskaya" unique_id=354728719]
 
@@ -896,6 +815,7 @@ position = Vector2(12154, 64)
 position = Vector2(14821, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+target_marker = NodePath("../../../Hall/InteractableObjects/Door(To701)")
 
 [node name="Bedroom" type="Node2D" parent="." unique_id=1627679249]
 
@@ -1143,25 +1063,71 @@ music_enabled = true
 music_on_enter = 8
 music_on_exit = 9
 
-[node name="Table" type="Sprite2D" parent="." unique_id=554521703]
-material = SubResource("ShaderMaterial_6wj6m")
-position = Vector2(48106.28, 239)
-scale = Vector2(0.44, 0.44)
+[node name="TableUPc2" type="Sprite2D" parent="." unique_id=2061527167]
+position = Vector2(44985.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("72_acem0")
-script = ExtResource("93_0tuqj")
-floor_path = NodePath("Hall/Background/Floor")
-floor_perspective_scale = 0.01
-vertical_power = 1.15
 
-[node name="Table2" type="Sprite2D" parent="." unique_id=2094356613]
-material = SubResource("ShaderMaterial_ao3ix")
-position = Vector2(47830.28, 239)
-scale = Vector2(0.44, 0.44)
+[node name="TableUPc3" type="Sprite2D" parent="." unique_id=502042631]
+position = Vector2(44618.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("72_acem0")
-script = ExtResource("93_0tuqj")
-sync_from_floor = false
-floor_path = NodePath("Hall/Background/Floor")
-perspective_amount = 1.75
+
+[node name="TableUPc10" type="Sprite2D" parent="." unique_id=394820130]
+position = Vector2(48451.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc11" type="Sprite2D" parent="." unique_id=724402358]
+position = Vector2(48084.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc4" type="Sprite2D" parent="." unique_id=2144405304]
+position = Vector2(46029, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc6" type="Sprite2D" parent="." unique_id=333582518]
+position = Vector2(46372.996, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc5" type="Sprite2D" parent="." unique_id=910568692]
+position = Vector2(45691.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc7" type="Sprite2D" parent="." unique_id=747850006]
+position = Vector2(47056, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc8" type="Sprite2D" parent="." unique_id=1021996963]
+position = Vector2(47399.996, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc9" type="Sprite2D" parent="." unique_id=1778128144]
+position = Vector2(46718.555, 185.39136)
+scale = Vector2(0.49619028, 0.49619022)
+texture = ExtResource("72_acem0")
+
+[node name="TableUPc90g" type="Sprite2D" parent="." unique_id=685953966]
+position = Vector2(48741, 200)
+scale = Vector2(-0.55, 0.55)
+texture = ExtResource("73_bhex2")
+
+[node name="TableUPc90g2" type="Sprite2D" parent="." unique_id=376913339]
+position = Vector2(36347, 200)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("73_bhex2")
+
+[node name="ShkafU1" type="Sprite2D" parent="." unique_id=177988564]
+z_index = -1
+position = Vector2(37467, 61)
+scale = Vector2(0.6282467, 0.6282467)
+texture = ExtResource("74_1eex3")
 
 [editable path="Hall/InteractableObjects/Door(StairsLeft)"]
 [editable path="Hall/InteractableObjects/Door(StairsRight)"]
