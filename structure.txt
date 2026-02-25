@@ -822,6 +822,8 @@
 │   │   │   ├── BackWallsUn.png.import
 │   │   │   ├── Battery_dist.png
 │   │   │   ├── Battery_dist.png.import
+│   │   │   ├── Chair.png
+│   │   │   ├── Chair.png.import
 │   │   │   ├── DownStairs.png
 │   │   │   ├── DownStairs.png.import
 │   │   │   ├── ElevatorButtons.png
@@ -850,6 +852,10 @@
 │   │   │   ├── STU_OnWallDecor_2.png.import
 │   │   │   ├── Shkaf_U1.png
 │   │   │   ├── Shkaf_U1.png.import
+│   │   │   ├── Shkaf_U2.png
+│   │   │   ├── Shkaf_U2.png.import
+│   │   │   ├── Shkaf_U3.png
+│   │   │   ├── Shkaf_U3.png.import
 │   │   │   ├── SofaSTU.png
 │   │   │   ├── SofaSTU.png.import
 │   │   │   ├── Table.png
@@ -863,7 +869,10 @@
 │   │   │   ├── ToiletTiles2.png
 │   │   │   ├── ToiletTiles2.png.import
 │   │   │   ├── UpStairs.png
-│   │   │   └── UpStairs.png.import
+│   │   │   ├── UpStairs.png.import
+│   │   │   ├── conditioner.png
+│   │   │   ├── conditioner.png.import
+│   │   │   └── table_U.tscn
 │   │   └── walls
 │   │       ├── wall_horizontal.tscn
 │   │       └── wall_vertical.tscn
@@ -1213,4 +1222,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1108 files
+106 directories, 1117 files

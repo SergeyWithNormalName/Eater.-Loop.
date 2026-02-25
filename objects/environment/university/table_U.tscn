@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://boomivqwb6hp2"]
+
+[ext_resource type="Texture2D" uid="uid://crfcxd726bbrc" path="res://objects/environment/university/Table_U_PC_90g.png" id="1_53hex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_88ulv"]
+size = Vector2(410.50504, 634.0233)
+
+[node name="Wash" type="StaticBody2D" unique_id=613740745]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=743593927]
+z_index = -2
+scale = Vector2(0.616, 0.616)
+texture = ExtResource("1_53hex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=51800625]
+position = Vector2(-2.4355469, 5.2791786)
+scale = Vector2(0.616, 0.616)
+shape = SubResource("RectangleShape2D_88ulv")
