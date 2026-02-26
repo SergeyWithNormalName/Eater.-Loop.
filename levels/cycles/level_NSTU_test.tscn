@@ -66,6 +66,7 @@
 [ext_resource type="PackedScene" path="res://objects/interactable/note/note.tscn" id="67_unon8"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_v7j2m"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_nt483"]
+[ext_resource type="Texture2D" uid="uid://domb75wcknjtg" path="res://objects/interactable/door/sprites/DoorNSTU_highevel.png" id="69_mylv1"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_uuw6b"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="71_b056n"]
 [ext_resource type="Texture2D" uid="uid://cjev23238d5vp" path="res://objects/environment/university/Table_U_PC.png" id="72_acem0"]
@@ -78,10 +79,19 @@
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
+[ext_resource type="Texture2D" uid="uid://c6720vlq21px" path="res://objects/environment/floor/floor_U_1stFloor.png" id="105_t6yhn"]
+[ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="109_kxkc2"]
+[ext_resource type="Texture2D" uid="uid://clnslqs8wgj4x" path="res://objects/environment/university/ApplePoster.png" id="120_kxkc2"]
+[ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="note_plan1"]
+[ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="note_plan2"]
+[ext_resource type="Texture2D" uid="uid://d0el0khlbwwfm" path="res://objects/environment/university/PlanOfLevel3.png" id="note_plan3"]
+[ext_resource type="Texture2D" uid="uid://bq4sk3opcr15c" path="res://objects/environment/university/PlanOfLevel4.png" id="note_plan4"]
+[ext_resource type="Texture2D" uid="uid://sjeg6p4alu0y" path="res://objects/environment/university/PlanOfLevel5.png" id="note_plan5"]
+[ext_resource type="Texture2D" uid="uid://brrxw11ulcli2" path="res://objects/environment/university/PlanOfLevel6.png" id="note_plan6"]
+[ext_resource type="Texture2D" uid="uid://7jlvkam6opu3" path="res://objects/environment/university/PlanOfLevel8.png" id="note_plan8"]
+[ext_resource type="Texture2D" uid="uid://c7q0xyempf78d" path="res://objects/environment/university/PlanOfLevel9.png" id="note_plan9"]
 [ext_resource type="Texture2D" uid="uid://pnhc3patg41n" path="res://objects/interactable/door/sprites/numbersU/101.jpg" id="num_101"]
-[ext_resource type="Texture2D" uid="uid://bdw2b8o2vu6is" path="res://objects/interactable/door/sprites/numbersU/102.jpg" id="num_102"]
 [ext_resource type="Texture2D" uid="uid://c1bb70xtx38bq" path="res://objects/interactable/door/sprites/numbersU/103.jpg" id="num_103"]
-[ext_resource type="Texture2D" uid="uid://pgf8nla6y0sp" path="res://objects/interactable/door/sprites/numbersU/104.jpg" id="num_104"]
 [ext_resource type="Texture2D" uid="uid://b8uki1s4q1ft7" path="res://objects/interactable/door/sprites/numbersU/201.jpg" id="num_201"]
 [ext_resource type="Texture2D" uid="uid://dt1g6mcc081w0" path="res://objects/interactable/door/sprites/numbersU/202.jpg" id="num_202"]
 [ext_resource type="Texture2D" uid="uid://bgcih0k6ptmpf" path="res://objects/interactable/door/sprites/numbersU/203.jpg" id="num_203"]
@@ -136,7 +146,10 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.78846157, 0.17948718)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_len77"]
-size = Vector2(339.5, 464.79214)
+size = Vector2(339.5, 466.78906)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
+size = Vector2(339.5, 406.78906)
 
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -517,6 +530,7 @@ corner_narrowing = 0.26
 position = Vector2(14930.999, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(ToBathroom)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To9thToilet)" parent="9thLevel/9thBathroom/InteractableObjects" unique_id=898666818 instance=ExtResource("15_scqts")]
 position = Vector2(13917.999, 83)
@@ -751,12 +765,12 @@ texture = ExtResource("55_tj0re")
 [node name="DownStairs" type="Sprite2D" parent="9thLevel/9thHall/Sprites" unique_id=2011227887]
 position = Vector2(13586.001, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("66_yevtl")
+texture = ExtResource("67_norj7")
 
 [node name="DownStairs2" type="Sprite2D" parent="9thLevel/9thHall/Sprites" unique_id=1342678050]
 position = Vector2(7059, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("67_norj7")
+texture = ExtResource("66_yevtl")
 
 [node name="InteractableObjects" type="Node2D" parent="9thLevel/9thHall" unique_id=622618864]
 
@@ -765,34 +779,40 @@ position = Vector2(12888, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_903")
 target_marker = NodePath("../../../903/InteractableObjects/Door(In903Right)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To903Left)" parent="9thLevel/9thHall/InteractableObjects" unique_id=1167195177 instance=ExtResource("92_r7f9u")]
 position = Vector2(11467, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_903")
 target_marker = NodePath("../../../903/InteractableObjects/Door(In903Left)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To904)" parent="9thLevel/9thHall/InteractableObjects" unique_id=153814559 instance=ExtResource("92_r7f9u")]
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To901)" parent="9thLevel/9thHall/InteractableObjects" unique_id=603809573 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
 door_locked_message = "Мне незачем выходить на улицу"
 number_texture = ExtResource("num_901")
 target_marker = NodePath("../../../901/InteractableObjects/Door(In901)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(ToBathroom)" parent="9thLevel/9thHall/InteractableObjects" unique_id=490820580 instance=ExtResource("92_r7f9u")]
 position = Vector2(8232, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("33_85201")
 target_marker = NodePath("../../../9thBathroom/InteractableObjects/Door(In9thBathroom)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To902)" parent="9thLevel/9thHall/InteractableObjects" unique_id=1762460941 instance=ExtResource("92_r7f9u")]
 position = Vector2(9154, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_902")
 target_marker = NodePath("../../../902/InteractableObjects/Door(In902)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(StairsLeft)" parent="9thLevel/9thHall/InteractableObjects" unique_id=1880436833 instance=ExtResource("15_scqts")]
 position = Vector2(7321, 81)
@@ -823,12 +843,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="9thLevel/9thHall/InteractableObjects" unique_id=956207971 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan9")
 
 [node name="Sprite2D" parent="9thLevel/9thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan9")
 
 [node name="904" type="Node2D" parent="9thLevel" unique_id=1324585748]
 position = Vector2(41298, 0)
@@ -928,6 +948,7 @@ position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To904)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="903" type="Node2D" parent="9thLevel" unique_id=1336088900]
 position = Vector2(38317, 0)
@@ -1077,15 +1098,15 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In903Right)" parent="9thLevel/903/InteractableObjects" unique_id=421856339 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_903")
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To903Right)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(In903Left)" parent="9thLevel/903/InteractableObjects" unique_id=315182307 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_903")
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To903Left)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="902" type="Node2D" parent="9thLevel" unique_id=1127345530]
 position = Vector2(22995, 0)
@@ -1184,6 +1205,7 @@ position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To902)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="901" type="Node2D" parent="9thLevel" unique_id=645940989]
 position = Vector2(7843, 0)
@@ -1278,6 +1300,7 @@ position = Vector2(14821, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To901)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="8thLevel" type="Node2D" parent="." unique_id=1608210260]
 position = Vector2(0, -7200)
@@ -1411,6 +1434,7 @@ corner_narrowing = 0.26
 position = Vector2(14930.999, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(ToBathroom)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To8thToilet)" parent="8thLevel/8thBathroom/InteractableObjects" unique_id=438937737 instance=ExtResource("15_scqts")]
 position = Vector2(13917.999, 83)
@@ -1659,35 +1683,41 @@ position = Vector2(12888, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_803")
 target_marker = NodePath("../../../803/InteractableObjects/Door(In803Right)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To803Left)" parent="8thLevel/8thHall/InteractableObjects" unique_id=1986172637 instance=ExtResource("92_r7f9u")]
 position = Vector2(11467, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_803")
 target_marker = NodePath("../../../803/InteractableObjects/Door(In803Left)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To804)" parent="8thLevel/8thHall/InteractableObjects" unique_id=1654889612 instance=ExtResource("92_r7f9u")]
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_804")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To801)" parent="8thLevel/8thHall/InteractableObjects" unique_id=2069116838 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
 door_locked_message = "Мне незачем выходить на улицу"
 number_texture = ExtResource("num_801")
 target_marker = NodePath("../../../801/InteractableObjects/Door(In801)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(ToBathroom)" parent="8thLevel/8thHall/InteractableObjects" unique_id=1642996088 instance=ExtResource("92_r7f9u")]
 position = Vector2(8232, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_toiletw")
 target_marker = NodePath("../../../8thBathroom/InteractableObjects/Door(In8thBathroom)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To802)" parent="8thLevel/8thHall/InteractableObjects" unique_id=1060006536 instance=ExtResource("92_r7f9u")]
 position = Vector2(9154, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_802")
 target_marker = NodePath("../../../802/InteractableObjects/Door(In802)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(StairsLeft)" parent="8thLevel/8thHall/InteractableObjects" unique_id=1847535540 instance=ExtResource("15_scqts")]
 position = Vector2(7321, 81)
@@ -1719,12 +1749,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="8thLevel/8thHall/InteractableObjects" unique_id=927757005 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan8")
 
 [node name="Sprite2D" parent="8thLevel/8thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan8")
 
 [node name="804" type="Node2D" parent="8thLevel" unique_id=1632337975]
 position = Vector2(41298, 0)
@@ -1824,6 +1854,7 @@ position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To804)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="803" type="Node2D" parent="8thLevel" unique_id=1174985016]
 position = Vector2(38317, 0)
@@ -1973,15 +2004,15 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In803Right)" parent="8thLevel/803/InteractableObjects" unique_id=1610342801 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_803")
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To803Right)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="Door(In803Left)" parent="8thLevel/803/InteractableObjects" unique_id=895956145 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_803")
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To803Left)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="802" type="Node2D" parent="8thLevel" unique_id=554893718]
 position = Vector2(22995, 0)
@@ -2080,6 +2111,7 @@ position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To802)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="801" type="Node2D" parent="8thLevel" unique_id=45702858]
 position = Vector2(7843, 0)
@@ -2174,6 +2206,7 @@ position = Vector2(14821, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To801)")
+door_texture = ExtResource("69_mylv1")
 
 [node name="7thLevel" type="Node2D" parent="." unique_id=783689796]
 
@@ -2540,12 +2573,12 @@ texture = ExtResource("55_tj0re")
 [node name="DownStairs" type="Sprite2D" parent="7thLevel/7thHall/Sprites" unique_id=832003760]
 position = Vector2(13586.001, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("66_yevtl")
+texture = ExtResource("67_norj7")
 
 [node name="DownStairs2" type="Sprite2D" parent="7thLevel/7thHall/Sprites" unique_id=719015882]
 position = Vector2(7059, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("67_norj7")
+texture = ExtResource("66_yevtl")
 
 [node name="InteractableObjects" type="Node2D" parent="7thLevel/7thHall" unique_id=302552950]
 
@@ -2868,14 +2901,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In703Right)" parent="7thLevel/703/InteractableObjects" unique_id=597792978 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("30_unon8")
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To703Right)")
 
 [node name="Door(In703Left)" parent="7thLevel/703/InteractableObjects" unique_id=936001253 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("30_unon8")
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To703Left)")
 
 [node name="702" type="Node2D" parent="7thLevel" unique_id=1669133303]
@@ -3510,12 +3541,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="6thLevel/6thHall/InteractableObjects" unique_id=1157138861 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan6")
 
 [node name="Sprite2D" parent="6thLevel/6thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan6")
 
 [node name="604" type="Node2D" parent="6thLevel" unique_id=884117358]
 position = Vector2(41298, 0)
@@ -3764,14 +3795,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In603Right)" parent="6thLevel/603/InteractableObjects" unique_id=1604927521 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_603")
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To603Right)")
 
 [node name="Door(In603Left)" parent="6thLevel/603/InteractableObjects" unique_id=2083211516 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_603")
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To603Left)")
 
 [node name="602" type="Node2D" parent="6thLevel" unique_id=518971577]
@@ -4332,12 +4361,12 @@ texture = ExtResource("55_tj0re")
 [node name="DownStairs" type="Sprite2D" parent="5thLevel/5thHall/Sprites" unique_id=122154081]
 position = Vector2(13586.001, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("66_yevtl")
+texture = ExtResource("67_norj7")
 
 [node name="DownStairs2" type="Sprite2D" parent="5thLevel/5thHall/Sprites" unique_id=1203205594]
 position = Vector2(7059, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("67_norj7")
+texture = ExtResource("66_yevtl")
 
 [node name="InteractableObjects" type="Node2D" parent="5thLevel/5thHall" unique_id=1945167516]
 
@@ -4406,12 +4435,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="5thLevel/5thHall/InteractableObjects" unique_id=1837160423 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan5")
 
 [node name="Sprite2D" parent="5thLevel/5thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan5")
 
 [node name="504" type="Node2D" parent="5thLevel" unique_id=2097503414]
 position = Vector2(41298, 0)
@@ -4654,14 +4683,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In503Right)" parent="5thLevel/503/InteractableObjects" unique_id=1215968852 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_503")
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To503Right)")
 
 [node name="Door(In503Left)" parent="5thLevel/503/InteractableObjects" unique_id=608592031 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_503")
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To503Left)")
 
 [node name="502" type="Node2D" parent="5thLevel" unique_id=1921170337]
@@ -5302,12 +5329,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="4thLevel/4thHall/InteractableObjects" unique_id=1738270100 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan4")
 
 [node name="Sprite2D" parent="4thLevel/4thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan4")
 
 [node name="404" type="Node2D" parent="4thLevel" unique_id=470567613]
 position = Vector2(41298, 0)
@@ -5556,14 +5583,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In403Right)" parent="4thLevel/403/InteractableObjects" unique_id=1839541359 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_403")
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To403Right)")
 
 [node name="Door(In403Left)" parent="4thLevel/403/InteractableObjects" unique_id=695563080 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_403")
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To403Left)")
 
 [node name="402" type="Node2D" parent="4thLevel" unique_id=993918069]
@@ -6124,12 +6149,12 @@ texture = ExtResource("55_tj0re")
 [node name="DownStairs" type="Sprite2D" parent="3thLevel/3thHall/Sprites" unique_id=1768101028]
 position = Vector2(13586.001, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("66_yevtl")
+texture = ExtResource("67_norj7")
 
 [node name="DownStairs2" type="Sprite2D" parent="3thLevel/3thHall/Sprites" unique_id=838734370]
 position = Vector2(7059, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("67_norj7")
+texture = ExtResource("66_yevtl")
 
 [node name="InteractableObjects" type="Node2D" parent="3thLevel/3thHall" unique_id=227837468]
 
@@ -6198,12 +6223,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="3thLevel/3thHall/InteractableObjects" unique_id=9639263 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan3")
 
 [node name="Sprite2D" parent="3thLevel/3thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan3")
 
 [node name="304" type="Node2D" parent="3thLevel" unique_id=2142880961]
 position = Vector2(41298, 0)
@@ -6452,14 +6477,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In303Right)" parent="3thLevel/303/InteractableObjects" unique_id=1410888013 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_303")
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To303Right)")
 
 [node name="Door(In303Left)" parent="3thLevel/303/InteractableObjects" unique_id=315874404 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_303")
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To303Left)")
 
 [node name="302" type="Node2D" parent="3thLevel" unique_id=1488747184]
@@ -7094,12 +7117,12 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="2thLevel/2thHall/InteractableObjects" unique_id=546157451 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan2")
 
 [node name="Sprite2D" parent="2thLevel/2thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan2")
 
 [node name="204" type="Node2D" parent="2thLevel" unique_id=799634630]
 position = Vector2(41298, 0)
@@ -7348,14 +7371,12 @@ scale = Vector2(0.88, -0.88)
 [node name="Door(In203Right)" parent="2thLevel/203/InteractableObjects" unique_id=2032570267 instance=ExtResource("92_r7f9u")]
 position = Vector2(9427, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_203")
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To203Right)")
 
 [node name="Door(In203Left)" parent="2thLevel/203/InteractableObjects" unique_id=607297413 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
 is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_203")
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To203Left)")
 
 [node name="202" type="Node2D" parent="2thLevel" unique_id=381888266]
@@ -7723,9 +7744,9 @@ texture = ExtResource("46_vpjmh")
 [node name="Floor" parent="1thLevel/1thHall/Background" unique_id=1700010013 instance=ExtResource("57_ih4cm")]
 z_index = -5
 position = Vector2(10604, 326)
-floor_texture = ExtResource("24_oevlm")
+floor_texture = ExtResource("105_t6yhn")
 size = Vector2(9000, 110)
-tiling = Vector2(7, 3)
+tiling = Vector2(32, 3)
 perspective_amount = 1.75
 horizon = -3.73
 edge_strength = 0.11
@@ -7843,21 +7864,6 @@ position = Vector2(6089, 63.860657)
 
 [node name="Sprites" type="Node2D" parent="1thLevel/1thHall" unique_id=1566780186]
 
-[node name="SofaStu" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=693853101]
-position = Vector2(10367, 205.00002)
-scale = Vector2(0.3599609, 0.3599609)
-texture = ExtResource("47_wpukm")
-
-[node name="SofaStu3" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=287483477]
-position = Vector2(14916, 211.329)
-scale = Vector2(0.3599609, 0.3599609)
-texture = ExtResource("47_wpukm")
-
-[node name="SofaStu2" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=565693706]
-position = Vector2(6295.0005, 211.329)
-scale = Vector2(0.3599609, 0.3599609)
-texture = ExtResource("47_wpukm")
-
 [node name="FireWash" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=1940730289]
 position = Vector2(7883, 18.000002)
 scale = Vector2(0.27998045, 0.27998045)
@@ -7883,16 +7889,6 @@ metadata/_edit_group_ = true
 scale = Vector2(17.187548, 5.859378)
 texture = SubResource("GradientTexture2D_k0vht")
 
-[node name="StuOnWallDecor1" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=1129193977]
-position = Vector2(9427, 10)
-scale = Vector2(0.24000001, 0.24000001)
-texture = ExtResource("50_6wu78")
-
-[node name="StuOnWallDecor2" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=713628397]
-position = Vector2(8859, 10)
-scale = Vector2(0.24000001, 0.24000001)
-texture = ExtResource("49_1m845")
-
 [node name="ElevatorButtons" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=1037013923]
 position = Vector2(10221, 43.000004)
 scale = Vector2(0.14569673, 0.14569671)
@@ -7916,10 +7912,15 @@ texture = ExtResource("55_tj0re")
 [node name="DownStairs" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=1272115285]
 position = Vector2(13586.001, 14.999999)
 scale = Vector2(0.13, 0.13)
-texture = ExtResource("66_yevtl")
+texture = ExtResource("67_norj7")
 
 [node name="DownStairs2" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=437903963]
 position = Vector2(7059, 14.999999)
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("66_yevtl")
+
+[node name="DownStairs3" type="Sprite2D" parent="1thLevel/1thHall/Sprites" unique_id=899517801]
+position = Vector2(7058.9995, 7581)
 scale = Vector2(0.13, 0.13)
 texture = ExtResource("67_norj7")
 
@@ -7929,18 +7930,11 @@ texture = ExtResource("67_norj7")
 position = Vector2(12888, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_103")
-target_marker = NodePath("../../../103/InteractableObjects/Door(In103Right)")
 
 [node name="Door(To103Left)" parent="1thLevel/1thHall/InteractableObjects" unique_id=373427051 instance=ExtResource("92_r7f9u")]
 position = Vector2(11467, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("num_103")
-target_marker = NodePath("../../../103/InteractableObjects/Door(In103Left)")
-
-[node name="Door(To104)" parent="1thLevel/1thHall/InteractableObjects" unique_id=555035187 instance=ExtResource("92_r7f9u")]
-position = Vector2(14598, 83)
-door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-number_texture = ExtResource("num_104")
 
 [node name="Door(To101)" parent="1thLevel/1thHall/InteractableObjects" unique_id=821554351 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -7953,12 +7947,6 @@ position = Vector2(8232, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
 number_texture = ExtResource("33_85201")
 target_marker = NodePath("../../../1thBathroom/InteractableObjects/Door(In1thBathroom)")
-
-[node name="Door(To102)" parent="1thLevel/1thHall/InteractableObjects" unique_id=1174905828 instance=ExtResource("92_r7f9u")]
-position = Vector2(9154, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_102")
-target_marker = NodePath("../../../102/InteractableObjects/Door(In102)")
 
 [node name="Door(StairsLeft)" parent="1thLevel/1thHall/InteractableObjects" unique_id=1961536391 instance=ExtResource("15_scqts")]
 position = Vector2(7321, 81)
@@ -7973,6 +7961,21 @@ shape = SubResource("RectangleShape2D_len77")
 position = Vector2(1.4901161e-08, -14.999999)
 scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("24_len77")
+
+[node name="Door(ToApple)" parent="1thLevel/1thHall/InteractableObjects" unique_id=988882064 instance=ExtResource("15_scqts")]
+position = Vector2(9266.874, 81)
+target_marker = NodePath("../../../../Basement/InteractableObjects/Door(Basement)")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="1thLevel/1thHall/InteractableObjects/Door(ToApple)" index="0"]
+position = Vector2(0.25, 0.39453125)
+shape = SubResource("RectangleShape2D_kxkc2")
+
+[node name="Sprite2D" parent="1thLevel/1thHall/InteractableObjects/Door(ToApple)" index="2"]
+position = Vector2(1.4901161e-08, -3.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("109_kxkc2")
 
 [node name="Door(StairsRight)" parent="1thLevel/1thHall/InteractableObjects" unique_id=937994484 instance=ExtResource("15_scqts")]
 position = Vector2(13843, 81)
@@ -7990,12 +7993,17 @@ texture = ExtResource("24_len77")
 
 [node name="Note" parent="1thLevel/1thHall/InteractableObjects" unique_id=1964878317 instance=ExtResource("67_unon8")]
 position = Vector2(6851, 22)
-note_texture = ExtResource("53_ji2ax")
+note_texture = ExtResource("note_plan1")
 
 [node name="Sprite2D" parent="1thLevel/1thHall/InteractableObjects/Note" index="1"]
 texture_filter = 2
 scale = Vector2(0.19266059, 0.19266056)
-texture = ExtResource("53_ji2ax")
+texture = ExtResource("note_plan1")
+
+[node name="Door(To204)2" parent="1thLevel/1thHall/InteractableObjects" unique_id=441992275 instance=ExtResource("92_r7f9u")]
+position = Vector2(14598, 83)
+door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+number_texture = ExtResource("num_204")
 
 [node name="104" type="Node2D" parent="1thLevel" unique_id=1511641307]
 position = Vector2(41298, 0)
@@ -8094,165 +8102,6 @@ texture = ExtResource("77_ghctl")
 position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = NodePath("../../../1thHall/InteractableObjects/Door(To104)")
-
-[node name="103" type="Node2D" parent="1thLevel" unique_id=154189221]
-position = Vector2(38317, 0)
-
-[node name="Background" type="Node2D" parent="1thLevel/103" unique_id=1441717789]
-
-[node name="WallBack" type="Sprite2D" parent="1thLevel/103/Background" unique_id=2124678538]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8352, 19)
-texture = ExtResource("21_85201")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
-[node name="Floor" parent="1thLevel/103/Background" unique_id=1600448854 instance=ExtResource("57_ih4cm")]
-z_index = -5
-position = Vector2(8348, 326)
-floor_texture = ExtResource("24_oevlm")
-size = Vector2(4500, 110)
-tiling = Vector2(7, 3)
-perspective_amount = 1.75
-horizon = -3.73
-edge_strength = 0.07
-edge_power = 0.55
-center_width = 0.0
-edge_end = 2.0
-max_distance = 1.99
-fade_length = 0.0
-
-[node name="Walls" type="Node2D" parent="1thLevel/103" unique_id=1354398143]
-
-[node name="WallBelow_1" parent="1thLevel/103/Walls" unique_id=703082250 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(6461, 400)
-
-[node name="WallBelow_2" parent="1thLevel/103/Walls" unique_id=1898668196 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(7243.0005, 400)
-
-[node name="WallBelow_3" parent="1thLevel/103/Walls" unique_id=1816407778 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(8031, 400)
-
-[node name="WallBelow_4" parent="1thLevel/103/Walls" unique_id=496197805 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(8813, 400)
-
-[node name="WallBelow_5" parent="1thLevel/103/Walls" unique_id=799766370 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(9465, 400)
-
-[node name="WallBelow_6" parent="1thLevel/103/Walls" unique_id=2107766101 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(10247, 400)
-
-[node name="WallAbove_1" parent="1thLevel/103/Walls" unique_id=1880843239 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(6461.0005, -271)
-
-[node name="WallAbove_2" parent="1thLevel/103/Walls" unique_id=1558651506 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(7243.0005, -271)
-
-[node name="WallAbove_3" parent="1thLevel/103/Walls" unique_id=400948796 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(8031.0005, -271)
-
-[node name="WallAbove_4" parent="1thLevel/103/Walls" unique_id=1296867331 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(8813, -271)
-
-[node name="WallAbove_5" parent="1thLevel/103/Walls" unique_id=1739480960 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(9465, -271)
-
-[node name="WallAbove_6" parent="1thLevel/103/Walls" unique_id=707776327 instance=ExtResource("7_6wj6m")]
-z_index = 10
-position = Vector2(10247, -271)
-
-[node name="WallLeft" parent="1thLevel/103/Walls" unique_id=485986410 instance=ExtResource("6_1eex3")]
-z_index = 10
-position = Vector2(10620, 64)
-
-[node name="WallRight" parent="1thLevel/103/Walls" unique_id=1987833231 instance=ExtResource("6_1eex3")]
-z_index = 10
-position = Vector2(6089, 63.860657)
-
-[node name="Sprites" type="Node2D" parent="1thLevel/103" unique_id=67181790]
-
-[node name="TableUPc2" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1402784461]
-position = Vector2(6668.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc3" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1598067357]
-position = Vector2(6301.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc10" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=191908619]
-position = Vector2(10134.555, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc11" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1984942209]
-position = Vector2(9767.555, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc4" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=782018351]
-position = Vector2(7712, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc6" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1236932243]
-position = Vector2(8055.996, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc5" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1214604163]
-position = Vector2(7374.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc7" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=1390959101]
-position = Vector2(8739, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc8" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=840292377]
-position = Vector2(9082.996, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="TableUPc9" type="Sprite2D" parent="1thLevel/103/Sprites" unique_id=2023937974]
-position = Vector2(8401.555, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
-[node name="Wash2" parent="1thLevel/103/Sprites" unique_id=1346767134 instance=ExtResource("77_rj2k8")]
-position = Vector2(10423.996, 210)
-rotation = 3.1415925
-scale = Vector2(0.88, -0.88)
-
-[node name="InteractableObjects" type="Node2D" parent="1thLevel/103" unique_id=209895285]
-
-[node name="Door(In103Right)" parent="1thLevel/103/InteractableObjects" unique_id=882248008 instance=ExtResource("92_r7f9u")]
-position = Vector2(9427, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("num_103")
-target_marker = NodePath("../../../1thHall/InteractableObjects/Door(To103Right)")
-
-[node name="Door(In103Left)" parent="1thLevel/103/InteractableObjects" unique_id=1183064612 instance=ExtResource("92_r7f9u")]
-position = Vector2(6992, 83)
-is_locked = true
-door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("num_103")
-target_marker = NodePath("../../../1thHall/InteractableObjects/Door(To103Left)")
 
 [node name="102" type="Node2D" parent="1thLevel" unique_id=510214678]
 position = Vector2(22995, 0)
@@ -8350,7 +8199,6 @@ scale = Vector2(0.88, 0.88)
 position = Vector2(14571, 83)
 is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-target_marker = NodePath("../../../1thHall/InteractableObjects/Door(To102)")
 
 [node name="101" type="Node2D" parent="1thLevel" unique_id=1107587954]
 position = Vector2(7843, 0)
@@ -8470,9 +8318,9 @@ region_rect = Rect2(0, 0, 4500, 550)
 [node name="Floor" parent="Basement/Background" unique_id=385323138 instance=ExtResource("57_ih4cm")]
 z_index = -5
 position = Vector2(10604, 326)
-floor_texture = ExtResource("24_oevlm")
+floor_texture = ExtResource("105_t6yhn")
 size = Vector2(9000, 110)
-tiling = Vector2(7, 3)
+tiling = Vector2(32, 3)
 perspective_amount = 1.75
 horizon = -3.73
 edge_strength = 0.11
@@ -8646,6 +8494,11 @@ flicker_chance = 0.07
 flicker_energy_min = 0.49
 flicker_return_speed = 0.04
 
+[node name="ApplePoster" type="Sprite2D" parent="." unique_id=841331927]
+position = Vector2(8908.874, 44424)
+scale = Vector2(0.2907549, 0.2907549)
+texture = ExtResource("120_kxkc2")
+
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Note"]
@@ -8671,6 +8524,7 @@ flicker_return_speed = 0.04
 [editable path="2thLevel/2thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="2thLevel/2thHall/InteractableObjects/Note"]
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsLeft)"]
+[editable path="1thLevel/1thHall/InteractableObjects/Door(ToApple)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]

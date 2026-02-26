@@ -7,12 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://bmu0hvqtf1fwp" path="res://objects/interactable/door/sprites/numbersU/904.jpg" id="5_4w0nc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xm0wp"]
-size = Vector2(209.5, 383)
+size = Vector2(203.5, 383)
 
 [node name="Door" type="Area2D" unique_id=597792978]
 script = ExtResource("1_qejh5")
-door_texture = ExtResource("2_4w0nc")
 number_texture = ExtResource("5_4w0nc")
+door_texture = ExtResource("2_4w0nc")
 sfx_locked = ExtResource("3_sdxwa")
 sfx_open = ExtResource("4_61yyf")
 prompt_text = "Войти"
@@ -32,4 +32,3 @@ texture = ExtResource("2_4w0nc")
 [node name="Number" type="Sprite2D" parent="." unique_id=1184343537]
 position = Vector2(0, -115)
 scale = Vector2(0.085, 0.085)
-texture = ExtResource("5_4w0nc")

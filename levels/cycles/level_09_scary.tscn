@@ -706,23 +706,6 @@ lid_curve = 0.63
 lid_softness = 0.3
 corner_narrowing = -0.06
 
-[node name="CreepyEye2" parent="Hall/Background" unique_id=818905757 instance=ExtResource("28_owfr1")]
-position = Vector2(10983.001, -310.00024)
-rotation = -0.24776113
-scale = Vector2(0.24, 0.24)
-show_only_after_cycle_distortion = true
-writhing_lines_intensity = 16.09
-writhing_lines_speed = 0.62
-writhing_lines_thickness = 4.18
-writhing_lines_distortion = 0.24
-eye_width = 1.6800000000000002
-eye_height = 2.74
-upper_lid_offset = 0.3
-lower_lid_offset = -0.33
-lid_curve = 0.63
-lid_softness = 0.3
-corner_narrowing = -0.06
-
 [node name="Walls" type="Node2D" parent="Hall" unique_id=1697054694]
 
 [node name="WallBelow_1" parent="Hall/Walls" unique_id=429774923 instance=ExtResource("7_puiye")]
@@ -900,11 +883,6 @@ position = Vector2(9477, -103.999985)
 scale = Vector2(0.31, 0.31)
 texture = ExtResource("35_gx0vn")
 
-[node name="HighKitchen2" type="Sprite2D" parent="Hall/Sprites" unique_id=378268934]
-position = Vector2(9477, -317)
-scale = Vector2(0.31, 0.31)
-texture = ExtResource("35_gx0vn")
-
 [node name="PictureOne" type="Sprite2D" parent="Hall/Sprites" unique_id=1631397279]
 position = Vector2(9131, -15)
 scale = Vector2(0.15, 0.15)
@@ -1042,52 +1020,11 @@ rotation = 1.5707964
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("47_0kcko")
 
-[node name="Window10" type="Sprite2D" parent="Hall/Sprites" unique_id=776509208]
-z_index = -4
-position = Vector2(10936.95, -432.75034)
-rotation = 1.3230352
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_0kcko")
-
 [node name="Battery3" type="Sprite2D" parent="Hall/Sprites" unique_id=531769789]
 z_index = -4
 position = Vector2(12330, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("49_glh1o")
-
-[node name="Chain" type="Sprite2D" parent="Hall/Sprites" unique_id=2016949170]
-position = Vector2(11815.531, -191.62547)
-rotation = 1.1241062
-scale = Vector2(0.1513916, 0.1513916)
-texture = ExtResource("50_6mou4")
-
-[node name="Chain2" type="Sprite2D" parent="Hall/Sprites" unique_id=172994736]
-position = Vector2(11718.001, -395.00085)
-rotation = 1.1241062
-scale = Vector2(0.1513916, 0.1513916)
-texture = ExtResource("50_6mou4")
-
-[node name="Chain3" type="Sprite2D" parent="Hall/Sprites" unique_id=1290788822]
-position = Vector2(11824.263, -193.45851)
-rotation = 1.1616184
-scale = Vector2(0.1513916, 0.1513916)
-texture = ExtResource("50_6mou4")
-
-[node name="Chain4" type="Sprite2D" parent="Hall/Sprites" unique_id=1024445442]
-position = Vector2(11737, -397.00027)
-rotation = 1.1616184
-scale = Vector2(0.1513916, 0.1513916)
-texture = ExtResource("50_6mou4")
-
-[node name="BigChain2" type="Sprite2D" parent="Hall/Sprites" unique_id=1749475311]
-position = Vector2(10974.926, -416.5)
-scale = Vector2(0.16634049, 0.1663405)
-texture = ExtResource("51_q787q")
-
-[node name="BigChain3" type="Sprite2D" parent="Hall/Sprites" unique_id=658035796]
-position = Vector2(10393.209, -413.5)
-scale = Vector2(0.17808223, 0.17808226)
-texture = ExtResource("51_q787q")
 
 [node name="InteractableObjects" type="Node2D" parent="Hall" unique_id=1839919247]
 
@@ -3382,9 +3319,6 @@ time_penalty = 28.0
 position = Vector2(7246, 10623)
 speed = 420.0
 time_penalty = 28.0
-
-[node name="EnemyLightSensitive3" parent="." unique_id=994297192 instance=ExtResource("87_lkvcm")]
-position = Vector2(14744, 103)
 
 [node name="TriggerBedroomSilent" parent="." unique_id=223404332 instance=ExtResource("91_3j3x3")]
 position = Vector2(-1919, 83)
