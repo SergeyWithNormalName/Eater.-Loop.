@@ -50,7 +50,6 @@
 [ext_resource type="PackedScene" uid="uid://byx06s4t2xtvj" path="res://levels/minigames/feeding/food/naggets/food_naggets.tscn" id="48_5edfv"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="49_b36hn"]
 [ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="50_1kabc"]
-[ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="51_d8uqj"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="52_a72t5"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="53_rbr5w"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="54_refxs"]
@@ -719,7 +718,6 @@ food_scenes = Array[PackedScene]([ExtResource("48_5edfv")])
 andrey_face = ExtResource("49_b36hn")
 food_count = 6
 bg_music = ExtResource("50_1kabc")
-win_sound = ExtResource("51_d8uqj")
 eat_sound = ExtResource("52_a72t5")
 background_texture = ExtResource("53_rbr5w")
 metadata/_edit_group_ = true

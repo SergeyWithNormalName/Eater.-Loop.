@@ -331,6 +331,13 @@
 │   ├── minigames
 │   │   ├── feeding
 │   │   │   ├── andreys_faces
+│   │   │   │   ├── Amputation
+│   │   │   │   │   ├── Body.png
+│   │   │   │   │   ├── Body.png.import
+│   │   │   │   │   ├── FirstArm.png
+│   │   │   │   │   ├── FirstArm.png.import
+│   │   │   │   │   ├── SecondArm.png
+│   │   │   │   │   └── SecondArm.png.import
 │   │   │   │   ├── BadEat.png
 │   │   │   │   ├── BadEat.png.import
 │   │   │   │   ├── BasicEat.png
@@ -439,6 +446,9 @@
 │   │   │   ├── feed_minigame.gd
 │   │   │   ├── feed_minigame.gd.uid
 │   │   │   ├── feed_minigame.tscn
+│   │   │   ├── feed_minigame_detach_hands.gd
+│   │   │   ├── feed_minigame_detach_hands.gd.uid
+│   │   │   ├── feed_minigame_detach_hands.tscn
 │   │   │   ├── final_feed_minigame.gd
 │   │   │   ├── final_feed_minigame.gd.uid
 │   │   │   └── final_feed_minigame.tscn
@@ -1103,6 +1113,8 @@
 │       │   ├── NotebookOff.png.import
 │       │   ├── NotebookOn.png
 │       │   ├── NotebookOn.png.import
+│       │   ├── Table_U_PC_on.png
+│       │   ├── Table_U_PC_on.png.import
 │       │   ├── laptop.gd
 │       │   ├── laptop.gd.uid
 │       │   └── laptop.tscn
@@ -1229,6 +1241,10 @@
 │   ├── distortion_overlay.gdshader.uid
 │   ├── distortion_transition.gdshader
 │   ├── distortion_transition.gdshader.uid
+│   ├── feeding_blood_drips.gdshader
+│   ├── feeding_blood_drips.gdshader.uid
+│   ├── pain_shock_distortion.gdshader
+│   ├── pain_shock_distortion.gdshader.uid
 │   ├── torn_right_wallpaper.gdshader
 │   └── torn_right_wallpaper.gdshader.uid
 ├── tests
@@ -1272,4 +1288,4 @@
 ├── project.godot
 └── structure.txt
 
-107 directories, 1166 files
+108 directories, 1181 files

@@ -16,6 +16,7 @@ var ate_this_cycle: bool = false
 var lab_done: bool = false
 var phone_picked: bool = false
 var fridge_interacted: bool = false
+var unique_feeding_intro_played: bool = false
 var pending_sleep_spawn: bool = false
 var last_scene_path: String = ""
 var has_active_run: bool = false
@@ -56,6 +57,15 @@ func mark_fridge_interacted() -> void:
 	fridge_interacted = true
 	fridge_interacted_changed.emit()
 
+func mark_unique_feeding_intro_played() -> void:
+	if unique_feeding_intro_played:
+		return
+	unique_feeding_intro_played = true
+	_save_run_state()
+
+func is_unique_feeding_intro_played() -> bool:
+	return unique_feeding_intro_played
+
 # Добавляем этот метод, чтобы GameDirector мог менять фазу
 func set_phase(new_phase: Phase) -> void:
 	phase = new_phase
@@ -81,6 +91,7 @@ func reset_run() -> void:
 	lab_done = false
 	phone_picked = false
 	fridge_interacted = false
+	unique_feeding_intro_played = false
 	pending_sleep_spawn = false
 	difficulty = Difficulty.SIMPLIFIED
 	electricity_on = true
@@ -104,6 +115,7 @@ func _save_run_state() -> void:
 	config.set_value("run", "lab_done", lab_done)
 	config.set_value("run", "phone_picked", phone_picked)
 	config.set_value("run", "fridge_interacted", fridge_interacted)
+	config.set_value("run", "unique_feeding_intro_played", unique_feeding_intro_played)
 	config.set_value("run", "ate_this_cycle", ate_this_cycle)
 	config.set_value("run", "electricity_on", electricity_on)
 	config.set_value("run", "difficulty", int(difficulty))
@@ -125,6 +137,7 @@ func _load_run_state() -> void:
 			lab_done = true
 	phone_picked = bool(config.get_value("run", "phone_picked", phone_picked))
 	fridge_interacted = bool(config.get_value("run", "fridge_interacted", fridge_interacted))
+	unique_feeding_intro_played = bool(config.get_value("run", "unique_feeding_intro_played", unique_feeding_intro_played))
 	ate_this_cycle = bool(config.get_value("run", "ate_this_cycle", ate_this_cycle))
 	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
 	var loaded_difficulty := int(config.get_value("run", "difficulty", int(difficulty)))

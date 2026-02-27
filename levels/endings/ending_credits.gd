@@ -17,6 +17,8 @@ extends Control
 @onready var _credits_root: VBoxContainer = $CreditsViewport/CreditsRoot
 @onready var _exit_hint_label: Label = $ExitHint
 
+const MAIN_MENU_SCENE_PATH := "res://levels/menu/main_menu.tscn"
+
 var _scroll_started: bool = false
 var _is_finishing: bool = false
 var _end_y: float = 0.0
@@ -180,9 +182,6 @@ func _start_escape_confirm_window() -> void:
 func _perform_return_transition() -> void:
 	if _return_transition_started:
 		return
-	if return_scene == null:
-		_is_finishing = false
-		return
 	_return_transition_started = true
 	_esc_confirm_pending = false
 	_esc_confirm_token += 1
@@ -190,11 +189,42 @@ func _perform_return_transition() -> void:
 	get_tree().paused = false
 	_stop_credits_music()
 	if UIMessage != null and UIMessage.has_method("play_fade_sequence") and return_fade_time > 0.0:
+		var token := _esc_confirm_token
 		UIMessage.play_fade_sequence(
 			return_fade_time,
 			return_fade_time,
-			func() -> void:
-				get_tree().change_scene_to_packed(return_scene)
+			Callable(self, "_change_to_return_scene"),
+			Callable(self, "_on_return_fade_finished").bind(token)
 		)
 		return
-	get_tree().change_scene_to_packed(return_scene)
+	_change_to_return_scene()
+
+func _change_to_return_scene() -> void:
+	var target_path := _resolve_return_scene_path()
+	var tree := get_tree()
+	if tree == null:
+		_return_transition_started = false
+		_is_finishing = false
+		return
+	var err := tree.change_scene_to_file(target_path)
+	if err == OK:
+		return
+	var menu_scene := load(MAIN_MENU_SCENE_PATH) as PackedScene
+	if menu_scene != null:
+		tree.change_scene_to_packed(menu_scene)
+		return
+	_return_transition_started = false
+	_is_finishing = false
+
+func _resolve_return_scene_path() -> String:
+	return MAIN_MENU_SCENE_PATH
+
+func _on_return_fade_finished(token: int) -> void:
+	if token != _esc_confirm_token:
+		return
+	# Если сцена по какой-то причине не сменилась, разблокируем титры и позволяем повторить выход.
+	if get_tree() != null and get_tree().current_scene == self:
+		_return_transition_started = false
+		_is_finishing = false
+		_esc_confirm_pending = false
+		_hide_exit_hint()

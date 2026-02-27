@@ -82,6 +82,9 @@
 [ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="109_kxkc2"]
 [ext_resource type="Texture2D" uid="uid://clnslqs8wgj4x" path="res://objects/environment/university/ApplePoster.png" id="120_kxkc2"]
 [ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="120_t6yhn"]
+[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="121_kxkc2"]
+[ext_resource type="PackedScene" uid="uid://d3qadgg85phau" path="res://levels/minigames/feeding/food/burger/food_burger.tscn" id="122_wfflm"]
+[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="123_r6e22"]
 [ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="note_plan1"]
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="note_plan2"]
 [ext_resource type="Texture2D" uid="uid://d0el0khlbwwfm" path="res://objects/environment/university/PlanOfLevel3.png" id="note_plan3"]
@@ -791,6 +794,7 @@ door_texture = ExtResource("69_mylv1")
 [node name="Door(To904)" parent="9thLevel/9thHall/InteractableObjects" unique_id=153814559 instance=ExtResource("92_r7f9u")]
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+target_marker = NodePath("../../../904/InteractableObjects/Door(In904)")
 door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To901)" parent="9thLevel/9thHall/InteractableObjects" unique_id=603809573 instance=ExtResource("92_r7f9u")]
@@ -945,7 +949,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In904)" parent="9thLevel/904/InteractableObjects" unique_id=79736904 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To904)")
 door_texture = ExtResource("69_mylv1")
@@ -1103,7 +1106,6 @@ door_texture = ExtResource("69_mylv1")
 
 [node name="Door(In903Left)" parent="9thLevel/903/InteractableObjects" unique_id=315182307 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To903Left)")
 door_texture = ExtResource("69_mylv1")
@@ -1202,7 +1204,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In902)" parent="9thLevel/902/InteractableObjects" unique_id=2104416764 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To902)")
 door_texture = ExtResource("69_mylv1")
@@ -1297,7 +1298,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In901)" parent="9thLevel/901/InteractableObjects" unique_id=899917923 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../9thHall/InteractableObjects/Door(To901)")
 door_texture = ExtResource("69_mylv1")
@@ -1696,6 +1696,7 @@ door_texture = ExtResource("69_mylv1")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_804")
+target_marker = NodePath("../../../804/InteractableObjects/Door(In804)")
 door_texture = ExtResource("69_mylv1")
 
 [node name="Door(To801)" parent="8thLevel/8thHall/InteractableObjects" unique_id=2069116838 instance=ExtResource("92_r7f9u")]
@@ -1851,7 +1852,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In804)" parent="8thLevel/804/InteractableObjects" unique_id=1140036374 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To804)")
 door_texture = ExtResource("69_mylv1")
@@ -2009,7 +2009,6 @@ door_texture = ExtResource("69_mylv1")
 
 [node name="Door(In803Left)" parent="8thLevel/803/InteractableObjects" unique_id=895956145 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To803Left)")
 door_texture = ExtResource("69_mylv1")
@@ -2108,7 +2107,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In802)" parent="8thLevel/802/InteractableObjects" unique_id=1117299034 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To802)")
 door_texture = ExtResource("69_mylv1")
@@ -2203,7 +2201,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In801)" parent="8thLevel/801/InteractableObjects" unique_id=1399290160 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../8thHall/InteractableObjects/Door(To801)")
 door_texture = ExtResource("69_mylv1")
@@ -2598,6 +2595,7 @@ target_marker = NodePath("../../../703/InteractableObjects/Door(In703Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("31_0ohhm")
+target_marker = NodePath("../../../704/InteractableObjects/Door(In704)")
 
 [node name="Door(To701)" parent="7thLevel/7thHall/InteractableObjects" unique_id=934868767 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -2749,7 +2747,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In704)" parent="7thLevel/704/InteractableObjects" unique_id=272581648 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To704)")
 
@@ -2905,7 +2902,6 @@ target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To703Right)"
 
 [node name="Door(In703Left)" parent="7thLevel/703/InteractableObjects" unique_id=936001253 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To703Left)")
 
@@ -3003,7 +2999,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In702)" parent="7thLevel/702/InteractableObjects" unique_id=1431399536 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To702)")
 
@@ -3097,7 +3092,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In701)" parent="7thLevel/701/InteractableObjects" unique_id=1808271625 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../7thHall/InteractableObjects/Door(To701)")
 
@@ -3492,6 +3486,7 @@ target_marker = NodePath("../../../603/InteractableObjects/Door(In603Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_604")
+target_marker = NodePath("../../../604/InteractableObjects/Door(In604)")
 
 [node name="Door(To601)" parent="6thLevel/6thHall/InteractableObjects" unique_id=1285049171 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -3637,7 +3632,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In604)" parent="6thLevel/604/InteractableObjects" unique_id=284592550 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
 
@@ -3793,7 +3787,6 @@ target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To603Right)"
 
 [node name="Door(In603Left)" parent="6thLevel/603/InteractableObjects" unique_id=2083211516 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To603Left)")
 
@@ -3891,7 +3884,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In602)" parent="6thLevel/602/InteractableObjects" unique_id=418286534 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To602)")
 
@@ -3985,7 +3977,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In601)" parent="6thLevel/601/InteractableObjects" unique_id=482399905 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To601)")
 
@@ -4380,6 +4371,7 @@ target_marker = NodePath("../../../503/InteractableObjects/Door(In503Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_504")
+target_marker = NodePath("../../../504/InteractableObjects/Door(In504)")
 
 [node name="Door(To501)" parent="5thLevel/5thHall/InteractableObjects" unique_id=667368959 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -4525,7 +4517,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In504)" parent="5thLevel/504/InteractableObjects" unique_id=728133759 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To504)")
 
@@ -4681,7 +4672,6 @@ target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To503Right)"
 
 [node name="Door(In503Left)" parent="5thLevel/503/InteractableObjects" unique_id=608592031 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To503Left)")
 
@@ -4779,7 +4769,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In502)" parent="5thLevel/502/InteractableObjects" unique_id=1520849978 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To502)")
 
@@ -4879,7 +4868,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In501)" parent="5thLevel/501/InteractableObjects" unique_id=703628731 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../5thHall/InteractableObjects/Door(To501)")
 
@@ -5274,6 +5262,7 @@ target_marker = NodePath("../../../403/InteractableObjects/Door(In403Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_404")
+target_marker = NodePath("../../../404/InteractableObjects/Door(In404)")
 
 [node name="Door(To401)" parent="4thLevel/4thHall/InteractableObjects" unique_id=1043332872 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -5425,7 +5414,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In404)" parent="4thLevel/404/InteractableObjects" unique_id=759953836 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To404)")
 
@@ -5581,7 +5569,6 @@ target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To403Right)"
 
 [node name="Door(In403Left)" parent="4thLevel/403/InteractableObjects" unique_id=695563080 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To403Left)")
 
@@ -5679,7 +5666,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In402)" parent="4thLevel/402/InteractableObjects" unique_id=1325830555 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To402)")
 
@@ -5773,7 +5759,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In401)" parent="4thLevel/401/InteractableObjects" unique_id=1001252622 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../4thHall/InteractableObjects/Door(To401)")
 
@@ -6168,6 +6153,7 @@ target_marker = NodePath("../../../303/InteractableObjects/Door(In303Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_304")
+target_marker = NodePath("../../../304/InteractableObjects/Door(In304)")
 
 [node name="Door(To301)" parent="3thLevel/3thHall/InteractableObjects" unique_id=366487938 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -6319,7 +6305,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In304)" parent="3thLevel/304/InteractableObjects" unique_id=1381023928 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To304)")
 
@@ -6475,7 +6460,6 @@ target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To303Right)"
 
 [node name="Door(In303Left)" parent="3thLevel/303/InteractableObjects" unique_id=315874404 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To303Left)")
 
@@ -6573,7 +6557,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In302)" parent="3thLevel/302/InteractableObjects" unique_id=157624644 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To302)")
 
@@ -6667,7 +6650,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In301)" parent="3thLevel/301/InteractableObjects" unique_id=2141710269 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../3thHall/InteractableObjects/Door(To301)")
 
@@ -7062,6 +7044,7 @@ target_marker = NodePath("../../../203/InteractableObjects/Door(In203Left)")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("num_204")
+target_marker = NodePath(".")
 
 [node name="Door(To201)" parent="2thLevel/2thHall/InteractableObjects" unique_id=2144836055 instance=ExtResource("92_r7f9u")]
 position = Vector2(6565, 83)
@@ -7213,7 +7196,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In204)" parent="2thLevel/204/InteractableObjects" unique_id=75122903 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To204)")
 
@@ -7369,7 +7351,6 @@ target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To203Right)"
 
 [node name="Door(In203Left)" parent="2thLevel/203/InteractableObjects" unique_id=607297413 instance=ExtResource("92_r7f9u")]
 position = Vector2(6992, 83)
-is_locked = true
 door_locked_message = "Мне незачем выходить на улицу"
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To203Left)")
 
@@ -7467,7 +7448,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In202)" parent="2thLevel/202/InteractableObjects" unique_id=1981732240 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To202)")
 
@@ -7561,7 +7541,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In201)" parent="2thLevel/201/InteractableObjects" unique_id=535648344 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../2thHall/InteractableObjects/Door(To201)")
 
@@ -8094,7 +8073,6 @@ texture = ExtResource("77_ghctl")
 
 [node name="Door(In104)" parent="1thLevel/104/InteractableObjects" unique_id=1209052870 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 
 [node name="102" type="Node2D" parent="1thLevel" unique_id=510214678]
@@ -8191,7 +8169,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In102)" parent="1thLevel/102/InteractableObjects" unique_id=2088562067 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 
 [node name="101" type="Node2D" parent="1thLevel" unique_id=1107587954]
@@ -8284,7 +8261,6 @@ scale = Vector2(0.88, 0.88)
 
 [node name="Door(In101)" parent="1thLevel/101/InteractableObjects" unique_id=1745146395 instance=ExtResource("92_r7f9u")]
 position = Vector2(14821, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../1thHall/InteractableObjects/Door(To101)")
 
@@ -8487,7 +8463,11 @@ scale = Vector2(0.2907549, 0.2907549)
 texture = ExtResource("120_kxkc2")
 
 [node name="Fridge" parent="." unique_id=540039702 instance=ExtResource("120_t6yhn")]
-position = Vector2(55540, 6585)
+position = Vector2(7680, 123)
+minigame_scene = ExtResource("121_kxkc2")
+food_scenes = Array[PackedScene]([ExtResource("122_wfflm")])
+background_texture = ExtResource("123_r6e22")
+unique_intro_once_per_run = true
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

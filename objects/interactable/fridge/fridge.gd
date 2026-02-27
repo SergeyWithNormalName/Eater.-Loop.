@@ -16,6 +16,12 @@ extends InteractiveObject
 @export var eat_sound: AudioStream
 @export var background_texture: Texture2D
 
+@export_group("Minigame (Unique Intro)")
+## Уникальная версия feeding, которая запускается один раз за ран.
+@export var unique_intro_minigame_scene: PackedScene = preload("res://levels/minigames/feeding/feed_minigame_detach_hands.tscn")
+## Если включено, уникальный интро-этап будет только один раз за ран.
+@export var unique_intro_once_per_run: bool = true
+
 @export_group("Security")
 ## Требовать ввод кода доступа.
 @export var require_access_code: bool = false
@@ -188,21 +194,51 @@ func _start_feeding_process() -> void:
 	
 	# Проверка наличия еды
 	var has_food := not food_scenes.is_empty()
-	if minigame_scene == null or not has_food:
+	var selected_scene := _resolve_feeding_scene()
+	if selected_scene == null or not has_food:
 		push_warning("Frizzer: Нет сцены мини-игры или еды!")
 		_finish_feeding_logic()
 		return
 	
 	# Запуск игры
-	var game = minigame_scene.instantiate()
+	var game = selected_scene.instantiate()
 	_current_minigame = game
 	_add_minigame_to_scene(game)
+	_mark_unique_intro_as_played(selected_scene)
 	
 	# Передаем параметры (как в твоем старом скрипте)
 	if game.has_method("setup_game"):
 		game.setup_game(andrey_face, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
 	
 	game.minigame_finished.connect(_on_feeding_finished)
+
+func _resolve_feeding_scene() -> PackedScene:
+	if _should_use_unique_intro_scene():
+		return unique_intro_minigame_scene
+	return minigame_scene
+
+func _should_use_unique_intro_scene() -> bool:
+	if unique_intro_minigame_scene == null:
+		return false
+	if not unique_intro_once_per_run:
+		return false
+	if GameState == null:
+		return true
+	return not bool(GameState.is_unique_feeding_intro_played())
+
+func _mark_unique_intro_as_played(scene_used: PackedScene) -> void:
+	if not _is_scene_match(scene_used, unique_intro_minigame_scene):
+		return
+	if GameState == null:
+		return
+	GameState.mark_unique_feeding_intro_played()
+
+func _is_scene_match(scene_a: PackedScene, scene_b: PackedScene) -> bool:
+	if scene_a == null or scene_b == null:
+		return false
+	if scene_a == scene_b:
+		return true
+	return scene_a.resource_path != "" and scene_a.resource_path == scene_b.resource_path
 
 func _on_feeding_finished() -> void:
 	if _current_minigame != null:
