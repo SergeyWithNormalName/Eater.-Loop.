@@ -2,6 +2,7 @@
 ├── docs
 │   ├── architecture_overview.md
 │   ├── audio_system.md
+│   ├── level_end_endings.md
 │   └── minigame_gamepad_system.md
 ├── enemies
 │   ├── light_ceiling
@@ -288,11 +289,21 @@
 │   │   ├── level_09_scary.tscn
 │   │   ├── level_10_crazy.tscn
 │   │   ├── level_NSTU_test.tscn
+│   │   ├── level_end.gd
+│   │   ├── level_end.gd.uid
 │   │   ├── level_end.tscn
 │   │   ├── level_music.gd
 │   │   ├── level_music.gd.uid
 │   │   ├── texture_distortion_manager.gd
 │   │   └── texture_distortion_manager.gd.uid
+│   ├── endings
+│   │   ├── bad_ending_screen.tscn
+│   │   ├── ending_credits.gd
+│   │   ├── ending_credits.gd.uid
+│   │   ├── ending_credits.tscn
+│   │   ├── ending_screen.gd
+│   │   ├── ending_screen.gd.uid
+│   │   └── good_ending_screen.tscn
 │   ├── menu
 │   │   ├── MainMenuBackground.png
 │   │   ├── MainMenuBackground.png.import
@@ -427,7 +438,10 @@
 │   │   │   ├── BackgroundBasic.png.import
 │   │   │   ├── feed_minigame.gd
 │   │   │   ├── feed_minigame.gd.uid
-│   │   │   └── feed_minigame.tscn
+│   │   │   ├── feed_minigame.tscn
+│   │   │   ├── final_feed_minigame.gd
+│   │   │   ├── final_feed_minigame.gd.uid
+│   │   │   └── final_feed_minigame.tscn
 │   │   ├── gamepad
 │   │   │   ├── gamepad_highlighter.gd
 │   │   │   ├── gamepad_highlighter.gd.uid
@@ -1046,6 +1060,8 @@
 │       │   │   └── OpenFridge.png.import
 │       │   ├── code_lock.gd
 │       │   ├── code_lock.gd.uid
+│       │   ├── final_ending_fridge.gd
+│       │   ├── final_ending_fridge.gd.uid
 │       │   ├── fridge.gd
 │       │   ├── fridge.gd.uid
 │       │   └── fridge.tscn
@@ -1256,4 +1272,4 @@
 ├── project.godot
 └── structure.txt
 
-106 directories, 1151 files
+107 directories, 1166 files

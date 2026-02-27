@@ -250,6 +250,31 @@ func pop_music(fade_time: float = -1.0) -> void:
 func clear_stack() -> void:
 	_stack.clear()
 
+func reset_base_music_state() -> void:
+	_kill_fade_tween()
+	var players: Array[AudioStreamPlayer] = [_player_a, _player_b]
+	for player in players:
+		if player == null:
+			continue
+		player.stop()
+		player.stream_paused = false
+		player.stream = null
+		player.volume_db = -80.0
+	_current_stream = null
+	_current_source_id = 0
+	_current_source_kind = SOURCE_KIND_GENERIC
+	_base_volume_db = default_volume_db
+	_is_ducked = false
+	_pre_duck_volume_db = default_volume_db
+	_last_duck_volume_db = 999.0
+	_base_pause_player = null
+	_base_pause_stream = null
+	_base_pause_position = 0.0
+	_base_pause_restore_db = 0.0
+	_base_pause_reasons.clear()
+	_base_pause_active = false
+	_chase_base_muted = false
+
 func get_current_stream() -> AudioStream:
 	return _current_stream
 

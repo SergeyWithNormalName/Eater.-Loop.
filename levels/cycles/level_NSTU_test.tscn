@@ -75,13 +75,13 @@
 [ext_resource type="Texture2D" uid="uid://ciyeejsemkm6o" path="res://objects/environment/university/Shkaf_U3.png" id="76_ao3ix"]
 [ext_resource type="Texture2D" uid="uid://cbo8s6vsltfun" path="res://objects/environment/university/Chair.png" id="77_ghctl"]
 [ext_resource type="PackedScene" uid="uid://boomivqwb6hp2" path="res://objects/environment/university/table_U.tscn" id="77_rj2k8"]
-[ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://objects/interactable/lamp/lamp.tscn" id="78_ghctl"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
 [ext_resource type="Texture2D" uid="uid://c6720vlq21px" path="res://objects/environment/floor/floor_U_1stFloor.png" id="105_t6yhn"]
 [ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="109_kxkc2"]
 [ext_resource type="Texture2D" uid="uid://clnslqs8wgj4x" path="res://objects/environment/university/ApplePoster.png" id="120_kxkc2"]
+[ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="120_t6yhn"]
 [ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="note_plan1"]
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="note_plan2"]
 [ext_resource type="Texture2D" uid="uid://d0el0khlbwwfm" path="res://objects/environment/university/PlanOfLevel3.png" id="note_plan3"]
@@ -155,7 +155,7 @@ size = Vector2(339.5, 406.78906)
 position = Vector2(16, 0)
 script = ExtResource("1_0ohhm")
 cycle_number = 2
-timer_duration = 200.0
+timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
@@ -3611,12 +3611,6 @@ z_index = 10
 position = Vector2(12995, 64)
 
 [node name="Sprites" type="Node2D" parent="6thLevel/604" unique_id=1509526732]
-
-[node name="ShkafU1" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=347845258]
-z_index = -1
-position = Vector2(14179, 92)
-scale = Vector2(0.6282467, 0.6282467)
-texture = ExtResource("74_1eex3")
 
 [node name="ShkafU2" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1222305282]
 position = Vector2(14904, 92.3051)
@@ -8487,17 +8481,13 @@ music_enabled = true
 music_on_enter = 8
 music_on_exit = 9
 
-[node name="Lamp" parent="." unique_id=1098671112 instance=ExtResource("78_ghctl")]
-position = Vector2(55289, 6276)
-flicker_enabled = true
-flicker_chance = 0.07
-flicker_energy_min = 0.49
-flicker_return_speed = 0.04
-
 [node name="ApplePoster" type="Sprite2D" parent="." unique_id=841331927]
 position = Vector2(8908.874, 44424)
 scale = Vector2(0.2907549, 0.2907549)
 texture = ExtResource("120_kxkc2")
+
+[node name="Fridge" parent="." unique_id=540039702 instance=ExtResource("120_t6yhn")]
+position = Vector2(55540, 6585)
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

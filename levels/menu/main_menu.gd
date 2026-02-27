@@ -15,6 +15,8 @@ extends "res://levels/menu/menu_base.gd"
 @export_range(0.0, 10.0, 0.1) var menu_music_fade_time: float = 1.2
 
 @export_group("Титры")
+## Сцена титров (используется кнопкой "Авторы").
+@export var ending_credits_scene: PackedScene = preload("res://levels/endings/ending_credits.tscn")
 ## Скорость прокрутки титров.
 @export_range(5.0, 200.0, 1.0) var credits_scroll_speed: float = 40.0
 
@@ -177,6 +179,13 @@ func _on_settings_pressed() -> void:
 	_apply_navigation_focus_state()
 
 func _on_credits_pressed() -> void:
+	if ending_credits_scene != null:
+		_stop_menu_music()
+		if UIMessage != null and UIMessage.has_method("change_scene_with_fade"):
+			await UIMessage.change_scene_with_fade(ending_credits_scene, 0.6, true)
+		else:
+			get_tree().change_scene_to_packed(ending_credits_scene)
+		return
 	_active_panel = PANEL_CREDITS
 	_main_panel.visible = false
 	_settings_panel.visible = false

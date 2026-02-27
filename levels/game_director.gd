@@ -221,6 +221,13 @@ func _on_distortion_timeout() -> void:
 	_spawn_stalker_if_needed()
 	distortion_started.emit()
 
+func trigger_distortion_now() -> void:
+	if _death_sequence_active:
+		return
+	if not _in_game_scene:
+		return
+	_on_distortion_timeout()
+
 func get_time_ratio() -> float:
 	if GameState.phase != GameState.Phase.NORMAL:
 		return 0.0
@@ -454,6 +461,8 @@ func _create_death_overlay() -> void:
 func trigger_death_screen() -> void:
 	if _death_sequence_active:
 		return
+	if _handle_custom_scene_death():
+		return
 	_death_sequence_active = true
 	_release_death_cursor_request()
 	_timer.stop()
@@ -489,6 +498,14 @@ func trigger_death_screen() -> void:
 		tween.tween_property(_death_camera, "rotation", target_rotation, fade_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(_death_camera, "zoom", target_zoom, fade_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(_on_death_fade_completed)
+
+func _handle_custom_scene_death() -> bool:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return false
+	if not scene.has_method("handle_custom_death_screen"):
+		return false
+	return bool(scene.call("handle_custom_death_screen"))
 
 func _on_death_fade_completed() -> void:
 	if not _death_sequence_active:

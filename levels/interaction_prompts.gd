@@ -156,8 +156,53 @@ func _update_channel_position(data: Dictionary) -> void:
 	if pos == null:
 		_set_sprite_visible(sprite, false)
 		return
+	_apply_prompt_z_index(sprite, source)
 	sprite.global_position = pos
 	_set_sprite_visible(sprite, true)
+
+func _apply_prompt_z_index(sprite: Sprite2D, source: Object) -> void:
+	if sprite == null:
+		return
+	sprite.z_index = _resolve_prompt_z_index(source)
+
+func _resolve_prompt_z_index(source: Object) -> int:
+	if not (source is CanvasItem):
+		return indicator_z_index
+	var source_item := source as CanvasItem
+	var source_z := _get_effective_z_index(source_item)
+	var visual_relative_z := _resolve_source_visual_relative_z(source_item, source_z)
+	return source_z + visual_relative_z + indicator_z_index
+
+func _get_effective_z_index(item: CanvasItem) -> int:
+	if item == null:
+		return 0
+	var result := item.z_index
+	var current: CanvasItem = item
+	while true:
+		var parent := current.get_parent()
+		if not (parent is CanvasItem):
+			break
+		var parent_item := parent as CanvasItem
+		if current.z_as_relative:
+			result += parent_item.z_index
+		current = parent_item
+	return result
+
+func _resolve_source_visual_relative_z(source_item: CanvasItem, source_effective_z: int) -> int:
+	if source_item == null:
+		return 0
+	var max_relative_z := 0
+	var stack: Array[Node] = [source_item]
+	while not stack.is_empty():
+		var node: Node = stack.pop_back()
+		if node is CanvasItem:
+			var item: CanvasItem = node as CanvasItem
+			var relative_z: int = _get_effective_z_index(item) - source_effective_z
+			if relative_z > max_relative_z:
+				max_relative_z = relative_z
+		for child: Node in node.get_children():
+			stack.append(child)
+	return max_relative_z
 
 func _try_get_prompt_world_position(source: Object) -> Variant:
 	if source == null:

@@ -6,6 +6,7 @@ var _pause_menu_layer: Node
 var _pause_menu: Node
 var _is_open: bool = false
 var _prev_paused_state: bool = false
+var _pause_blockers: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -21,6 +22,8 @@ func _input(event: InputEvent) -> void:
 		else:
 			_request_resume()
 		get_viewport().set_input_as_handled()
+		return
+	if is_pause_blocked():
 		return
 	if keyboard_escape_requested and _should_defer_to_minigame_cancel(event):
 		return
@@ -112,3 +115,26 @@ func _should_defer_to_minigame_cancel(event: InputEvent) -> bool:
 
 func is_pause_menu_open() -> bool:
 	return _is_open
+
+func set_pause_blocked(source: Object, blocked: bool = true) -> void:
+	if source == null:
+		return
+	var source_id := source.get_instance_id()
+	if blocked:
+		_pause_blockers[source_id] = weakref(source)
+	else:
+		_pause_blockers.erase(source_id)
+	_cleanup_pause_blockers()
+
+func is_pause_blocked() -> bool:
+	_cleanup_pause_blockers()
+	return not _pause_blockers.is_empty()
+
+func _cleanup_pause_blockers() -> void:
+	var stale: Array[int] = []
+	for source_id in _pause_blockers.keys():
+		var ref := _pause_blockers[source_id] as WeakRef
+		if ref == null or ref.get_ref() == null:
+			stale.append(source_id)
+	for source_id in stale:
+		_pause_blockers.erase(source_id)

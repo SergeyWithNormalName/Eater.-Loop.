@@ -1,0 +1,194 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://levels/endings/ending_credits.gd" id="1_credits"]
+
+[node name="EndingCredits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_credits")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.01, 0.01, 0.01, 1)
+
+[node name="CreditsViewport" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+clip_contents = true
+
+[node name="ExitHint" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 38.0
+offset_right = 700.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 52
+text = "Нажмите ещё раз, чтобы выйти"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsRoot" type="VBoxContainer" parent="CreditsViewport"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = -1200.0
+offset_right = 1680.0
+offset_bottom = 0.0
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 124
+text = "ТИТРЫ"
+horizontal_alignment = 1
+
+[node name="SpacerA" type="Control" parent="CreditsViewport/CreditsRoot"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Line01" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Автор идеи — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line02" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Геймдизайн — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line03" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Сценарий и нарратив — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line04" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Режиссура — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line05" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Продюсирование — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line06" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Программирование — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line07" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Архитектура проекта — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line08" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Дизайн уровней — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line09" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "UI/UX-дизайн — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line10" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "2D-арт и иллюстрации — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line11" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Технический арт и шейдеры — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line12" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Анимация — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line13" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Саунд-дизайн — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line14" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Композитор — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line15" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Сведение и монтаж аудио — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line16" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Тестирование и QA — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line17" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Локализация — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line18" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Маркетинг и презентация — Сергей Генерозов"
+horizontal_alignment = 1
+
+[node name="Line19" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "Озвучка главного героя — Андрей Горшков"
+horizontal_alignment = 1
+
+[node name="SpacerB" type="Control" parent="CreditsViewport/CreditsRoot"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+
+[node name="FinalThanks" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
+layout_mode = 2
+theme_override_font_sizes/font_size = 62
+text = "Большое спасибо, что прошли мою игру! Очень надеюсь, что вам понравилось, раз вы читаете это. Хорошего вам времени суток, человек!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SpacerC" type="Control" parent="CreditsViewport/CreditsRoot"]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2

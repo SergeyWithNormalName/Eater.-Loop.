@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://brvl8ddr8l7vd"]
 
-[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_bjoj5"]
+[ext_resource type="Script" uid="uid://bhvuatcfc38ms" path="res://levels/cycles/level_end.gd" id="1_bjoj5"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_nlvqe"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="3_bndxr"]
 [ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="4_kwc3l"]
@@ -70,6 +70,10 @@
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_sp8fe"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_fewya"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="70_nlvqe"]
+[ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="71_llm_game"]
+[ext_resource type="Script" uid="uid://cnstjn1x553py" path="res://objects/interactable/fridge/final_ending_fridge.gd" id="72_final_fridge"]
+[ext_resource type="PackedScene" path="res://levels/minigames/feeding/final_feed_minigame.tscn" id="73_final_feed"]
+[ext_resource type="PackedScene" path="res://levels/endings/bad_ending_screen.tscn" id="74_bad_end"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_nlvqe")
@@ -85,10 +89,11 @@ gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Level" type="Node2D" unique_id=1494661517]
+[node name="Level2" type="Node2D" unique_id=1494661517]
 position = Vector2(16, 0)
 script = ExtResource("1_bjoj5")
-cycle_number = 2
+bad_ending_scene = ExtResource("74_bad_end")
+cycle_number = 14
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=611295868]
 rotation = 0.009666472
@@ -705,6 +710,10 @@ one_shot = null
 
 [node name="Fridge" parent="Hall/InteractableObjects" unique_id=374775092 instance=ExtResource("46_hrhaq")]
 position = Vector2(9809.79, 115.749985)
+script = ExtResource("72_final_fridge")
+final_minigame_scene = ExtResource("73_final_feed")
+force_distortion_on_start = true
+distortion_trigger_delay = 5.0
 minigame_scene = ExtResource("47_mrhv4")
 food_scenes = Array[PackedScene]([ExtResource("48_5edfv")])
 andrey_face = ExtResource("49_b36hn")
@@ -717,6 +726,15 @@ metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Hall/InteractableObjects/Fridge" unique_id=1963340311]
 position = Vector2(0.20996094, -32.749985)
+
+[node name="Laptop" parent="Hall/InteractableObjects" unique_id=1919299909 instance=ExtResource("66_q2t52")]
+z_index = 6
+position = Vector2(10170, 152)
+scale = Vector2(0.96, 0.96)
+minigame_scene = ExtResource("71_llm_game")
+time_limit = 65.0
+show_note_on_completed = true
+completed_message = "Теперь можно спокойно идти спать"
 
 [node name="Bedroom" type="Node2D" parent="." unique_id=482738088]
 
@@ -905,11 +923,6 @@ texture = ExtResource("65_51ai1")
 
 [node name="InteractableObjects" type="Node2D" parent="Bedroom" unique_id=2098892100]
 
-[node name="Laptop" parent="Bedroom/InteractableObjects" unique_id=1919299909 instance=ExtResource("66_q2t52")]
-z_index = 6
-position = Vector2(10289.001, 154)
-scale = Vector2(0.96, 0.96)
-
 [node name="Clock" type="Sprite2D" parent="Bedroom/InteractableObjects" unique_id=1810619233]
 position = Vector2(-2124, 150)
 scale = Vector2(0.18, 0.18)
@@ -919,7 +932,7 @@ texture = ExtResource("67_nkd8f")
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "0:24"
+start_game_time = "7:16"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock" unique_id=349479308]
@@ -942,7 +955,9 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=437107312 instance=ExtResource("69_fewya")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "res://levels/endings/good_ending_screen.tscn"
 
 [node name="TextureDistortionManager" parent="." unique_id=1504856680 instance=ExtResource("70_nlvqe")]
 position = Vector2(8946, 984)
+distortion_music = null
+distortion_sfx = null
