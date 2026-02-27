@@ -82,8 +82,8 @@ func _wire_buttons() -> void:
 		button.focus_mode = Control.FOCUS_ALL
 		button.pivot_offset = button.size * 0.5
 		button.resized.connect(func(): button.pivot_offset = button.size * 0.5)
-		button.mouse_entered.connect(_on_button_hover.bind(button))
-		button.focus_entered.connect(_on_button_hover.bind(button))
+		button.mouse_entered.connect(_on_button_mouse_entered.bind(button))
+		button.focus_entered.connect(_on_button_focus_entered.bind(button))
 		button.mouse_exited.connect(_on_button_unhover.bind(button))
 		button.focus_exited.connect(_on_button_unhover.bind(button))
 		_connect_button_press_sfx(button)
@@ -94,6 +94,13 @@ func _wire_buttons() -> void:
 		if button == null:
 			continue
 		_connect_button_press_sfx(button)
+
+func _on_button_mouse_entered(button: Button) -> void:
+	_release_focus_for_mouse_hover(button)
+	_on_button_hover(button)
+
+func _on_button_focus_entered(button: Button) -> void:
+	_on_button_hover(button)
 
 func _on_button_hover(button: Button) -> void:
 	if button.disabled:
@@ -151,3 +158,46 @@ func _release_cursor_request() -> void:
 	if CursorManager == null:
 		return
 	CursorManager.release_visible(self)
+
+func _release_focus_for_mouse_hover(hovered_button: Button) -> void:
+	if hovered_button == null:
+		return
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	if focus_owner == null:
+		return
+	if not (focus_owner is Control):
+		return
+	var focused_control := focus_owner as Control
+	if not is_ancestor_of(focused_control):
+		return
+	focused_control.release_focus()
+
+func activate_focused_menu_button_on_accept(event: InputEvent) -> bool:
+	if event == null:
+		return false
+	if not _is_accept_like_event(event):
+		return false
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	if not (focus_owner is BaseButton):
+		return false
+	var button := focus_owner as BaseButton
+	if button.disabled:
+		return false
+	button.pressed.emit()
+	get_viewport().set_input_as_handled()
+	return true
+
+func _is_accept_like_event(event: InputEvent) -> bool:
+	if event == null:
+		return false
+	if event.is_action_pressed("ui_accept"):
+		return true
+	if not (event is InputEventKey):
+		return false
+	var key_event := event as InputEventKey
+	if not key_event.pressed or key_event.is_echo():
+		return false
+	return key_event.keycode == KEY_ENTER \
+		or key_event.keycode == KEY_KP_ENTER \
+		or key_event.physical_keycode == KEY_ENTER \
+		or key_event.physical_keycode == KEY_KP_ENTER

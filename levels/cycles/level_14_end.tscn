@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://brvl8ddr8l7vd"]
 
-[ext_resource type="Script" uid="uid://bhvuatcfc38ms" path="res://levels/cycles/level_end.gd" id="1_bjoj5"]
+[ext_resource type="Script" uid="uid://bhvuatcfc38ms" path="res://levels/cycles/level_11_end.gd" id="1_bjoj5"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_nlvqe"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="3_bndxr"]
 [ext_resource type="Texture2D" uid="uid://doke6oh3ub2r4" path="res://objects/environment/background/ToiletTiles.png" id="4_kwc3l"]

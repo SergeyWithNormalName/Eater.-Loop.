@@ -8,16 +8,25 @@
 [ext_resource type="PackedScene" uid="uid://bxjrvr1ri8lfh" path="res://levels/menu/main_menu.tscn" id="6_main_menu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-content_margin_left = 26.0
-content_margin_top = 20.0
-content_margin_right = 26.0
-content_margin_bottom = 20.0
-bg_color = Color(0.08, 0.08, 0.09, 0.85)
-border_color = Color(0.55, 0.45, 0.35, 0.9)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+content_margin_left = 34.0
+content_margin_top = 28.0
+content_margin_right = 34.0
+content_margin_bottom = 28.0
+bg_color = Color(0.05, 0.05, 0.05, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.74, 0.74, 0.74, 0.34)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+anti_aliasing = true
+anti_aliasing_size = 1.0
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 24
+shadow_offset = Vector2(0, 8)
 
 [node name="PauseMenuLayer" type="CanvasLayer"]
 process_mode = 3
@@ -37,6 +46,8 @@ menu_music = ExtResource("5_menu_music")
 hover_sfx = ExtResource("4_hover_sfx")
 click_sfx = ExtResource("3_click_sfx")
 hover_sfx_volume_db = -24.0
+hover_scale = 1.02
+hover_tint = Color(1, 1, 1, 1)
 
 [node name="Dim" type="ColorRect" parent="PauseMenu"]
 layout_mode = 1
@@ -45,89 +56,136 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.55)
+color = Color(0, 0, 0, 0.62)
 
-[node name="MainPanel" type="PanelContainer" parent="PauseMenu"]
+[node name="MainPanelCenter" type="CenterContainer" parent="PauseMenu"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -240.0
-offset_right = 320.0
-offset_bottom = 240.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="SettingsPanelCenter" type="CenterContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ConfirmPanelCenter" type="CenterContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainPanel" type="PanelContainer" parent="PauseMenu/MainPanelCenter"]
+layout_mode = 2
+custom_minimum_size = Vector2(760, 540)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="PauseMenu/MainPanel"]
-layout_mode = 2
-alignment = 1
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/MainPanelCenter/MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 16
 
-[node name="Title" type="Label" parent="PauseMenu/MainPanel/VBox"]
+[node name="TopSpacer" type="Control" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
 layout_mode = 2
 text = "Пауза"
 horizontal_alignment = 1
 
-[node name="Buttons" type="VBoxContainer" parent="PauseMenu/MainPanel/VBox"]
+[node name="Buttons" type="VBoxContainer" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
 layout_mode = 2
+separation = 10
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="ResumeButton" type="Button" parent="PauseMenu/MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+size_flags_horizontal = 4
 text = "Продолжить"
 
-[node name="SettingsButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="SettingsButton" type="Button" parent="PauseMenu/MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+size_flags_horizontal = 4
 text = "Настройки"
 
-[node name="ExitMenuButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="ExitMenuButton" type="Button" parent="PauseMenu/MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+size_flags_horizontal = 4
 text = "Выйти в меню"
 
-[node name="ExitGameButton" type="Button" parent="PauseMenu/MainPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="ExitGameButton" type="Button" parent="PauseMenu/MainPanelCenter/MainPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+size_flags_horizontal = 4
 text = "Выйти из игры"
 
-[node name="SettingsPanel" parent="PauseMenu" instance=ExtResource("2_settings_panel")]
+[node name="BottomSpacer" type="Control" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="ConfirmPanel" type="PanelContainer" parent="PauseMenu"]
+[node name="SettingsPanel" parent="PauseMenu/SettingsPanelCenter" instance=ExtResource("2_settings_panel")]
+
+[node name="ConfirmPanel" type="PanelContainer" parent="PauseMenu/ConfirmPanelCenter"]
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -150.0
-offset_right = 300.0
-offset_bottom = 150.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+custom_minimum_size = Vector2(760, 360)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="PauseMenu/ConfirmPanel"]
-layout_mode = 2
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+separation = 16
+alignment = 1
 
-[node name="Message" type="Label" parent="PauseMenu/ConfirmPanel/VBox"]
+[node name="TopSpacer" type="Control" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Message" type="Label" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
 layout_mode = 2
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="PauseMenu/ConfirmPanel/VBox"]
+[node name="Buttons" type="HBoxContainer" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
 layout_mode = 2
+separation = 14
 alignment = 1
 
-[node name="YesButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="YesButton" type="Button" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
 text = "Да"
 
-[node name="NoButton" type="Button" parent="PauseMenu/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
+[node name="NoButton" type="Button" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox/Buttons" groups=["menu_button"]]
 layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
 text = "Нет"
+
+[node name="BottomSpacer" type="Control" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="PauseMenu"]
 bus = &"Sounds"

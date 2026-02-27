@@ -123,6 +123,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _startup_disclaimer_active:
 		get_viewport().set_input_as_handled()
 		return
+	if activate_focused_menu_button_on_accept(event):
+		return
 	if event.is_action_pressed("ui_cancel"):
 		if _credits_panel.visible:
 			_hide_credits()
