@@ -75,6 +75,7 @@
 [ext_resource type="Texture2D" uid="uid://ciyeejsemkm6o" path="res://objects/environment/university/Shkaf_U3.png" id="76_ao3ix"]
 [ext_resource type="Texture2D" uid="uid://cbo8s6vsltfun" path="res://objects/environment/university/Chair.png" id="77_ghctl"]
 [ext_resource type="PackedScene" uid="uid://boomivqwb6hp2" path="res://objects/environment/university/table_U.tscn" id="77_rj2k8"]
+[ext_resource type="Texture2D" uid="uid://crfcxd726bbrc" path="res://objects/environment/university/Table_U_PC_90g.png" id="85_33cun"]
 [ext_resource type="AudioStream" uid="uid://dx1rb27am4g0w" path="res://music/UniversityMusic.wav" id="90_university_music"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="PackedScene" uid="uid://gb3gqxicb00v" path="res://objects/interactable/door/door_university.tscn" id="92_r7f9u"]
@@ -84,7 +85,12 @@
 [ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="120_t6yhn"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="121_kxkc2"]
 [ext_resource type="PackedScene" uid="uid://d3qadgg85phau" path="res://levels/minigames/feeding/food/burger/food_burger.tscn" id="122_wfflm"]
+[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="123_c8avo"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="123_r6e22"]
+[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="124_33cun"]
+[ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="124_xjdrn"]
+[ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="125_ylru2"]
+[ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="126_ylru2"]
 [ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="note_plan1"]
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="note_plan2"]
 [ext_resource type="Texture2D" uid="uid://d0el0khlbwwfm" path="res://objects/environment/university/PlanOfLevel3.png" id="note_plan3"]
@@ -935,16 +941,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Table" parent="9thLevel/904/Sprites" unique_id=894263740 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="9thLevel/904/Sprites" unique_id=1804094217]
-position = Vector2(13886.996, 242)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="9thLevel/904" unique_id=597755006]
 
 [node name="Door(In904)" parent="9thLevel/904/InteractableObjects" unique_id=79736904 instance=ExtResource("92_r7f9u")]
@@ -1196,10 +1192,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="9thLevel/902/Sprites" unique_id=2007397655 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="9thLevel/902" unique_id=124164896]
 
 [node name="Door(In902)" parent="9thLevel/902/InteractableObjects" unique_id=2104416764 instance=ExtResource("92_r7f9u")]
@@ -1289,10 +1281,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="9thLevel/901/Sprites" unique_id=102421853 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="9thLevel/901" unique_id=1855544086]
 
@@ -1838,16 +1826,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Table" parent="8thLevel/804/Sprites" unique_id=1510645184 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="8thLevel/804/Sprites" unique_id=1472647949]
-position = Vector2(13886.996, 242)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="8thLevel/804" unique_id=908237005]
 
 [node name="Door(In804)" parent="8thLevel/804/InteractableObjects" unique_id=1140036374 instance=ExtResource("92_r7f9u")]
@@ -1979,11 +1957,6 @@ position = Vector2(7374.5547, 185.39136)
 scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("72_acem0")
 
-[node name="TableUPc7" type="Sprite2D" parent="8thLevel/803/Sprites" unique_id=880997345]
-position = Vector2(8739, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("72_acem0")
-
 [node name="TableUPc8" type="Sprite2D" parent="8thLevel/803/Sprites" unique_id=949978087]
 position = Vector2(9082.996, 185.39136)
 scale = Vector2(0.49619028, 0.49619022)
@@ -2099,10 +2072,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="8thLevel/802/Sprites" unique_id=258761899 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="8thLevel/802" unique_id=1081236253]
 
 [node name="Door(In802)" parent="8thLevel/802/InteractableObjects" unique_id=1117299034 instance=ExtResource("92_r7f9u")]
@@ -2192,10 +2161,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="8thLevel/801/Sprites" unique_id=35624668 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="8thLevel/801" unique_id=55220150]
 
@@ -2733,16 +2698,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Table" parent="7thLevel/704/Sprites" unique_id=613740745 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="7thLevel/704/Sprites" unique_id=513650356]
-position = Vector2(13886.996, 242)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="7thLevel/704" unique_id=1942883600]
 
 [node name="Door(In704)" parent="7thLevel/704/InteractableObjects" unique_id=272581648 instance=ExtResource("92_r7f9u")]
@@ -2991,10 +2946,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="7thLevel/702/Sprites" unique_id=811660160 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="7thLevel/702" unique_id=1878417322]
 
 [node name="Door(In702)" parent="7thLevel/702/InteractableObjects" unique_id=1431399536 instance=ExtResource("92_r7f9u")]
@@ -3083,10 +3034,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="7thLevel/701/Sprites" unique_id=751906580 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="7thLevel/701" unique_id=1470192432]
 
@@ -3522,6 +3469,8 @@ texture = ExtResource("24_len77")
 
 [node name="Door(StairsRight)" parent="6thLevel/6thHall/InteractableObjects" unique_id=548178166 instance=ExtResource("15_scqts")]
 position = Vector2(13843, 81)
+is_locked = true
+door_locked_message = "Дверь заперта."
 target_marker = NodePath("../../../../5thLevel/5thHall/InteractableObjects/Door(StairsRight)")
 door_texture = null
 metadata/_edit_group_ = true
@@ -3618,22 +3567,229 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="6thLevel/604/Sprites" unique_id=1861793501 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="Chair" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=137641765]
-position = Vector2(13886.996, 241)
+z_index = 6
+position = Vector2(13884, 254)
 rotation = 3.1415925
 scale = Vector2(0.316, -0.316)
 texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1425743867]
+z_index = 6
+position = Vector2(13631, 223)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair5" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1232386930]
+z_index = 6
+position = Vector2(13884.379, 6934.09)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g5" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=351676423]
+z_index = 6
+position = Vector2(13631.379, 6903.09)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair6" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1704930756]
+z_index = 6
+position = Vector2(13884.379, 14197.09)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g6" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=543742220]
+z_index = 6
+position = Vector2(13631.379, 14166.09)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair7" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=460135143]
+z_index = 6
+position = Vector2(13884.379, 22306.09)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g7" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1861269197]
+z_index = 6
+position = Vector2(13631.379, 22275.09)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair8" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1519698669]
+z_index = 6
+position = Vector2(13884.379, 30455.09)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g8" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1628637509]
+z_index = 6
+position = Vector2(13631.379, 30424.09)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair2" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=393356575]
+z_index = 6
+position = Vector2(13884.379, -6234.91)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g2" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1231944649]
+z_index = 6
+position = Vector2(13631.379, -6265.91)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair3" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=510268856]
+z_index = 6
+position = Vector2(13884.379, -13430.91)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g3" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=359159088]
+z_index = 6
+position = Vector2(13631.379, -13461.91)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="Chair4" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=883604078]
+z_index = 6
+position = Vector2(13884.379, -21265.91)
+rotation = 3.1415925
+scale = Vector2(0.316, -0.316)
+texture = ExtResource("77_ghctl")
+
+[node name="TableUPc90g4" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=146246577]
+z_index = 6
+position = Vector2(13631.379, -21296.91)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g9" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=650569226]
+z_index = 6
+position = Vector2(-4872, -21297)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g10" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=83203614]
+z_index = 6
+position = Vector2(-20084, -21297)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g11" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1854908663]
+z_index = 6
+position = Vector2(-20084, -13467)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g12" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=381744129]
+z_index = 6
+position = Vector2(-20084, -6265.0005)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g19" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1238879045]
+z_index = 6
+position = Vector2(-4874.623, -13466.91)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g20" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1718285876]
+z_index = 6
+position = Vector2(-4874.623, -6264.9106)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g21" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1855447454]
+z_index = 6
+position = Vector2(-4874.998, 222)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g22" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=407094261]
+z_index = 6
+position = Vector2(-4874.998, 6904)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g23" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=838207839]
+z_index = 6
+position = Vector2(-4874.998, 14168)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g24" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1008207500]
+z_index = 6
+position = Vector2(-4874.998, 22277)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g25" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=300843227]
+z_index = 6
+position = Vector2(-4874.998, 30427)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g13" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=31753813]
+z_index = 6
+position = Vector2(-20084, 221)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g14" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1830827572]
+z_index = 6
+position = Vector2(-20084, 6904)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g15" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=1420284465]
+z_index = 6
+position = Vector2(-20084, 14169)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g16" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=239544622]
+z_index = 6
+position = Vector2(-20084, 22276)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g17" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=821000626]
+z_index = 6
+position = Vector2(-20084, 30424)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
+
+[node name="TableUPc90g18" type="Sprite2D" parent="6thLevel/604/Sprites" unique_id=173096536]
+z_index = 6
+position = Vector2(-20084, 38168.004)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("85_33cun")
 
 [node name="InteractableObjects" type="Node2D" parent="6thLevel/604" unique_id=1006386096]
 
 [node name="Door(In604)" parent="6thLevel/604/InteractableObjects" unique_id=284592550 instance=ExtResource("92_r7f9u")]
 position = Vector2(14571, 83)
+is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
+required_key_id = "key_6level"
+
+[node name="Fridge" parent="6thLevel/604/InteractableObjects" unique_id=540039702 instance=ExtResource("120_t6yhn")]
+position = Vector2(14188, 98)
+minigame_scene = ExtResource("121_kxkc2")
+food_scenes = Array[PackedScene]([ExtResource("122_wfflm")])
+food_count = 6
+bg_music = ExtResource("123_c8avo")
+eat_sound = ExtResource("124_33cun")
+background_texture = ExtResource("123_r6e22")
 
 [node name="603" type="Node2D" parent="6thLevel" unique_id=1673846713]
 position = Vector2(38317, 0)
@@ -3876,10 +4032,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="6thLevel/602/Sprites" unique_id=1884230173 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="6thLevel/602" unique_id=208433760]
 
 [node name="Door(In602)" parent="6thLevel/602/InteractableObjects" unique_id=418286534 instance=ExtResource("92_r7f9u")]
@@ -3968,10 +4120,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="6thLevel/601/Sprites" unique_id=167356890 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="6thLevel/601" unique_id=952817725]
 
@@ -4509,10 +4657,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="5thLevel/504/Sprites" unique_id=385831206 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="5thLevel/504" unique_id=1895047718]
 
 [node name="Door(In504)" parent="5thLevel/504/InteractableObjects" unique_id=728133759 instance=ExtResource("92_r7f9u")]
@@ -4761,10 +4905,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="5thLevel/502/Sprites" unique_id=667141081 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="5thLevel/502" unique_id=374836929]
 
 [node name="Door(In502)" parent="5thLevel/502/InteractableObjects" unique_id=1520849978 instance=ExtResource("92_r7f9u")]
@@ -4853,16 +4993,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="5thLevel/501/Sprites" unique_id=235516892 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="5thLevel/501/Sprites" unique_id=787141746]
-position = Vector2(47341.996, 243.99902)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
 
 [node name="InteractableObjects" type="Node2D" parent="5thLevel/501" unique_id=1970435192]
 
@@ -5400,16 +5530,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="4thLevel/404/Sprites" unique_id=2044553036 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="4thLevel/404/Sprites" unique_id=997306401]
-position = Vector2(13886.996, 252)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="4thLevel/404" unique_id=922984082]
 
 [node name="Door(In404)" parent="4thLevel/404/InteractableObjects" unique_id=759953836 instance=ExtResource("92_r7f9u")]
@@ -5658,10 +5778,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="4thLevel/402/Sprites" unique_id=1562112392 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="4thLevel/402" unique_id=486176244]
 
 [node name="Door(In402)" parent="4thLevel/402/InteractableObjects" unique_id=1325830555 instance=ExtResource("92_r7f9u")]
@@ -5750,10 +5866,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="4thLevel/401/Sprites" unique_id=2045470145 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="4thLevel/401" unique_id=2023572972]
 
@@ -6291,16 +6403,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="3thLevel/304/Sprites" unique_id=2005622757 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="3thLevel/304/Sprites" unique_id=1647489657]
-position = Vector2(13886.996, 252)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="3thLevel/304" unique_id=678882312]
 
 [node name="Door(In304)" parent="3thLevel/304/InteractableObjects" unique_id=1381023928 instance=ExtResource("92_r7f9u")]
@@ -6549,10 +6651,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="3thLevel/302/Sprites" unique_id=1681615078 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="3thLevel/302" unique_id=551582877]
 
 [node name="Door(In302)" parent="3thLevel/302/InteractableObjects" unique_id=157624644 instance=ExtResource("92_r7f9u")]
@@ -6641,10 +6739,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="3thLevel/301/Sprites" unique_id=307451830 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="3thLevel/301" unique_id=1969143281]
 
@@ -7182,16 +7276,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="2thLevel/204/Sprites" unique_id=2078804494 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="2thLevel/204/Sprites" unique_id=13240466]
-position = Vector2(13886.996, 252)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="2thLevel/204" unique_id=867303090]
 
 [node name="Door(In204)" parent="2thLevel/204/InteractableObjects" unique_id=75122903 instance=ExtResource("92_r7f9u")]
@@ -7440,10 +7524,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="2thLevel/202/Sprites" unique_id=34019223 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="2thLevel/202" unique_id=1460638581]
 
 [node name="Door(In202)" parent="2thLevel/202/InteractableObjects" unique_id=1981732240 instance=ExtResource("92_r7f9u")]
@@ -7532,10 +7612,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="2thLevel/201/Sprites" unique_id=273556202 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="2thLevel/201" unique_id=1347542185]
 
@@ -8059,16 +8135,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="1thLevel/104/Sprites" unique_id=887607624 instance=ExtResource("77_rj2k8")]
-position = Vector2(13632, 210)
-scale = Vector2(0.88, 0.88)
-
-[node name="Chair" type="Sprite2D" parent="1thLevel/104/Sprites" unique_id=1858848982]
-position = Vector2(13886.996, 252)
-rotation = 3.1415925
-scale = Vector2(0.316, -0.316)
-texture = ExtResource("77_ghctl")
-
 [node name="InteractableObjects" type="Node2D" parent="1thLevel/104" unique_id=554083574]
 
 [node name="Door(In104)" parent="1thLevel/104/InteractableObjects" unique_id=1209052870 instance=ExtResource("92_r7f9u")]
@@ -8161,10 +8227,6 @@ position = Vector2(13237.004, 92.045074)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
 
-[node name="Wash" parent="1thLevel/102/Sprites" unique_id=1443407276 instance=ExtResource("77_rj2k8")]
-position = Vector2(13431, 210)
-scale = Vector2(0.88, 0.88)
-
 [node name="InteractableObjects" type="Node2D" parent="1thLevel/102" unique_id=2116558973]
 
 [node name="Door(In102)" parent="1thLevel/102/InteractableObjects" unique_id=2088562067 instance=ExtResource("92_r7f9u")]
@@ -8252,10 +8314,6 @@ z_index = -2
 position = Vector2(13498.002, 92.33864)
 scale = Vector2(0.644483, 0.64448303)
 texture = ExtResource("76_ao3ix")
-
-[node name="Table_U" parent="1thLevel/101/Sprites" unique_id=1993831779 instance=ExtResource("77_rj2k8")]
-position = Vector2(13367.027, 210.29356)
-scale = Vector2(0.88, 0.88)
 
 [node name="InteractableObjects" type="Node2D" parent="1thLevel/101" unique_id=283926453]
 
@@ -8418,6 +8476,11 @@ metadata/_edit_group_ = true
 scale = Vector2(17.187548, 5.859378)
 texture = SubResource("GradientTexture2D_k0vht")
 
+[node name="ApplePoster" type="Sprite2D" parent="Basement/Sprites" unique_id=841331927]
+position = Vector2(8908.874, -7570)
+scale = Vector2(0.2907549, 0.2907549)
+texture = ExtResource("120_kxkc2")
+
 [node name="InteractableObjects" type="Node2D" parent="Basement" unique_id=807053510]
 
 [node name="Door(Basement)" parent="Basement/InteractableObjects" unique_id=1472932913 instance=ExtResource("15_scqts")]
@@ -8457,17 +8520,23 @@ music_enabled = true
 music_on_enter = 8
 music_on_exit = 9
 
-[node name="ApplePoster" type="Sprite2D" parent="." unique_id=841331927]
-position = Vector2(8908.874, 44424)
-scale = Vector2(0.2907549, 0.2907549)
-texture = ExtResource("120_kxkc2")
+[node name="Laptop" parent="." unique_id=302000911 instance=ExtResource("124_xjdrn")]
+position = Vector2(47060, -7123)
+minigame_scene = ExtResource("125_ylru2")
+time_limit = 12.0
+locked_sprite = ExtResource("72_acem0")
+available_sprite = ExtResource("126_ylru2")
 
-[node name="Fridge" parent="." unique_id=540039702 instance=ExtResource("120_t6yhn")]
-position = Vector2(7680, 123)
-minigame_scene = ExtResource("121_kxkc2")
-food_scenes = Array[PackedScene]([ExtResource("122_wfflm")])
-background_texture = ExtResource("123_r6e22")
-unique_intro_once_per_run = true
+[node name="Note" parent="." unique_id=1771840164 instance=ExtResource("67_unon8")]
+position = Vector2(56205, 6573)
+reward_key_id = "key_6level"
+reward_subtitle = "На полке найден ключ"
+
+[node name="CollisionShape2D" parent="Note" index="0"]
+position = Vector2(-3, 4)
+
+[node name="Sprite2D" parent="Note" index="1"]
+texture = null
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]
@@ -8498,3 +8567,4 @@ unique_intro_once_per_run = true
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]
+[editable path="Note"]

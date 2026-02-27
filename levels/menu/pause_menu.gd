@@ -16,7 +16,7 @@ signal resume_requested
 ## Длительность возврата музыки погони после паузы (сек).
 @export_range(0.0, 10.0, 0.1) var chase_music_resume_fade_time: float = 0.1
 
-const EXIT_WARNING := "Несохранённые данные будут потеряны. Вы сможете продолжить только с начала текущего цикла."
+const EXIT_WARNING := "Вы уверены, что хотите выйти? В следующий раз вам придётся проснуться снова..."
 
 @onready var _title_label: Label = $MainPanel/VBox/Title
 @onready var _resume_button: Button = $MainPanel/VBox/Buttons/ResumeButton

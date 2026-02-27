@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://u02pjldgfvip"]
+
+[ext_resource type="Script" uid="uid://b56d1j6fxyjxs" path="res://objects/interactable/notebook/laptop.gd" id="1_iassh"]
+[ext_resource type="Texture2D" uid="uid://de1t1kxuo8uay" path="res://objects/interactable/notebook/NotebookOff.png" id="2_bs8at"]
+[ext_resource type="Texture2D" uid="uid://bjvemva0egbb6" path="res://objects/interactable/notebook/NotebookOn.png" id="3_8escd"]
+[ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="4_bs8at"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qx3ec"]
+size = Vector2(131.97206, 136)
+
+[sub_resource type="Gradient" id="Gradient_8u1p6"]
+colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xiu3k"]
+gradient = SubResource("Gradient_8u1p6")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.65, 0)
+
+[sub_resource type="Gradient" id="Gradient_twaj4"]
+colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0.92156863, 0.9411765, 0.9411765, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0t4v3"]
+gradient = SubResource("Gradient_twaj4")
+
+[node name="Laptop" type="Area2D" unique_id=302000911]
+script = ExtResource("1_iassh")
+locked_sprite = ExtResource("2_bs8at")
+available_sprite = ExtResource("3_8escd")
+sprite_node = NodePath("TableUPcOn")
+available_light_node = NodePath("PointLight2D")
+available_light_node_secondary = NodePath("PointLight2D2")
+prompt_text = "Сделать лабораторную"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=865947896]
+scale = Vector2(0.99999964, 1)
+shape = SubResource("RectangleShape2D_qx3ec")
+
+[node name="NotebookOff2" type="Sprite2D" parent="." unique_id=2021243624]
+visible = false
+z_index = 1
+position = Vector2(0.9481888, 5.7399445)
+scale = Vector2(0.26368898, 0.263689)
+texture = ExtResource("3_8escd")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=536965944]
+position = Vector2(-0.14233589, 29.7319)
+scale = Vector2(2.526802, 1.3489764)
+texture = SubResource("GradientTexture2D_xiu3k")
+
+[node name="PointLight2D2" type="PointLight2D" parent="." unique_id=738980946]
+position = Vector2(-0.5971385, -2.0000017)
+scale = Vector2(1.5499107, 0.93749994)
+texture = SubResource("GradientTexture2D_0t4v3")
+
+[node name="TableUPcOn" type="Sprite2D" parent="." unique_id=668570063]
+position = Vector2(0, 108.99999)
+scale = Vector2(0.496, 0.496)
+texture = ExtResource("4_bs8at")

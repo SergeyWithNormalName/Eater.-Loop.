@@ -5,7 +5,7 @@ extends Control
 @export_range(0.0, 6.0, 0.1) var end_hold_time: float = 2.3
 @export_range(0.0, 6.0, 0.1) var return_fade_time: float = 0.9
 @export var return_scene: PackedScene = preload("res://levels/menu/main_menu.tscn")
-@export var esc_exit_hint_text: String = "Нажмите ещё раз, чтобы выйти"
+@export var esc_exit_hint_text: String = "Вы уверены, что хотите выйти? В следующий раз вам придётся проснуться снова..."
 @export_range(0.3, 5.0, 0.1) var esc_exit_hint_window: float = 1.8
 @export_range(10, 120, 1) var esc_exit_hint_font_size: int = 52
 

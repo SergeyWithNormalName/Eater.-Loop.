@@ -130,7 +130,7 @@ func _finalize_finish(success: bool) -> void:
 			if get_tree().root.has_node("GameDirector"):
 				get_tree().root.get_node("GameDirector").reduce_time(penalty_time)
 
-		if success and get_tree().root.has_node("GameState"):
+		if get_tree().root.has_node("GameState"):
 			var gs = get_tree().root.get_node("GameState")
 			if gs and gs.has_method("mark_lab_completed"):
 				gs.mark_lab_completed()

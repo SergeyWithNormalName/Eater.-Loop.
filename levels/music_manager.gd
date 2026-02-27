@@ -69,10 +69,12 @@ var _is_ducked: bool = false
 var _pre_duck_volume_db: float = 0.0
 var _last_duck_volume_db: float = 999.0
 var _fade_tween: Tween
+var _pitch_stop_tween: Tween
 var _is_crossfading: bool = false
 var _crossfade_from: AudioStreamPlayer
 var _crossfade_to: AudioStreamPlayer
 var _crossfade_target_db: float = 0.0
+var _pitch_stop_player: AudioStreamPlayer
 var _stack: Array[Dictionary] = []
 var _runner_player: AudioStreamPlayer
 var _runner_fade_tween: Tween
@@ -123,6 +125,7 @@ func _ready() -> void:
 	set_process(true)
 
 func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0, start_position: float = 0.0, output_volume_db: float = 999.0, source_id: int = 0, source_kind: String = SOURCE_KIND_GENERIC) -> void:
+	_kill_pitch_stop_tween()
 	if stream == null:
 		_current_source_id = 0
 		_current_source_kind = SOURCE_KIND_GENERIC
@@ -169,6 +172,7 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	_crossfade_players(_active_player, _inactive_player, output_volume, target_fade)
 
 func stop_music(fade_time: float = -1.0) -> void:
+	_kill_pitch_stop_tween()
 	_kill_fade_tween()
 	var player := _resolve_playing_player()
 	if player == null or not player.playing:
@@ -374,7 +378,28 @@ func stop_minigame_music() -> void:
 	var player := _resolve_playing_player()
 	if player == null:
 		return
+	_kill_pitch_stop_tween()
 	player.stop()
+
+func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: float = 0.05) -> void:
+	if _current_source_id != SOURCE_MINIGAME and _current_source_kind != SOURCE_KIND_MINIGAME:
+		return
+	var player := _resolve_playing_player()
+	if player == null or not player.playing:
+		return
+	_kill_pitch_stop_tween(false)
+	_pitch_stop_player = player
+	var safe_duration := maxf(0.01, duration)
+	var safe_target_pitch := clampf(target_pitch, 0.01, 1.0)
+	_pitch_stop_tween = create_tween()
+	_pitch_stop_tween.tween_property(player, "pitch_scale", safe_target_pitch, safe_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	_pitch_stop_tween.tween_callback(func():
+		if is_instance_valid(player):
+			player.stop()
+			player.pitch_scale = 1.0
+		_pitch_stop_player = null
+		_pitch_stop_tween = null
+	)
 
 func start_pause_menu_music(stream: AudioStream, fade_out_time: float = -1.0, volume_db: float = 999.0) -> void:
 	_pause_menu_active = true
@@ -719,6 +744,7 @@ func _setup_player(player: AudioStreamPlayer) -> void:
 	if AudioServer.get_bus_index(bus_name) == -1:
 		bus_name = "Master"
 	player.bus = bus_name
+	player.pitch_scale = 1.0
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	player.volume_db = -80.0
 
@@ -820,6 +846,14 @@ func _kill_fade_tween() -> void:
 	_fade_tween = null
 	if _is_crossfading:
 		_finalize_crossfade()
+
+func _kill_pitch_stop_tween(reset_pitch: bool = true) -> void:
+	if _pitch_stop_tween and _pitch_stop_tween.is_running():
+		_pitch_stop_tween.kill()
+	_pitch_stop_tween = null
+	if reset_pitch and _pitch_stop_player != null and is_instance_valid(_pitch_stop_player):
+		_pitch_stop_player.pitch_scale = 1.0
+	_pitch_stop_player = null
 
 func _finalize_crossfade() -> void:
 	if not _is_crossfading:

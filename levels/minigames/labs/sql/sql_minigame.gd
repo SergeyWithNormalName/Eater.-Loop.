@@ -172,10 +172,9 @@ func finish_game(success: bool):
 				if gd:
 					gd.reduce_time(penalty_time)
 
-			if success:
-				var gs = get_node_or_null("/root/GameState")
-				if gs and gs.has_method("mark_lab_completed"):
-					gs.mark_lab_completed()
+			var gs = get_node_or_null("/root/GameState")
+			if gs and gs.has_method("mark_lab_completed"):
+				gs.mark_lab_completed()
 
 			queue_free()
 		)
@@ -190,10 +189,9 @@ func finish_game(success: bool):
 		if gd:
 			gd.reduce_time(penalty_time)
 
-	if success:
-		var gs = get_node_or_null("/root/GameState")
-		if gs and gs.has_method("mark_lab_completed"):
-			gs.mark_lab_completed()
+	var gs = get_node_or_null("/root/GameState")
+	if gs and gs.has_method("mark_lab_completed"):
+		gs.mark_lab_completed()
 
 	queue_free()
 

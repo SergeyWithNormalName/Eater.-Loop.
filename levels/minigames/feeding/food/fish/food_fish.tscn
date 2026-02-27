@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cesl0cgqw8wl5"]
+
+[ext_resource type="Script" uid="uid://gygsji0chilg" path="res://levels/minigames/feeding/food/food_item.gd" id="1_2vonj"]
+[ext_resource type="Texture2D" uid="uid://bo55c2hurdabu" path="res://levels/minigames/feeding/food/fish/Fish.png" id="2_rktgy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1a4a"]
+radius = 218.12408
+height = 1082.2002
+
+[node name="FoodItem" type="Area2D" unique_id=921520785]
+script = ExtResource("1_2vonj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=398043905]
+scale = Vector2(0.13807538, 0.1380753)
+texture = ExtResource("2_rktgy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=619084603]
+rotation = -2.026692
+scale = Vector2(0.205021, 0.20502092)
+shape = SubResource("CapsuleShape2D_q1a4a")

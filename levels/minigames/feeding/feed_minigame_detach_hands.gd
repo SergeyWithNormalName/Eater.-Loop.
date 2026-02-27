@@ -37,6 +37,9 @@ const SCREAM_STREAMS: Array[AudioStream] = [
 @export_range(0.1, 6.0, 0.05) var pain_shock_pull_decay_time: float = 1.6
 @export_range(0.1, 6.0, 0.05) var pain_shock_detach_decay_time: float = 2.5
 @export_range(0.01, 1.0, 0.01) var pain_shock_repeat_cooldown: float = 0.2
+@export_group("Creepy Music Stop")
+@export_range(0.1, 8.0, 0.1) var creepy_music_stop_duration: float = 4.2
+@export_range(0.01, 0.2, 0.01) var creepy_music_target_pitch: float = 0.05
 
 var _hands: Dictionary = {}
 var _active_hand_id: StringName = &""
@@ -45,6 +48,7 @@ var _scream_player: AudioStreamPlayer = null
 var _scream_cooldown: float = 0.0
 var _pain_shock_tween: Tween = null
 var _pain_shock_repeat_timer: float = 0.0
+var _creepy_music_stop_triggered: bool = false
 
 @onready var pain_overlay: ColorRect = $Control/PainColorRect
 
@@ -102,6 +106,7 @@ func _prepare_hands() -> void:
 	_hands.clear()
 	_hands_intro_completed = false
 	_active_hand_id = &""
+	_creepy_music_stop_triggered = false
 
 	var first_arm := _create_hand_layer(
 		&"FirstArm",
@@ -168,6 +173,7 @@ func _try_start_hand_drag(pointer_position: Vector2) -> void:
 	state.node.z_index = 8
 	state.grab_offset = state.node.global_position - pointer_position
 	_play_scream(true)
+	_trigger_creepy_music_stop_once()
 	trigger_pain_shock(pain_shock_pull_peak, pain_shock_pull_decay_time)
 
 func _pick_hand_at_point(point: Vector2) -> StringName:
@@ -301,6 +307,15 @@ func trigger_pain_shock(peak: float = 1.0, fade_time: float = 2.5) -> void:
 	material.set_shader_parameter("intensity", clampf(peak, 0.0, 1.0))
 	_pain_shock_tween = create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	_pain_shock_tween.tween_property(material, "shader_parameter/intensity", 0.0, maxf(0.01, fade_time))
+
+func _trigger_creepy_music_stop_once() -> void:
+	if _creepy_music_stop_triggered:
+		return
+	_creepy_music_stop_triggered = true
+	if MusicManager == null:
+		return
+	if MusicManager.has_method("stop_minigame_music_with_pitch_drop"):
+		MusicManager.stop_minigame_music_with_pitch_drop(creepy_music_stop_duration, creepy_music_target_pitch)
 
 func _get_hand_anchor_tear_point(state: HandState) -> Vector2:
 	return state.base_global_pos + state.node.size * state.tear_uv
