@@ -15,7 +15,6 @@ const BODY_FACE := preload("res://levels/minigames/feeding/andreys_faces/Amputat
 const FIRST_ARM_TEXTURE := preload("res://levels/minigames/feeding/andreys_faces/Amputation/FirstArm.png")
 const SECOND_ARM_TEXTURE := preload("res://levels/minigames/feeding/andreys_faces/Amputation/SecondArm.png")
 const DRIPS_SHADER := preload("res://shaders/feeding_blood_drips.gdshader")
-const PAIN_SHOCK_SHADER := preload("res://shaders/pain_shock_distortion.gdshader")
 
 const SCREAM_STREAMS: Array[AudioStream] = [
 	preload("res://player/audio/screams/Scream_1.wav"),
@@ -33,24 +32,26 @@ const SCREAM_STREAMS: Array[AudioStream] = [
 @export var first_hand_drip_point_path: NodePath = NodePath("FirstHandDripPoint")
 @export var second_hand_drip_point_path: NodePath = NodePath("SecondHandDripPoint")
 @export_group("Pain Shock")
-@export_range(0.5, 20.0, 0.1) var pain_shock_response_speed: float = 11.0
-@export_range(0.0, 1.0, 0.01) var pain_shock_free_intensity: float = 0.45
-@export_range(0.0, 1.0, 0.01) var pain_shock_pull_base_intensity: float = 0.55
-@export_range(0.0, 1.0, 0.01) var pain_shock_pull_bonus_intensity: float = 0.3
+@export_range(0.0, 1.0, 0.01) var pain_shock_pull_peak: float = 0.55
+@export_range(0.0, 1.0, 0.01) var pain_shock_detach_peak: float = 0.85
+@export_range(0.1, 6.0, 0.05) var pain_shock_pull_decay_time: float = 1.6
+@export_range(0.1, 6.0, 0.05) var pain_shock_detach_decay_time: float = 2.5
+@export_range(0.01, 1.0, 0.01) var pain_shock_repeat_cooldown: float = 0.2
 
 var _hands: Dictionary = {}
 var _active_hand_id: StringName = &""
 var _hands_intro_completed: bool = false
 var _scream_player: AudioStreamPlayer = null
 var _scream_cooldown: float = 0.0
-var _pain_shock_rect: ColorRect = null
-var _pain_shock_material: ShaderMaterial = null
-var _pain_shock_intensity: float = 0.0
+var _pain_shock_tween: Tween = null
+var _pain_shock_repeat_timer: float = 0.0
+
+@onready var pain_overlay: ColorRect = $Control/PainColorRect
 
 func _ready() -> void:
 	super._ready()
 	_prepare_scream_player()
-	_prepare_pain_shock_overlay()
+	_reset_pain_shock_intensity()
 	_prepare_hands()
 
 func setup_game(_andrey_texture: Texture2D, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null, food_scenes: Array[PackedScene] = []) -> void:
@@ -60,7 +61,8 @@ func setup_game(_andrey_texture: Texture2D, count: int, music: AudioStream, win_
 func _process(delta: float) -> void:
 	if _scream_cooldown > 0.0:
 		_scream_cooldown = maxf(0.0, _scream_cooldown - delta)
-	_update_pain_shock(delta)
+	if _pain_shock_repeat_timer > 0.0:
+		_pain_shock_repeat_timer = maxf(0.0, _pain_shock_repeat_timer - delta)
 	if _hands_intro_completed:
 		return
 	if _active_hand_id == &"":
@@ -95,27 +97,6 @@ func _prepare_scream_player() -> void:
 	_scream_player.bus = "Sounds"
 	_scream_player.volume_db = scream_volume_db
 	add_child(_scream_player)
-
-func _prepare_pain_shock_overlay() -> void:
-	if _pain_shock_rect != null:
-		return
-	_pain_shock_rect = ColorRect.new()
-	_pain_shock_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_pain_shock_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_pain_shock_rect.color = Color.WHITE
-	_pain_shock_rect.z_index = 150
-	_pain_shock_rect.visible = false
-
-	_pain_shock_material = ShaderMaterial.new()
-	_pain_shock_material.shader = PAIN_SHOCK_SHADER
-	_pain_shock_material.set_shader_parameter("intensity", 0.0)
-	_pain_shock_rect.material = _pain_shock_material
-
-	var parent_control := get_node_or_null("Control") as Control
-	if parent_control != null:
-		parent_control.add_child(_pain_shock_rect)
-	else:
-		add_child(_pain_shock_rect)
 
 func _prepare_hands() -> void:
 	_hands.clear()
@@ -187,6 +168,7 @@ func _try_start_hand_drag(pointer_position: Vector2) -> void:
 	state.node.z_index = 8
 	state.grab_offset = state.node.global_position - pointer_position
 	_play_scream(true)
+	trigger_pain_shock(pain_shock_pull_peak, pain_shock_pull_decay_time)
 
 func _pick_hand_at_point(point: Vector2) -> StringName:
 	var best_id: StringName = &""
@@ -241,6 +223,9 @@ func _update_active_hand_drag(delta: float) -> void:
 	if pull_length > 3.0:
 		state.pull_progress = minf(1.0, state.pull_progress + (pull_length / 220.0) * unlock_progress_speed * delta)
 		_play_scream(false)
+		if _pain_shock_repeat_timer <= 0.0:
+			trigger_pain_shock(pain_shock_pull_peak, pain_shock_pull_decay_time)
+			_pain_shock_repeat_timer = pain_shock_repeat_cooldown
 
 	if state.pull_progress < 1.0:
 		return
@@ -248,6 +233,7 @@ func _update_active_hand_drag(delta: float) -> void:
 	state.is_free = true
 	state.grab_offset = state.node.global_position - pointer
 	_play_scream(true)
+	trigger_pain_shock(pain_shock_detach_peak, pain_shock_detach_decay_time)
 
 func _stop_active_hand_drag() -> void:
 	if _active_hand_id == &"":
@@ -269,6 +255,7 @@ func _finalize_removed_hand(state: HandState) -> void:
 	state.removed = true
 	state.node.visible = false
 	state.drip_node.visible = true
+	trigger_pain_shock(pain_shock_detach_peak, pain_shock_detach_decay_time)
 	_check_intro_completion()
 
 func _check_intro_completion() -> void:
@@ -294,32 +281,26 @@ func _resolve_drip_position(drip_point_path: NodePath, fallback_local: Vector2, 
 	var local_in_face: Vector2 = andrey_sprite.get_global_transform_with_canvas().affine_inverse() * point.global_position
 	return local_in_face - Vector2(drip_size.x * 0.5, 2.0)
 
-func _update_pain_shock(delta: float) -> void:
-	if _pain_shock_rect == null or _pain_shock_material == null:
+func _reset_pain_shock_intensity() -> void:
+	var material := _get_pain_material()
+	if material == null:
 		return
-	var target_intensity := _get_pain_shock_target_intensity()
-	var weight := clampf(delta * pain_shock_response_speed, 0.0, 1.0)
-	_pain_shock_intensity = lerpf(_pain_shock_intensity, target_intensity, weight)
-	if _pain_shock_intensity < 0.002 and target_intensity <= 0.001:
-		_pain_shock_intensity = 0.0
-	_pain_shock_rect.visible = _pain_shock_intensity > 0.0
-	_pain_shock_material.set_shader_parameter("intensity", _pain_shock_intensity)
+	material.set_shader_parameter("intensity", 0.0)
 
-func _get_pain_shock_target_intensity() -> float:
-	if _hands_intro_completed:
-		return 0.0
-	if _active_hand_id == &"":
-		return 0.0
-	var state: HandState = _hands.get(_active_hand_id, null) as HandState
-	if state == null or state.removed:
-		return 0.0
-	if state.is_free:
-		return pain_shock_free_intensity
-	return clampf(
-		pain_shock_pull_base_intensity + state.pull_progress * pain_shock_pull_bonus_intensity,
-		0.0,
-		1.0
-	)
+func _get_pain_material() -> ShaderMaterial:
+	if pain_overlay == null:
+		return null
+	return pain_overlay.material as ShaderMaterial
+
+func trigger_pain_shock(peak: float = 1.0, fade_time: float = 2.5) -> void:
+	var material := _get_pain_material()
+	if material == null:
+		return
+	if _pain_shock_tween != null and _pain_shock_tween.is_running():
+		_pain_shock_tween.kill()
+	material.set_shader_parameter("intensity", clampf(peak, 0.0, 1.0))
+	_pain_shock_tween = create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	_pain_shock_tween.tween_property(material, "shader_parameter/intensity", 0.0, maxf(0.01, fade_time))
 
 func _get_hand_anchor_tear_point(state: HandState) -> Vector2:
 	return state.base_global_pos + state.node.size * state.tear_uv
