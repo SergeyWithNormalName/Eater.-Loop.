@@ -3,6 +3,8 @@ extends InteractiveObject
 @export_group("Generator Settings")
 ## Список ламп, которые включатся.
 @export var linked_lights: Array[Node2D] = [] 
+## Активировать все лампы с флагом requires_generator в текущей сцене.
+@export var activate_required_lamps_in_scene: bool = true
 
 @export_group("Effects")
 ## Звук запуска (стартер).
@@ -13,8 +15,8 @@ extends InteractiveObject
 @export var on_animation: String = "work"
 
 # Ссылки на дочерние узлы (добавь их на сцену генератора!)
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var audio_player: AudioStreamPlayer2D = get_node_or_null("AudioStreamPlayer2D") as AudioStreamPlayer2D
+@onready var sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 
 func _on_interact() -> void:
 	# Если уже включен — просто пишем сообщение
@@ -48,6 +50,7 @@ func _on_interact() -> void:
 	for light in linked_lights:
 		if light and light.has_method("turn_on"):
 			light.turn_on()
+	_activate_required_lamps_in_scene()
 	
 	if UIMessage:
 		UIMessage.show_message("Питание восстановлено!")
@@ -63,5 +66,17 @@ func _on_start_sfx_finished() -> void:
 		# Отключаем сигнал, чтобы не зациклилось странно
 		if audio_player.finished.is_connected(_on_start_sfx_finished):
 			audio_player.finished.disconnect(_on_start_sfx_finished)
+
+func _activate_required_lamps_in_scene() -> void:
+	if not activate_required_lamps_in_scene:
+		return
+	var tree := get_tree()
+	if tree == null:
+		return
+	for lamp in tree.get_nodes_in_group("generator_required_lamp"):
+		if lamp == null:
+			continue
+		if lamp.has_method("turn_on"):
+			lamp.call("turn_on")
 			
 			

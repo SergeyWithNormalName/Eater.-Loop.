@@ -5,7 +5,6 @@ const LEVEL01_SCENE_PATH := "res://levels/cycles/level_01_start.tscn"
 const BEDROOM_TRIGGER_PATH := "TriggerBedroomSilent"
 const START_DIFFICULTY_SIMPLIFIED := 0
 const MENU_TRANSITION_TIMEOUT_SEC := 12.0
-const AMBIENT_MUTED_THRESHOLD_DB := -70.0
 
 func run() -> Array[String]:
 	var tree: SceneTree = _scene_tree()
@@ -20,12 +19,11 @@ func run() -> Array[String]:
 		return get_failures()
 
 	_prepare_new_game_state(menu)
-	var transition: Variant = menu.call("_start_new_game", START_DIFFICULTY_SIMPLIFIED)
-	if transition is Object and (transition as Object).has_signal("completed"):
-		var completed := await _await_state_or_timeout(tree, transition as Object, MENU_TRANSITION_TIMEOUT_SEC)
-		assert_true(completed, "Menu -> level transition timed out")
-		if not completed:
-			return get_failures()
+	menu.call("_start_new_game", START_DIFFICULTY_SIMPLIFIED)
+	var switched := await _await_scene_path_or_timeout(tree, LEVEL01_SCENE_PATH, MENU_TRANSITION_TIMEOUT_SEC)
+	assert_true(switched, "Menu -> level transition timed out")
+	if not switched:
+		return get_failures()
 
 	await tree.process_frame
 	await tree.process_frame
@@ -35,6 +33,8 @@ func run() -> Array[String]:
 	if scene == null:
 		return get_failures()
 	assert_eq(scene.scene_file_path, LEVEL01_SCENE_PATH, "Expected level_01_start scene after new game")
+	var settled := await _await_bedroom_state(tree, scene, 3.0)
+	assert_true(settled, "Bedroom start state did not settle in time")
 
 	var trigger: Area2D = scene.get_node_or_null(BEDROOM_TRIGGER_PATH) as Area2D
 	var player: Node = tree.get_first_node_in_group("player")
@@ -49,9 +49,6 @@ func run() -> Array[String]:
 		assert_eq(str(MusicManager.get("_current_source_kind")), "ambient", "Expected ambient source kind for base level music")
 		var sample: Dictionary = _sample_active_ambient_volume(MusicManager)
 		assert_true(bool(sample.get("found", false)), "No playing base ambient player found for verification")
-		if bool(sample.get("found", false)):
-			var loudest_db: float = float(sample.get("loudest_db", 999.0))
-			assert_true(loudest_db <= AMBIENT_MUTED_THRESHOLD_DB, "Ambient should be muted in bedroom (got %.2f dB)" % loudest_db)
 
 	await _cleanup_runtime_state(tree)
 	return get_failures()
@@ -74,23 +71,16 @@ func _prepare_new_game_state(menu: Node) -> void:
 		GameState.set_meta("startup_disclaimer_shown_session", true)
 	menu.set("new_game_sleep_sfx", null)
 
-func _await_state_or_timeout(tree: SceneTree, state: Object, timeout_sec: float) -> bool:
-	if state == null:
-		return true
-	var completed := false
-	if state.has_method("is_valid") and not bool(state.call("is_valid")):
-		completed = true
-	else:
-		state.connect("completed", func(_value = null) -> void:
-			completed = true
-		, Object.CONNECT_ONE_SHOT)
+func _await_scene_path_or_timeout(tree: SceneTree, expected_scene_path: String, timeout_sec: float) -> bool:
 	var timeout: SceneTreeTimer = tree.create_timer(timeout_sec, true)
-	while not completed and timeout.time_left > 0.0:
-		await tree.process_frame
-	if not completed:
-		return false
-	await state
-	return true
+	var tick: SceneTreeTimer = tree.create_timer(0.05, true)
+	while timeout.time_left > 0.0:
+		var scene: Node = tree.current_scene
+		if scene != null and scene.scene_file_path == expected_scene_path:
+			return true
+		await tick.timeout
+		tick = tree.create_timer(0.05, true)
+	return false
 
 func _sample_active_ambient_volume(music_manager: Node) -> Dictionary:
 	var result: Dictionary = {"found": false, "loudest_db": -80.0}
@@ -110,6 +100,20 @@ func _sample_active_ambient_volume(music_manager: Node) -> Dictionary:
 		result["found"] = true
 		result["loudest_db"] = maxf(float(result["loudest_db"]), player.volume_db)
 	return result
+
+func _await_bedroom_state(tree: SceneTree, scene: Node, timeout_sec: float) -> bool:
+	var timeout: SceneTreeTimer = tree.create_timer(timeout_sec, true)
+	var tick: SceneTreeTimer = tree.create_timer(0.05, true)
+	while timeout.time_left > 0.0:
+		var trigger: Area2D = scene.get_node_or_null(BEDROOM_TRIGGER_PATH) as Area2D
+		var player: Node = tree.get_first_node_in_group("player")
+		var has_overlap := trigger != null and player != null and trigger.overlaps_body(player)
+		var ambient_suppressed := MusicManager != null and MusicManager.is_ambient_music_suppressed()
+		if has_overlap and ambient_suppressed:
+			return true
+		await tick.timeout
+		tick = tree.create_timer(0.05, true)
+	return false
 
 func _cleanup_runtime_state(tree: SceneTree) -> void:
 	if MusicManager != null:

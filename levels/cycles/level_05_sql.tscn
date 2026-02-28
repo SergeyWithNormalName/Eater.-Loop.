@@ -1284,7 +1284,7 @@ metadata/_edit_group_ = true
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:58"
+start_game_time = "2:19"
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock" unique_id=955645102]
 position = Vector2(47.222225, 38.88893)
@@ -1467,7 +1467,7 @@ metadata/_edit_group_ = true
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:31"
+start_game_time = "2:19"
 
 [node name="PointLight2D" type="PointLight2D" parent="Clock2/WorldClock" unique_id=1147645521]
 position = Vector2(47.222225, 38.88893)
@@ -1485,7 +1485,7 @@ metadata/_edit_group_ = true
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:31"
+start_game_time = "2:19"
 
 [node name="PointLight2D" type="PointLight2D" parent="Clock3/WorldClock" unique_id=1226734639]
 position = Vector2(47.222225, 38.88893)

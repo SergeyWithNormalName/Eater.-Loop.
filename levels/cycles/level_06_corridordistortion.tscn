@@ -2194,7 +2194,7 @@ texture = ExtResource("52_4s1x1")
 [node name="WorldClock" parent="Bedroom1" unique_id=1004707882 instance=ExtResource("53_wcqfl")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
-start_game_time = "2:14"
+start_game_time = "2:52"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom1/WorldClock" unique_id=888033042]
@@ -3302,11 +3302,6 @@ texture = ExtResource("39_3jki4")
 [node name="TestNote2" type="Area2D" parent="." unique_id=178293667]
 position = Vector2(7082, 2411)
 script = ExtResource("77_jucsf")
-interact_message = null
-interact_area_node = null
-prompt_text = null
-auto_prompt = null
-handle_input = null
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote2" unique_id=1525320539]

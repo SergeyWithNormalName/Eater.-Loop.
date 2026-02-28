@@ -1219,16 +1219,16 @@ rocking_sound = ExtResource("72_fcrek")
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" parent="Hall/InteractableObjects/Fridge" index="1"]
+[node name="Sprite2D" parent="Hall/InteractableObjects/Fridge" index="1" unique_id=1299263173]
 texture = ExtResource("64_0ugqs")
 
-[node name="PointLight2D" parent="Hall/InteractableObjects/Fridge" index="2"]
+[node name="PointLight2D" parent="Hall/InteractableObjects/Fridge" index="2" unique_id=1829784290]
 position = Vector2(-64.67319, -28.980007)
 
-[node name="PointLight2D2" parent="Hall/InteractableObjects/Fridge" index="3"]
+[node name="PointLight2D2" parent="Hall/InteractableObjects/Fridge" index="3" unique_id=170307336]
 position = Vector2(-127.660934, -29.804386)
 
-[node name="AudioStreamPlayer2D" parent="Hall/InteractableObjects/Fridge" index="4"]
+[node name="AudioStreamPlayer2D" parent="Hall/InteractableObjects/Fridge" index="4" unique_id=1296501811]
 stream = ExtResource("54_d4hxy")
 volume_db = -2.5
 
@@ -3156,7 +3156,7 @@ texture = ExtResource("67_h2fjm")
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "3:17"
+start_game_time = "4:00"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock" unique_id=997169530]
@@ -3174,7 +3174,7 @@ texture = ExtResource("67_h2fjm")
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "3:17"
+start_game_time = "4:00"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock2/WorldClock" unique_id=102836104]
@@ -3192,7 +3192,7 @@ texture = ExtResource("67_h2fjm")
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "3:17"
+start_game_time = "4:00"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock3/WorldClock" unique_id=1316360504]
@@ -3448,7 +3448,7 @@ metadata/_edit_group_ = true
 position = Vector2(-94.444336, -61.111206)
 rotation = 0.002830834
 scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "0:21"
+start_game_time = "6:21"
 
 [node name="PointLight2D" type="PointLight2D" parent="Clock/WorldClock" unique_id=1209389313]
 position = Vector2(47.222225, 38.88893)

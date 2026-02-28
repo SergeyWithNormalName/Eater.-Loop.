@@ -3,6 +3,8 @@ extends InteractiveObject # Убедись, что наследуешься от
 @export_group("Lamp Settings")
 ## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
+## Требуется ли запуск генератора, чтобы лампа заработала.
+@export var requires_generator: bool = false
 ## Включена ли лампа при старте (автоматически дает электричество).
 @export var start_on: bool = false
 ## Звук включения лампы.
@@ -73,14 +75,13 @@ func _ready() -> void:
 		add_to_group("bedroom_lamp")
 	if not is_in_group("lamp"):
 		add_to_group("lamp")
+	if requires_generator and not is_in_group("generator_required_lamp"):
+		add_to_group("generator_required_lamp")
 	
-	# ИСПРАВЛЕНИЕ: Логика инициализации состояния
-	if start_on:
-		_has_power = true
-		_is_on = true
-	else:
-		_has_power = false
-		_is_on = false
+	# По умолчанию лампа работает без генератора.
+	# Для ламп с requires_generator питание появится после запуска генератора.
+	_has_power = not requires_generator
+	_is_on = start_on
 		
 	# Применяем состояние (false = без звука при старте)
 	_update_light_enabled(false)

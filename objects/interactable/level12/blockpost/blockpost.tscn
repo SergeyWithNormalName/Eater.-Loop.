@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ccep2nskcxpgh"]
+
+[ext_resource type="Script" uid="uid://c3smhk3wb4p6p" path="res://objects/interactable/level12/blockpost/blockpost.gd" id="1_blockpost"]
+[ext_resource type="Texture2D" uid="uid://dga46xtxqpjjv" path="res://objects/environment/university/KitchLenta.png" id="2_texture"]
+[ext_resource type="AudioStream" uid="uid://cd37yvfu7yjxc" path="res://objects/interactable/door/audio/door_locked1.wav" id="3_locked"]
+[ext_resource type="AudioStream" uid="uid://bt6thjww7aweb" path="res://objects/interactable/door/audio/door_open1.wav" id="4_open"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_blockpost"]
+size = Vector2(682, 328)
+
+[node name="Blockpost" type="Area2D" unique_id=1852257165]
+script = ExtResource("1_blockpost")
+target_marker = NodePath("PassMarker")
+door_texture = ExtResource("2_texture")
+sfx_locked = ExtResource("3_locked")
+sfx_open = ExtResource("4_open")
+prompt_text = "Proyti cherez blokpost"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1829100643]
+shape = SubResource("RectangleShape2D_blockpost")
+
+[node name="PassMarker" type="Marker2D" parent="." unique_id=910439765]
+position = Vector2(420, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=413277128]
+scale = Vector2(0.52, 0.52)
+texture = ExtResource("2_texture")
+
+[node name="Number" type="Sprite2D" parent="." unique_id=757705199]
+visible = false

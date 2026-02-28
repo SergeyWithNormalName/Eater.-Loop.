@@ -2547,13 +2547,15 @@ texture = ExtResource("54_88wv6")
 
 [node name="Door(To703Right)" parent="7thLevel/7thHall/InteractableObjects" unique_id=548559091 instance=ExtResource("55_v4cmy")]
 position = Vector2(12888, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("74_x357w")
 target_marker = NodePath("../../../703/InteractableObjects/Door(In703Right)")
 
 [node name="Door(To703Left)" parent="7thLevel/7thHall/InteractableObjects" unique_id=806914981 instance=ExtResource("55_v4cmy")]
 position = Vector2(11467, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("74_x357w")
 target_marker = NodePath("../../../703/InteractableObjects/Door(In703Left)")
 
@@ -8531,15 +8533,15 @@ time_limit = 12.0
 locked_sprite = ExtResource("66_fum3w")
 available_sprite = ExtResource("130_e4eaf")
 
-[node name="Note" parent="." unique_id=1771840164 instance=ExtResource("61_w8wei")]
+[node name="NoteStory" parent="." unique_id=1771840164 instance=ExtResource("61_w8wei")]
 position = Vector2(56205, 6573)
 reward_key_id = "key_6level"
-reward_subtitle = "На полке найден ключ"
+reward_subtitle = "Эти суки сами виноваты."
 
-[node name="CollisionShape2D" parent="Note" index="0"]
+[node name="CollisionShape2D" parent="NoteStory" index="0"]
 position = Vector2(-3, 4)
 
-[node name="Sprite2D" parent="Note" index="1"]
+[node name="Sprite2D" parent="NoteStory" index="1"]
 texture = null
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
@@ -8571,4 +8573,4 @@ texture = null
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]
-[editable path="Note"]
+[editable path="NoteStory"]

@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/interactable/level12/money/level12_money_system.gd" id="1_money"]
+
+[node name="Level12MoneySystem" type="Node"]
+script = ExtResource("1_money")
+required_money = 100

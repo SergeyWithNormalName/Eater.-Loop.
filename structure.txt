@@ -292,6 +292,8 @@
 │   │   ├── level_11_end.gd
 │   │   ├── level_11_end.gd.uid
 │   │   ├── level_12_STU_2.tscn
+│   │   ├── level_12_stu_2.gd
+│   │   ├── level_12_stu_2.gd.uid
 │   │   ├── level_13_STU_3.tscn
 │   │   ├── level_14_end.tscn
 │   │   ├── level_NSTU_test.tscn
@@ -1111,6 +1113,23 @@
 │       │   ├── lebedka.gd
 │       │   ├── lebedka.gd.uid
 │       │   └── lebedka.tscn
+│       ├── level12
+│       │   ├── blockpost
+│       │   │   ├── blockpost.gd
+│       │   │   ├── blockpost.gd.uid
+│       │   │   └── blockpost.tscn
+│       │   ├── money
+│       │   │   ├── level12_money_system.gd
+│       │   │   ├── level12_money_system.gd.uid
+│       │   │   └── level12_money_system.tscn
+│       │   ├── notebook
+│       │   │   ├── laptop_money.gd
+│       │   │   ├── laptop_money.gd.uid
+│       │   │   └── laptop_money.tscn
+│       │   └── student
+│       │       ├── student_money_npc.gd
+│       │       ├── student_money_npc.gd.uid
+│       │       └── student_money_npc.tscn
 │       ├── note
 │       │   ├── 1234.jpg
 │       │   ├── 1234.jpg.import
@@ -1269,14 +1288,28 @@
 │   │   ├── test_gamepad_pick_place_flow.gd.uid
 │   │   ├── test_gamepad_runtime_navigation.gd
 │   │   ├── test_gamepad_runtime_navigation.gd.uid
+│   │   ├── test_generator_activates_required_lamps.gd
+│   │   ├── test_generator_activates_required_lamps.gd.uid
 │   │   ├── test_input_actions.gd
 │   │   ├── test_input_actions.gd.uid
+│   │   ├── test_lamp_generator_requirement.gd
+│   │   ├── test_lamp_generator_requirement.gd.uid
+│   │   ├── test_level12_laptop_money_reward.gd
+│   │   ├── test_level12_laptop_money_reward.gd.uid
+│   │   ├── test_level12_money_system.gd
+│   │   ├── test_level12_money_system.gd.uid
+│   │   ├── test_level12_stu2_wiring_runtime.gd
+│   │   ├── test_level12_stu2_wiring_runtime.gd.uid
+│   │   ├── test_level12_student_reward.gd
+│   │   ├── test_level12_student_reward.gd.uid
 │   │   ├── test_minigame_gamepad_bindings.gd
 │   │   ├── test_minigame_gamepad_bindings.gd.uid
 │   │   ├── test_music_crossfade_suppression_runtime.gd
 │   │   ├── test_music_crossfade_suppression_runtime.gd.uid
 │   │   ├── test_musicmanager_private_api_usage.gd
 │   │   ├── test_musicmanager_private_api_usage.gd.uid
+│   │   ├── test_note_audio_optional.gd
+│   │   ├── test_note_audio_optional.gd.uid
 │   │   ├── test_project_config.gd
 │   │   ├── test_project_config.gd.uid
 │   │   ├── test_scenes_load.gd
@@ -1298,4 +1331,4 @@
 ├── project.godot
 └── structure.txt
 
-109 directories, 1190 files
+114 directories, 1218 files

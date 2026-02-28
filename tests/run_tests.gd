@@ -53,19 +53,21 @@ func _run_test(path: String) -> Array[String]:
     var result: Variant = test.call("run")
     if result is Object and result.has_signal("completed"):
         var state: Object = result
-        var completed := false
         if state.has_method("is_valid") and not bool(state.call("is_valid")):
-            completed = true
+            result = null
         else:
+            var status := {"completed": false}
             state.connect("completed", func(_value = null) -> void:
-                completed = true
+                status["completed"] = true
             , Object.CONNECT_ONE_SHOT)
-        var timeout := create_timer(TEST_TIMEOUT_SECONDS, true)
-        while not completed and timeout.time_left > 0.0:
-            await process_frame
-        if not completed:
-            return ["Timed out after %.1f sec" % TEST_TIMEOUT_SECONDS]
-        result = await state
+            var timeout := create_timer(TEST_TIMEOUT_SECONDS, true)
+            var tick := create_timer(0.05, true)
+            while not bool(status["completed"]) and timeout.time_left > 0.0:
+                await tick.timeout
+                tick = create_timer(0.05, true)
+            if not bool(status["completed"]):
+                return ["Timed out after %.1f sec" % TEST_TIMEOUT_SECONDS]
+            result = null
     if result == null and test.has_method("get_failures"):
         return test.get_failures()
     if result is Array:

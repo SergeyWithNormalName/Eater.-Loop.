@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/interactable/notebook/laptop_STU.tscn" id="1_base"]
+[ext_resource type="Script" path="res://objects/interactable/level12/notebook/laptop_money.gd" id="2_script"]
+
+[node name="LaptopMoney" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+prompt_text = "Sdelat labu za dengi"

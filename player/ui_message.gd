@@ -349,11 +349,13 @@ func _on_subtitle_timeout() -> void:
 func fade_out(duration: float = 0.5) -> void:
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
 	var tween = create_tween()
-	await tween.tween_property(_fade_rect, "color:a", 1.0, duration).finished
+	tween.tween_property(_fade_rect, "color:a", 1.0, duration)
+	await tween.finished
 
 func fade_in(duration: float = 0.5) -> void:
 	var tween = create_tween()
-	await tween.tween_property(_fade_rect, "color:a", 0.0, duration).finished
+	tween.tween_property(_fade_rect, "color:a", 0.0, duration)
+	await tween.finished
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func play_fade_sequence(fade_out_duration: float, fade_in_duration: float, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
