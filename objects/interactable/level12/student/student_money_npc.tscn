@@ -1,19 +1,19 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bb78mt7j8o84m"]
 
-[ext_resource type="Script" path="res://objects/interactable/level12/student/student_money_npc.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://enemies/light_sensitive/Monster_2.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://bukbvlmpodiar" path="res://objects/interactable/level12/student/student_money_npc.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cwmue6vsgu0w8" path="res://enemies/light_only/sprites/Max.png" id="2_6ksor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_student"]
 size = Vector2(260, 520)
 
-[node name="StudentMoneyNPC" type="Area2D"]
+[node name="StudentMoneyNPC" type="Area2D" unique_id=643407410]
 script = ExtResource("1_script")
 prompt_text = "Pogovorit so studentom"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=552361323]
 shape = SubResource("RectangleShape2D_student")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=515011090]
 position = Vector2(0, -20)
 scale = Vector2(0.33, 0.33)
-texture = ExtResource("2_sprite")
+texture = ExtResource("2_6ksor")

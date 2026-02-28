@@ -1,23 +1,25 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://bx006q3826ui6"]
 
-[ext_resource type="Script" path="res://levels/minigames/feeding/final_feed_minigame.gd" id="1_final_feed"]
+[ext_resource type="Script" uid="uid://yr1rkdqelry7" path="res://levels/minigames/feeding/final_feed_minigame.gd" id="1_final_feed"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="2_background"]
+[ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="2_vn3fx"]
 [ext_resource type="Texture2D" uid="uid://bookuyu7wubkp" path="res://levels/minigames/feeding/andreys_faces/BasicEat.png" id="3_face"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mouth"]
 radius = 61.13101
 
-[node name="FeedMiniGameFinal" type="CanvasLayer"]
+[node name="FeedMiniGameFinal" type="CanvasLayer" unique_id=698168078]
 process_mode = 3
 script = ExtResource("1_final_feed")
+eat_sound = ExtResource("2_vn3fx")
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-bus = "Music"
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1691705562]
+bus = &"Music"
 
-[node name="SoundsPlayer" type="AudioStreamPlayer" parent="."]
-bus = "Sounds"
+[node name="SoundsPlayer" type="AudioStreamPlayer" parent="." unique_id=375191158]
+bus = &"Sounds"
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=625178214]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,12 +27,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackFon" type="Sprite2D" parent="Control"]
-texture = ExtResource("2_background")
+[node name="BackFon" type="Sprite2D" parent="Control" unique_id=1515044140]
 position = Vector2(960, 540)
 scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_background")
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1622679447]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.50980395)
 
-[node name="AndreyFace" type="TextureRect" parent="Control"]
+[node name="AndreyFace" type="TextureRect" parent="Control" unique_id=1945199373]
 layout_mode = 0
 offset_left = 82.0
 offset_top = 143.0
@@ -47,11 +49,11 @@ offset_right = 824.0
 offset_bottom = 1339.9712
 texture = ExtResource("3_face")
 
-[node name="MouthArea" type="Area2D" parent="Control/AndreyFace"]
+[node name="MouthArea" type="Area2D" parent="Control/AndreyFace" unique_id=1867156320]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/AndreyFace/MouthArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/AndreyFace/MouthArea" unique_id=966691232]
 position = Vector2(534, 298)
 shape = SubResource("CircleShape2D_mouth")
 
-[node name="FoodContainer" type="Node2D" parent="Control"]
+[node name="FoodContainer" type="Node2D" parent="Control" unique_id=2039806070]
 position = Vector2(1407, 694)

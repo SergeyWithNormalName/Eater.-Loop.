@@ -99,6 +99,9 @@ var _base_pause_restore_db: float = 0.0
 var _base_pause_stream: AudioStream
 var _base_pause_position: float = 0.0
 var _ambient_suppression_sources: Dictionary = {}
+var _pending_ambient_stream: AudioStream
+var _pending_ambient_volume_db: float = 999.0
+var _pending_ambient_fade_time: float = -1.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -278,6 +281,7 @@ func reset_base_music_state() -> void:
 	_base_pause_reasons.clear()
 	_base_pause_active = false
 	_chase_base_muted = false
+	_clear_pending_ambient_request()
 
 func get_current_stream() -> AudioStream:
 	return _current_stream
@@ -304,21 +308,31 @@ func remove_music_from_stack_by_source_id(source_id: int) -> void:
 
 func play_ambient_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	if stream == null:
+		_clear_pending_ambient_request()
 		stop_music(fade_time)
 		return
 	var target_volume := resolve_mix_volume_db(MIX_AMBIENT, volume_db)
+	if is_ambient_music_suppressed():
+		_set_pending_ambient_request(stream, target_volume, fade_time)
+		_stop_base_music_if_playing()
+		return
+	_clear_pending_ambient_request()
 	play_music(stream, fade_time, target_volume, 0.0, 999.0, 0, SOURCE_KIND_AMBIENT)
 
 func play_menu_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	if stream == null:
+		_clear_pending_ambient_request()
 		stop_music(fade_time)
 		return
+	_clear_pending_ambient_request()
 	var target_volume := resolve_mix_volume_db(MIX_MENU, volume_db)
 	play_music(stream, fade_time, target_volume, 0.0, 999.0, 0, SOURCE_KIND_MENU)
 
 func stop_ambient_music(stream: AudioStream, fade_time: float = -1.0) -> void:
 	if stream == null:
 		return
+	if _pending_ambient_stream == stream:
+		_clear_pending_ambient_request()
 	if _current_stream == stream:
 		stop_music(fade_time)
 	remove_music_from_stack(stream)
@@ -457,8 +471,20 @@ func set_ambient_music_suppressed(source: Object, suppressed: bool, fade_time: f
 	var is_suppressed := is_ambient_music_suppressed()
 	if was_suppressed == is_suppressed:
 		return
+	if is_suppressed:
+		var stopped_ambient := _capture_active_ambient_as_pending(fade_time)
+		if _base_pause_active:
+			_base_pause_restore_db = _get_base_target_volume_db(_current_source_kind)
+			return
+		if stopped_ambient:
+			return
+		_sync_base_music_output(fade_time)
+		return
+	var played_pending := _play_pending_ambient_if_possible(fade_time)
 	if _base_pause_active:
 		_base_pause_restore_db = _get_base_target_volume_db(_current_source_kind)
+		return
+	if played_pending:
 		return
 	_sync_base_music_output(fade_time)
 
@@ -470,8 +496,11 @@ func _on_ambient_suppression_source_exited(source_id: int) -> void:
 	if not _ambient_suppression_sources.has(source_id):
 		return
 	_ambient_suppression_sources.erase(source_id)
+	var played_pending := _play_pending_ambient_if_possible(0.0)
 	if _base_pause_active:
 		_base_pause_restore_db = _get_base_target_volume_db(_current_source_kind)
+		return
+	if played_pending:
 		return
 	_sync_base_music_output(0.0)
 
@@ -487,6 +516,59 @@ func _cleanup_ambient_suppression_sources() -> void:
 				stale_ids.append(id)
 	for id in stale_ids:
 		_ambient_suppression_sources.erase(id)
+
+func _set_pending_ambient_request(stream: AudioStream, mixed_volume_db: float, fade_time: float) -> void:
+	_pending_ambient_stream = stream
+	_pending_ambient_volume_db = mixed_volume_db
+	_pending_ambient_fade_time = fade_time
+
+func _clear_pending_ambient_request() -> void:
+	_pending_ambient_stream = null
+	_pending_ambient_volume_db = 999.0
+	_pending_ambient_fade_time = -1.0
+
+func _stop_active_ambient_if_playing() -> void:
+	if _current_source_kind != SOURCE_KIND_AMBIENT:
+		return
+	var player := _resolve_base_output_player()
+	if player == null or not player.playing:
+		return
+	stop_music(0.0)
+
+func _stop_base_music_if_playing() -> void:
+	var player := _resolve_base_output_player()
+	if player == null or not player.playing:
+		return
+	stop_music(0.0)
+
+func _capture_active_ambient_as_pending(fade_time: float = -1.0) -> bool:
+	if _base_pause_active:
+		return false
+	if _current_source_kind != SOURCE_KIND_AMBIENT:
+		return false
+	if _current_stream == null:
+		return false
+	var player := _resolve_base_output_player()
+	if player == null or not player.playing:
+		return false
+	_set_pending_ambient_request(_current_stream, _base_volume_db, fade_time)
+	_stop_active_ambient_if_playing()
+	return true
+
+func _play_pending_ambient_if_possible(fade_time_override: float = -1.0) -> bool:
+	if _pending_ambient_stream == null:
+		return false
+	if is_ambient_music_suppressed():
+		return false
+	var stream := _pending_ambient_stream
+	var volume := _pending_ambient_volume_db
+	var pending_fade := _pending_ambient_fade_time
+	_clear_pending_ambient_request()
+	var target_fade := pending_fade
+	if fade_time_override >= 0.0:
+		target_fade = fade_time_override
+	play_music(stream, target_fade, volume, 0.0, 999.0, 0, SOURCE_KIND_AMBIENT)
+	return true
 
 func set_chase_music_source(source: Object, active: bool, stream: AudioStream = null, volume_db: float = 999.0, fade_out_time: float = -1.0) -> void:
 	if source == null:

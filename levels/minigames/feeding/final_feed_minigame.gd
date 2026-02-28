@@ -186,3 +186,10 @@ func _play_stage_glitch_sfx() -> void:
 		return
 	if UIMessage != null and UIMessage.has_method("play_sfx"):
 		UIMessage.play_sfx(stage_glitch_sfx, stage_glitch_sfx_volume_db, 1.0)
+
+func _win() -> void:
+	_is_won = true
+	if MinigameController:
+		MinigameController.stop_minigame_music(music_suspend_fade_time)
+	# Для финальной feeding-миниигры в level_14_end отключаем win-sfx (Poel_1.wav).
+	get_tree().create_timer(finish_delay).timeout.connect(_close_game)

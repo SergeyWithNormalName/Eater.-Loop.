@@ -257,6 +257,8 @@
 │   ├── export_presets.cfg
 │   ├── iconofgame.png
 │   ├── iconofgame.png.import
+│   ├── itchio.jpg
+│   ├── itchio.jpg.import
 │   ├── Иконка_предварительно.icns
 │   └── Иконка_предварительно.ico
 ├── levels
@@ -291,6 +293,8 @@
 │   │   ├── level_11_STU_1.tscn
 │   │   ├── level_11_end.gd
 │   │   ├── level_11_end.gd.uid
+│   │   ├── level_11_stu_1.gd
+│   │   ├── level_11_stu_1.gd.uid
 │   │   ├── level_12_STU_2.tscn
 │   │   ├── level_12_stu_2.gd
 │   │   ├── level_12_stu_2.gd.uid
@@ -312,6 +316,8 @@
 │   ├── menu
 │   │   ├── MainMenuBackground.png
 │   │   ├── MainMenuBackground.png.import
+│   │   ├── cold_bloom_fade.gdshader
+│   │   ├── cold_bloom_fade.gdshader.uid
 │   │   ├── disclaimer_screen.gd
 │   │   ├── disclaimer_screen.gd.uid
 │   │   ├── disclaimer_screen.tscn
@@ -719,6 +725,8 @@
 │   │   │   │   │   ├── Window1.png.import
 │   │   │   │   │   ├── Window2.png
 │   │   │   │   │   ├── Window2.png.import
+│   │   │   │   │   ├── Window2Morning.png
+│   │   │   │   │   ├── Window2Morning.png.import
 │   │   │   │   │   ├── Window3.png
 │   │   │   │   │   ├── Window3.png.import
 │   │   │   │   │   ├── WindowKilled1.png
@@ -728,7 +736,9 @@
 │   │   │   │   │   ├── WindowKilled3.png
 │   │   │   │   │   ├── WindowKilled3.png.import
 │   │   │   │   │   ├── WindowWithMonster.png
-│   │   │   │   │   └── WindowWithMonster.png.import
+│   │   │   │   │   ├── WindowWithMonster.png.import
+│   │   │   │   │   ├── Windows3Morning.png
+│   │   │   │   │   └── Windows3Morning.png.import
 │   │   │   │   ├── Balka.png
 │   │   │   │   ├── Balka.png.import
 │   │   │   │   ├── BigChain.png
@@ -1331,4 +1341,4 @@
 ├── project.godot
 └── structure.txt
 
-114 directories, 1218 files
+114 directories, 1228 files

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bxjrvr1ri8lfh"]
+[gd_scene load_steps=14 format=3 uid="uid://bxjrvr1ri8lfh"]
 
 [ext_resource type="Script" uid="uid://ircg1tjrp7qr" path="res://levels/menu/main_menu.gd" id="1_main_menu_script"]
 [ext_resource type="PackedScene" path="res://levels/menu/main_settings_panel.tscn" id="2_settings_panel"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bkxfm51r6vlro" path="res://music/StressMusic.wav" id="5_menu_music"]
 [ext_resource type="PackedScene" uid="uid://cc6ehxxoauhyn" path="res://levels/cycles/level_01_start.tscn" id="6_level_01"]
 [ext_resource type="Texture2D" uid="uid://cqt3na311ltmq" path="res://levels/menu/MainMenuBackground.png" id="7_menu_bg"]
+[ext_resource type="Shader" path="res://levels/menu/cold_bloom_fade.gdshader" id="8_cold_bloom_shader"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 content_margin_left = 36.0
@@ -73,6 +74,9 @@ corner_radius_bottom_left = 14
 anti_aliasing = true
 anti_aliasing_size = 1.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cold_bloom"]
+shader = ExtResource("8_cold_bloom_shader")
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -111,6 +115,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+material = SubResource("ShaderMaterial_cold_bloom")
 color = Color(0.25, 0.45, 0.98, 0.13)
 
 [node name="Vignette" type="ColorRect" parent="."]

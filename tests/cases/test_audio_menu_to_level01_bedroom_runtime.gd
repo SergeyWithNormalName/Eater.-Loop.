@@ -46,9 +46,8 @@ func run() -> Array[String]:
 	assert_true(MusicManager != null, "MusicManager autoload is missing")
 	if MusicManager != null:
 		assert_true(MusicManager.is_ambient_music_suppressed(), "Ambient suppression must be active at level start in bedroom")
-		assert_eq(str(MusicManager.get("_current_source_kind")), "ambient", "Expected ambient source kind for base level music")
 		var sample: Dictionary = _sample_active_ambient_volume(MusicManager)
-		assert_true(bool(sample.get("found", false)), "No playing base ambient player found for verification")
+		assert_true(not bool(sample.get("found", false)), "Ambient playback must stay stopped while bedroom suppression is active")
 
 	await _cleanup_runtime_state(tree)
 	return get_failures()

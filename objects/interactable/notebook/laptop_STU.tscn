@@ -25,6 +25,7 @@ gradient = SubResource("Gradient_twaj4")
 
 [node name="Laptop" type="Area2D" unique_id=302000911]
 script = ExtResource("1_iassh")
+completed_message = "Я уже сдал эту работу, и всех всё устроило."
 locked_sprite = ExtResource("2_bs8at")
 available_sprite = ExtResource("3_8escd")
 sprite_node = NodePath("TableUPcOn")

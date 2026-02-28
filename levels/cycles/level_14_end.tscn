@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://dkiqee0or6cla" path="res://objects/environment/sprites/hall/Boots6.png" id="38_l5t4u"]
 [ext_resource type="Texture2D" uid="uid://oq1gpkqxc4q6" path="res://objects/environment/sprites/kitchen/Urna.png" id="39_q4djo"]
 [ext_resource type="Texture2D" uid="uid://d134gyj8cprhb" path="res://objects/environment/background/decals/HoleInWall6.png" id="40_isqb2"]
-[ext_resource type="Texture2D" uid="uid://d2bwhc4wjqat7" path="res://objects/environment/sprites/allrooms/windows/Window3.png" id="41_ib8r8"]
+[ext_resource type="Texture2D" uid="uid://bnktaiab7mnu4" path="res://objects/environment/sprites/allrooms/windows/Windows3Morning.png" id="42_p1vf4"]
 [ext_resource type="Texture2D" uid="uid://0nnqdhgtkcgf" path="res://objects/environment/sprites/allrooms/OpenShtora.png" id="42_wch37"]
 [ext_resource type="Texture2D" uid="uid://qnkqiqbu5neh" path="res://objects/environment/sprites/hall/Battery.png" id="43_s88f7"]
 [ext_resource type="Texture2D" uid="uid://cocl8ggjke7cp" path="res://objects/interactable/door/sprites/DoorExit.png" id="44_rqxkn"]
@@ -62,16 +62,16 @@
 [ext_resource type="Texture2D" uid="uid://jdik5gs6i1me" path="res://objects/environment/sprites/bedroom/Sweets.png" id="61_65gmu"]
 [ext_resource type="Texture2D" uid="uid://dsohjj4aoi6fw" path="res://objects/environment/sprites/bedroom/Powerbank2.png" id="62_bat0r"]
 [ext_resource type="Texture2D" uid="uid://c2sjp6c63e3am" path="res://objects/environment/sprites/bedroom/UsedFood.png" id="63_gahgw"]
-[ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_aiuoe"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_51ai1"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_q2t52"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_nkd8f"]
+[ext_resource type="Texture2D" uid="uid://bkbo1qvp8brna" path="res://objects/environment/sprites/allrooms/windows/Window2Morning.png" id="68_ru48q"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_sp8fe"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_fewya"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="70_nlvqe"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="71_llm_game"]
 [ext_resource type="Script" uid="uid://cnstjn1x553py" path="res://objects/interactable/fridge/final_ending_fridge.gd" id="72_final_fridge"]
-[ext_resource type="PackedScene" path="res://levels/minigames/feeding/final_feed_minigame.tscn" id="73_final_feed"]
+[ext_resource type="PackedScene" uid="uid://bx006q3826ui6" path="res://levels/minigames/feeding/final_feed_minigame.tscn" id="73_final_feed"]
 [ext_resource type="PackedScene" path="res://levels/endings/bad_ending_screen.tscn" id="74_bad_end"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
@@ -92,11 +92,12 @@ fill_from = Vector2(0.5, 0.5)
 position = Vector2(16, 0)
 script = ExtResource("1_bjoj5")
 bad_ending_scene = ExtResource("74_bad_end")
+laptop_sleep_prompt = "Теперь можно спокойно идти спать"
 cycle_number = 14
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=611295868]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.56378925, 0.5457313, 0.68298554, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=864071025]
 
@@ -623,7 +624,7 @@ texture = ExtResource("40_isqb2")
 z_index = -4
 position = Vector2(10323, -45.50812)
 scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("41_ib8r8")
+texture = ExtResource("42_p1vf4")
 
 [node name="OpenShtora2" type="Sprite2D" parent="Hall/Sprites" unique_id=1701857225]
 z_index = -3
@@ -911,7 +912,7 @@ texture = ExtResource("42_wch37")
 z_index = -4
 position = Vector2(-2359.8748, -52.50812)
 scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("64_aiuoe")
+texture = ExtResource("68_ru48q")
 
 [node name="Rozetka1" type="Sprite2D" parent="Bedroom/Sprites" unique_id=565201795]
 z_index = -3

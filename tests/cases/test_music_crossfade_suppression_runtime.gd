@@ -2,7 +2,6 @@ extends "res://tests/test_case.gd"
 
 const MENU_STREAM_PATH := "res://music/StressMusic.wav"
 const AMBIENT_STREAM_PATH := "res://music/InsideAmbient.wav"
-const MUTED_THRESHOLD_DB := -70.0
 
 func run() -> Array[String]:
 	assert_true(MusicManager != null, "MusicManager autoload is missing")
@@ -34,8 +33,9 @@ func run() -> Array[String]:
 		return get_failures()
 	await tree.create_timer(0.45, true).timeout
 
-	assert_true(to_player.playing, "Crossfade target player must stay playing after suppression")
-	assert_true(to_player.volume_db <= MUTED_THRESHOLD_DB, "Crossfade target ambient must be muted after suppression (got %.2f dB)" % to_player.volume_db)
+	assert_true(not to_player.playing, "Crossfade target ambient must stop while suppression is active")
+	assert_true(not from_player.playing, "Crossfade source must stop while ambient suppression is active")
+	assert_eq(MusicManager.get("_pending_ambient_stream"), ambient_stream, "Ambient stream must be queued for restart after suppression")
 
 	_cleanup_music_manager_state(from_player, to_player)
 	return get_failures()

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dqjk1yfsy7tsq"]
 
-[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_upyn3"]
+[ext_resource type="Script" uid="uid://drerk2bb2e3c3" path="res://levels/cycles/level_11_stu_1.gd" id="1_upyn3"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_yl6qn"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="3_0grpv"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="4_g6lqu"]
@@ -169,7 +169,7 @@ timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.23529412, 0.23529412, 0.27450982, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -841,6 +841,8 @@ texture = ExtResource("60_sfw4l")
 
 [node name="Door(StairsRight)" parent="9thLevel/9thHall/InteractableObjects" unique_id=1956809106 instance=ExtResource("28_hov4k")]
 position = Vector2(13843, 81)
+is_locked = true
+door_locked_message = "Дверь заперта"
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -3780,7 +3782,6 @@ texture = ExtResource("85_es6o5")
 
 [node name="Door(In604)" parent="6thLevel/604/InteractableObjects" unique_id=284592550 instance=ExtResource("55_v4cmy")]
 position = Vector2(14571, 83)
-is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
 required_key_id = "key_6level"
@@ -8530,6 +8531,7 @@ music_on_exit = 9
 position = Vector2(47060, -7123)
 minigame_scene = ExtResource("129_jqckr")
 time_limit = 12.0
+completed_message = "Я уже сделал эту работу, и всех всё устроило."
 locked_sprite = ExtResource("66_fum3w")
 available_sprite = ExtResource("130_e4eaf")
 

@@ -132,8 +132,7 @@
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_gy0x1"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_yuqxs"]
 [ext_resource type="PackedScene" path="res://objects/interactable/level12/money/level12_money_system.tscn" id="132_nwjpy"]
-[ext_resource type="PackedScene" path="res://objects/interactable/level12/student/student_money_npc.tscn" id="133_hca3w"]
-[ext_resource type="PackedScene" path="res://objects/interactable/level12/blockpost/blockpost.tscn" id="134_3n8qo"]
+[ext_resource type="PackedScene" uid="uid://bb78mt7j8o84m" path="res://objects/interactable/level12/student/student_money_npc.tscn" id="133_hca3w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_vgh3a")
@@ -173,7 +172,7 @@ timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.23529412, 0.23529412, 0.27450982, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -402,7 +401,7 @@ texture = SubResource("GradientTexture2D_pgutp")
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" unique_id=1200285345 instance=ExtResource("28_vkruc")]
 position = Vector2(-1581, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../7thLevel/7thHall/InteractableObjects/Door(To701)")
+target_marker = NodePath("../../../2thLevel/2thHall/InteractableObjects/Door(To202)")
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1523049142 instance=ExtResource("29_moo7p")]
 position = Vector2(-2420, 226)
@@ -3790,7 +3789,8 @@ target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
 required_key_id = "key_6level"
 
 [node name="Fridge" parent="6thLevel/604/InteractableObjects" unique_id=540039702 instance=ExtResource("86_0af5o")]
-position = Vector2(14188, 98)
+z_index = 1
+position = Vector2(-30125, 38073)
 minigame_scene = ExtResource("87_oo34e")
 food_scenes = Array[PackedScene]([ExtResource("88_txkp3")])
 food_count = 6
@@ -5423,6 +5423,8 @@ target_marker = NodePath("../../../402/InteractableObjects/Door(In402)")
 
 [node name="Door(StairsLeft)" parent="4thLevel/4thHall/InteractableObjects" unique_id=2014962743 instance=ExtResource("28_vkruc")]
 position = Vector2(7321, 81)
+is_locked = true
+door_locked_message = "Дверь заперта"
 target_marker = NodePath("../../../../5thLevel/5thHall/InteractableObjects/Door(StairsLeft)")
 door_texture = null
 metadata/_edit_group_ = true
@@ -8024,7 +8026,8 @@ texture = ExtResource("60_3ulto")
 
 [node name="Door(ToApple)" parent="1thLevel/1thHall/InteractableObjects" unique_id=988882064 instance=ExtResource("28_vkruc")]
 position = Vector2(9266.874, 81)
-target_marker = NodePath("../../../../Basement/InteractableObjects/Door(Basement)")
+is_locked = true
+door_locked_message = "Дверь заперта"
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -8064,174 +8067,6 @@ texture = ExtResource("117_qmcx7")
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 number_texture = ExtResource("108_6r356")
-
-[node name="Stolovaya" type="Node2D" parent="1thLevel" unique_id=238093817]
-position = Vector2(59287, 0)
-
-[node name="Background" type="Node2D" parent="1thLevel/Stolovaya" unique_id=942471983]
-
-[node name="WallBack" type="Sprite2D" parent="1thLevel/Stolovaya/Background" unique_id=289369482]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8352, 19)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("112_wcxm0")
-region_enabled = true
-region_rect = Rect2(0, 0, 9000, 1100)
-
-[node name="WallBack2" type="Sprite2D" parent="1thLevel/Stolovaya/Background" unique_id=578352682]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12849, 19)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("112_wcxm0")
-region_enabled = true
-region_rect = Rect2(0, 0, 9000, 1100)
-
-[node name="Floor" parent="1thLevel/Stolovaya/Background" unique_id=1490854438 instance=ExtResource("33_a7dha")]
-z_index = -5
-position = Vector2(10604, 326)
-floor_texture = ExtResource("113_rlfe0")
-size = Vector2(9000, 110)
-tiling = Vector2(32, 3)
-perspective_amount = 1.75
-horizon = -3.73
-edge_strength = 0.11
-edge_power = 0.55
-center_width = 0.0
-edge_end = 2.0
-max_distance = 1.99
-fade_length = 0.0
-
-[node name="Walls" type="Node2D" parent="1thLevel/Stolovaya" unique_id=945275205]
-
-[node name="WallBelow_1" parent="1thLevel/Stolovaya/Walls" unique_id=371090948 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(6461, 400)
-
-[node name="WallBelow_2" parent="1thLevel/Stolovaya/Walls" unique_id=1917003705 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(7243.0005, 400)
-
-[node name="WallBelow_3" parent="1thLevel/Stolovaya/Walls" unique_id=1190609391 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(8031, 400)
-
-[node name="WallBelow_4" parent="1thLevel/Stolovaya/Walls" unique_id=691042353 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(8813, 400)
-
-[node name="WallBelow_5" parent="1thLevel/Stolovaya/Walls" unique_id=63385022 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(9465, 400)
-
-[node name="WallBelow_6" parent="1thLevel/Stolovaya/Walls" unique_id=1149990611 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(10247, 400)
-
-[node name="WallAbove_1" parent="1thLevel/Stolovaya/Walls" unique_id=2005197384 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(6461.0005, -271)
-
-[node name="WallAbove_2" parent="1thLevel/Stolovaya/Walls" unique_id=1050166863 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(7243.0005, -271)
-
-[node name="WallAbove_3" parent="1thLevel/Stolovaya/Walls" unique_id=1096036607 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(8031.0005, -271)
-
-[node name="WallAbove_4" parent="1thLevel/Stolovaya/Walls" unique_id=621848667 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(8813, -271)
-
-[node name="WallAbove_5" parent="1thLevel/Stolovaya/Walls" unique_id=739854081 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(9465, -271)
-
-[node name="WallAbove_6" parent="1thLevel/Stolovaya/Walls" unique_id=362371172 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(10247, -271)
-
-[node name="WallBelow_7" parent="1thLevel/Stolovaya/Walls" unique_id=1927588678 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(10958, 400)
-
-[node name="WallBelow_8" parent="1thLevel/Stolovaya/Walls" unique_id=38793446 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(11740, 400)
-
-[node name="WallBelow_9" parent="1thLevel/Stolovaya/Walls" unique_id=507617334 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(12528, 400)
-
-[node name="WallBelow_10" parent="1thLevel/Stolovaya/Walls" unique_id=1060983304 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(13310, 400)
-
-[node name="WallBelow_11" parent="1thLevel/Stolovaya/Walls" unique_id=1600951670 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(13962, 400)
-
-[node name="WallBelow_12" parent="1thLevel/Stolovaya/Walls" unique_id=1401005635 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(14744, 400)
-
-[node name="WallAbove_7" parent="1thLevel/Stolovaya/Walls" unique_id=1246019013 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(10958, -271)
-
-[node name="WallAbove_8" parent="1thLevel/Stolovaya/Walls" unique_id=448269308 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(11740, -271)
-
-[node name="WallAbove_9" parent="1thLevel/Stolovaya/Walls" unique_id=1323421399 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(12528, -271)
-
-[node name="WallAbove_10" parent="1thLevel/Stolovaya/Walls" unique_id=183932125 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(13310, -271)
-
-[node name="WallAbove_11" parent="1thLevel/Stolovaya/Walls" unique_id=1601012339 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(13962, -271)
-
-[node name="WallAbove_12" parent="1thLevel/Stolovaya/Walls" unique_id=1678758463 instance=ExtResource("8_2574q")]
-z_index = 10
-position = Vector2(14744, -271)
-
-[node name="WallLeft" parent="1thLevel/Stolovaya/Walls" unique_id=2030478895 instance=ExtResource("7_4q6d4")]
-z_index = 10
-position = Vector2(15119, 64)
-
-[node name="WallRight" parent="1thLevel/Stolovaya/Walls" unique_id=358257789 instance=ExtResource("7_4q6d4")]
-z_index = 10
-position = Vector2(6089, 63.860657)
-
-[node name="Sprites" type="Node2D" parent="1thLevel/Stolovaya" unique_id=205670882]
-
-[node name="DownStairs3" type="Sprite2D" parent="1thLevel/Stolovaya/Sprites" unique_id=1007935295]
-position = Vector2(7058.9995, 7581)
-scale = Vector2(0.13, 0.13)
-texture = ExtResource("53_x4t6y")
-
-[node name="InteractableObjects" type="Node2D" parent="1thLevel/Stolovaya" unique_id=679357429]
-
-[node name="Door(ToApple)" parent="1thLevel/Stolovaya/InteractableObjects" unique_id=685025302 instance=ExtResource("28_vkruc")]
-position = Vector2(7527.999, 81)
-target_marker = NodePath("../../../../Basement/InteractableObjects/Door(Basement)")
-door_texture = null
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" parent="1thLevel/Stolovaya/InteractableObjects/Door(ToApple)" index="0"]
-position = Vector2(0.25, 0.39453125)
-shape = SubResource("RectangleShape2D_kxkc2")
-
-[node name="Sprite2D" parent="1thLevel/Stolovaya/InteractableObjects/Door(ToApple)" index="2"]
-position = Vector2(1.4901161e-08, -3.999999)
-scale = Vector2(0.64408255, 0.56408244)
-texture = ExtResource("116_qh63g")
 
 [node name="104" type="Node2D" parent="1thLevel" unique_id=1511641307]
 position = Vector2(41298, 0)
@@ -8706,12 +8541,6 @@ position = Vector2(46630, -7109)
 money_system_path = NodePath("../Level12MoneySystem")
 reward_message = "Ty poluchil 40 rub."
 
-[node name="Blockpost" parent="." unique_id=2036292015 instance=ExtResource("134_3n8qo")]
-position = Vector2(71601, 44587)
-money_system_path = NodePath("../Level12MoneySystem")
-not_enough_money_message = "Проход стоит 100 рублей"
-access_granted_message = "Я заплатил за проход"
-
 [node name="Laptop" parent="." unique_id=302000911 instance=ExtResource("128_qyde8")]
 position = Vector2(47060, -7123)
 money_system_path = NodePath("../Level12MoneySystem")
@@ -8719,27 +8548,13 @@ reward_money = 60
 reward_reason = "Lab completed"
 minigame_scene = ExtResource("129_0r3n2")
 time_limit = 12.0
+completed_message = "Я уже сдал эту работу. Оценка отличная."
 locked_sprite = ExtResource("66_lbsek")
 available_sprite = ExtResource("130_gy0x1")
-
-[node name="Note" parent="." unique_id=1771840164 instance=ExtResource("61_1as5p")]
-position = Vector2(56205, 6573)
-read_audio = ExtResource("126_owlbn")
-reward_key_id = "key_6level"
-reward_subtitle = "На полке найден ключ"
-
-[node name="CollisionShape2D" parent="Note" index="0"]
-position = Vector2(-3, 4)
-
-[node name="Sprite2D" parent="Note" index="1"]
-texture = null
 
 [node name="Generator" parent="." unique_id=1749179163 instance=ExtResource("131_yuqxs")]
 position = Vector2(14043.999, 52074.996)
 scale = Vector2(0.36, 0.36)
-
-[node name="Fridge" parent="." unique_id=1816588780 instance=ExtResource("86_0af5o")]
-position = Vector2(72217, 44537)
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]
@@ -8769,6 +8584,4 @@ position = Vector2(72217, 44537)
 [editable path="1thLevel/1thHall/InteractableObjects/Door(ToApple)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
-[editable path="1thLevel/Stolovaya/InteractableObjects/Door(ToApple)"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]
-[editable path="Note"]

@@ -131,6 +131,7 @@
 [ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_wiiq7"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_1d7t7"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_0jbf5"]
+[ext_resource type="PackedScene" uid="uid://ccep2nskcxpgh" path="res://objects/interactable/level12/blockpost/blockpost.tscn" id="132_esy5d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_esy5d")
@@ -162,6 +163,9 @@ size = Vector2(339.5, 466.78906)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
 size = Vector2(339.5, 406.78906)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nuox8"]
+size = Vector2(339.5, 406.78906)
+
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
 script = ExtResource("1_8gqb3")
@@ -170,7 +174,7 @@ timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.23529412, 0.23529412, 0.27450982, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -8546,6 +8550,183 @@ texture = null
 position = Vector2(14043.999, 52074.996)
 scale = Vector2(0.36, 0.36)
 
+[node name="Stolovaya" type="Node2D" parent="." unique_id=823622313]
+position = Vector2(59287, 44212)
+
+[node name="Background" type="Node2D" parent="Stolovaya" unique_id=310045957]
+
+[node name="WallBack" type="Sprite2D" parent="Stolovaya/Background" unique_id=1679836496]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("112_l2pcu")
+region_enabled = true
+region_rect = Rect2(0, 0, 9000, 1100)
+
+[node name="WallBack2" type="Sprite2D" parent="Stolovaya/Background" unique_id=229967084]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12849, 19)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("112_l2pcu")
+region_enabled = true
+region_rect = Rect2(0, 0, 9000, 1100)
+
+[node name="Floor" parent="Stolovaya/Background" unique_id=926713758 instance=ExtResource("33_asw5k")]
+z_index = -5
+position = Vector2(10604, 326)
+floor_texture = ExtResource("113_o3b00")
+size = Vector2(9000, 110)
+tiling = Vector2(32, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.11
+edge_power = 0.55
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Walls" type="Node2D" parent="Stolovaya" unique_id=1035690486]
+
+[node name="WallBelow_1" parent="Stolovaya/Walls" unique_id=543004682 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(6461, 400)
+
+[node name="WallBelow_2" parent="Stolovaya/Walls" unique_id=1352409949 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(7243.0005, 400)
+
+[node name="WallBelow_3" parent="Stolovaya/Walls" unique_id=2116631212 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(8031, 400)
+
+[node name="WallBelow_4" parent="Stolovaya/Walls" unique_id=466431894 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(8813, 400)
+
+[node name="WallBelow_5" parent="Stolovaya/Walls" unique_id=525510375 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(9465, 400)
+
+[node name="WallBelow_6" parent="Stolovaya/Walls" unique_id=1010582870 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(10247, 400)
+
+[node name="WallAbove_1" parent="Stolovaya/Walls" unique_id=311729699 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(6461.0005, -271)
+
+[node name="WallAbove_2" parent="Stolovaya/Walls" unique_id=2118348403 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(7243.0005, -271)
+
+[node name="WallAbove_3" parent="Stolovaya/Walls" unique_id=219903150 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(8031.0005, -271)
+
+[node name="WallAbove_4" parent="Stolovaya/Walls" unique_id=1732254706 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(8813, -271)
+
+[node name="WallAbove_5" parent="Stolovaya/Walls" unique_id=1887093479 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(9465, -271)
+
+[node name="WallAbove_6" parent="Stolovaya/Walls" unique_id=1393302230 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(10247, -271)
+
+[node name="WallBelow_7" parent="Stolovaya/Walls" unique_id=531838099 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(10958, 400)
+
+[node name="WallBelow_8" parent="Stolovaya/Walls" unique_id=433259459 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(11740, 400)
+
+[node name="WallBelow_9" parent="Stolovaya/Walls" unique_id=796950412 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(12528, 400)
+
+[node name="WallBelow_10" parent="Stolovaya/Walls" unique_id=1928427107 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(13310, 400)
+
+[node name="WallBelow_11" parent="Stolovaya/Walls" unique_id=1754669999 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(13962, 400)
+
+[node name="WallBelow_12" parent="Stolovaya/Walls" unique_id=125464468 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(14744, 400)
+
+[node name="WallAbove_7" parent="Stolovaya/Walls" unique_id=1735062904 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(10958, -271)
+
+[node name="WallAbove_8" parent="Stolovaya/Walls" unique_id=782846967 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(11740, -271)
+
+[node name="WallAbove_9" parent="Stolovaya/Walls" unique_id=584917792 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(12528, -271)
+
+[node name="WallAbove_10" parent="Stolovaya/Walls" unique_id=1496586390 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(13310, -271)
+
+[node name="WallAbove_11" parent="Stolovaya/Walls" unique_id=1174305182 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(13962, -271)
+
+[node name="WallAbove_12" parent="Stolovaya/Walls" unique_id=489472713 instance=ExtResource("8_doow5")]
+z_index = 10
+position = Vector2(14744, -271)
+
+[node name="WallLeft" parent="Stolovaya/Walls" unique_id=745334297 instance=ExtResource("7_7q3uo")]
+z_index = 10
+position = Vector2(15119, 64)
+
+[node name="WallRight" parent="Stolovaya/Walls" unique_id=652740471 instance=ExtResource("7_7q3uo")]
+z_index = 10
+position = Vector2(6089, 63.860657)
+
+[node name="Sprites" type="Node2D" parent="Stolovaya" unique_id=652919779]
+
+[node name="DownStairs3" type="Sprite2D" parent="Stolovaya/Sprites" unique_id=1436630095]
+position = Vector2(7058.9995, 7581)
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("53_pru2q")
+
+[node name="InteractableObjects" type="Node2D" parent="Stolovaya" unique_id=251791330]
+
+[node name="Door(InApple)" parent="Stolovaya/InteractableObjects" unique_id=1491470212 instance=ExtResource("28_xtfbx")]
+position = Vector2(7527.999, 81)
+target_marker = NodePath("../../../1thHall/InteractableObjects/Door(ToApple)")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Stolovaya/InteractableObjects/Door(InApple)" index="0"]
+position = Vector2(0.25, 0.39453125)
+shape = SubResource("RectangleShape2D_nuox8")
+
+[node name="Sprite2D" parent="Stolovaya/InteractableObjects/Door(InApple)" index="2"]
+position = Vector2(1.4901161e-08, -3.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("116_4nlgi")
+
+[node name="Blockpost" parent="Stolovaya/InteractableObjects" unique_id=1852257165 instance=ExtResource("132_esy5d")]
+position = Vector2(12314, 154)
+money_system_path = NodePath("../../../../Level12MoneySystem")
+not_enough_money_message = "Проход стоит 100 рублей"
+access_granted_message = "Я заплатил за проход"
+
+[node name="Fridge" parent="Stolovaya/InteractableObjects" unique_id=1816588780 instance=ExtResource("86_boplk")]
+position = Vector2(12930, 104)
+
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Note"]
@@ -8576,3 +8757,4 @@ scale = Vector2(0.36, 0.36)
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]
 [editable path="Note"]
+[editable path="Stolovaya/InteractableObjects/Door(InApple)"]
