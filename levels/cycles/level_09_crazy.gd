@@ -2,24 +2,7 @@ extends "res://levels/cycles/level.gd"
 
 const CYCLE_START_SUBTITLE := "Мне что-то не нравится, я должен БЕЖАТЬ"
 
-var _cycle_start_subtitle_shown: bool = false
-
 func _ready() -> void:
+	show_start_subtitle = true
+	start_subtitle_text = CYCLE_START_SUBTITLE
 	super._ready()
-	call_deferred("_show_cycle_start_subtitle")
-
-func _show_cycle_start_subtitle() -> void:
-	if _cycle_start_subtitle_shown:
-		return
-	_cycle_start_subtitle_shown = true
-	if UIMessage == null:
-		return
-	if UIMessage.has_method("is_screen_dark"):
-		var max_wait_frames := 360
-		while max_wait_frames > 0 and bool(UIMessage.call("is_screen_dark")):
-			await get_tree().process_frame
-			max_wait_frames -= 1
-	if UIMessage.has_method("show_subtitle"):
-		UIMessage.show_subtitle(CYCLE_START_SUBTITLE)
-	elif UIMessage.has_method("show_text"):
-		UIMessage.show_text(CYCLE_START_SUBTITLE)

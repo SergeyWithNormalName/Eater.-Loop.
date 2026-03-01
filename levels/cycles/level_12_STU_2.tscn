@@ -8731,7 +8731,7 @@ scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("119_r6pxs")
 
 [node name="Door(Basement)3" parent="Basement2/InteractableObjects" unique_id=2014101020 instance=ExtResource("28_vkruc")]
-position = Vector2(14832, 81)
+position = Vector2(13063, 81)
 target_marker = NodePath("../../../Basement/InteractableObjects/Door(Basement)3")
 door_texture = null
 metadata/_edit_group_ = true
@@ -8744,11 +8744,17 @@ position = Vector2(1.4901161e-08, -14.999999)
 scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("119_r6pxs")
 
-[node name="EnemyLightOnly" parent="Basement2/InteractableObjects" unique_id=684077194 instance=ExtResource("119_esq3s")]
-position = Vector2(8273, 115)
+[node name="EnemyLightOnly" parent="Basement2/InteractableObjects" unique_id=1499821905 instance=ExtResource("119_esq3s")]
+position = Vector2(13454, 106)
 
-[node name="EnemyLightOnly3" parent="Basement2/InteractableObjects" unique_id=1908540173 instance=ExtResource("119_esq3s")]
-position = Vector2(10361, 115)
+[node name="EnemyLightOnly2" parent="Basement2/InteractableObjects" unique_id=277091628 instance=ExtResource("119_esq3s")]
+position = Vector2(13943, 103)
+
+[node name="EnemyLightOnly3" parent="Basement2/InteractableObjects" unique_id=61975738 instance=ExtResource("119_esq3s")]
+position = Vector2(14396, 124)
+
+[node name="EnemyLightOnly4" parent="Basement2/InteractableObjects" unique_id=774508825 instance=ExtResource("119_esq3s")]
+position = Vector2(14972, 107)
 
 [node name="StalkerSpawnMarker" parent="." unique_id=1199752994 instance=ExtResource("119_svj3e")]
 position = Vector2(12208, 80)

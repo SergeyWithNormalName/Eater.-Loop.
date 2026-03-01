@@ -556,6 +556,7 @@ func _on_death_retry_pressed() -> void:
 		return
 	if GameState:
 		GameState.reset_cycle_state()
+		GameState.pending_respawn_blackout = true
 	_restore_death_camera()
 	if _death_root:
 		_death_root.visible = false

@@ -160,7 +160,6 @@ func _play_stage_glitch() -> void:
 	var half_duration := maxf(0.05, stage_glitch_duration * 0.5)
 	var tween := create_tween()
 	tween.tween_method(_set_stage_glitch_intensity, 0.0, stage_glitch_peak_intensity, half_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_callback(_start_next_stage)
 	tween.tween_method(_set_stage_glitch_intensity, stage_glitch_peak_intensity, 0.0, half_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tween.finished.connect(_finish_stage_glitch_overlay)
 
@@ -174,12 +173,16 @@ func _finish_stage_glitch_overlay() -> void:
 		_stage_glitch_rect.visible = false
 	_set_stage_glitch_intensity(0.0)
 	if stage_pause_after_glitch > 0.0:
-		get_tree().create_timer(stage_pause_after_glitch).timeout.connect(_complete_stage_transition_after_glitch)
+		get_tree().create_timer(stage_pause_after_glitch).timeout.connect(_finalize_stage_transition_after_glitch)
 		return
-	_complete_stage_transition_after_glitch()
+	_finalize_stage_transition_after_glitch()
 
 func _complete_stage_transition_after_glitch() -> void:
 	_stage_transition_active = false
+
+func _finalize_stage_transition_after_glitch() -> void:
+	_complete_stage_transition_after_glitch()
+	_start_next_stage()
 
 func _play_stage_glitch_sfx() -> void:
 	if stage_glitch_sfx == null:

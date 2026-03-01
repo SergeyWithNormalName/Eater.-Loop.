@@ -19,6 +19,7 @@ var phone_picked: bool = false
 var fridge_interacted: bool = false
 var unique_feeding_intro_played: bool = false
 var pending_sleep_spawn: bool = false
+var pending_respawn_blackout: bool = false
 var last_scene_path: String = ""
 var has_active_run: bool = false
 var _electricity_on: bool = true
@@ -40,6 +41,7 @@ func next_cycle() -> void:
 	fridge_interacted = false
 	lab_done = false
 	completed_labs = PackedStringArray()
+	pending_respawn_blackout = false
 	set_phase(Phase.NORMAL)
 	_save_run_state()
 
@@ -85,6 +87,7 @@ func reset_cycle_state() -> void:
 	lab_done = false
 	completed_labs = PackedStringArray()
 	pending_sleep_spawn = false
+	pending_respawn_blackout = false
 	set_phase(Phase.NORMAL)
 	_save_run_state()
 
@@ -96,6 +99,7 @@ func reset_run() -> void:
 	fridge_interacted = false
 	unique_feeding_intro_played = false
 	pending_sleep_spawn = false
+	pending_respawn_blackout = false
 	electricity_on = true
 	set_phase(Phase.NORMAL)
 	last_scene_path = ""
@@ -136,6 +140,7 @@ func _load_run_state() -> void:
 	ate_this_cycle = bool(config.get_value("run", "ate_this_cycle", ate_this_cycle))
 	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
 	pending_sleep_spawn = false
+	pending_respawn_blackout = false
 	set_phase(Phase.NORMAL)
 
 func mark_lab_completed(lab_id: String = "") -> void:

@@ -105,8 +105,10 @@
 [ext_resource type="Texture2D" uid="uid://bgcih0k6ptmpf" path="res://objects/interactable/door/sprites/numbersU/203.jpg" id="107_55sxp"]
 [ext_resource type="Texture2D" uid="uid://dks2s48ajyows" path="res://objects/interactable/door/sprites/numbersU/204.jpg" id="108_i2yyy"]
 [ext_resource type="Texture2D" uid="uid://b8uki1s4q1ft7" path="res://objects/interactable/door/sprites/numbersU/201.jpg" id="109_s6nmb"]
+[ext_resource type="PackedScene" uid="uid://t48uttt1m656" path="res://enemies/light_sensitive/enemy_light_sensitive.tscn" id="110_2n4m5"]
 [ext_resource type="Texture2D" uid="uid://dt1g6mcc081w0" path="res://objects/interactable/door/sprites/numbersU/202.jpg" id="110_h1uov"]
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="111_3xcbr"]
+[ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="111_8gqb3"]
 [ext_resource type="Texture2D" uid="uid://d1k5x4eptitr1" path="res://objects/environment/background/WhiteWallU.png" id="112_l2pcu"]
 [ext_resource type="Texture2D" uid="uid://c6720vlq21px" path="res://objects/environment/floor/floor_U_1stFloor.png" id="113_o3b00"]
 [ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="116_4nlgi"]
@@ -8031,6 +8033,21 @@ texture = ExtResource("117_c3xe5")
 [node name="Door(To204)2" parent="1thLevel/1thHall/InteractableObjects" unique_id=441992275 instance=ExtResource("55_ie8g8")]
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+
+[node name="EnemyLightSensitive" parent="1thLevel/1thHall/InteractableObjects" unique_id=307833949 instance=ExtResource("110_2n4m5")]
+position = Vector2(8455, -31142)
+
+[node name="EnemyLightSensitive2" parent="1thLevel/1thHall/InteractableObjects" unique_id=2126119278 instance=ExtResource("110_2n4m5")]
+position = Vector2(11799, -44335)
+
+[node name="EnemyLightOnly" parent="1thLevel/1thHall/InteractableObjects" unique_id=1499821905 instance=ExtResource("111_8gqb3")]
+position = Vector2(10586, -44297)
+
+[node name="EnemyLightOnly2" parent="1thLevel/1thHall/InteractableObjects" unique_id=1665060566 instance=ExtResource("111_8gqb3")]
+position = Vector2(8435, -23859)
+
+[node name="EnemyLightOnly3" parent="1thLevel/1thHall/InteractableObjects" unique_id=1695319575 instance=ExtResource("111_8gqb3")]
+position = Vector2(12141, -23859)
 
 [node name="104" type="Node2D" parent="1thLevel" unique_id=1511641307]
 position = Vector2(41298, 0)

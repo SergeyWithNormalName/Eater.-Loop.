@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Godot 4.6 uses `-fs HFS+` for DMG creation.
+# On newer macOS versions this can fail with:
+# "hdiutil: create failed - No mounted file systems".
+# We rewrite HFS+ to APFS only for `hdiutil create`.
+
+if [[ "${1:-}" != "create" ]]; then
+  exec /usr/bin/hdiutil "$@"
+fi
+
+patched_args=()
+index=1
+while [[ $index -le $# ]]; do
+  arg="${!index}"
+
+  if [[ "$arg" == "-fs" ]]; then
+    next_index=$((index + 1))
+    fs="${!next_index:-}"
+    patched_args+=("-fs")
+    if [[ "$fs" == "HFS+" ]]; then
+      patched_args+=("APFS")
+    else
+      patched_args+=("$fs")
+    fi
+    index=$((index + 2))
+    continue
+  fi
+
+  patched_args+=("$arg")
+  index=$((index + 1))
+done
+
+exec /usr/bin/hdiutil "${patched_args[@]}"

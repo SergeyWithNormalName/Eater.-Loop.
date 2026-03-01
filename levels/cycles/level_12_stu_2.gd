@@ -14,9 +14,11 @@ var _is_player_in_basement: bool = false
 var _generator_node: Node = null
 var _fridge_node: Node = null
 var _door_to_202_node: Node = null
-var _cycle_start_subtitle_shown: bool = false
 
 func _ready() -> void:
+	show_start_subtitle = true
+	start_subtitle_text = CYCLE_START_SUBTITLE
+	_generator_node = get_node_or_null("Generator")
 	super._ready()
 	_darkness_node = get_node_or_null("Darkness") as CanvasModulate
 	_player_node = get_node_or_null("Player") as Node2D
@@ -25,7 +27,6 @@ func _ready() -> void:
 		_default_darkness_color = _darkness_node.color
 	_update_basement_darkness(true)
 	call_deferred("_wire_level12_dependencies")
-	call_deferred("_show_cycle_start_subtitle")
 
 func _physics_process(_delta: float) -> void:
 	_update_basement_darkness()
@@ -68,18 +69,10 @@ func _wire_level12_dependencies() -> void:
 			GameState.connect("fridge_interacted_changed", on_fridge_interacted)
 	_update_to202_target()
 
-func _show_cycle_start_subtitle() -> void:
-	if _cycle_start_subtitle_shown:
-		return
-	_cycle_start_subtitle_shown = true
-	if _is_generator_completed():
-		return
-	if UIMessage == null:
-		return
-	if UIMessage.has_method("show_subtitle"):
-		UIMessage.show_subtitle(CYCLE_START_SUBTITLE)
-	elif UIMessage.has_method("show_text"):
-		UIMessage.show_text(CYCLE_START_SUBTITLE)
+func should_show_start_subtitle() -> bool:
+	if _generator_node == null:
+		_generator_node = get_node_or_null("Generator")
+	return not _is_generator_completed()
 
 func _is_generator_completed() -> bool:
 	if _generator_node == null:

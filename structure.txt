@@ -3,6 +3,7 @@
 │   ├── architecture_overview.md
 │   ├── audio_system.md
 │   ├── level_end_endings.md
+│   ├── macos-dmg-export-fix.md
 │   └── minigame_gamepad_system.md
 ├── enemies
 │   ├── light_ceiling
@@ -1398,6 +1399,11 @@
 │   ├── test_case.gd.uid
 │   ├── test_utils.gd
 │   └── test_utils.gd.uid
+├── tools
+│   └── macos_dmg_fix
+│       ├── export_macos_dmg.sh
+│       ├── hdiutil
+│       └── run_godot_with_dmg_fix.sh
 ├── default_bus_layout.tres
 ├── export_presets.cfg
 ├── icon.svg
@@ -1405,4 +1411,4 @@
 ├── project.godot
 └── structure.txt
 
-118 directories, 1288 files
+120 directories, 1292 files
