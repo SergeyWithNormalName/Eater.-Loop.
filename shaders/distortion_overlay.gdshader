@@ -33,7 +33,10 @@ void fragment() {
 	vec3 col_g = texture(screen_texture, squash_uv + warp - vec2(shift, 0.0)).rgb;
 	vec3 col_b = texture(screen_texture, squash_uv + warp).rgb;
 	vec3 distorted = vec3(col_r.r, col_g.g, col_b.b);
-	distorted += (noise - 0.5) * color_shift * intensity;
+	# Keep near-black pixels truly dark: suppress additive noise in deep shadows.
+	float luma = dot(distorted, vec3(0.299, 0.587, 0.114));
+	float dark_mask = smoothstep(0.02, 0.1, luma);
+	distorted += (noise - 0.5) * color_shift * intensity * dark_mask;
 	distorted *= mix(0.95, 1.1, wave * intensity);
 
 	vec3 base = texture(screen_texture, squash_uv).rgb;

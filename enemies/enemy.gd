@@ -188,7 +188,7 @@ func _attack_player() -> void:
 				GameState.reset_cycle_state()
 			get_tree().call_deferred("reload_current_scene")
 		return
-	_play_attack_sfx()
+	_play_attack_sfx(_pick_random_death_scream())
 	if GameDirector:
 		if GameDirector.has_method("trigger_damage_flash"):
 			GameDirector.trigger_damage_flash()
