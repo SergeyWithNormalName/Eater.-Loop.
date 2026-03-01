@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8tigiycrqn8"]
+[gd_scene load_steps=11 format=3 uid="uid://c8tigiycrqn8"]
 
 [ext_resource type="Script" uid="uid://dcrtxffc0inb1" path="res://enemies/light_only/enemy_light_only.gd" id="1_light_only"]
 [ext_resource type="Texture2D" uid="uid://bnj7pe2mabwrx" path="res://enemies/light_only/sprites/Denis.png" id="2_6ora2"]
+[ext_resource type="Texture2D" path="res://enemies/light_only/sprites/Max.png" id="3_max"]
+[ext_resource type="Texture2D" path="res://enemies/light_only/sprites/Nikita.png" id="4_nikita"]
+[ext_resource type="Texture2D" path="res://enemies/light_only/sprites/Serega.png" id="5_serega"]
+[ext_resource type="Texture2D" path="res://enemies/light_only/sprites/Slava.png" id="6_slava"]
+[ext_resource type="Texture2D" path="res://enemies/light_only/sprites/Tolya.png" id="7_tolya"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(2528, 870)
@@ -14,6 +19,7 @@ size = Vector2(606, 870)
 
 [node name="EnemyLightOnly" type="CharacterBody2D"]
 script = ExtResource("1_light_only")
+random_sprites = [ExtResource("2_6ora2"), ExtResource("3_max"), ExtResource("4_nikita"), ExtResource("5_serega"), ExtResource("6_slava"), ExtResource("7_tolya")]
 
 [node name="DetectionArea" type="Area2D" parent="."]
 scale = Vector2(0.5, 0.5)

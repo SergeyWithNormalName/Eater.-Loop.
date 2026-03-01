@@ -362,8 +362,7 @@ func _setup_animations() -> void:
 		return
 	_idle_texture = _get_idle_texture()
 	_update_walk_loop_bounds()
-	if walk_frame_time > 0.0 and sprite.sprite_frames.has_animation(walk_animation):
-		sprite.sprite_frames.set_animation_speed(walk_animation, 1.0 / walk_frame_time)
+	_update_walk_animation_speed()
 
 func _get_idle_texture() -> Texture2D:
 	if sprite == null or sprite.sprite_frames == null:
@@ -413,6 +412,19 @@ func _update_walk_animation(_delta: float, direction: float) -> void:
 		if _is_walking:
 			_is_walking = false
 			_start_idle_animation()
+	_update_walk_animation_speed()
+
+func _update_walk_animation_speed() -> void:
+	if sprite == null or sprite.sprite_frames == null:
+		return
+	if not sprite.sprite_frames.has_animation(walk_animation):
+		return
+	if walk_frame_time <= 0.0:
+		return
+	var speed_multiplier := 1.0
+	if _is_walking and _is_running:
+		speed_multiplier = maxf(1.0, run_speed_multiplier)
+	sprite.sprite_frames.set_animation_speed(walk_animation, (1.0 / walk_frame_time) * speed_multiplier)
 
 func _start_walk_animation() -> void:
 	if sprite == null or sprite.sprite_frames == null:

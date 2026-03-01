@@ -11,6 +11,7 @@ var has_key: bool = false
 @onready var search_area: Control = $SearchArea
 @onready var key_button: TextureButton = $SearchArea/KeyButton
 @onready var trash_container: Control = $SearchArea/TrashContainer
+@onready var hint_label: Label = get_node_or_null("HintLabel") as Label
 
 var _rng := RandomNumberGenerator.new()
 var _setup_done: bool = false
@@ -21,6 +22,8 @@ func _ready() -> void:
 	add_to_group("search_key_minigame")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_rng.randomize()
+	_hide_search_area_background()
+	_apply_hint_label_style()
 
 	key_button.visible = false
 	key_button.focus_mode = Control.FOCUS_NONE
@@ -31,6 +34,23 @@ func _ready() -> void:
 
 	if not _setup_done:
 		call_deferred("_spawn_content")
+
+func _hide_search_area_background() -> void:
+	if search_area == null:
+		return
+	if search_area is Panel:
+		(search_area as Panel).add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+
+func _apply_hint_label_style() -> void:
+	if hint_label == null:
+		return
+	var subtitle_font := load("res://global/fonts/AmaticSC-Regular.ttf")
+	if subtitle_font:
+		var subtitle_variation := FontVariation.new()
+		subtitle_variation.base_font = subtitle_font
+		subtitle_variation.spacing_glyph = 3
+		hint_label.add_theme_font_override("font", subtitle_variation)
+	hint_label.add_theme_font_size_override("font_size", 52)
 
 func setup(config: Dictionary) -> void:
 	if config.has("has_key"):

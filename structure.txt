@@ -727,6 +727,10 @@
 │   │   │   │   ├── stalker_spawn_marker.gd
 │   │   │   │   ├── stalker_spawn_marker.gd.uid
 │   │   │   │   └── stalker_spawn_marker.tscn
+│   │   │   ├── target
+│   │   │   │   ├── target.gd
+│   │   │   │   ├── target.gd.uid
+│   │   │   │   └── target.tscn
 │   │   │   └── world_clock
 │   │   │       ├── Clock.png
 │   │   │       ├── Clock.png.import
@@ -1158,6 +1162,8 @@
 │       ├── note
 │       │   ├── 1234.jpg
 │       │   ├── 1234.jpg.import
+│       │   ├── Otchislenie.png
+│       │   ├── Otchislenie.png.import
 │       │   ├── note.tscn
 │       │   ├── note_object.gd
 │       │   └── note_object.gd.uid
@@ -1297,6 +1303,8 @@
 │   ├── distortion_transition.gdshader.uid
 │   ├── feeding_blood_drips.gdshader
 │   ├── feeding_blood_drips.gdshader.uid
+│   ├── light_only_jump_overlay.gdshader
+│   ├── light_only_jump_overlay.gdshader.uid
 │   ├── pain_shock_distortion.gdshader
 │   ├── pain_shock_distortion.gdshader.uid
 │   ├── torn_right_wallpaper.gdshader
@@ -1356,4 +1364,4 @@
 ├── project.godot
 └── structure.txt
 
-115 directories, 1242 files
+116 directories, 1249 files

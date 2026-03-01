@@ -44,10 +44,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -198.0
-offset_top = -161.0
-offset_right = 148.0
-offset_bottom = 104.0
+offset_left = -145.0
+offset_top = -121.0
+offset_right = 113.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -64,13 +64,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HintLabel" type="Label" parent="."]
+[node name="HintLabel" type="Label" parent="." unique_id=1729128283]
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -420.0
 offset_top = 24.0
 offset_right = 420.0
 offset_bottom = 78.0
-horizontal_alignment = 1
+grow_horizontal = 2
 text = "Вы можете двигать мусор, чтобы найти ключ"
+horizontal_alignment = 1

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://objects/environment/smart/target/target.gd" id="1_target_script"]
+
+[node name="TargetMonsterSpawner" type="Marker2D"]
+script = ExtResource("1_target_script")

@@ -1,5 +1,9 @@
 extends "res://enemies/enemy_flashlight_base.gd"
 
+@export_group("Visual")
+## Набор спрайтов для случайного выбора при создании врага.
+@export var random_sprites: Array[Texture2D] = []
+
 @export_group("Jump")
 ## Звуки скачков.
 @export var jump_sounds: Array[AudioStream] = []
@@ -28,6 +32,8 @@ var _light_active: bool = false
 
 func _ready() -> void:
 	super._ready()
+	_assign_random_sprite()
+
 	_jump_player = AudioStreamPlayer2D.new()
 	_jump_player.bus = "Sounds"
 	add_child(_jump_player)
@@ -38,6 +44,18 @@ func _ready() -> void:
 
 	_reset_jump_timer()
 	_reset_idle_sound_timer()
+
+func _assign_random_sprite() -> void:
+	if random_sprites.is_empty():
+		return
+	var sprite_node := _sprite as Sprite2D
+	if sprite_node == null:
+		sprite_node = get_node_or_null("Sprite2D") as Sprite2D
+	if sprite_node == null:
+		return
+	var chosen_sprite: Texture2D = random_sprites.pick_random() as Texture2D
+	if chosen_sprite != null:
+		sprite_node.texture = chosen_sprite
 
 func _physics_process(delta: float) -> void:
 	if not _is_flashlight_hitting():

@@ -41,6 +41,20 @@ signal distortion_started
 ## Поворот камеры при ударе (градусы).
 @export_range(0.0, 12.0, 0.1) var damage_flash_camera_tilt_deg: float = 1.8
 
+@export_group("LightOnly Jump FX")
+## Включить экранный эффект скачка для врагов light_only.
+@export var light_only_jump_effect_enabled: bool = true
+## Пиковая интенсивность эффекта при скачке.
+@export_range(0.0, 1.0, 0.05) var light_only_jump_peak_intensity: float = 1.0
+## Длительность резкого появления эффекта (сек).
+@export_range(0.01, 0.3, 0.01) var light_only_jump_attack_duration: float = 0.05
+## Длительность плавного затухания эффекта (сек).
+@export_range(0.05, 1.0, 0.01) var light_only_jump_release_duration: float = 0.2
+## Скорость анимации шума.
+@export_range(0.0, 80.0, 0.5) var light_only_jump_noise_speed: float = 30.0
+## Сила горизонтальных разрывов строк.
+@export_range(0.0, 0.4, 0.005) var light_only_jump_glitch_amount: float = 0.08
+
 @export_group("Death Screen")
 ## Длительность затемнения до экрана смерти (сек).
 @export_range(0.05, 3.0, 0.05) var death_fade_duration: float = 0.55
@@ -61,6 +75,9 @@ var _transition_rect: ColorRect
 var _transition_material: ShaderMaterial
 var _damage_rect: ColorRect
 var _damage_material: ShaderMaterial
+var _light_only_jump_rect: ColorRect
+var _light_only_jump_material: ShaderMaterial
+var _light_only_jump_tween: Tween = null
 var current_max_time: float = 1.0
 var _current_cycle_number: int = 0
 var _current_timer_duration: float = 0.0
@@ -70,6 +87,7 @@ var _transition_active: bool = false
 var _transition_progress: float = 0.0
 var _flash_active: bool = false
 var _damage_flash_active: bool = false
+var _light_only_jump_active: bool = false
 var _minigame_active: bool = false
 var _minigame_blocks_distortion: bool = false
 var _in_game_scene: bool = false
@@ -95,6 +113,7 @@ const INPUT_KIND_GAMEPAD := 1
 const INPUT_KIND_UNKNOWN := -1
 const JOYPAD_MOTION_DEADZONE := 0.45
 const DEATH_TITLE_GLITCH_SHADER: Shader = preload("res://shaders/death_text_glitch.gdshader")
+const LIGHT_ONLY_JUMP_SHADER: Shader = preload("res://shaders/light_only_jump_overlay.gdshader")
 const DEATH_TITLE_PENANCE_TEXT := "Никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения"
 const DEATH_TITLE_SEQUENCE: Array[String] = [
 	"Ошибся",
@@ -139,6 +158,7 @@ func _process(delta: float) -> void:
 	if _distortion_rect == null or _distortion_material == null:
 		return
 	if not _is_distortion_allowed():
+		_stop_light_only_jump_effect()
 		_hide_distortion_overlays()
 		return
 	var has_active := false
@@ -151,6 +171,8 @@ func _process(delta: float) -> void:
 		_advance_transition(delta)
 		has_active = true
 	if _damage_flash_active:
+		has_active = true
+	if _light_only_jump_active:
 		has_active = true
 	if _flash_active:
 		return
@@ -165,6 +187,7 @@ func start_normal_phase(timer_duration: float = -1.0) -> void:
 	_transition_progress = 0.0
 	_flash_active = false
 	_damage_flash_active = false
+	_stop_light_only_jump_effect()
 	_stalker_spawned = false
 	_hide_distortion_overlays()
 	
@@ -314,6 +337,17 @@ func _create_distortion_overlay() -> void:
 	_set_damage_intensity(0.0)
 	_configure_damage_material()
 
+	_light_only_jump_rect = ColorRect.new()
+	_light_only_jump_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_light_only_jump_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_light_only_jump_rect.visible = false
+	_light_only_jump_material = ShaderMaterial.new()
+	_light_only_jump_material.shader = LIGHT_ONLY_JUMP_SHADER
+	_light_only_jump_rect.material = _light_only_jump_material
+	_overlay_layer.add_child(_light_only_jump_rect)
+	_configure_light_only_jump_material()
+	_set_light_only_jump_intensity(0.0)
+
 func _flash_red() -> void:
 	if _distortion_rect.visible:
 		return
@@ -373,6 +407,7 @@ func _update_for_scene(scene: Node) -> void:
 	_transition_active = false
 	_transition_progress = 0.0
 	_flash_active = false
+	_stop_light_only_jump_effect()
 	_stalker_spawned = false
 	_hide_distortion_overlays()
 	if GameState:
@@ -472,6 +507,7 @@ func trigger_death_screen() -> void:
 	_transition_progress = 0.0
 	_flash_active = false
 	_damage_flash_active = false
+	_stop_light_only_jump_effect()
 	_hide_distortion_overlays()
 	_death_camera = _resolve_primary_camera()
 	if _death_camera != null:
@@ -574,6 +610,66 @@ func _set_damage_intensity(value: float) -> void:
 	if _damage_material == null:
 		return
 	_damage_material.set_shader_parameter("intensity", value)
+
+func _set_light_only_jump_intensity(value: float) -> void:
+	if _light_only_jump_material == null:
+		return
+	_light_only_jump_material.set_shader_parameter("intensity", float(clamp(value, 0.0, 1.0)))
+
+func _get_light_only_jump_intensity() -> float:
+	if _light_only_jump_material == null:
+		return 0.0
+	var value: Variant = _light_only_jump_material.get_shader_parameter("intensity")
+	if value == null:
+		return 0.0
+	return clampf(float(value), 0.0, 1.0)
+
+func _configure_light_only_jump_material() -> void:
+	if _light_only_jump_material == null:
+		return
+	_light_only_jump_material.set_shader_parameter("noise_speed", light_only_jump_noise_speed)
+	_light_only_jump_material.set_shader_parameter("glitch_amount", light_only_jump_glitch_amount)
+
+func trigger_light_only_jump_effect(peak_intensity: float = -1.0) -> void:
+	if not light_only_jump_effect_enabled:
+		return
+	if _light_only_jump_rect == null or _light_only_jump_material == null:
+		return
+	if _death_sequence_active:
+		return
+	if not _is_distortion_allowed():
+		return
+	_configure_light_only_jump_material()
+	var target_peak := light_only_jump_peak_intensity if peak_intensity < 0.0 else peak_intensity
+	target_peak = clampf(target_peak, 0.0, 1.0)
+	var attack_time := maxf(0.01, light_only_jump_attack_duration)
+	var release_time := maxf(0.01, light_only_jump_release_duration)
+	var current := _get_light_only_jump_intensity()
+	var peak := maxf(current, target_peak)
+	_light_only_jump_rect.visible = true
+	_light_only_jump_active = true
+	if _light_only_jump_tween != null and is_instance_valid(_light_only_jump_tween):
+		_light_only_jump_tween.kill()
+	_light_only_jump_tween = create_tween()
+	_light_only_jump_tween.tween_property(_light_only_jump_material, "shader_parameter/intensity", peak, attack_time).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	_light_only_jump_tween.tween_property(_light_only_jump_material, "shader_parameter/intensity", 0.0, release_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	_light_only_jump_tween.finished.connect(_on_light_only_jump_effect_finished)
+
+func _on_light_only_jump_effect_finished() -> void:
+	_light_only_jump_tween = null
+	_light_only_jump_active = false
+	if _light_only_jump_rect:
+		_light_only_jump_rect.visible = false
+	_set_light_only_jump_intensity(0.0)
+
+func _stop_light_only_jump_effect() -> void:
+	if _light_only_jump_tween != null and is_instance_valid(_light_only_jump_tween):
+		_light_only_jump_tween.kill()
+	_light_only_jump_tween = null
+	_light_only_jump_active = false
+	if _light_only_jump_rect:
+		_light_only_jump_rect.visible = false
+	_set_light_only_jump_intensity(0.0)
 
 func _configure_damage_material() -> void:
 	if _damage_material == null:
@@ -779,12 +875,16 @@ func _hide_distortion_overlays() -> void:
 		_transition_rect.visible = false
 	if _damage_rect and not _damage_flash_active:
 		_damage_rect.visible = false
+	if _light_only_jump_rect and not _light_only_jump_active:
+		_light_only_jump_rect.visible = false
 	_set_distortion_intensity(0.0)
 	_set_distortion_squash(0.0)
 	_set_transition_intensity(0.0)
 	_set_transition_squash(0.0)
 	if not _damage_flash_active:
 		_set_damage_intensity(0.0)
+	if not _light_only_jump_active:
+		_set_light_only_jump_intensity(0.0)
 
 func _spawn_stalker_if_needed() -> void:
 	if _stalker_spawned:

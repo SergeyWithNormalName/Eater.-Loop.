@@ -130,6 +130,10 @@
 [ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="128_jsb5w"]
 [ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_jqckr"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_e4eaf"]
+[ext_resource type="Texture2D" uid="uid://bdytis2jqaj38" path="res://objects/interactable/note/Otchislenie.png" id="131_g6lqu"]
+[ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://objects/interactable/lamp/lamp.tscn" id="131_upyn3"]
+[ext_resource type="PackedScene" path="res://objects/environment/smart/target/target.tscn" id="132_0grpv"]
+[ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="133_g6lqu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_yl6qn")
@@ -8530,13 +8534,15 @@ music_on_exit = 9
 [node name="Laptop" parent="." unique_id=302000911 instance=ExtResource("128_jsb5w")]
 position = Vector2(47060, -7123)
 minigame_scene = ExtResource("129_jqckr")
-time_limit = 12.0
+time_limit = 8.0
+penalty_time = 20.0
 completed_message = "Я уже сделал эту работу, и всех всё устроило."
 locked_sprite = ExtResource("66_fum3w")
 available_sprite = ExtResource("130_e4eaf")
 
 [node name="NoteStory" parent="." unique_id=1771840164 instance=ExtResource("61_w8wei")]
 position = Vector2(56205, 6573)
+note_texture = ExtResource("131_g6lqu")
 reward_key_id = "key_6level"
 reward_subtitle = "Эти суки сами виноваты."
 
@@ -8545,6 +8551,32 @@ position = Vector2(-3, 4)
 
 [node name="Sprite2D" parent="NoteStory" index="1"]
 texture = null
+
+[node name="Lamp2" parent="." unique_id=1785403388 instance=ExtResource("131_upyn3")]
+position = Vector2(11949, 6273)
+start_on = true
+light_color = Color(0.88261443, 0.9684318, 0.99312955, 1)
+light_energy = 0.95
+flicker_enabled = true
+flicker_energy_min = 0.66
+flicker_energy_max = 0.86
+off_texture = null
+on_texture = null
+
+[node name="Lamp3" parent="." unique_id=273407782 instance=ExtResource("131_upyn3")]
+position = Vector2(10292, 6273)
+start_on = true
+light_color = Color(0.88261443, 0.9684318, 0.99312955, 1)
+light_energy = 0.95
+flicker_enabled = true
+flicker_energy_min = 0.66
+flicker_energy_max = 0.86
+off_texture = null
+on_texture = null
+
+[node name="TargetMonsterSpawner" parent="." unique_id=249516465 instance=ExtResource("132_0grpv")]
+position = Vector2(10961, 6659)
+enemy_scene = ExtResource("133_g6lqu")
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

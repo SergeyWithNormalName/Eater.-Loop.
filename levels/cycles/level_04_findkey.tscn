@@ -70,6 +70,7 @@
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_p4ir0"]
 [ext_resource type="PackedScene" uid="uid://phdu5uudp1p0" path="res://levels/minigames/feeding/food/krilishki/food_krilishki.tscn" id="70_2bxq4"]
 [ext_resource type="PackedScene" path="res://objects/interactable/search_spot/search_spot.tscn" id="72_hr46p"]
+[ext_resource type="PackedScene" uid="uid://qrm8lgbhajjq" path="res://levels/minigames/search_key/search_minigame_stiralka.tscn" id="73_b0js6"]
 [ext_resource type="Texture2D" uid="uid://casdt22d3vom4" path="res://levels/minigames/search_key/Key.png" id="73_cmq65"]
 [ext_resource type="Texture2D" uid="uid://chqjxafw6gmv3" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_1.png" id="74_5wshx"]
 [ext_resource type="Texture2D" uid="uid://dhg2avxqf7ano" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_2.png" id="75_wtad1"]
@@ -88,6 +89,7 @@
 [ext_resource type="Texture2D" uid="uid://divj68263y2js" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_15.png" id="88_ssrxx"]
 [ext_resource type="Texture2D" uid="uid://dcixupjbbmhou" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_16.png" id="89_mmu7e"]
 [ext_resource type="Texture2D" uid="uid://bb6h2rva5iy2" path="res://levels/minigames/search_key/urna/sprites/Trash_1.png" id="90_6qsug"]
+[ext_resource type="PackedScene" uid="uid://vpj56qr5wq2d" path="res://levels/minigames/search_key/search_minigame_urna.tscn" id="90_dwvuy"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
 [ext_resource type="Texture2D" uid="uid://dectkrmeb7456" path="res://levels/minigames/search_key/urna/sprites/Trash_2.png" id="91_rm4nf"]
@@ -105,6 +107,7 @@
 [ext_resource type="Texture2D" uid="uid://7xdxupxgxl1d" path="res://levels/minigames/search_key/urna/sprites/Trash_14.png" id="103_7a55g"]
 [ext_resource type="Texture2D" uid="uid://c6bu82di6ng0d" path="res://levels/minigames/search_key/urna/sprites/Trash_15.png" id="104_nnmjy"]
 [ext_resource type="Texture2D" uid="uid://idbsuf2eipjc" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_1.png" id="105_1i4bq"]
+[ext_resource type="PackedScene" uid="uid://dmxpg5qoncpox" path="res://levels/minigames/search_key/search_minigame_rakovina.tscn" id="106_jhwql"]
 [ext_resource type="Texture2D" uid="uid://yc7xdi4y6hqm" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_2.png" id="106_jqnsi"]
 [ext_resource type="Texture2D" uid="uid://camars2h80dy4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_3.png" id="107_uo057"]
 [ext_resource type="Texture2D" uid="uid://dir8k4goevkmg" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_4.png" id="108_np76i"]
@@ -1722,6 +1725,7 @@ script = ExtResource("91_level_music")
 [node name="SearchSpot3" parent="." unique_id=986438599 node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(19322, 2993)
 scale = Vector2(2.8508883, 4.0245605)
+minigame_scene = ExtResource("73_b0js6")
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
 trash_min = 9
@@ -1730,21 +1734,24 @@ searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot" parent="." unique_id=1300009375 node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
-position = Vector2(8114, 3245.9998)
+position = Vector2(9197, 3027)
 scale = Vector2(2.0907319, 2.904042)
+minigame_scene = ExtResource("90_dwvuy")
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("90_6qsug"), ExtResource("91_rm4nf"), ExtResource("92_8fgma"), ExtResource("93_yc2j2"), ExtResource("94_vs8ya"), ExtResource("95_5ye2y"), ExtResource("96_xgqo3"), ExtResource("97_bar5d"), ExtResource("98_siwla"), ExtResource("99_p4ir0"), ExtResource("100_s24v6"), ExtResource("101_vs84s"), ExtResource("102_l44aq"), ExtResource("103_7a55g"), ExtResource("104_nnmjy")])
-trash_min = 15
-trash_max = 20
+trash_min = 7
+trash_max = 9
 searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot4" parent="." unique_id=924195740 node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(9548, 2899)
 scale = Vector2(2.0907319, 2.904042)
+minigame_scene = ExtResource("106_jhwql")
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("105_1i4bq"), ExtResource("106_jqnsi"), ExtResource("107_uo057"), ExtResource("108_np76i"), ExtResource("109_mu543"), ExtResource("110_foxbh")])
-trash_max = 7
+trash_min = 9
+trash_max = 13
 searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
@@ -1754,8 +1761,8 @@ scale = Vector2(7.410693, 6.4640417)
 minigame_scene = ExtResource("111_pi6qg")
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
-trash_min = 6
-trash_max = 11
+trash_min = 7
+trash_max = 12
 searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
