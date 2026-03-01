@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bxjrvr1ri8lfh"]
+[gd_scene load_steps=13 format=3 uid="uid://bxjrvr1ri8lfh"]
 
 [ext_resource type="Script" uid="uid://ircg1tjrp7qr" path="res://levels/menu/main_menu.gd" id="1_main_menu_script"]
 [ext_resource type="PackedScene" path="res://levels/menu/main_settings_panel.tscn" id="2_settings_panel"]
@@ -29,24 +29,6 @@ anti_aliasing_size = 1.0
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_size = 28
 shadow_offset = Vector2(0, 8)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_description"]
-content_margin_left = 22.0
-content_margin_top = 20.0
-content_margin_right = 22.0
-content_margin_bottom = 20.0
-bg_color = Color(0.02, 0.04, 0.08, 0.68)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.56, 0.71, 0.92, 0.32)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-anti_aliasing = true
-anti_aliasing_size = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disclaimer_card"]
 bg_color = Color(0.01, 0.03, 0.08, 0.48)
@@ -146,15 +128,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="CreditsPanelCenter" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="DifficultyPanelCenter" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -273,69 +246,6 @@ text = "Спасибо за игру"
 [node name="BackButton" type="Button" parent="CreditsPanelCenter/CreditsPanel/VBox" groups=["menu_button"]]
 layout_mode = 2
 text = "Назад"
-
-[node name="DifficultyPanel" type="PanelContainer" parent="DifficultyPanelCenter"]
-visible = false
-layout_mode = 2
-custom_minimum_size = Vector2(860, 600)
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
-
-[node name="VBox" type="VBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-separation = 14
-
-[node name="Title" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
-layout_mode = 2
-text = "Новая игра"
-horizontal_alignment = 1
-
-[node name="Message" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
-layout_mode = 2
-text = "Выберите сложность"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="DifficultyButtons" type="HBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
-layout_mode = 2
-separation = 12
-
-[node name="SimplifiedButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
-layout_mode = 2
-text = "Упрощённая"
-toggle_mode = true
-
-[node name="HardcoreButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DifficultyButtons" groups=["menu_button"]]
-layout_mode = 2
-text = "Каноническая"
-toggle_mode = true
-
-[node name="DescriptionPanel" type="PanelContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_description")
-
-[node name="Description" type="Label" parent="DifficultyPanelCenter/DifficultyPanel/VBox/DescriptionPanel"]
-layout_mode = 2
-text = "Выберите сложность, чтобы увидеть её описание."
-autowrap_mode = 2
-
-[node name="BottomRow" type="HBoxContainer" parent="DifficultyPanelCenter/DifficultyPanel/VBox"]
-layout_mode = 2
-separation = 12
-
-[node name="BackButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
-layout_mode = 2
-text = "Назад"
-
-[node name="StartButton" type="Button" parent="DifficultyPanelCenter/DifficultyPanel/VBox/BottomRow" groups=["menu_button"]]
-layout_mode = 2
-disabled = true
-text = "Начать новую игру"
 
 [node name="StartupBlurSpoiler" type="ColorRect" parent="."]
 visible = false

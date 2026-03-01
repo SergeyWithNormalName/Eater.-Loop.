@@ -83,6 +83,9 @@ func _await_scene_path_or_timeout(tree: SceneTree, expected_scene_path: String, 
 
 func _sample_active_ambient_volume(music_manager: Node) -> Dictionary:
 	var result: Dictionary = {"found": false, "loudest_db": -80.0}
+	var source_kind := String(music_manager.get("_current_source_kind"))
+	if source_kind != "ambient":
+		return result
 	var current_stream: Variant = music_manager.call("get_current_stream")
 	var active_player: AudioStreamPlayer = music_manager.get("_active_player") as AudioStreamPlayer
 	var inactive_player: AudioStreamPlayer = music_manager.get("_inactive_player") as AudioStreamPlayer

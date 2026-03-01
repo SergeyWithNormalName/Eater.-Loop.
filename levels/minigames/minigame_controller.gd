@@ -245,6 +245,9 @@ func get_time_limit() -> float:
 func is_active(minigame: Node) -> bool:
 	return minigame != null and minigame == _active_minigame
 
+func has_active_minigame() -> bool:
+	return _active_minigame != null and is_instance_valid(_active_minigame)
+
 func should_block_player_movement() -> bool:
 	return _active_minigame != null and _block_player_movement
 

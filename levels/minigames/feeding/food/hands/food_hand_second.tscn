@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c1wsf4fjiaoav"]
+
+[ext_resource type="Script" uid="uid://gygsji0chilg" path="res://levels/minigames/feeding/food/food_item.gd" id="1_food_item"]
+[ext_resource type="Texture2D" uid="uid://l7j28fydxf76" path="res://levels/minigames/feeding/andreys_faces/Amputation/SecondArm.png" id="2_hand_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_second_hand"]
+size = Vector2(932.1616, 2701.7542)
+
+[node name="FoodItem" type="Area2D" unique_id=1686426043]
+script = ExtResource("1_food_item")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=514156830]
+scale = Vector2(1.0333332, 1.0333332)
+texture = ExtResource("2_hand_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1366603513]
+position = Vector2(-37, -38)
+rotation = -2.37041
+scale = Vector2(0.2, 0.2)
+shape = SubResource("RectangleShape2D_second_hand")

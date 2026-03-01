@@ -7,7 +7,6 @@ signal fridge_interacted_changed
 signal electricity_changed(is_on: bool)
 
 enum Phase { NORMAL, DISTORTED }
-enum Difficulty { SIMPLIFIED, HARDCORE }
 
 const SAVE_PATH := "user://run_save.cfg"
 
@@ -20,7 +19,6 @@ var unique_feeding_intro_played: bool = false
 var pending_sleep_spawn: bool = false
 var last_scene_path: String = ""
 var has_active_run: bool = false
-var difficulty: Difficulty = Difficulty.SIMPLIFIED
 var _electricity_on: bool = true
 var electricity_on: bool:
 	set(value):
@@ -93,17 +91,10 @@ func reset_run() -> void:
 	fridge_interacted = false
 	unique_feeding_intro_played = false
 	pending_sleep_spawn = false
-	difficulty = Difficulty.SIMPLIFIED
 	electricity_on = true
 	set_phase(Phase.NORMAL)
 	last_scene_path = ""
 	has_active_run = false
-	_save_run_state()
-
-func set_difficulty(value: int) -> void:
-	if value != Difficulty.SIMPLIFIED and value != Difficulty.HARDCORE:
-		return
-	difficulty = value as Difficulty
 	_save_run_state()
 
 func _save_run_state() -> void:
@@ -118,7 +109,6 @@ func _save_run_state() -> void:
 	config.set_value("run", "unique_feeding_intro_played", unique_feeding_intro_played)
 	config.set_value("run", "ate_this_cycle", ate_this_cycle)
 	config.set_value("run", "electricity_on", electricity_on)
-	config.set_value("run", "difficulty", int(difficulty))
 	config.save(SAVE_PATH)
 
 func _load_run_state() -> void:
@@ -140,11 +130,6 @@ func _load_run_state() -> void:
 	unique_feeding_intro_played = bool(config.get_value("run", "unique_feeding_intro_played", unique_feeding_intro_played))
 	ate_this_cycle = bool(config.get_value("run", "ate_this_cycle", ate_this_cycle))
 	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
-	var loaded_difficulty := int(config.get_value("run", "difficulty", int(difficulty)))
-	if loaded_difficulty == Difficulty.HARDCORE:
-		difficulty = Difficulty.HARDCORE
-	else:
-		difficulty = Difficulty.SIMPLIFIED
 	pending_sleep_spawn = false
 	set_phase(Phase.NORMAL)
 

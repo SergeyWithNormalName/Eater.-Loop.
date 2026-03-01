@@ -5,7 +5,7 @@ extends "res://enemies/enemy.gd"
 @export var door_reach_distance: float = 24.0
 ## How often to recompute a door route.
 @export var route_recalc_interval: float = 0.5
-## Maximum number of door hops to search.
+## Legacy route limit (for compatibility). Stalker now always searches through all doors.
 @export var max_door_hops: int = 6
 ## Collision mask for navigation rays (0 = use current collision_mask).
 @export var nav_collision_mask: int = 0
@@ -46,6 +46,12 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		_update_animation()
 		return
+	if _is_player_busy_with_minigame():
+		velocity = Vector2.ZERO
+		_door_route.clear()
+		_route_timer = 0.0
+		_update_animation()
+		return
 
 	_route_timer -= delta
 	var has_direct := _has_line_of_sight(global_position, _player.global_position)
@@ -79,7 +85,7 @@ func _follow_door_route() -> void:
 		return
 
 	var door_pos := door.global_position
-	if global_position.distance_to(door_pos) <= door_reach_distance:
+	if _is_within_door_reach(door_pos):
 		var exit_node: Node2D = _get_door_exit_node(door)
 		if exit_node != null:
 			global_position = exit_node.global_position
@@ -119,16 +125,19 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 	if doors.is_empty():
 		return empty_route
 
-	var max_hops: int = maxi(0, max_door_hops)
+	# Route length can never exceed number of unique doors, so this guarantees
+	# full search regardless of legacy max_door_hops values.
+	var max_hops: int = doors.size()
+	if max_door_hops > max_hops:
+		max_hops = max_door_hops
 	var queue: Array[Dictionary] = []
+	var best_depth_for_exit: Dictionary = {}
 	var initial_route: Array[Node] = []
 	queue.append({"pos": start_pos, "route": initial_route})
 
 	while not queue.is_empty():
 		var state: Dictionary = queue.pop_front()
 		var route := state["route"] as Array[Node]
-		if route.size() >= max_hops:
-			continue
 
 		for door in doors:
 			if route.has(door):
@@ -144,6 +153,14 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 			new_route.append(door)
 			if _has_line_of_sight(exit_pos, target_pos):
 				return new_route
+			if new_route.size() >= max_hops:
+				continue
+
+			var exit_id := exit_node.get_instance_id()
+			var best_known_depth := int(best_depth_for_exit.get(exit_id, -1))
+			if best_known_depth >= 0 and best_known_depth <= new_route.size():
+				continue
+			best_depth_for_exit[exit_id] = new_route.size()
 
 			queue.append({"pos": exit_pos, "route": new_route})
 
@@ -168,9 +185,24 @@ func _get_door_exit_node(door: Node) -> Node2D:
 	var target_node := door.get_node_or_null(target_path)
 	if target_node == null:
 		return null
+	# Self-references (NodePath(".")) are invalid exits for teleport navigation.
+	if target_node == door:
+		return null
 	if target_node is Node2D:
 		return target_node
 	return null
+
+func _is_within_door_reach(door_pos: Vector2) -> bool:
+	return absf(global_position.x - door_pos.x) <= door_reach_distance
+
+func _is_player_busy_with_minigame() -> bool:
+	if MinigameController == null:
+		return false
+	if MinigameController.has_method("has_active_minigame"):
+		return bool(MinigameController.has_active_minigame())
+	if MinigameController.has_method("should_block_player_movement"):
+		return bool(MinigameController.should_block_player_movement())
+	return false
 
 func _setup_walk_animation() -> void:
 	if _animated_sprite == null:

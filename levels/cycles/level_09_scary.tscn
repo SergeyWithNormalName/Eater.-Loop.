@@ -56,16 +56,11 @@
 [ext_resource type="Texture2D" uid="uid://dte03pmpqboqd" path="res://objects/interactable/door/sprites/DoorToiletOutside.png" id="54_kqgh4"]
 [ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="55_p3wld"]
 [ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="56_ppxr1"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="57_no2bi"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="58_mnjy1"]
 [ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="59_6c0pv"]
 [ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="60_171s8"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="61_g7gna"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="62_xpbab"]
-[ext_resource type="Texture2D" uid="uid://ci343g7n8ffpk" path="res://objects/interactable/fridge/sprites/FridgeOnChain.png" id="63_d0lyh"]
-[ext_resource type="Texture2D" uid="uid://372dm7yr24yw" path="res://objects/interactable/fridge/sprites/FallenFridge.png" id="64_i6qai"]
-[ext_resource type="AudioStream" uid="uid://dyuhyx3bs3v16" path="res://objects/interactable/fridge/audio/FridgeCreaking.wav" id="65_r21k0"]
-[ext_resource type="AudioStream" uid="uid://cw2pyiur3lxxs" path="res://objects/interactable/fridge/audio/PigsScream.wav" id="66_yo6kn"]
 [ext_resource type="PackedScene" path="res://objects/interactable/lebedka/lebedka.tscn" id="67_bdxoa"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="68_abvxk"]
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="69_k2x1k"]
@@ -110,6 +105,7 @@
 [ext_resource type="Texture2D" uid="uid://demqelnrdfni8" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_5.png" id="108_d51s3"]
 [ext_resource type="Texture2D" uid="uid://ckerdoixhbll0" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_6.png" id="109_ruw0w"]
 [ext_resource type="Texture2D" uid="uid://dqghu5rryf68a" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_7.png" id="110_j4bbp"]
+[ext_resource type="PackedScene" uid="uid://byx06s4t2xtvj" path="res://levels/minigames/feeding/food/naggets/food_naggets.tscn" id="110_ktl8c"]
 [ext_resource type="Texture2D" uid="uid://dmv5hqipiyh2f" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_8.png" id="111_xw25n"]
 [ext_resource type="Texture2D" uid="uid://b1421lowk4a5p" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_9.png" id="112_g8jug"]
 [ext_resource type="Texture2D" uid="uid://1rcveohtrlgq" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_10.png" id="113_krqxy"]
@@ -1135,43 +1131,6 @@ auto_prompt = null
 handle_input = null
 one_shot = null
 
-[node name="Fridge" parent="Hall/InteractableObjects" unique_id=1243623637 instance=ExtResource("55_p3wld")]
-position = Vector2(9810, -500)
-minigame_scene = ExtResource("56_ppxr1")
-food_scenes = Array[PackedScene]([ExtResource("57_no2bi")])
-andrey_face = ExtResource("58_mnjy1")
-food_count = 7
-bg_music = ExtResource("59_6c0pv")
-win_sound = ExtResource("60_171s8")
-eat_sound = ExtResource("61_g7gna")
-background_texture = ExtResource("62_xpbab")
-require_lab_completion = true
-lab_required_message = "Я подвесил холодильник, чтобы не есть"
-locked_sprite = ExtResource("63_d0lyh")
-available_sprite = ExtResource("64_i6qai")
-rocking_cycle_duration = 4.0
-rocking_strength_degrees = 2.0
-rocking_pivot_mode = 1
-rocking_sound = ExtResource("65_r21k0")
-locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" parent="Hall/InteractableObjects/Fridge" index="1" unique_id=1299263173]
-texture = ExtResource("64_i6qai")
-
-[node name="PointLight2D" parent="Hall/InteractableObjects/Fridge" index="2" unique_id=1829784290]
-position = Vector2(-64.67319, -28.980007)
-
-[node name="PointLight2D2" parent="Hall/InteractableObjects/Fridge" index="3" unique_id=170307336]
-position = Vector2(-127.660934, -29.804386)
-
-[node name="AudioStreamPlayer2D" parent="Hall/InteractableObjects/Fridge" index="4" unique_id=1296501811]
-stream = ExtResource("66_yo6kn")
-volume_db = -2.5
-
-[node name="FridgeMarker" type="Marker2D" parent="Hall/InteractableObjects/Fridge" unique_id=2021342338]
-position = Vector2(0.20996094, -32.749985)
-
 [node name="HallLebedka1" type="Node2D" parent="." unique_id=1472079581]
 position = Vector2(0, 5204)
 
@@ -1846,7 +1805,6 @@ one_shot = null
 
 [node name="Lebedka" parent="HallLebedka1/InteractableObjects" unique_id=1292910143 instance=ExtResource("67_bdxoa")]
 position = Vector2(13344, 228)
-fridge_path = NodePath("../../../Hall/InteractableObjects/Fridge")
 fridge_target_global_position = Vector2(9810, 120)
 used_sprite = null
 
@@ -3431,5 +3389,19 @@ trash_min = 8
 trash_max = 14
 searched_empty_message = "Теперь мне нечего тут искать"
 
-[editable path="Hall/InteractableObjects/Fridge"]
+[node name="Fridge" parent="." unique_id=1816588780 instance=ExtResource("55_p3wld")]
+position = Vector2(9809.79, 115.749985)
+minigame_scene = ExtResource("56_ppxr1")
+food_scenes = Array[PackedScene]([ExtResource("110_ktl8c")])
+andrey_face = ExtResource("58_mnjy1")
+food_count = 6
+bg_music = ExtResource("59_6c0pv")
+win_sound = ExtResource("60_171s8")
+eat_sound = ExtResource("61_g7gna")
+background_texture = ExtResource("62_xpbab")
+metadata/_edit_group_ = true
+
+[node name="FridgeMarker" type="Marker2D" parent="Fridge" unique_id=353596857]
+position = Vector2(0.20996094, -32.749985)
+
 [editable path="Bed"]

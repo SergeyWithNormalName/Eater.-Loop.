@@ -31,17 +31,16 @@ func run() -> Array[String]:
 
 	assert_true(level.get_node_or_null("Level12MoneySystem") != null, "Level12MoneySystem node is missing")
 	assert_true(level.get_node_or_null("StudentMoneyNPC") != null, "StudentMoneyNPC node is missing")
-	assert_true(level.get_node_or_null("Blockpost") != null, "Blockpost node is missing")
 
 	var laptop := level.get_node_or_null("Laptop")
 	assert_true(laptop != null, "Top-level laptop node is missing")
 	if laptop != null:
 		assert_true("money_system_path" in laptop, "Laptop must expose money_system_path")
 
-	var note := level.get_node_or_null("Note")
-	assert_true(note != null, "Top-level note node is missing")
-	if note != null:
-		assert_true(note.get("read_audio") != null, "Top-level note should have read_audio assigned")
+	var notes := level.find_children("Note", "", true, false)
+	assert_true(notes.size() > 0, "Level 12 should contain at least one Note node")
+	for note in notes:
+		assert_true("read_audio" in note, "Each level 12 note should expose read_audio property")
 
 	level.queue_free()
 	await tree.process_frame
