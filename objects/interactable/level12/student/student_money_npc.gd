@@ -2,9 +2,9 @@ extends "res://objects/interactable/interactive_object.gd"
 
 @export var money_system_path: NodePath
 @export var reward_money: int = 40
-@export_multiline var talk_message: String = "Student: vot chast deneg za pomoshch."
-@export_multiline var reward_message: String = "Ty poluchil dengi."
-@export_multiline var already_given_message: String = "Student: ya uzhe vse otdal."
+@export_multiline var talk_message: String = "Студент: вот часть денег за помощь."
+@export_multiline var reward_message: String = "Ты получил деньги."
+@export_multiline var already_given_message: String = "Студент: я уже всё отдал."
 @export_range(0.0, 5.0, 0.05) var fade_out_duration: float = 0.35
 @export_range(0.0, 5.0, 0.05) var fade_in_duration: float = 0.35
 
@@ -38,7 +38,7 @@ func _play_reward_sequence() -> void:
 
 	var money_system := _resolve_money_system()
 	if money_system and money_system.has_method("add_money"):
-		money_system.call("add_money", reward_money, "Student reward")
+		money_system.call("add_money", reward_money, "Награда от студента")
 
 	if reward_message.strip_edges() != "":
 		UIMessage.show_text(reward_message)

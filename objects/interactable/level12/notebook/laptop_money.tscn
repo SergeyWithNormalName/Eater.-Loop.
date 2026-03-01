@@ -5,4 +5,5 @@
 
 [node name="LaptopMoney" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-prompt_text = "Sdelat labu za dengi"
+prompt_text = "Сделать лабораторную"
+reward_on_work_completion = true

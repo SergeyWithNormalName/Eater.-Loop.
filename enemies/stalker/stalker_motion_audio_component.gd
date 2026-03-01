@@ -11,6 +11,8 @@ signal motion_event_triggered(event_name: StringName, frame_index: int, animatio
 @export_group("General")
 @export var audio_bus: StringName = &"Sounds"
 @export var max_polyphony: int = 4
+## Максимальная дистанция слышимости шагов/скрипа от stalker.
+@export_range(32.0, 5000.0, 1.0) var motion_max_distance: float = 900.0
 
 @export_group("Step")
 @export var step_animation_name: StringName = &"walk"
@@ -29,18 +31,16 @@ signal motion_event_triggered(event_name: StringName, frame_index: int, animatio
 @export var scrape_pitch_max: float = 1.05
 
 var _sprite: AnimatedSprite2D = null
-var _step_player: AudioStreamPlayer
-var _scrape_player: AudioStreamPlayer
+var _step_player: AudioStreamPlayer2D
+var _scrape_player: AudioStreamPlayer2D
 
 func _ready() -> void:
-	_step_player = AudioStreamPlayer.new()
-	_step_player.bus = audio_bus
-	_step_player.max_polyphony = max(1, max_polyphony)
+	_step_player = AudioStreamPlayer2D.new()
+	_configure_spatial_player(_step_player)
 	add_child(_step_player)
 
-	_scrape_player = AudioStreamPlayer.new()
-	_scrape_player.bus = audio_bus
-	_scrape_player.max_polyphony = max(1, max_polyphony)
+	_scrape_player = AudioStreamPlayer2D.new()
+	_configure_spatial_player(_scrape_player)
 	add_child(_scrape_player)
 
 	_resolve_sprite()
@@ -142,7 +142,7 @@ func _is_matching_frame(animation_name: StringName, frame_index: int, required_a
 	return frame_indices.has(frame_index + 1)
 
 func _play_track_sound(
-		player: AudioStreamPlayer,
+		player: AudioStreamPlayer2D,
 		sounds: Array[AudioStream],
 		volume_db: float,
 		pitch_min: float,
@@ -150,8 +150,15 @@ func _play_track_sound(
 	) -> void:
 	if player == null or sounds.is_empty():
 		return
-	player.bus = audio_bus
+	_configure_spatial_player(player)
 	player.stream = sounds.pick_random()
 	player.volume_db = volume_db
 	player.pitch_scale = randf_range(minf(pitch_min, pitch_max), maxf(pitch_min, pitch_max))
 	player.play()
+
+func _configure_spatial_player(player: AudioStreamPlayer2D) -> void:
+	if player == null:
+		return
+	player.bus = audio_bus
+	player.max_polyphony = max(1, max_polyphony)
+	player.max_distance = maxf(32.0, motion_max_distance)

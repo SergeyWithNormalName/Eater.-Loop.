@@ -307,6 +307,8 @@
 │   │   ├── level_07_doors.gd.uid
 │   │   ├── level_07_doors.tscn
 │   │   ├── level_08_PT.tscn
+│   │   ├── level_09_crazy.gd
+│   │   ├── level_09_crazy.gd.uid
 │   │   ├── level_09_сrazy.tscn
 │   │   ├── level_11_STU_1.tscn
 │   │   ├── level_11_end.gd
@@ -1082,6 +1084,8 @@
 │       │   │   │   ├── ToiletM.jpg.import
 │       │   │   │   ├── ToiletW.jpg
 │       │   │   │   └── ToiletW.jpg.import
+│       │   │   ├── DoorBasement.png
+│       │   │   ├── DoorBasement.png.import
 │       │   │   ├── DoorBasic.png
 │       │   │   ├── DoorBasic.png.import
 │       │   │   ├── DoorBasic_Distorted.png
@@ -1393,4 +1397,4 @@
 ├── project.godot
 └── structure.txt
 
-118 directories, 1276 files
+118 directories, 1280 files

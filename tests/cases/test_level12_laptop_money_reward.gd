@@ -31,15 +31,12 @@ func run() -> Array[String]:
 	var laptop := laptop_scene.instantiate()
 	laptop.set("money_system_path", NodePath("../Level12MoneySystem"))
 	laptop.set("reward_money", 60)
+	laptop.set("reward_on_work_completion", true)
 	root.add_child(laptop)
 	await tree.process_frame
 
-	laptop.set("_lab_completed_before_minigame", false)
-	if GameState and GameState.has_method("mark_lab_completed"):
-		GameState.mark_lab_completed()
-
 	laptop.call("_on_minigame_closed")
-	assert_eq(int(money_system.call("get_money")), 60, "Laptop should reward money after lab completion")
+	assert_eq(int(money_system.call("get_money")), 60, "Laptop should reward money after work completion regardless of success")
 
 	laptop.call("_on_minigame_closed")
 	assert_eq(int(money_system.call("get_money")), 60, "Laptop reward must be one-time")

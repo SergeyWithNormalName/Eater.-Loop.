@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=4 uid="uid://sdmle35lsdig"]
+[gd_scene format=4 uid="uid://sdmle35lsdig"]
 
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="1_j5jbj"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="1_plrscn"]
@@ -151,12 +151,12 @@ size = Vector2(111.6167, 966.4249)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dwgmq"]
 size = Vector2(111.6167, 1199.4946)
 
-[node name="Level2" type="Node2D"]
+[node name="Level2" type="Node2D" unique_id=1253979523]
 position = Vector2(16, 0)
 script = ExtResource("level_settings")
 timer_duration = 3.0
 
-[node name="WallBack_Hall" type="Sprite2D" parent="."]
+[node name="WallBack_Hall" type="Sprite2D" parent="." unique_id=2033687579]
 z_index = -5
 texture_repeat = 2
 position = Vector2(8352, 19)
@@ -164,7 +164,7 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="WallBack_Hall2" type="Sprite2D" parent="."]
+[node name="WallBack_Hall2" type="Sprite2D" parent="." unique_id=1653008630]
 z_index = -5
 texture_repeat = 2
 position = Vector2(12783, 19)
@@ -172,7 +172,7 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="WallBack_Bedroom" type="Sprite2D" parent="."]
+[node name="WallBack_Bedroom" type="Sprite2D" parent="." unique_id=1184533510]
 z_index = -5
 texture_repeat = 2
 position = Vector2(-1913, 19)
@@ -180,19 +180,18 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 1500, 550)
 
-[node name="Window1" type="Sprite2D" parent="."]
+[node name="Window1" type="Sprite2D" parent="." unique_id=1957529740]
 z_index = -4
 position = Vector2(-2360, -12.000001)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("2_7eav4")
 
-[node name="Player" parent="." instance=ExtResource("1_plrscn")]
+[node name="Player" parent="." unique_id=1677568869 instance=ExtResource("1_plrscn")]
 z_index = 3
 position = Vector2(-2366, 96)
-run_speed_multiplier = 1.8
 stamina_max = 30.0
 
-[node name="Door(In Bedroom)" type="Area2D" parent="."]
+[node name="Door(In Bedroom)" type="Area2D" parent="." unique_id=743761061]
 z_index = -2
 position = Vector2(-1581, 83)
 script = ExtResource("11_uthrx")
@@ -201,19 +200,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bedroom)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bedroom)" unique_id=190454695]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(In Bedroom)"]
+[node name="Marker2D" type="Marker2D" parent="Door(In Bedroom)" unique_id=1919677505]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(In Bedroom)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Bedroom)" unique_id=1252307840]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("14_247hy")
 
-[node name="Door(To Bedroom)" type="Area2D" parent="."]
+[node name="Door(To Bedroom)" type="Area2D" parent="." unique_id=1621825688]
 z_index = -2
 position = Vector2(8123, 83)
 script = ExtResource("11_uthrx")
@@ -222,19 +221,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bedroom)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bedroom)" unique_id=469320950]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(To Bedroom)"]
+[node name="Marker2D" type="Marker2D" parent="Door(To Bedroom)" unique_id=1182421358]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(To Bedroom)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Bedroom)" unique_id=317472822]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("14_247hy")
 
-[node name="Door(To Parents)" type="Area2D" parent="."]
+[node name="Door(To Parents)" type="Area2D" parent="." unique_id=919297957]
 z_index = -2
 position = Vector2(8523, 83)
 script = ExtResource("11_uthrx")
@@ -244,19 +243,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Parents)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Parents)" unique_id=1366183953]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(To Parents)"]
+[node name="Marker2D" type="Marker2D" parent="Door(To Parents)" unique_id=709719865]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(To Parents)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Parents)" unique_id=1990501206]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("14_247hy")
 
-[node name="Door(To Exit)" type="Area2D" parent="."]
+[node name="Door(To Exit)" type="Area2D" parent="." unique_id=502649113]
 z_index = -2
 position = Vector2(6699, 83)
 script = ExtResource("11_uthrx")
@@ -266,19 +265,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Exit)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Exit)" unique_id=1937588223]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(To Exit)"]
+[node name="Marker2D" type="Marker2D" parent="Door(To Exit)" unique_id=2142304906]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(To Exit)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Exit)" unique_id=139236039]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.8562749, 0.8975009)
 texture = ExtResource("15_cnjqr")
 
-[node name="Door(To Toilet)" type="Area2D" parent="."]
+[node name="Door(To Toilet)" type="Area2D" parent="." unique_id=1021276514]
 z_index = -2
 position = Vector2(7651, 83)
 script = ExtResource("11_uthrx")
@@ -288,19 +287,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Toilet)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Toilet)" unique_id=675253226]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(To Toilet)"]
+[node name="Marker2D" type="Marker2D" parent="Door(To Toilet)" unique_id=1425668048]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(To Toilet)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Toilet)" unique_id=1960290229]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("16_n0klf")
 
-[node name="Door(To Bathroom)" type="Area2D" parent="."]
+[node name="Door(To Bathroom)" type="Area2D" parent="." unique_id=2096370875]
 z_index = -2
 position = Vector2(7334, 83)
 script = ExtResource("11_uthrx")
@@ -310,19 +309,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bathroom)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(To Bathroom)" unique_id=1143334316]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(To Bathroom)"]
+[node name="Marker2D" type="Marker2D" parent="Door(To Bathroom)" unique_id=1451241490]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(To Bathroom)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(To Bathroom)" unique_id=1279594428]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("16_n0klf")
 
-[node name="Door(In Bathroom)" type="Area2D" parent="."]
+[node name="Door(In Bathroom)" type="Area2D" parent="." unique_id=66661600]
 z_index = -2
 position = Vector2(14090.726, 2338.8599)
 script = ExtResource("11_uthrx")
@@ -332,19 +331,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bathroom)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Bathroom)" unique_id=877619196]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(In Bathroom)"]
+[node name="Marker2D" type="Marker2D" parent="Door(In Bathroom)" unique_id=944233756]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(In Bathroom)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Bathroom)" unique_id=981947899]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("17_rc80n")
 
-[node name="Door(In Toilet)" type="Area2D" parent="."]
+[node name="Door(In Toilet)" type="Area2D" parent="." unique_id=456494548]
 z_index = -2
 position = Vector2(16842.371, 2338.8599)
 script = ExtResource("11_uthrx")
@@ -354,19 +353,19 @@ sfx_locked = ExtResource("12_dklpa")
 sfx_open = ExtResource("13_lasqn")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Toilet)"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door(In Toilet)" unique_id=628509469]
 position = Vector2(0.25, 0.3960724)
 shape = SubResource("RectangleShape2D_fh42t")
 
-[node name="Marker2D" type="Marker2D" parent="Door(In Toilet)"]
+[node name="Marker2D" type="Marker2D" parent="Door(In Toilet)" unique_id=1677334768]
 position = Vector2(0.25, 0.8960724)
 
-[node name="Sprite2D" type="Sprite2D" parent="Door(In Toilet)"]
+[node name="Sprite2D" type="Sprite2D" parent="Door(In Toilet)" unique_id=504970436]
 position = Vector2(0.25, 0.8960724)
 scale = Vector2(0.6841216, 0.6841215)
 texture = ExtResource("17_rc80n")
 
-[node name="Bed" type="Area2D" parent="."]
+[node name="Bed" type="Area2D" parent="." unique_id=170607753]
 z_index = -1
 position = Vector2(-2420, 226)
 script = ExtResource("18_nk8an")
@@ -374,16 +373,16 @@ next_level_path = "res://levels/cycles/level_01.tscn"
 not_ate_message = "Не могу уснуть, мне нужно поесть"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed" unique_id=37078671]
 position = Vector2(-0.20233154, -0.49996948)
 shape = SubResource("RectangleShape2D_akavt")
 
-[node name="Sprite2D" type="Sprite2D" parent="Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="Bed" unique_id=108551183]
 position = Vector2(-1.0320587, 0.2812729)
 scale = Vector2(0.5486593, 0.54865927)
 texture = ExtResource("19_vbetb")
 
-[node name="Frizzer" type="Area2D" parent="."]
+[node name="Frizzer" type="Area2D" parent="." unique_id=1383537295]
 z_index = -1
 position = Vector2(9809.79, 121)
 rotation = 0.002391043
@@ -394,16 +393,16 @@ require_access_code = true
 open_sound = ExtResource("24_42xd2")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Frizzer" unique_id=933305158]
 position = Vector2(0.25, -0.22574615)
 shape = SubResource("RectangleShape2D_2yfbk")
 
-[node name="Sprite2D" type="Sprite2D" parent="Frizzer"]
+[node name="Sprite2D" type="Sprite2D" parent="Frizzer" unique_id=111393310]
 position = Vector2(1.000001, 0.15893745)
 scale = Vector2(0.7364341, 0.73643416)
 texture = ExtResource("25_h6aah")
 
-[node name="PointLight2D" type="PointLight2D" parent="Frizzer"]
+[node name="PointLight2D" type="PointLight2D" parent="Frizzer" unique_id=2066248043]
 visible = false
 position = Vector2(-72.01596, -0.6028094)
 scale = Vector2(0.75128275, 5.546401)
@@ -411,7 +410,7 @@ shadow_enabled = true
 shadow_filter_smooth = 24.4
 texture = SubResource("GradientTexture2D_xddf6")
 
-[node name="PointLight2D2" type="PointLight2D" parent="Frizzer"]
+[node name="PointLight2D2" type="PointLight2D" parent="Frizzer" unique_id=1340920278]
 visible = false
 light_mask = 3
 visibility_layer = 3
@@ -423,22 +422,22 @@ shadow_enabled = true
 shadow_filter_smooth = 24.4
 texture = SubResource("GradientTexture2D_xddf6")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Frizzer"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Frizzer" unique_id=1115974684]
 stream = SubResource("AudioStreamWAV_nlubh")
 volume_db = -18.0
 autoplay = true
 
-[node name="WorldClock2" parent="." instance=ExtResource("27_ui7uc")]
+[node name="WorldClock2" parent="." unique_id=2082973334 instance=ExtResource("27_ui7uc")]
 position = Vector2(9236, -756)
 start_game_time = "0:07"
 
-[node name="Darkness" type="CanvasModulate" parent="."]
+[node name="Darkness" type="CanvasModulate" parent="." unique_id=2089076430]
 rotation = 0.009666472
 color = Color(0.28082654, 0.28089628, 0.33698675, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=481159302]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1765014469]
 material = SubResource("ShaderMaterial_lu44e")
 anchors_preset = 15
 anchor_right = 1.0
@@ -447,12 +446,12 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="OnOffer1" type="Sprite2D" parent="."]
+[node name="OnOffer1" type="Sprite2D" parent="." unique_id=1871272433]
 position = Vector2(-1735.2787, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("29_iptbn")
 
-[node name="TestKey" type="Area2D" parent="."]
+[node name="TestKey" type="Area2D" parent="." unique_id=1772219178]
 position = Vector2(3702, -536)
 script = ExtResource("30_jo8rr")
 key_id = null
@@ -464,68 +463,68 @@ auto_prompt = null
 handle_input = null
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestKey" unique_id=1143252804]
 shape = SubResource("RectangleShape2D_aqck0")
 
-[node name="Sprite2D" type="Sprite2D" parent="TestKey"]
+[node name="Sprite2D" type="Sprite2D" parent="TestKey" unique_id=127337569]
 texture = ExtResource("31_0vyli")
 
-[node name="TestNote" type="Area2D" parent="."]
+[node name="TestNote" type="Area2D" parent="." unique_id=2105815987]
 position = Vector2(7082, -533)
 script = ExtResource("32_46nnu")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestNote" unique_id=2145380101]
 shape = SubResource("RectangleShape2D_aqck0")
 
-[node name="Sprite2D" type="Sprite2D" parent="TestNote"]
+[node name="Sprite2D" type="Sprite2D" parent="TestNote" unique_id=1282818450]
 texture = ExtResource("31_0vyli")
 
-[node name="Rozetka1" type="Sprite2D" parent="."]
+[node name="Rozetka1" type="Sprite2D" parent="." unique_id=256374978]
 z_index = -3
 position = Vector2(-2467.875, 173)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("33_mdo08")
 
-[node name="OnOffer2" type="Sprite2D" parent="."]
+[node name="OnOffer2" type="Sprite2D" parent="." unique_id=1746065318]
 position = Vector2(7512.875, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("29_iptbn")
 
-[node name="OnOffer5" type="Sprite2D" parent="."]
+[node name="OnOffer5" type="Sprite2D" parent="." unique_id=1021175839]
 position = Vector2(6861, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("29_iptbn")
 
-[node name="OnOffer4" type="Sprite2D" parent="."]
+[node name="OnOffer4" type="Sprite2D" parent="." unique_id=625583580]
 position = Vector2(8980, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("29_iptbn")
 
-[node name="OnOffer3" type="Sprite2D" parent="."]
+[node name="OnOffer3" type="Sprite2D" parent="." unique_id=1496553507]
 position = Vector2(7474.875, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("29_iptbn")
 
-[node name="KitchenFurniture" type="Sprite2D" parent="."]
+[node name="KitchenFurniture" type="Sprite2D" parent="." unique_id=1725196220]
 z_index = -2
 position = Vector2(9479.546, 176.75)
 scale = Vector2(0.65167105, 0.6516709)
 texture = ExtResource("34_wxo28")
 
-[node name="Window2" type="Sprite2D" parent="."]
+[node name="Window2" type="Sprite2D" parent="." unique_id=2083871488]
 z_index = -4
 position = Vector2(10323, -12.000001)
 scale = Vector2(0.9091287, 0.9091287)
 texture = ExtResource("35_8s8vv")
 
-[node name="KitchenTable" type="Sprite2D" parent="."]
+[node name="KitchenTable" type="Sprite2D" parent="." unique_id=11164297]
 z_index = 7
 position = Vector2(10163.37, 276.23898)
 scale = Vector2(0.9169747, 0.91697466)
 texture = ExtResource("36_lr5a3")
 
-[node name="TableForLab" type="Area2D" parent="."]
+[node name="TableForLab" type="Area2D" parent="." unique_id=740355840]
 position = Vector2(-1857.0001, 165)
 scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("37_xe867")
@@ -537,28 +536,28 @@ available_light_node = NodePath("PointLight2D")
 available_light_node_secondary = NodePath("PointLight2D2")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TableForLab"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TableForLab" unique_id=1336287504]
 position = Vector2(0.5439453, -1.3511658)
 scale = Vector2(0.9999997, 1)
 shape = SubResource("RectangleShape2D_nyxq3")
 
-[node name="NotebookOff2" type="Sprite2D" parent="TableForLab"]
+[node name="NotebookOff2" type="Sprite2D" parent="TableForLab" unique_id=1855982286]
 z_index = 1
 position = Vector2(19.629883, -86.15288)
 scale = Vector2(0.26368898, 0.263689)
 texture = ExtResource("40_2ii75")
 
-[node name="PointLight2D" type="PointLight2D" parent="TableForLab"]
+[node name="PointLight2D" type="PointLight2D" parent="TableForLab" unique_id=2110175672]
 position = Vector2(18.539358, -62.16093)
 scale = Vector2(2.526802, 1.3489764)
 texture = SubResource("GradientTexture2D_twaj4")
 
-[node name="PointLight2D2" type="PointLight2D" parent="TableForLab"]
+[node name="PointLight2D2" type="PointLight2D" parent="TableForLab" unique_id=255446424]
 position = Vector2(19.084557, -94.877205)
 scale = Vector2(1.686933, 0.88606596)
 texture = SubResource("GradientTexture2D_r2tj0")
 
-[node name="Phone" type="Area2D" parent="."]
+[node name="Phone" type="Area2D" parent="." unique_id=1219637686]
 position = Vector2(7976, -502)
 scale = Vector2(0.9169747, 0.91697466)
 script = ExtResource("41_y5xcj")
@@ -568,35 +567,35 @@ prompt_text = null
 auto_prompt = null
 handle_input = null
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Phone" unique_id=1298060847]
 position = Vector2(0.5439453, -1.3511658)
 scale = Vector2(0.9999999, 1)
 shape = SubResource("RectangleShape2D_tw5p7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Phone"]
+[node name="Sprite2D" type="Sprite2D" parent="Phone" unique_id=705474490]
 z_index = 7
 scale = Vector2(0.99999994, 1)
 texture = ExtResource("36_lr5a3")
 
-[node name="WashMachine" type="Sprite2D" parent="."]
+[node name="WashMachine" type="Sprite2D" parent="." unique_id=1744122640]
 z_index = -2
 position = Vector2(13740.602, 2453.1492)
 scale = Vector2(0.61568123, 0.61568123)
 texture = ExtResource("42_rnsmf")
 
-[node name="CookingGas" type="Sprite2D" parent="."]
+[node name="CookingGas" type="Sprite2D" parent="." unique_id=2102282347]
 z_index = -1
 position = Vector2(9993.2, 200.70374)
 scale = Vector2(0.2942373, 0.2942373)
 texture = ExtResource("43_d0fn0")
 
-[node name="Rakovina" type="Sprite2D" parent="."]
+[node name="Rakovina" type="Sprite2D" parent="." unique_id=630430317]
 z_index = -2
 position = Vector2(13906.001, 2456.8596)
 scale = Vector2(0.536, 0.536)
 texture = ExtResource("44_fu053")
 
-[node name="WallBack_Toilet" type="Sprite2D" parent="."]
+[node name="WallBack_Toilet" type="Sprite2D" parent="." unique_id=1408403575]
 z_index = -5
 texture_repeat = 2
 position = Vector2(16690.602, 2274.8599)
@@ -605,7 +604,7 @@ texture = ExtResource("45_nohlj")
 region_enabled = true
 region_rect = Rect2(0, 0, 2400, 2200)
 
-[node name="WallBack_Bathroom" type="Sprite2D" parent="."]
+[node name="WallBack_Bathroom" type="Sprite2D" parent="." unique_id=724484020]
 z_index = -5
 texture_repeat = 2
 position = Vector2(14139, 2274.8599)
@@ -614,18 +613,18 @@ texture = ExtResource("45_nohlj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4100, 2200)
 
-[node name="Toilet" type="Sprite2D" parent="."]
+[node name="Toilet" type="Sprite2D" parent="." unique_id=739248674]
 z_index = -2
 position = Vector2(16536, 2436.8599)
 scale = Vector2(0.61568123, 0.61568123)
 texture = ExtResource("46_d64aq")
 
-[node name="Yorhic" type="Sprite2D" parent="."]
+[node name="Yorhic" type="Sprite2D" parent="." unique_id=686744792]
 position = Vector2(16446, 2483.8599)
 scale = Vector2(0.27, 0.27)
 texture = ExtResource("47_y66bm")
 
-[node name="FloorBedroom" type="Sprite2D" parent="."]
+[node name="FloorBedroom" type="Sprite2D" parent="." unique_id=1661448622]
 z_index = -5
 texture_repeat = 2
 position = Vector2(-1913.0001, 326)
@@ -634,7 +633,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 6840, 500)
 
-[node name="FloorKitchen" type="Sprite2D" parent="."]
+[node name="FloorKitchen" type="Sprite2D" parent="." unique_id=1922017982]
 z_index = -5
 texture_repeat = 2
 position = Vector2(8351.001, 326)
@@ -643,7 +642,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="FloorKitchen2" type="Sprite2D" parent="."]
+[node name="FloorKitchen2" type="Sprite2D" parent="." unique_id=1154423517]
 z_index = -5
 texture_repeat = 2
 position = Vector2(12784, 326)
@@ -652,7 +651,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack_Hall3" type="Sprite2D" parent="."]
+[node name="WallBack_Hall3" type="Sprite2D" parent="." unique_id=1004918557]
 z_index = -5
 texture_repeat = 2
 position = Vector2(17272, 19)
@@ -660,7 +659,7 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="FloorKitchen3" type="Sprite2D" parent="."]
+[node name="FloorKitchen3" type="Sprite2D" parent="." unique_id=1619584366]
 z_index = -5
 texture_repeat = 2
 position = Vector2(17273, 326)
@@ -669,7 +668,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack_Hall4" type="Sprite2D" parent="."]
+[node name="WallBack_Hall4" type="Sprite2D" parent="." unique_id=1885336627]
 z_index = -5
 texture_repeat = 2
 position = Vector2(21702, 19)
@@ -677,7 +676,7 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="FloorKitchen4" type="Sprite2D" parent="."]
+[node name="FloorKitchen4" type="Sprite2D" parent="." unique_id=930625441]
 z_index = -5
 texture_repeat = 2
 position = Vector2(21703, 326)
@@ -686,7 +685,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack_Hall5" type="Sprite2D" parent="."]
+[node name="WallBack_Hall5" type="Sprite2D" parent="." unique_id=228131560]
 z_index = -5
 texture_repeat = 2
 position = Vector2(26166, 19)
@@ -694,7 +693,7 @@ texture = ExtResource("1_j5jbj")
 region_enabled = true
 region_rect = Rect2(0, 0, 4500, 550)
 
-[node name="FloorKitchen5" type="Sprite2D" parent="."]
+[node name="FloorKitchen5" type="Sprite2D" parent="." unique_id=1665871483]
 z_index = -5
 texture_repeat = 2
 position = Vector2(26167, 326)
@@ -703,7 +702,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="FloorBathroom" type="Sprite2D" parent="."]
+[node name="FloorBathroom" type="Sprite2D" parent="." unique_id=329807887]
 z_index = -5
 texture_repeat = 2
 position = Vector2(14139, 2581.8599)
@@ -712,7 +711,7 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 4650, 500)
 
-[node name="FloorToilet" type="Sprite2D" parent="."]
+[node name="FloorToilet" type="Sprite2D" parent="." unique_id=76509200]
 z_index = -5
 texture_repeat = 2
 position = Vector2(16690.602, 2581.8599)
@@ -721,988 +720,988 @@ texture = ExtResource("48_d35qo")
 region_enabled = true
 region_rect = Rect2(0, 0, 2750, 500)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1592653128]
 position = Vector2(14479, 2451.8599)
 scale = Vector2(0.61568123, 0.61568123)
 
-[node name="Wash" type="Sprite2D" parent="StaticBody2D"]
+[node name="Wash" type="Sprite2D" parent="StaticBody2D" unique_id=274042529]
 z_index = -2
 texture = ExtResource("49_shqfx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1163759516]
 position = Vector2(-2.4355469, 45.47809)
 shape = SubResource("RectangleShape2D_rdh85")
 
-[node name="Chair1" type="Sprite2D" parent="."]
+[node name="Chair1" type="Sprite2D" parent="." unique_id=2133935106]
 z_index = 6
 position = Vector2(10442, 245)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("50_e34kh")
 
-[node name="Chair2" type="Sprite2D" parent="."]
+[node name="Chair2" type="Sprite2D" parent="." unique_id=946892513]
 z_index = 3
 position = Vector2(10252, 230)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("51_pts8l")
 
-[node name="Chair3" type="Sprite2D" parent="."]
+[node name="Chair3" type="Sprite2D" parent="." unique_id=520105805]
 z_index = 3
 position = Vector2(10092.369, 229.99998)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("51_pts8l")
 
-[node name="HighKitchen" type="Sprite2D" parent="."]
+[node name="HighKitchen" type="Sprite2D" parent="." unique_id=116494648]
 position = Vector2(9477, -103.999985)
 scale = Vector2(0.31, 0.31)
 texture = ExtResource("52_6x3iq")
 
-[node name="Comode" type="Sprite2D" parent="."]
+[node name="Comode" type="Sprite2D" parent="." unique_id=641044102]
 position = Vector2(-1323.5944, 189)
 scale = Vector2(0.32872525, 0.32872525)
 texture = ExtResource("53_qa5h3")
 
-[node name="Comode2" type="Sprite2D" parent="."]
+[node name="Comode2" type="Sprite2D" parent="." unique_id=1745760937]
 position = Vector2(-1857.2787, 190.00002)
 scale = Vector2(0.3389674, 0.33896744)
 texture = ExtResource("54_s01p5")
 
-[node name="Tumbochka2" type="Sprite2D" parent="."]
+[node name="Tumbochka2" type="Sprite2D" parent="." unique_id=1218987746]
 position = Vector2(-2112.125, 238)
 scale = Vector2(0.21, 0.21)
 texture = ExtResource("55_w0s5i")
 
-[node name="Clock" type="Sprite2D" parent="."]
+[node name="Clock" type="Sprite2D" parent="." unique_id=271519853]
 position = Vector2(-2124, 150)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("56_rfyxr")
 
-[node name="WorldClock" parent="." instance=ExtResource("27_ui7uc")]
+[node name="WorldClock" parent="." unique_id=1355313687 instance=ExtResource("27_ui7uc")]
 position = Vector2(-2141, 138.99998)
 scale = Vector2(0.36, 0.36)
 start_game_time = "1:03"
 metadata/_edit_group_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="WorldClock"]
+[node name="PointLight2D" type="PointLight2D" parent="WorldClock" unique_id=1901518418]
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_f1xxx")
 
-[node name="SteamDeck" type="Sprite2D" parent="."]
+[node name="SteamDeck" type="Sprite2D" parent="." unique_id=2145800005]
 position = Vector2(-1258.5944, 55.96)
 scale = Vector2(0.24, 0.24)
 texture = ExtResource("57_dtolq")
 
-[node name="NotebookOff" type="Sprite2D" parent="."]
+[node name="NotebookOff" type="Sprite2D" parent="." unique_id=609135583]
 visible = false
 position = Vector2(-1839, 86)
 scale = Vector2(0.24179614, 0.24179614)
 texture = ExtResource("39_vbm7i")
 
-[node name="Plakat1" type="Sprite2D" parent="."]
+[node name="Plakat1" type="Sprite2D" parent="." unique_id=1971060517]
 z_index = -5
 position = Vector2(-2091, 37)
 scale = Vector2(0.18294117, 0.18294117)
 texture = ExtResource("58_cne4r")
 
-[node name="Plakat2" type="Sprite2D" parent="."]
+[node name="Plakat2" type="Sprite2D" parent="." unique_id=1521539288]
 z_index = -4
 position = Vector2(-1353, -46)
 scale = Vector2(0.1879456, 0.1879456)
 texture = ExtResource("59_soj0c")
 
-[node name="Lamp1" type="Sprite2D" parent="."]
+[node name="Lamp1" type="Sprite2D" parent="." unique_id=184167123]
 position = Vector2(-1898.9999, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("60_nsye0")
 
-[node name="Lamp4" type="Sprite2D" parent="."]
+[node name="Lamp4" type="Sprite2D" parent="." unique_id=220780432]
 position = Vector2(9814, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("60_nsye0")
 
-[node name="Lamp5" type="Sprite2D" parent="."]
+[node name="Lamp5" type="Sprite2D" parent="." unique_id=132451738]
 position = Vector2(6699, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("60_nsye0")
 
-[node name="Lamp2" type="Sprite2D" parent="."]
+[node name="Lamp2" type="Sprite2D" parent="." unique_id=54466320]
 position = Vector2(14165, 2047.8599)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("60_nsye0")
 
-[node name="Lamp3" type="Sprite2D" parent="."]
+[node name="Lamp3" type="Sprite2D" parent="." unique_id=1730329155]
 position = Vector2(16701, 2046.8599)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("60_nsye0")
 
-[node name="WallEnd" type="StaticBody2D" parent="."]
+[node name="WallEnd" type="StaticBody2D" parent="." unique_id=2011451575]
 position = Vector2(-1151.5, 63.860657)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd" unique_id=255362906]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd" unique_id=904697020]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof" type="StaticBody2D" parent="."]
+[node name="WallRoof" type="StaticBody2D" parent="." unique_id=693421013]
 position = Vector2(-1450.9999, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof" unique_id=507924772]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof" unique_id=218963524]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof2" type="StaticBody2D" parent="."]
+[node name="WallRoof2" type="StaticBody2D" parent="." unique_id=802779391]
 position = Vector2(-2252, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof2" unique_id=1339573963]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof2"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof2" unique_id=1095604332]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof3" type="StaticBody2D" parent="."]
+[node name="WallRoof3" type="StaticBody2D" parent="." unique_id=1663494953]
 position = Vector2(-1450.9999, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof3" unique_id=1723214258]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof3"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof3" unique_id=717816437]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof4" type="StaticBody2D" parent="."]
+[node name="WallRoof4" type="StaticBody2D" parent="." unique_id=1982670849]
 position = Vector2(-2252, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof4" unique_id=794033920]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof4"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof4" unique_id=1521316077]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd2" type="StaticBody2D" parent="."]
+[node name="WallEnd2" type="StaticBody2D" parent="." unique_id=1443631956]
 position = Vector2(-2680, 63.860657)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd2" unique_id=1631209898]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd2"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd2" unique_id=1262193851]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd5" type="StaticBody2D" parent="."]
+[node name="WallEnd5" type="StaticBody2D" parent="." unique_id=1437853426]
 position = Vector2(17008, 2319.7205)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd5" unique_id=629258668]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd5"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd5" unique_id=1019648690]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof18" type="StaticBody2D" parent="."]
+[node name="WallRoof18" type="StaticBody2D" parent="." unique_id=546261519]
 position = Vector2(16735, 1980.8596)
 rotation = -1.5707964
 scale = Vector2(0.385, 0.562)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof18"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof18" unique_id=313975296]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof18"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof18" unique_id=316296378]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof19" type="StaticBody2D" parent="."]
+[node name="WallRoof19" type="StaticBody2D" parent="." unique_id=1125865479]
 position = Vector2(16735, 2654.8599)
 rotation = -1.5707964
 scale = Vector2(0.485, 0.562)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof19"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof19" unique_id=1289492822]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof19"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof19" unique_id=1311186969]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd6" type="StaticBody2D" parent="."]
+[node name="WallEnd6" type="StaticBody2D" parent="." unique_id=492891746]
 position = Vector2(16372, 2319.7205)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd6" unique_id=1214803658]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd6"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd6" unique_id=406599129]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd7" type="StaticBody2D" parent="."]
+[node name="WallEnd7" type="StaticBody2D" parent="." unique_id=140217887]
 position = Vector2(14666, 2319.7205)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd7" unique_id=51692944]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd7"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd7" unique_id=1896726146]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof20" type="StaticBody2D" parent="."]
+[node name="WallRoof20" type="StaticBody2D" parent="." unique_id=1294172114]
 position = Vector2(13909, 1980.8596)
 rotation = -1.5707964
 scale = Vector2(0.385, 0.46)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof20"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof20" unique_id=56310246]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof20"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof20" unique_id=529930666]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof22" type="StaticBody2D" parent="."]
+[node name="WallRoof22" type="StaticBody2D" parent="." unique_id=877445276]
 position = Vector2(14445, 1980.8596)
 rotation = -1.5707964
 scale = Vector2(0.385, 0.46)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof22"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof22" unique_id=336364332]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof22"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof22" unique_id=1359492791]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof21" type="StaticBody2D" parent="."]
+[node name="WallRoof21" type="StaticBody2D" parent="." unique_id=972130563]
 position = Vector2(13909, 2654.8596)
 rotation = -1.5707964
 scale = Vector2(0.385, 0.46)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof21"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof21" unique_id=1565357150]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof21"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof21" unique_id=845618080]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof23" type="StaticBody2D" parent="."]
+[node name="WallRoof23" type="StaticBody2D" parent="." unique_id=879361364]
 position = Vector2(14447, 2654.8596)
 rotation = -1.5707964
 scale = Vector2(0.385, 0.46)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof23"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof23" unique_id=1785439018]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof23"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof23" unique_id=631338600]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd8" type="StaticBody2D" parent="."]
+[node name="WallEnd8" type="StaticBody2D" parent="." unique_id=1875092984]
 position = Vector2(13615, 2319.7205)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd8" unique_id=151183299]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd8"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd8" unique_id=114340739]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd3" type="StaticBody2D" parent="."]
+[node name="WallEnd3" type="StaticBody2D" parent="." unique_id=1901627997]
 position = Vector2(28409, 65)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd3" unique_id=1613528391]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd3"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd3" unique_id=455083368]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof5" type="StaticBody2D" parent="."]
+[node name="WallRoof5" type="StaticBody2D" parent="." unique_id=458291789]
 position = Vector2(10321, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof5" unique_id=1433688993]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof5"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof5" unique_id=1933655101]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof6" type="StaticBody2D" parent="."]
+[node name="WallRoof6" type="StaticBody2D" parent="." unique_id=1298682756]
 position = Vector2(6517, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof6" unique_id=960096213]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof6"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof6" unique_id=404549079]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof7" type="StaticBody2D" parent="."]
+[node name="WallRoof7" type="StaticBody2D" parent="." unique_id=1346089155]
 position = Vector2(10321, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof7" unique_id=2143994546]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof7"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof7" unique_id=420334059]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof9" type="StaticBody2D" parent="."]
+[node name="WallRoof9" type="StaticBody2D" parent="." unique_id=1061465414]
 position = Vector2(9540, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof9"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof9" unique_id=855385386]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof9"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof9" unique_id=1718440703]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof10" type="StaticBody2D" parent="."]
+[node name="WallRoof10" type="StaticBody2D" parent="." unique_id=1721783554]
 position = Vector2(9540, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof10"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof10" unique_id=1761058570]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof10"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof10" unique_id=1505600459]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof17" type="StaticBody2D" parent="."]
+[node name="WallRoof17" type="StaticBody2D" parent="." unique_id=459987824]
 position = Vector2(11099.999, 398.99997)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof17"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof17" unique_id=138631420]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof17"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof17" unique_id=1226906091]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof24" type="StaticBody2D" parent="."]
+[node name="WallRoof24" type="StaticBody2D" parent="." unique_id=252531138]
 position = Vector2(11873, 398.99997)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof24"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof24" unique_id=814824140]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof24"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof24" unique_id=2118675600]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof25" type="StaticBody2D" parent="."]
+[node name="WallRoof25" type="StaticBody2D" parent="." unique_id=1438301570]
 position = Vector2(12643.999, 398.99997)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof25"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof25" unique_id=1079945289]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof25"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof25" unique_id=1462745363]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof26" type="StaticBody2D" parent="."]
+[node name="WallRoof26" type="StaticBody2D" parent="." unique_id=1586465238]
 position = Vector2(13411.999, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof26"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof26" unique_id=1210714523]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof26"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof26" unique_id=883947938]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof27" type="StaticBody2D" parent="."]
+[node name="WallRoof27" type="StaticBody2D" parent="." unique_id=1344153220]
 position = Vector2(14181.999, 398.99997)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof27"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof27" unique_id=111547490]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof27"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof27" unique_id=221641968]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof28" type="StaticBody2D" parent="."]
+[node name="WallRoof28" type="StaticBody2D" parent="." unique_id=1699217349]
 position = Vector2(14955, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof28"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof28" unique_id=633146235]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof28"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof28" unique_id=967622264]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof29" type="StaticBody2D" parent="."]
+[node name="WallRoof29" type="StaticBody2D" parent="." unique_id=2075803096]
 position = Vector2(15728.001, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof29"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof29" unique_id=225846300]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof29"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof29" unique_id=1532445888]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof30" type="StaticBody2D" parent="."]
+[node name="WallRoof30" type="StaticBody2D" parent="." unique_id=1541506602]
 position = Vector2(16499, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof30"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof30" unique_id=1020699325]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof30"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof30" unique_id=651032189]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof31" type="StaticBody2D" parent="."]
+[node name="WallRoof31" type="StaticBody2D" parent="." unique_id=359665570]
 position = Vector2(17267, 399.00003)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof31"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof31" unique_id=180963000]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof31"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof31" unique_id=503448845]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof32" type="StaticBody2D" parent="."]
+[node name="WallRoof32" type="StaticBody2D" parent="." unique_id=1177981374]
 position = Vector2(18037, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof32"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof32" unique_id=1783485380]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof32"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof32" unique_id=1353653221]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof33" type="StaticBody2D" parent="."]
+[node name="WallRoof33" type="StaticBody2D" parent="." unique_id=868372747]
 position = Vector2(18801, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof33"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof33" unique_id=840347899]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof33"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof33" unique_id=37356302]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof34" type="StaticBody2D" parent="."]
+[node name="WallRoof34" type="StaticBody2D" parent="." unique_id=1917269295]
 position = Vector2(19574, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof34"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof34" unique_id=321453788]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof34"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof34" unique_id=1994976718]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof35" type="StaticBody2D" parent="."]
+[node name="WallRoof35" type="StaticBody2D" parent="." unique_id=646657084]
 position = Vector2(20345, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof35"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof35" unique_id=2026742420]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof35"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof35" unique_id=1151225100]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof36" type="StaticBody2D" parent="."]
+[node name="WallRoof36" type="StaticBody2D" parent="." unique_id=16360626]
 position = Vector2(21113, 399.00003)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof36"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof36" unique_id=355467213]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof36"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof36" unique_id=1957905165]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof37" type="StaticBody2D" parent="."]
+[node name="WallRoof37" type="StaticBody2D" parent="." unique_id=97169936]
 position = Vector2(21883, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof37"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof37" unique_id=441058920]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof37"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof37" unique_id=319433595]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof38" type="StaticBody2D" parent="."]
+[node name="WallRoof38" type="StaticBody2D" parent="." unique_id=29171421]
 position = Vector2(22641, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof38"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof38" unique_id=1888637144]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof38"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof38" unique_id=2053349199]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof39" type="StaticBody2D" parent="."]
+[node name="WallRoof39" type="StaticBody2D" parent="." unique_id=976587573]
 position = Vector2(23414, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof39"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof39" unique_id=1035740780]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof39"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof39" unique_id=1929290696]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof40" type="StaticBody2D" parent="."]
+[node name="WallRoof40" type="StaticBody2D" parent="." unique_id=842948619]
 position = Vector2(24185, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof40"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof40" unique_id=1679450027]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof40"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof40" unique_id=1062621632]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof41" type="StaticBody2D" parent="."]
+[node name="WallRoof41" type="StaticBody2D" parent="." unique_id=1819628089]
 position = Vector2(24953, 399.00003)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof41"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof41" unique_id=1385859046]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof41"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof41" unique_id=230252764]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof42" type="StaticBody2D" parent="."]
+[node name="WallRoof42" type="StaticBody2D" parent="." unique_id=72974749]
 position = Vector2(25723, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof42"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof42" unique_id=1385778049]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof42"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof42" unique_id=1462381585]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof43" type="StaticBody2D" parent="."]
+[node name="WallRoof43" type="StaticBody2D" parent="." unique_id=574374029]
 position = Vector2(26490, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof43"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof43" unique_id=253973045]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof43"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof43" unique_id=1360828695]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof44" type="StaticBody2D" parent="."]
+[node name="WallRoof44" type="StaticBody2D" parent="." unique_id=726207017]
 position = Vector2(27258, 399.00003)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof44"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof44" unique_id=989202094]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof44"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof44" unique_id=881815270]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof45" type="StaticBody2D" parent="."]
+[node name="WallRoof45" type="StaticBody2D" parent="." unique_id=1891522517]
 position = Vector2(28028, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof45"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof45" unique_id=374778982]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof45"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof45" unique_id=871542679]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof11" type="StaticBody2D" parent="."]
+[node name="WallRoof11" type="StaticBody2D" parent="." unique_id=215317693]
 position = Vector2(8757, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof11"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof11" unique_id=2079666607]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof11"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof11" unique_id=1083936146]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof12" type="StaticBody2D" parent="."]
+[node name="WallRoof12" type="StaticBody2D" parent="." unique_id=1129483441]
 position = Vector2(8757, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof12"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof12" unique_id=57969320]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof12"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof12" unique_id=347810151]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof13" type="StaticBody2D" parent="."]
+[node name="WallRoof13" type="StaticBody2D" parent="." unique_id=308084855]
 position = Vector2(7977, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof13"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof13" unique_id=990592248]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof13"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof13" unique_id=1748699702]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof14" type="StaticBody2D" parent="."]
+[node name="WallRoof14" type="StaticBody2D" parent="." unique_id=98759992]
 position = Vector2(7977, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof14"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof14" unique_id=1919712999]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof14"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof14" unique_id=1100752658]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof15" type="StaticBody2D" parent="."]
+[node name="WallRoof15" type="StaticBody2D" parent="." unique_id=1553060183]
 position = Vector2(7292, -275)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof15"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof15" unique_id=290353756]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof15"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof15" unique_id=1529609457]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof16" type="StaticBody2D" parent="."]
+[node name="WallRoof16" type="StaticBody2D" parent="." unique_id=112623823]
 position = Vector2(7292, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof16"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof16" unique_id=1626862449]
 position = Vector2(0, -108.873535)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof16"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof16" unique_id=1874326510]
 light_mask = 2
 position = Vector2(0, -113.01953)
 scale = Vector2(1, 1.230417)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallRoof8" type="StaticBody2D" parent="."]
+[node name="WallRoof8" type="StaticBody2D" parent="." unique_id=1556636247]
 position = Vector2(6517, 399)
 rotation = -1.5707964
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRoof8" unique_id=974336202]
 position = Vector2(0, -85.822266)
 shape = SubResource("RectangleShape2D_dwgmq")
 
-[node name="WallBok" type="Sprite2D" parent="WallRoof8"]
+[node name="WallBok" type="Sprite2D" parent="WallRoof8" unique_id=1802266758]
 light_mask = 2
 position = Vector2(0, -81.81008)
 scale = Vector2(1, 1.2386152)
 texture = ExtResource("61_pvnfl")
 
-[node name="WallEnd4" type="StaticBody2D" parent="."]
+[node name="WallEnd4" type="StaticBody2D" parent="." unique_id=796522279]
 position = Vector2(6089, 63.860657)
 scale = Vector2(0.38524616, 0.6557377)
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallEnd4" unique_id=1259830683]
 shape = SubResource("RectangleShape2D_o12kx")
 
-[node name="WallBok" type="Sprite2D" parent="WallEnd4"]
+[node name="WallBok" type="Sprite2D" parent="WallEnd4" unique_id=2132596783]
 light_mask = 2
 texture = ExtResource("61_pvnfl")
 
-[node name="ToiletPaper" type="Sprite2D" parent="."]
+[node name="ToiletPaper" type="Sprite2D" parent="." unique_id=12209158]
 position = Vector2(16640, 2405.8599)
 scale = Vector2(0.08124997, 0.081249975)
 texture = ExtResource("62_35v6e")
 
-[node name="Vent" type="Sprite2D" parent="."]
+[node name="Vent" type="Sprite2D" parent="." unique_id=213824534]
 position = Vector2(16550, 2095.8596)
 scale = Vector2(0.15588242, 0.1558824)
 texture = ExtResource("63_qilx3")
 
-[node name="Vent2" type="Sprite2D" parent="."]
+[node name="Vent2" type="Sprite2D" parent="." unique_id=1068207653]
 position = Vector2(13849.999, 2095.8596)
 scale = Vector2(0.15588242, 0.1558824)
 texture = ExtResource("63_qilx3")
 
-[node name="ChairBedroom" type="Sprite2D" parent="."]
+[node name="ChairBedroom" type="Sprite2D" parent="." unique_id=1264386595]
 light_mask = 2
 z_index = 2
 position = Vector2(-1840.9999, 221.99998)
 scale = Vector2(0.29, 0.29)
 texture = ExtResource("64_3wd2r")
 
-[node name="OpenShtora" type="Sprite2D" parent="."]
+[node name="OpenShtora" type="Sprite2D" parent="." unique_id=870092963]
 z_index = -3
 position = Vector2(-2362, 54)
 scale = Vector2(0.59296346, 0.59296346)
 texture = ExtResource("65_uyig3")
 
-[node name="OpenShtora2" type="Sprite2D" parent="."]
+[node name="OpenShtora2" type="Sprite2D" parent="." unique_id=392939117]
 z_index = -3
 position = Vector2(10323, 54)
 scale = Vector2(0.66074157, 0.59296346)
 texture = ExtResource("65_uyig3")
 
-[node name="ToothPolka" type="Sprite2D" parent="."]
+[node name="ToothPolka" type="Sprite2D" parent="." unique_id=1337815045]
 position = Vector2(13906, 2302.7397)
 scale = Vector2(0.18251042, 0.18251051)
 texture = ExtResource("66_bhsw6")
 
-[node name="TilesFloor1" type="Sprite2D" parent="."]
+[node name="TilesFloor1" type="Sprite2D" parent="." unique_id=1681837762]
 z_index = -5
 position = Vector2(16691.934, 2582.86)
 scale = Vector2(0.3938595, 0.39385954)
 texture = ExtResource("67_t8p3l")
 
-[node name="TilesFloor2" type="Sprite2D" parent="."]
+[node name="TilesFloor2" type="Sprite2D" parent="." unique_id=1874816701]
 z_index = -5
 position = Vector2(13981.504, 2587.2974)
 scale = Vector2(0.45307007, 0.45307013)
 texture = ExtResource("67_t8p3l")
 
-[node name="Sweets" type="Sprite2D" parent="."]
+[node name="Sweets" type="Sprite2D" parent="." unique_id=2101989616]
 position = Vector2(-1959.9788, 114.54161)
 rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
@@ -1710,7 +1709,7 @@ skew = -0.5637413
 texture = ExtResource("68_qhoba")
 metadata/_edit_group_ = true
 
-[node name="Sweets2" type="Sprite2D" parent="."]
+[node name="Sweets2" type="Sprite2D" parent="." unique_id=932230498]
 position = Vector2(-1972.4827, 114.3853)
 rotation = -0.12217305
 scale = Vector2(0.02, 0.02)
@@ -1718,90 +1717,90 @@ skew = -0.5637413
 texture = ExtResource("68_qhoba")
 metadata/_edit_group_ = true
 
-[node name="PictureOne" type="Sprite2D" parent="."]
+[node name="PictureOne" type="Sprite2D" parent="." unique_id=1825938306]
 position = Vector2(9131, -15)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("69_10h7x")
 
-[node name="Shkaf1" type="Sprite2D" parent="."]
+[node name="Shkaf1" type="Sprite2D" parent="." unique_id=1061688568]
 position = Vector2(6333.0005, 44)
 scale = Vector2(0.7199503, 0.7199504)
 texture = ExtResource("70_ko7i6")
 
-[node name="BootsBoard" type="Sprite2D" parent="."]
+[node name="BootsBoard" type="Sprite2D" parent="." unique_id=1209675219]
 position = Vector2(6954.0005, 249)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("71_1ttwx")
 
-[node name="Boots1" type="Sprite2D" parent="."]
+[node name="Boots1" type="Sprite2D" parent="." unique_id=1759060813]
 position = Vector2(6877, 180)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("72_px6hj")
 
-[node name="Boots3" type="Sprite2D" parent="."]
+[node name="Boots3" type="Sprite2D" parent="." unique_id=1530844274]
 position = Vector2(6951, 239)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("73_xsbd7")
 
-[node name="Boots4" type="Sprite2D" parent="."]
+[node name="Boots4" type="Sprite2D" parent="." unique_id=324615030]
 position = Vector2(6878, 240)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("74_bddgk")
 
-[node name="Boots5" type="Sprite2D" parent="."]
+[node name="Boots5" type="Sprite2D" parent="." unique_id=42758886]
 position = Vector2(7024, 240)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("75_0a7ki")
 
-[node name="Boots2" type="Sprite2D" parent="."]
+[node name="Boots2" type="Sprite2D" parent="." unique_id=422291130]
 position = Vector2(6949, 184)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("76_h6a1m")
 
-[node name="Boots6" type="Sprite2D" parent="."]
+[node name="Boots6" type="Sprite2D" parent="." unique_id=378819114]
 position = Vector2(7028, 178)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("77_y0ton")
 
-[node name="Urna" type="Sprite2D" parent="."]
+[node name="Urna" type="Sprite2D" parent="." unique_id=367966603]
 position = Vector2(9198, 227)
 scale = Vector2(0.14, 0.14)
 texture = ExtResource("78_ug0bd")
 
-[node name="Powerbank2" type="Sprite2D" parent="."]
+[node name="Powerbank2" type="Sprite2D" parent="." unique_id=2014201476]
 position = Vector2(-1310.9999, 39.999996)
 rotation = -0.061086524
 scale = Vector2(0.23, 0.26)
 skew = 0.10646509
 texture = ExtResource("79_kqa0o")
 
-[node name="Kover" type="Sprite2D" parent="."]
+[node name="Kover" type="Sprite2D" parent="." unique_id=478071025]
 z_index = -5
 position = Vector2(6698, 306)
 scale = Vector2(0.19589221, 0.19589221)
 
-[node name="HoleInWall6" type="Sprite2D" parent="."]
+[node name="HoleInWall6" type="Sprite2D" parent="." unique_id=2121529711]
 z_index = -5
 position = Vector2(6557, -1)
 scale = Vector2(0.27, 0.27)
 texture = ExtResource("80_0fedf")
 
-[node name="Mirror" type="Sprite2D" parent="."]
+[node name="Mirror" type="Sprite2D" parent="." unique_id=1974090923]
 z_index = -2
 position = Vector2(13907, 2247.7397)
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("81_wwm0w")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=231062613]
 
-[node name="UsedFood" type="Sprite2D" parent="."]
+[node name="UsedFood" type="Sprite2D" parent="." unique_id=876818380]
 position = Vector2(-1754.9999, 107.99999)
 rotation = -0.061086524
 scale = Vector2(0.04193877, 0.052643225)
 skew = 0.08726646
 texture = ExtResource("82_tu4sr")
 
-[node name="EnemyRunner" parent="." instance=ExtResource("77_vpq6w")]
+[node name="EnemyRunner" parent="." unique_id=855848582 instance=ExtResource("77_vpq6w")]
 position = Vector2(6675, 125)
 step_sounds = Array[AudioStream]([ExtResource("77_nlubh")])
 step_volume_db = -6.0
@@ -1812,10 +1811,10 @@ step_frame_indices = Array[int]([6, 10, 14, 18])
 camera_shake_intensity = 19.0
 kill_on_attack = true
 
-[node name="EnemyLightSensitive" parent="." instance=ExtResource("85_3pht0")]
+[node name="EnemyLightSensitive" parent="." unique_id=604558583 instance=ExtResource("85_3pht0")]
 position = Vector2(13077, 127)
 
-[node name="TextureDistortionManager" type="Node" parent="."]
+[node name="TextureDistortionManager" type="Node" parent="." unique_id=1163500695]
 script = ExtResource("79_2r2n3")
 texture_map = {
 ExtResource("1_j5jbj"): ExtResource("80_3pht0"),

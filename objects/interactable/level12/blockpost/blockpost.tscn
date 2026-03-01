@@ -8,6 +8,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_blockpost"]
 size = Vector2(682, 328)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_blocker"]
+size = Vector2(64, 420)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
+size = Vector2(88, 440)
+
 [node name="Blockpost" type="Area2D" unique_id=1852257165]
 script = ExtResource("1_blockpost")
 target_marker = NodePath("PassMarker")
@@ -18,6 +24,17 @@ prompt_text = "Proyti cherez blokpost"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1829100643]
 shape = SubResource("RectangleShape2D_blockpost")
+
+[node name="PassageBlocker" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassageBlocker"]
+shape = SubResource("RectangleShape2D_blocker")
+
+[node name="TouchArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea"]
+shape = SubResource("RectangleShape2D_touch")
 
 [node name="PassMarker" type="Marker2D" parent="." unique_id=910439765]
 position = Vector2(420, 0)

@@ -59,6 +59,8 @@
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="55_mklec"]
 [ext_resource type="Texture2D" uid="uid://clvy8hsvxotb0" path="res://objects/environment/sprites/bedroom/Tumbochka2.png" id="56_v0ju6"]
 [ext_resource type="Texture2D" uid="uid://dqhgq58qj1ci4" path="res://objects/environment/sprites/bedroom/SteamDeck.png" id="57_4aogx"]
+[ext_resource type="PackedScene" uid="uid://f48xld52w63j" path="res://levels/minigames/feeding/food/shaurma/food_shaurma.tscn" id="57_i53xb"]
+[ext_resource type="PackedScene" uid="uid://d3qadgg85phau" path="res://levels/minigames/feeding/food/burger/food_burger.tscn" id="58_6yyfy"]
 [ext_resource type="Texture2D" uid="uid://dvg6r0ihj7jum" path="res://objects/environment/sprites/bedroom/Plakat1.png" id="58_vw0t0"]
 [ext_resource type="Texture2D" uid="uid://b7okdw3eb0vb5" path="res://objects/environment/sprites/bedroom/Plakat2.png" id="59_45lrc"]
 [ext_resource type="Texture2D" uid="uid://cva67qm7mulic" path="res://objects/environment/sprites/bedroom/ChairBedroom.png" id="60_ffapr"]
@@ -69,7 +71,6 @@
 [ext_resource type="Texture2D" uid="uid://bjrhhafy010va" path="res://objects/environment/sprites/allrooms/windows/Window2.png" id="64_2sl01"]
 [ext_resource type="Texture2D" uid="uid://du2tqossi3tlw" path="res://objects/environment/sprites/allrooms/Pozetka.png" id="65_c75j3"]
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_4migs"]
-[ext_resource type="PackedScene" uid="uid://ctd8ulf2b7pu6" path="res://levels/minigames/feeding/food/dumpling/food_dumpling.tscn" id="66_d4hxy"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="67_h2fjm"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="68_jd84a"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_rg3cs"]
@@ -1185,7 +1186,7 @@ one_shot = null
 [node name="Fridge" parent="Hall/InteractableObjects" unique_id=1243623637 instance=ExtResource("46_1bre6")]
 position = Vector2(9810, -500)
 minigame_scene = ExtResource("47_6s121")
-food_scenes = Array[PackedScene]([ExtResource("66_d4hxy")])
+food_scenes = Array[PackedScene]([ExtResource("57_i53xb"), ExtResource("58_6yyfy")])
 andrey_face = ExtResource("49_2h32i")
 food_count = 7
 bg_music = ExtResource("50_ccica")

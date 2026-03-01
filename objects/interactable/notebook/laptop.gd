@@ -9,6 +9,18 @@ extends InteractiveObject
 ## Штраф по времени за ошибку.
 @export var penalty_time: float = 10.0
 
+@export_group("Награда Деньгами")
+## Выдавать деньги после закрытия мини-игры (успех/неуспех не важен).
+@export var reward_on_work_completion: bool = false
+## Путь до системы денег (если пусто, будет ../Level12MoneySystem).
+@export var money_system_path: NodePath
+## Размер награды за работу.
+@export var reward_money: int = 60
+## Причина начисления (для HUD).
+@export_multiline var reward_reason: String = "Награда за лабораторную"
+## Выдать награду только один раз для этого ноутбука.
+@export var reward_once: bool = true
+
 @export_group("Availability")
 ## Вручную отключить ноутбук.
 @export var is_enabled: bool = true:
@@ -47,6 +59,7 @@ var _current_minigame: Node = null
 var _is_ready: bool = false
 var _is_enabled: bool = true
 var _dependency_override: bool = false
+var _money_rewarded: bool = false
 
 func _ready() -> void:
 	super._ready() # Важно для работы базового класса
@@ -118,6 +131,7 @@ func _start_lab_minigame() -> void:
 
 func _on_minigame_closed() -> void:
 	_current_minigame = null
+	_try_reward_for_work_completion()
 	_update_visuals()
 	
 	# Если после игры лаба появилась в списке выполненных — успех
@@ -183,6 +197,26 @@ func _is_dependency_satisfied() -> bool:
 	if dependency_object == null:
 		return true
 	return dependency_object.is_completed
+
+func _try_reward_for_work_completion() -> void:
+	if not reward_on_work_completion:
+		return
+	if reward_once and _money_rewarded:
+		return
+	if reward_money <= 0:
+		return
+
+	var money_system := _resolve_money_system()
+	if money_system == null or not money_system.has_method("add_money"):
+		return
+
+	money_system.call("add_money", reward_money, reward_reason)
+	_money_rewarded = true
+
+func _resolve_money_system() -> Node:
+	if money_system_path.is_empty():
+		return get_node_or_null("../Level12MoneySystem")
+	return get_node_or_null(money_system_path)
 	
 func _add_minigame_to_scene(minigame: Node) -> void:
 	if minigame == null:

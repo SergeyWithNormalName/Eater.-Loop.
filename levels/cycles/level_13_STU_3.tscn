@@ -128,10 +128,11 @@
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="126_nwjv1"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="127_djg4i"]
 [ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="128_kuiyc"]
-[ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_wiiq7"]
+[ext_resource type="PackedScene" uid="uid://cdumkmia83xgl" path="res://levels/minigames/labs/sql/sql_minigame_glitch.tscn" id="129_nuox8"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_1d7t7"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_0jbf5"]
 [ext_resource type="PackedScene" uid="uid://ccep2nskcxpgh" path="res://objects/interactable/level12/blockpost/blockpost.tscn" id="132_esy5d"]
+[ext_resource type="PackedScene" path="res://objects/interactable/level12/money/level12_money_system.tscn" id="133_o0t8e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_esy5d")
@@ -166,7 +167,7 @@ size = Vector2(339.5, 406.78906)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nuox8"]
 size = Vector2(339.5, 406.78906)
 
-[node name="Level" type="Node2D" unique_id=2066288641]
+[node name="Level2" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
 script = ExtResource("1_8gqb3")
 cycle_number = 2
@@ -403,7 +404,7 @@ texture = SubResource("GradientTexture2D_pgutp")
 [node name="Door(InBedroom)" parent="Bedroom/InteractableObjects" unique_id=1200285345 instance=ExtResource("28_xtfbx")]
 position = Vector2(-1581, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-target_marker = NodePath("../../../7thLevel/7thHall/InteractableObjects/Door(To701)")
+target_marker = NodePath("../../../1thLevel/1thHall/InteractableObjects/Door(ToBathroom)")
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1523049142 instance=ExtResource("29_k1n6y")]
 position = Vector2(-2420, 226)
@@ -7130,13 +7131,15 @@ texture = ExtResource("53_pru2q")
 
 [node name="Door(To203Right)" parent="2thLevel/2thHall/InteractableObjects" unique_id=1265273262 instance=ExtResource("55_ie8g8")]
 position = Vector2(12888, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("107_55sxp")
 target_marker = NodePath("../../../203/InteractableObjects/Door(In203Right)")
 
 [node name="Door(To203Left)" parent="2thLevel/2thHall/InteractableObjects" unique_id=1290284886 instance=ExtResource("55_ie8g8")]
 position = Vector2(11467, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("107_55sxp")
 target_marker = NodePath("../../../203/InteractableObjects/Door(In203Left)")
 
@@ -8021,7 +8024,7 @@ texture = ExtResource("60_ryyea")
 
 [node name="Door(ToApple)" parent="1thLevel/1thHall/InteractableObjects" unique_id=988882064 instance=ExtResource("28_xtfbx")]
 position = Vector2(9266.874, 81)
-target_marker = NodePath("../../../../Basement/InteractableObjects/Door(Basement)")
+target_marker = NodePath("../../../../Stolovaya/InteractableObjects/Door(InApple)")
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -8530,8 +8533,11 @@ music_on_exit = 9
 
 [node name="Laptop" parent="." unique_id=302000911 instance=ExtResource("128_kuiyc")]
 position = Vector2(47060, -7123)
-minigame_scene = ExtResource("129_wiiq7")
-time_limit = 12.0
+minigame_scene = ExtResource("129_nuox8")
+time_limit = 10.0
+reward_on_work_completion = true
+money_system_path = NodePath("../Level12MoneySystem")
+reward_money = 50
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8558,26 +8564,17 @@ position = Vector2(59287, 44212)
 [node name="WallBack" type="Sprite2D" parent="Stolovaya/Background" unique_id=1679836496]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8352, 19)
+position = Vector2(7972, 19)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("112_l2pcu")
 region_enabled = true
-region_rect = Rect2(0, 0, 9000, 1100)
-
-[node name="WallBack2" type="Sprite2D" parent="Stolovaya/Background" unique_id=229967084]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12849, 19)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("112_l2pcu")
-region_enabled = true
-region_rect = Rect2(0, 0, 9000, 1100)
+region_rect = Rect2(0, 0, 7500, 1100)
 
 [node name="Floor" parent="Stolovaya/Background" unique_id=926713758 instance=ExtResource("33_asw5k")]
 z_index = -5
-position = Vector2(10604, 326)
+position = Vector2(7961, 326)
 floor_texture = ExtResource("113_o3b00")
-size = Vector2(9000, 110)
+size = Vector2(3750, 110)
 tiling = Vector2(32, 3)
 perspective_amount = 1.75
 horizon = -3.73
@@ -8610,10 +8607,6 @@ position = Vector2(8813, 400)
 z_index = 10
 position = Vector2(9465, 400)
 
-[node name="WallBelow_6" parent="Stolovaya/Walls" unique_id=1010582870 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(10247, 400)
-
 [node name="WallAbove_1" parent="Stolovaya/Walls" unique_id=311729699 instance=ExtResource("8_doow5")]
 z_index = 10
 position = Vector2(6461.0005, -271)
@@ -8634,61 +8627,9 @@ position = Vector2(8813, -271)
 z_index = 10
 position = Vector2(9465, -271)
 
-[node name="WallAbove_6" parent="Stolovaya/Walls" unique_id=1393302230 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(10247, -271)
-
-[node name="WallBelow_7" parent="Stolovaya/Walls" unique_id=531838099 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(10958, 400)
-
-[node name="WallBelow_8" parent="Stolovaya/Walls" unique_id=433259459 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(11740, 400)
-
-[node name="WallBelow_9" parent="Stolovaya/Walls" unique_id=796950412 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(12528, 400)
-
-[node name="WallBelow_10" parent="Stolovaya/Walls" unique_id=1928427107 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(13310, 400)
-
-[node name="WallBelow_11" parent="Stolovaya/Walls" unique_id=1754669999 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(13962, 400)
-
-[node name="WallBelow_12" parent="Stolovaya/Walls" unique_id=125464468 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(14744, 400)
-
-[node name="WallAbove_7" parent="Stolovaya/Walls" unique_id=1735062904 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(10958, -271)
-
-[node name="WallAbove_8" parent="Stolovaya/Walls" unique_id=782846967 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(11740, -271)
-
-[node name="WallAbove_9" parent="Stolovaya/Walls" unique_id=584917792 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(12528, -271)
-
-[node name="WallAbove_10" parent="Stolovaya/Walls" unique_id=1496586390 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(13310, -271)
-
-[node name="WallAbove_11" parent="Stolovaya/Walls" unique_id=1174305182 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(13962, -271)
-
-[node name="WallAbove_12" parent="Stolovaya/Walls" unique_id=489472713 instance=ExtResource("8_doow5")]
-z_index = 10
-position = Vector2(14744, -271)
-
 [node name="WallLeft" parent="Stolovaya/Walls" unique_id=745334297 instance=ExtResource("7_7q3uo")]
 z_index = 10
-position = Vector2(15119, 64)
+position = Vector2(9840, 64)
 
 [node name="WallRight" parent="Stolovaya/Walls" unique_id=652740471 instance=ExtResource("7_7q3uo")]
 z_index = 10
@@ -8719,13 +8660,15 @@ scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("116_4nlgi")
 
 [node name="Blockpost" parent="Stolovaya/InteractableObjects" unique_id=1852257165 instance=ExtResource("132_esy5d")]
-position = Vector2(12314, 154)
-money_system_path = NodePath("../../../../Level12MoneySystem")
+position = Vector2(8880, 154)
+money_system_path = NodePath("../../../Level12MoneySystem")
 not_enough_money_message = "Проход стоит 100 рублей"
 access_granted_message = "Я заплатил за проход"
 
 [node name="Fridge" parent="Stolovaya/InteractableObjects" unique_id=1816588780 instance=ExtResource("86_boplk")]
-position = Vector2(12930, 104)
+position = Vector2(9592, 114)
+
+[node name="Level12MoneySystem" parent="." unique_id=234445541 instance=ExtResource("133_o0t8e")]
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

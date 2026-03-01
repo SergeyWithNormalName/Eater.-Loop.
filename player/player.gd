@@ -304,8 +304,7 @@ func _toggle_flashlight() -> void:
 func _can_enable_flashlight() -> bool:
 	if flashlight_use_duration <= 0.0:
 		return true
-	var max_charge: float = maxf(0.0, flashlight_use_duration)
-	return _flashlight_charge >= max_charge
+	return _flashlight_charge > 0.0
 
 func _set_flashlight_enabled(enabled_state: bool) -> void:
 	if flashlight == null:

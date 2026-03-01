@@ -44,6 +44,7 @@ func run() -> Array[String]:
 	_test_route_search_covers_long_door_chains()
 	_test_follow_door_route_uses_horizontal_reach()
 	_test_self_target_door_is_ignored()
+	await _test_door_open_sfx_is_played()
 	await _test_stalker_pauses_while_minigame_active()
 	return get_failures()
 
@@ -126,6 +127,32 @@ func _test_self_target_door_is_ignored() -> void:
 	assert_true(exit_node == null, "Door with target_marker='.' must not be used by stalker navigation")
 	stalker.free()
 	door.free()
+
+func _test_door_open_sfx_is_played() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	assert_true(tree != null, "SceneTree is not available")
+	if tree == null:
+		return
+
+	var stalker := StalkerScript.new()
+	tree.root.add_child(stalker)
+	await tree.process_frame
+
+	stalker.call("_play_door_open_sfx")
+	var door_player := _find_first_door_audio_player(stalker)
+	assert_true(door_player != null, "Stalker must have global AudioStreamPlayer for door-open SFX")
+	if door_player != null:
+		assert_true(door_player.stream == stalker.door_open_sound, "Door-open player must play configured stalker door sound")
+		assert_true(door_player.playing, "Door-open SFX must start playing when stalker opens a door")
+
+	stalker.queue_free()
+	await tree.process_frame
+
+func _find_first_door_audio_player(stalker: Node) -> AudioStreamPlayer:
+	for child in stalker.get_children():
+		if child is AudioStreamPlayer:
+			return child as AudioStreamPlayer
+	return null
 
 func _test_stalker_pauses_while_minigame_active() -> void:
 	assert_true(MinigameController != null, "MinigameController autoload is missing")

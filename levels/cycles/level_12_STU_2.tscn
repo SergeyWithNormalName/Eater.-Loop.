@@ -113,11 +113,11 @@
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="111_rbn4v"]
 [ext_resource type="Texture2D" uid="uid://d1k5x4eptitr1" path="res://objects/environment/background/WhiteWallU.png" id="112_wcxm0"]
 [ext_resource type="Texture2D" uid="uid://c6720vlq21px" path="res://objects/environment/floor/floor_U_1stFloor.png" id="113_rlfe0"]
-[ext_resource type="Texture2D" uid="uid://c1bb70xtx38bq" path="res://objects/interactable/door/sprites/numbersU/103.jpg" id="114_1q0gq"]
-[ext_resource type="Texture2D" uid="uid://pnhc3patg41n" path="res://objects/interactable/door/sprites/numbersU/101.jpg" id="115_u547k"]
 [ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="116_qh63g"]
 [ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="117_qmcx7"]
 [ext_resource type="Texture2D" uid="uid://clnslqs8wgj4x" path="res://objects/environment/university/ApplePoster.png" id="118_pnkyr"]
+[ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="119_esq3s"]
+[ext_resource type="Texture2D" uid="uid://jjk7revnfbit" path="res://objects/interactable/door/sprites/DoorBasement.png" id="119_r6pxs"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="119_svj3e"]
 [ext_resource type="Script" uid="uid://dpxp5qdffk55s" path="res://levels/cycles/texture_distortion_manager.gd" id="120_sm87p"]
 [ext_resource type="Texture2D" uid="uid://cppmtyifper6i" path="res://objects/environment/background/BackWallsDistorted.png" id="121_o2l77"]
@@ -133,6 +133,7 @@
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_yuqxs"]
 [ext_resource type="PackedScene" path="res://objects/interactable/level12/money/level12_money_system.tscn" id="132_nwjpy"]
 [ext_resource type="PackedScene" uid="uid://bb78mt7j8o84m" path="res://objects/interactable/level12/student/student_money_npc.tscn" id="133_hca3w"]
+[ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://objects/interactable/lamp/lamp.tscn" id="134_esq3s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_vgh3a")
@@ -172,7 +173,7 @@ timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.019607844, 0.019607844, 0.02745098, 1)
+color = Color(0.045, 0.045, 0.055, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -7135,13 +7136,15 @@ texture = ExtResource("53_x4t6y")
 
 [node name="Door(To203Right)" parent="2thLevel/2thHall/InteractableObjects" unique_id=1265273262 instance=ExtResource("55_3tps2")]
 position = Vector2(12888, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("107_icjqf")
 target_marker = NodePath("../../../203/InteractableObjects/Door(In203Right)")
 
 [node name="Door(To203Left)" parent="2thLevel/2thHall/InteractableObjects" unique_id=1290284886 instance=ExtResource("55_3tps2")]
 position = Vector2(11467, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
+is_locked = true
+door_locked_message = "Поточка закрыта"
 number_texture = ExtResource("107_icjqf")
 target_marker = NodePath("../../../203/InteractableObjects/Door(In203Left)")
 
@@ -7990,18 +7993,18 @@ texture = ExtResource("53_x4t6y")
 
 [node name="Door(To103Right)" parent="1thLevel/1thHall/InteractableObjects" unique_id=877736083 instance=ExtResource("55_3tps2")]
 position = Vector2(12888, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("114_1q0gq")
+is_locked = true
+door_locked_message = "Заперто"
 
 [node name="Door(To103Left)" parent="1thLevel/1thHall/InteractableObjects" unique_id=373427051 instance=ExtResource("55_3tps2")]
 position = Vector2(11467, 83)
-door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("114_1q0gq")
+is_locked = true
+door_locked_message = "Заперто"
 
 [node name="Door(To101)" parent="1thLevel/1thHall/InteractableObjects" unique_id=821554351 instance=ExtResource("55_3tps2")]
 position = Vector2(6565, 83)
-door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("115_u547k")
+is_locked = true
+door_locked_message = "Заперто"
 target_marker = NodePath("../../../101/InteractableObjects/Door(In101)")
 
 [node name="Door(ToBathroom)" parent="1thLevel/1thHall/InteractableObjects" unique_id=1071676751 instance=ExtResource("55_3tps2")]
@@ -8065,8 +8068,8 @@ texture = ExtResource("117_qmcx7")
 
 [node name="Door(To204)2" parent="1thLevel/1thHall/InteractableObjects" unique_id=441992275 instance=ExtResource("55_3tps2")]
 position = Vector2(14598, 83)
-door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-number_texture = ExtResource("108_6r356")
+is_locked = true
+door_locked_message = "Заперто"
 
 [node name="104" type="Node2D" parent="1thLevel" unique_id=1511641307]
 position = Vector2(41298, 0)
@@ -8511,6 +8514,240 @@ position = Vector2(1.4901161e-08, -14.999999)
 scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("60_3ulto")
 
+[node name="Door(Basement)2" parent="Basement/InteractableObjects" unique_id=2143280976 instance=ExtResource("28_vkruc")]
+position = Vector2(6617, 81)
+is_locked = true
+door_locked_message = "Заперто"
+target_marker = NodePath("../../../1thLevel/1thHall/InteractableObjects/Door(StairsLeft)")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Basement/InteractableObjects/Door(Basement)2" index="0"]
+shape = SubResource("RectangleShape2D_len77")
+
+[node name="Sprite2D" parent="Basement/InteractableObjects/Door(Basement)2" index="2"]
+position = Vector2(1.4901161e-08, -14.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("119_r6pxs")
+
+[node name="Door(Basement)3" parent="Basement/InteractableObjects" unique_id=1456837721 instance=ExtResource("28_vkruc")]
+position = Vector2(14832, 81)
+target_marker = NodePath("../../../Basement2/InteractableObjects/Door(Basement)3")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Basement/InteractableObjects/Door(Basement)3" index="0"]
+shape = SubResource("RectangleShape2D_len77")
+
+[node name="Sprite2D" parent="Basement/InteractableObjects/Door(Basement)3" index="2"]
+position = Vector2(1.4901161e-08, -14.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("119_r6pxs")
+
+[node name="EnemyLightOnly" parent="Basement/InteractableObjects" unique_id=72561907 instance=ExtResource("119_esq3s")]
+position = Vector2(8273, 115)
+
+[node name="EnemyLightOnly2" parent="Basement/InteractableObjects" unique_id=21741578 instance=ExtResource("119_esq3s")]
+position = Vector2(8962, 115)
+
+[node name="EnemyLightOnly7" parent="Basement/InteractableObjects" unique_id=1264427166 instance=ExtResource("119_esq3s")]
+position = Vector2(10446, -7455)
+
+[node name="EnemyLightOnly8" parent="Basement/InteractableObjects" unique_id=1400591879 instance=ExtResource("119_esq3s")]
+position = Vector2(9482, -15179)
+
+[node name="EnemyLightOnly3" parent="Basement/InteractableObjects" unique_id=940039117 instance=ExtResource("119_esq3s")]
+position = Vector2(10361, 115)
+
+[node name="EnemyLightOnly4" parent="Basement/InteractableObjects" unique_id=1234446961 instance=ExtResource("119_esq3s")]
+position = Vector2(10984, 115)
+
+[node name="EnemyLightOnly5" parent="Basement/InteractableObjects" unique_id=1115378725 instance=ExtResource("119_esq3s")]
+position = Vector2(11991, 115)
+
+[node name="EnemyLightOnly6" parent="Basement/InteractableObjects" unique_id=1692559392 instance=ExtResource("119_esq3s")]
+position = Vector2(12766, 115)
+
+[node name="Basement2" type="Node2D" parent="." unique_id=1078604622]
+position = Vector2(0, 55239)
+
+[node name="Background" type="Node2D" parent="Basement2" unique_id=416326976]
+
+[node name="WallBack" type="Sprite2D" parent="Basement2/Background" unique_id=1891973165]
+z_index = -5
+texture_repeat = 2
+position = Vector2(8352, 19)
+texture = ExtResource("43_6ec22")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="WallBack2" type="Sprite2D" parent="Basement2/Background" unique_id=1519338421]
+z_index = -5
+texture_repeat = 2
+position = Vector2(12849, 19)
+texture = ExtResource("43_6ec22")
+region_enabled = true
+region_rect = Rect2(0, 0, 4500, 550)
+
+[node name="Floor" parent="Basement2/Background" unique_id=434418290 instance=ExtResource("33_a7dha")]
+z_index = -5
+position = Vector2(10604, 326)
+floor_texture = ExtResource("113_rlfe0")
+size = Vector2(9000, 110)
+tiling = Vector2(32, 3)
+perspective_amount = 1.75
+horizon = -3.73
+edge_strength = 0.11
+edge_power = 0.55
+center_width = 0.0
+edge_end = 2.0
+max_distance = 1.99
+fade_length = 0.0
+
+[node name="Walls" type="Node2D" parent="Basement2" unique_id=949749713]
+
+[node name="WallBelow_1" parent="Basement2/Walls" unique_id=1546994208 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(6461, 400)
+
+[node name="WallBelow_2" parent="Basement2/Walls" unique_id=1770553079 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(7243.0005, 400)
+
+[node name="WallBelow_3" parent="Basement2/Walls" unique_id=315020393 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(8031, 400)
+
+[node name="WallBelow_4" parent="Basement2/Walls" unique_id=1233660210 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(8813, 400)
+
+[node name="WallBelow_5" parent="Basement2/Walls" unique_id=1552715469 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(9465, 400)
+
+[node name="WallBelow_6" parent="Basement2/Walls" unique_id=548101813 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(10247, 400)
+
+[node name="WallAbove_1" parent="Basement2/Walls" unique_id=818110658 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(6461.0005, -271)
+
+[node name="WallAbove_2" parent="Basement2/Walls" unique_id=1635484829 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(7243.0005, -271)
+
+[node name="WallAbove_3" parent="Basement2/Walls" unique_id=1333194568 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(8031.0005, -271)
+
+[node name="WallAbove_4" parent="Basement2/Walls" unique_id=758142391 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(8813, -271)
+
+[node name="WallAbove_5" parent="Basement2/Walls" unique_id=934682929 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(9465, -271)
+
+[node name="WallAbove_6" parent="Basement2/Walls" unique_id=1317339852 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(10247, -271)
+
+[node name="WallBelow_7" parent="Basement2/Walls" unique_id=1170273616 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(10958, 400)
+
+[node name="WallBelow_8" parent="Basement2/Walls" unique_id=1735156107 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(11740, 400)
+
+[node name="WallBelow_9" parent="Basement2/Walls" unique_id=1636117130 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(12528, 400)
+
+[node name="WallBelow_10" parent="Basement2/Walls" unique_id=580786832 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(13310, 400)
+
+[node name="WallBelow_11" parent="Basement2/Walls" unique_id=945710710 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(13962, 400)
+
+[node name="WallBelow_12" parent="Basement2/Walls" unique_id=386014510 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(14744, 400)
+
+[node name="WallAbove_7" parent="Basement2/Walls" unique_id=1079531324 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(10958, -271)
+
+[node name="WallAbove_8" parent="Basement2/Walls" unique_id=56865611 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(11740, -271)
+
+[node name="WallAbove_9" parent="Basement2/Walls" unique_id=574523795 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(12528, -271)
+
+[node name="WallAbove_10" parent="Basement2/Walls" unique_id=2123512489 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(13310, -271)
+
+[node name="WallAbove_11" parent="Basement2/Walls" unique_id=296549408 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(13962, -271)
+
+[node name="WallAbove_12" parent="Basement2/Walls" unique_id=1776195848 instance=ExtResource("8_2574q")]
+z_index = 10
+position = Vector2(14744, -271)
+
+[node name="WallLeft" parent="Basement2/Walls" unique_id=704448819 instance=ExtResource("7_4q6d4")]
+z_index = 10
+position = Vector2(15119, 64)
+
+[node name="WallRight" parent="Basement2/Walls" unique_id=821959421 instance=ExtResource("7_4q6d4")]
+z_index = 10
+position = Vector2(6089, 63.860657)
+
+[node name="Sprites" type="Node2D" parent="Basement2" unique_id=1330115131]
+
+[node name="InteractableObjects" type="Node2D" parent="Basement2" unique_id=1539797503]
+
+[node name="Door(Basement)2" parent="Basement2/InteractableObjects" unique_id=1115044260 instance=ExtResource("28_vkruc")]
+position = Vector2(6617, 81)
+target_marker = NodePath("../../../Basement/InteractableObjects/Door(Basement)2")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Basement2/InteractableObjects/Door(Basement)2" index="0"]
+shape = SubResource("RectangleShape2D_len77")
+
+[node name="Sprite2D" parent="Basement2/InteractableObjects/Door(Basement)2" index="2"]
+position = Vector2(1.4901161e-08, -14.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("119_r6pxs")
+
+[node name="Door(Basement)3" parent="Basement2/InteractableObjects" unique_id=2014101020 instance=ExtResource("28_vkruc")]
+position = Vector2(14832, 81)
+target_marker = NodePath("../../../Basement/InteractableObjects/Door(Basement)3")
+door_texture = null
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Basement2/InteractableObjects/Door(Basement)3" index="0"]
+shape = SubResource("RectangleShape2D_len77")
+
+[node name="Sprite2D" parent="Basement2/InteractableObjects/Door(Basement)3" index="2"]
+position = Vector2(1.4901161e-08, -14.999999)
+scale = Vector2(0.64408255, 0.56408244)
+texture = ExtResource("119_r6pxs")
+
+[node name="EnemyLightOnly" parent="Basement2/InteractableObjects" unique_id=684077194 instance=ExtResource("119_esq3s")]
+position = Vector2(8273, 115)
+
+[node name="EnemyLightOnly3" parent="Basement2/InteractableObjects" unique_id=1908540173 instance=ExtResource("119_esq3s")]
+position = Vector2(10361, 115)
+
 [node name="StalkerSpawnMarker" parent="." unique_id=1199752994 instance=ExtResource("119_svj3e")]
 position = Vector2(12208, 80)
 
@@ -8539,13 +8776,13 @@ music_on_exit = 9
 [node name="StudentMoneyNPC" parent="." unique_id=786302373 instance=ExtResource("133_hca3w")]
 position = Vector2(46630, -7109)
 money_system_path = NodePath("../Level12MoneySystem")
-reward_message = "Ty poluchil 40 rub."
+reward_message = "Ты получил 40 руб."
 
 [node name="Laptop" parent="." unique_id=302000911 instance=ExtResource("128_qyde8")]
 position = Vector2(47060, -7123)
 money_system_path = NodePath("../Level12MoneySystem")
 reward_money = 60
-reward_reason = "Lab completed"
+reward_reason = "Лабораторная работа"
 minigame_scene = ExtResource("129_0r3n2")
 time_limit = 12.0
 completed_message = "Я уже сдал эту работу. Оценка отличная."
@@ -8555,6 +8792,384 @@ available_sprite = ExtResource("130_gy0x1")
 [node name="Generator" parent="." unique_id=1749179163 instance=ExtResource("131_yuqxs")]
 position = Vector2(14043.999, 52074.996)
 scale = Vector2(0.36, 0.36)
+
+[node name="Lamp" parent="." unique_id=137672882 instance=ExtResource("134_esq3s")]
+position = Vector2(11039, 51794)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp4" parent="." unique_id=654752054 instance=ExtResource("134_esq3s")]
+position = Vector2(12647, 51794)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp5" parent="." unique_id=1412625494 instance=ExtResource("134_esq3s")]
+position = Vector2(14281, 51794)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp2" parent="." unique_id=237422349 instance=ExtResource("134_esq3s")]
+position = Vector2(9122, 51794)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp3" parent="." unique_id=862519760 instance=ExtResource("134_esq3s")]
+position = Vector2(7265, 51794)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp6" parent="." unique_id=1643786600 instance=ExtResource("134_esq3s")]
+position = Vector2(11043, 55031)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp7" parent="." unique_id=1860645660 instance=ExtResource("134_esq3s")]
+position = Vector2(12651, 55031)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp8" parent="." unique_id=1067744953 instance=ExtResource("134_esq3s")]
+position = Vector2(14285, 55031)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp9" parent="." unique_id=1206009386 instance=ExtResource("134_esq3s")]
+position = Vector2(9126, 55031)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp10" parent="." unique_id=1009117388 instance=ExtResource("134_esq3s")]
+position = Vector2(7269, 55031)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp11" parent="." unique_id=1318830251 instance=ExtResource("134_esq3s")]
+position = Vector2(11044, 44220)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp12" parent="." unique_id=639355528 instance=ExtResource("134_esq3s")]
+position = Vector2(12652, 44220)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp13" parent="." unique_id=2051474800 instance=ExtResource("134_esq3s")]
+position = Vector2(14286, 44220)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp14" parent="." unique_id=1983760658 instance=ExtResource("134_esq3s")]
+position = Vector2(9127, 44220)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp15" parent="." unique_id=336284147 instance=ExtResource("134_esq3s")]
+position = Vector2(7270, 44220)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp16" parent="." unique_id=1754255383 instance=ExtResource("134_esq3s")]
+position = Vector2(11044, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp17" parent="." unique_id=1892734392 instance=ExtResource("134_esq3s")]
+position = Vector2(12652, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp18" parent="." unique_id=1766975722 instance=ExtResource("134_esq3s")]
+position = Vector2(14286, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp26" parent="." unique_id=615524575 instance=ExtResource("134_esq3s")]
+position = Vector2(21928, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp27" parent="." unique_id=1849857976 instance=ExtResource("134_esq3s")]
+position = Vector2(28959, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp28" parent="." unique_id=1551390081 instance=ExtResource("134_esq3s")]
+position = Vector2(37146, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp29" parent="." unique_id=1740630199 instance=ExtResource("134_esq3s")]
+position = Vector2(45379, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp30" parent="." unique_id=321555686 instance=ExtResource("134_esq3s")]
+position = Vector2(46800, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp31" parent="." unique_id=422607826 instance=ExtResource("134_esq3s")]
+position = Vector2(48206, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp32" parent="." unique_id=1101523979 instance=ExtResource("134_esq3s")]
+position = Vector2(55410, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp33" parent="." unique_id=1525035866 instance=ExtResource("134_esq3s")]
+position = Vector2(21925, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp34" parent="." unique_id=1886437986 instance=ExtResource("134_esq3s")]
+position = Vector2(28956, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp35" parent="." unique_id=172681668 instance=ExtResource("134_esq3s")]
+position = Vector2(37143, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp36" parent="." unique_id=993578943 instance=ExtResource("134_esq3s")]
+position = Vector2(45376, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp37" parent="." unique_id=1574669168 instance=ExtResource("134_esq3s")]
+position = Vector2(46797, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp38" parent="." unique_id=978752337 instance=ExtResource("134_esq3s")]
+position = Vector2(48203, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp39" parent="." unique_id=2142594063 instance=ExtResource("134_esq3s")]
+position = Vector2(55407, 28348)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp40" parent="." unique_id=1251743895 instance=ExtResource("134_esq3s")]
+position = Vector2(21925, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp41" parent="." unique_id=726912390 instance=ExtResource("134_esq3s")]
+position = Vector2(28956, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp42" parent="." unique_id=196484137 instance=ExtResource("134_esq3s")]
+position = Vector2(37143, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp43" parent="." unique_id=1803838624 instance=ExtResource("134_esq3s")]
+position = Vector2(45376, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp44" parent="." unique_id=1305987671 instance=ExtResource("134_esq3s")]
+position = Vector2(46797, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp45" parent="." unique_id=116768944 instance=ExtResource("134_esq3s")]
+position = Vector2(48203, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp46" parent="." unique_id=183930668 instance=ExtResource("134_esq3s")]
+position = Vector2(55407, 20225)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp47" parent="." unique_id=623713043 instance=ExtResource("134_esq3s")]
+position = Vector2(21925, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp48" parent="." unique_id=541445490 instance=ExtResource("134_esq3s")]
+position = Vector2(28956, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp49" parent="." unique_id=528326304 instance=ExtResource("134_esq3s")]
+position = Vector2(37143, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp50" parent="." unique_id=40250768 instance=ExtResource("134_esq3s")]
+position = Vector2(45376, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp51" parent="." unique_id=1089683038 instance=ExtResource("134_esq3s")]
+position = Vector2(46797, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp52" parent="." unique_id=1121411744 instance=ExtResource("134_esq3s")]
+position = Vector2(48203, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp53" parent="." unique_id=1407095984 instance=ExtResource("134_esq3s")]
+position = Vector2(55407, 12958)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp19" parent="." unique_id=823835981 instance=ExtResource("134_esq3s")]
+position = Vector2(9127, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp20" parent="." unique_id=118796503 instance=ExtResource("134_esq3s")]
+position = Vector2(7270, 36485)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp21" parent="." unique_id=1498434726 instance=ExtResource("134_esq3s")]
+position = Vector2(11044, 28346)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp22" parent="." unique_id=595851116 instance=ExtResource("134_esq3s")]
+position = Vector2(12652, 28346)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp23" parent="." unique_id=1161635576 instance=ExtResource("134_esq3s")]
+position = Vector2(14286, 28346)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp24" parent="." unique_id=1908421918 instance=ExtResource("134_esq3s")]
+position = Vector2(9127, 28346)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp25" parent="." unique_id=1761342273 instance=ExtResource("134_esq3s")]
+position = Vector2(7270, 28346)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp54" parent="." unique_id=449108262 instance=ExtResource("134_esq3s")]
+position = Vector2(11046, 20224)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp55" parent="." unique_id=1896048265 instance=ExtResource("134_esq3s")]
+position = Vector2(12654, 20224)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp56" parent="." unique_id=1253836315 instance=ExtResource("134_esq3s")]
+position = Vector2(14288, 20224)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp57" parent="." unique_id=1986295084 instance=ExtResource("134_esq3s")]
+position = Vector2(9129, 20224)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp58" parent="." unique_id=813237833 instance=ExtResource("134_esq3s")]
+position = Vector2(7272, 20224)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp59" parent="." unique_id=1847280550 instance=ExtResource("134_esq3s")]
+position = Vector2(11046, 12957)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp60" parent="." unique_id=500483018 instance=ExtResource("134_esq3s")]
+position = Vector2(12654, 12957)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp61" parent="." unique_id=743065145 instance=ExtResource("134_esq3s")]
+position = Vector2(14288, 12957)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp62" parent="." unique_id=643682551 instance=ExtResource("134_esq3s")]
+position = Vector2(9129, 12957)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
+
+[node name="Lamp63" parent="." unique_id=495088319 instance=ExtResource("134_esq3s")]
+position = Vector2(7272, 12957)
+requires_generator = true
+light_color = Color(0.8987421, 0.96213883, 0.99718887, 1)
+light_energy = 0.7
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]
@@ -8585,3 +9200,7 @@ scale = Vector2(0.36, 0.36)
 [editable path="1thLevel/1thHall/InteractableObjects/Door(StairsRight)"]
 [editable path="1thLevel/1thHall/InteractableObjects/Note"]
 [editable path="Basement/InteractableObjects/Door(Basement)"]
+[editable path="Basement/InteractableObjects/Door(Basement)2"]
+[editable path="Basement/InteractableObjects/Door(Basement)3"]
+[editable path="Basement2/InteractableObjects/Door(Basement)2"]
+[editable path="Basement2/InteractableObjects/Door(Basement)3"]

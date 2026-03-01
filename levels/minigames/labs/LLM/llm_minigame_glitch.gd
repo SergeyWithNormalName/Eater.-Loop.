@@ -145,11 +145,11 @@ func _jump_button_to_chaos(from_mouse_escape: bool = false) -> void:
 	if interaction_area == null:
 		_schedule_next_jump()
 		return
-	var size := interaction_area.size
+	var area_size := interaction_area.size
 	var over := 220.0 if from_mouse_escape else 120.0
 	_button_target_position = Vector2(
-		_rng.randf_range(-over, size.x - generate_button.size.x + over),
-		_rng.randf_range(-over, size.y - generate_button.size.y + over)
+		_rng.randf_range(-over, area_size.x - generate_button.size.x + over),
+		_rng.randf_range(-over, area_size.y - generate_button.size.y + over)
 	)
 	generate_button.text = _pick(TEXT_IDLE_VARIANTS)
 	_schedule_next_jump()

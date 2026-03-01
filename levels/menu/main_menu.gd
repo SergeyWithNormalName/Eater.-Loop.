@@ -492,14 +492,14 @@ func _fit_startup_disclaimer_text() -> void:
 	if available_height <= 0.0:
 		return
 	var selected_size: int = disclaimer_body_font_min_size
-	var size: int = disclaimer_body_font_size
-	while size >= disclaimer_body_font_min_size:
-		_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", size)
+	var candidate_font_size: int = disclaimer_body_font_size
+	while candidate_font_size >= disclaimer_body_font_min_size:
+		_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", candidate_font_size)
 		var content_height: float = _startup_disclaimer_text.get_content_height()
 		if content_height <= available_height:
-			selected_size = size
+			selected_size = candidate_font_size
 			break
-		size -= 1
+		candidate_font_size -= 1
 	_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", selected_size)
 	_startup_disclaimer_text.scroll_to_line(0)
 

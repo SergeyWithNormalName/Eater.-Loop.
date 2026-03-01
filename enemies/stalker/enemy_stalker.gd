@@ -1,6 +1,6 @@
 extends "res://enemies/enemy.gd"
 
-const StalkerMotionAudioComponent := preload("res://enemies/stalker/stalker_motion_audio_component.gd")
+const StalkerMotionAudioComponentScript := preload("res://enemies/stalker/stalker_motion_audio_component.gd")
 
 @export_group("Stalker Navigation")
 ## Distance to trigger door teleport.
@@ -227,31 +227,40 @@ func _is_player_busy_with_minigame() -> bool:
 	return false
 
 func _setup_audio() -> void:
+	_ensure_door_open_player()
+	_motion_audio = _resolve_motion_audio_component()
+
+func _ensure_door_open_player() -> AudioStreamPlayer:
+	if _door_open_player != null and is_instance_valid(_door_open_player):
+		return _door_open_player
 	_door_open_player = AudioStreamPlayer.new()
 	_door_open_player.bus = door_open_audio_bus
 	_door_open_player.max_polyphony = 4
 	add_child(_door_open_player)
-	_motion_audio = _resolve_motion_audio_component()
+	return _door_open_player
 
 func _resolve_motion_audio_component() -> StalkerMotionAudioComponent:
 	if motion_audio_component_path != NodePath():
-		var by_path := get_node_or_null(motion_audio_component_path) as StalkerMotionAudioComponent
+		var by_path := get_node_or_null(motion_audio_component_path) as StalkerMotionAudioComponentScript
 		if by_path != null:
 			return by_path
 	for child in get_children():
-		var component := child as StalkerMotionAudioComponent
+		var component := child as StalkerMotionAudioComponentScript
 		if component != null:
 			return component
 	return null
 
 func _play_door_open_sfx() -> void:
-	if _door_open_player == null or door_open_sound == null:
+	if door_open_sound == null:
 		return
-	_door_open_player.bus = door_open_audio_bus
-	_door_open_player.stream = door_open_sound
-	_door_open_player.volume_db = door_open_volume_db
-	_door_open_player.pitch_scale = randf_range(minf(door_open_pitch_min, door_open_pitch_max), maxf(door_open_pitch_min, door_open_pitch_max))
-	_door_open_player.play()
+	var player := _ensure_door_open_player()
+	if player == null:
+		return
+	player.bus = door_open_audio_bus
+	player.stream = door_open_sound
+	player.volume_db = door_open_volume_db
+	player.pitch_scale = randf_range(minf(door_open_pitch_min, door_open_pitch_max), maxf(door_open_pitch_min, door_open_pitch_max))
+	player.play()
 
 func _setup_walk_animation() -> void:
 	if _animated_sprite == null:

@@ -8,7 +8,7 @@ size = Vector2(260, 520)
 
 [node name="StudentMoneyNPC" type="Area2D" unique_id=643407410]
 script = ExtResource("1_script")
-prompt_text = "Pogovorit so studentom"
+prompt_text = "Поговорить со студентом"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=552361323]
 shape = SubResource("RectangleShape2D_student")
