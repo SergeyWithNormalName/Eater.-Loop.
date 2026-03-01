@@ -988,6 +988,19 @@ auto_prompt = null
 handle_input = null
 one_shot = null
 
+[node name="Door(ToParents)2" parent="Hall/InteractableObjects" unique_id=648293497 instance=ExtResource("15_m4yh5")]
+position = Vector2(7623, 83)
+is_locked = true
+door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+target_marker = null
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
 [node name="Door(ToLebedka)" parent="Hall/InteractableObjects" unique_id=1555384058 instance=ExtResource("15_m4yh5")]
 position = Vector2(11939, 83)
 is_locked = true

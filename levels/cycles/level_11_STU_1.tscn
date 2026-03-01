@@ -8558,7 +8558,7 @@ position = Vector2(10961, 6659)
 enemy_scene = ExtResource("133_g6lqu")
 
 [node name="Lamp" parent="." unique_id=1861148071 instance=ExtResource("131_upyn3")]
-position = Vector2(12091, 6289)
+position = Vector2(12091, 6290)
 light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
 flicker_enabled = true
 

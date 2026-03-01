@@ -90,6 +90,7 @@ func _update_jump(delta: float) -> void:
 	var max_distance := to_player.length()
 	var applied_distance: float = minf(distance, max_distance)
 
+	_trigger_jump_screen_effect()
 	global_position += dir * applied_distance
 	velocity = Vector2.ZERO
 	_update_facing_from_direction(dir)
@@ -110,6 +111,13 @@ func _play_jump_sound() -> void:
 		return
 	_jump_player.stream = jump_sounds.pick_random()
 	_jump_player.play()
+
+func _trigger_jump_screen_effect() -> void:
+	if GameDirector == null:
+		return
+	if not GameDirector.has_method("trigger_light_only_jump_effect"):
+		return
+	GameDirector.trigger_light_only_jump_effect()
 
 func _play_idle_sound() -> void:
 	_idle_sound_player.stream = idle_sounds.pick_random()

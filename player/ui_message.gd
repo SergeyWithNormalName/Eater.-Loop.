@@ -37,6 +37,8 @@ var _note_bg: ColorRect
 var _note_image: TextureRect
 var _is_viewing_note: bool = false
 var _note_prev_paused: bool = false
+var _queued_subtitle_text: String = ""
+var _queued_subtitle_duration: float = -1.0
 
 # --- Переменные для подсказок ---
 var _hint_bg: ColorRect
@@ -217,6 +219,7 @@ func hide_note() -> void:
 	_note_bg.visible = false
 	_note_image.visible = false
 	get_tree().paused = _note_prev_paused
+	_flush_queued_subtitle()
 
 func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true) -> void:
 	var t := text.strip_edges()
@@ -294,6 +297,16 @@ func show_subtitle(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":
 		return
+	if _is_viewing_note:
+		_queued_subtitle_text = t
+		_queued_subtitle_duration = duration
+		return
+	_show_subtitle_now(t, duration)
+
+func _show_subtitle_now(text: String, duration: float = -1.0) -> void:
+	var t := text.strip_edges()
+	if t == "":
+		return
 	_subtitle_label.text = t
 	_subtitle_label.visible = true
 	_subtitle_timer.start(duration if duration > 0.0 else subtitle_duration)
@@ -301,6 +314,15 @@ func show_subtitle(text: String, duration: float = -1.0) -> void:
 func hide_subtitle() -> void:
 	_subtitle_label.visible = false
 	_subtitle_timer.stop()
+
+func _flush_queued_subtitle() -> void:
+	if _queued_subtitle_text == "":
+		return
+	var text := _queued_subtitle_text
+	var duration := _queued_subtitle_duration
+	_queued_subtitle_text = ""
+	_queued_subtitle_duration = -1.0
+	_show_subtitle_now(text, duration)
 
 func show_interact_prompt(source: Object, text: String = "") -> void:
 	if InteractionPrompts:
