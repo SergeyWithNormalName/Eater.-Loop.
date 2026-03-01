@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c8fkenwlt4hfv"]
 
 [ext_resource type="Script" uid="uid://tcl6ubqwjrxh" path="res://enemies/stalker/enemy_stalker.gd" id="1_stalker"]
+[ext_resource type="Script" path="res://enemies/stalker/stalker_motion_audio_component.gd" id="2_stalker_motion_audio"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb6gf"]
 size = Vector2(2620, 1272)
@@ -32,6 +33,9 @@ shape = SubResource("RectangleShape2D_lu5c6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034365030]
 scale = Vector2(1.0726826, 1.0726826)
+
+[node name="StalkerMotionAudio" type="Node" parent="." unique_id=1943170055]
+script = ExtResource("2_stalker_motion_audio")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1837516850]
 scale = Vector2(0.5, 0.5)

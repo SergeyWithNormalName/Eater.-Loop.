@@ -172,7 +172,7 @@ timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.23529412, 0.23529412, 0.27450982, 1)
+color = Color(0.019607844, 0.019607844, 0.02745098, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -405,7 +405,7 @@ target_marker = NodePath("../../../2thLevel/2thHall/InteractableObjects/Door(To2
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1523049142 instance=ExtResource("29_moo7p")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://dgtscp6a6bnj5"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=279338492]
 stream = ExtResource("30_yuxii")

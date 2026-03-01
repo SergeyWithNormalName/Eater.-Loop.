@@ -192,6 +192,15 @@
 │   │   ├── enemy_runner.gd.uid
 │   │   └── enemy_runner.tscn
 │   ├── stalker
+│   │   ├── StalkerWalk
+│   │   │   ├── StalkerWalk_Creak_1.wav
+│   │   │   ├── StalkerWalk_Creak_1.wav.import
+│   │   │   ├── StalkerWalk_Creak_2.wav
+│   │   │   ├── StalkerWalk_Creak_2.wav.import
+│   │   │   ├── StalkerWalk_Step_1.wav
+│   │   │   ├── StalkerWalk_Step_1.wav.import
+│   │   │   ├── StalkerWalk_Step_2.wav
+│   │   │   └── StalkerWalk_Step_2.wav.import
 │   │   ├── walking_animation
 │   │   │   ├── ezgif-frame-008.png
 │   │   │   ├── ezgif-frame-008.png.import
@@ -237,11 +246,17 @@
 │   │   │   ├── ezgif-frame-028.png.import
 │   │   │   ├── ezgif-frame-029.png
 │   │   │   └── ezgif-frame-029.png.import
+│   │   ├── StalkerOpenDoor.wav
+│   │   ├── StalkerOpenDoor.wav.import
+│   │   ├── StalkerWalk.wav
+│   │   ├── StalkerWalk.wav.import
 │   │   ├── enemy_stalker.gd
 │   │   ├── enemy_stalker.gd.uid
 │   │   ├── enemy_stalker.tscn
 │   │   ├── sprite.png
-│   │   └── sprite.png.import
+│   │   ├── sprite.png.import
+│   │   ├── stalker_motion_audio_component.gd
+│   │   └── stalker_motion_audio_component.gd.uid
 │   ├── enemy.gd
 │   ├── enemy.gd.uid
 │   ├── enemy.tscn
@@ -269,8 +284,10 @@
 │   │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   │   ├── level_05_keystests.tscn
 │   │   │   ├── level_06.tscn
+│   │   │   ├── level_07_doors_save.tscn
 │   │   │   ├── level_test_enemies.tscn
-│   │   │   └── level_test_enemies2.tscn
+│   │   │   ├── level_test_enemies2.tscn
+│   │   │   └── trashhh.tscn
 │   │   ├── TextureDistortionManager.tscn
 │   │   ├── crazy_level_event.gd
 │   │   ├── crazy_level_event.gd.uid
@@ -286,11 +303,11 @@
 │   │   ├── level_04_findkey.tscn
 │   │   ├── level_05_sql.tscn
 │   │   ├── level_06_corridordistortion.tscn
+│   │   ├── level_07_doors.gd
+│   │   ├── level_07_doors.gd.uid
 │   │   ├── level_07_doors.tscn
-│   │   ├── level_07_doors_save.tscn
 │   │   ├── level_08_PT.tscn
-│   │   ├── level_09_scary.tscn
-│   │   ├── level_10_crazy.tscn
+│   │   ├── level_09_сrazy.tscn
 │   │   ├── level_11_STU_1.tscn
 │   │   ├── level_11_end.gd
 │   │   ├── level_11_end.gd.uid
@@ -744,6 +761,8 @@
 │   │   ├── sprites
 │   │   │   ├── allrooms
 │   │   │   │   ├── windows
+│   │   │   │   │   ├── Hole.png
+│   │   │   │   │   ├── Hole.png.import
 │   │   │   │   │   ├── Window1.png
 │   │   │   │   │   ├── Window1.png.import
 │   │   │   │   │   ├── Window2.png
@@ -1187,6 +1206,8 @@
 │       │   ├── obstacle.gd.uid
 │       │   └── obstacle.tscn
 │       ├── phone
+│       │   ├── 164690__deleted_user_2104797__phone_ring.wav
+│       │   ├── 164690__deleted_user_2104797__phone_ring.wav.import
 │       │   ├── JokeAboutChicken.wav
 │       │   ├── JokeAboutChicken.wav.import
 │       │   ├── phone.gd
@@ -1354,7 +1375,9 @@
 │   │   ├── test_scripts_compile.gd
 │   │   ├── test_scripts_compile.gd.uid
 │   │   ├── test_stalker_behavior.gd
-│   │   └── test_stalker_behavior.gd.uid
+│   │   ├── test_stalker_behavior.gd.uid
+│   │   ├── test_stalker_motion_audio_component.gd
+│   │   └── test_stalker_motion_audio_component.gd.uid
 │   ├── README.md
 │   ├── run_tests.gd
 │   ├── run_tests.gd.uid
@@ -1370,4 +1393,4 @@
 ├── project.godot
 └── structure.txt
 
-117 directories, 1254 files
+118 directories, 1276 files

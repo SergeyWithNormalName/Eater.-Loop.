@@ -1,5 +1,7 @@
 extends "res://enemies/enemy.gd"
 
+const StalkerMotionAudioComponent := preload("res://enemies/stalker/stalker_motion_audio_component.gd")
+
 @export_group("Stalker Navigation")
 ## Distance to trigger door teleport.
 @export var door_reach_distance: float = 24.0
@@ -18,6 +20,22 @@ extends "res://enemies/enemy.gd"
 ## Длительность кадра ходьбы в секундах.
 @export var walk_frame_time: float = 0.08
 
+@export_group("Door Audio")
+## Звук открытия двери stalker (слышен по всей локации).
+@export var door_open_sound: AudioStream = preload("res://enemies/stalker/StalkerOpenDoor.wav")
+## Громкость открытия двери в дБ.
+@export var door_open_volume_db: float = -5.0
+## Минимальный питч открытия двери.
+@export var door_open_pitch_min: float = 0.98
+## Максимальный питч открытия двери.
+@export var door_open_pitch_max: float = 1.02
+## Шина для звука открытия двери.
+@export var door_open_audio_bus: StringName = &"Sounds"
+
+@export_group("Motion Audio")
+## Путь к уникальному компоненту аудио шагов/скрипа stalker.
+@export var motion_audio_component_path: NodePath = NodePath("StalkerMotionAudio")
+
 const WALK_FRAME_PATTERN := "res://enemies/stalker/walking_animation/ezgif-frame-%03d.png"
 const WALK_FRAME_START := 8
 const WALK_FRAME_END := 29
@@ -26,6 +44,8 @@ const IDLE_TEXTURE_PATH := "res://enemies/stalker/sprite.png"
 var _route_timer: float = 0.0
 var _door_route: Array[Node] = []
 var _animated_sprite: AnimatedSprite2D = null
+var _door_open_player: AudioStreamPlayer = null
+var _motion_audio: StalkerMotionAudioComponent = null
 
 func _ready() -> void:
 	super._ready()
@@ -37,6 +57,7 @@ func _ready() -> void:
 		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 		if _animated_sprite != null:
 			_sprite = _animated_sprite
+	_setup_audio()
 	_setup_walk_animation()
 	_update_animation()
 
@@ -88,6 +109,7 @@ func _follow_door_route() -> void:
 	if _is_within_door_reach(door_pos):
 		var exit_node: Node2D = _get_door_exit_node(door)
 		if exit_node != null:
+			_play_door_open_sfx()
 			global_position = exit_node.global_position
 		_door_route.pop_front()
 		_route_timer = 0.0
@@ -203,6 +225,33 @@ func _is_player_busy_with_minigame() -> bool:
 	if MinigameController.has_method("should_block_player_movement"):
 		return bool(MinigameController.should_block_player_movement())
 	return false
+
+func _setup_audio() -> void:
+	_door_open_player = AudioStreamPlayer.new()
+	_door_open_player.bus = door_open_audio_bus
+	_door_open_player.max_polyphony = 4
+	add_child(_door_open_player)
+	_motion_audio = _resolve_motion_audio_component()
+
+func _resolve_motion_audio_component() -> StalkerMotionAudioComponent:
+	if motion_audio_component_path != NodePath():
+		var by_path := get_node_or_null(motion_audio_component_path) as StalkerMotionAudioComponent
+		if by_path != null:
+			return by_path
+	for child in get_children():
+		var component := child as StalkerMotionAudioComponent
+		if component != null:
+			return component
+	return null
+
+func _play_door_open_sfx() -> void:
+	if _door_open_player == null or door_open_sound == null:
+		return
+	_door_open_player.bus = door_open_audio_bus
+	_door_open_player.stream = door_open_sound
+	_door_open_player.volume_db = door_open_volume_db
+	_door_open_player.pitch_scale = randf_range(minf(door_open_pitch_min, door_open_pitch_max), maxf(door_open_pitch_min, door_open_pitch_max))
+	_door_open_player.play()
 
 func _setup_walk_animation() -> void:
 	if _animated_sprite == null:

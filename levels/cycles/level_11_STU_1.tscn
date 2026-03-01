@@ -407,7 +407,7 @@ target_marker = NodePath("../../../7thLevel/7thHall/InteractableObjects/Door(To7
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1523049142 instance=ExtResource("29_juln6")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://dex5od1gsq3n8"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=279338492]
 stream = ExtResource("30_26ub7")
@@ -3787,7 +3787,7 @@ texture = ExtResource("85_es6o5")
 
 [node name="Door(In604)" parent="6thLevel/604/InteractableObjects" unique_id=284592550 instance=ExtResource("55_v4cmy")]
 position = Vector2(14571, 83)
-door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
+door_locked_message = "Дверь не открывается"
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
 required_key_id = "key_6level"
 
@@ -8553,31 +8553,14 @@ position = Vector2(-3, 4)
 [node name="Sprite2D" parent="NoteStory" index="1"]
 texture = null
 
-[node name="Lamp2" parent="." unique_id=1785403388 instance=ExtResource("131_upyn3")]
-position = Vector2(11949, 6273)
-start_on = true
-light_color = Color(0.88261443, 0.9684318, 0.99312955, 1)
-light_energy = 0.95
-flicker_enabled = true
-flicker_energy_min = 0.66
-flicker_energy_max = 0.86
-off_texture = null
-on_texture = null
-
-[node name="Lamp3" parent="." unique_id=273407782 instance=ExtResource("131_upyn3")]
-position = Vector2(10292, 6273)
-start_on = true
-light_color = Color(0.88261443, 0.9684318, 0.99312955, 1)
-light_energy = 0.95
-flicker_enabled = true
-flicker_energy_min = 0.66
-flicker_energy_max = 0.86
-off_texture = null
-on_texture = null
-
 [node name="TargetMonsterSpawner" parent="." unique_id=249516465 instance=ExtResource("132_0grpv")]
 position = Vector2(10961, 6659)
 enemy_scene = ExtResource("133_g6lqu")
+
+[node name="Lamp" parent="." unique_id=1861148071 instance=ExtResource("131_upyn3")]
+position = Vector2(12091, 6289)
+light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
+flicker_enabled = true
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

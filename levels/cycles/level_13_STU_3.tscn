@@ -407,7 +407,7 @@ target_marker = NodePath("../../../7thLevel/7thHall/InteractableObjects/Door(To7
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1523049142 instance=ExtResource("29_k1n6y")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://r7k3dupn14tx"
+next_level_path = "uid://brvl8ddr8l7vd"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=279338492]
 stream = ExtResource("30_ql2dk")

@@ -1011,7 +1011,7 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=5177339 instance=ExtResource("69_l5kxe")]
 position = Vector2(-2420, 226)
-next_level_path = "uid://ddrjoe11x5ccx"
+next_level_path = "uid://dqjk1yfsy7tsq"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1771280544]
 stream = ExtResource("70_1o4mo")

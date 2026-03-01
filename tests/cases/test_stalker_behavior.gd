@@ -12,6 +12,7 @@ class RouteProbeStalker:
 	var fake_doors: Array[Node] = []
 	var fake_exits: Dictionary = {}
 	var fake_los: Dictionary = {}
+	var door_open_sfx_calls: int = 0
 
 	func _get_doors() -> Array[Node]:
 		return fake_doors
@@ -35,6 +36,9 @@ class RouteProbeStalker:
 
 	func get_route_size() -> int:
 		return _door_route.size()
+
+	func _play_door_open_sfx() -> void:
+		door_open_sfx_calls += 1
 
 func run() -> Array[String]:
 	_test_route_search_covers_long_door_chains()
@@ -109,6 +113,7 @@ func _test_follow_door_route_uses_horizontal_reach() -> void:
 
 	assert_eq(stalker.global_position, exit_marker.global_position, "Stalker must pass through door when horizontally close even with large Y offset")
 	assert_eq(stalker.get_route_size(), 0, "Door route should advance after successful teleport")
+	assert_eq(stalker.door_open_sfx_calls, 1, "Stalker must play global door-open SFX when using a door")
 
 	stalker.free()
 	door.free()

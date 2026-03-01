@@ -102,6 +102,7 @@
 [ext_resource type="Texture2D" uid="uid://cxx0yb2fd50j8" path="res://objects/environment/sprites/hall/CoverOnWall_1.png" id="100_wc02g"]
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="101_2hugo"]
 [ext_resource type="PackedScene" path="res://objects/interactable/search_spot/search_spot.tscn" id="101_y3i3l"]
+[ext_resource type="PackedScene" uid="uid://dccsvb40ywqm0" path="res://levels/minigames/search_key/search_minigame_shkaf_1.tscn" id="103_lrg5q"]
 [ext_resource type="Texture2D" uid="uid://casdt22d3vom4" path="res://levels/minigames/search_key/Key.png" id="103_mdcon"]
 [ext_resource type="Texture2D" uid="uid://chqjxafw6gmv3" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_1.png" id="104_nrakj"]
 [ext_resource type="Texture2D" uid="uid://dhg2avxqf7ano" path="res://levels/minigames/search_key/stiralka/sprites/Clear_Cloth_2.png" id="105_lrg5q"]
@@ -3407,7 +3408,7 @@ texture = SubResource("GradientTexture2D_wc02g")
 [node name="Bed" parent="." unique_id=363519875 instance=ExtResource("69_rg3cs")]
 position = Vector2(24867, 5446)
 scale = Vector2(1.2, 1.2)
-next_level_path = "uid://c3s82ewvaot7t"
+next_level_path = "uid://cf6175x5iuho8"
 require_light_for_sleep = true
 no_bedroom_light_message = "Не помню, чтобы здесь стояла эта кровать"
 metadata/_edit_group_ = true
@@ -3440,6 +3441,7 @@ search_spots = Array[NodePath]([NodePath("../SearchSpot")])
 [node name="SearchSpot" parent="." unique_id=1360898350 instance=ExtResource("101_y3i3l")]
 position = Vector2(25388.002, 5297)
 scale = Vector2(5.72, 7.123382)
+minigame_scene = ExtResource("103_lrg5q")
 key_texture = ExtResource("103_mdcon")
 trash_textures = Array[Texture2D]([ExtResource("104_nrakj"), ExtResource("105_lrg5q"), ExtResource("106_i53xb"), ExtResource("107_6yyfy"), ExtResource("108_ajhvm"), ExtResource("109_1pvq6"), ExtResource("110_mm11o"), ExtResource("111_7sqgy"), ExtResource("112_6m2d3"), ExtResource("113_7a7fl"), ExtResource("114_f8xq4"), ExtResource("115_qt32k"), ExtResource("116_y1xw1"), ExtResource("117_3mfle"), ExtResource("118_f020u"), ExtResource("119_ovd81")])
 trash_min = 8
