@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgtscp6a6bnj5"]
 
-[ext_resource type="Script" uid="uid://c2c2uoavsqnip" path="res://levels/cycles/level.gd" id="1_8gqb3"]
+[ext_resource type="Script" uid="uid://v35qhav86464" path="res://levels/cycles/level_13_stu_3.gd" id="1_8gqb3"]
 [ext_resource type="Shader" uid="uid://c7db8mhrwlog4" path="res://levels/cycles/level_01.gdshader" id="2_esy5d"]
 [ext_resource type="PackedScene" uid="uid://cmxtuvlqs321l" path="res://player/player.tscn" id="3_nuox8"]
 [ext_resource type="Texture2D" uid="uid://bic51a06275mf" path="res://objects/environment/background/BackWalls.png" id="4_kfa3y"]
@@ -86,11 +86,7 @@
 [ext_resource type="Texture2D" uid="uid://cbo8s6vsltfun" path="res://objects/environment/university/Chair.png" id="84_1tnqh"]
 [ext_resource type="Texture2D" uid="uid://crfcxd726bbrc" path="res://objects/environment/university/Table_U_PC_90g.png" id="85_f0d3x"]
 [ext_resource type="PackedScene" uid="uid://bifi1qeublh82" path="res://objects/interactable/fridge/fridge.tscn" id="86_boplk"]
-[ext_resource type="PackedScene" uid="uid://cgir8at2gjnkc" path="res://levels/minigames/feeding/feed_minigame.tscn" id="87_jrpip"]
-[ext_resource type="PackedScene" uid="uid://d3qadgg85phau" path="res://levels/minigames/feeding/food/burger/food_burger.tscn" id="88_pakad"]
-[ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="89_xnohc"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="90_7qnpl"]
-[ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="91_8npev"]
 [ext_resource type="Texture2D" uid="uid://c6wiua6hepvju" path="res://objects/interactable/door/sprites/numbersU/503.jpg" id="92_gy74x"]
 [ext_resource type="Texture2D" uid="uid://c4tlfm76q7q6g" path="res://objects/interactable/door/sprites/numbersU/504.jpg" id="93_at1pa"]
 [ext_resource type="Texture2D" uid="uid://brjpvw03i8hoy" path="res://objects/interactable/door/sprites/numbersU/501.jpg" id="94_d6rn1"]
@@ -171,6 +167,7 @@ size = Vector2(339.5, 406.78906)
 [node name="Level2" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
 script = ExtResource("1_8gqb3")
+primary_fridge_path = NodePath("")
 cycle_number = 2
 timer_duration = 600.0
 
@@ -3472,7 +3469,6 @@ texture = ExtResource("60_ryyea")
 
 [node name="Door(StairsRight)" parent="6thLevel/6thHall/InteractableObjects" unique_id=548178166 instance=ExtResource("28_xtfbx")]
 position = Vector2(13843, 81)
-is_locked = true
 door_locked_message = "Дверь заперта."
 target_marker = NodePath("../../../../5thLevel/5thHall/InteractableObjects/Door(StairsRight)")
 door_texture = null
@@ -3784,16 +3780,6 @@ is_locked = true
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
 target_marker = NodePath("../../../6thHall/InteractableObjects/Door(To604)")
 required_key_id = "key_6level"
-
-[node name="Fridge" parent="6thLevel/604/InteractableObjects" unique_id=540039702 instance=ExtResource("86_boplk")]
-position = Vector2(14188, 98)
-minigame_scene = ExtResource("87_jrpip")
-food_scenes = Array[PackedScene]([ExtResource("88_pakad")])
-food_count = 6
-bg_music = ExtResource("89_xnohc")
-win_sound = ExtResource("90_7qnpl")
-eat_sound = ExtResource("90_7qnpl")
-background_texture = ExtResource("91_8npev")
 
 [node name="603" type="Node2D" parent="6thLevel" unique_id=1673846713]
 position = Vector2(38317, 0)
@@ -8677,8 +8663,9 @@ scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("116_4nlgi")
 
 [node name="Blockpost" parent="Stolovaya/InteractableObjects" unique_id=1852257165 instance=ExtResource("132_esy5d")]
-position = Vector2(8885, 154)
+position = Vector2(8885, 144)
 money_system_path = NodePath("../../../Level12MoneySystem")
+required_money = 25
 not_enough_money_message = "Проход стоит 100 рублей"
 access_granted_message = "Я заплатил за проход"
 

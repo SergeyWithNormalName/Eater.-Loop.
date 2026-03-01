@@ -321,6 +321,8 @@
 │   │   ├── level_12_stu_2.gd
 │   │   ├── level_12_stu_2.gd.uid
 │   │   ├── level_13_STU_3.tscn
+│   │   ├── level_13_stu_3.gd
+│   │   ├── level_13_stu_3.gd.uid
 │   │   ├── level_14_end.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_music.gd
@@ -1401,4 +1403,4 @@
 ├── project.godot
 └── structure.txt
 
-118 directories, 1284 files
+118 directories, 1286 files

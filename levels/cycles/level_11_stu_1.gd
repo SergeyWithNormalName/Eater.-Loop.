@@ -4,7 +4,7 @@ extends "res://levels/cycles/level.gd"
 @export var door_in604_path: NodePath = NodePath("6thLevel/604/InteractableObjects/Door(In604)")
 @export var door_to701_path: NodePath = NodePath("7thLevel/7thHall/InteractableObjects/Door(To701)")
 @export var door_to701_target_before_fridge: NodePath = NodePath("../../../701/InteractableObjects/Door(In701)")
-@export var door_to701_target_after_fridge: NodePath = NodePath("../../../Bedroom/InteractableObjects/Door(InBedroom)")
+@export var door_to701_target_after_fridge: NodePath = NodePath("../../../../Bedroom/InteractableObjects/Door(InBedroom)")
 @export var note_story_path: NodePath = NodePath("NoteStory")
 
 var _fridge: InteractiveObject = null
