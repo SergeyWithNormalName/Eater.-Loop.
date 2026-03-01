@@ -158,7 +158,6 @@ func _process(delta: float) -> void:
 	if _distortion_rect == null or _distortion_material == null:
 		return
 	if not _is_distortion_allowed():
-		_stop_light_only_jump_effect()
 		_hide_distortion_overlays()
 		return
 	var has_active := false
@@ -636,8 +635,6 @@ func trigger_light_only_jump_effect(peak_intensity: float = -1.0) -> void:
 	if _light_only_jump_rect == null or _light_only_jump_material == null:
 		return
 	if _death_sequence_active:
-		return
-	if not _is_distortion_allowed():
 		return
 	_configure_light_only_jump_material()
 	var target_peak := light_only_jump_peak_intensity if peak_intensity < 0.0 else peak_intensity
