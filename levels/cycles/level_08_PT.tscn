@@ -3185,7 +3185,7 @@ one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=490067309 instance=ExtResource("69_rg3cs")]
 position = Vector2(-2420, 226)
-require_light_for_sleep = true
+next_level_path = "uid://cf6175x5iuho8"
 no_bedroom_light_message = "На данный момент это последний уровень"
 
 [node name="Kladovka" type="Node2D" parent="." unique_id=48974067]

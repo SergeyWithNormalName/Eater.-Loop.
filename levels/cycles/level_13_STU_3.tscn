@@ -132,6 +132,7 @@
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_1d7t7"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_0jbf5"]
 [ext_resource type="PackedScene" uid="uid://ccep2nskcxpgh" path="res://objects/interactable/level12/blockpost/blockpost.tscn" id="132_esy5d"]
+[ext_resource type="PackedScene" uid="uid://cesl0cgqw8wl5" path="res://levels/minigames/feeding/food/fish/food_fish.tscn" id="133_kfa3y"]
 [ext_resource type="PackedScene" path="res://objects/interactable/level12/money/level12_money_system.tscn" id="133_o0t8e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
@@ -1043,11 +1044,6 @@ z_index = 10
 position = Vector2(6089, 63.860657)
 
 [node name="Sprites" type="Node2D" parent="9thLevel/903" unique_id=1981578984]
-
-[node name="TableUPc2" type="Sprite2D" parent="9thLevel/903/Sprites" unique_id=1608993670]
-position = Vector2(6668.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("66_r4j8a")
 
 [node name="TableUPc3" type="Sprite2D" parent="9thLevel/903/Sprites" unique_id=151064668]
 position = Vector2(6301.5547, 185.39136)
@@ -3795,6 +3791,7 @@ minigame_scene = ExtResource("87_jrpip")
 food_scenes = Array[PackedScene]([ExtResource("88_pakad")])
 food_count = 6
 bg_music = ExtResource("89_xnohc")
+win_sound = ExtResource("90_7qnpl")
 eat_sound = ExtResource("90_7qnpl")
 background_texture = ExtResource("91_8npev")
 
@@ -3907,7 +3904,7 @@ scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("66_r4j8a")
 
 [node name="TableUPc4" type="Sprite2D" parent="6thLevel/603/Sprites" unique_id=1743476086]
-position = Vector2(7712, 185.39136)
+position = Vector2(8739, 185.39136)
 scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("66_r4j8a")
 
@@ -3918,11 +3915,6 @@ texture = ExtResource("66_r4j8a")
 
 [node name="TableUPc5" type="Sprite2D" parent="6thLevel/603/Sprites" unique_id=1831836614]
 position = Vector2(7374.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("66_r4j8a")
-
-[node name="TableUPc7" type="Sprite2D" parent="6thLevel/603/Sprites" unique_id=1633843410]
-position = Vector2(8739, 185.39136)
 scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("66_r4j8a")
 
@@ -5639,11 +5631,6 @@ texture = ExtResource("66_r4j8a")
 
 [node name="TableUPc3" type="Sprite2D" parent="4thLevel/403/Sprites" unique_id=1233958316]
 position = Vector2(6301.5547, 185.39136)
-scale = Vector2(0.49619028, 0.49619022)
-texture = ExtResource("66_r4j8a")
-
-[node name="TableUPc10" type="Sprite2D" parent="4thLevel/403/Sprites" unique_id=1249566781]
-position = Vector2(10134.555, 185.39136)
 scale = Vector2(0.49619028, 0.49619022)
 texture = ExtResource("66_r4j8a")
 
@@ -8537,7 +8524,37 @@ minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
 reward_on_work_completion = true
 money_system_path = NodePath("../Level12MoneySystem")
-reward_money = 50
+reward_money = 25
+locked_sprite = ExtResource("66_r4j8a")
+available_sprite = ExtResource("130_1d7t7")
+
+[node name="Laptop3" parent="." unique_id=1037929597 instance=ExtResource("128_kuiyc")]
+position = Vector2(44983, -14956)
+minigame_scene = ExtResource("129_nuox8")
+time_limit = 10.0
+reward_on_work_completion = true
+money_system_path = NodePath("../Level12MoneySystem")
+reward_money = 25
+locked_sprite = ExtResource("66_r4j8a")
+available_sprite = ExtResource("130_1d7t7")
+
+[node name="Laptop2" parent="." unique_id=411323855 instance=ExtResource("128_kuiyc")]
+position = Vector2(46021, 6563)
+minigame_scene = ExtResource("129_nuox8")
+time_limit = 10.0
+reward_on_work_completion = true
+money_system_path = NodePath("../Level12MoneySystem")
+reward_money = 25
+locked_sprite = ExtResource("66_r4j8a")
+available_sprite = ExtResource("130_1d7t7")
+
+[node name="Laptop4" parent="." unique_id=584346137 instance=ExtResource("128_kuiyc")]
+position = Vector2(48430, 20508)
+minigame_scene = ExtResource("129_nuox8")
+time_limit = 10.0
+reward_on_work_completion = true
+money_system_path = NodePath("../Level12MoneySystem")
+reward_money = 25
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8646,7 +8663,7 @@ texture = ExtResource("53_pru2q")
 
 [node name="Door(InApple)" parent="Stolovaya/InteractableObjects" unique_id=1491470212 instance=ExtResource("28_xtfbx")]
 position = Vector2(7527.999, 81)
-target_marker = NodePath("../../../1thHall/InteractableObjects/Door(ToApple)")
+target_marker = NodePath("../../../1thLevel/1thHall/InteractableObjects/Door(ToApple)")
 door_texture = null
 metadata/_edit_group_ = true
 
@@ -8660,13 +8677,16 @@ scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("116_4nlgi")
 
 [node name="Blockpost" parent="Stolovaya/InteractableObjects" unique_id=1852257165 instance=ExtResource("132_esy5d")]
-position = Vector2(8880, 154)
+position = Vector2(8885, 154)
 money_system_path = NodePath("../../../Level12MoneySystem")
 not_enough_money_message = "Проход стоит 100 рублей"
 access_granted_message = "Я заплатил за проход"
 
 [node name="Fridge" parent="Stolovaya/InteractableObjects" unique_id=1816588780 instance=ExtResource("86_boplk")]
 position = Vector2(9592, 114)
+food_scenes = Array[PackedScene]([ExtResource("133_kfa3y")])
+win_sound = ExtResource("90_7qnpl")
+unique_intro_once_per_run = true
 
 [node name="Level12MoneySystem" parent="." unique_id=234445541 instance=ExtResource("133_o0t8e")]
 

@@ -648,7 +648,6 @@ door_locked_message = "Дверь приоткрыта, но что-то не д
 required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
-door_texture = ExtResource("74_u7x3d")
 interact_area_node = null
 auto_prompt = null
 handle_input = null

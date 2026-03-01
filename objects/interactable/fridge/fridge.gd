@@ -123,17 +123,12 @@ func _on_interact() -> void:
 		UIMessage.show_text("Я уже поел.")
 		return
 	
-	# 2. Проверка: погоня?
-	if _is_chase_active():
-		UIMessage.show_text("Нельзя есть на бегу!")
-		return
-
-	# 3. Если замок закрыт — запускаем взлом
+	# 2. Если замок закрыт — запускаем взлом
 	if require_access_code and not _code_unlocked:
 		_start_code_lock()
 		return
 
-	# 4. Если всё ок (замок открыт или не нужен) — ЕДИМ
+	# 3. Если всё ок (замок открыт или не нужен) — ЕДИМ
 	_start_feeding_process()
 
 # --- ЛОГИКА КОДОВОГО ЗАМКА ---
@@ -283,11 +278,6 @@ func _show_access_code_failed_message() -> void:
 		UIMessage.show_text(message)
 
 # --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
-func _is_chase_active() -> bool:
-	if MusicManager and MusicManager.has_method("is_chase_active"):
-		return MusicManager.is_chase_active()
-	return false
-
 func _update_visuals() -> void:
 	# Доступен, если не требуется код/лаба ИЛИ условия выполнены
 	var is_unlocked := (not require_access_code or _code_unlocked)

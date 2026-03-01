@@ -89,7 +89,6 @@
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="115_lnbu4"]
 [ext_resource type="AudioStream" uid="uid://cloagxjbd1mt3" path="res://enemies/runner/audio/BigStep_1V.wav" id="116_gvb1n"]
 [ext_resource type="Script" uid="uid://cd5eygyioofn4" path="res://levels/cycles/crazy_level_event.gd" id="116_n1jmu"]
-[ext_resource type="PackedScene" uid="uid://c8fkenwlt4hfv" path="res://enemies/stalker/enemy_stalker.tscn" id="117_sjmh0"]
 [ext_resource type="Texture2D" uid="uid://b42beiaowbgvc" path="res://objects/environment/sprites/allrooms/windows/Hole.png" id="117_tnkfd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
@@ -2723,9 +2722,6 @@ step_frame_indices = Array[int]([6, 10, 14, 18])
 camera_shake_intensity = 19.0
 speed = 600.0
 kill_on_attack = true
-
-[node name="EnemyStalker" parent="." unique_id=987572861 instance=ExtResource("117_sjmh0")]
-position = Vector2(8247, 24)
 
 [node name="EnemyLightSensitive" parent="." unique_id=307833949 instance=ExtResource("75_4jok7")]
 position = Vector2(11910, 10604)

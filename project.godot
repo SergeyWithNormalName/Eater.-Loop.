@@ -18,8 +18,8 @@ config/name="Едок. Петля."
 run/main_scene="res://levels/menu/main_menu.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://bwxfalfqm6n1r"
-config/macos_native_icon="res://global/Иконка_предварительно.icns"
-config/windows_native_icon="res://global/Иконка_предварительно.ico"
+config/macos_native_icon="res://global/macos_icon.icns"
+config/windows_native_icon="res://global/windows_icon.ico"
 
 [autoload]
 

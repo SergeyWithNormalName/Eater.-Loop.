@@ -41,9 +41,12 @@ var _lamp_react_playing: bool = false
 
 const WALK_FRAMES_DIR := "res://enemies/light_sensitive/animations/walking"
 const WALK_FRAME_PREFIX := "ezgif-frame-"
+const WALK_FRAME_PATTERN := "%s/%s%03d.png"
 const WALK_LOOP_ANIMATION: StringName = &"walk_loop"
 const WALK_LOOP_START_FRAME: int = 5
 const WALK_LOOP_END_FRAME: int = 22
+const WALK_FRAME_PROBE_START: int = 1
+const WALK_FRAME_PROBE_END: int = 64
 
 func _ready() -> void:
 	super._ready()
@@ -111,17 +114,28 @@ func _setup_walk_loop_animation(frames: SpriteFrames, frame_numbers: Array[int])
 func _collect_walk_frame_numbers() -> Array[int]:
 	var numbers: Array[int] = []
 	var dir := DirAccess.open(WALK_FRAMES_DIR)
-	if dir == null:
-		return numbers
-	for file_name in dir.get_files():
-		if not file_name.ends_with(".png"):
-			continue
-		var frame_number := _extract_walk_frame_number(file_name)
-		if frame_number < 0:
-			continue
-		numbers.append(frame_number)
+	if dir != null:
+		var seen := {}
+		for file_name in dir.get_files():
+			var frame_number := _extract_walk_frame_number_from_entry(file_name)
+			if frame_number < 0 or seen.has(frame_number):
+				continue
+			seen[frame_number] = true
+			numbers.append(frame_number)
+	if numbers.is_empty():
+		for i in range(WALK_FRAME_PROBE_START, WALK_FRAME_PROBE_END + 1):
+			if ResourceLoader.exists(_walk_frame_path(i), "Texture2D"):
+				numbers.append(i)
 	numbers.sort()
 	return numbers
+
+func _extract_walk_frame_number_from_entry(file_name: String) -> int:
+	var normalized := file_name
+	if normalized.ends_with(".remap"):
+		normalized = normalized.trim_suffix(".remap")
+	if normalized.ends_with(".import"):
+		normalized = normalized.trim_suffix(".import")
+	return _extract_walk_frame_number(normalized)
 
 func _extract_walk_frame_number(file_name: String) -> int:
 	if not file_name.begins_with(WALK_FRAME_PREFIX):
@@ -135,8 +149,10 @@ func _extract_walk_frame_number(file_name: String) -> int:
 	return int(number_str)
 
 func _load_walk_texture(frame_number: int) -> Texture2D:
-	var path := "%s/%s%03d.png" % [WALK_FRAMES_DIR, WALK_FRAME_PREFIX, frame_number]
-	return load(path) as Texture2D
+	return load(_walk_frame_path(frame_number)) as Texture2D
+
+func _walk_frame_path(frame_number: int) -> String:
+	return WALK_FRAME_PATTERN % [WALK_FRAMES_DIR, WALK_FRAME_PREFIX, frame_number]
 
 func _sync_light_mask_with_player() -> void:
 	var player := _player

@@ -274,6 +274,8 @@
 │   ├── iconofgame.png.import
 │   ├── itchio.jpg
 │   ├── itchio.jpg.import
+│   ├── macos_icon.icns
+│   ├── windows_icon.ico
 │   ├── Иконка_предварительно.icns
 │   └── Иконка_предварительно.ico
 ├── levels
@@ -1346,6 +1348,8 @@
 │   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd.uid
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
+│   │   ├── test_fridge_chase_interaction.gd
+│   │   ├── test_fridge_chase_interaction.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
 │   │   ├── test_gamepad_pick_place_flow.gd.uid
 │   │   ├── test_gamepad_runtime_navigation.gd
@@ -1397,4 +1401,4 @@
 ├── project.godot
 └── structure.txt
 
-118 directories, 1280 files
+118 directories, 1284 files
