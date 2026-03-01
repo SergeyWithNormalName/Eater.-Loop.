@@ -497,53 +497,60 @@
 │   │   │       └── sql_minigame_glitch.tscn
 │   │   ├── search_key
 │   │   │   ├── rakovina
-│   │   │   │   └── sprites
-│   │   │   │       ├── Posuda_1.png
-│   │   │   │       ├── Posuda_1.png.import
-│   │   │   │       ├── Posuda_2.png
-│   │   │   │       ├── Posuda_2.png.import
-│   │   │   │       ├── Posuda_3.png
-│   │   │   │       ├── Posuda_3.png.import
-│   │   │   │       ├── Posuda_4.png
-│   │   │   │       ├── Posuda_4.png.import
-│   │   │   │       ├── Posuda_5.png
-│   │   │   │       ├── Posuda_5.png.import
-│   │   │   │       ├── Posuda_6.png
-│   │   │   │       └── Posuda_6.png.import
+│   │   │   │   ├── sprites
+│   │   │   │   │   ├── Posuda_1.png
+│   │   │   │   │   ├── Posuda_1.png.import
+│   │   │   │   │   ├── Posuda_2.png
+│   │   │   │   │   ├── Posuda_2.png.import
+│   │   │   │   │   ├── Posuda_3.png
+│   │   │   │   │   ├── Posuda_3.png.import
+│   │   │   │   │   ├── Posuda_4.png
+│   │   │   │   │   ├── Posuda_4.png.import
+│   │   │   │   │   ├── Posuda_5.png
+│   │   │   │   │   ├── Posuda_5.png.import
+│   │   │   │   │   ├── Posuda_6.png
+│   │   │   │   │   └── Posuda_6.png.import
+│   │   │   │   ├── Без названия 7.png
+│   │   │   │   └── Без названия 7.png.import
+│   │   │   ├── shkaf
+│   │   │   │   ├── Без названия 6.png
+│   │   │   │   └── Без названия 6.png.import
 │   │   │   ├── stiralka
-│   │   │   │   └── sprites
-│   │   │   │       ├── Clear_Cloth_1.png
-│   │   │   │       ├── Clear_Cloth_1.png.import
-│   │   │   │       ├── Clear_Cloth_10.png
-│   │   │   │       ├── Clear_Cloth_10.png.import
-│   │   │   │       ├── Clear_Cloth_11.png
-│   │   │   │       ├── Clear_Cloth_11.png.import
-│   │   │   │       ├── Clear_Cloth_12.png
-│   │   │   │       ├── Clear_Cloth_12.png.import
-│   │   │   │       ├── Clear_Cloth_13.png
-│   │   │   │       ├── Clear_Cloth_13.png.import
-│   │   │   │       ├── Clear_Cloth_14.png
-│   │   │   │       ├── Clear_Cloth_14.png.import
-│   │   │   │       ├── Clear_Cloth_15.png
-│   │   │   │       ├── Clear_Cloth_15.png.import
-│   │   │   │       ├── Clear_Cloth_16.png
-│   │   │   │       ├── Clear_Cloth_16.png.import
-│   │   │   │       ├── Clear_Cloth_2.png
-│   │   │   │       ├── Clear_Cloth_2.png.import
-│   │   │   │       ├── Clear_Cloth_3.png
-│   │   │   │       ├── Clear_Cloth_3.png.import
-│   │   │   │       ├── Clear_Cloth_4.png
-│   │   │   │       ├── Clear_Cloth_4.png.import
-│   │   │   │       ├── Clear_Cloth_5.png
-│   │   │   │       ├── Clear_Cloth_5.png.import
-│   │   │   │       ├── Clear_Cloth_6.png
-│   │   │   │       ├── Clear_Cloth_6.png.import
-│   │   │   │       ├── Clear_Cloth_7.png
-│   │   │   │       ├── Clear_Cloth_7.png.import
-│   │   │   │       ├── Clear_Cloth_8.png
-│   │   │   │       ├── Clear_Cloth_8.png.import
-│   │   │   │       ├── Clear_Cloth_9.png
-│   │   │   │       └── Clear_Cloth_9.png.import
+│   │   │   │   ├── sprites
+│   │   │   │   │   ├── Clear_Cloth_1.png
+│   │   │   │   │   ├── Clear_Cloth_1.png.import
+│   │   │   │   │   ├── Clear_Cloth_10.png
+│   │   │   │   │   ├── Clear_Cloth_10.png.import
+│   │   │   │   │   ├── Clear_Cloth_11.png
+│   │   │   │   │   ├── Clear_Cloth_11.png.import
+│   │   │   │   │   ├── Clear_Cloth_12.png
+│   │   │   │   │   ├── Clear_Cloth_12.png.import
+│   │   │   │   │   ├── Clear_Cloth_13.png
+│   │   │   │   │   ├── Clear_Cloth_13.png.import
+│   │   │   │   │   ├── Clear_Cloth_14.png
+│   │   │   │   │   ├── Clear_Cloth_14.png.import
+│   │   │   │   │   ├── Clear_Cloth_15.png
+│   │   │   │   │   ├── Clear_Cloth_15.png.import
+│   │   │   │   │   ├── Clear_Cloth_16.png
+│   │   │   │   │   ├── Clear_Cloth_16.png.import
+│   │   │   │   │   ├── Clear_Cloth_2.png
+│   │   │   │   │   ├── Clear_Cloth_2.png.import
+│   │   │   │   │   ├── Clear_Cloth_3.png
+│   │   │   │   │   ├── Clear_Cloth_3.png.import
+│   │   │   │   │   ├── Clear_Cloth_4.png
+│   │   │   │   │   ├── Clear_Cloth_4.png.import
+│   │   │   │   │   ├── Clear_Cloth_5.png
+│   │   │   │   │   ├── Clear_Cloth_5.png.import
+│   │   │   │   │   ├── Clear_Cloth_6.png
+│   │   │   │   │   ├── Clear_Cloth_6.png.import
+│   │   │   │   │   ├── Clear_Cloth_7.png
+│   │   │   │   │   ├── Clear_Cloth_7.png.import
+│   │   │   │   │   ├── Clear_Cloth_8.png
+│   │   │   │   │   ├── Clear_Cloth_8.png.import
+│   │   │   │   │   ├── Clear_Cloth_9.png
+│   │   │   │   │   └── Clear_Cloth_9.png.import
+│   │   │   │   ├── Без названия 10.png
+│   │   │   │   └── Без названия 10.png.import
 │   │   │   ├── urna
 │   │   │   │   ├── sprites
 │   │   │   │   │   ├── Trash_1.png
@@ -578,7 +585,9 @@
 │   │   │   │   │   └── Trash_9.png.import
 │   │   │   │   ├── BackgroundUrna.png
 │   │   │   │   ├── BackgroundUrna.png.import
-│   │   │   │   └── urna_search_minigame.tscn
+│   │   │   │   ├── urna_search_minigame.tscn
+│   │   │   │   ├── Без названия 8.png
+│   │   │   │   └── Без названия 8.png.import
 │   │   │   ├── Key.png
 │   │   │   ├── Key.png.import
 │   │   │   ├── draggable_trash.gd
@@ -587,7 +596,11 @@
 │   │   │   ├── search_key_manager.gd.uid
 │   │   │   ├── search_minigame.gd
 │   │   │   ├── search_minigame.gd.uid
-│   │   │   └── search_minigame.tscn
+│   │   │   ├── search_minigame.tscn
+│   │   │   ├── search_minigame_rakovina.tscn
+│   │   │   ├── search_minigame_shkaf_1.tscn
+│   │   │   ├── search_minigame_stiralka.tscn
+│   │   │   └── search_minigame_urna.tscn
 │   │   ├── ui
 │   │   │   ├── code_lock.tscn
 │   │   │   ├── code_lock.tscn.uid
@@ -671,6 +684,8 @@
 │   │   │   │   └── HoleInWall7.png.import
 │   │   │   ├── BackWalls.png
 │   │   │   ├── BackWalls.png.import
+│   │   │   ├── BackWallsDistorted 2.png
+│   │   │   ├── BackWallsDistorted 2.png.import
 │   │   │   ├── BackWallsDistorted.png
 │   │   │   ├── BackWallsDistorted.png.import
 │   │   │   ├── BackWallsParents.png
@@ -1341,4 +1356,4 @@
 ├── project.godot
 └── structure.txt
 
-114 directories, 1228 files
+115 directories, 1242 files

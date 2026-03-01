@@ -146,9 +146,9 @@ func _get_gamepad_focus_nodes() -> Array[Node]:
 	for button in keypad_grid.get_children():
 		if button is Button:
 			nodes.append(button)
-	nodes.append(ok_button)
-	nodes.append(clear_button)
 	nodes.append(cancel_button)
+	nodes.append(clear_button)
+	nodes.append(ok_button)
 	return nodes
 
 func _on_gamepad_confirm(active: Node, _context: Dictionary) -> bool:

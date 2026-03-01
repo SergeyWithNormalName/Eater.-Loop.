@@ -40,3 +40,14 @@ anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 24.0
+offset_right = 420.0
+offset_bottom = 78.0
+horizontal_alignment = 1
+text = "Вы можете двигать мусор, чтобы найти ключ"

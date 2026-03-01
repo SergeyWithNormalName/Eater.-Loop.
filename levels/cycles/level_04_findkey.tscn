@@ -111,6 +111,7 @@
 [ext_resource type="Texture2D" uid="uid://3dvv2qnxssb4" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_5.png" id="109_mu543"]
 [ext_resource type="Texture2D" uid="uid://ea2aqm07dq1v" path="res://levels/minigames/search_key/rakovina/sprites/Posuda_6.png" id="110_foxbh"]
 [ext_resource type="Script" uid="uid://basse1iqwckqj" path="res://levels/minigames/search_key/search_key_manager.gd" id="111_cmq65"]
+[ext_resource type="PackedScene" uid="uid://dccsvb40ywqm0" path="res://levels/minigames/search_key/search_minigame_shkaf_1.tscn" id="111_pi6qg"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="112_5wshx"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_wtad1"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="114_5a25b"]
@@ -1729,7 +1730,7 @@ searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 
 [node name="SearchSpot" parent="." unique_id=1300009375 node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
-position = Vector2(9198, 3028)
+position = Vector2(8114, 3245.9998)
 scale = Vector2(2.0907319, 2.904042)
 key_texture = ExtResource("73_cmq65")
 trash_textures = Array[Texture2D]([ExtResource("90_6qsug"), ExtResource("91_rm4nf"), ExtResource("92_8fgma"), ExtResource("93_yc2j2"), ExtResource("94_vs8ya"), ExtResource("95_5ye2y"), ExtResource("96_xgqo3"), ExtResource("97_bar5d"), ExtResource("98_siwla"), ExtResource("99_p4ir0"), ExtResource("100_s24v6"), ExtResource("101_vs84s"), ExtResource("102_l44aq"), ExtResource("103_7a55g"), ExtResource("104_nnmjy")])
@@ -1750,7 +1751,11 @@ dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 [node name="SearchSpot2" parent="." unique_id=2727646 node_paths=PackedStringArray("dependency_object") instance=ExtResource("72_hr46p")]
 position = Vector2(6323, 2927.9998)
 scale = Vector2(7.410693, 6.4640417)
+minigame_scene = ExtResource("111_pi6qg")
 key_texture = ExtResource("73_cmq65")
+trash_textures = Array[Texture2D]([ExtResource("74_5wshx"), ExtResource("75_wtad1"), ExtResource("76_51mve"), ExtResource("77_quj25"), ExtResource("78_qbtv6"), ExtResource("79_wy8lh"), ExtResource("80_4wpj2"), ExtResource("81_2hh7m"), ExtResource("82_unttk"), ExtResource("83_l6n8o"), ExtResource("84_s81hl"), ExtResource("85_b1egb"), ExtResource("86_gn8yf"), ExtResource("87_y123b"), ExtResource("88_ssrxx"), ExtResource("89_mmu7e")])
+trash_min = 6
+trash_max = 11
 searched_empty_message = "Теперь мне нечего тут искать"
 dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 

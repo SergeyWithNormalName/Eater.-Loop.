@@ -52,3 +52,15 @@ offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
+
+[node name="HintLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -420.0
+offset_top = 24.0
+offset_right = 420.0
+offset_bottom = 78.0
+horizontal_alignment = 1
+text = "Вы можете двигать мусор, чтобы найти ключ"

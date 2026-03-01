@@ -373,21 +373,13 @@ one_shot = null
 
 [node name="Background" type="Node2D" parent="Hall" unique_id=1909041121]
 
-[node name="WallBack" type="Sprite2D" parent="Hall/Background" unique_id=1125833404]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8352, 19)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
 [node name="WallBack2" type="Sprite2D" parent="Hall/Background" unique_id=275502802]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8352, -531)
+position = Vector2(8352, -270)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
+region_rect = Rect2(0, 0, 4500, 1100)
 
 [node name="FloorKitchen" type="Sprite2D" parent="Hall/Background" unique_id=2047902706]
 z_index = -5
@@ -398,23 +390,14 @@ texture = ExtResource("17_jsy42")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack3" type="Sprite2D" parent="Hall/Background" unique_id=433568423]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12879.5, 19)
-scale = Vector2(1.0188888, 1)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
 [node name="WallBack4" type="Sprite2D" parent="Hall/Background" unique_id=43974493]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12882, -531)
+position = Vector2(12882, -270)
 scale = Vector2(1.02, 1)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
+region_rect = Rect2(0, 0, 4500, 1100)
 
 [node name="FloorKitchen2" type="Sprite2D" parent="Hall/Background" unique_id=1432379644]
 z_index = -5
@@ -1240,21 +1223,13 @@ position = Vector2(0, 5204)
 
 [node name="Background" type="Node2D" parent="HallLebedka1" unique_id=1185201131]
 
-[node name="WallBack" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1687416217]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8352, 19)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
 [node name="WallBack2" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1296218491]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8352, -531)
+position = Vector2(8352, -262)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
+region_rect = Rect2(0, 0, 4500, 1100)
 
 [node name="FloorKitchen" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1356940499]
 z_index = -4
@@ -1265,23 +1240,14 @@ texture = ExtResource("17_jsy42")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack3" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1525900943]
-z_index = -5
-texture_repeat = 2
-position = Vector2(12373.667, 16)
-scale = Vector2(1.0188888, 1)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 4250, 550)
-
 [node name="WallBack4" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1756804133]
 z_index = -5
 texture_repeat = 2
-position = Vector2(12376.167, -534)
+position = Vector2(12376.167, -265)
 scale = Vector2(1.02, 1)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 4250, 550)
+region_rect = Rect2(0, 0, 4250, 1100)
 
 [node name="FloorKitchen2" type="Sprite2D" parent="HallLebedka1/Background" unique_id=1620357960]
 z_index = -5
@@ -2326,21 +2292,13 @@ position = Vector2(0, 10511)
 
 [node name="Background" type="Node2D" parent="HallLebedka2" unique_id=435570290]
 
-[node name="WallBack" type="Sprite2D" parent="HallLebedka2/Background" unique_id=586778757]
-z_index = -5
-texture_repeat = 2
-position = Vector2(8352, 19)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
-
 [node name="WallBack2" type="Sprite2D" parent="HallLebedka2/Background" unique_id=611189561]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8352, -531)
+position = Vector2(8352, -266)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
+region_rect = Rect2(0, 0, 4500, 1100)
 
 [node name="FloorKitchen" type="Sprite2D" parent="HallLebedka2/Background" unique_id=2036941563]
 z_index = -4
@@ -2351,23 +2309,14 @@ texture = ExtResource("17_jsy42")
 region_enabled = true
 region_rect = Rect2(0, 0, 20500, 500)
 
-[node name="WallBack3" type="Sprite2D" parent="HallLebedka2/Background" unique_id=1977662461]
-z_index = -5
-texture_repeat = 2
-position = Vector2(11976.056, 19)
-scale = Vector2(1.0188888, 1)
-texture = ExtResource("21_fea6n")
-region_enabled = true
-region_rect = Rect2(0, 0, 3500, 550)
-
 [node name="WallBack4" type="Sprite2D" parent="HallLebedka2/Background" unique_id=1365206828]
 z_index = -5
 texture_repeat = 2
-position = Vector2(11978.556, -531)
+position = Vector2(11978.556, -266)
 scale = Vector2(1.02, 1)
 texture = ExtResource("21_fea6n")
 region_enabled = true
-region_rect = Rect2(0, 0, 3500, 550)
+region_rect = Rect2(0, 0, 3500, 1100)
 
 [node name="FloorKitchen2" type="Sprite2D" parent="HallLebedka2/Background" unique_id=307643501]
 z_index = -5

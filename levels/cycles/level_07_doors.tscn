@@ -1349,19 +1349,19 @@ position = Vector2(11809, -10343)
 [node name="WallBack" type="Sprite2D" parent="Hall5/Background" unique_id=2119624937]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8352, 19)
+position = Vector2(7247, 19)
 texture = ExtResource("21_k0xuy")
 region_enabled = true
-region_rect = Rect2(0, 0, 4500, 550)
+region_rect = Rect2(0, 0, 2300, 550)
 
 [node name="FloorKitchen" type="Sprite2D" parent="Hall5/Background" unique_id=1675013571]
 z_index = -5
 texture_repeat = 2
-position = Vector2(8351.001, 326)
+position = Vector2(7255.001, 326)
 scale = Vector2(0.21939737, 0.21939737)
 texture = ExtResource("17_4copk")
 region_enabled = true
-region_rect = Rect2(0, 0, 20500, 500)
+region_rect = Rect2(0, 0, 10500, 500)
 
 [node name="Plintus7" type="Sprite2D" parent="Hall5/Background" unique_id=2070190844]
 z_index = -5
@@ -1401,67 +1401,114 @@ texture = ExtResource("22_is18w")
 
 [node name="Plintus13" type="Sprite2D" parent="Hall5/Background" unique_id=1339906125]
 z_index = -5
-position = Vector2(7680, 266)
+position = Vector2(7684, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
 [node name="Plintus14" type="Sprite2D" parent="Hall5/Background" unique_id=996373431]
 z_index = -5
-position = Vector2(8034, 266)
+position = Vector2(8081.4844, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
 [node name="Plintus15" type="Sprite2D" parent="Hall5/Background" unique_id=187786709]
 z_index = -5
-position = Vector2(8239, 266)
+position = Vector2(8286.484, 266)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus16" type="Sprite2D" parent="Hall5/Background" unique_id=858889599]
+[node name="WallBack2" type="Sprite2D" parent="Hall5/Background" unique_id=593139750]
 z_index = -5
-position = Vector2(8445, 266)
+texture_repeat = 2
+position = Vector2(7648, 3391.8604)
+texture = ExtResource("21_k0xuy")
+region_enabled = true
+region_rect = Rect2(0, 0, 3100, 550)
+
+[node name="FloorKitchen2" type="Sprite2D" parent="Hall5/Background" unique_id=1164134004]
+z_index = -5
+texture_repeat = 2
+position = Vector2(7647.001, 3698.8604)
+scale = Vector2(0.21939737, 0.21939737)
+texture = ExtResource("17_4copk")
+region_enabled = true
+region_rect = Rect2(0, 0, 14000, 500)
+
+[node name="Plintus16" type="Sprite2D" parent="Hall5/Background" unique_id=720234164]
+z_index = -5
+position = Vector2(6222, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus17" type="Sprite2D" parent="Hall5/Background" unique_id=831835084]
+[node name="Plintus17" type="Sprite2D" parent="Hall5/Background" unique_id=387603636]
 z_index = -5
-position = Vector2(8841, 266)
+position = Vector2(6721, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus18" type="Sprite2D" parent="Hall5/Background" unique_id=1971709575]
+[node name="Plintus18" type="Sprite2D" parent="Hall5/Background" unique_id=439621006]
 z_index = -5
-position = Vector2(9040, 266)
+position = Vector2(6514.9995, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus19" type="Sprite2D" parent="Hall5/Background" unique_id=1885435806]
+[node name="Plintus19" type="Sprite2D" parent="Hall5/Background" unique_id=1156056879]
 z_index = -5
-position = Vector2(9435.001, 266)
+position = Vector2(6908.9995, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus20" type="Sprite2D" parent="Hall5/Background" unique_id=1402578055]
+[node name="Plintus20" type="Sprite2D" parent="Hall5/Background" unique_id=488980939]
 z_index = -5
-position = Vector2(9821, 266)
+position = Vector2(7288, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus21" type="Sprite2D" parent="Hall5/Background" unique_id=724478590]
+[node name="Plintus21" type="Sprite2D" parent="Hall5/Background" unique_id=663823077]
 z_index = -5
-position = Vector2(10027.001, 266)
+position = Vector2(7490, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus22" type="Sprite2D" parent="Hall5/Background" unique_id=1598337523]
+[node name="Plintus22" type="Sprite2D" parent="Hall5/Background" unique_id=780281388]
 z_index = -5
-position = Vector2(10232.001, 266)
+position = Vector2(7694, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
-[node name="Plintus23" type="Sprite2D" parent="Hall5/Background" unique_id=206630619]
+[node name="Plintus23" type="Sprite2D" parent="Hall5/Background" unique_id=810178972]
 z_index = -5
-position = Vector2(10522, 266)
+position = Vector2(8091.4844, 3638.8599)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_is18w")
+
+[node name="Plintus24" type="Sprite2D" parent="Hall5/Background" unique_id=1528030346]
+z_index = -5
+position = Vector2(8296.484, 3638.8599)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_is18w")
+
+[node name="Plintus25" type="Sprite2D" parent="Hall5/Background" unique_id=60719037]
+z_index = -5
+position = Vector2(8503, 3638.8599)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_is18w")
+
+[node name="Plintus26" type="Sprite2D" parent="Hall5/Background" unique_id=1733880938]
+z_index = -5
+position = Vector2(8710, 3638.8599)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_is18w")
+
+[node name="Plintus27" type="Sprite2D" parent="Hall5/Background" unique_id=690039180]
+z_index = -5
+position = Vector2(8915, 3638.8599)
+scale = Vector2(0.2433336, 0.2433336)
+texture = ExtResource("22_is18w")
+
+[node name="Plintus28" type="Sprite2D" parent="Hall5/Background" unique_id=1511063766]
+z_index = -5
+position = Vector2(9117, 3638.8599)
 scale = Vector2(0.2433336, 0.2433336)
 texture = ExtResource("22_is18w")
 
@@ -1499,35 +1546,65 @@ position = Vector2(8407, 64)
 z_index = 10
 position = Vector2(6089, 63.860657)
 
+[node name="WallBelow_4" parent="Hall5/Walls" unique_id=1452428455 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(6471, 3772.8599)
+
+[node name="WallBelow_5" parent="Hall5/Walls" unique_id=94895213 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(7253.0005, 3772.8599)
+
+[node name="WallBelow_6" parent="Hall5/Walls" unique_id=814771592 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(8041, 3772.8599)
+
+[node name="WallAbove_4" parent="Hall5/Walls" unique_id=1419060213 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(6471.0005, 3101.8599)
+
+[node name="WallAbove_5" parent="Hall5/Walls" unique_id=267789074 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(7253.0005, 3101.8599)
+
+[node name="WallAbove_6" parent="Hall5/Walls" unique_id=545311541 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(8041.0005, 3101.8599)
+
+[node name="WallBelow_7" parent="Hall5/Walls" unique_id=207319169 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(8828, 3773)
+
+[node name="WallAbove_7" parent="Hall5/Walls" unique_id=1143553670 instance=ExtResource("7_rnd26")]
+z_index = 10
+position = Vector2(8828, 3102)
+
+[node name="WallLeft2" parent="Hall5/Walls" unique_id=1495983723 instance=ExtResource("6_rc77r")]
+z_index = 10
+position = Vector2(9202, 3437)
+
+[node name="WallRight2" parent="Hall5/Walls" unique_id=1294782634 instance=ExtResource("6_rc77r")]
+z_index = 10
+position = Vector2(6099, 3436.721)
+
 [node name="Sprites" type="Node2D" parent="Hall5" unique_id=1559540132]
 
 [node name="OnOffer2" type="Sprite2D" parent="Hall5/Sprites" unique_id=1294902950]
-position = Vector2(7694, 29)
+position = Vector2(7724, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("23_31sa4")
 
 [node name="OnOffer5" type="Sprite2D" parent="Hall5/Sprites" unique_id=233903161]
-position = Vector2(6861, 29)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("23_31sa4")
-
-[node name="OnOffer4" type="Sprite2D" parent="Hall5/Sprites" unique_id=250928119]
-position = Vector2(8980, 29)
+position = Vector2(6209, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("23_31sa4")
 
 [node name="OnOffer3" type="Sprite2D" parent="Hall5/Sprites" unique_id=1684020422]
-position = Vector2(7656, 29)
+position = Vector2(6930, 29)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("23_31sa4")
 
-[node name="Lamp4" type="Sprite2D" parent="Hall5/Sprites" unique_id=1876927447]
-position = Vector2(9814, -214)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("11_7gihw")
-
 [node name="Lamp5" type="Sprite2D" parent="Hall5/Sprites" unique_id=316001539]
-position = Vector2(6699, -214)
+position = Vector2(7301, -214)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("11_7gihw")
 
@@ -1539,6 +1616,37 @@ scale = Vector2(0.19589221, 0.19589221)
 [node name="HoleInWall6" type="Sprite2D" parent="Hall5/Sprites" unique_id=505860164]
 z_index = -5
 position = Vector2(6557, -1)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("40_jh4kr")
+
+[node name="OnOffer4" type="Sprite2D" parent="Hall5/Sprites" unique_id=511152310]
+position = Vector2(7734, 3401.8604)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_31sa4")
+
+[node name="OnOffer8" type="Sprite2D" parent="Hall5/Sprites" unique_id=1402314141]
+position = Vector2(8650.75, 3401.8604)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_31sa4")
+
+[node name="OnOffer6" type="Sprite2D" parent="Hall5/Sprites" unique_id=1440637074]
+position = Vector2(6219, 3401.8604)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_31sa4")
+
+[node name="OnOffer7" type="Sprite2D" parent="Hall5/Sprites" unique_id=1640819601]
+position = Vector2(6940, 3401.8604)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("23_31sa4")
+
+[node name="Lamp6" type="Sprite2D" parent="Hall5/Sprites" unique_id=79581463]
+position = Vector2(7584, 3158.8604)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_7gihw")
+
+[node name="HoleInWall7" type="Sprite2D" parent="Hall5/Sprites" unique_id=634616581]
+z_index = -5
+position = Vector2(6567, 3371.8604)
 scale = Vector2(0.27, 0.27)
 texture = ExtResource("40_jh4kr")
 
@@ -1573,7 +1681,63 @@ handle_input = null
 one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall5/InteractableObjects" unique_id=1186947924 instance=ExtResource("15_i40oy")]
-position = Vector2(7832.125, 83)
+position = Vector2(7885, 83)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+door_texture = ExtResource("45_tvi2a")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(Exit)2" parent="Hall5/InteractableObjects" unique_id=645621887 instance=ExtResource("15_i40oy")]
+position = Vector2(6374, 3455.8604)
+is_locked = true
+door_locked_message = "Мне незачем выходить на улицу"
+target_marker = null
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+door_texture = ExtResource("44_rdfsr")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(ToBathroom)2" parent="Hall5/InteractableObjects" unique_id=638599949 instance=ExtResource("15_i40oy")]
+position = Vector2(7098, 3455.8604)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+target_marker = NodePath("../../../Bathroom/InteractableObjects/Door(InBathroom)")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+door_texture = ExtResource("45_tvi2a")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(ToToilet)2" parent="Hall5/InteractableObjects" unique_id=705904382 instance=ExtResource("15_i40oy")]
+position = Vector2(7895, 3455.8604)
+is_locked = null
+door_locked_message = "Сначала нужно сделать что-то другое..."
+target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")
+required_key_id = null
+required_key_name = null
+consume_key_on_unlock = null
+door_texture = ExtResource("45_tvi2a")
+interact_area_node = null
+auto_prompt = null
+handle_input = null
+one_shot = null
+
+[node name="Door(ToToilet)3" parent="Hall5/InteractableObjects" unique_id=1858700851 instance=ExtResource("15_i40oy")]
+position = Vector2(8811.75, 3455.8604)
 is_locked = null
 door_locked_message = "Сначала нужно сделать что-то другое..."
 target_marker = NodePath("../../../Toilet/InteractableObjects/Door(InToilet)")

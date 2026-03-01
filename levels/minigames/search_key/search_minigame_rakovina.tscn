@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dmxpg5qoncpox"]
+
+[ext_resource type="Script" uid="uid://cq7rpe0ney727" path="res://levels/minigames/search_key/search_minigame.gd" id="1_y5sx4"]
+[ext_resource type="Texture2D" uid="uid://1kla0gyr0ell" path="res://levels/minigames/search_key/rakovina/Без названия 7.png" id="2_y5sx4"]
+
+[node name="SearchMinigame" type="Control" unique_id=1798677589]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y5sx4")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1256390310]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color(0, 0, 0, 0.35)
+
+[node name="PanelContainer" type="PanelContainer" parent="Backdrop" unique_id=1319050519]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Backdrop/PanelContainer" unique_id=1125482308]
+scale = Vector2(1.3437909, 1.3437909)
+texture = ExtResource("2_y5sx4")
+
+[node name="SearchArea" type="Panel" parent="." unique_id=443833001]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -172.0
+offset_right = 320.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KeyButton" type="TextureButton" parent="SearchArea" unique_id=367987130]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+
+[node name="TrashContainer" type="Control" parent="SearchArea" unique_id=99577172]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 24.0
+offset_right = 420.0
+offset_bottom = 78.0
+horizontal_alignment = 1
+text = "Вы можете двигать мусор, чтобы найти ключ"
