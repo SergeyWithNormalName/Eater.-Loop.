@@ -157,7 +157,7 @@ horizontal_alignment = 1
 [node name="Line16" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]
 layout_mode = 2
 theme_override_font_sizes/font_size = 58
-text = "Тестирование и QA — Сергей Генерозов"
+text = "Тестирование и QA — Сергей Генерозов, Гришти Максим, Горшков Андрей, Вячеслав Окачутин"
 horizontal_alignment = 1
 
 [node name="Line17" type="Label" parent="CreditsViewport/CreditsRoot" groups=["ending_credit_label"]]

@@ -42,6 +42,7 @@ class RouteProbeStalker:
 
 func run() -> Array[String]:
 	_test_route_search_covers_long_door_chains()
+	_test_route_prefers_nearest_visible_door()
 	_test_follow_door_route_uses_horizontal_reach()
 	_test_self_target_door_is_ignored()
 	await _test_door_open_sfx_is_played()
@@ -94,6 +95,42 @@ func _test_route_search_covers_long_door_chains() -> void:
 	exit_a.free()
 	exit_b.free()
 	exit_c.free()
+
+func _test_route_prefers_nearest_visible_door() -> void:
+	var stalker := RouteProbeStalker.new()
+	var start := Vector2(0, 0)
+	var target := Vector2(1000, 0)
+
+	var near_door := Node2D.new()
+	near_door.position = Vector2(120, 0)
+	var far_door := Node2D.new()
+	far_door.position = Vector2(460, 0)
+
+	var near_exit := Node2D.new()
+	near_exit.position = Vector2(820, 0)
+	var far_exit := Node2D.new()
+	far_exit.position = Vector2(880, 0)
+
+	stalker.fake_doors = [far_door, near_door]
+	stalker.fake_exits[near_door.get_instance_id()] = near_exit
+	stalker.fake_exits[far_door.get_instance_id()] = far_exit
+
+	stalker.set_los(start, target, false)
+	stalker.set_los(start, near_door.global_position, true)
+	stalker.set_los(start, far_door.global_position, true)
+	stalker.set_los(near_exit.global_position, target, true)
+	stalker.set_los(far_exit.global_position, target, true)
+
+	var route: Array[Node] = stalker.call("_find_door_route", start, target)
+	assert_eq(route.size(), 1, "Stalker should choose single-door route when both exits have line of sight")
+	if route.size() == 1:
+		assert_true(route[0] == near_door, "Stalker must prefer the nearest reachable door")
+
+	stalker.free()
+	near_door.free()
+	far_door.free()
+	near_exit.free()
+	far_exit.free()
 
 func _test_follow_door_route_uses_horizontal_reach() -> void:
 	var stalker := RouteProbeStalker.new()

@@ -2727,3 +2727,6 @@ position = Vector2(11910, 10604)
 
 [node name="EnemyLightSensitive2" parent="." unique_id=1945463531 instance=ExtResource("75_4jok7")]
 position = Vector2(10028, 10604)
+
+[node name="EnemyLightSensitive3" parent="." unique_id=1531857683 instance=ExtResource("75_4jok7")]
+position = Vector2(12778, 5312)

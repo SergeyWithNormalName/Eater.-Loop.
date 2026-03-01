@@ -47,6 +47,10 @@ func _ready() -> void:
 	_load_death_screams()
 
 func _physics_process(_delta: float) -> void:
+	if _is_player_busy_with_minigame():
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	if chase_player and _player != null:
 		var delta = _player.global_position - global_position
 		if abs(delta.x) < 1.0:
@@ -87,6 +91,8 @@ func _on_detection_area_body_exited(body: Node) -> void:
 # --- Сигналы касания (Hitbox Area) ---
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
+	if _is_player_busy_with_minigame():
+		return
 	if body.is_in_group("player"):
 		_attack_player()
 
@@ -178,6 +184,8 @@ func _play_attack_sfx(stream_override: AudioStream = null) -> void:
 	fallback_player.play()
 
 func _attack_player() -> void:
+	if _is_player_busy_with_minigame():
+		return
 	var is_lethal := kill_on_attack or GameState.phase == GameState.Phase.DISTORTED
 	if is_lethal:
 		_play_attack_sfx(_pick_random_death_scream())
@@ -200,3 +208,12 @@ func _attack_player() -> void:
 
 func _exit_tree() -> void:
 	_stop_chase_music()
+
+func _is_player_busy_with_minigame() -> bool:
+	if MinigameController == null:
+		return false
+	if MinigameController.has_method("has_active_minigame"):
+		return bool(MinigameController.has_active_minigame())
+	if MinigameController.has_method("should_block_player_movement"):
+		return bool(MinigameController.should_block_player_movement())
+	return false

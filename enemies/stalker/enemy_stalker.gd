@@ -160,11 +160,13 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 	while not queue.is_empty():
 		var state: Dictionary = queue.pop_front()
 		var route := state["route"] as Array[Node]
+		var state_pos: Vector2 = state["pos"]
+		var doors_for_state := _sort_doors_for_state(doors, state_pos, target_pos)
 
-		for door in doors:
+		for door in doors_for_state:
 			if route.has(door):
 				continue
-			if not _has_line_of_sight(state["pos"], door.global_position):
+			if not _has_line_of_sight(state_pos, door.global_position):
 				continue
 			var exit_node: Node2D = _get_door_exit_node(door)
 			if exit_node == null:
@@ -187,6 +189,27 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 			queue.append({"pos": exit_pos, "route": new_route})
 
 	return empty_route
+
+func _sort_doors_for_state(doors: Array[Node], from_pos: Vector2, target_pos: Vector2) -> Array[Node]:
+	var sorted_doors: Array[Node] = doors.duplicate()
+	sorted_doors.sort_custom(func(a: Node, b: Node) -> bool:
+		var a_door := a as Node2D
+		var b_door := b as Node2D
+		if a_door == null and b_door == null:
+			return false
+		if a_door == null:
+			return false
+		if b_door == null:
+			return true
+		var dist_a := from_pos.distance_squared_to(a_door.global_position)
+		var dist_b := from_pos.distance_squared_to(b_door.global_position)
+		if is_equal_approx(dist_a, dist_b):
+			var target_dist_a := target_pos.distance_squared_to(a_door.global_position)
+			var target_dist_b := target_pos.distance_squared_to(b_door.global_position)
+			return target_dist_a < target_dist_b
+		return dist_a < dist_b
+	)
+	return sorted_doors
 
 func _get_doors() -> Array[Node]:
 	var nodes := get_tree().get_nodes_in_group("doors")
@@ -218,13 +241,7 @@ func _is_within_door_reach(door_pos: Vector2) -> bool:
 	return absf(global_position.x - door_pos.x) <= door_reach_distance
 
 func _is_player_busy_with_minigame() -> bool:
-	if MinigameController == null:
-		return false
-	if MinigameController.has_method("has_active_minigame"):
-		return bool(MinigameController.has_active_minigame())
-	if MinigameController.has_method("should_block_player_movement"):
-		return bool(MinigameController.should_block_player_movement())
-	return false
+	return super._is_player_busy_with_minigame()
 
 func _setup_audio() -> void:
 	_ensure_door_open_player()

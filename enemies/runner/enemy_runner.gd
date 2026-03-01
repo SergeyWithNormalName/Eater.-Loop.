@@ -99,6 +99,11 @@ func _ready() -> void:
 		_setup_animations()
 
 func _physics_process(delta: float) -> void:
+	if _is_player_busy_with_minigame():
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_update_walk_animation(delta)
+		return
 	var is_chasing := chase_player and _player != null
 	if is_chasing:
 		var offset = _player.global_position - global_position

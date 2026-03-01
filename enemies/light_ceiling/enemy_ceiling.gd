@@ -11,6 +11,10 @@ var _heard_player_sound: bool = false
 var _lamp_frozen: bool = false
 
 func _physics_process(_delta: float) -> void:
+	if _is_player_busy_with_minigame():
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	if _apply_lamp_freeze():
 		return
 	if not _should_chase_player():
@@ -79,6 +83,8 @@ func _on_player_made_sound() -> void:
 	_heard_player_sound = true
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
+	if _is_player_busy_with_minigame():
+		return
 	if _lamp_frozen:
 		return
 	if not _should_chase_player():

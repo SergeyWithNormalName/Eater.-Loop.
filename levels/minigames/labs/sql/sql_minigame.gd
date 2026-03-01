@@ -33,6 +33,7 @@ var current_task_index = 0
 var current_time = 0.0
 var _is_finished: bool = false
 var _gamepad_selected_word: String = ""
+var lab_completion_id: String = ""
 
 const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
@@ -174,7 +175,7 @@ func finish_game(success: bool):
 
 			var game_state_in_callback = get_node_or_null("/root/GameState")
 			if game_state_in_callback and game_state_in_callback.has_method("mark_lab_completed"):
-				game_state_in_callback.mark_lab_completed()
+				game_state_in_callback.mark_lab_completed(lab_completion_id.strip_edges())
 
 			queue_free()
 		)
@@ -191,7 +192,7 @@ func finish_game(success: bool):
 
 	var game_state = get_node_or_null("/root/GameState")
 	if game_state and game_state.has_method("mark_lab_completed"):
-		game_state.mark_lab_completed()
+		game_state.mark_lab_completed(lab_completion_id.strip_edges())
 
 	queue_free()
 

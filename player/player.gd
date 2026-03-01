@@ -154,6 +154,8 @@ func _on_minigame_state_changed(_minigame: Node, _success: bool = true) -> void:
 		_movement_blocked = bool(MinigameController.should_block_player_movement())
 	else:
 		_movement_blocked = false
+	if _is_minigame_active():
+		_force_disable_flashlight()
 
 func _physics_process(delta: float) -> void:
 	if _is_movement_blocked():
@@ -293,6 +295,8 @@ func _update_flashlight_charge(delta: float) -> void:
 func _toggle_flashlight() -> void:
 	if flashlight == null:
 		return
+	if _is_minigame_active():
+		return
 	if flashlight.enabled:
 		_set_flashlight_enabled(false)
 		return
@@ -313,6 +317,20 @@ func _set_flashlight_enabled(enabled_state: bool) -> void:
 		return
 	flashlight.enabled = enabled_state
 	_play_flashlight_toggle_sound()
+
+func _force_disable_flashlight() -> void:
+	if flashlight == null:
+		return
+	flashlight.enabled = false
+
+func _is_minigame_active() -> bool:
+	if MinigameController == null:
+		return false
+	if MinigameController.has_method("has_active_minigame"):
+		return bool(MinigameController.has_active_minigame())
+	if MinigameController.has_method("should_block_player_movement"):
+		return bool(MinigameController.should_block_player_movement())
+	return false
 
 func _play_flashlight_toggle_sound() -> void:
 	if flashlight_sound == null:

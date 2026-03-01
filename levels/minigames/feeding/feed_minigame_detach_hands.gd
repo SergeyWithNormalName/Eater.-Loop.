@@ -15,8 +15,6 @@ const BODY_FACE := preload("res://levels/minigames/feeding/andreys_faces/Amputat
 const FIRST_ARM_TEXTURE := preload("res://levels/minigames/feeding/andreys_faces/Amputation/FirstArm.png")
 const SECOND_ARM_TEXTURE := preload("res://levels/minigames/feeding/andreys_faces/Amputation/SecondArm.png")
 const DRIPS_SHADER := preload("res://shaders/feeding_blood_drips.gdshader")
-const FIRST_HAND_FOOD_SCENE := preload("res://levels/minigames/feeding/food/hands/food_hand_first.tscn")
-const SECOND_HAND_FOOD_SCENE := preload("res://levels/minigames/feeding/food/hands/food_hand_second.tscn")
 
 const SCREAM_STREAMS: Array[AudioStream] = [
 	preload("res://player/audio/screams/Scream_1.wav"),
@@ -28,6 +26,8 @@ const SCREAM_STREAMS: Array[AudioStream] = [
 @export_range(0.1, 4.0, 0.05) var unlock_progress_speed: float = 1.2
 @export_range(0.05, 1.0, 0.01) var initial_follow_factor: float = 0.12
 @export_range(0.3, 1.2, 0.01) var max_follow_factor: float = 0.96
+@export_range(0.0, 300.0, 1.0) var detach_pull_deadzone: float = 95.0
+@export_range(50.0, 1000.0, 1.0) var detach_pull_distance_for_full: float = 420.0
 @export_range(0.1, 1.0, 0.01) var scream_repeat_delay: float = 0.25
 @export_range(-40.0, 6.0, 0.1) var scream_volume_db: float = -4.0
 @export_group("Drip Points")
@@ -51,7 +51,6 @@ var _scream_cooldown: float = 0.0
 var _pain_shock_tween: Tween = null
 var _pain_shock_repeat_timer: float = 0.0
 var _creepy_music_stop_triggered: bool = false
-var _detached_hand_food_added: Dictionary = {}
 
 @onready var pain_overlay: ColorRect = $Control/PainColorRect
 
@@ -110,7 +109,6 @@ func _prepare_hands() -> void:
 	_hands_intro_completed = false
 	_active_hand_id = &""
 	_creepy_music_stop_triggered = false
-	_detached_hand_food_added.clear()
 
 	var first_arm := _create_hand_layer(
 		&"FirstArm",
@@ -231,7 +229,11 @@ func _update_active_hand_drag(delta: float) -> void:
 	state.node.global_position = state.base_global_pos + pull_vector * follow_factor
 
 	if pull_length > 3.0:
-		state.pull_progress = minf(1.0, state.pull_progress + (pull_length / 220.0) * unlock_progress_speed * delta)
+		var effective_pull := maxf(0.0, pull_length - detach_pull_deadzone)
+		if effective_pull > 0.0:
+			var required_distance := maxf(1.0, detach_pull_distance_for_full)
+			var pull_gain := (effective_pull / required_distance) * unlock_progress_speed * delta
+			state.pull_progress = minf(1.0, state.pull_progress + pull_gain)
 		_play_scream(false)
 		if _pain_shock_repeat_timer <= 0.0:
 			trigger_pain_shock(pain_shock_pull_peak, pain_shock_pull_decay_time)
@@ -266,55 +268,8 @@ func _finalize_removed_hand(hand_id: StringName, state: HandState) -> void:
 	state.removed = true
 	state.node.visible = false
 	state.drip_node.visible = true
-	_spawn_detached_hand_food(hand_id, state)
 	trigger_pain_shock(pain_shock_detach_peak, pain_shock_detach_decay_time)
 	_check_intro_completion()
-
-func _spawn_detached_hand_food(hand_id: StringName, state: HandState) -> void:
-	if _detached_hand_food_added.get(hand_id, false):
-		return
-	var hand_food_scene := _get_hand_food_scene(hand_id)
-	if hand_food_scene == null:
-		return
-	var hand_food := hand_food_scene.instantiate()
-	if hand_food == null:
-		return
-	food_container.add_child(hand_food)
-	var hand_food_node := hand_food as Node2D
-	if hand_food_node != null:
-		var start_local := food_container.to_local(_get_hand_anchor_tear_point(state))
-		hand_food_node.position = start_local
-		hand_food_node.rotation_degrees = randf_range(-food_rotation_jitter_deg, food_rotation_jitter_deg)
-		hand_food_node.z_index = 12
-		var tween := create_tween()
-		tween.tween_property(hand_food_node, "position", _get_hand_plate_position(hand_id), 0.32).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		tween.finished.connect(func():
-			if is_instance_valid(hand_food_node):
-				hand_food_node.z_index = 0
-		)
-	if hand_food.has_method("set_target_mouth"):
-		hand_food.set_target_mouth(mouth_area if _hands_intro_completed else null)
-	if hand_food.has_signal("eaten"):
-		hand_food.eaten.connect(_on_food_eaten)
-	_detached_hand_food_added[hand_id] = true
-	food_needed += 1
-
-func _get_hand_food_scene(hand_id: StringName) -> PackedScene:
-	match hand_id:
-		&"first":
-			return FIRST_HAND_FOOD_SCENE
-		&"second":
-			return SECOND_HAND_FOOD_SCENE
-		_:
-			return null
-
-func _get_hand_plate_position(hand_id: StringName) -> Vector2:
-	var position := Vector2(randf_range(-95.0, 95.0), randf_range(-72.0, 72.0))
-	if hand_id == &"first":
-		position += Vector2(-34.0, -18.0)
-	elif hand_id == &"second":
-		position += Vector2(34.0, 18.0)
-	return position
 
 func _check_intro_completion() -> void:
 	for hand_id in _hands.keys():

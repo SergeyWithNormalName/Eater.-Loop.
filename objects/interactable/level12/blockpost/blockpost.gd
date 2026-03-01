@@ -34,8 +34,6 @@ func _try_use_door() -> void:
 		return
 
 	if _has_access:
-		_play_sound(sfx_open)
-		_perform_transition()
 		return
 
 	var money_system := _resolve_money_system()
@@ -61,7 +59,6 @@ func _try_use_door() -> void:
 	if access_granted_message.strip_edges() != "":
 		UIMessage.show_text(access_granted_message)
 	_play_sound(sfx_open)
-	_perform_transition()
 
 func _resolve_money_system() -> Node:
 	if money_system_path.is_empty():

@@ -109,8 +109,6 @@
 [ext_resource type="Texture2D" uid="uid://1dp7oirdsdxt" path="res://objects/environment/university/PlanOfLevel2.png" id="111_3xcbr"]
 [ext_resource type="Texture2D" uid="uid://d1k5x4eptitr1" path="res://objects/environment/background/WhiteWallU.png" id="112_l2pcu"]
 [ext_resource type="Texture2D" uid="uid://c6720vlq21px" path="res://objects/environment/floor/floor_U_1stFloor.png" id="113_o3b00"]
-[ext_resource type="Texture2D" uid="uid://c1bb70xtx38bq" path="res://objects/interactable/door/sprites/numbersU/103.jpg" id="114_kv43o"]
-[ext_resource type="Texture2D" uid="uid://pnhc3patg41n" path="res://objects/interactable/door/sprites/numbersU/101.jpg" id="115_1o5cu"]
 [ext_resource type="Texture2D" uid="uid://4y30xfnaarl2" path="res://objects/interactable/door/sprites/DoubleDoorU.png" id="116_4nlgi"]
 [ext_resource type="Texture2D" uid="uid://xuh2tciw3s26" path="res://objects/environment/university/PlanOfLevel1.png" id="117_c3xe5"]
 [ext_resource type="Texture2D" uid="uid://clnslqs8wgj4x" path="res://objects/environment/university/ApplePoster.png" id="118_sl1m0"]
@@ -7962,17 +7960,14 @@ texture = ExtResource("53_pru2q")
 [node name="Door(To103Right)" parent="1thLevel/1thHall/InteractableObjects" unique_id=877736083 instance=ExtResource("55_ie8g8")]
 position = Vector2(12888, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("114_kv43o")
 
 [node name="Door(To103Left)" parent="1thLevel/1thHall/InteractableObjects" unique_id=373427051 instance=ExtResource("55_ie8g8")]
 position = Vector2(11467, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
-number_texture = ExtResource("114_kv43o")
 
 [node name="Door(To101)" parent="1thLevel/1thHall/InteractableObjects" unique_id=821554351 instance=ExtResource("55_ie8g8")]
 position = Vector2(6565, 83)
 door_locked_message = "Мне незачем выходить на улицу"
-number_texture = ExtResource("115_1o5cu")
 target_marker = NodePath("../../../101/InteractableObjects/Door(In101)")
 
 [node name="Door(ToBathroom)" parent="1thLevel/1thHall/InteractableObjects" unique_id=1071676751 instance=ExtResource("55_ie8g8")]
@@ -8036,7 +8031,6 @@ texture = ExtResource("117_c3xe5")
 [node name="Door(To204)2" parent="1thLevel/1thHall/InteractableObjects" unique_id=441992275 instance=ExtResource("55_ie8g8")]
 position = Vector2(14598, 83)
 door_locked_message = "Там спят родители. Их сейчас лучше не тревожить."
-number_texture = ExtResource("108_i2yyy")
 
 [node name="104" type="Node2D" parent="1thLevel" unique_id=1511641307]
 position = Vector2(41298, 0)
@@ -8508,6 +8502,7 @@ music_on_exit = 9
 position = Vector2(47060, -7123)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
+lab_completion_id = "level_13_stu_3_laptop_1"
 reward_on_work_completion = true
 money_system_path = NodePath("../Level12MoneySystem")
 reward_money = 25
@@ -8518,6 +8513,7 @@ available_sprite = ExtResource("130_1d7t7")
 position = Vector2(44983, -14956)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
+lab_completion_id = "level_13_stu_3_laptop_2"
 reward_on_work_completion = true
 money_system_path = NodePath("../Level12MoneySystem")
 reward_money = 25
@@ -8528,6 +8524,7 @@ available_sprite = ExtResource("130_1d7t7")
 position = Vector2(46021, 6563)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
+lab_completion_id = "level_13_stu_3_laptop_3"
 reward_on_work_completion = true
 money_system_path = NodePath("../Level12MoneySystem")
 reward_money = 25
@@ -8538,6 +8535,7 @@ available_sprite = ExtResource("130_1d7t7")
 position = Vector2(48430, 20508)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
+lab_completion_id = "level_13_stu_3_laptop_4"
 reward_on_work_completion = true
 money_system_path = NodePath("../Level12MoneySystem")
 reward_money = 25

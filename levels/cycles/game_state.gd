@@ -2,6 +2,7 @@ extends Node
 
 @warning_ignore("unused_signal")
 signal lab_completed
+signal lab_completed_with_id(lab_id: String)
 signal phone_picked_changed
 signal fridge_interacted_changed
 signal electricity_changed(is_on: bool)
@@ -13,6 +14,7 @@ const SAVE_PATH := "user://run_save.cfg"
 var phase: Phase = Phase.NORMAL # Было просто phase
 var ate_this_cycle: bool = false
 var lab_done: bool = false
+var completed_labs: PackedStringArray = PackedStringArray()
 var phone_picked: bool = false
 var fridge_interacted: bool = false
 var unique_feeding_intro_played: bool = false
@@ -37,6 +39,7 @@ func next_cycle() -> void:
 	ate_this_cycle = false
 	fridge_interacted = false
 	lab_done = false
+	completed_labs = PackedStringArray()
 	set_phase(Phase.NORMAL)
 	_save_run_state()
 
@@ -80,6 +83,7 @@ func reset_cycle_state() -> void:
 	fridge_interacted = false
 	phone_picked = false
 	lab_done = false
+	completed_labs = PackedStringArray()
 	pending_sleep_spawn = false
 	set_phase(Phase.NORMAL)
 	_save_run_state()
@@ -87,6 +91,7 @@ func reset_cycle_state() -> void:
 func reset_run() -> void:
 	ate_this_cycle = false
 	lab_done = false
+	completed_labs = PackedStringArray()
 	phone_picked = false
 	fridge_interacted = false
 	unique_feeding_intro_played = false
@@ -104,6 +109,7 @@ func _save_run_state() -> void:
 	config.set_value("run", "last_scene_path", last_scene_path)
 	config.set_value("run", "has_active_run", has_active_run)
 	config.set_value("run", "lab_done", lab_done)
+	config.set_value("run", "completed_labs", completed_labs)
 	config.set_value("run", "phone_picked", phone_picked)
 	config.set_value("run", "fridge_interacted", fridge_interacted)
 	config.set_value("run", "unique_feeding_intro_played", unique_feeding_intro_played)
@@ -120,11 +126,10 @@ func _load_run_state() -> void:
 	last_scene_path = str(config.get_value("run", "last_scene_path", last_scene_path))
 	has_active_run = bool(config.get_value("run", "has_active_run", has_active_run))
 	lab_done = bool(config.get_value("run", "lab_done", lab_done))
-	var legacy_completed = config.get_value("run", "completed_labs", null)
-	if legacy_completed != null and not lab_done:
-		var legacy_list := _coerce_string_array(legacy_completed)
-		if not legacy_list.is_empty():
-			lab_done = true
+	var completed_labs_raw: Variant = config.get_value("run", "completed_labs", [])
+	completed_labs = PackedStringArray(_coerce_string_array(completed_labs_raw))
+	if not lab_done and not completed_labs.is_empty():
+		lab_done = true
 	phone_picked = bool(config.get_value("run", "phone_picked", phone_picked))
 	fridge_interacted = bool(config.get_value("run", "fridge_interacted", fridge_interacted))
 	unique_feeding_intro_played = bool(config.get_value("run", "unique_feeding_intro_played", unique_feeding_intro_played))
@@ -133,21 +138,43 @@ func _load_run_state() -> void:
 	pending_sleep_spawn = false
 	set_phase(Phase.NORMAL)
 
-func mark_lab_completed() -> void:
-	if lab_done:
-		return
-	lab_done = true
-	lab_completed.emit()
+func mark_lab_completed(lab_id: String = "") -> void:
+	var normalized_id := lab_id.strip_edges()
+	var did_add_specific := false
+	if normalized_id != "" and not completed_labs.has(normalized_id):
+		completed_labs.append(normalized_id)
+		did_add_specific = true
+		lab_completed_with_id.emit(normalized_id)
+	if not lab_done:
+		lab_done = true
+		lab_completed.emit()
+	if did_add_specific or normalized_id == "":
+		_save_run_state()
+
+func is_lab_completed(lab_id: String = "") -> bool:
+	var normalized_id := lab_id.strip_edges()
+	if normalized_id == "":
+		return lab_done
+	return completed_labs.has(normalized_id)
 
 func _coerce_string_array(value: Variant) -> Array[String]:
 	var result: Array[String] = []
+	var seen: Dictionary = {}
 	if value is PackedStringArray:
 		for item in value:
-			result.append(item)
+			var text := str(item)
+			if seen.has(text):
+				continue
+			seen[text] = true
+			result.append(text)
 		return result
 	if value is Array:
 		for item in value:
-			result.append(str(item))
+			var text := str(item)
+			if seen.has(text):
+				continue
+			seen[text] = true
+			result.append(text)
 	return result
 
 func _saves_enabled() -> bool:

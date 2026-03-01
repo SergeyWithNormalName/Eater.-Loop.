@@ -1362,6 +1362,8 @@
 │   │   ├── test_input_actions.gd.uid
 │   │   ├── test_lamp_generator_requirement.gd
 │   │   ├── test_lamp_generator_requirement.gd.uid
+│   │   ├── test_laptop_multi_lab_ids.gd
+│   │   ├── test_laptop_multi_lab_ids.gd.uid
 │   │   ├── test_level12_laptop_money_reward.gd
 │   │   ├── test_level12_laptop_money_reward.gd.uid
 │   │   ├── test_level12_money_system.gd
@@ -1403,4 +1405,4 @@
 ├── project.godot
 └── structure.txt
 
-118 directories, 1286 files
+118 directories, 1288 files

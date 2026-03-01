@@ -8,6 +8,8 @@ extends InteractiveObject
 @export var time_limit: float = 45.0
 ## Штраф по времени за ошибку.
 @export var penalty_time: float = 10.0
+## Уникальный ID лабораторной для мульти-режима (пусто = старый глобальный lab_done).
+@export var lab_completion_id: String = ""
 
 @export_group("Награда Деньгами")
 ## Выдавать деньги после закрытия мини-игры (успех/неуспех не важен).
@@ -83,6 +85,8 @@ func _ready() -> void:
 	# Следим за завершением лаб через GameState
 	if GameState.has_signal("lab_completed"):
 		GameState.lab_completed.connect(_update_visuals)
+	if GameState.has_signal("lab_completed_with_id"):
+		GameState.lab_completed_with_id.connect(_on_lab_completed_with_id)
 
 # --- ВЗАИМОДЕЙСТВИЕ ---
 func _on_interact() -> void:
@@ -112,6 +116,8 @@ func _start_lab_minigame() -> void:
 	# Настраиваем параметры (как в твоем старом коде)
 	if "time_limit" in game: game.time_limit = time_limit
 	if "penalty_time" in game: game.penalty_time = penalty_time
+	if "lab_completion_id" in game:
+		game.lab_completion_id = lab_completion_id.strip_edges()
 	
 	# Добавляем на сцену (в отдельный CanvasLayer, чтобы UI не терялся из-за CanvasModulate/оверлеев)
 	_add_minigame_to_scene(game)
@@ -136,6 +142,7 @@ func _on_minigame_closed() -> void:
 	
 	# Если после игры лаба появилась в списке выполненных — успех
 	if _is_lab_completed():
+		_handle_completed_interaction()
 		complete_interaction() # Помечаем ноутбук как "пройденный" (для других цепочек)
 
 func _handle_completed_interaction() -> void:
@@ -176,6 +183,14 @@ func _update_visuals() -> void:
 		if _available_light: _available_light.visible = false
 		if _available_light_secondary: _available_light_secondary.visible = false
 
+func _on_lab_completed_with_id(completed_id: String) -> void:
+	var local_id := lab_completion_id.strip_edges()
+	if local_id == "":
+		return
+	if completed_id != local_id:
+		return
+	_update_visuals()
+
 func _can_interact() -> bool:
 	return _is_enabled
 
@@ -189,7 +204,14 @@ func _apply_enabled_state() -> void:
 	_update_visuals()
 
 func _is_lab_completed() -> bool:
-	return GameState.lab_done
+	if GameState == null:
+		return false
+	var local_id := lab_completion_id.strip_edges()
+	if local_id != "":
+		if GameState.has_method("is_lab_completed"):
+			return bool(GameState.is_lab_completed(local_id))
+		return false
+	return bool(GameState.lab_done)
 
 func _is_dependency_satisfied() -> bool:
 	if _dependency_override:

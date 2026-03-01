@@ -964,7 +964,6 @@ door_locked_message = "Приоткрыта... но заклинило."
 required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
-door_texture = ExtResource("75_j5q6n")
 interact_area_node = null
 auto_prompt = null
 handle_input = null

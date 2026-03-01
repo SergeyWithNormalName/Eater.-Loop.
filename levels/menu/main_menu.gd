@@ -358,18 +358,6 @@ func _setup_startup_disclaimer() -> void:
 	_activate_startup_disclaimer()
 
 func _should_show_startup_disclaimer() -> bool:
-	if GameState == null:
-		var unseen_without_gamestate := not _is_startup_disclaimer_seen_persisted()
-		if unseen_without_gamestate:
-			_mark_startup_disclaimer_seen_persisted()
-		return unseen_without_gamestate
-	if GameState.has_meta(STARTUP_DISCLAIMER_META):
-		return false
-	if _is_startup_disclaimer_seen_persisted():
-		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
-		return false
-	GameState.set_meta(STARTUP_DISCLAIMER_META, true)
-	_mark_startup_disclaimer_seen_persisted()
 	return true
 
 func _activate_startup_disclaimer() -> void:
