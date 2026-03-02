@@ -26,11 +26,11 @@ func add_money(amount: int, reason: String = "") -> void:
 	_money += amount
 	money_changed.emit(_money, amount, reason)
 
-	var header := "+%d руб." % amount
-	var note := reason.strip_edges()
+	var header := tr("+%d руб.") % amount
+	var note := tr(reason.strip_edges())
 	if note != "":
 		header = "%s\n%s" % [header, note]
-	_show_hud("%s\nДеньги: %d/%d руб." % [header, _money, required_money])
+	_show_hud(tr("%s\nДеньги: %d/%d руб.") % [header, _money, required_money])
 
 func has_enough_money(required_money_override: int = -1) -> bool:
 	return _money >= _resolve_required_money(required_money_override)
@@ -41,9 +41,9 @@ func try_open_blockpost(required_money_override: int = -1) -> bool:
 	passage_check.emit(_money, needed, can_pass)
 
 	if can_pass:
-		_show_hud("Деньги: %d/%d руб.\nМожно пройти." % [_money, needed])
+		_show_hud(tr("Деньги: %d/%d руб.\nМожно пройти.") % [_money, needed])
 	else:
-		_show_hud("Деньги: %d/%d руб.\nНужно ещё %d руб." % [_money, needed, needed - _money])
+		_show_hud(tr("Деньги: %d/%d руб.\nНужно ещё %d руб.") % [_money, needed, needed - _money])
 
 	return can_pass
 

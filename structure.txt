@@ -270,6 +270,11 @@
 │   │   ├── AmaticSC-Regular.ttf
 │   │   ├── AmaticSC-Regular.ttf.import
 │   │   └── OFL.txt
+│   ├── localization
+│   │   ├── texts.csv
+│   │   ├── texts.csv.import
+│   │   ├── texts.en.translation
+│   │   └── texts.ru.translation
 │   ├── export_presets.cfg
 │   ├── iconofgame.png
 │   ├── iconofgame.png.import
@@ -1411,4 +1416,4 @@
 ├── project.godot
 └── structure.txt
 
-120 directories, 1292 files
+121 directories, 1296 files

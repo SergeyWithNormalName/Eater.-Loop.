@@ -77,7 +77,7 @@ func _process(delta: float) -> void:
 
 func _update_status_label() -> void:
 	if timer_label:
-		timer_label.text = _pick(STATUS_GLITCH_VARIANTS) % max(0.0, current_time)
+		timer_label.text = tr(_pick(STATUS_GLITCH_VARIANTS)) % max(0.0, current_time)
 
 func load_task(index: int) -> void:
 	if index < 0 or index >= tasks.size():
@@ -356,7 +356,7 @@ func _apply_visual_glitch_tick() -> void:
 	_update_status_label()
 
 func _make_glitch_task_text(base_text: String) -> String:
-	return "%s%s" % [base_text, _pick(TASK_GLITCH_SUFFIXES)]
+	return "%s%s" % [tr(base_text), tr(_pick(TASK_GLITCH_SUFFIXES))]
 
 func _corrupt_word(word: String) -> String:
 	if word.length() <= 1:

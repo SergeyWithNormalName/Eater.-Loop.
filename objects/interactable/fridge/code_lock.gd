@@ -51,7 +51,7 @@ func _on_ok_pressed() -> void:
 		unlocked.emit()
 		_close(true)
 	else:
-		info_label.text = "Неверный код"
+		info_label.text = tr("Неверный код")
 		_current_input = ""
 		_update_display()
 

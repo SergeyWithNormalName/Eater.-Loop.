@@ -118,10 +118,15 @@ func _style_settings_panel() -> void:
 	if graphics_title != null:
 		graphics_title.add_theme_color_override("font_color", Color(0.84, 0.84, 0.84, 0.92))
 
+	var language_title := _settings_panel.get_node_or_null("VBox/Content/LanguageTitle") as Label
+	if language_title != null:
+		language_title.add_theme_color_override("font_color", Color(0.84, 0.84, 0.84, 0.92))
+
 	var row_labels := [
 		"VBox/Content/MasterRow/MasterLabel",
 		"VBox/Content/MusicRow/MusicLabel",
-		"VBox/Content/SfxRow/SfxLabel"
+		"VBox/Content/SfxRow/SfxLabel",
+		"VBox/Content/LanguageRow/LanguageLabel"
 	]
 	for label_path in row_labels:
 		var row_label := _settings_panel.get_node_or_null(label_path) as Label
@@ -157,6 +162,16 @@ func _style_settings_panel() -> void:
 		check.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
 		check.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1))
 		check.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 1))
+
+	var language_options := _settings_panel.find_children("*", "OptionButton", true, false)
+	for node in language_options:
+		var option := node as OptionButton
+		if option == null:
+			continue
+		option.add_theme_color_override("font_color", Color(0.93, 0.93, 0.93, 0.95))
+		option.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
+		option.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1))
+		option.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 1))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if activate_focused_menu_button_on_accept(event):
@@ -246,7 +261,7 @@ func _exit_game() -> void:
 
 func _show_confirm(message: String, action: Callable) -> void:
 	_panel_before_confirm = _active_panel
-	_confirm_label.text = message
+	_confirm_label.text = tr(message)
 	_confirm_action = action
 	_main_panel.visible = false
 	_settings_panel.visible = false

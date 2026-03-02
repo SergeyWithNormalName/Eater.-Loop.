@@ -80,7 +80,7 @@ func _try_use_door() -> void:
 				return
 			else:
 				if required_key_name != "":
-					UIMessage.show_text("%s\nНужен: %s." % [door_locked_message, required_key_name])
+					UIMessage.show_text("%s\n%s" % [tr(door_locked_message), tr("Нужен: %s.") % tr(required_key_name)])
 				else:
 					UIMessage.show_text(door_locked_message)
 				

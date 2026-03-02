@@ -70,11 +70,12 @@ func _on_interact() -> void:
 
 # Показ сообщения о блокировке
 func _show_locked_message() -> void:
+	var localized_message := tr(locked_message)
 	# Используем твою систему UIMessage
 	if UIMessage and UIMessage.has_method("show_message"):
-		UIMessage.show_message(locked_message)
+		UIMessage.show_message(localized_message)
 	else:
-		print("LOCKED: " + locked_message)
+		print("LOCKED: " + localized_message)
 
 # --- ИНФРАСТРУКТУРА (ОСТАВЛЯЕМ БЕЗ ИЗМЕНЕНИЙ) ---
 
@@ -138,7 +139,7 @@ func _hide_prompt() -> void:
 		InteractionPrompts.hide_interact(self)
 
 func _get_prompt_text() -> String:
-	return prompt_text
+	return tr(prompt_text)
 
 func get_prompt_world_position() -> Vector2:
 	var anchor := _interact_area

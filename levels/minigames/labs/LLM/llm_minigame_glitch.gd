@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 		if _cooldown_remaining <= 0.0:
 			_cooldown_finished()
 		else:
-			generate_button.text = "%s %.1fс" % [_pick(TEXT_PROCESSING_VARIANTS), _cooldown_remaining]
+			generate_button.text = tr("%s %.1fс") % [tr(_pick(TEXT_PROCESSING_VARIANTS)), _cooldown_remaining]
 
 	_next_jump_in -= delta
 	if _next_jump_in <= 0.0:
@@ -129,14 +129,14 @@ func _start_click_cooldown() -> void:
 func _cooldown_finished() -> void:
 	_cooldown_remaining = 0.0
 	generate_button.disabled = false
-	generate_button.text = _pick(TEXT_IDLE_VARIANTS)
+	generate_button.text = tr(_pick(TEXT_IDLE_VARIANTS))
 	generate_button.remove_theme_color_override("font_color")
 	if arrow_icon:
 		arrow_icon.modulate = Color(1, 1, 1)
 
 func _update_ui_state() -> void:
 	progress_bar.value = _progress * 100.0
-	generate_button.text = _pick(TEXT_IDLE_VARIANTS)
+	generate_button.text = tr(_pick(TEXT_IDLE_VARIANTS))
 
 func _schedule_next_jump() -> void:
 	_next_jump_in = _rng.randf_range(0.16, 0.52)
@@ -151,7 +151,7 @@ func _jump_button_to_chaos(from_mouse_escape: bool = false) -> void:
 		_rng.randf_range(-over, area_size.x - generate_button.size.x + over),
 		_rng.randf_range(-over, area_size.y - generate_button.size.y + over)
 	)
-	generate_button.text = _pick(TEXT_IDLE_VARIANTS)
+	generate_button.text = tr(_pick(TEXT_IDLE_VARIANTS))
 	_schedule_next_jump()
 
 func _pick(list: Array) -> String:
@@ -172,7 +172,7 @@ func finish_game(success: bool) -> void:
 
 func _finalize_finish(success: bool) -> void:
 	if success:
-		generate_button.text = TEXT_DONE
+		generate_button.text = tr(TEXT_DONE)
 		var style = generate_button.get_theme_stylebox("normal").duplicate()
 		style.border_color = Color.GREEN
 		generate_button.add_theme_stylebox_override("normal", style)

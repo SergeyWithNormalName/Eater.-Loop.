@@ -30,7 +30,7 @@ const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 
 # Тексты для кнопки (имитация состояний)
 const TEXT_IDLE = "   Сгенерировать отчёт"
-const TEXT_PROCESSING = "   Подождите... "
+const TEXT_PROCESSING_WITH_TIME = "   Подождите... %.1f сек"
 const TEXT_DONE = "   Отчёт готов!"
 
 # --- ССЫЛКИ НА УЗЛЫ (Nodes) ---
@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 		if _cooldown_remaining <= 0.0:
 			_cooldown_finished()
 		else:
-			generate_button.text = TEXT_PROCESSING + "%.1f сек" % _cooldown_remaining
+			generate_button.text = tr(TEXT_PROCESSING_WITH_TIME) % _cooldown_remaining
 
 func _on_generate_pressed() -> void:
 	if _is_finished:
@@ -93,14 +93,14 @@ func _start_click_cooldown() -> void:
 func _cooldown_finished() -> void:
 	_cooldown_remaining = 0.0
 	generate_button.disabled = false
-	generate_button.text = TEXT_IDLE
+	generate_button.text = tr(TEXT_IDLE)
 	generate_button.remove_theme_color_override("font_color")
 	if arrow_icon:
 		arrow_icon.modulate = Color(1, 1, 1)
 
 func _update_ui_state() -> void:
 	progress_bar.value = _progress * 100.0
-	generate_button.text = TEXT_IDLE
+	generate_button.text = tr(TEXT_IDLE)
 
 func finish_game(success: bool) -> void:
 	if _is_finished:
@@ -116,7 +116,7 @@ func finish_game(success: bool) -> void:
 
 func _finalize_finish(success: bool) -> void:
 	if success:
-		generate_button.text = TEXT_DONE
+		generate_button.text = tr(TEXT_DONE)
 		var style = generate_button.get_theme_stylebox("normal").duplicate()
 		style.border_color = Color.GREEN
 		generate_button.add_theme_stylebox_override("normal", style)

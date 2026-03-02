@@ -141,6 +141,31 @@ text = "Вертикальная синхронизация"
 theme_override_font_sizes/font_size = 36
 focus_mode = 2
 
+[node name="LanguageDivider" type="HSeparator" parent="VBox/Content"]
+layout_mode = 2
+
+[node name="LanguageTitle" type="Label" parent="VBox/Content"]
+layout_mode = 2
+text = "Язык"
+theme_override_colors/font_color = Color(0.84, 0.84, 0.84, 0.9)
+
+[node name="LanguageRow" type="HBoxContainer" parent="VBox/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+separation = 20
+alignment = 1
+
+[node name="LanguageLabel" type="Label" parent="VBox/Content/LanguageRow"]
+layout_mode = 2
+text = "Язык интерфейса"
+custom_minimum_size = Vector2(320, 0)
+
+[node name="LanguageOption" type="OptionButton" parent="VBox/Content/LanguageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(360, 0)
+focus_mode = 2
+
 [node name="BackButton" type="Button" parent="VBox" groups=["menu_button"]]
 layout_mode = 2
 text = "Назад"

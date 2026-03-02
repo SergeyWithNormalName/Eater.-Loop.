@@ -157,7 +157,7 @@ func _apply_exit_hint_style(title_font: Font, body_font: Font) -> void:
 func _show_exit_hint() -> void:
 	if _exit_hint_label == null:
 		return
-	_exit_hint_label.text = esc_exit_hint_text
+	_exit_hint_label.text = tr(esc_exit_hint_text)
 	_exit_hint_label.visible = true
 
 func _hide_exit_hint() -> void:

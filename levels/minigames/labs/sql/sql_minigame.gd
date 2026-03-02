@@ -63,7 +63,7 @@ func _ready():
 
 func _update_status_label() -> void:
 	if timer_label:
-		timer_label.text = STATUS_TEMPLATE % max(0.0, current_time)
+		timer_label.text = tr(STATUS_TEMPLATE) % max(0.0, current_time)
 
 func load_task(index):
 	if index < 0 or index >= tasks.size():
@@ -73,7 +73,7 @@ func load_task(index):
 	_gamepad_selected_word = ""
 	var data = tasks[index]
 	
-	task_label.text = data["description"]
+	task_label.text = tr(String(data["description"]))
 	
 	# Очистка старых элементов
 	for child in query_container.get_children(): child.queue_free()

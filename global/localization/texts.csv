@@ -1,0 +1,217 @@
+keys,ru,en
+   [ERR:BUTTON_MOVED],   [ERR:BUTTON_MOVED],   [ERR:BUTTON_MOVED]
+   ÐŸÐ¾Ð´Ð¾Ð¶Ð´Ð¸Ñ‚Ðµ,   ÐŸÐ¾Ð´Ð¾Ð¶Ð´Ð¸Ñ‚Ðµ,   Please wait
+   КНОПКА НЕ ЗДЕСЬ,   КНОПКА НЕ ЗДЕСЬ,   BUTTON NOT HERE
+"   Нажми, если сможешь","   Нажми, если сможешь",   Press if you can
+   Отчёт готов!,   Отчёт готов!,   Report ready!
+   Отчёт готов! (невероятно),   Отчёт готов! (невероятно),   Report ready! (unbelievable)
+   ПРОГРЕСС? ХА,   ПРОГРЕСС? ХА,   PROGRESS? HA
+   Подождите...,   Подождите...,   Please wait...
+   Подождите... %.1f сек,   Подождите... %.1f сек,   Please wait... %.1f s
+   Сгенерировать отчёт,   Сгенерировать отчёт,   Generate report
+"   думаю, но медленно","   думаю, но медленно","   thinking, but slowly"
+   компилирую отмазки,   компилирую отмазки,   compiling excuses
+   убегаю от курсора,   убегаю от курсора,   running from cursor
+" SQL | UTF-8 | ВРЕМЯ: %.1f сек | LN 1, COL 1"," SQL | UTF-8 | ВРЕМЯ: %.1f сек | LN 1, COL 1"," SQL | UTF-8 | TIME: %.1f s | LN 1, COL 1"
+ SQЛ | ПАКЕТЫ ПОТЕРЯНЫ | %.1f, SQЛ | ПАКЕТЫ ПОТЕРЯНЫ | %.1f, SQL | PACKETS LOST | %.1f
+ [ОШИБКА 0xF00D], [ОШИБКА 0xF00D], [ERROR 0xF00D]
+ [задание мутирует], [задание мутирует], [task is mutating]
+ [подсказки лгут], [подсказки лгут], [hints are lying]
+ [таблица сбежала], [таблица сбежала], [table escaped]
+"%s
+Деньги: %d/%d руб.","%s
+Деньги: %d/%d руб.","%s
+Money: %d/%d RUB"
+%s %.1fс,%s %.1fс,%s %.1fs
+%s: %s,%s: %s,%s: %s
++%d руб.,+%d руб.,+%d RUB
+- Имя Фамилия,- Имя Фамилия,- Name Surname
+2D-арт и иллюстрации — Сергей Генерозов,2D-арт и иллюстрации — Сергей Генерозов,2D Art and Illustrations - Sergej Generozov
+E — %s,E — %s,E - %s
+E — взаимодействовать,E — взаимодействовать,E - interact
+Proyti cherez blokpost,Proyti cherez blokpost,Pass through checkpoint
+Q — включить свет,Q — включить свет,Q - turn on light
+Q — выключить свет,Q — выключить свет,Q - turn off light
+Snachala zapusti generator.,Snachala zapusti generator.,Start the generator first.
+UI/UX-дизайн — Сергей Генерозов,UI/UX-дизайн — Сергей Генерозов,UI/UX Design - Sergej Generozov
+menu.startup_disclaimer_text,"Данная игра является художественным произведением. Все события, персонажи, образы и ситуации являются вымышленными либо используются в художественной интерпретации. Любые совпадения с реальными лицами, событиями или обстоятельствами являются случайными.
+
+Все графические материалы, анимации и визуальные элементы созданы с использованием технологий генеративного искусственного интеллекта либо иными законными способами. Музыкальные произведения и звуковые эффекты либо созданы автором игры, либо используются на основании лицензии CC0 (Creative Commons Zero) либо иных свободных лицензий, допускающих свободное использование.
+
+Игра может содержать сцены психологического напряжения, тревожные визуальные и звуковые эффекты, скримеры, а также элементы, способные вызвать дискомфорт. Лицам с повышенной чувствительностью, сердечно-сосудистыми заболеваниями, эпилепсией или иными медицинскими противопоказаниями рекомендуется соблюдать осторожность.
+
+Игра не содержит призывов к противоправным действиям, насилию, дискриминации либо иным формам противоправного поведения. Автор не пропагандирует и не одобряет какие-либо формы вредного или опасного поведения.
+
+Использование игры осуществляется пользователем добровольно и на собственный риск. Автор не несёт ответственности за возможный физический, психологический или иной ущерб, возникший в результате использования игры.","This game is a work of fiction. All events, characters, images, and situations are fictional or used in an artistic interpretation. Any resemblance to real persons, events, or circumstances is coincidental.
+
+All visual materials, animations, and visual elements were created using generative AI technologies or by other lawful means. Music and sound effects were either created by the game author or used under a CC0 (Creative Commons Zero) license or other free licenses that allow unrestricted use.
+
+The game may contain scenes of psychological tension, disturbing visual and sound effects, jump scares, and other elements that may cause discomfort. People with heightened sensitivity, cardiovascular conditions, epilepsy, or other medical contraindications are advised to exercise caution.
+
+The game does not contain calls for illegal actions, violence, discrimination, or other forms of unlawful behavior. The author does not promote or endorse any harmful or dangerous behavior.
+
+The game is used voluntarily and at the user's own risk. The author is not responsible for possible physical, psychological, or other harm resulting from the use of the game."
+Автор идеи — Сергей Генерозов,Автор идеи — Сергей Генерозов,Original Idea - Sergej Generozov
+Авторы,Авторы,Credits
+Английский,Английский,English
+Анимация — Сергей Генерозов,Анимация — Сергей Генерозов,Animation - Sergej Generozov
+Арт и визуал:,Арт и визуал:,Art and Visuals:
+Архитектура проекта — Сергей Генерозов,Архитектура проекта — Сергей Генерозов,Project Architecture - Sergej Generozov
+"Большое спасибо, что прошли мою игру! Очень надеюсь, что вам понравилось, раз вы читаете это. Хорошего вам времени суток, человек!","Большое спасибо, что прошли мою игру! Очень надеюсь, что вам понравилось, раз вы читаете это. Хорошего вам времени суток, человек!","Thank you so much for finishing my game! I truly hope you enjoyed it if you are reading this. Have a wonderful day, human!"
+Вертикальная синхронизация,Вертикальная синхронизация,V-Sync
+Вкуснятина,Вкуснятина,Yummy
+Войти,Войти,Enter
+Времени осталось:,Времени осталось:,Time left:
+Время вышло! Штраф.,Время вышло! Штраф.,Time is up! Penalty.
+"Вы можете двигать мусор, чтобы найти ключ","Вы можете двигать мусор, чтобы найти ключ",You can move trash to find the key
+"Вы уверены, что хотите выйти? В следующий раз вам придётся проснуться снова...","Вы уверены, что хотите выйти? В следующий раз вам придётся проснуться снова...",Are you sure you want to exit? Next time you will have to wake up again...
+Выбор / вставка,Выбор / вставка,Select / place
+Выбрать,Выбрать,Select
+Выбрать всех студентов из таблицы Users,Выбрать всех студентов из таблицы Users,Select all students from the Users table
+Выйти в меню,Выйти в меню,Exit to Menu
+Выйти из игры,Выйти из игры,Exit Game
+Выход,Выход,Exit
+Геймдизайн — Сергей Генерозов,Геймдизайн — Сергей Генерозов,Game Design - Sergej Generozov
+Генератор работает стабильно.,Генератор работает стабильно.,Generator is running steadily.
+Графика,Графика,Graphics
+Да,Да,Yes
+"Двери врут: часть приоткрытых заклинит.
+Ищи холодильник через дальние коридоры.
+После еды путь назад изменится.","Двери врут: часть приоткрытых заклинит.
+Ищи холодильник через дальние коридоры.
+После еды путь назад изменится.","Doors lie: some half-open ones will jam.
+Find the fridge through the far corridors.
+After eating, the way back will change."
+Дверь в коридор.,Дверь в коридор.,Door to the hallway.
+Дверь закрыта.,Дверь закрыта.,The door is closed.
+Дверь заперта,Дверь заперта,Door is locked
+Дверь заперта.,Дверь заперта.,The door is locked.
+Дверь не открывается,Дверь не открывается,The door won't open
+Дверь открылась.,Дверь открылась.,The door opened.
+"Дверь приоткрыта, но что-то не дает ее открыть.","Дверь приоткрыта, но что-то не дает ее открыть.","The door is slightly open, but something blocks it."
+"Деньги: %d/%d руб.
+Можно пройти.","Деньги: %d/%d руб.
+Можно пройти.","Money: %d/%d RUB
+You may pass."
+"Деньги: %d/%d руб.
+Нужно ещё %d руб.","Деньги: %d/%d руб.
+Нужно ещё %d руб.","Money: %d/%d RUB
+Need %d more RUB."
+Дизайн уровней — Сергей Генерозов,Дизайн уровней — Сергей Генерозов,Level Design - Sergej Generozov
+Едок. Петля.,Едок. Петля.,Eater. Loop.
+ЗАДАНИЕ,ЗАДАНИЕ,TASK
+Замок открыт.,Замок открыт.,Lock opened.
+Заперто,Заперто,Locked
+Заперто... Нужно найти ключ.,Заперто... Нужно найти ключ.,Locked... Need to find a key.
+Звук,Звук,Sound
+Звуки,Звуки,Sound Effects
+Использовать лебедку,Использовать лебедку,Use the hoist
+"Кажется, за ней такой же коридор.","Кажется, за ней такой же коридор.",Looks like the same hallway behind it.
+Ключ,Ключ,Key
+Кодовый замок,Кодовый замок,Code Lock
+Композитор — Сергей Генерозов,Композитор — Сергей Генерозов,Composer - Sergej Generozov
+"Кто, блять, запер дверь в туалет?","Кто, блять, запер дверь в туалет?",Who the hell locked the bathroom door?
+"Кто, блять, запер туалет?","Кто, блять, запер туалет?",Who the hell locked the toilet?
+Лабораторная выполнена!,Лабораторная выполнена!,Lab completed!
+Лечь спать,Лечь спать,Go to sleep
+Локализация — Сергей Генерозов,Локализация — Сергей Генерозов,Localization - Sergej Generozov
+Маркетинг и презентация — Сергей Генерозов,Маркетинг и презентация — Сергей Генерозов,Marketing and Presentation - Sergej Generozov
+Мне незачем выходить на улицу,Мне незачем выходить на улицу,I have no reason to go outside
+"Мне что-то не нравится, я должен БЕЖАТЬ","Мне что-то не нравится, я должен БЕЖАТЬ","I don't like this, I need to RUN"
+Музыка,Музыка,Music
+Музыка и звук:,Музыка и звук:,Music and Sound:
+НАД РТОМ ЛИ МЫ,НАД РТОМ ЛИ МЫ,ARE WE ABOVE THE MOUTH
+На данный момент это последний уровень,На данный момент это последний уровень,This is the last level for now
+На полке найден ключ,На полке найден ключ,A key was found on the shelf
+Награда за лабораторную,Награда за лабораторную,Lab work reward
+Награда от студента,Награда от студента,Reward from student
+"Нажимайте E, чтобы убрать препятствие","Нажимайте E, чтобы убрать препятствие",Press E repeatedly to clear the obstacle
+"Нажмите ещё раз, чтобы выйти","Нажмите ещё раз, чтобы выйти",Press again to exit
+Назад,Назад,Back
+Найден ключ!,Найден ключ!,Key found!
+"Найдите всех должников, чей долг > бесконечности и < -1 и = maybe.","Найдите всех должников, чей долг > бесконечности и < -1 и = maybe.",Find all debtors whose debt is > infinity and < -1 and = maybe.
+Найти должников (debt > 0),Найти должников (debt > 0),Find debtors (debt > 0)
+Настройки,Настройки,Settings
+"Не помню, чтобы здесь стояла эта кровать","Не помню, чтобы здесь стояла эта кровать",I don't remember this bed being here
+Неверный код,Неверный код,Wrong code
+Нельзя спать: сначала поешь.,Нельзя спать: сначала поешь.,You cannot sleep yet: eat first.
+Несовместимая версия системы денег.,Несовместимая версия системы денег.,Incompatible version of money system.
+Нет,Нет,No
+Нет электричества.,Нет электричества.,No electricity.
+Новая игра,Новая игра,New Game
+Нужен: %s.,Нужен: %s.,Required: %s.
+Нужно 100 рублей для прохода.,Нужно 100 рублей для прохода.,You need 100 rubles to pass.
+ОК,ОК,OK
+Общая громкость,Общая громкость,Master Volume
+Обыскать,Обыскать,Search
+Озвучка главного героя — Андрей Горшков,Озвучка главного героя — Андрей Горшков,Main Character Voice - Andrey Gorshkov
+Описание задания,Описание задания,Task description
+Отмена,Отмена,Cancel
+Отменить выбор,Отменить выбор,Cancel selection
+Очистить,Очистить,Clear
+Очистить слот,Очистить слот,Clear slot
+Пауза,Пауза,Pause
+Перед началом игры,Перед началом игры,Before You Start
+Питание восстановлено!,Питание восстановлено!,Power restored!
+Плохая концовка,Плохая концовка,Bad Ending
+Поговорить со студентом,Поговорить со студентом,Talk to student
+Подобрал,Подобрал,Picked up
+Подтвердить,Подтвердить,Confirm
+"Пожалуйста, ознакомьтесь с информацией перед началом.","Пожалуйста, ознакомьтесь с информацией перед началом.",Please read this information before you begin.
+Полноэкранный режим,Полноэкранный режим,Fullscreen
+Поместить,Поместить,Place
+Попытка нажать,Попытка нажать,Attempt press
+Поточка закрыта,Поточка закрыта,The stream is closed
+Приоткрыта... но заклинило.,Приоткрыта... но заклинило.,Ajar... but jammed.
+Программирование — Сергей Генерозов,Программирование — Сергей Генерозов,Programming - Sergej Generozov
+Продолжить,Продолжить,Continue
+Продюсирование — Сергей Генерозов,Продюсирование — Сергей Генерозов,Production - Sergej Generozov
+Проход открыт.,Проход открыт.,Passage open.
+Проход стоит 100 рублей,Проход стоит 100 рублей,Passage costs 100 rubles
+Прочитать,Прочитать,Read
+Разработка:,Разработка:,Development:
+Режиссура — Сергей Генерозов,Режиссура — Сергей Генерозов,Direction - Sergej Generozov
+Русский,Русский,Russian
+Саунд-дизайн — Сергей Генерозов,Саунд-дизайн — Сергей Генерозов,Sound Design - Sergej Generozov
+Сведение и монтаж аудио — Сергей Генерозов,Сведение и монтаж аудио — Сергей Генерозов,Audio Mixing and Editing - Sergej Generozov
+Сгенерировать,Сгенерировать,Generate
+Сдвинуть / взять ключ,Сдвинуть / взять ключ,Move / pick up key
+Сделать лабораторную,Сделать лабораторную,Do lab work
+Секция,Секция,Section
+Система денег не настроена.,Система денег не настроена.,Money system is not configured.
+Скормить,Скормить,Feed
+Сначала нужно сделать лабораторную работу.,Сначала нужно сделать лабораторную работу.,You need to complete the lab work first.
+Сначала нужно сделать что-то другое...,Сначала нужно сделать что-то другое...,You need to do something else first...
+"Соберите запрос, который валиден только по пятницам в 25:61.","Соберите запрос, который валиден только по пятницам в 25:61.",Build a query valid only on Fridays at 25:61.
+Спасибо за игру,Спасибо за игру,Thanks for playing
+Студент: вот часть денег за помощь.,Студент: вот часть денег за помощь.,Student: here is some money for your help.
+Студент: я уже всё отдал.,Студент: я уже всё отдал.,Student: I already gave everything.
+Сценарий и нарратив — Сергей Генерозов,Сценарий и нарратив — Сергей Генерозов,Script and Narrative - Sergej Generozov
+ТИТРЫ,ТИТРЫ,CREDITS
+Там спят родители. Их сейчас лучше не тревожить.,Там спят родители. Их сейчас лучше не тревожить.,My parents are sleeping there. Better not disturb them now.
+Теперь мне нечего тут искать,Теперь мне нечего тут искать,There is nothing left for me to search here
+Теперь не нечего тут искать,Теперь не нечего тут искать,There is nothing left to search here
+"Тестирование и QA — Сергей Генерозов, Гришти Максим, Горшков Андрей, Вячеслав Окачутин","Тестирование и QA — Сергей Генерозов, Гришти Максим, Горшков Андрей, Вячеслав Окачутин","Testing and QA - Sergej Generozov, Maksim Grishti, Andrey Gorshkov, Vyacheslav Okachutin"
+Технический арт и шейдеры — Сергей Генерозов,Технический арт и шейдеры — Сергей Генерозов,Technical Art and Shaders - Sergej Generozov
+Тут ничего не написано.,Тут ничего не написано.,Nothing is written here.
+Ты получил 40 руб.,Ты получил 40 руб.,You received 40 RUB.
+Ты получил деньги.,Ты получил деньги.,You got money.
+"Удалите таблицу друзей и одновременно добавьте в неё борщ. Да, одновременно.","Удалите таблицу друзей и одновременно добавьте в неё борщ. Да, одновременно.","Delete the friends table and insert borscht into it at the same time. Yes, simultaneously."
+Удалить таблицу Долги (Осторожно!),Удалить таблицу Долги (Осторожно!),Delete Debts table (Careful!)
+"Удерживайте E, чтобы убрать препятствие","Удерживайте E, чтобы убрать препятствие",Hold E to clear the obstacle
+Холодный сквозняк из подъезда...,Холодный сквозняк из подъезда...,A cold draft from the entryway...
+Хорошая концовка,Хорошая концовка,Good Ending
+Щелк. Эту дверь заклинило. Придется идти через другую.,Щелк. Эту дверь заклинило. Придется идти через другую.,Click. This door is jammed. You will have to go through another one.
+Эта дверь всегда была заперта...,Эта дверь всегда была заперта...,This door has always been locked...
+Эта дверь заперта,Эта дверь заперта,This door is locked
+Эта дверь заперта на ключ,Эта дверь заперта на ключ,This door is locked with a key
+Эти суки сами виноваты.,Эти суки сами виноваты.,They brought this on themselves.
+Я боюсь засыпать в темноте...,Я боюсь засыпать в темноте...,I'm afraid to fall asleep in the dark...
+Я заплатил за проход,Я заплатил за проход,I paid for passage
+"Я не буду есть, пока не сделаю лабораторную работу","Я не буду есть, пока не сделаю лабораторную работу",I won't eat until I complete lab work
+Я не помню здесь этой двери...,Я не помню здесь этой двери...,I don't remember this door being here...
+"Я подвесил холодильник, чтобы не есть","Я подвесил холодильник, чтобы не есть",I hung up the fridge so I wouldn't eat
+"Я поставил пароль, чтобы не забыть сначала сделать лабу","Я поставил пароль, чтобы не забыть сначала сделать лабу",I set a password so I don't forget to do the lab first
+Я уже поел.,Я уже поел.,I already ate.
+Язык,Язык,Language
+Язык интерфейса,Язык интерфейса,Interface Language

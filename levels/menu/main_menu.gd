@@ -57,15 +57,7 @@ const STARTUP_DISCLAIMER_STATE_PATH := "user://startup_state.cfg"
 const STARTUP_DISCLAIMER_SECTION := "ui"
 const STARTUP_DISCLAIMER_KEY := "disclaimer_seen"
 const MENU_SPOILER_SHADER: Shader = preload("res://levels/menu/screen_spoiler_blur.gdshader")
-const STARTUP_DISCLAIMER_TEXT := """Данная игра является художественным произведением. Все события, персонажи, образы и ситуации являются вымышленными либо используются в художественной интерпретации. Любые совпадения с реальными лицами, событиями или обстоятельствами являются случайными.
-
-Все графические материалы, анимации и визуальные элементы созданы с использованием технологий генеративного искусственного интеллекта либо иными законными способами. Музыкальные произведения и звуковые эффекты либо созданы автором игры, либо используются на основании лицензии CC0 (Creative Commons Zero) либо иных свободных лицензий, допускающих свободное использование.
-
-Игра может содержать сцены психологического напряжения, тревожные визуальные и звуковые эффекты, скримеры, а также элементы, способные вызвать дискомфорт. Лицам с повышенной чувствительностью, сердечно-сосудистыми заболеваниями, эпилепсией или иными медицинскими противопоказаниями рекомендуется соблюдать осторожность.
-
-Игра не содержит призывов к противоправным действиям, насилию, дискриминации либо иным формам противоправного поведения. Автор не пропагандирует и не одобряет какие-либо формы вредного или опасного поведения.
-
-Использование игры осуществляется пользователем добровольно и на собственный риск. Автор не несёт ответственности за возможный физический, психологический или иной ущерб, возникший в результате использования игры."""
+const STARTUP_DISCLAIMER_TEXT_KEY := "menu.startup_disclaimer_text"
 
 var _active_panel: String = PANEL_MAIN
 var _navigation_input_active: bool = false
@@ -348,7 +340,7 @@ func _stop_menu_music() -> void:
 	MusicManager.stop_music(menu_music_fade_time)
 
 func _setup_startup_disclaimer() -> void:
-	_startup_disclaimer_text.text = STARTUP_DISCLAIMER_TEXT
+	_startup_disclaimer_text.text = tr(STARTUP_DISCLAIMER_TEXT_KEY)
 	_apply_startup_disclaimer_style()
 	_startup_blur_spoiler.visible = false
 	_startup_disclaimer.visible = false

@@ -225,6 +225,7 @@ func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true)
 	var t := text.strip_edges()
 	if t == "":
 		return
+	t = tr(t)
 	_is_viewing_hint = true
 	_hint_label.text = t
 	_hint_image.texture = texture
@@ -286,7 +287,7 @@ func _input(event: InputEvent) -> void:
 func show_text(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
 	if t == "": return
-	_label.text = t
+	_label.text = tr(t)
 	_label.visible = true
 	_timer.start(duration if duration > 0.0 else default_duration)
 
@@ -297,6 +298,7 @@ func show_subtitle(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":
 		return
+	t = tr(t)
 	if _is_viewing_note:
 		_queued_subtitle_text = t
 		_queued_subtitle_duration = duration

@@ -31,7 +31,7 @@ func _get_prompt_text() -> String:
 	var message_text := interact_message.strip_edges()
 	if message_text == "":
 		return ""
-	return "E — %s" % message_text
+	return tr("E — %s") % tr(message_text)
 
 func _on_interact() -> void:
 	if note_texture:

@@ -99,7 +99,7 @@ func _append_hint(parts: Array[String], hints: Dictionary, key: String, button_n
 	var text := String(hints.get(key, "")).strip_edges()
 	if text == "":
 		return
-	parts.append("%s: %s" % [button_name, text])
+	parts.append("%s: %s" % [button_name, tr(text)])
 
 func _resolve_host(owner: Node) -> Node:
 	if owner is CanvasLayer:

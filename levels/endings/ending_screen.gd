@@ -12,7 +12,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_reset_music_for_ending()
 	_apply_title_font()
-	_title.text = ending_text
+	_title.text = tr(ending_text)
 	_title.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	_run_sequence()
 

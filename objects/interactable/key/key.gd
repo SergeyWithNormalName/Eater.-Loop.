@@ -19,6 +19,6 @@ func _pickup() -> void:
 	if player != null and player.has_method("add_key"):
 		player.add_key(key_id)
 
-	UIMessage.show_text("%s: %s" % [pickup_message, key_name])
+	UIMessage.show_text(tr("%s: %s") % [tr(pickup_message), tr(key_name)])
 	_hide_prompt()
 	queue_free()
