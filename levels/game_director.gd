@@ -585,6 +585,11 @@ func _on_death_retry_pressed() -> void:
 		CycleState.reset_cycle_state()
 	if CycleState != null:
 		CycleState.queue_respawn_blackout()
+	if UIMessage != null:
+		if UIMessage.has_method("set_screen_dark"):
+			UIMessage.set_screen_dark(true)
+		elif UIMessage.has_method("fade_out"):
+			await UIMessage.fade_out(0.0)
 	_restore_death_camera()
 	if _death_root:
 		_death_root.visible = false

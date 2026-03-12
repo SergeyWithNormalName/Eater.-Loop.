@@ -38,8 +38,14 @@ func run() -> Array[String]:
 	assert_true(bool(projector.call("is_point_lit", projector.global_position + Vector2.RIGHT * 320.0)), "Projector must light targets in front of it")
 	assert_true(not bool(projector.call("is_point_lit", projector.global_position + Vector2.LEFT * 320.0)), "Projector must not light targets behind it")
 
-	assert_true(bool(pickup_flashlight.call("is_point_lit", pickup_flashlight.global_position + Vector2.LEFT * 240.0)), "Pickup flashlight must light targets in front of its beam")
-	assert_true(not bool(pickup_flashlight.call("is_point_lit", pickup_flashlight.global_position + Vector2.RIGHT * 240.0)), "Pickup flashlight must not light targets behind it")
+	assert_true(bool(pickup_flashlight.call("is_point_lit", pickup_flashlight.global_position + Vector2.RIGHT * 240.0)), "Pickup flashlight must light targets in the visible beam direction")
+	assert_true(not bool(pickup_flashlight.call("is_point_lit", pickup_flashlight.global_position + Vector2.LEFT * 240.0)), "Pickup flashlight must not light targets behind the visible beam")
+	var pickup_sprite := pickup_flashlight.get_node_or_null("Sprite2D") as Node2D
+	assert_true(pickup_sprite != null, "Pickup flashlight must expose Sprite2D as prompt anchor")
+	if pickup_sprite != null:
+		pickup_sprite.position = Vector2(96.0, -24.0)
+		var prompt_pos: Variant = pickup_flashlight.call("get_prompt_world_position")
+		assert_eq(prompt_pos, pickup_sprite.global_position, "Pickup flashlight prompt must follow the current Sprite2D position")
 
 	root.queue_free()
 	await tree.process_frame

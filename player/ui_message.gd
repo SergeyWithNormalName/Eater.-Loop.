@@ -461,6 +461,15 @@ func fade_in(duration: float = 0.5) -> void:
 	await tween.finished
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+func set_screen_dark(dark: bool) -> void:
+	if _fade_rect == null:
+		return
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+		_fade_tween = null
+	_fade_rect.color.a = 1.0 if dark else 0.0
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP if dark else Control.MOUSE_FILTER_IGNORE
+
 func play_fade_sequence(fade_out_duration: float, fade_in_duration: float, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
 	if _fade_rect == null:
 		if on_black.is_valid():

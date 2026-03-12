@@ -3037,7 +3037,6 @@ flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive" parent="." unique_id=799227234 instance=ExtResource("75_fu1x1")]
 position = Vector2(13013, 119)
-stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
 time_penalty = 80.0
@@ -3052,7 +3051,8 @@ texture = ExtResource("76_gufev")
 
 [node name="PickupFlashlight" parent="." unique_id=196650323 instance=ExtResource("91_pickup_flashlight")]
 z_index = -4
-position = Vector2(12419, 73)
+position = Vector2(12419, 117)
+prompt_offset = Vector2(0, -80)
 
 [node name="Plintus7" type="Sprite2D" parent="." unique_id=138330700]
 z_index = -5
@@ -3323,7 +3323,6 @@ flicker_energy_min = 0.6
 
 [node name="EnemyLightSensitive2" parent="." unique_id=794162932 instance=ExtResource("75_fu1x1")]
 position = Vector2(8417, 3063)
-stun_duration = 2.5
 speed = 325.0
 keep_chasing_outside_detection = true
 kill_on_attack = true

@@ -31,23 +31,22 @@ fill_to = Vector2(0.75, 0.237)
 [node name="PickupFlashlight" type="Area2D" unique_id=927340495]
 script = ExtResource("1_pickup_flashlight_script")
 prompt_text = "Подобрать фонарик"
-prompt_offset = Vector2(0, -80)
+prompt_offset = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2042306213]
 shape = SubResource("CircleShape2D_pickup_flashlight")
 
 [node name="PointLight2D2" type="PointLight2D" parent="." unique_id=580031108]
-position = Vector2(46.999996, 3)
+position = Vector2(21.000002, 0.9999999)
 rotation = 0.15456748
-scale = Vector2(0.16352189, 0.31169376)
+scale = Vector2(0.058106452, 0.13163584)
 energy = 1.49
 texture = SubResource("GradientTexture2D_nsikq")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=953179305]
 z_index = 2
-light_mask = 1
 rotation = 0.03
-scale = Vector2(-0.16, 0.16)
+scale = Vector2(-0.04, 0.04)
 texture = ExtResource("2_hdyya")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1889724680]

@@ -1388,6 +1388,8 @@
 │   │   ├── test_cycle_state_flashlight_unlock.gd.uid
 │   │   ├── test_cycle_state_lab_scope.gd
 │   │   ├── test_cycle_state_lab_scope.gd.uid
+│   │   ├── test_enemy_light_sensitive_external_flashlight.gd
+│   │   ├── test_enemy_light_sensitive_external_flashlight.gd.uid
 │   │   ├── test_enemy_light_sensitive_flashlight_stun.gd
 │   │   ├── test_enemy_light_sensitive_flashlight_stun.gd.uid
 │   │   ├── test_fridge_chase_interaction.gd
@@ -1468,4 +1470,4 @@
 ├── project.godot
 └── structure.txt
 
-124 directories, 1345 files
+124 directories, 1347 files
