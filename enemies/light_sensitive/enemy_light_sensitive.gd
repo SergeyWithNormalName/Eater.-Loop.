@@ -17,19 +17,8 @@ extends "res://enemies/enemy_flashlight_base.gd"
 @export_group("Stun")
 ## Длительность стана от света.
 @export var stun_duration: float = 2.0
-## Перезарядка стана.
-@export var stun_cooldown: float = 6.0
-## Замедление после стана, если фонарик продолжает светить (1.0 = без замедления).
-@export_range(1.0, 3.0, 0.1) var flashlight_slow_factor: float = 1.5
-## Дистанция отступления при стане.
-@export var knockback_distance: float = 60.0
-## Скорость отступления при стане.
-@export var knockback_speed: float = 120.0
 
 var _stun_timer: float = 0.0
-var _stun_cooldown_timer: float = 0.0
-var _knockback_remaining: float = 0.0
-var _knockback_dir: Vector2 = Vector2.ZERO
 var _player_in_hitbox: Node2D = null
 var _is_walking: bool = false
 var _was_stunned: bool = false
@@ -225,19 +214,7 @@ func _apply_player_flashlight_stun() -> bool:
 	_stun_timer = maxf(_stun_timer, maxf(0.0, stun_duration))
 	if _stun_timer > 0.0 and not _flashlight_anim_active:
 		_start_flashlight_stun_animation()
-	_knockback_remaining = 0.0
-	_knockback_dir = Vector2.ZERO
 	return _stun_timer > 0.0
-
-func _start_knockback() -> void:
-	_knockback_remaining = max(0.0, knockback_distance)
-	if _knockback_remaining <= 0.0:
-		_knockback_dir = Vector2.ZERO
-		return
-	if _player != null:
-		_knockback_dir = Vector2(sign(global_position.x - _player.global_position.x), 0.0)
-	else:
-		_knockback_dir = Vector2.LEFT
 
 func _update_stun_motion(_delta: float) -> void:
 	velocity = Vector2.ZERO
@@ -407,9 +384,6 @@ func _set_idle_animation() -> void:
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()
 	state["stun_timer"] = _stun_timer
-	state["stun_cooldown_timer"] = _stun_cooldown_timer
-	state["knockback_remaining"] = _knockback_remaining
-	state["knockback_dir"] = _knockback_dir
 	state["is_walking"] = _is_walking
 	state["was_stunned"] = _was_stunned
 	state["lamp_frozen"] = _lamp_frozen
@@ -425,9 +399,6 @@ func capture_checkpoint_state() -> Dictionary:
 func apply_checkpoint_state(state: Dictionary) -> void:
 	super.apply_checkpoint_state(state)
 	_stun_timer = float(state.get("stun_timer", _stun_timer))
-	_stun_cooldown_timer = float(state.get("stun_cooldown_timer", _stun_cooldown_timer))
-	_knockback_remaining = float(state.get("knockback_remaining", _knockback_remaining))
-	_knockback_dir = state.get("knockback_dir", _knockback_dir)
 	_is_walking = bool(state.get("is_walking", _is_walking))
 	_was_stunned = bool(state.get("was_stunned", _was_stunned))
 	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))

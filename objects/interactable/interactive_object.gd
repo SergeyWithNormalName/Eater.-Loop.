@@ -89,11 +89,8 @@ func _on_interact() -> void:
 # Показ сообщения о блокировке
 func _show_locked_message() -> void:
 	var localized_message := tr(locked_message)
-	# Используем твою систему UIMessage
-	if UIMessage and UIMessage.has_method("show_notification"):
+	if UIMessage:
 		UIMessage.show_notification(localized_message)
-	elif UIMessage and UIMessage.has_method("show_message"):
-		UIMessage.show_message(localized_message)
 	else:
 		print("LOCKED: " + localized_message)
 

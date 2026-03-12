@@ -37,7 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://objects/environment/background/decals/HoleInWall4.png" id="35_4yyvl"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://objects/environment/background/decals/HoleInWall1.png" id="36_on7v4"]
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://objects/environment/background/decals/HoleInWall3.png" id="37_qqkdi"]
-[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="38_ml68x"]
+[ext_resource type="Script" path="res://levels/cycles/corridor_distortion.gd" id="38_ml68x"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="39_3jki4"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://objects/interactable/trigger/trigger_set_property.gd" id="40_fx2a0"]
 [ext_resource type="AudioStream" uid="uid://b8mota5j1bj6r" path="res://player/audio/HeartBeat_1.wav" id="41_vdt5w"]
@@ -892,7 +892,7 @@ texture = ExtResource("33_vuvb0")
 position = Vector2(9126, 0)
 script = ExtResource("38_ml68x")
 trigger_path = NodePath("../Trigger")
-kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
+kitchen_nodes = Array[NodePath]([NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
 kitchen_move = Vector2(3000, 0)
 kitchen_duration = 7.0
 kitchen_trans = 4

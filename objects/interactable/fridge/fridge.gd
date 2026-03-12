@@ -283,7 +283,7 @@ func _clear_chase_after_teleport_success() -> void:
 
 func _show_locked_message() -> void:
 	if require_lab_completion and not _has_required_lab_completion():
-		if UIMessage and UIMessage.has_method("show_message"):
+		if UIMessage:
 			UIMessage.show_notification(lab_required_message)
 		else:
 			print("LOCKED: " + lab_required_message)
@@ -294,7 +294,7 @@ func _show_access_code_failed_message() -> void:
 	var message := access_code_failed_message.strip_edges()
 	if message == "":
 		return
-	if UIMessage and UIMessage.has_method("show_notification"):
+	if UIMessage:
 		UIMessage.show_notification(message)
 	else:
 		print("LOCKED: " + message)

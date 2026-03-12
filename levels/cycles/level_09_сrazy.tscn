@@ -226,8 +226,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_upkuj")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Toilet" type="Node2D" parent="." unique_id=43382815]
@@ -317,8 +315,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_upkuj")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Hall" type="Node2D" parent="." unique_id=505273404]
@@ -925,8 +921,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" unique_id=1606818286 instance=ExtResource("15_m4yh5")]
@@ -938,8 +932,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToParents)2" parent="Hall/InteractableObjects" unique_id=648293497 instance=ExtResource("15_m4yh5")]
@@ -951,8 +943,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToLebedka)" parent="Hall/InteractableObjects" unique_id=1555384058 instance=ExtResource("15_m4yh5")]
@@ -964,8 +954,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("50_nev1t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToSaveHall)Right" parent="Hall/InteractableObjects" unique_id=1095698003 instance=ExtResource("15_m4yh5")]
@@ -976,8 +964,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToKladovka)" parent="Hall/InteractableObjects" unique_id=2061516348 instance=ExtResource("15_m4yh5")]
@@ -989,8 +975,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("51_d8210")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" unique_id=2003142809 instance=ExtResource("15_m4yh5")]
@@ -1003,8 +987,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("50_nev1t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" unique_id=1877339093 instance=ExtResource("15_m4yh5")]
@@ -1017,8 +999,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("52_qwmnd")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" unique_id=587734171 instance=ExtResource("15_m4yh5")]
@@ -1031,8 +1011,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("52_qwmnd")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToSaveHall)Left" parent="Hall/InteractableObjects" unique_id=1891645036 instance=ExtResource("15_m4yh5")]
@@ -1045,8 +1023,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("52_qwmnd")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="HallLebedka1" type="Node2D" parent="." unique_id=1472079581]
@@ -1561,8 +1537,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("50_nev1t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)6" parent="HallLebedka1/InteractableObjects" unique_id=1438485508 instance=ExtResource("15_m4yh5")]
@@ -1573,8 +1547,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="HallKey" type="Node2D" parent="." unique_id=153424108]
@@ -1729,8 +1701,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(InSaveHall)Right" parent="HallKey/InteractableObjects" unique_id=730629514 instance=ExtResource("15_m4yh5")]
@@ -1741,8 +1711,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="HallLebedka2" type="Node2D" parent="." unique_id=1652488699]
@@ -2218,8 +2186,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("50_nev1t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)6" parent="HallLebedka2/InteractableObjects" unique_id=1072427281 instance=ExtResource("15_m4yh5")]
@@ -2230,8 +2196,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Bedroom" type="Node2D" parent="." unique_id=122944335]
@@ -2471,8 +2435,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=490067309 instance=ExtResource("71_mucsr")]
@@ -2598,8 +2560,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="EnemyLightSensitive" parent="Kladovka" unique_id=590527961 instance=ExtResource("75_4jok7")]
@@ -2647,7 +2607,7 @@ position = Vector2(6803, 103)
 position = Vector2(25388.002, 5297)
 scale = Vector2(5.72, 7.123382)
 script = ExtResource("89_ivcsp")
-search_spots = Array[NodePath]([NodePath("")])
+search_spots = Array[NodePath]([])
 
 [node name="Fridge" parent="." unique_id=1816588780 instance=ExtResource("108_dlf1h")]
 position = Vector2(7403, 10621)

@@ -292,8 +292,6 @@
 │   ├── cycles
 │   │   ├── archive(trash)
 │   │   │   ├── level_04_old_trash.tscn
-│   │   │   ├── level_05_corridor_distortion.gd
-│   │   │   ├── level_05_corridor_distortion.gd.uid
 │   │   │   ├── level_05_keystests.tscn
 │   │   │   ├── level_06.tscn
 │   │   │   ├── level_07_doors_save.tscn
@@ -301,6 +299,8 @@
 │   │   │   ├── level_test_enemies2.tscn
 │   │   │   └── trashhh.tscn
 │   │   ├── TextureDistortionManager.tscn
+│   │   ├── corridor_distortion.gd
+│   │   ├── corridor_distortion.gd.uid
 │   │   ├── crazy_level_event.gd
 │   │   ├── crazy_level_event.gd.uid
 │   │   ├── cycle_state.gd

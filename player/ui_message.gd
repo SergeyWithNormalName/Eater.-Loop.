@@ -320,9 +320,6 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			hide_note()
 
-func show_text(text: String, duration: float = -1.0) -> void:
-	show_notification(text, duration)
-
 func show_notification(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":
@@ -330,12 +327,6 @@ func show_notification(text: String, duration: float = -1.0) -> void:
 	_label.text = tr(t)
 	_label.visible = true
 	_timer.start(duration if duration > 0.0 else default_duration)
-
-func show_message(text: String, duration: float = -1.0) -> void:
-	show_notification(text, duration)
-
-func show_subtitle(text: String, duration: float = -1.0) -> void:
-	show_dialogue(text, null, duration)
 
 func show_dialogue(text: String, voice: AudioStream = null, duration: float = -1.0, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	var t := text.strip_edges()

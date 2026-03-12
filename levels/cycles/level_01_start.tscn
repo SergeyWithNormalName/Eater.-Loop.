@@ -212,8 +212,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_4cwao")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Toilet" type="Node2D" parent="." unique_id=844565248]
@@ -303,8 +301,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_4cwao")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Hall" type="Node2D" parent="." unique_id=1321091505]
@@ -651,8 +647,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" unique_id=1963952830 instance=ExtResource("82_5lo1f")]
@@ -664,8 +658,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" unique_id=235978318 instance=ExtResource("82_5lo1f")]
@@ -678,8 +670,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("14_m3n5y")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" unique_id=334125368 instance=ExtResource("82_5lo1f")]
@@ -692,8 +682,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("15_qr0f4")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" unique_id=2019841809 instance=ExtResource("82_5lo1f")]
@@ -706,8 +694,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("15_qr0f4")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Fridge" parent="Hall/InteractableObjects" unique_id=293320804 instance=ExtResource("46_7kpgv")]
@@ -944,8 +930,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=1906100001 instance=ExtResource("74_goh1n")]
