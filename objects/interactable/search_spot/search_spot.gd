@@ -34,7 +34,7 @@ func _on_interact() -> void:
 		return
 	if is_searched_empty:
 		if UIMessage:
-			UIMessage.show_text(searched_empty_message)
+			UIMessage.show_notification(searched_empty_message)
 		return
 	if minigame_scene == null:
 		push_warning("SearchSpot: minigame_scene не задан.")
@@ -42,7 +42,6 @@ func _on_interact() -> void:
 
 	var minigame = minigame_scene.instantiate()
 	_current_minigame = minigame
-	_add_minigame_to_scene(minigame)
 
 	if minigame.has_method("setup"):
 		var layout_payload: Dictionary = {}
@@ -66,7 +65,9 @@ func _on_interact() -> void:
 		settings.block_player_movement = true
 		settings.allow_pause_menu = false
 		settings.allow_cancel_action = true
-		MinigameController.start_minigame(minigame, settings)
+		start_managed_minigame(minigame, settings)
+	else:
+		attach_minigame(minigame)
 
 func _on_minigame_finished(minigame: Node, success: bool) -> void:
 	if minigame != _current_minigame:
@@ -90,15 +91,3 @@ func _mark_all_spots_searched_empty() -> void:
 		return
 	if manager.has_method("mark_all_spots_searched_empty"):
 		manager.mark_all_spots_searched_empty()
-
-func _add_minigame_to_scene(minigame: Node) -> void:
-	if minigame == null:
-		return
-	if MinigameController and MinigameController.has_method("attach_minigame"):
-		MinigameController.attach_minigame(minigame)
-		return
-	var parent := get_tree().current_scene
-	if parent == null:
-		parent = get_tree().root
-	if parent:
-		parent.add_child(minigame)

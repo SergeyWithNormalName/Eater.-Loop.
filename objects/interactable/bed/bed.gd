@@ -21,7 +21,10 @@ var _is_sleeping: bool = false # Защита от повторного нажа
 func _ready() -> void:
 	super._ready()
 	input_pickable = false
-	if GameState.pending_sleep_spawn:
+	if GameState != null and GameState.has_method("consume_pending_sleep_spawn") and GameState.consume_pending_sleep_spawn():
+		if UIMessage and sleep_sfx != null:
+			UIMessage.play_sfx(sleep_sfx)
+	elif GameState.pending_sleep_spawn:
 		if UIMessage and sleep_sfx != null:
 			UIMessage.play_sfx(sleep_sfx)
 		GameState.pending_sleep_spawn = false
@@ -32,14 +35,19 @@ func _on_interact() -> void:
 	_try_sleep()
 
 func _try_sleep() -> void:
-	if not GameState.ate_this_cycle:
-		UIMessage.show_text(not_ate_message)
+	var ate_this_cycle := false
+	if GameState != null and GameState.has_method("has_eaten_this_cycle"):
+		ate_this_cycle = bool(GameState.has_eaten_this_cycle())
+	else:
+		ate_this_cycle = bool(GameState.ate_this_cycle)
+	if not ate_this_cycle:
+		UIMessage.show_notification(not_ate_message)
 		return
 	if require_light_for_sleep and not _is_bedroom_light_on():
 		var message := no_bedroom_light_message
 		if message == null or str(message).strip_edges() == "":
 			message = DEFAULT_NO_LIGHT_MESSAGE
-		UIMessage.show_text(str(message))
+		UIMessage.show_notification(str(message))
 		return
 
 	_is_sleeping = true
@@ -58,11 +66,16 @@ func _try_sleep() -> void:
 		await UIMessage.fade_in(0.4)
 		return
 	
-	GameState.pending_sleep_spawn = true
+	if GameState != null and GameState.has_method("queue_sleep_spawn"):
+		GameState.queue_sleep_spawn()
+	else:
+		GameState.pending_sleep_spawn = true
 	var sleep_delay := _get_sleep_sfx_delay()
-	await UIMessage.change_scene_with_fade_delay(next_level_scene, 0.4, sleep_delay, func():
+	await UIMessage.change_scene_with_fade_delay(next_level_scene, 0.4, sleep_delay, Callable(self, "_advance_cycle_before_sleep_scene_change"))
+
+func _advance_cycle_before_sleep_scene_change() -> void:
+	if GameState != null:
 		GameState.next_cycle()
-	)
 
 func _is_bedroom_light_on() -> bool:
 	var lamps := get_tree().get_nodes_in_group("bedroom_lamp")

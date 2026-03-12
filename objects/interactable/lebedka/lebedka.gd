@@ -90,23 +90,22 @@ func _apply_winch_effects() -> void:
 	set_prompts_enabled(false)
 	complete_interaction()
 
-func _get_fridge_target() -> Node2D:
+func _get_fridge_target() -> Node:
 	if fridge_path.is_empty():
 		push_warning("Lebedka: fridge_path is not assigned.")
 		return null
 	
-	var fridge := get_node_or_null(fridge_path) as Node2D
-	if fridge == null:
-		push_warning("Lebedka: fridge_path does not point to Node2D.")
+	var fridge := get_node_or_null(fridge_path)
+	if fridge == null or not fridge.has_method("apply_winch_release_state"):
+		push_warning("Lebedka: fridge_path does not point to Fridge.")
 		return null
 	
 	return fridge
 
-func _apply_fridge_winch_state(fridge: Node2D) -> void:
+func _apply_fridge_winch_state(fridge: Node) -> void:
 	if fridge == null:
 		return
-	if fridge.has_method("apply_winch_release_state"):
-		fridge.call("apply_winch_release_state")
+	fridge.call("apply_winch_release_state")
 
 func _apply_used_visual() -> void:
 	if _sprite and used_sprite:

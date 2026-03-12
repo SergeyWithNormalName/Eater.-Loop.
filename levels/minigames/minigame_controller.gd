@@ -196,19 +196,13 @@ func finish_minigame_with_fade(minigame: Node, success: bool = true, on_black: C
 		return
 	if not _can_run_transition(minigame_finish_fade_time):
 		_finalize_minigame_finish(minigame, success)
-		if on_black.is_valid():
-			on_black.call()
-		if on_finished.is_valid():
-			on_finished.call()
+		_call_callable_if_alive(on_black)
+		_call_callable_if_alive(on_finished)
 		return
-	_enqueue_transition(minigame_finish_fade_time, func():
-		_finalize_minigame_finish(minigame, success)
-		_set_minigame_visible(minigame, false)
-		if on_black.is_valid():
-			on_black.call()
-	, func():
-		if on_finished.is_valid():
-			on_finished.call()
+	_enqueue_transition(
+		minigame_finish_fade_time,
+		Callable(self, "_finish_minigame_transition_on_black").bind(minigame, success, on_black),
+		on_finished
 	)
 
 func stop_minigame_music(fade_time: float = -1.0) -> void:
@@ -396,16 +390,12 @@ func _request_start_transition(minigame: Node) -> void:
 	if not _can_run_transition(minigame_start_fade_time):
 		return
 	_set_minigame_visible(minigame, false)
-	_enqueue_transition(minigame_start_fade_time, func():
-		_set_minigame_visible(minigame, true)
-	)
+	_enqueue_transition(minigame_start_fade_time, Callable(self, "_set_minigame_visibility_bound").bind(minigame, true))
 
 func _request_finish_transition(minigame: Node) -> void:
 	if not _can_run_transition(minigame_finish_fade_time):
 		return
-	_enqueue_transition(minigame_finish_fade_time, func():
-		_set_minigame_visible(minigame, false)
-	)
+	_enqueue_transition(minigame_finish_fade_time, Callable(self, "_set_minigame_visibility_bound").bind(minigame, false))
 
 func _enqueue_transition(duration: float, on_black: Callable = Callable(), on_finished: Callable = Callable()) -> void:
 	_transition_queue.append({"duration": duration, "on_black": on_black, "on_finished": on_finished})
@@ -423,20 +413,13 @@ func _play_next_transition() -> void:
 	var on_black: Callable = entry.get("on_black", Callable())
 	var on_finished: Callable = entry.get("on_finished", Callable())
 	if duration <= 0.0:
-		if on_black.is_valid():
-			on_black.call()
-		if on_finished.is_valid():
-			on_finished.call()
+		_call_callable_if_alive(on_black)
+		_call_callable_if_alive(on_finished)
 		_transition_active = false
 		_play_next_transition()
 		return
 	if UIMessage and UIMessage.has_method("play_fade_sequence"):
-		UIMessage.play_fade_sequence(duration, duration, on_black, func():
-			if on_finished.is_valid():
-				on_finished.call()
-			_transition_active = false
-			_play_next_transition()
-		)
+		UIMessage.play_fade_sequence(duration, duration, on_black, Callable(self, "_on_transition_fade_finished").bind(on_finished))
 	else:
 		_transition_active = false
 		_play_next_transition()
@@ -526,10 +509,7 @@ func _handle_cancel_request() -> void:
 		_active_minigame.call("on_minigame_cancel")
 		return
 	var minigame := _active_minigame
-	finish_minigame_with_fade(minigame, false, func():
-		if minigame != null and is_instance_valid(minigame) and minigame.is_inside_tree():
-			minigame.queue_free()
-	)
+	finish_minigame_with_fade(minigame, false, Callable(self, "_queue_free_minigame_if_alive").bind(minigame))
 
 func _resolve_settings(config: Variant) -> MinigameSettings:
 	if config is MinigameSettings:
@@ -563,6 +543,55 @@ func _resolve_settings(config: Variant) -> MinigameSettings:
 		if config.has("allow_cancel_action"):
 			settings.allow_cancel_action = bool(config.get("allow_cancel_action"))
 	return settings
+
+func _set_minigame_visibility_bound(minigame: Variant, visible: bool) -> void:
+	if minigame == null or not is_instance_valid(minigame):
+		return
+	if not (minigame is Node):
+		return
+	var target := minigame as Node
+	if target == null:
+		return
+	_set_minigame_visible(target, visible)
+
+func _finish_minigame_transition_on_black(minigame: Variant, success: bool, callback: Callable) -> void:
+	if minigame == null or not is_instance_valid(minigame):
+		return
+	if not (minigame is Node):
+		return
+	var target := minigame as Node
+	if target == null:
+		return
+	_finalize_minigame_finish(target, success)
+	_set_minigame_visible(target, false)
+	_call_callable_if_alive(callback)
+
+func _on_transition_fade_finished(callback: Callable) -> void:
+	_call_callable_if_alive(callback)
+	_transition_active = false
+	_play_next_transition()
+
+func _queue_free_minigame_if_alive(minigame: Variant) -> void:
+	if minigame == null or not is_instance_valid(minigame):
+		return
+	if not (minigame is Node):
+		return
+	var target := minigame as Node
+	if target != null and target.is_inside_tree():
+		target.queue_free()
+
+func _call_callable_if_alive(callback: Callable) -> void:
+	if callback.is_null():
+		return
+	if callback.is_standard():
+		var target := callback.get_object()
+		if target != null and not is_instance_valid(target):
+			return
+	elif callback.is_custom():
+		var custom_target := callback.get_object()
+		if custom_target != null and not is_instance_valid(custom_target):
+			return
+	callback.call()
 
 func _apply_registered_gamepad_scheme(minigame: Node) -> void:
 	if _gamepad_runtime == null:

@@ -131,5 +131,5 @@ func get_prompt_world_position() -> Vector2:
 func _clear_obstacle() -> void:
 	_hide_prompt()
 	if cleared_message.strip_edges() != "":
-		UIMessage.show_text(cleared_message)
+		UIMessage.show_notification(cleared_message)
 	queue_free()

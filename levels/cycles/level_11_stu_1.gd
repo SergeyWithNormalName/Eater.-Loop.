@@ -36,45 +36,34 @@ func _configure_note_dependency() -> void:
 	if _note_story == null or _fridge == null:
 		return
 
-	_note_story.dependency_object = _fridge
-	if _note_story.has_method("_setup_dependency_listener"):
-		_note_story.call("_setup_dependency_listener")
-	if _note_story.has_method("_refresh_prompt_state"):
-		_note_story.call("_refresh_prompt_state")
+	_note_story.set_dependency_object(_fridge)
+	_note_story.refresh_interaction_state()
 
 func _on_fridge_successfully_interacted() -> void:
 	if _fridge != null:
 		_fridge.is_completed = true
 	_apply_door_lock_state(true)
 	_apply_to701_target(true)
-	if _note_story != null and _note_story.has_method("_refresh_prompt_state"):
-		_note_story.call("_refresh_prompt_state")
+	if _note_story != null:
+		_note_story.refresh_interaction_state()
 
 func _apply_door_lock_state(is_locked_state: bool) -> void:
-	if _door_in604 == null:
+	if _door_in604 == null or not _door_in604.has_method("set_locked"):
 		return
-	if not _has_property(_door_in604, "is_locked"):
-		return
-	_door_in604.set("is_locked", is_locked_state)
+	_door_in604.call("set_locked", is_locked_state)
 
 func _apply_to701_target(fridge_done: bool) -> void:
-	if _door_to701 == null:
-		return
-	if not _has_property(_door_to701, "target_marker"):
+	if _door_to701 == null or not _door_to701.has_method("set_target_marker_path"):
 		return
 
 	var target_marker: NodePath = door_to701_target_after_fridge if fridge_done else door_to701_target_before_fridge
 	if target_marker.is_empty():
 		return
-	_door_to701.set("target_marker", target_marker)
+	_door_to701.call("set_target_marker_path", target_marker)
 
 func _is_fridge_success_done() -> bool:
 	if GameState == null:
 		return _fridge != null and _fridge.is_completed
+	if GameState.has_method("is_fridge_interacted"):
+		return bool(GameState.is_fridge_interacted())
 	return bool(GameState.fridge_interacted)
-
-func _has_property(node: Object, property_name: String) -> bool:
-	for info in node.get_property_list():
-		if String(info.name) == property_name:
-			return true
-	return false

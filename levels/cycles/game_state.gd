@@ -3,6 +3,7 @@ extends Node
 @warning_ignore("unused_signal")
 signal lab_completed
 signal lab_completed_with_id(lab_id: String)
+signal ate_this_cycle_changed(is_ate: bool)
 signal phone_picked_changed
 signal fridge_interacted_changed
 signal electricity_changed(is_on: bool)
@@ -37,7 +38,7 @@ func _ready() -> void:
 		_load_run_state()
 
 func next_cycle() -> void:
-	ate_this_cycle = false
+	_set_ate_this_cycle(false)
 	fridge_interacted = false
 	lab_done = false
 	completed_labs = PackedStringArray()
@@ -46,7 +47,10 @@ func next_cycle() -> void:
 	_save_run_state()
 
 func mark_ate() -> void:
-	ate_this_cycle = true
+	_set_ate_this_cycle(true)
+
+func has_eaten_this_cycle() -> bool:
+	return ate_this_cycle
 
 func mark_phone_picked() -> void:
 	if phone_picked:
@@ -59,6 +63,9 @@ func mark_fridge_interacted() -> void:
 		return
 	fridge_interacted = true
 	fridge_interacted_changed.emit()
+
+func is_fridge_interacted() -> bool:
+	return fridge_interacted
 
 func mark_unique_feeding_intro_played() -> void:
 	if unique_feeding_intro_played:
@@ -81,7 +88,7 @@ func set_current_scene_path(path: String) -> void:
 	_save_run_state()
 
 func reset_cycle_state() -> void:
-	ate_this_cycle = false
+	_set_ate_this_cycle(false)
 	fridge_interacted = false
 	phone_picked = false
 	lab_done = false
@@ -92,7 +99,7 @@ func reset_cycle_state() -> void:
 	_save_run_state()
 
 func reset_run() -> void:
-	ate_this_cycle = false
+	_set_ate_this_cycle(false)
 	lab_done = false
 	completed_labs = PackedStringArray()
 	phone_picked = false
@@ -104,6 +111,9 @@ func reset_run() -> void:
 	set_phase(Phase.NORMAL)
 	last_scene_path = ""
 	has_active_run = false
+	_save_run_state()
+
+func autosave_run() -> void:
 	_save_run_state()
 
 func _save_run_state() -> void:
@@ -137,7 +147,7 @@ func _load_run_state() -> void:
 	phone_picked = bool(config.get_value("run", "phone_picked", phone_picked))
 	fridge_interacted = bool(config.get_value("run", "fridge_interacted", fridge_interacted))
 	unique_feeding_intro_played = bool(config.get_value("run", "unique_feeding_intro_played", unique_feeding_intro_played))
-	ate_this_cycle = bool(config.get_value("run", "ate_this_cycle", ate_this_cycle))
+	_set_ate_this_cycle(bool(config.get_value("run", "ate_this_cycle", ate_this_cycle)))
 	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
 	pending_sleep_spawn = false
 	pending_respawn_blackout = false
@@ -161,6 +171,45 @@ func is_lab_completed(lab_id: String = "") -> bool:
 	if normalized_id == "":
 		return lab_done
 	return completed_labs.has(normalized_id)
+
+func has_completed_any_lab() -> bool:
+	return lab_done
+
+func queue_sleep_spawn() -> void:
+	pending_sleep_spawn = true
+
+func has_pending_sleep_spawn() -> bool:
+	return pending_sleep_spawn
+
+func consume_pending_sleep_spawn() -> bool:
+	if not pending_sleep_spawn:
+		return false
+	pending_sleep_spawn = false
+	return true
+
+func queue_respawn_blackout() -> void:
+	pending_respawn_blackout = true
+
+func has_pending_respawn_blackout() -> bool:
+	return pending_respawn_blackout
+
+func consume_pending_respawn_blackout() -> bool:
+	if not pending_respawn_blackout:
+		return false
+	pending_respawn_blackout = false
+	return true
+
+func get_last_scene_path() -> String:
+	return last_scene_path
+
+func has_active_run_state() -> bool:
+	return has_active_run
+
+func _set_ate_this_cycle(value: bool) -> void:
+	if ate_this_cycle == value:
+		return
+	ate_this_cycle = value
+	ate_this_cycle_changed.emit(ate_this_cycle)
 
 func _coerce_string_array(value: Variant) -> Array[String]:
 	var result: Array[String] = []

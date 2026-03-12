@@ -1,4 +1,5 @@
 extends Node
+class_name Level12MoneySystem
 
 signal money_changed(current_money: int, delta: int, reason: String)
 signal passage_check(current_money: int, required_money: int, can_pass: bool)

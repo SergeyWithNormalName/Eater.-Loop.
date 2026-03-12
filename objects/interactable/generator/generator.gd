@@ -22,7 +22,7 @@ func _on_interact() -> void:
 	# Если уже включен — просто пишем сообщение
 	if is_completed:
 		if UIMessage:
-			UIMessage.show_message("Генератор работает стабильно.")
+			UIMessage.show_notification("Генератор работает стабильно.")
 		return
 
 	# --- ЛОГИКА ЗАПУСКА ---
@@ -53,7 +53,7 @@ func _on_interact() -> void:
 	_activate_required_lamps_in_scene()
 	
 	if UIMessage:
-		UIMessage.show_message("Питание восстановлено!")
+		UIMessage.show_notification("Питание восстановлено!")
 
 	# 4. Фиксируем успех
 	complete_interaction()

@@ -21,7 +21,7 @@ extends "res://levels/menu/menu_base.gd"
 @export_range(5.0, 200.0, 1.0) var credits_scroll_speed: float = 40.0
 
 @export_group("Дисклеймер")
-@export_range(1.0, 60.0, 1.0) var disclaimer_auto_hide_time: float = 15.0
+@export_range(1.0, 180.0, 1.0) var disclaimer_auto_hide_time: float = 120.0
 @export_range(0.1, 3.0, 0.05) var disclaimer_reveal_time: float = 1.05
 @export_range(16, 42, 1) var disclaimer_body_font_size: int = 30
 @export_range(12, 32, 1) var disclaimer_body_font_min_size: int = 20
@@ -122,7 +122,11 @@ func _connect_buttons() -> void:
 		_settings_panel.connect("closed", _hide_settings)
 
 func _update_continue_state() -> void:
-	var can_continue := GameState != null and GameState.has_active_run and GameState.last_scene_path != ""
+	var can_continue := false
+	if GameState != null and GameState.has_method("has_active_run_state") and GameState.has_method("get_last_scene_path"):
+		can_continue = GameState.has_active_run_state() and GameState.get_last_scene_path() != ""
+	elif GameState != null:
+		can_continue = GameState.has_active_run and GameState.last_scene_path != ""
 	_continue_button.disabled = not can_continue
 
 func _show_main() -> void:
@@ -173,7 +177,10 @@ func _start_new_game(_unused_difficulty: int = 0) -> void:
 	if GameState:
 		GameState.reset_run()
 		GameState.set_current_scene_path(new_game_scene.resource_path)
-		GameState.pending_sleep_spawn = true
+		if GameState.has_method("queue_sleep_spawn"):
+			GameState.queue_sleep_spawn()
+		else:
+			GameState.pending_sleep_spawn = true
 	_stop_menu_music()
 	await UIMessage.change_scene_with_fade_delay(new_game_scene, 0.4, _get_sleep_sfx_delay())
 
@@ -188,11 +195,16 @@ func _get_sleep_sfx_delay() -> float:
 func _start_continue() -> void:
 	if GameState == null:
 		return
-	if GameState.last_scene_path == "":
+	var scene_path := ""
+	if GameState.has_method("get_last_scene_path"):
+		scene_path = String(GameState.get_last_scene_path())
+	else:
+		scene_path = String(GameState.last_scene_path)
+	if scene_path == "":
 		return
-	var scene := load(GameState.last_scene_path) as PackedScene
+	var scene := load(scene_path) as PackedScene
 	if scene == null:
-		push_warning("MainMenu: не удалось загрузить сцену продолжения: %s" % GameState.last_scene_path)
+		push_warning("MainMenu: не удалось загрузить сцену продолжения: %s" % scene_path)
 		return
 	_stop_menu_music()
 	await UIMessage.change_scene_with_fade(scene)

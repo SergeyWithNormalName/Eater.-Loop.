@@ -1,4 +1,7 @@
 extends InteractiveObject
+class_name Fridge
+
+signal feeding_finished
 
 
 @export_group("Minigame (Feeding)")
@@ -114,13 +117,16 @@ func _on_interact() -> void:
 		return
 
 	# 0. Проверка: лабораторная не завершена
-	if require_lab_completion and not GameState.lab_done:
+	if require_lab_completion and not _has_required_lab_completion():
 		_show_locked_message()
 		return
 
 	# 1. Проверка: уже ел?
-	if GameState.ate_this_cycle:
-		UIMessage.show_text("Я уже поел.")
+	if GameState != null and GameState.has_method("has_eaten_this_cycle") and GameState.has_eaten_this_cycle():
+		UIMessage.show_notification("Я уже поел.")
+		return
+	if GameState != null and bool(GameState.ate_this_cycle):
+		UIMessage.show_notification("Я уже поел.")
 		return
 	
 	# 2. Если замок закрыт — запускаем взлом
@@ -159,7 +165,7 @@ func _start_code_lock() -> void:
 	)
 
 	# 4. Добавляем замок на сцену (поверх всего, но внутри текущей сцены)
-	_add_minigame_to_scene(lock_instance)
+	attach_minigame(lock_instance)
 	
 	# 5. Активируем режим взаимодействия (старт мини-игры обрабатывает сам замок)
 	_is_interacting = true
@@ -169,7 +175,7 @@ func _start_code_lock() -> void:
 func _on_unlock_success() -> void:
 	_code_unlocked = true
 	_is_interacting = false
-	UIMessage.show_text("Замок открыт.")
+	UIMessage.show_notification("Замок открыт.")
 	_update_visuals()
 	
 	# Сразу после взлома можно предложить поесть или заставить нажать Е еще раз.
@@ -198,7 +204,7 @@ func _start_feeding_process() -> void:
 	# Запуск игры
 	var game = selected_scene.instantiate()
 	_current_minigame = game
-	_add_minigame_to_scene(game)
+	attach_minigame(game)
 	_mark_unique_intro_as_played(selected_scene)
 	
 	# Передаем параметры (как в твоем старом скрипте)
@@ -246,14 +252,13 @@ func _on_feeding_finished() -> void:
 
 func _finish_feeding_logic() -> void:
 	GameState.mark_ate()
-	UIMessage.show_text("Вкуснятина")
+	UIMessage.show_notification("Вкуснятина")
 	
 	if GameState.has_method("mark_fridge_interacted"):
 		GameState.mark_fridge_interacted()
-
-	var current_level = get_tree().current_scene
-	if current_level.has_method("on_fed_andrey"):
-		current_level.on_fed_andrey()
+	if GameState.has_method("autosave_run"):
+		GameState.autosave_run()
+	feeding_finished.emit()
 
 	# ВАЖНО: Помечаем объект выполненным только ПОСЛЕ еды.
 	# Теперь Ноутбук (зависящий от Холодильника) станет доступен.
@@ -262,9 +267,9 @@ func _finish_feeding_logic() -> void:
 	_teleport_player_if_needed()
 
 func _show_locked_message() -> void:
-	if require_lab_completion and not GameState.lab_done:
+	if require_lab_completion and not _has_required_lab_completion():
 		if UIMessage and UIMessage.has_method("show_message"):
-			UIMessage.show_message(lab_required_message)
+			UIMessage.show_notification(lab_required_message)
 		else:
 			print("LOCKED: " + lab_required_message)
 		return
@@ -274,14 +279,18 @@ func _show_access_code_failed_message() -> void:
 	var message := access_code_failed_message.strip_edges()
 	if message == "":
 		return
-	if UIMessage and UIMessage.has_method("show_text"):
-		UIMessage.show_text(message)
+	if UIMessage and UIMessage.has_method("show_notification"):
+		UIMessage.show_notification(message)
+	else:
+		print("LOCKED: " + message)
 
 # --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
 func _update_visuals() -> void:
 	# Доступен, если не требуется код/лаба ИЛИ условия выполнены
 	var is_unlocked := (not require_access_code or _code_unlocked)
-	if require_lab_completion and not GameState.lab_done:
+	if require_lab_completion and not _has_required_lab_completion():
+		is_unlocked = false
+	if dependency_object != null and not dependency_object.is_completed:
 		is_unlocked = false
 	
 	if is_unlocked:
@@ -296,6 +305,13 @@ func _update_visuals() -> void:
 		if _available_light_secondary: _available_light_secondary.visible = false
 	_update_rocking_pivot()
 
+func refresh_visual_state() -> void:
+	_update_visuals()
+
+func _on_dependency_finished() -> void:
+	super._on_dependency_finished()
+	_update_visuals()
+
 func _teleport_player_if_needed() -> void:
 	if not enable_teleport or teleport_target.is_empty():
 		return
@@ -304,6 +320,13 @@ func _teleport_player_if_needed() -> void:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
 			player.global_position = marker.global_position
+
+func _has_required_lab_completion() -> bool:
+	if GameState == null:
+		return false
+	if GameState.has_method("has_completed_any_lab"):
+		return bool(GameState.has_completed_any_lab())
+	return bool(GameState.lab_done)
 
 func _update_rocking_pivot() -> void:
 	if _sprite == null or _sprite.texture == null:
@@ -372,15 +395,3 @@ func apply_winch_release_state() -> void:
 	rocking_strength_degrees = 0.0
 	rocking_pivot_mode = 0
 	_update_rocking_pivot()
-
-func _add_minigame_to_scene(minigame: Node) -> void:
-	if minigame == null:
-		return
-	if MinigameController and MinigameController.has_method("attach_minigame"):
-		MinigameController.attach_minigame(minigame)
-		return
-	var parent := get_tree().current_scene
-	if parent == null:
-		parent = get_tree().root
-	if parent:
-		parent.add_child(minigame)

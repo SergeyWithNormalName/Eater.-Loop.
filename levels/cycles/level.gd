@@ -1,4 +1,5 @@
 extends Node2D
+class_name CycleLevel
 
 ## Cycle number for this level.
 @export var cycle_number: int = 1
@@ -86,7 +87,9 @@ func _show_start_subtitle() -> void:
 	if UIMessage == null:
 		return
 	_start_subtitle_shown = true
-	if UIMessage.has_method("show_subtitle"):
+	if UIMessage.has_method("show_dialogue"):
+		UIMessage.show_dialogue(text, null, start_subtitle_duration)
+	elif UIMessage.has_method("show_subtitle"):
 		UIMessage.show_subtitle(text, start_subtitle_duration)
 	elif UIMessage.has_method("show_text"):
 		UIMessage.show_text(text, start_subtitle_duration)
@@ -122,6 +125,8 @@ func _run_pending_respawn_blackout() -> void:
 func _consume_pending_respawn_blackout() -> bool:
 	if GameState == null:
 		return false
+	if GameState.has_method("consume_pending_respawn_blackout"):
+		return bool(GameState.consume_pending_respawn_blackout()) and respawn_blackout_enabled
 	if not bool(GameState.get("pending_respawn_blackout")):
 		return false
 	GameState.pending_respawn_blackout = false
@@ -143,3 +148,6 @@ func _resolve_default_wake_blackout_duration() -> float:
 			return _cached_default_wake_blackout_duration
 	_cached_default_wake_blackout_duration = DEFAULT_BLACKOUT_FALLBACK
 	return _cached_default_wake_blackout_duration
+
+func handle_custom_death_screen() -> bool:
+	return false

@@ -37,17 +37,12 @@ func _try_use_door() -> void:
 		return
 
 	var money_system := _resolve_money_system()
-	if money_system == null:
-		UIMessage.show_text("Система денег не настроена.")
+	if money_system == null or not money_system.has_method("try_open_blockpost"):
+		UIMessage.show_notification("Система денег не настроена.")
 		_play_sound(sfx_locked)
 		return
 
-	if not money_system.has_method("try_open_blockpost"):
-		UIMessage.show_text("Несовместимая версия системы денег.")
-		_play_sound(sfx_locked)
-		return
-
-	var can_pass := bool(money_system.call("try_open_blockpost", required_money))
+	var can_pass: bool = bool(money_system.call("try_open_blockpost", required_money))
 	if not can_pass:
 		_show_not_enough_money_feedback(true)
 		return
@@ -57,7 +52,7 @@ func _try_use_door() -> void:
 		_set_passage_block_enabled(false)
 
 	if access_granted_message.strip_edges() != "":
-		UIMessage.show_text(access_granted_message)
+		UIMessage.show_notification(access_granted_message)
 	_play_sound(sfx_open)
 
 func _resolve_money_system() -> Node:
@@ -67,13 +62,9 @@ func _resolve_money_system() -> Node:
 
 func _can_afford_passage() -> bool:
 	var money_system := _resolve_money_system()
-	if money_system == null:
+	if money_system == null or not money_system.has_method("has_enough_money"):
 		return false
-	if money_system.has_method("has_enough_money"):
-		return bool(money_system.call("has_enough_money", required_money))
-	if money_system.has_method("get_money"):
-		return int(money_system.call("get_money")) >= required_money
-	return false
+	return bool(money_system.call("has_enough_money", required_money))
 
 func _show_not_enough_money_feedback(force: bool) -> void:
 	if not force:
@@ -83,7 +74,7 @@ func _show_not_enough_money_feedback(force: bool) -> void:
 		_last_touch_warning_time = now
 
 	if not_enough_money_message.strip_edges() != "":
-		UIMessage.show_text(not_enough_money_message)
+		UIMessage.show_notification(not_enough_money_message)
 	_play_sound(sfx_locked)
 
 func _set_passage_block_enabled(enabled: bool) -> void:

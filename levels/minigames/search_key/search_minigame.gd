@@ -205,7 +205,7 @@ func _on_key_pressed() -> void:
 	if player and player.has_method("add_key"):
 		player.add_key(key_id)
 	if UIMessage:
-		UIMessage.show_text("Найден ключ!")
+		UIMessage.show_notification("Найден ключ!")
 	_close_minigame(true)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -218,11 +218,12 @@ func on_minigame_cancel() -> void:
 
 func _close_minigame(success: bool) -> void:
 	if MinigameController:
-		MinigameController.finish_minigame_with_fade(self, success, func():
-			queue_free()
-		)
+		MinigameController.finish_minigame_with_fade(self, success, Callable(self, "_queue_free_after_close"))
 	else:
 		queue_free()
+
+func _queue_free_after_close() -> void:
+	queue_free()
 
 func _exit_tree() -> void:
 	if MinigameController:

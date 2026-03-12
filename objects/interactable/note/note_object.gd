@@ -37,7 +37,7 @@ func _on_interact() -> void:
 	if note_texture:
 		UIMessage.show_note(note_texture)
 	else:
-		UIMessage.show_text("Тут ничего не написано.") # Заглушка, если забыл картинку
+		UIMessage.show_notification("Тут ничего не написано.") # Заглушка, если забыл картинку
 	_play_read_audio_if_set()
 	_give_reward_key()
 
@@ -52,7 +52,7 @@ func _give_reward_key() -> void:
 
 	var subtitle_text := reward_subtitle.strip_edges()
 	if subtitle_text != "":
-		UIMessage.show_subtitle(subtitle_text)
+		UIMessage.show_dialogue(subtitle_text)
 
 func _play_read_audio_if_set() -> void:
 	if read_audio == null or _read_audio_player == null:

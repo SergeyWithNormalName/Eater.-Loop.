@@ -37,7 +37,7 @@ func _start_feeding_process() -> void:
 
 	var game := game_scene.instantiate()
 	_current_minigame = game
-	_add_minigame_to_scene(game)
+	attach_minigame(game)
 
 	if force_distortion_on_start:
 		_schedule_level_distortion()

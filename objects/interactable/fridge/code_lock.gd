@@ -68,11 +68,12 @@ func _update_display() -> void:
 
 func _close(success: bool) -> void:
 	if MinigameController:
-		MinigameController.finish_minigame_with_fade(self, success, func():
-			queue_free()
-		)
+		MinigameController.finish_minigame_with_fade(self, success, Callable(self, "_queue_free_after_close"))
 	else:
 		queue_free()
+
+func _queue_free_after_close() -> void:
+	queue_free()
 
 func _exit_tree() -> void:
 	if MinigameController:

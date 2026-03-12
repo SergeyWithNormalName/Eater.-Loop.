@@ -14,14 +14,14 @@ var _is_reward_in_progress: bool = false
 func _on_interact() -> void:
 	if _reward_given:
 		if already_given_message.strip_edges() != "":
-			UIMessage.show_text(already_given_message)
+			UIMessage.show_dialogue(already_given_message)
 		return
 	if _is_reward_in_progress:
 		return
 
 	_is_reward_in_progress = true
 	if talk_message.strip_edges() != "":
-		UIMessage.show_text(talk_message)
+		UIMessage.show_dialogue(talk_message)
 
 	await _play_reward_sequence()
 	_reward_given = true
@@ -37,11 +37,11 @@ func _play_reward_sequence() -> void:
 		await get_tree().create_timer(max(0.0, fade_out_duration)).timeout
 
 	var money_system := _resolve_money_system()
-	if money_system and money_system.has_method("add_money"):
-		money_system.call("add_money", reward_money, "Награда от студента")
+	if money_system != null:
+		money_system.add_money(reward_money, "Награда от студента")
 
 	if reward_message.strip_edges() != "":
-		UIMessage.show_text(reward_message)
+		UIMessage.show_notification(reward_message)
 
 	if UIMessage and UIMessage.has_method("fade_in"):
 		await UIMessage.fade_in(fade_in_duration)

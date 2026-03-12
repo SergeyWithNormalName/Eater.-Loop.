@@ -40,7 +40,7 @@ var is_completed: bool = false # <--- ФЛАГ: Выполнен объект и
 func _ready() -> void:
 	input_pickable = false
 	_setup_interaction_area()
-	_setup_dependency_listener()
+	set_dependency_object(dependency_object)
 
 # --- ЛОГИКА ВЗАИМОДЕЙСТВИЯ ---
 
@@ -49,6 +49,7 @@ func request_interact() -> void:
 	if not _can_interact():
 		return
 	if not _is_dependency_satisfied():
+		_show_locked_message()
 		return
 
 	# 2. ЕСЛИ ВСЁ ОК — ЗАПУСКАЕМ ДЕЙСТВИЕ
@@ -72,7 +73,9 @@ func _on_interact() -> void:
 func _show_locked_message() -> void:
 	var localized_message := tr(locked_message)
 	# Используем твою систему UIMessage
-	if UIMessage and UIMessage.has_method("show_message"):
+	if UIMessage and UIMessage.has_method("show_notification"):
+		UIMessage.show_notification(localized_message)
+	elif UIMessage and UIMessage.has_method("show_message"):
 		UIMessage.show_message(localized_message)
 	else:
 		print("LOCKED: " + localized_message)
@@ -157,6 +160,45 @@ func set_prompts_enabled(enabled: bool) -> void:
 	_prompts_enabled = enabled
 	_refresh_prompt_state()
 
+func set_interaction_enabled(enabled: bool) -> void:
+	handle_input = enabled
+	set_prompts_enabled(enabled)
+
+func refresh_interaction_state() -> void:
+	_refresh_prompt_state()
+
+func set_dependency_object(new_dependency: InteractiveObject) -> void:
+	if dependency_object == new_dependency:
+		_refresh_prompt_state()
+		return
+	_disconnect_dependency_listener()
+	dependency_object = new_dependency
+	_setup_dependency_listener()
+	_refresh_prompt_state()
+
+func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> Node:
+	if minigame == null:
+		return null
+	if MinigameController and MinigameController.has_method("attach_minigame"):
+		MinigameController.attach_minigame(minigame, layer_override, parent_override)
+		return minigame
+	var parent := parent_override
+	if parent == null:
+		parent = get_tree().current_scene
+	if parent == null:
+		parent = get_tree().root
+	if parent != null:
+		parent.add_child(minigame)
+	return minigame
+
+func start_managed_minigame(minigame: Node, settings: Variant = null, layer_override: int = -1, parent_override: Node = null) -> Node:
+	if minigame == null:
+		return null
+	attach_minigame(minigame, layer_override, parent_override)
+	if settings != null and MinigameController and not MinigameController.is_active(minigame):
+		MinigameController.start_minigame(minigame, settings)
+	return minigame
+
 func _setup_dependency_listener() -> void:
 	if dependency_object == null:
 		return
@@ -164,6 +206,14 @@ func _setup_dependency_listener() -> void:
 		return
 	if not dependency_object.interaction_finished.is_connected(_on_dependency_finished):
 		dependency_object.interaction_finished.connect(_on_dependency_finished)
+
+func _disconnect_dependency_listener() -> void:
+	if dependency_object == null:
+		return
+	if not is_instance_valid(dependency_object):
+		return
+	if dependency_object.interaction_finished.is_connected(_on_dependency_finished):
+		dependency_object.interaction_finished.disconnect(_on_dependency_finished)
 
 func _on_dependency_finished() -> void:
 	_refresh_prompt_state()

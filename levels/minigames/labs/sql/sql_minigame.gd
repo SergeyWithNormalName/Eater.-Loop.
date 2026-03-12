@@ -1,12 +1,6 @@
-extends Control
-
-
-signal task_completed(success: bool)
+extends "res://levels/minigames/labs/timed_lab_minigame_base.gd"
 
 # --- Настройки ---
-@export var time_limit: float = 60.0
-@export var penalty_time: float = 15.0
-
 # --- Данные заданий ---
 var tasks = [
 	{
@@ -30,12 +24,8 @@ var tasks = [
 ]
 
 var current_task_index = 0
-var current_time = 0.0
 var _is_finished: bool = false
 var _gamepad_selected_word: String = ""
-var lab_completion_id: String = ""
-
-const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 const COLOR_KEYWORD := Color(0.337255, 0.611765, 0.839216)
 const STATUS_TEMPLATE := " SQL | UTF-8 | ВРЕМЯ: %.1f сек | LN 1, COL 1"
 const MONO_FONT_NAMES := ["JetBrains Mono", "Menlo", "Consolas", "Courier New", "Courier"]
@@ -53,11 +43,10 @@ var slot_scene = preload("res://levels/minigames/ui/drop_slot.tscn")
 var word_scene = preload("res://levels/minigames/ui/drag_word.tscn")
 
 func _ready():
-	add_to_group("minigame_ui")
-	process_mode = Node.PROCESS_MODE_ALWAYS
 	_mono_font_bold = _build_mono_font(600)
 
-	_start_minigame_session()
+	start_timed_lab_session(Callable(self, "_on_time_updated"), Callable(self, "_on_time_expired"))
+	_update_status_label()
 	load_task(0)
 	_register_gamepad_scheme()
 
@@ -162,62 +151,18 @@ func finish_game(success: bool):
 		return
 	_is_finished = true
 	if MinigameController:
-		MinigameController.finish_minigame_with_fade(self, success, func():
-			task_completed.emit(success)
-			
-			if success:
-				print("Лабораторная выполнена!")
-			else:
-				print("Время вышло! Штраф.")
-				var gd = get_node_or_null("/root/GameDirector")
-				if gd:
-					gd.reduce_time(penalty_time)
-
-			var game_state_in_callback = get_node_or_null("/root/GameState")
-			if game_state_in_callback and game_state_in_callback.has_method("mark_lab_completed"):
-				game_state_in_callback.mark_lab_completed(lab_completion_id.strip_edges())
-
-			queue_free()
-		)
+		MinigameController.finish_minigame_with_fade(self, success, Callable(self, "_finalize_finish_after_fade").bind(success))
 		return
+	_finalize_finish_after_fade(success)
+
+func _finalize_finish_after_fade(success: bool) -> void:
 	task_completed.emit(success)
-	
 	if success:
 		print("Лабораторная выполнена!")
 	else:
 		print("Время вышло! Штраф.")
-		var gd = get_node_or_null("/root/GameDirector")
-		if gd:
-			gd.reduce_time(penalty_time)
-
-	var game_state = get_node_or_null("/root/GameState")
-	if game_state and game_state.has_method("mark_lab_completed"):
-		game_state.mark_lab_completed(lab_completion_id.strip_edges())
-
+	apply_standard_lab_outcome(success)
 	queue_free()
-
-func _start_minigame_session() -> void:
-	if MinigameController == null:
-		current_time = time_limit
-		_update_status_label()
-		return
-	_ensure_lab_music_loop()
-	if not MinigameController.is_active(self):
-		var settings := MinigameSettings.new()
-		settings.pause_game = false
-		settings.show_mouse_cursor = true
-		settings.block_player_movement = true
-		settings.time_limit = time_limit
-		settings.music_stream = LAB_MUSIC_STREAM
-		settings.music_fade_time = 0.0
-		settings.auto_finish_on_timeout = false
-		MinigameController.start_minigame(self, settings)
-	current_time = time_limit
-	_update_status_label()
-	if not MinigameController.minigame_time_updated.is_connected(_on_time_updated):
-		MinigameController.minigame_time_updated.connect(_on_time_updated)
-	if not MinigameController.minigame_time_expired.is_connected(_on_time_expired):
-		MinigameController.minigame_time_expired.connect(_on_time_expired)
 
 func _on_time_updated(minigame: Node, time_left: float, _time_limit: float) -> void:
 	if minigame != self:
@@ -236,30 +181,8 @@ func _build_mono_font(weight: int) -> SystemFont:
 	font.font_weight = weight
 	return font
 
-func _ensure_lab_music_loop() -> void:
-	var stream: AudioStream = LAB_MUSIC_STREAM
-	if stream is AudioStreamWAV:
-		var wav := stream as AudioStreamWAV
-		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
-			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
-		return
-	if stream is AudioStreamOggVorbis:
-		var ogg := stream as AudioStreamOggVorbis
-		ogg.loop = true
-		return
-	if stream is AudioStreamMP3:
-		var mp3 := stream as AudioStreamMP3
-		mp3.loop = true
-
 func _exit_tree() -> void:
-	if MinigameController:
-		MinigameController.clear_gamepad_scheme(self)
-		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
-			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
-		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
-			MinigameController.minigame_time_expired.disconnect(_on_time_expired)
-		if MinigameController.is_active(self):
-			MinigameController.finish_minigame(self, false)
+	cleanup_timed_lab(Callable(self, "_on_time_updated"), Callable(self, "_on_time_expired"))
 
 func _register_gamepad_scheme() -> void:
 	if MinigameController == null:

@@ -1,4 +1,5 @@
 extends InteractiveObject
+class_name Laptop
 
 
 @export_group("Lab Settings")
@@ -73,14 +74,7 @@ func _ready() -> void:
 	_is_ready = true
 	_apply_enabled_state()
 	
-	# Если у нас есть зависимость (Холодильник), подписываемся на её завершение,
-	# чтобы включить экран ноутбука, когда холодильник будет открыт.
-	if dependency_object:
-		if not dependency_object.interaction_finished.is_connected(_on_dependency_finished):
-			dependency_object.interaction_finished.connect(_on_dependency_finished)
-		if unlock_on_dependency_interaction:
-			if not dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
-				dependency_object.interaction_requested.connect(_on_dependency_interaction_requested)
+	_setup_dependency_interaction_listener()
 	
 	# Следим за завершением лаб через GameState
 	if GameState.has_signal("lab_completed"):
@@ -107,7 +101,6 @@ func _start_lab_minigame() -> void:
 		push_warning("Laptop: Не назначена сцена мини-игры!")
 		return
 	
-	# Создаем игру
 	var game = minigame_scene.instantiate()
 	_current_minigame = game
 	if game is Node:
@@ -119,18 +112,13 @@ func _start_lab_minigame() -> void:
 	if "lab_completion_id" in game:
 		game.lab_completion_id = lab_completion_id.strip_edges()
 	
-	# Добавляем на сцену (в отдельный CanvasLayer, чтобы UI не терялся из-за CanvasModulate/оверлеев)
-	_add_minigame_to_scene(game)
-	
-	# Запускаем через контроллер (для паузы, курсора и таймера)
-	if MinigameController and not MinigameController.is_active(game):
-		var settings := MinigameSettings.new()
-		settings.pause_game = false
-		settings.show_mouse_cursor = true
-		settings.block_player_movement = true
-		settings.time_limit = time_limit
-		settings.auto_finish_on_timeout = false
-		MinigameController.start_minigame(game, settings)
+	var settings := MinigameSettings.new()
+	settings.pause_game = false
+	settings.show_mouse_cursor = true
+	settings.block_player_movement = true
+	settings.time_limit = time_limit
+	settings.auto_finish_on_timeout = false
+	start_managed_minigame(game, settings)
 	
 	# Ловим момент закрытия игры
 	game.tree_exited.connect(_on_minigame_closed)
@@ -149,7 +137,7 @@ func _handle_completed_interaction() -> void:
 	if show_note_on_completed and completed_note_texture:
 		UIMessage.show_note(completed_note_texture)
 	else:
-		UIMessage.show_text(completed_message)
+		UIMessage.show_notification(completed_message)
 
 # --- ВИЗУАЛ ---
 func _on_dependency_finished() -> void:
@@ -162,6 +150,25 @@ func _on_dependency_interaction_requested(_player: Node = null) -> void:
 	if not _is_enabled:
 		is_enabled = true
 	_update_visuals()
+
+func set_dependency_object(new_dependency: InteractiveObject) -> void:
+	_disconnect_dependency_interaction_listener()
+	super.set_dependency_object(new_dependency)
+	_setup_dependency_interaction_listener()
+
+func _setup_dependency_interaction_listener() -> void:
+	if not unlock_on_dependency_interaction:
+		return
+	if dependency_object == null or not is_instance_valid(dependency_object):
+		return
+	if not dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
+		dependency_object.interaction_requested.connect(_on_dependency_interaction_requested)
+
+func _disconnect_dependency_interaction_listener() -> void:
+	if dependency_object == null or not is_instance_valid(dependency_object):
+		return
+	if dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
+		dependency_object.interaction_requested.disconnect(_on_dependency_interaction_requested)
 
 func _update_visuals() -> void:
 	# Ноутбук "доступен" (светится), если зависимость выполнена.
@@ -200,7 +207,7 @@ func _show_prompt() -> void:
 	super._show_prompt()
 
 func _apply_enabled_state() -> void:
-	set_prompts_enabled(_is_enabled)
+	set_interaction_enabled(_is_enabled)
 	_update_visuals()
 
 func _is_lab_completed() -> bool:
@@ -211,6 +218,8 @@ func _is_lab_completed() -> bool:
 		if GameState.has_method("is_lab_completed"):
 			return bool(GameState.is_lab_completed(local_id))
 		return false
+	if GameState.has_method("has_completed_any_lab"):
+		return bool(GameState.has_completed_any_lab())
 	return bool(GameState.lab_done)
 
 func _is_dependency_satisfied() -> bool:
@@ -239,15 +248,3 @@ func _resolve_money_system() -> Node:
 	if money_system_path.is_empty():
 		return get_node_or_null("../Level12MoneySystem")
 	return get_node_or_null(money_system_path)
-	
-func _add_minigame_to_scene(minigame: Node) -> void:
-	if minigame == null:
-		return
-	if MinigameController and MinigameController.has_method("attach_minigame"):
-		MinigameController.attach_minigame(minigame)
-		return
-	var parent := get_tree().current_scene
-	if parent == null:
-		parent = get_tree().root
-	if parent:
-		parent.add_child(minigame)

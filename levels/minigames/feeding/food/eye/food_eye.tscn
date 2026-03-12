@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dh5jd2vshsky6"]
+
+[ext_resource type="Script" path="res://levels/minigames/feeding/food/eye/food_eye.gd" id="2_h6w5k"]
+[ext_resource type="Texture2D" uid="uid://cit6wnet7tyo5" path="res://levels/minigames/feeding/food/eye/Белок.png" id="2_tgrdr"]
+[ext_resource type="Texture2D" uid="uid://bfyyx0x0e1768" path="res://levels/minigames/feeding/food/eye/Зрачок.png" id="3_s7752"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j4b0v"]
+radius = 229.29669
+
+[node name="FoodItem" type="Area2D" unique_id=1385397559]
+script = ExtResource("2_h6w5k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1493705939]
+scale = Vector2(0.17991634, 0.17991619)
+texture = ExtResource("2_tgrdr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1350870314]
+position = Vector2(-18, 0)
+scale = Vector2(0.17991634, 0.17991619)
+texture = ExtResource("3_s7752")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1923971199]
+scale = Vector2(0.205021, 0.20502092)
+shape = SubResource("CircleShape2D_j4b0v")

@@ -1,4 +1,5 @@
 extends "res://objects/interactable/interactive_object.gd"
+class_name Door
 
 # --- Настройки логики ---
 ## Дверь закрыта и требует ключ или сообщение.
@@ -74,20 +75,20 @@ func _try_use_door() -> void:
 				if consume_key_on_unlock and player.has_method("remove_key"):
 					player.remove_key(required_key_id)
 				
-				UIMessage.show_text("Дверь открылась.")
+				UIMessage.show_notification("Дверь открылась.")
 				_play_sound(sfx_open) # ЗВУК: Открыли ключом
 				_perform_transition()
 				return
 			else:
 				if required_key_name != "":
-					UIMessage.show_text("%s\n%s" % [tr(door_locked_message), tr("Нужен: %s.") % tr(required_key_name)])
+					UIMessage.show_notification("%s\n%s" % [tr(door_locked_message), tr("Нужен: %s.") % tr(required_key_name)])
 				else:
-					UIMessage.show_text(door_locked_message)
+					UIMessage.show_notification(door_locked_message)
 				
 				_play_sound(sfx_locked) # ЗВУК: Дверь заперта
 				return
 
-		UIMessage.show_text(door_locked_message)
+		UIMessage.show_notification(door_locked_message)
 		_play_sound(sfx_locked) # ЗВУК: Дверь заперта (без ключа)
 		return
 
@@ -144,6 +145,17 @@ func _apply_door_texture() -> void:
 func _apply_number_texture() -> void:
 	if _number_sprite != null and number_texture != null:
 		_number_sprite.texture = number_texture
+
+func set_locked(locked: bool, locked_message_override: String = "") -> void:
+	is_locked = locked
+	if locked_message_override.strip_edges() != "":
+		door_locked_message = locked_message_override
+
+func set_target_marker_path(path: NodePath) -> void:
+	target_marker = path
+
+func get_target_marker_path() -> NodePath:
+	return target_marker
 
 # Вспомогательная функция для проигрывания
 func _play_sound(stream: AudioStream) -> void:

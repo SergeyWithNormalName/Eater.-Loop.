@@ -112,6 +112,7 @@ const INPUT_KIND_KEYBOARD := 0
 const INPUT_KIND_GAMEPAD := 1
 const INPUT_KIND_UNKNOWN := -1
 const JOYPAD_MOTION_DEADZONE := 0.45
+const CycleLevelBase = preload("res://levels/cycles/level.gd")
 const DEATH_TITLE_GLITCH_SHADER: Shader = preload("res://shaders/death_text_glitch.gdshader")
 const LIGHT_ONLY_JUMP_SHADER: Shader = preload("res://shaders/light_only_jump_overlay.gdshader")
 const DEATH_TITLE_PENANCE_TEXT := "Никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения, никогда, никогда, никогда, никогда не заслужу прощения"
@@ -538,9 +539,9 @@ func _handle_custom_scene_death() -> bool:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return false
-	if not scene.has_method("handle_custom_death_screen"):
+	if not (scene is CycleLevelBase):
 		return false
-	return bool(scene.call("handle_custom_death_screen"))
+	return bool((scene as CycleLevelBase).handle_custom_death_screen())
 
 func _on_death_fade_completed() -> void:
 	if not _death_sequence_active:
@@ -556,7 +557,10 @@ func _on_death_retry_pressed() -> void:
 		return
 	if GameState:
 		GameState.reset_cycle_state()
-		GameState.pending_respawn_blackout = true
+		if GameState.has_method("queue_respawn_blackout"):
+			GameState.queue_respawn_blackout()
+		else:
+			GameState.pending_respawn_blackout = true
 	_restore_death_camera()
 	if _death_root:
 		_death_root.visible = false

@@ -1,15 +1,7 @@
-extends Control
-
-
-# --- СИГНАЛЫ ---
-signal task_completed(success: bool)
+extends "res://levels/minigames/labs/timed_lab_minigame_base.gd"
 
 # --- НАСТРОЙКИ ---
 @export_group("Game Logic")
-## Лимит времени на мини-игру (сек).
-@export var time_limit: float = 60.0
-## Штраф по времени за провал (сек).
-@export var penalty_time: float = 15.0
 ## Насколько заполняется прогресс за один клик (0.1 = 10%).
 @export var progress_per_click: float = 0.1
 
@@ -20,13 +12,10 @@ signal task_completed(success: bool)
 @export_range(0.0, 5.0) var click_cooldown_max: float = 1.2
 
 # --- ВНУТРЕННИЕ ПЕРЕМЕННЫЕ ---
-var current_time: float = 0.0
 var _progress: float = 0.0
 var _is_finished: bool = false
 var _cooldown_remaining: float = 0.0
 var _rng := RandomNumberGenerator.new()
-
-const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
 
 # Тексты для кнопки (имитация состояний)
 const TEXT_IDLE = "   Сгенерировать отчёт"
@@ -40,18 +29,14 @@ const TEXT_DONE = "   Отчёт готов!"
 @onready var arrow_icon: Control = $CenterContainer/InteractionArea/InputButton/IconArrow
 
 func _ready() -> void:
-	add_to_group("minigame_ui")
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	_start_minigame_session()
+	start_timed_lab_session(Callable(self, "_on_time_updated"), Callable(self, "_on_time_expired"))
 
-	current_time = time_limit
 	_rng.randomize()
 
 	_update_ui_state()
 	generate_button.pressed.connect(_on_generate_pressed)
 	_register_gamepad_scheme()
-	if MinigameController == null:
-		_update_timer_label()
+	_update_timer_label()
 
 func _process(delta: float) -> void:
 	if _is_finished:
@@ -107,9 +92,7 @@ func finish_game(success: bool) -> void:
 		return
 	_is_finished = true
 	if MinigameController:
-		MinigameController.finish_minigame_with_fade(self, success, func():
-			_finalize_finish(success)
-		)
+		MinigameController.finish_minigame_with_fade(self, success, Callable(self, "_finalize_finish").bind(success))
 		return
 
 	_finalize_finish(success)
@@ -123,30 +106,15 @@ func _finalize_finish(success: bool) -> void:
 	else:
 		_shake_button()
 
-	get_tree().create_timer(0.5).timeout.connect(func():
-		task_completed.emit(success)
+	get_tree().create_timer(0.5).timeout.connect(Callable(self, "_complete_finish").bind(success), Object.CONNECT_ONE_SHOT)
 
-		if not success:
-			if get_tree().root.has_node("GameDirector"):
-				get_tree().root.get_node("GameDirector").reduce_time(penalty_time)
-
-		if get_tree().root.has_node("GameState"):
-			var gs = get_tree().root.get_node("GameState")
-			if gs and gs.has_method("mark_lab_completed"):
-				gs.mark_lab_completed()
-
-		queue_free()
-	)
+func _complete_finish(success: bool) -> void:
+	task_completed.emit(success)
+	apply_standard_lab_outcome(success)
+	queue_free()
 
 func _exit_tree() -> void:
-	if MinigameController:
-		MinigameController.clear_gamepad_scheme(self)
-		if MinigameController.minigame_time_updated.is_connected(_on_time_updated):
-			MinigameController.minigame_time_updated.disconnect(_on_time_updated)
-		if MinigameController.minigame_time_expired.is_connected(_on_time_expired):
-			MinigameController.minigame_time_expired.disconnect(_on_time_expired)
-		if MinigameController.is_active(self):
-			MinigameController.finish_minigame(self, false)
+	cleanup_timed_lab(Callable(self, "_on_time_updated"), Callable(self, "_on_time_expired"))
 
 func _shake_button() -> void:
 	var tween = create_tween()
@@ -155,27 +123,6 @@ func _shake_button() -> void:
 		tween.tween_property(generate_button, "position:x", orig_pos + 5, 0.05)
 		tween.tween_property(generate_button, "position:x", orig_pos - 5, 0.05)
 	tween.tween_property(generate_button, "position:x", orig_pos, 0.05)
-
-func _start_minigame_session() -> void:
-	if MinigameController == null:
-		return
-	_ensure_lab_music_loop()
-	if not MinigameController.is_active(self):
-		var settings := MinigameSettings.new()
-		settings.pause_game = false
-		settings.show_mouse_cursor = true
-		settings.block_player_movement = true
-		settings.time_limit = time_limit
-		settings.music_stream = LAB_MUSIC_STREAM
-		settings.music_fade_time = 0.0
-		settings.auto_finish_on_timeout = false
-		MinigameController.start_minigame(self, settings)
-	current_time = time_limit
-	_update_timer_label()
-	if not MinigameController.minigame_time_updated.is_connected(_on_time_updated):
-		MinigameController.minigame_time_updated.connect(_on_time_updated)
-	if not MinigameController.minigame_time_expired.is_connected(_on_time_expired):
-		MinigameController.minigame_time_expired.connect(_on_time_expired)
 
 func _on_time_updated(minigame: Node, time_left: float, _limit: float) -> void:
 	if minigame != self:
@@ -192,21 +139,6 @@ func _update_timer_label() -> void:
 	var mins = floor(current_time / 60)
 	var secs = int(current_time) % 60
 	timer_label.text = "%02d:%02d" % [mins, secs]
-
-func _ensure_lab_music_loop() -> void:
-	var stream: AudioStream = LAB_MUSIC_STREAM
-	if stream is AudioStreamWAV:
-		var wav := stream as AudioStreamWAV
-		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
-			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
-		return
-	if stream is AudioStreamOggVorbis:
-		var ogg := stream as AudioStreamOggVorbis
-		ogg.loop = true
-		return
-	if stream is AudioStreamMP3:
-		var mp3 := stream as AudioStreamMP3
-		mp3.loop = true
 
 func _register_gamepad_scheme() -> void:
 	if MinigameController == null:

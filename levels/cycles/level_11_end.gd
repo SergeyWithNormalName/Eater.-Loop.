@@ -22,9 +22,9 @@ var _branch: EndingBranch = EndingBranch.NONE
 var _ending_started: bool = false
 var _bad_ending_queued: bool = false
 
-var _laptop: InteractiveObject = null
-var _fridge: InteractiveObject = null
-var _bed: InteractiveObject = null
+var _laptop: Node = null
+var _fridge: Node = null
+var _bed: Node = null
 
 func _ready() -> void:
 	super._ready()
@@ -39,26 +39,20 @@ func handle_custom_death_screen() -> bool:
 	_start_bad_ending()
 	return true
 
-func on_fed_andrey() -> void:
-	if _branch != EndingBranch.FRIDGE:
-		return
-	_queue_bad_ending_after_fridge()
-
 func _resolve_nodes() -> void:
-	_laptop = get_node_or_null(laptop_path) as InteractiveObject
-	_fridge = get_node_or_null(fridge_path) as InteractiveObject
-	_bed = get_node_or_null(bed_path) as InteractiveObject
+	_laptop = get_node_or_null(laptop_path)
+	_fridge = get_node_or_null(fridge_path)
+	_bed = get_node_or_null(bed_path)
 
 func _connect_level_flow() -> void:
-	if _laptop != null and not _laptop.interaction_requested.is_connected(_on_laptop_interaction_requested):
+	if _laptop != null and _laptop.has_signal("interaction_requested") and not _laptop.interaction_requested.is_connected(_on_laptop_interaction_requested):
 		_laptop.interaction_requested.connect(_on_laptop_interaction_requested)
-	if _fridge != null and not _fridge.interaction_requested.is_connected(_on_fridge_interaction_requested):
+	if _fridge != null and _fridge.has_signal("interaction_requested") and not _fridge.interaction_requested.is_connected(_on_fridge_interaction_requested):
 		_fridge.interaction_requested.connect(_on_fridge_interaction_requested)
 	if GameState != null and GameState.has_signal("lab_completed") and not GameState.lab_completed.is_connected(_on_lab_completed):
 		GameState.lab_completed.connect(_on_lab_completed)
-	if _fridge != null and _fridge.has_signal("ending_feeding_finished"):
-		if not _fridge.is_connected("ending_feeding_finished", Callable(self, "_on_fridge_feeding_finished")):
-			_fridge.connect("ending_feeding_finished", Callable(self, "_on_fridge_feeding_finished"))
+	if _fridge != null and _fridge.has_signal("feeding_finished") and not _fridge.feeding_finished.is_connected(_on_fridge_feeding_finished):
+		_fridge.feeding_finished.connect(_on_fridge_feeding_finished)
 
 func _on_laptop_interaction_requested(_player: Node = null) -> void:
 	if _branch == EndingBranch.NONE:
@@ -73,7 +67,12 @@ func _choose_branch(branch: EndingBranch) -> void:
 	match _branch:
 		EndingBranch.LAPTOP:
 			_set_fridge_enabled(false)
-			if GameState != null and GameState.lab_done:
+			var has_lab := false
+			if GameState != null and GameState.has_method("has_completed_any_lab"):
+				has_lab = bool(GameState.has_completed_any_lab())
+			elif GameState != null:
+				has_lab = bool(GameState.lab_done)
+			if has_lab:
 				_on_lab_completed()
 		EndingBranch.FRIDGE:
 			_set_laptop_enabled(false)
@@ -85,7 +84,7 @@ func _on_lab_completed() -> void:
 		GameState.mark_ate()
 	_set_bed_enabled(true)
 	if UIMessage != null and laptop_sleep_prompt.strip_edges() != "":
-		UIMessage.show_text(laptop_sleep_prompt)
+		UIMessage.show_notification(laptop_sleep_prompt)
 
 func _on_fridge_feeding_finished() -> void:
 	if _branch != EndingBranch.FRIDGE:
@@ -122,67 +121,23 @@ func _set_bed_enabled(enabled: bool) -> void:
 
 func _set_laptop_enabled(enabled: bool) -> void:
 	_set_object_enabled(_laptop, enabled)
-	if _laptop == null:
+	if _laptop == null or not ("is_enabled" in _laptop):
 		return
-	if _has_property(_laptop, &"is_enabled"):
-		_laptop.set("is_enabled", enabled)
+	_laptop.set("is_enabled", enabled)
 
 func _set_fridge_enabled(enabled: bool) -> void:
 	_set_object_enabled(_fridge, enabled)
 	_set_fridge_locked_visual(not enabled)
 
-func _set_object_enabled(object: InteractiveObject, enabled: bool) -> void:
-	if object == null:
+func _set_object_enabled(object: Node, enabled: bool) -> void:
+	if object == null or not object.has_method("set_interaction_enabled"):
 		return
-	object.handle_input = enabled
-	object.set_prompts_enabled(enabled)
+	object.call("set_interaction_enabled", enabled)
 
 func _set_fridge_locked_visual(locked: bool) -> void:
 	if _fridge == null:
 		return
-	var sprite_path := _read_node_path_property(_fridge, &"sprite_node")
-	if not sprite_path.is_empty():
-		var sprite := _fridge.get_node_or_null(sprite_path) as Sprite2D
-		if sprite != null:
-			var target_texture: Texture2D = _read_texture_property(_fridge, &"locked_sprite") if locked else _read_texture_property(_fridge, &"available_sprite")
-			if target_texture != null:
-				sprite.texture = target_texture
-	_set_optional_canvas_item_visible(_fridge, &"available_light_node", not locked)
-	_set_optional_canvas_item_visible(_fridge, &"available_light_node_secondary", not locked)
-	if _fridge.has_method("_update_rocking_pivot"):
-		_fridge.call("_update_rocking_pivot")
-
-func _set_optional_canvas_item_visible(root: Node, property_name: StringName, visible_state: bool) -> void:
-	if root == null:
-		return
-	var path := _read_node_path_property(root, property_name)
-	if path.is_empty():
-		return
-	var node := root.get_node_or_null(path) as CanvasItem
-	if node == null:
-		return
-	node.visible = visible_state
-
-func _read_node_path_property(target: Object, property_name: StringName) -> NodePath:
-	if not _has_property(target, property_name):
-		return NodePath("")
-	var value: Variant = target.get(String(property_name))
-	if value is NodePath:
-		return value
-	return NodePath("")
-
-func _read_texture_property(target: Object, property_name: StringName) -> Texture2D:
-	if not _has_property(target, property_name):
-		return null
-	var value: Variant = target.get(String(property_name))
-	if value is Texture2D:
-		return value
-	return null
-
-func _has_property(target: Object, property_name: StringName) -> bool:
-	if target == null:
-		return false
-	for entry in target.get_property_list():
-		if StringName(entry.get("name", "")) == property_name:
-			return true
-	return false
+	if _fridge.has_method("set_interaction_enabled"):
+		_fridge.call("set_interaction_enabled", not locked)
+	if _fridge.has_method("refresh_visual_state"):
+		_fridge.call("refresh_visual_state")

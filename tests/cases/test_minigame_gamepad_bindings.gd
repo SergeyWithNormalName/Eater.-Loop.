@@ -10,7 +10,7 @@ func run() -> Array[String]:
 	]
 	for path in scripts_with_scheme:
 		_assert_script_contains(path, "set_gamepad_scheme", "Missing gamepad scheme registration")
-		_assert_script_contains(path, "clear_gamepad_scheme", "Missing gamepad scheme cleanup")
+		_assert_script_contains_any(path, ["clear_gamepad_scheme", "cleanup_timed_lab"], "Missing gamepad scheme cleanup")
 
 	_assert_script_contains("res://levels/minigames/minigame_controller.gd", "func set_gamepad_scheme", "MinigameController API set_gamepad_scheme missing")
 	_assert_script_contains("res://levels/minigames/minigame_controller.gd", "func clear_gamepad_scheme", "MinigameController API clear_gamepad_scheme missing")
@@ -23,6 +23,16 @@ func _assert_script_contains(path: String, needle: String, message: String) -> v
 		return
 	var content := FileAccess.get_file_as_string(path)
 	assert_true(content.find(needle) != -1, "%s (%s)" % [message, path])
+
+func _assert_script_contains_any(path: String, needles: Array[String], message: String) -> void:
+	if not FileAccess.file_exists(path):
+		fail("Missing file: %s" % path)
+		return
+	var content := FileAccess.get_file_as_string(path)
+	for needle in needles:
+		if content.find(needle) != -1:
+			return
+	assert_true(false, "%s (%s)" % [message, path])
 
 func _assert_script_not_contains(path: String, needle: String, message: String) -> void:
 	if not FileAccess.file_exists(path):

@@ -106,7 +106,7 @@ func _toggle() -> void:
 		# Можно использовать встроенный locked_message базового класса,
 		# но у тебя тут кастомное сообщение было, оставим его вызов через UIMessage
 		if UIMessage:
-			UIMessage.show_message("Нет электричества.")
+			UIMessage.show_notification("Нет электричества.")
 		return
 
 	_is_on = !_is_on

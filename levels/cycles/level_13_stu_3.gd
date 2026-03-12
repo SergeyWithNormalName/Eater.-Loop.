@@ -45,27 +45,17 @@ func _on_fridge_interaction_finished() -> void:
 func _on_fridge_interacted_changed() -> void:
 	_update_bathroom_door_target()
 
-func on_fed_andrey() -> void:
-	_update_bathroom_door_target()
-
 func _update_bathroom_door_target() -> void:
 	if _door_to_bathroom == null:
 		return
-	if not _has_property(_door_to_bathroom, "target_marker"):
-		return
 	var target := TO_BEDROOM_TARGET if _is_fridge_interacted() else TO_BATHROOM_DEFAULT_TARGET
-	_door_to_bathroom.set("target_marker", target)
+	if _door_to_bathroom.has_method("set_target_marker_path"):
+		_door_to_bathroom.call("set_target_marker_path", target)
 
 func _is_fridge_interacted() -> bool:
-	if GameState != null and bool(GameState.fridge_interacted):
+	if GameState != null and GameState.has_method("is_fridge_interacted") and GameState.is_fridge_interacted():
 		return true
 	for fridge in _fridges:
 		if fridge != null and is_instance_valid(fridge) and bool(fridge.is_completed):
-			return true
-	return false
-
-func _has_property(node: Object, property_name: String) -> bool:
-	for info in node.get_property_list():
-		if String(info.name) == property_name:
 			return true
 	return false

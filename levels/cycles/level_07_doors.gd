@@ -25,7 +25,7 @@ func _setup_level_logic() -> void:
 		_fridge.interaction_finished.connect(_on_fridge_interaction_finished)
 
 	_apply_pre_fridge_layout()
-	if GameState != null and bool(GameState.fridge_interacted):
+	if GameState != null and GameState.has_method("is_fridge_interacted") and GameState.is_fridge_interacted():
 		_apply_post_fridge_layout()
 
 func _on_fridge_interaction_finished() -> void:
@@ -49,20 +49,11 @@ func _apply_post_fridge_layout() -> void:
 	_set_door_state(_hall2_right_door, false, "Дверь в коридор.")
 
 func _set_door_state(door: Node, locked: bool, locked_message: String) -> void:
-	if door == null:
+	if door == null or not door.has_method("set_locked"):
 		return
-	if _has_property(door, "is_locked"):
-		door.set("is_locked", locked)
-	if _has_property(door, "door_locked_message"):
-		door.set("door_locked_message", LOCKED_DOOR_MESSAGE if locked else locked_message)
+	door.call("set_locked", locked, LOCKED_DOOR_MESSAGE if locked else locked_message)
 
 func _apply_unified_locked_messages() -> void:
 	for door in get_tree().get_nodes_in_group("doors"):
-		if _has_property(door, "door_locked_message"):
+		if door != null and "door_locked_message" in door:
 			door.set("door_locked_message", LOCKED_DOOR_MESSAGE)
-
-func _has_property(node: Object, property_name: String) -> bool:
-	for info in node.get_property_list():
-		if String(info.name) == property_name:
-			return true
-	return false

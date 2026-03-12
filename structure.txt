@@ -426,6 +426,14 @@
 │   │   │   │   │   ├── Dumpling.png
 │   │   │   │   │   ├── Dumpling.png.import
 │   │   │   │   │   └── food_dumpling.tscn
+│   │   │   │   ├── eye
+│   │   │   │   │   ├── food_eye.gd
+│   │   │   │   │   ├── food_eye.gd.uid
+│   │   │   │   │   ├── food_eye.tscn
+│   │   │   │   │   ├── Белок.png
+│   │   │   │   │   ├── Белок.png.import
+│   │   │   │   │   ├── Зрачок.png
+│   │   │   │   │   └── Зрачок.png.import
 │   │   │   │   ├── fish
 │   │   │   │   │   ├── Fish.png
 │   │   │   │   │   ├── Fish.png.import
@@ -517,17 +525,19 @@
 │   │   │   │   ├── llm_minigame_glitch.gd
 │   │   │   │   ├── llm_minigame_glitch.gd.uid
 │   │   │   │   └── llm_minigame_glitch.tscn
-│   │   │   └── sql
-│   │   │       ├── drag_slot.gd
-│   │   │       ├── drag_slot.gd.uid
-│   │   │       ├── drag_word.gd
-│   │   │       ├── drag_word.gd.uid
-│   │   │       ├── sql_minigame.gd
-│   │   │       ├── sql_minigame.gd.uid
-│   │   │       ├── sql_minigame.tscn
-│   │   │       ├── sql_minigame_glitch.gd
-│   │   │       ├── sql_minigame_glitch.gd.uid
-│   │   │       └── sql_minigame_glitch.tscn
+│   │   │   ├── sql
+│   │   │   │   ├── drag_slot.gd
+│   │   │   │   ├── drag_slot.gd.uid
+│   │   │   │   ├── drag_word.gd
+│   │   │   │   ├── drag_word.gd.uid
+│   │   │   │   ├── sql_minigame.gd
+│   │   │   │   ├── sql_minigame.gd.uid
+│   │   │   │   ├── sql_minigame.tscn
+│   │   │   │   ├── sql_minigame_glitch.gd
+│   │   │   │   ├── sql_minigame_glitch.gd.uid
+│   │   │   │   └── sql_minigame_glitch.tscn
+│   │   │   ├── timed_lab_minigame_base.gd
+│   │   │   └── timed_lab_minigame_base.gd.uid
 │   │   ├── search_key
 │   │   │   ├── rakovina
 │   │   │   │   ├── sprites
@@ -1229,6 +1239,9 @@
 │       │   ├── phone.png
 │       │   ├── phone.png.import
 │       │   └── phone.tscn
+│       ├── projector
+│       │   ├── ProjectorSprite.png
+│       │   └── ProjectorSprite.png.import
 │       ├── search_spot
 │       │   ├── search_spot.gd
 │       │   ├── search_spot.gd.uid
@@ -1366,6 +1379,10 @@
 │   │   ├── test_generator_activates_required_lamps.gd.uid
 │   │   ├── test_input_actions.gd
 │   │   ├── test_input_actions.gd.uid
+│   │   ├── test_interaction_architecture_contracts.gd
+│   │   ├── test_interaction_architecture_contracts.gd.uid
+│   │   ├── test_interactive_object_locked_message.gd
+│   │   ├── test_interactive_object_locked_message.gd.uid
 │   │   ├── test_lamp_generator_requirement.gd
 │   │   ├── test_lamp_generator_requirement.gd.uid
 │   │   ├── test_laptop_multi_lab_ids.gd
@@ -1395,7 +1412,9 @@
 │   │   ├── test_stalker_behavior.gd
 │   │   ├── test_stalker_behavior.gd.uid
 │   │   ├── test_stalker_motion_audio_component.gd
-│   │   └── test_stalker_motion_audio_component.gd.uid
+│   │   ├── test_stalker_motion_audio_component.gd.uid
+│   │   ├── test_ui_message_dialogue_channels.gd
+│   │   └── test_ui_message_dialogue_channels.gd.uid
 │   ├── README.md
 │   ├── run_tests.gd
 │   ├── run_tests.gd.uid
@@ -1416,4 +1435,4 @@
 ├── project.godot
 └── structure.txt
 
-121 directories, 1296 files
+123 directories, 1313 files

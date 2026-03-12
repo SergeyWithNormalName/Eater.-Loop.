@@ -30,6 +30,7 @@ var _subtitle_timer: Timer
 var _fade_rect: ColorRect
 var _fade_tween: Tween
 var _sfx_player: AudioStreamPlayer
+var _dialogue_voice_player: AudioStreamPlayer
 var _modules: Dictionary = {}
 
 # --- Переменные для записок ---
@@ -39,6 +40,9 @@ var _is_viewing_note: bool = false
 var _note_prev_paused: bool = false
 var _queued_subtitle_text: String = ""
 var _queued_subtitle_duration: float = -1.0
+var _queued_dialogue_voice: AudioStream = null
+var _queued_dialogue_volume_db: float = 0.0
+var _queued_dialogue_pitch_scale: float = 1.0
 
 # --- Переменные для подсказок ---
 var _hint_bg: ColorRect
@@ -121,6 +125,11 @@ func _ready() -> void:
 	_sfx_player.bus = "Sounds"
 	_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_sfx_player)
+
+	_dialogue_voice_player = AudioStreamPlayer.new()
+	_dialogue_voice_player.bus = "Sounds"
+	_dialogue_voice_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_dialogue_voice_player)
 	
 	_setup_note_viewer()
 	_setup_hint_viewer()
@@ -285,16 +294,23 @@ func _input(event: InputEvent) -> void:
 			hide_note()
 
 func show_text(text: String, duration: float = -1.0) -> void:
+	show_notification(text, duration)
+
+func show_notification(text: String, duration: float = -1.0) -> void:
 	var t := text.strip_edges()
-	if t == "": return
+	if t == "":
+		return
 	_label.text = tr(t)
 	_label.visible = true
 	_timer.start(duration if duration > 0.0 else default_duration)
 
 func show_message(text: String, duration: float = -1.0) -> void:
-	show_text(text, duration)
+	show_notification(text, duration)
 
 func show_subtitle(text: String, duration: float = -1.0) -> void:
+	show_dialogue(text, null, duration)
+
+func show_dialogue(text: String, voice: AudioStream = null, duration: float = -1.0, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":
 		return
@@ -302,29 +318,44 @@ func show_subtitle(text: String, duration: float = -1.0) -> void:
 	if _is_viewing_note:
 		_queued_subtitle_text = t
 		_queued_subtitle_duration = duration
+		_queued_dialogue_voice = voice
+		_queued_dialogue_volume_db = volume_db
+		_queued_dialogue_pitch_scale = pitch_scale
 		return
-	_show_subtitle_now(t, duration)
+	_show_dialogue_now(t, voice, duration, volume_db, pitch_scale)
 
 func _show_subtitle_now(text: String, duration: float = -1.0) -> void:
+	_show_dialogue_now(text, null, duration)
+
+func _show_dialogue_now(text: String, voice: AudioStream = null, duration: float = -1.0, volume_db: float = 0.0, pitch_scale: float = 1.0) -> void:
 	var t := text.strip_edges()
 	if t == "":
 		return
 	_subtitle_label.text = t
 	_subtitle_label.visible = true
 	_subtitle_timer.start(duration if duration > 0.0 else subtitle_duration)
+	_play_dialogue_voice(voice, volume_db, pitch_scale)
 
 func hide_subtitle() -> void:
 	_subtitle_label.visible = false
 	_subtitle_timer.stop()
+	if _dialogue_voice_player:
+		_dialogue_voice_player.stop()
 
 func _flush_queued_subtitle() -> void:
 	if _queued_subtitle_text == "":
 		return
 	var text := _queued_subtitle_text
 	var duration := _queued_subtitle_duration
+	var voice := _queued_dialogue_voice
+	var volume_db := _queued_dialogue_volume_db
+	var pitch_scale := _queued_dialogue_pitch_scale
 	_queued_subtitle_text = ""
 	_queued_subtitle_duration = -1.0
-	_show_subtitle_now(text, duration)
+	_queued_dialogue_voice = null
+	_queued_dialogue_volume_db = 0.0
+	_queued_dialogue_pitch_scale = 1.0
+	_show_dialogue_now(text, voice, duration, volume_db, pitch_scale)
 
 func show_interact_prompt(source: Object, text: String = "") -> void:
 	if InteractionPrompts:
@@ -364,11 +395,32 @@ func play_sfx(stream: AudioStream, volume_db: float = 0.0, pitch_scale: float = 
 	_sfx_player.pitch_scale = pitch_scale
 	_sfx_player.play()
 
+func is_notification_visible() -> bool:
+	return _label != null and _label.visible
+
+func get_notification_text() -> String:
+	if _label == null:
+		return ""
+	return _label.text
+
+func is_dialogue_visible() -> bool:
+	return _subtitle_label != null and _subtitle_label.visible
+
+func get_dialogue_text() -> String:
+	if _subtitle_label == null:
+		return ""
+	return _subtitle_label.text
+
+func is_dialogue_voice_playing() -> bool:
+	return _dialogue_voice_player != null and _dialogue_voice_player.playing
+
 func _on_timeout() -> void:
 	_label.visible = false
 
 func _on_subtitle_timeout() -> void:
 	_subtitle_label.visible = false
+	if _dialogue_voice_player:
+		_dialogue_voice_player.stop()
 
 func fade_out(duration: float = 0.5) -> void:
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -396,16 +448,9 @@ func play_fade_sequence(fade_out_duration: float, fade_in_duration: float, on_bl
 	var in_time: float = max(0.0, float(fade_in_duration))
 	_fade_tween = create_tween()
 	_fade_tween.tween_property(_fade_rect, "color:a", 1.0, out_time)
-	_fade_tween.tween_callback(func():
-		if on_black.is_valid():
-			on_black.call()
-	)
+	_fade_tween.tween_callback(Callable(self, "_invoke_callable_if_valid").bind(on_black))
 	_fade_tween.tween_property(_fade_rect, "color:a", 0.0, in_time)
-	_fade_tween.tween_callback(func():
-		_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		if on_finished.is_valid():
-			on_finished.call()
-	)
+	_fade_tween.tween_callback(Callable(self, "_finish_fade_sequence").bind(on_finished))
 
 func is_screen_dark(threshold: float = 0.01) -> bool:
 	if _fade_rect == null:
@@ -440,5 +485,23 @@ func _track_scene(new_scene: PackedScene) -> void:
 	if path.find("/levels/cycles/") == -1:
 		return
 	GameState.set_current_scene_path(path)
-	
-	
+
+func _play_dialogue_voice(stream: AudioStream, volume_db: float, pitch_scale: float) -> void:
+	if _dialogue_voice_player == null:
+		return
+	_dialogue_voice_player.stop()
+	if stream == null:
+		return
+	_dialogue_voice_player.stream = stream
+	_dialogue_voice_player.volume_db = volume_db
+	_dialogue_voice_player.pitch_scale = pitch_scale
+	_dialogue_voice_player.play()
+
+func _invoke_callable_if_valid(callback: Callable) -> void:
+	if callback.is_valid():
+		callback.call()
+
+func _finish_fade_sequence(callback: Callable) -> void:
+	if _fade_rect != null:
+		_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_invoke_callable_if_valid(callback)
