@@ -145,3 +145,16 @@ func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if not _is_flashlight_hitting():
 		return
 	super._on_hitbox_area_body_entered(body)
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["jump_timer"] = _jump_timer
+	state["idle_sound_timer"] = _idle_sound_timer
+	state["light_active"] = _light_active
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_jump_timer = float(state.get("jump_timer", _jump_timer))
+	_idle_sound_timer = float(state.get("idle_sound_timer", _idle_sound_timer))
+	_light_active = bool(state.get("light_active", _light_active))

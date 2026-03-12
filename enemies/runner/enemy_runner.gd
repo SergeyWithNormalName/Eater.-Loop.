@@ -306,6 +306,37 @@ func _resolve_step_audio_component() -> StepAudioComponent:
 		return get_node("StepAudioComponent") as StepAudioComponent
 	return null
 
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["growl_timer"] = _growl_timer
+	state["wander_timer"] = _wander_timer
+	state["wander_dir"] = _wander_dir
+	state["wander_moving"] = _wander_moving
+	state["is_walking"] = _is_walking
+	state["facing_dir"] = _facing_dir
+	if _animated_sprite != null:
+		state["animation"] = String(_animated_sprite.animation)
+		state["frame"] = _animated_sprite.frame
+		state["animation_playing"] = _animated_sprite.is_playing()
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_growl_timer = float(state.get("growl_timer", _growl_timer))
+	_wander_timer = float(state.get("wander_timer", _wander_timer))
+	_wander_dir = float(state.get("wander_dir", _wander_dir))
+	_wander_moving = bool(state.get("wander_moving", _wander_moving))
+	_is_walking = bool(state.get("is_walking", _is_walking))
+	_facing_dir = float(state.get("facing_dir", _facing_dir))
+	_apply_facing()
+	if _animated_sprite != null:
+		var animation_name := StringName(state.get("animation", String(_animated_sprite.animation)))
+		if animation_name != StringName() and _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name):
+			_animated_sprite.play(animation_name)
+			_animated_sprite.frame = int(state.get("frame", _animated_sprite.frame))
+			if not bool(state.get("animation_playing", true)):
+				_animated_sprite.stop()
+
 func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
 	if body.is_in_group("player"):

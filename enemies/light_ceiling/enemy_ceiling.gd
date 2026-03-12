@@ -104,24 +104,25 @@ func _apply_lamp_freeze() -> bool:
 	return true
 
 func _is_lamp_light_hitting() -> bool:
-	var lights := get_tree().get_nodes_in_group("lamp_light")
-	for light_node in lights:
-		var light := light_node as PointLight2D
-		if light == null:
+	var tree := get_tree()
+	if tree == null:
+		return false
+	for light_source in tree.get_nodes_in_group("reactive_light_source"):
+		if light_source == null or not is_instance_valid(light_source):
 			continue
-		if not light.enabled:
+		if not light_source.has_method("is_point_lit"):
 			continue
-		if not light.visible:
-			continue
-		if light.texture == null:
-			continue
-
-		var origin := light.global_transform * light.offset
-		var base_radius = max(light.texture.get_width(), light.texture.get_height()) * 0.5
-		if base_radius <= 0.0:
-			continue
-		var scale_factor = max(light.global_scale.x, light.global_scale.y)
-		var light_range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
-		if origin.distance_to(global_position) <= light_range:
-			return true
+			if bool(light_source.call("is_point_lit", global_position)):
+				return true
 	return false
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["heard_player_sound"] = _heard_player_sound
+	state["lamp_frozen"] = _lamp_frozen
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_heard_player_sound = bool(state.get("heard_player_sound", _heard_player_sound))
+	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))

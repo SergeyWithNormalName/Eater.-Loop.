@@ -25,7 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://csp3tkmwdpbyd" path="res://player/animations/walking/ezgif-frame-014.png" id="23_walk_014"]
 [ext_resource type="Texture2D" uid="uid://c45pq2agcovo5" path="res://player/animations/walking/ezgif-frame-015.png" id="24_walk_015"]
 [ext_resource type="Texture2D" uid="uid://dn8tfyah0vqho" path="res://player/animations/walking/ezgif-frame-016.png" id="25_walk_016"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
 size = Vector2(101, 346)
 

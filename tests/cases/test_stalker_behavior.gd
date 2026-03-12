@@ -43,6 +43,7 @@ class RouteProbeStalker:
 func run() -> Array[String]:
 	_test_route_search_covers_long_door_chains()
 	_test_route_prefers_nearest_visible_door()
+	_test_route_search_uses_horizontal_door_approach()
 	_test_follow_door_route_uses_horizontal_reach()
 	_test_self_target_door_is_ignored()
 	await _test_door_open_sfx_is_played()
@@ -131,6 +132,32 @@ func _test_route_prefers_nearest_visible_door() -> void:
 	far_door.free()
 	near_exit.free()
 	far_exit.free()
+
+func _test_route_search_uses_horizontal_door_approach() -> void:
+	var stalker := RouteProbeStalker.new()
+	var start := Vector2(0, -300)
+	var target := Vector2(1000, -300)
+	var door := Node2D.new()
+	door.position = Vector2(180, 540)
+	var exit_marker := Node2D.new()
+	exit_marker.position = Vector2(520, 540)
+	var horizontal_approach := Vector2(door.global_position.x, start.y)
+
+	stalker.fake_doors = [door]
+	stalker.fake_exits[door.get_instance_id()] = exit_marker
+	stalker.set_los(start, target, false)
+	stalker.set_los(start, door.global_position, false)
+	stalker.set_los(start, horizontal_approach, true)
+	stalker.set_los(exit_marker.global_position, target, true)
+
+	var route: Array[Node] = stalker.call("_find_door_route", start, target)
+	assert_eq(route.size(), 1, "Stalker must accept doors reachable by horizontal approach")
+	if route.size() == 1:
+		assert_true(route[0] == door, "Stalker must keep the horizontally reachable door in the route")
+
+	stalker.free()
+	door.free()
+	exit_marker.free()
 
 func _test_follow_door_route_uses_horizontal_reach() -> void:
 	var stalker := RouteProbeStalker.new()

@@ -138,9 +138,9 @@ func _apply_visibility_rule() -> void:
 func _is_distorted_phase_active() -> bool:
 	if Engine.is_editor_hint():
 		return true
-	if GameState == null:
+	if CycleState == null:
 		return false
-	return int(GameState.phase) == int(GameState.Phase.DISTORTED)
+	return int(CycleState.phase) == int(CycleState.Phase.DISTORTED)
 
 func _update_saccade(delta: float) -> void:
 	_saccade_timer -= delta

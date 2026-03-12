@@ -169,6 +169,7 @@ position = Vector2(16, 0)
 script = ExtResource("1_8gqb3")
 primary_fridge_path = NodePath("")
 cycle_number = 2
+unlock_flashlight_on_ready = true
 timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
@@ -8689,6 +8690,8 @@ position = Vector2(9592, 114)
 food_scenes = Array[PackedScene]([ExtResource("133_kfa3y")])
 win_sound = ExtResource("90_7qnpl")
 unique_intro_once_per_run = true
+require_lab_completion = true
+required_lab_completion_ids = PackedStringArray("level_13_stu_3_laptop_1", "level_13_stu_3_laptop_2", "level_13_stu_3_laptop_3", "level_13_stu_3_laptop_4")
 
 [node name="Level12MoneySystem" parent="." unique_id=234445541 instance=ExtResource("133_o0t8e")]
 

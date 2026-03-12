@@ -170,6 +170,7 @@ size = Vector2(339.5, 406.78906)
 position = Vector2(16, 0)
 script = ExtResource("1_py70c")
 cycle_number = 2
+unlock_flashlight_on_ready = true
 timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]

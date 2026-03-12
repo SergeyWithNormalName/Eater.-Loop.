@@ -109,6 +109,7 @@ fill_from = Vector2(0.5, 0.5)
 position = Vector2(16, 0)
 script = ExtResource("1_dipft")
 cycle_number = 9
+unlock_flashlight_on_ready = true
 timer_duration = 500.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1779346994]

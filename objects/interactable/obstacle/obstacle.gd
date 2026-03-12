@@ -33,6 +33,8 @@ var _presses: int = 0
 var _last_prompt_text: String = ""
 
 func _ready() -> void:
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	if _interact_area:
 		_ensure_interact_area_script()
 		if _interact_area.has_signal("player_entered"):
@@ -133,3 +135,14 @@ func _clear_obstacle() -> void:
 	if cleared_message.strip_edges() != "":
 		UIMessage.show_notification(cleared_message)
 	queue_free()
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"hold_time": _hold_time,
+		"presses": _presses,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	_hold_time = float(state.get("hold_time", _hold_time))
+	_presses = int(state.get("presses", _presses))
+	_refresh_prompt()

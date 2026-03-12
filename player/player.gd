@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
+
 signal player_made_sound
 signal flashlight_recharged
 signal flashlight_activation_denied(charge_ratio: float)
@@ -93,6 +95,8 @@ var _flashlight_denied_player: AudioStreamPlayer
 
 func _ready() -> void:
 	add_to_group("player")
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	
 	# --- Настройка аудио ---
 	_flashlight_player = AudioStreamPlayer.new()
@@ -253,15 +257,32 @@ func get_flashlight_charge_ratio() -> float:
 		return 1.0
 	return clampf(_flashlight_charge / flashlight_use_duration, 0.0, 1.0)
 
+func has_flashlight_available() -> bool:
+	if CycleState != null and CycleState.has_method("has_flashlight_for_current_cycle"):
+		return bool(CycleState.has_flashlight_for_current_cycle())
+	if GameState != null and GameState.has_method("is_flashlight_unlocked"):
+		return bool(GameState.is_flashlight_unlocked())
+	return false
+
 func is_running() -> bool:
 	return _is_running
 
 func is_flashlight_enabled() -> bool:
-	return flashlight != null and flashlight.enabled
+	return has_flashlight_available() and flashlight != null and flashlight.enabled
+
+func is_point_lit(point: Vector2) -> bool:
+	if not is_flashlight_enabled() or flashlight == null:
+		return false
+	var origin := ReactiveLightUtils.resolve_light_origin(flashlight)
+	var light_range := ReactiveLightUtils.resolve_point_light_range(flashlight, 650.0)
+	var facing := ReactiveLightUtils.facing_from_light(flashlight)
+	return ReactiveLightUtils.is_point_within_cone(origin, facing, point, light_range, 90.0)
 
 func _update_flashlight_charge(delta: float) -> void:
 	if flashlight == null:
 		return
+	if flashlight.enabled and not has_flashlight_available():
+		_force_disable_flashlight()
 
 	var max_charge: float = maxf(0.0, flashlight_use_duration)
 	_flashlight_charge = clampf(_flashlight_charge, 0.0, max_charge)
@@ -294,6 +315,8 @@ func _update_flashlight_charge(delta: float) -> void:
 
 func _toggle_flashlight() -> void:
 	if flashlight == null:
+		return
+	if not has_flashlight_available():
 		return
 	if _is_minigame_active():
 		return
@@ -505,6 +528,33 @@ func _resolve_step_audio_component() -> StepAudioComponent:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_flashlight"):
 		_toggle_flashlight()
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"keys": keys.keys(),
+		"facing_dir": _facing_dir,
+		"stamina": _stamina,
+		"flashlight_charge": _flashlight_charge,
+		"time_since_flashlight_use": _time_since_flashlight_use,
+		"time_since_run": _time_since_run,
+		"flashlight_enabled": flashlight != null and flashlight.enabled,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	keys.clear()
+	var key_list: Variant = state.get("keys", [])
+	if key_list is Array:
+		for key_id in key_list:
+			keys[str(key_id)] = true
+	_facing_dir = float(state.get("facing_dir", _facing_dir))
+	_stamina = float(state.get("stamina", _stamina))
+	_flashlight_charge = float(state.get("flashlight_charge", _flashlight_charge))
+	_time_since_flashlight_use = float(state.get("time_since_flashlight_use", _time_since_flashlight_use))
+	_time_since_run = float(state.get("time_since_run", _time_since_run))
+	_apply_facing()
+	if flashlight != null:
+		var should_enable := bool(state.get("flashlight_enabled", false)) and has_flashlight_available()
+		flashlight.enabled = should_enable
 
 # ===== Работа с ключами =====
 func add_key(key_id: String) -> void:

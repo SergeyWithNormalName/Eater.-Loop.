@@ -76,8 +76,8 @@ func _apply_winch_effects() -> void:
 	if _is_used:
 		return
 
-	if complete_lab_on_use and GameState and GameState.has_method("mark_lab_completed"):
-		GameState.mark_lab_completed()
+	if complete_lab_on_use and CycleState != null and CycleState.has_method("mark_lab_completed"):
+		CycleState.mark_lab_completed()
 
 	var fridge := _get_fridge_target()
 	if fridge != null:
@@ -118,3 +118,17 @@ func _play_use_sound() -> void:
 	_audio_player.volume_db = use_sound_volume_db
 	_audio_player.pitch_scale = randf_range(0.97, 1.03)
 	_audio_player.play()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_used"] = _is_used
+	state["is_using"] = _is_using
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_is_used = bool(state.get("is_used", _is_used))
+	_is_using = bool(state.get("is_using", false))
+	if _is_used:
+		_apply_used_visual()
+		set_prompts_enabled(false)

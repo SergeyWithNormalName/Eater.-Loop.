@@ -26,10 +26,10 @@ func _wire_bathroom_redirect() -> void:
 		if not fridge.interaction_finished.is_connected(_on_fridge_interaction_finished):
 			fridge.interaction_finished.connect(_on_fridge_interaction_finished)
 
-	if GameState != null and GameState.has_signal("fridge_interacted_changed"):
+	if CycleState != null and CycleState.has_signal("fridge_interacted_changed"):
 		var on_changed := Callable(self, "_on_fridge_interacted_changed")
-		if not GameState.is_connected("fridge_interacted_changed", on_changed):
-			GameState.connect("fridge_interacted_changed", on_changed)
+		if not CycleState.is_connected("fridge_interacted_changed", on_changed):
+			CycleState.connect("fridge_interacted_changed", on_changed)
 
 	_update_bathroom_door_target()
 
@@ -53,7 +53,7 @@ func _update_bathroom_door_target() -> void:
 		_door_to_bathroom.call("set_target_marker_path", target)
 
 func _is_fridge_interacted() -> bool:
-	if GameState != null and GameState.has_method("is_fridge_interacted") and GameState.is_fridge_interacted():
+	if CycleState != null and CycleState.has_method("is_fridge_interacted") and CycleState.is_fridge_interacted():
 		return true
 	for fridge in _fridges:
 		if fridge != null and is_instance_valid(fridge) and bool(fridge.is_completed):

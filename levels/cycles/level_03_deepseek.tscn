@@ -857,14 +857,16 @@ texture = ExtResource("65_nkoij")
 
 [node name="InteractableObjects" type="Node2D" parent="Bedroom" unique_id=2120924945]
 
-[node name="Laptop" parent="Bedroom/InteractableObjects" unique_id=353758513 instance=ExtResource("66_n60me")]
+[node name="Laptop" parent="Bedroom/InteractableObjects" unique_id=353758513 node_paths=PackedStringArray("dependency_object") instance=ExtResource("66_n60me")]
 z_index = -1
 position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
 is_enabled = false
+unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
+dependency_object = NodePath("../../../Hall/InteractableObjects/Fridge")
 
 [node name="Clock" type="Sprite2D" parent="Bedroom/InteractableObjects" unique_id=309829582]
 position = Vector2(-2124, 150)
@@ -1116,6 +1118,8 @@ position = Vector2(-1853, 2067)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
+is_enabled = false
+unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
 dependency_object = NodePath("../Hall/InteractableObjects/Fridge")
 

@@ -73,10 +73,34 @@ func _activate_required_lamps_in_scene() -> void:
 	var tree := get_tree()
 	if tree == null:
 		return
-	for lamp in tree.get_nodes_in_group("generator_required_lamp"):
-		if lamp == null:
-			continue
-		if lamp.has_method("turn_on"):
-			lamp.call("turn_on")
+	var activated: Dictionary = {}
+	for group_name in [&"generator_required_light", &"generator_required_lamp"]:
+		for light_node in tree.get_nodes_in_group(group_name):
+			if light_node == null:
+				continue
+			var node_id := light_node.get_instance_id()
+			if activated.has(node_id):
+				continue
+			activated[node_id] = true
+			if light_node.has_method("turn_on"):
+				light_node.call("turn_on")
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	if not is_completed:
+		return
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(on_animation):
+		sprite.play(on_animation)
+	for light in linked_lights:
+		if light and light.has_method("turn_on"):
+			light.turn_on()
+	_activate_required_lamps_in_scene()
+	if audio_player:
+		if loop_sfx:
+			audio_player.stream = loop_sfx
+			audio_player.play()
+		elif start_sfx:
+			audio_player.stream = start_sfx
+			audio_player.play()
 			
 			

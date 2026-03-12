@@ -28,9 +28,9 @@ enum ConditionType {
 @export_enum("Флаг GameState", "Сигнал от узла", "Вход в триггер") var condition_type: int = ConditionType.GAMESTATE_BOOL
 
 @export_group("Condition/GameState")
-## Имя bool-поля в GameState.
+## Имя bool-поля в CycleState или GameState.
 @export_enum("ate_this_cycle", "lab_done", "phone_picked", "fridge_interacted", "unique_feeding_intro_played", "electricity_on") var game_state_flag_name: String = "ate_this_cycle"
-## Ожидаемое значение флага в GameState.
+## Ожидаемое значение флага.
 @export var game_state_expected_value: bool = true
 ## Проверять флаг каждый кадр, если нет подходящего сигнала.
 @export var poll_game_state_when_no_signal: bool = true
@@ -61,6 +61,8 @@ var _spawned: bool = false
 
 func _ready() -> void:
 	add_to_group("target_monster_spawner")
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	_arm_condition()
 
 func _process(_delta: float) -> void:
@@ -94,7 +96,8 @@ func _arm_game_state_condition() -> void:
 		set_process(true)
 
 func _connect_game_state_signal_if_possible() -> bool:
-	if GameState == null:
+	var state_owner := _resolve_state_owner()
+	if state_owner == null:
 		return false
 	var signal_name := StringName()
 	match game_state_flag_name:
@@ -108,20 +111,28 @@ func _connect_game_state_signal_if_possible() -> bool:
 			signal_name = &"electricity_changed"
 		_:
 			return false
-	if not GameState.has_signal(signal_name):
+	if not state_owner.has_signal(signal_name):
 		return false
 	var callback := Callable(self, "_on_game_state_signal")
-	if not GameState.is_connected(signal_name, callback):
-		GameState.connect(signal_name, callback)
+	if not state_owner.is_connected(signal_name, callback):
+		state_owner.connect(signal_name, callback)
 	return true
 
 func _is_game_state_condition_met() -> bool:
-	if GameState == null:
+	var state_owner := _resolve_state_owner()
+	if state_owner == null:
 		return false
-	if not _has_property(GameState, game_state_flag_name):
+	if not _has_property(state_owner, game_state_flag_name):
 		push_warning("TargetMonsterSpawner: в GameState нет свойства '%s'." % game_state_flag_name)
 		return false
-	return bool(GameState.get(game_state_flag_name)) == game_state_expected_value
+	return bool(state_owner.get(game_state_flag_name)) == game_state_expected_value
+
+func _resolve_state_owner() -> Object:
+	match game_state_flag_name:
+		"unique_feeding_intro_played":
+			return GameState
+		_:
+			return CycleState
 
 func _on_game_state_signal(_arg0: Variant = null) -> void:
 	if _spawned and one_shot:
@@ -230,6 +241,16 @@ func _spawn_enemy() -> Node:
 	if auto_free_after_spawn:
 		queue_free()
 	return enemy
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"spawned": _spawned,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	_spawned = bool(state.get("spawned", _spawned))
+	if _spawned and one_shot:
+		set_process(false)
 
 func _place_spawned_enemy(enemy: Node) -> void:
 	if not (enemy is Node2D):

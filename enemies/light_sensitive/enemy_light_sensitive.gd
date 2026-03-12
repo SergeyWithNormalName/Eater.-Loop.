@@ -183,34 +183,33 @@ func _sync_light_mask_with_player() -> void:
 
 func _physics_process(delta: float) -> void:
 	_update_stun_timers(delta)
-	var flashlight_hit := _is_flashlight_cone_hitting()
+	var flashlight_hit := _is_player_flashlight_hitting()
+	if flashlight_hit:
+		_apply_player_flashlight_stun()
 	if _flashlight_anim_active and _stun_timer <= 0.0:
 		_stop_flashlight_stun_animation()
 	var lamp_frozen_now := _update_lamp_freeze_state()
-	var stunned_now := lamp_frozen_now or _stun_timer > 0.0
+	var stunned_now := lamp_frozen_now or flashlight_hit or _stun_timer > 0.0
 	if _was_stunned and not stunned_now:
 		_try_attack_if_in_hitbox()
 	_was_stunned = stunned_now
 	if lamp_frozen_now:
 		_apply_lamp_freeze_motion()
 		return
-	if _stun_timer > 0.0:
-		_update_stun_motion(delta)
-		return
-	if flashlight_hit and _try_stun():
+	if flashlight_hit or _stun_timer > 0.0:
 		_update_stun_motion(delta)
 		return
 
-	_apply_chase_motion(flashlight_hit)
+	_apply_chase_motion()
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_in_hitbox = body
 	if _update_lamp_freeze_state():
 		return
-	if _is_flashlight_cone_hitting():
-		if _try_stun():
-			return
+	if _is_player_flashlight_hitting():
+		_apply_player_flashlight_stun()
+		return
 	if _stun_timer > 0.0:
 		return
 	super._on_hitbox_area_body_entered(body)
@@ -220,14 +219,11 @@ func _on_hitbox_area_body_exited(body: Node2D) -> void:
 		_player_in_hitbox = null
 	super._on_hitbox_area_body_exited(body)
 
-func _try_stun() -> bool:
+func _apply_player_flashlight_stun() -> bool:
 	if _lamp_frozen:
 		return false
-	if _stun_timer > 0.0 or _stun_cooldown_timer > 0.0:
-		return false
-	_stun_timer = max(0.0, stun_duration)
-	_stun_cooldown_timer = max(0.0, stun_cooldown)
-	if _stun_timer > 0.0:
+	_stun_timer = maxf(_stun_timer, maxf(0.0, stun_duration))
+	if _stun_timer > 0.0 and not _flashlight_anim_active:
 		_start_flashlight_stun_animation()
 	_knockback_remaining = 0.0
 	_knockback_dir = Vector2.ZERO
@@ -247,7 +243,7 @@ func _update_stun_motion(_delta: float) -> void:
 	velocity = Vector2.ZERO
 	move_and_slide()
 
-func _apply_chase_motion(flashlight_hit: bool) -> void:
+func _apply_chase_motion() -> void:
 	if not chase_player or _player == null:
 		velocity = Vector2.ZERO
 		_update_motion_animation()
@@ -257,11 +253,7 @@ func _apply_chase_motion(flashlight_hit: bool) -> void:
 	if abs(delta_pos.x) < 1.0:
 		velocity = Vector2.ZERO
 	else:
-		var speed_multiplier := 1.0
-		if flashlight_hit and _stun_cooldown_timer > 0.0:
-			speed_multiplier = max(1.0, flashlight_slow_factor)
-		var applied_speed := speed / speed_multiplier
-		velocity = Vector2(sign(delta_pos.x) * applied_speed, 0.0)
+		velocity = Vector2(sign(delta_pos.x) * speed, 0.0)
 
 	move_and_slide()
 	_update_facing_from_velocity()
@@ -310,8 +302,6 @@ func _start_walk_loop_animation() -> void:
 func _update_stun_timers(delta: float) -> void:
 	if _stun_timer > 0.0:
 		_stun_timer = max(0.0, _stun_timer - delta)
-	if _stun_cooldown_timer > 0.0:
-		_stun_cooldown_timer = max(0.0, _stun_cooldown_timer - delta)
 
 func _try_attack_if_in_hitbox() -> void:
 	if _lamp_frozen or _stun_timer > 0.0:
@@ -413,3 +403,41 @@ func _set_idle_animation() -> void:
 		return
 	_animated_sprite.stop()
 	_animated_sprite.frame = 0
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["stun_timer"] = _stun_timer
+	state["stun_cooldown_timer"] = _stun_cooldown_timer
+	state["knockback_remaining"] = _knockback_remaining
+	state["knockback_dir"] = _knockback_dir
+	state["is_walking"] = _is_walking
+	state["was_stunned"] = _was_stunned
+	state["lamp_frozen"] = _lamp_frozen
+	state["flashlight_anim_active"] = _flashlight_anim_active
+	state["lamp_anim_active"] = _lamp_anim_active
+	state["lamp_react_playing"] = _lamp_react_playing
+	if _animated_sprite != null:
+		state["animation"] = String(_animated_sprite.animation)
+		state["frame"] = _animated_sprite.frame
+		state["animation_playing"] = _animated_sprite.is_playing()
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_stun_timer = float(state.get("stun_timer", _stun_timer))
+	_stun_cooldown_timer = float(state.get("stun_cooldown_timer", _stun_cooldown_timer))
+	_knockback_remaining = float(state.get("knockback_remaining", _knockback_remaining))
+	_knockback_dir = state.get("knockback_dir", _knockback_dir)
+	_is_walking = bool(state.get("is_walking", _is_walking))
+	_was_stunned = bool(state.get("was_stunned", _was_stunned))
+	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))
+	_flashlight_anim_active = bool(state.get("flashlight_anim_active", _flashlight_anim_active))
+	_lamp_anim_active = bool(state.get("lamp_anim_active", _lamp_anim_active))
+	_lamp_react_playing = bool(state.get("lamp_react_playing", _lamp_react_playing))
+	if _animated_sprite != null:
+		var animation_name := StringName(state.get("animation", String(_animated_sprite.animation)))
+		if animation_name != StringName() and _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name):
+			_animated_sprite.play(animation_name)
+			_animated_sprite.frame = int(state.get("frame", _animated_sprite.frame))
+			if not bool(state.get("animation_playing", true)):
+				_animated_sprite.stop()

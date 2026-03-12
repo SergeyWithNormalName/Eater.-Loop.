@@ -38,6 +38,8 @@ signal feeding_finished
 @export_group("Lab Requirement")
 ## Запретить еду, пока не сдана лабораторная.
 @export var require_lab_completion: bool = false
+## Если список не пуст, холодильник разблокируется только после выполнения всех указанных лабораторных в текущем цикле.
+@export var required_lab_completion_ids: PackedStringArray = PackedStringArray()
 ## Сообщение, если лабораторная еще не выполнена.
 @export var lab_required_message: String = "Сначала нужно сделать лабораторную работу."
 
@@ -108,8 +110,12 @@ func _ready() -> void:
 	_update_rocking_pivot()
 	_start_rocking_if_configured()
 	
-	if require_lab_completion and GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(_update_visuals)
+	if require_lab_completion and CycleState != null and CycleState.has_signal("lab_completed"):
+		CycleState.lab_completed.connect(_update_visuals)
+	if require_lab_completion and CycleState != null and CycleState.has_signal("lab_completed_with_id"):
+		CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+	if CycleState != null and CycleState.has_signal("cycle_state_reset"):
+		CycleState.cycle_state_reset.connect(_update_visuals)
 
 # --- ОСНОВНАЯ ТОЧКА ВХОДА ---
 func _on_interact() -> void:
@@ -122,10 +128,7 @@ func _on_interact() -> void:
 		return
 
 	# 1. Проверка: уже ел?
-	if GameState != null and GameState.has_method("has_eaten_this_cycle") and GameState.has_eaten_this_cycle():
-		UIMessage.show_notification("Я уже поел.")
-		return
-	if GameState != null and bool(GameState.ate_this_cycle):
+	if CycleState != null and CycleState.has_eaten_this_cycle():
 		UIMessage.show_notification("Я уже поел.")
 		return
 	
@@ -251,20 +254,32 @@ func _on_feeding_finished() -> void:
 	_is_interacting = false
 
 func _finish_feeding_logic() -> void:
-	GameState.mark_ate()
+	if enable_teleport:
+		_clear_chase_after_teleport_success()
+	if CycleState != null:
+		CycleState.mark_ate()
 	UIMessage.show_notification("Вкуснятина")
 	
-	if GameState.has_method("mark_fridge_interacted"):
-		GameState.mark_fridge_interacted()
-	if GameState.has_method("autosave_run"):
-		GameState.autosave_run()
+	if CycleState != null:
+		CycleState.mark_fridge_interacted()
 	feeding_finished.emit()
 
 	# ВАЖНО: Помечаем объект выполненным только ПОСЛЕ еды.
 	# Теперь Ноутбук (зависящий от Холодильника) станет доступен.
 	complete_interaction() 
-	
+
 	_teleport_player_if_needed()
+	var tree := get_tree() if is_inside_tree() else null
+	if GameState != null and GameState.has_method("capture_fridge_checkpoint") and tree != null:
+		GameState.capture_fridge_checkpoint(tree.current_scene)
+	elif GameState != null and GameState.has_method("autosave_run"):
+		GameState.autosave_run()
+
+func _clear_chase_after_teleport_success() -> void:
+	if get_tree() != null:
+		get_tree().call_group("enemies", "force_stop_chase")
+	if MusicManager != null and MusicManager.has_method("clear_chase_music_sources"):
+		MusicManager.clear_chase_music_sources(0.2)
 
 func _show_locked_message() -> void:
 	if require_lab_completion and not _has_required_lab_completion():
@@ -312,6 +327,9 @@ func _on_dependency_finished() -> void:
 	super._on_dependency_finished()
 	_update_visuals()
 
+func _on_lab_completed_with_id(_completed_id: String) -> void:
+	_update_visuals()
+
 func _teleport_player_if_needed() -> void:
 	if not enable_teleport or teleport_target.is_empty():
 		return
@@ -322,11 +340,11 @@ func _teleport_player_if_needed() -> void:
 			player.global_position = marker.global_position
 
 func _has_required_lab_completion() -> bool:
-	if GameState == null:
+	if CycleState == null:
 		return false
-	if GameState.has_method("has_completed_any_lab"):
-		return bool(GameState.has_completed_any_lab())
-	return bool(GameState.lab_done)
+	if not required_lab_completion_ids.is_empty():
+		return bool(CycleState.has_completed_all_labs(required_lab_completion_ids))
+	return bool(CycleState.has_completed_any_lab())
 
 func _update_rocking_pivot() -> void:
 	if _sprite == null or _sprite.texture == null:
@@ -395,3 +413,15 @@ func apply_winch_release_state() -> void:
 	rocking_strength_degrees = 0.0
 	rocking_pivot_mode = 0
 	_update_rocking_pivot()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["code_unlocked"] = _code_unlocked
+	state["is_interacting"] = _is_interacting
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_code_unlocked = bool(state.get("code_unlocked", _code_unlocked))
+	_is_interacting = bool(state.get("is_interacting", false))
+	_update_visuals()

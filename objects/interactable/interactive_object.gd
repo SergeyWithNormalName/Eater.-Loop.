@@ -38,9 +38,26 @@ var _prompts_enabled: bool = true
 var is_completed: bool = false # <--- ФЛАГ: Выполнен объект или нет
 
 func _ready() -> void:
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	input_pickable = false
 	_setup_interaction_area()
 	set_dependency_object(dependency_object)
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"is_completed": is_completed,
+		"handle_input": handle_input,
+		"auto_prompt": auto_prompt,
+		"prompts_enabled": _prompts_enabled,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	is_completed = bool(state.get("is_completed", is_completed))
+	handle_input = bool(state.get("handle_input", handle_input))
+	auto_prompt = bool(state.get("auto_prompt", auto_prompt))
+	_prompts_enabled = bool(state.get("prompts_enabled", _prompts_enabled))
+	_refresh_prompt_state()
 
 # --- ЛОГИКА ВЗАИМОДЕЙСТВИЯ ---
 

@@ -94,6 +94,7 @@ script = ExtResource("1_bjoj5")
 bad_ending_scene = ExtResource("74_bad_end")
 laptop_sleep_prompt = "Теперь можно спокойно идти спать"
 cycle_number = 14
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=611295868]
 rotation = 0.009666472

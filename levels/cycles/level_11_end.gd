@@ -49,8 +49,8 @@ func _connect_level_flow() -> void:
 		_laptop.interaction_requested.connect(_on_laptop_interaction_requested)
 	if _fridge != null and _fridge.has_signal("interaction_requested") and not _fridge.interaction_requested.is_connected(_on_fridge_interaction_requested):
 		_fridge.interaction_requested.connect(_on_fridge_interaction_requested)
-	if GameState != null and GameState.has_signal("lab_completed") and not GameState.lab_completed.is_connected(_on_lab_completed):
-		GameState.lab_completed.connect(_on_lab_completed)
+	if CycleState != null and CycleState.has_signal("lab_completed") and not CycleState.lab_completed.is_connected(_on_lab_completed):
+		CycleState.lab_completed.connect(_on_lab_completed)
 	if _fridge != null and _fridge.has_signal("feeding_finished") and not _fridge.feeding_finished.is_connected(_on_fridge_feeding_finished):
 		_fridge.feeding_finished.connect(_on_fridge_feeding_finished)
 
@@ -68,10 +68,8 @@ func _choose_branch(branch: EndingBranch) -> void:
 		EndingBranch.LAPTOP:
 			_set_fridge_enabled(false)
 			var has_lab := false
-			if GameState != null and GameState.has_method("has_completed_any_lab"):
-				has_lab = bool(GameState.has_completed_any_lab())
-			elif GameState != null:
-				has_lab = bool(GameState.lab_done)
+			if CycleState != null and CycleState.has_method("has_completed_any_lab"):
+				has_lab = bool(CycleState.has_completed_any_lab())
 			if has_lab:
 				_on_lab_completed()
 		EndingBranch.FRIDGE:
@@ -80,8 +78,8 @@ func _choose_branch(branch: EndingBranch) -> void:
 func _on_lab_completed() -> void:
 	if _branch != EndingBranch.LAPTOP:
 		return
-	if GameState != null and GameState.has_method("mark_ate"):
-		GameState.mark_ate()
+	if CycleState != null and CycleState.has_method("mark_ate"):
+		CycleState.mark_ate()
 	_set_bed_enabled(true)
 	if UIMessage != null and laptop_sleep_prompt.strip_edges() != "":
 		UIMessage.show_notification(laptop_sleep_prompt)

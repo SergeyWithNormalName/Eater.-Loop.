@@ -275,12 +275,16 @@
 │   │   ├── texts.csv.import
 │   │   ├── texts.en.translation
 │   │   └── texts.ru.translation
+│   ├── checkpoint_state_utils.gd
+│   ├── checkpoint_state_utils.gd.uid
 │   ├── export_presets.cfg
 │   ├── iconofgame.png
 │   ├── iconofgame.png.import
 │   ├── itchio.jpg
 │   ├── itchio.jpg.import
 │   ├── macos_icon.icns
+│   ├── reactive_light_utils.gd
+│   ├── reactive_light_utils.gd.uid
 │   ├── windows_icon.ico
 │   ├── Иконка_предварительно.icns
 │   └── Иконка_предварительно.ico
@@ -299,6 +303,8 @@
 │   │   ├── TextureDistortionManager.tscn
 │   │   ├── crazy_level_event.gd
 │   │   ├── crazy_level_event.gd.uid
+│   │   ├── cycle_state.gd
+│   │   ├── cycle_state.gd.uid
 │   │   ├── game_state.gd
 │   │   ├── game_state.gd.uid
 │   │   ├── level.gd
@@ -1132,6 +1138,12 @@
 │       │   ├── door.gd.uid
 │       │   ├── door.tscn
 │       │   └── door_university.tscn
+│       ├── flashlight
+│       │   ├── Flashlight_Sprite.png
+│       │   ├── Flashlight_Sprite.png.import
+│       │   ├── pickup_flashlight.gd
+│       │   ├── pickup_flashlight.gd.uid
+│       │   └── pickup_flashlight.tscn
 │       ├── fridge
 │       │   ├── audio
 │       │   │   ├── FridgeCreaking.wav
@@ -1241,7 +1253,10 @@
 │       │   └── phone.tscn
 │       ├── projector
 │       │   ├── ProjectorSprite.png
-│       │   └── ProjectorSprite.png.import
+│       │   ├── ProjectorSprite.png.import
+│       │   ├── projector.gd
+│       │   ├── projector.gd.uid
+│       │   └── projector.tscn
 │       ├── search_spot
 │       │   ├── search_spot.gd
 │       │   ├── search_spot.gd.uid
@@ -1369,6 +1384,14 @@
 │   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd.uid
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
+│   │   ├── test_cycle_state_flashlight_unlock.gd
+│   │   ├── test_cycle_state_flashlight_unlock.gd.uid
+│   │   ├── test_cycle_state_lab_scope.gd
+│   │   ├── test_cycle_state_lab_scope.gd.uid
+│   │   ├── test_enemy_light_sensitive_external_flashlight.gd
+│   │   ├── test_enemy_light_sensitive_external_flashlight.gd.uid
+│   │   ├── test_enemy_light_sensitive_flashlight_stun.gd
+│   │   ├── test_enemy_light_sensitive_flashlight_stun.gd.uid
 │   │   ├── test_fridge_chase_interaction.gd
 │   │   ├── test_fridge_chase_interaction.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
@@ -1395,6 +1418,14 @@
 │   │   ├── test_level12_stu2_wiring_runtime.gd.uid
 │   │   ├── test_level12_student_reward.gd
 │   │   ├── test_level12_student_reward.gd.uid
+│   │   ├── test_level13_multi_lab_requirement.gd
+│   │   ├── test_level13_multi_lab_requirement.gd.uid
+│   │   ├── test_level_checkpoint_spawn.gd
+│   │   ├── test_level_checkpoint_spawn.gd.uid
+│   │   ├── test_level_default_flashlight.gd
+│   │   ├── test_level_default_flashlight.gd.uid
+│   │   ├── test_light_adds_directional_contract.gd
+│   │   ├── test_light_adds_directional_contract.gd.uid
 │   │   ├── test_minigame_gamepad_bindings.gd
 │   │   ├── test_minigame_gamepad_bindings.gd.uid
 │   │   ├── test_music_crossfade_suppression_runtime.gd
@@ -1405,6 +1436,10 @@
 │   │   ├── test_note_audio_optional.gd.uid
 │   │   ├── test_project_config.gd
 │   │   ├── test_project_config.gd.uid
+│   │   ├── test_respawn_checkpoint_restore.gd
+│   │   ├── test_respawn_checkpoint_restore.gd.uid
+│   │   ├── test_save_state_split.gd
+│   │   ├── test_save_state_split.gd.uid
 │   │   ├── test_scenes_load.gd
 │   │   ├── test_scenes_load.gd.uid
 │   │   ├── test_scripts_compile.gd
@@ -1435,4 +1470,4 @@
 ├── project.godot
 └── structure.txt
 
-123 directories, 1313 files
+124 directories, 1347 files

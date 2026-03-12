@@ -166,7 +166,7 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 		for door in doors_for_state:
 			if route.has(door):
 				continue
-			if not _has_line_of_sight(state_pos, door.global_position):
+			if not _can_approach_door(state_pos, door):
 				continue
 			var exit_node: Node2D = _get_door_exit_node(door)
 			if exit_node == null:
@@ -189,6 +189,15 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 			queue.append({"pos": exit_pos, "route": new_route})
 
 	return empty_route
+
+func _can_approach_door(from_pos: Vector2, door: Node2D) -> bool:
+	if door == null:
+		return false
+	var door_pos := door.global_position
+	if _has_line_of_sight(from_pos, door_pos):
+		return true
+	var horizontal_approach := Vector2(door_pos.x, from_pos.y)
+	return _has_line_of_sight(from_pos, horizontal_approach)
 
 func _sort_doors_for_state(doors: Array[Node], from_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 	var sorted_doors: Array[Node] = doors.duplicate()
@@ -315,3 +324,24 @@ func _update_animation() -> void:
 	else:
 		_animated_sprite.stop()
 		_animated_sprite.frame = 0
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["route_timer"] = _route_timer
+	if _animated_sprite != null:
+		state["animation"] = String(_animated_sprite.animation)
+		state["frame"] = _animated_sprite.frame
+		state["animation_playing"] = _animated_sprite.is_playing()
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_route_timer = float(state.get("route_timer", _route_timer))
+	_door_route.clear()
+	if _animated_sprite != null:
+		var animation_name := StringName(state.get("animation", String(_animated_sprite.animation)))
+		if animation_name != StringName() and _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name):
+			_animated_sprite.play(animation_name)
+			_animated_sprite.frame = int(state.get("frame", _animated_sprite.frame))
+			if not bool(state.get("animation_playing", true)):
+				_animated_sprite.stop()
