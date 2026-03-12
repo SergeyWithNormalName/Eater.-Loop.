@@ -155,3 +155,15 @@ func _resolve_beam_direction() -> Vector2:
 	if facing.length_squared() <= 0.000001:
 		return Vector2.RIGHT
 	return facing.normalized()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_on"] = _is_on
+	state["has_power"] = _has_power
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_is_on = bool(state.get("is_on", _is_on))
+	_has_power = bool(state.get("has_power", _has_power))
+	_update_light_enabled(false)

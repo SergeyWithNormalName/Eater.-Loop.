@@ -157,6 +157,19 @@ func set_target_marker_path(path: NodePath) -> void:
 func get_target_marker_path() -> NodePath:
 	return target_marker
 
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_locked"] = is_locked
+	state["door_locked_message"] = door_locked_message
+	state["is_transitioning"] = _is_transitioning
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	is_locked = bool(state.get("is_locked", is_locked))
+	door_locked_message = str(state.get("door_locked_message", door_locked_message))
+	_is_transitioning = bool(state.get("is_transitioning", false))
+
 # Вспомогательная функция для проигрывания
 func _play_sound(stream: AudioStream) -> void:
 	if stream != null:

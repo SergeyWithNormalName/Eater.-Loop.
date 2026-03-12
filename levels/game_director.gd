@@ -577,7 +577,9 @@ func _on_death_retry_pressed() -> void:
 	if not _death_sequence_active:
 		return
 	var restored_autosave := false
-	if GameState != null and GameState.has_method("restore_autosave_run"):
+	if GameState != null and GameState.has_method("restore_respawn_checkpoint"):
+		restored_autosave = bool(GameState.restore_respawn_checkpoint())
+	elif GameState != null and GameState.has_method("restore_autosave_run"):
 		restored_autosave = bool(GameState.restore_autosave_run())
 	if not restored_autosave and CycleState != null:
 		CycleState.reset_cycle_state()
@@ -967,4 +969,51 @@ func _minigame_allows_distortion(minigame: Node) -> bool:
 
 func get_cycle_number() -> int:
 	return _current_cycle_number
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"current_max_time": current_max_time,
+		"current_cycle_number": _current_cycle_number,
+		"current_timer_duration": _current_timer_duration,
+		"time_left": get_time_left(),
+		"timer_running": is_timer_running(),
+		"pending_distortion_activation": _pending_distortion_activation,
+		"stalker_spawned": _stalker_spawned,
+		"distortion_active": _distortion_active,
+		"distortion_progress": _distortion_progress,
+		"transition_active": _transition_active,
+		"transition_progress": _transition_progress,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	if state.is_empty():
+		return
+	_current_cycle_number = int(state.get("current_cycle_number", _current_cycle_number))
+	_current_timer_duration = float(state.get("current_timer_duration", _current_timer_duration))
+	current_max_time = float(state.get("current_max_time", current_max_time))
+	_pending_distortion_activation = bool(state.get("pending_distortion_activation", false))
+	_stalker_spawned = bool(state.get("stalker_spawned", false))
+	_distortion_active = bool(state.get("distortion_active", false))
+	_distortion_progress = float(state.get("distortion_progress", 0.0))
+	_transition_active = bool(state.get("transition_active", false))
+	_transition_progress = float(state.get("transition_progress", 0.0))
+	_flash_active = false
+	_damage_flash_active = false
+	_stop_light_only_jump_effect()
+	if _damage_rect != null:
+		_damage_rect.visible = false
+	_set_damage_intensity(0.0)
+	if _death_sequence_active:
+		_reset_death_screen_state()
+	if CycleState != null and CycleState.phase == CycleState.Phase.NORMAL and current_max_time > 0.0:
+		var timer_running := bool(state.get("timer_running", false))
+		var time_left := clampf(float(state.get("time_left", current_max_time)), 0.0, current_max_time)
+		if timer_running and time_left > 0.0:
+			_timer.start(time_left)
+		else:
+			_timer.stop()
+	else:
+		_timer.stop()
+	if not _distortion_active and not _transition_active:
+		_hide_distortion_overlays()
 	

@@ -262,15 +262,18 @@ func _finish_feeding_logic() -> void:
 	
 	if CycleState != null:
 		CycleState.mark_fridge_interacted()
-	if GameState.has_method("autosave_run"):
-		GameState.autosave_run()
 	feeding_finished.emit()
 
 	# ВАЖНО: Помечаем объект выполненным только ПОСЛЕ еды.
 	# Теперь Ноутбук (зависящий от Холодильника) станет доступен.
 	complete_interaction() 
-	
+
 	_teleport_player_if_needed()
+	var tree := get_tree() if is_inside_tree() else null
+	if GameState != null and GameState.has_method("capture_fridge_checkpoint") and tree != null:
+		GameState.capture_fridge_checkpoint(tree.current_scene)
+	elif GameState != null and GameState.has_method("autosave_run"):
+		GameState.autosave_run()
 
 func _clear_chase_after_teleport_success() -> void:
 	if get_tree() != null:
@@ -410,3 +413,15 @@ func apply_winch_release_state() -> void:
 	rocking_strength_degrees = 0.0
 	rocking_pivot_mode = 0
 	_update_rocking_pivot()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["code_unlocked"] = _code_unlocked
+	state["is_interacting"] = _is_interacting
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_code_unlocked = bool(state.get("code_unlocked", _code_unlocked))
+	_is_interacting = bool(state.get("is_interacting", false))
+	_update_visuals()

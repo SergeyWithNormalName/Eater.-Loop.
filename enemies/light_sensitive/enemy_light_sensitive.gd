@@ -403,3 +403,41 @@ func _set_idle_animation() -> void:
 		return
 	_animated_sprite.stop()
 	_animated_sprite.frame = 0
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["stun_timer"] = _stun_timer
+	state["stun_cooldown_timer"] = _stun_cooldown_timer
+	state["knockback_remaining"] = _knockback_remaining
+	state["knockback_dir"] = _knockback_dir
+	state["is_walking"] = _is_walking
+	state["was_stunned"] = _was_stunned
+	state["lamp_frozen"] = _lamp_frozen
+	state["flashlight_anim_active"] = _flashlight_anim_active
+	state["lamp_anim_active"] = _lamp_anim_active
+	state["lamp_react_playing"] = _lamp_react_playing
+	if _animated_sprite != null:
+		state["animation"] = String(_animated_sprite.animation)
+		state["frame"] = _animated_sprite.frame
+		state["animation_playing"] = _animated_sprite.is_playing()
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_stun_timer = float(state.get("stun_timer", _stun_timer))
+	_stun_cooldown_timer = float(state.get("stun_cooldown_timer", _stun_cooldown_timer))
+	_knockback_remaining = float(state.get("knockback_remaining", _knockback_remaining))
+	_knockback_dir = state.get("knockback_dir", _knockback_dir)
+	_is_walking = bool(state.get("is_walking", _is_walking))
+	_was_stunned = bool(state.get("was_stunned", _was_stunned))
+	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))
+	_flashlight_anim_active = bool(state.get("flashlight_anim_active", _flashlight_anim_active))
+	_lamp_anim_active = bool(state.get("lamp_anim_active", _lamp_anim_active))
+	_lamp_react_playing = bool(state.get("lamp_react_playing", _lamp_react_playing))
+	if _animated_sprite != null:
+		var animation_name := StringName(state.get("animation", String(_animated_sprite.animation)))
+		if animation_name != StringName() and _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name):
+			_animated_sprite.play(animation_name)
+			_animated_sprite.frame = int(state.get("frame", _animated_sprite.frame))
+			if not bool(state.get("animation_playing", true)):
+				_animated_sprite.stop()

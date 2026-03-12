@@ -84,5 +84,23 @@ func _activate_required_lamps_in_scene() -> void:
 			activated[node_id] = true
 			if light_node.has_method("turn_on"):
 				light_node.call("turn_on")
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	if not is_completed:
+		return
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(on_animation):
+		sprite.play(on_animation)
+	for light in linked_lights:
+		if light and light.has_method("turn_on"):
+			light.turn_on()
+	_activate_required_lamps_in_scene()
+	if audio_player:
+		if loop_sfx:
+			audio_player.stream = loop_sfx
+			audio_player.play()
+		elif start_sfx:
+			audio_player.stream = start_sfx
+			audio_player.play()
 			
 			

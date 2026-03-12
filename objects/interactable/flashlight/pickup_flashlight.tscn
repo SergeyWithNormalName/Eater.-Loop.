@@ -44,9 +44,10 @@ energy = 1.49
 texture = SubResource("GradientTexture2D_nsikq")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=953179305]
-light_mask = 3
+z_index = 2
+light_mask = 1
 rotation = 0.03
-scale = Vector2(-0.09, 0.09)
+scale = Vector2(-0.16, 0.16)
 texture = ExtResource("2_hdyya")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1889724680]

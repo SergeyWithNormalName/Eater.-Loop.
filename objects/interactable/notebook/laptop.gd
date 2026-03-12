@@ -249,3 +249,18 @@ func _resolve_money_system() -> Node:
 	if money_system_path.is_empty():
 		return get_node_or_null("../Level12MoneySystem")
 	return get_node_or_null(money_system_path)
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_enabled"] = _is_enabled
+	state["dependency_override"] = _dependency_override
+	state["money_rewarded"] = _money_rewarded
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_is_enabled = bool(state.get("is_enabled", _is_enabled))
+	_dependency_override = bool(state.get("dependency_override", _dependency_override))
+	_money_rewarded = bool(state.get("money_rewarded", _money_rewarded))
+	_apply_enabled_state()
+	_update_visuals()

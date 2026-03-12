@@ -61,6 +61,8 @@ var _spawned: bool = false
 
 func _ready() -> void:
 	add_to_group("target_monster_spawner")
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	_arm_condition()
 
 func _process(_delta: float) -> void:
@@ -239,6 +241,16 @@ func _spawn_enemy() -> Node:
 	if auto_free_after_spawn:
 		queue_free()
 	return enemy
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"spawned": _spawned,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	_spawned = bool(state.get("spawned", _spawned))
+	if _spawned and one_shot:
+		set_process(false)
 
 func _place_spawned_enemy(enemy: Node) -> void:
 	if not (enemy is Node2D):

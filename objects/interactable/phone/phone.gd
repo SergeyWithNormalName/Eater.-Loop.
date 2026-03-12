@@ -68,3 +68,20 @@ func _pickup() -> void:
 		_pickup_player.play()
 	if CycleState != null:
 		CycleState.mark_phone_picked()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_picked"] = _is_picked
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_is_picked = bool(state.get("is_picked", _is_picked))
+	if _ring_timer != null:
+		_ring_timer.stop()
+	if _ring_player != null:
+		_ring_player.stop()
+	if _is_picked:
+		_hide_prompt()
+		return
+	_start_ringing()

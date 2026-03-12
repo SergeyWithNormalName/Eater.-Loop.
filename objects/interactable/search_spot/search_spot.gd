@@ -91,3 +91,18 @@ func _mark_all_spots_searched_empty() -> void:
 		return
 	if manager.has_method("mark_all_spots_searched_empty"):
 		manager.mark_all_spots_searched_empty()
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["has_key"] = has_key
+	state["is_searched_empty"] = is_searched_empty
+	state["layout_state"] = _layout_state.duplicate(true)
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	has_key = bool(state.get("has_key", has_key))
+	is_searched_empty = bool(state.get("is_searched_empty", is_searched_empty))
+	var layout_state: Variant = state.get("layout_state", {})
+	_layout_state = layout_state.duplicate(true) if layout_state is Dictionary else {}
+	_current_minigame = null

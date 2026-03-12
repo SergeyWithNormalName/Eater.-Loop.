@@ -169,6 +169,7 @@ position = Vector2(16, 0)
 script = ExtResource("1_8gqb3")
 primary_fridge_path = NodePath("")
 cycle_number = 2
+unlock_flashlight_on_ready = true
 timer_duration = 600.0
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]

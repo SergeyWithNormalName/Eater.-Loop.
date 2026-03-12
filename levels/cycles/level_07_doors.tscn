@@ -99,6 +99,7 @@ script = ExtResource("1_2labn")
 hall2_left_door_path = NodePath("Hall2/InteractableObjects/Door(InKithenLeft)")
 hall2_right_door_path = NodePath("Hall2/InteractableObjects/Door(InKithenRight)")
 cycle_number = 8
+unlock_flashlight_on_ready = true
 timer_duration = 50.0
 start_hint_text = "Двери врут: часть приоткрытых заклинит.
 Ищи холодильник через дальние коридоры.

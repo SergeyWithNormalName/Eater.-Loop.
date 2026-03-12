@@ -112,6 +112,17 @@ func _is_lamp_light_hitting() -> bool:
 			continue
 		if not light_source.has_method("is_point_lit"):
 			continue
-		if bool(light_source.call("is_point_lit", global_position)):
-			return true
+			if bool(light_source.call("is_point_lit", global_position)):
+				return true
 	return false
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["heard_player_sound"] = _heard_player_sound
+	state["lamp_frozen"] = _lamp_frozen
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_heard_player_sound = bool(state.get("heard_player_sound", _heard_player_sound))
+	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))

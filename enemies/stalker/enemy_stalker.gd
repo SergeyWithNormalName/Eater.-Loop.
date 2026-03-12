@@ -324,3 +324,24 @@ func _update_animation() -> void:
 	else:
 		_animated_sprite.stop()
 		_animated_sprite.frame = 0
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["route_timer"] = _route_timer
+	if _animated_sprite != null:
+		state["animation"] = String(_animated_sprite.animation)
+		state["frame"] = _animated_sprite.frame
+		state["animation_playing"] = _animated_sprite.is_playing()
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_route_timer = float(state.get("route_timer", _route_timer))
+	_door_route.clear()
+	if _animated_sprite != null:
+		var animation_name := StringName(state.get("animation", String(_animated_sprite.animation)))
+		if animation_name != StringName() and _animated_sprite.sprite_frames != null and _animated_sprite.sprite_frames.has_animation(animation_name):
+			_animated_sprite.play(animation_name)
+			_animated_sprite.frame = int(state.get("frame", _animated_sprite.frame))
+			if not bool(state.get("animation_playing", true)):
+				_animated_sprite.stop()

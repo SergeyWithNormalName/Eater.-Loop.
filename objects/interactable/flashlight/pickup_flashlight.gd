@@ -12,19 +12,12 @@ const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
 @export var light_fov_deg: float = 90.0
 @export var beam_direction_local: Vector2 = Vector2.LEFT
 
-@export_group("Visuals")
-@export var sprite_node: NodePath = NodePath("Sprite2D")
-@export_file("*.png") var sprite_texture_path: String = "res://objects/interactable/flashlight/Flashlight_Sprite.png"
-
 var _light: PointLight2D = null
-var _sprite: Sprite2D = null
 
 func _ready() -> void:
 	super._ready()
 
 	_light = get_node_or_null(light_node) as PointLight2D
-	_sprite = get_node_or_null(sprite_node) as Sprite2D
-	_apply_sprite_texture()
 	if not is_in_group("reactive_light_source"):
 		add_to_group("reactive_light_source")
 	if _should_despawn_immediately():
@@ -73,16 +66,3 @@ func _should_despawn_immediately() -> bool:
 	if GameState != null and GameState.has_method("is_flashlight_unlocked"):
 		return bool(GameState.is_flashlight_unlocked())
 	return false
-
-func _apply_sprite_texture() -> void:
-	if _sprite == null or sprite_texture_path.strip_edges() == "":
-		return
-	var texture := _load_raw_texture(sprite_texture_path)
-	if texture != null:
-		_sprite.texture = texture
-
-func _load_raw_texture(path: String) -> Texture2D:
-	var image := Image.new()
-	if image.load(ProjectSettings.globalize_path(path)) != OK:
-		return null
-	return ImageTexture.create_from_image(image)

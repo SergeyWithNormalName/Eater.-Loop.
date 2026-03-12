@@ -214,3 +214,15 @@ func is_point_lit(point: Vector2) -> bool:
 	var origin := ReactiveLightUtils.resolve_light_origin(_light)
 	var light_range := ReactiveLightUtils.resolve_point_light_range(_light, light_range)
 	return ReactiveLightUtils.is_point_within_radius(origin, point, light_range)
+
+func capture_checkpoint_state() -> Dictionary:
+	var state := super.capture_checkpoint_state()
+	state["is_on"] = _is_on
+	state["has_power"] = _has_power
+	return state
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	super.apply_checkpoint_state(state)
+	_is_on = bool(state.get("is_on", _is_on))
+	_has_power = bool(state.get("has_power", _has_power))
+	_update_light_enabled(false)

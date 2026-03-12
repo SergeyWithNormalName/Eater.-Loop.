@@ -12,11 +12,13 @@ func run() -> Array[String]:
 
 func _test_level_moves_player_to_fridge_checkpoint_spawn() -> void:
 	assert_true(CycleState != null, "CycleState autoload is missing")
+	assert_true(GameState != null, "GameState autoload is missing")
 	var tree := Engine.get_main_loop() as SceneTree
 	assert_true(tree != null, "SceneTree is not available")
-	if CycleState == null or tree == null:
+	if CycleState == null or GameState == null or tree == null:
 		return
 
+	GameState.reset_run()
 	CycleState.reset_cycle_state()
 	CycleState.mark_fridge_interacted()
 
@@ -42,4 +44,5 @@ func _test_level_moves_player_to_fridge_checkpoint_spawn() -> void:
 	player.queue_free()
 	level.queue_free()
 	await tree.process_frame
+	GameState.reset_run()
 	CycleState.reset_cycle_state()

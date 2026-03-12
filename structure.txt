@@ -275,6 +275,8 @@
 │   │   ├── texts.csv.import
 │   │   ├── texts.en.translation
 │   │   └── texts.ru.translation
+│   ├── checkpoint_state_utils.gd
+│   ├── checkpoint_state_utils.gd.uid
 │   ├── export_presets.cfg
 │   ├── iconofgame.png
 │   ├── iconofgame.png.import
@@ -1418,6 +1420,8 @@
 │   │   ├── test_level13_multi_lab_requirement.gd.uid
 │   │   ├── test_level_checkpoint_spawn.gd
 │   │   ├── test_level_checkpoint_spawn.gd.uid
+│   │   ├── test_level_default_flashlight.gd
+│   │   ├── test_level_default_flashlight.gd.uid
 │   │   ├── test_light_adds_directional_contract.gd
 │   │   ├── test_light_adds_directional_contract.gd.uid
 │   │   ├── test_minigame_gamepad_bindings.gd
@@ -1430,6 +1434,8 @@
 │   │   ├── test_note_audio_optional.gd.uid
 │   │   ├── test_project_config.gd
 │   │   ├── test_project_config.gd.uid
+│   │   ├── test_respawn_checkpoint_restore.gd
+│   │   ├── test_respawn_checkpoint_restore.gd.uid
 │   │   ├── test_save_state_split.gd
 │   │   ├── test_save_state_split.gd.uid
 │   │   ├── test_scenes_load.gd
@@ -1462,4 +1468,4 @@
 ├── project.godot
 └── structure.txt
 
-124 directories, 1339 files
+124 directories, 1345 files

@@ -38,13 +38,22 @@ class_name CycleLevel
 ## Маркер, у которого нужно возродить игрока, если в цикле уже был успешный холодильник.
 @export var fridge_interacted_spawn_marker_path: NodePath
 
+@export_group("Прогресс Игрока")
+## Автоматически выдавать фонарик при входе на уровень.
+@export var unlock_flashlight_on_ready: bool = false
+
 const DEFAULT_WAKE_SFX_PATH := "res://objects/interactable/bed/OutOfBed.wav"
 const DEFAULT_BLACKOUT_FALLBACK := 1.0
 
 var _start_subtitle_shown: bool = false
 var _cached_default_wake_blackout_duration: float = -1.0
+var _checkpoint_restored: bool = false
 
 func _ready() -> void:
+	if GameState != null and GameState.has_method("apply_checkpoint_to_scene"):
+		_checkpoint_restored = bool(GameState.apply_checkpoint_to_scene(self))
+	_apply_default_player_progress()
+	call_deferred("_capture_level_start_checkpoint")
 	call_deferred("_apply_conditional_respawn_position")
 	call_deferred("_run_pending_respawn_blackout")
 	if show_start_hint and start_hint_text.strip_edges() != "":
@@ -100,6 +109,8 @@ func _show_start_subtitle() -> void:
 		UIMessage.show_text(text, start_subtitle_duration)
 
 func _apply_conditional_respawn_position() -> void:
+	if _checkpoint_restored:
+		return
 	if fridge_interacted_spawn_marker_path == NodePath(""):
 		return
 	if CycleState == null or not CycleState.has_method("is_fridge_interacted"):
@@ -113,6 +124,20 @@ func _apply_conditional_respawn_position() -> void:
 	if player == null:
 		return
 	player.global_position = marker.global_position
+
+func _apply_default_player_progress() -> void:
+	if not unlock_flashlight_on_ready:
+		return
+	if GameState != null and GameState.has_method("unlock_flashlight"):
+		GameState.unlock_flashlight()
+
+func _capture_level_start_checkpoint() -> void:
+	if _checkpoint_restored:
+		return
+	if GameState == null or not GameState.has_method("capture_level_start_checkpoint"):
+		return
+	await get_tree().process_frame
+	GameState.capture_level_start_checkpoint(self)
 
 func _wait_until_screen_is_not_dark() -> void:
 	if UIMessage == null:

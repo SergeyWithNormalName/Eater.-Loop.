@@ -172,6 +172,41 @@ func write_save_data(config: ConfigFile) -> void:
 	config.set_value(SAVE_SECTION, "electricity_on", electricity_on)
 	config.set_value(SAVE_SECTION, "flashlight_collected_this_cycle", flashlight_collected_this_cycle)
 
+func export_checkpoint_state() -> Dictionary:
+	return {
+		"phase": int(phase),
+		"ate_this_cycle": ate_this_cycle,
+		"lab_done": lab_done,
+		"completed_labs": completed_labs,
+		"phone_picked": phone_picked,
+		"fridge_interacted": fridge_interacted,
+		"pending_sleep_spawn": pending_sleep_spawn,
+		"pending_respawn_blackout": pending_respawn_blackout,
+		"electricity_on": electricity_on,
+		"flashlight_collected_this_cycle": flashlight_collected_this_cycle,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	if state.is_empty():
+		_reset_cycle_state_internal(false)
+		return
+	var raw_phase := int(state.get("phase", int(Phase.NORMAL)))
+	if raw_phase < int(Phase.NORMAL) or raw_phase > int(Phase.DISTORTED):
+		raw_phase = int(Phase.NORMAL)
+	phase = raw_phase
+	ate_this_cycle = bool(state.get("ate_this_cycle", false))
+	lab_done = bool(state.get("lab_done", false))
+	var completed_labs_raw: Variant = state.get("completed_labs", [])
+	completed_labs = PackedStringArray(_coerce_string_array(completed_labs_raw))
+	if not lab_done and not completed_labs.is_empty():
+		lab_done = true
+	phone_picked = bool(state.get("phone_picked", false))
+	fridge_interacted = bool(state.get("fridge_interacted", false))
+	pending_sleep_spawn = bool(state.get("pending_sleep_spawn", false))
+	pending_respawn_blackout = bool(state.get("pending_respawn_blackout", false))
+	electricity_on = bool(state.get("electricity_on", true))
+	flashlight_collected_this_cycle = bool(state.get("flashlight_collected_this_cycle", false))
+
 func load_save_data(config: ConfigFile) -> void:
 	if config == null:
 		_reset_cycle_state_internal(false)

@@ -66,6 +66,7 @@ var keys: Dictionary = {}
 @onready var pivot: Node2D = get_node_or_null("Pivot") as Node2D
 @onready var sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 @onready var flashlight: PointLight2D = null
+@onready var flashlight_visual_sprite: Sprite2D = get_node_or_null("FlashlightSprite") as Sprite2D
 var step_audio: StepAudioComponent = null
 
 # Внутренние переменные
@@ -74,6 +75,8 @@ var _pivot_base_scale: Vector2 = Vector2.ONE
 var _sprite_base_scale: Vector2 = Vector2.ONE
 var _flashlight_base_scale: Vector2 = Vector2.ONE
 var _flashlight_base_offset: Vector2 = Vector2.ZERO
+var _flashlight_visual_base_scale: Vector2 = Vector2.ONE
+var _flashlight_visual_base_position: Vector2 = Vector2.ZERO
 var _idle_texture: Texture2D = null
 var _is_walking: bool = false
 var _is_running: bool = false
@@ -95,6 +98,8 @@ var _flashlight_denied_player: AudioStreamPlayer
 
 func _ready() -> void:
 	add_to_group("player")
+	if not is_in_group("checkpoint_stateful"):
+		add_to_group("checkpoint_stateful")
 	
 	# --- Настройка аудио ---
 	_flashlight_player = AudioStreamPlayer.new()
@@ -134,11 +139,15 @@ func _ready() -> void:
 		_flashlight_base_scale = flashlight.scale
 		_flashlight_base_offset = flashlight.offset
 		flashlight.enabled = false 
+	if flashlight_visual_sprite:
+		_flashlight_visual_base_scale = flashlight_visual_sprite.scale
+		_flashlight_visual_base_position = flashlight_visual_sprite.position
 	
 	_stamina = stamina_max
 	_flashlight_charge = max(0.0, flashlight_use_duration)
 	_time_since_flashlight_use = max(0.0, flashlight_recharge_delay)
 	_apply_facing()
+	_update_flashlight_visual()
 	_connect_minigame_controller()
 
 func _connect_minigame_controller() -> void:
@@ -166,6 +175,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		_update_walk_animation(delta, 0.0)
 		_update_flashlight_charge(delta)
+		_update_flashlight_visual()
 		return
 	var direction := Input.get_axis("move_left", "move_right")
 	if _is_screen_dark():
@@ -189,6 +199,7 @@ func _physics_process(delta: float) -> void:
 	# Обновление анимации
 	_update_walk_animation(delta, direction)
 	_update_flashlight_charge(delta)
+	_update_flashlight_visual()
 
 func _is_movement_blocked() -> bool:
 	return _movement_blocked
@@ -394,6 +405,9 @@ func _apply_facing() -> void:
 	if flashlight and pivot == null:
 		flashlight.scale = Vector2(abs(_flashlight_base_scale.x) * _facing_dir, _flashlight_base_scale.y)
 		flashlight.offset = _flashlight_base_offset
+	if flashlight_visual_sprite and pivot == null:
+		flashlight_visual_sprite.scale = Vector2(absf(_flashlight_visual_base_scale.x) * _facing_dir, _flashlight_visual_base_scale.y)
+		flashlight_visual_sprite.position = Vector2(_flashlight_visual_base_position.x * _facing_dir, _flashlight_visual_base_position.y)
 
 func _setup_animations() -> void:
 	if sprite == null or sprite.sprite_frames == null:
@@ -526,6 +540,39 @@ func _resolve_step_audio_component() -> StepAudioComponent:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_flashlight"):
 		_toggle_flashlight()
+
+func _update_flashlight_visual() -> void:
+	if flashlight_visual_sprite == null:
+		return
+	flashlight_visual_sprite.visible = has_flashlight_available()
+
+func capture_checkpoint_state() -> Dictionary:
+	return {
+		"keys": keys.keys(),
+		"facing_dir": _facing_dir,
+		"stamina": _stamina,
+		"flashlight_charge": _flashlight_charge,
+		"time_since_flashlight_use": _time_since_flashlight_use,
+		"time_since_run": _time_since_run,
+		"flashlight_enabled": flashlight != null and flashlight.enabled,
+	}
+
+func apply_checkpoint_state(state: Dictionary) -> void:
+	keys.clear()
+	var key_list: Variant = state.get("keys", [])
+	if key_list is Array:
+		for key_id in key_list:
+			keys[str(key_id)] = true
+	_facing_dir = float(state.get("facing_dir", _facing_dir))
+	_stamina = float(state.get("stamina", _stamina))
+	_flashlight_charge = float(state.get("flashlight_charge", _flashlight_charge))
+	_time_since_flashlight_use = float(state.get("time_since_flashlight_use", _time_since_flashlight_use))
+	_time_since_run = float(state.get("time_since_run", _time_since_run))
+	_apply_facing()
+	if flashlight != null:
+		var should_enable := bool(state.get("flashlight_enabled", false)) and has_flashlight_available()
+		flashlight.enabled = should_enable
+	_update_flashlight_visual()
 
 # ===== Работа с ключами =====
 func add_key(key_id: String) -> void:
