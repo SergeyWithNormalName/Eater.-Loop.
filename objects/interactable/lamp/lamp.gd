@@ -1,7 +1,5 @@
 extends InteractiveObject # Убедись, что наследуешься от обновленного класса
 
-const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
-
 @export_group("Lamp Settings")
 ## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
@@ -212,8 +210,8 @@ func is_point_lit(point: Vector2) -> bool:
 	if not is_light_active():
 		return false
 	var origin := ReactiveLightUtils.resolve_light_origin(_light)
-	var light_range := ReactiveLightUtils.resolve_point_light_range(_light, light_range)
-	return ReactiveLightUtils.is_point_within_radius(origin, point, light_range)
+	var resolved_light_range := ReactiveLightUtils.resolve_point_light_range(_light, light_range)
+	return ReactiveLightUtils.is_point_within_radius(origin, point, resolved_light_range)
 
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()

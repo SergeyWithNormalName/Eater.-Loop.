@@ -1,7 +1,5 @@
 extends InteractiveObject
 
-const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
-
 @export_group("Pickup")
 @export var pickup_message: String = "Подобрал фонарик."
 @export var already_collected_message: String = ""

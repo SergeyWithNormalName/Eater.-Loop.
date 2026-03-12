@@ -1,6 +1,7 @@
 extends Control
 class_name TimedLabMinigameBase
 
+@warning_ignore("unused_signal")
 signal task_completed(success: bool)
 
 @export_group("Timed Lab")
