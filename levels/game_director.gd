@@ -90,6 +90,7 @@ var _damage_flash_active: bool = false
 var _light_only_jump_active: bool = false
 var _minigame_active: bool = false
 var _minigame_blocks_distortion: bool = false
+var _pending_distortion_activation: bool = false
 var _in_game_scene: bool = false
 var _stalker_spawned: bool = false
 var _death_layer: CanvasLayer
@@ -180,7 +181,9 @@ func _process(delta: float) -> void:
 		_hide_distortion_overlays()
 
 func start_normal_phase(timer_duration: float = -1.0) -> void:
-	GameState.set_phase(GameState.Phase.NORMAL)
+	if CycleState != null:
+		CycleState.set_phase(CycleState.Phase.NORMAL)
+	_pending_distortion_activation = false
 	_distortion_active = false
 	_distortion_progress = 0.0
 	_transition_active = false
@@ -212,7 +215,7 @@ func reduce_time(amount: float, damage_flash: bool = false) -> void:
 	if not is_timer_running():
 		return
 	set_time_left(get_time_left() - amount)
-	if GameState and GameState.phase != GameState.Phase.NORMAL:
+	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
 		return
 	if damage_flash:
 		trigger_damage_flash()
@@ -225,9 +228,21 @@ func trigger_damage_flash() -> void:
 	_flash_damage()
 
 func _on_distortion_timeout() -> void:
-	if GameState and GameState.phase == GameState.Phase.DISTORTED:
+	if CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED:
+		_pending_distortion_activation = false
 		return
-	GameState.set_phase(GameState.Phase.DISTORTED)
+	if _should_defer_distortion_activation():
+		_pending_distortion_activation = true
+		return
+	_activate_distortion_phase()
+
+func _activate_distortion_phase() -> void:
+	if CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED:
+		_pending_distortion_activation = false
+		return
+	_pending_distortion_activation = false
+	if CycleState != null:
+		CycleState.set_phase(CycleState.Phase.DISTORTED)
 	_distortion_active = true
 	_distortion_progress = 0.0
 	_transition_active = true
@@ -244,6 +259,11 @@ func _on_distortion_timeout() -> void:
 	_spawn_stalker_if_needed()
 	distortion_started.emit()
 
+func _should_defer_distortion_activation() -> bool:
+	if _death_sequence_active:
+		return false
+	return _minigame_active and _minigame_blocks_distortion
+
 func trigger_distortion_now() -> void:
 	if _death_sequence_active:
 		return
@@ -252,7 +272,7 @@ func trigger_distortion_now() -> void:
 	_on_distortion_timeout()
 
 func get_time_ratio() -> float:
-	if GameState.phase != GameState.Phase.NORMAL:
+	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
 		return 0.0
 	
 	# Если таймер стоит в нормальной фазе — значит время бесконечное (100%)
@@ -265,20 +285,20 @@ func get_time_left() -> float:
 	if current_max_time <= 0.0:
 		return 0.0
 	if _timer.is_stopped():
-		if GameState and GameState.phase == GameState.Phase.NORMAL:
+		if CycleState != null and CycleState.phase == CycleState.Phase.NORMAL:
 			return current_max_time
 		return 0.0
 	return _timer.time_left
 
 func is_timer_running() -> bool:
-	if GameState and GameState.phase != GameState.Phase.NORMAL:
+	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
 		return false
 	return current_max_time > 0.0 and not _timer.is_stopped()
 
 func ensure_timer_running(fallback_time: float) -> void:
 	if fallback_time <= 0.0:
 		return
-	if GameState and GameState.phase != GameState.Phase.NORMAL:
+	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
 		return
 	if is_timer_running():
 		return
@@ -288,7 +308,7 @@ func ensure_timer_running(fallback_time: float) -> void:
 func set_time_left(new_time: float) -> void:
 	if _death_sequence_active:
 		return
-	if GameState and GameState.phase != GameState.Phase.NORMAL:
+	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
 		return
 	if current_max_time <= 0.0:
 		return
@@ -358,7 +378,7 @@ func _flash_red() -> void:
 	_set_distortion_intensity(0.25)
 	_set_distortion_squash(0.0)
 	get_tree().create_timer(0.1).timeout.connect(func():
-		if GameState.phase == GameState.Phase.NORMAL:
+		if CycleState == null or CycleState.phase == CycleState.Phase.NORMAL:
 			_distortion_rect.visible = false
 			_set_distortion_intensity(0.0)
 			_set_distortion_squash(0.0)
@@ -397,6 +417,7 @@ func _update_for_scene(scene: Node) -> void:
 	_in_game_scene = path.find("/levels/cycles/") != -1
 	_minigame_active = false
 	_minigame_blocks_distortion = false
+	_pending_distortion_activation = false
 	_set_mouse_visibility(_in_game_scene)
 	if _in_game_scene:
 		_apply_level_settings(scene)
@@ -410,8 +431,8 @@ func _update_for_scene(scene: Node) -> void:
 	_stop_light_only_jump_effect()
 	_stalker_spawned = false
 	_hide_distortion_overlays()
-	if GameState:
-		GameState.set_phase(GameState.Phase.NORMAL)
+	if CycleState != null:
+		CycleState.set_phase(CycleState.Phase.NORMAL)
 
 func _apply_level_settings(scene: Node) -> void:
 	_current_cycle_number = _resolve_cycle_number(scene)
@@ -555,12 +576,13 @@ func _on_death_fade_completed() -> void:
 func _on_death_retry_pressed() -> void:
 	if not _death_sequence_active:
 		return
-	if GameState:
-		GameState.reset_cycle_state()
-		if GameState.has_method("queue_respawn_blackout"):
-			GameState.queue_respawn_blackout()
-		else:
-			GameState.pending_respawn_blackout = true
+	var restored_autosave := false
+	if GameState != null and GameState.has_method("restore_autosave_run"):
+		restored_autosave = bool(GameState.restore_autosave_run())
+	if not restored_autosave and CycleState != null:
+		CycleState.reset_cycle_state()
+	if CycleState != null:
+		CycleState.queue_respawn_blackout()
 	_restore_death_camera()
 	if _death_root:
 		_death_root.visible = false
@@ -931,6 +953,8 @@ func _on_minigame_started(_minigame: Node) -> void:
 func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
 	_minigame_active = false
 	_minigame_blocks_distortion = false
+	if _pending_distortion_activation:
+		_activate_distortion_phase()
 
 func _minigame_allows_distortion(minigame: Node) -> bool:
 	if minigame == null:

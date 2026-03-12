@@ -62,8 +62,8 @@ func _apply_to701_target(fridge_done: bool) -> void:
 	_door_to701.call("set_target_marker_path", target_marker)
 
 func _is_fridge_success_done() -> bool:
-	if GameState == null:
+	if CycleState == null:
 		return _fridge != null and _fridge.is_completed
-	if GameState.has_method("is_fridge_interacted"):
-		return bool(GameState.is_fridge_interacted())
-	return bool(GameState.fridge_interacted)
+	if CycleState.has_method("is_fridge_interacted"):
+		return bool(CycleState.is_fridge_interacted())
+	return false

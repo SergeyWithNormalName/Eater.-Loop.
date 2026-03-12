@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
+
 signal player_made_sound
 signal flashlight_recharged
 signal flashlight_activation_denied(charge_ratio: float)
@@ -253,15 +255,32 @@ func get_flashlight_charge_ratio() -> float:
 		return 1.0
 	return clampf(_flashlight_charge / flashlight_use_duration, 0.0, 1.0)
 
+func has_flashlight_available() -> bool:
+	if CycleState != null and CycleState.has_method("has_flashlight_for_current_cycle"):
+		return bool(CycleState.has_flashlight_for_current_cycle())
+	if GameState != null and GameState.has_method("is_flashlight_unlocked"):
+		return bool(GameState.is_flashlight_unlocked())
+	return false
+
 func is_running() -> bool:
 	return _is_running
 
 func is_flashlight_enabled() -> bool:
-	return flashlight != null and flashlight.enabled
+	return has_flashlight_available() and flashlight != null and flashlight.enabled
+
+func is_point_lit(point: Vector2) -> bool:
+	if not is_flashlight_enabled() or flashlight == null:
+		return false
+	var origin := ReactiveLightUtils.resolve_light_origin(flashlight)
+	var light_range := ReactiveLightUtils.resolve_point_light_range(flashlight, 650.0)
+	var facing := ReactiveLightUtils.facing_from_light(flashlight)
+	return ReactiveLightUtils.is_point_within_cone(origin, facing, point, light_range, 90.0)
 
 func _update_flashlight_charge(delta: float) -> void:
 	if flashlight == null:
 		return
+	if flashlight.enabled and not has_flashlight_available():
+		_force_disable_flashlight()
 
 	var max_charge: float = maxf(0.0, flashlight_use_duration)
 	_flashlight_charge = clampf(_flashlight_charge, 0.0, max_charge)
@@ -294,6 +313,8 @@ func _update_flashlight_charge(delta: float) -> void:
 
 func _toggle_flashlight() -> void:
 	if flashlight == null:
+		return
+	if not has_flashlight_available():
 		return
 	if _is_minigame_active():
 		return

@@ -1,5 +1,7 @@
 extends "res://enemies/enemy.gd"
 
+const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
+
 @export_group("Flashlight Detection")
 ## Максимальная дальность влияния фонарика.
 @export var flashlight_range: float = 650.0
@@ -28,48 +30,39 @@ func _get_flashlight() -> PointLight2D:
 	return _cached_flashlight
 
 func _is_flashlight_hitting() -> bool:
-	return _is_flashlight_cone_hitting() or _is_lamp_light_hitting()
+	return _is_player_flashlight_hitting() or _is_external_reactive_light_hitting()
 
-func _is_flashlight_cone_hitting() -> bool:
+func _is_player_flashlight_hitting() -> bool:
 	var flashlight := _get_flashlight()
 	if flashlight == null:
 		return false
 	if flashlight_requires_enabled and not flashlight.enabled:
 		return false
 
-	var origin := flashlight.global_transform * flashlight.offset
-	var to_self := global_position - origin
-	var distance := to_self.length()
-	if flashlight_range > 0.0 and distance > flashlight_range:
+	var origin := ReactiveLightUtils.resolve_light_origin(flashlight)
+	var facing := ReactiveLightUtils.facing_from_light(flashlight)
+	var light_range := flashlight_range
+	if light_range <= 0.0:
+		light_range = ReactiveLightUtils.resolve_point_light_range(flashlight)
+	return ReactiveLightUtils.is_point_within_cone(origin, facing, global_position, light_range, flashlight_fov_deg)
+
+func _is_flashlight_cone_hitting() -> bool:
+	return _is_player_flashlight_hitting()
+
+func _is_external_reactive_light_hitting() -> bool:
+	var tree := get_tree()
+	if tree == null:
 		return false
-	if distance <= 0.001:
-		return true
-	if flashlight_fov_deg <= 0.0:
-		return true
-
-	var facing := -flashlight.global_transform.x.normalized()
-	var half_angle := deg_to_rad(flashlight_fov_deg) * 0.5
-	return facing.dot(to_self.normalized()) >= cos(half_angle)
-
-func _is_lamp_light_hitting() -> bool:
-	var lights := get_tree().get_nodes_in_group("lamp_light")
-	for light_node in lights:
-		var light := light_node as PointLight2D
-		if light == null:
+	for light_source in tree.get_nodes_in_group("reactive_light_source"):
+		if light_source == null or not is_instance_valid(light_source):
 			continue
-		if not light.enabled:
+		if light_source.is_in_group("player"):
 			continue
-		if not light.visible:
+		if not light_source.has_method("is_point_lit"):
 			continue
-		if light.texture == null:
-			continue
-
-		var origin := light.global_transform * light.offset
-		var base_radius = max(light.texture.get_width(), light.texture.get_height()) * 0.5
-		if base_radius <= 0.0:
-			continue
-		var scale_factor = max(light.global_scale.x, light.global_scale.y)
-		var light_range = base_radius * max(0.001, light.texture_scale) * max(0.001, scale_factor)
-		if origin.distance_to(global_position) <= light_range:
+		if bool(light_source.call("is_point_lit", global_position)):
 			return true
 	return false
+
+func _is_lamp_light_hitting() -> bool:
+	return _is_external_reactive_light_hitting()

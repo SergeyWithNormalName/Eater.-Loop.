@@ -73,10 +73,16 @@ func _activate_required_lamps_in_scene() -> void:
 	var tree := get_tree()
 	if tree == null:
 		return
-	for lamp in tree.get_nodes_in_group("generator_required_lamp"):
-		if lamp == null:
-			continue
-		if lamp.has_method("turn_on"):
-			lamp.call("turn_on")
+	var activated: Dictionary = {}
+	for group_name in [&"generator_required_light", &"generator_required_lamp"]:
+		for light_node in tree.get_nodes_in_group(group_name):
+			if light_node == null:
+				continue
+			var node_id := light_node.get_instance_id()
+			if activated.has(node_id):
+				continue
+			activated[node_id] = true
+			if light_node.has_method("turn_on"):
+				light_node.call("turn_on")
 			
 			

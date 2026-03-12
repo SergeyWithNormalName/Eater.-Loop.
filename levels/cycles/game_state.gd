@@ -1,71 +1,23 @@
 extends Node
 
-@warning_ignore("unused_signal")
-signal lab_completed
-signal lab_completed_with_id(lab_id: String)
-signal ate_this_cycle_changed(is_ate: bool)
-signal phone_picked_changed
-signal fridge_interacted_changed
-signal electricity_changed(is_on: bool)
-
-enum Phase { NORMAL, DISTORTED }
-
 const SAVE_PATH := "user://run_save.cfg"
-
-var phase: Phase = Phase.NORMAL # Было просто phase
-var ate_this_cycle: bool = false
-var lab_done: bool = false
-var completed_labs: PackedStringArray = PackedStringArray()
-var phone_picked: bool = false
-var fridge_interacted: bool = false
 var unique_feeding_intro_played: bool = false
-var pending_sleep_spawn: bool = false
-var pending_respawn_blackout: bool = false
 var last_scene_path: String = ""
 var has_active_run: bool = false
-var _electricity_on: bool = true
-var electricity_on: bool:
-	set(value):
-		if _electricity_on == value:
-			return
-		_electricity_on = value
-		electricity_changed.emit(_electricity_on)
-	get:
-		return _electricity_on
+var flashlight_unlocked: bool = false
+var running_unlocked: bool = false
 
 func _ready() -> void:
 	if _saves_enabled():
-		_load_run_state()
+		restore_autosave_run()
 
 func next_cycle() -> void:
-	_set_ate_this_cycle(false)
-	fridge_interacted = false
-	lab_done = false
-	completed_labs = PackedStringArray()
-	pending_respawn_blackout = false
-	set_phase(Phase.NORMAL)
+	if not flashlight_unlocked and CycleState != null and CycleState.has_method("has_flashlight_for_current_cycle"):
+		if bool(CycleState.has_flashlight_for_current_cycle()):
+			flashlight_unlocked = true
+	if CycleState != null and CycleState.has_method("next_cycle"):
+		CycleState.next_cycle()
 	_save_run_state()
-
-func mark_ate() -> void:
-	_set_ate_this_cycle(true)
-
-func has_eaten_this_cycle() -> bool:
-	return ate_this_cycle
-
-func mark_phone_picked() -> void:
-	if phone_picked:
-		return
-	phone_picked = true
-	phone_picked_changed.emit()
-
-func mark_fridge_interacted() -> void:
-	if fridge_interacted:
-		return
-	fridge_interacted = true
-	fridge_interacted_changed.emit()
-
-func is_fridge_interacted() -> bool:
-	return fridge_interacted
 
 func mark_unique_feeding_intro_played() -> void:
 	if unique_feeding_intro_played:
@@ -76,10 +28,6 @@ func mark_unique_feeding_intro_played() -> void:
 func is_unique_feeding_intro_played() -> bool:
 	return unique_feeding_intro_played
 
-# Добавляем этот метод, чтобы GameDirector мог менять фазу
-func set_phase(new_phase: Phase) -> void:
-	phase = new_phase
-
 func set_current_scene_path(path: String) -> void:
 	if path == "":
 		return
@@ -88,116 +36,89 @@ func set_current_scene_path(path: String) -> void:
 	_save_run_state()
 
 func reset_cycle_state() -> void:
-	_set_ate_this_cycle(false)
-	fridge_interacted = false
-	phone_picked = false
-	lab_done = false
-	completed_labs = PackedStringArray()
-	pending_sleep_spawn = false
-	pending_respawn_blackout = false
-	set_phase(Phase.NORMAL)
+	if CycleState != null and CycleState.has_method("reset_cycle_state"):
+		CycleState.reset_cycle_state()
 	_save_run_state()
 
+func set_phase(new_phase: int) -> void:
+	if CycleState != null and CycleState.has_method("set_phase"):
+		CycleState.set_phase(new_phase)
+
+func mark_ate() -> void:
+	if CycleState != null and CycleState.has_method("mark_ate"):
+		CycleState.mark_ate()
+
+func has_eaten_this_cycle() -> bool:
+	if CycleState != null and CycleState.has_method("has_eaten_this_cycle"):
+		return bool(CycleState.has_eaten_this_cycle())
+	return false
+
+func mark_phone_picked() -> void:
+	if CycleState != null and CycleState.has_method("mark_phone_picked"):
+		CycleState.mark_phone_picked()
+
+func mark_fridge_interacted() -> void:
+	if CycleState != null and CycleState.has_method("mark_fridge_interacted"):
+		CycleState.mark_fridge_interacted()
+
+func is_fridge_interacted() -> bool:
+	if CycleState != null and CycleState.has_method("is_fridge_interacted"):
+		return bool(CycleState.is_fridge_interacted())
+	return false
+
+func queue_sleep_spawn() -> void:
+	if CycleState != null and CycleState.has_method("queue_sleep_spawn"):
+		CycleState.queue_sleep_spawn()
+
+func consume_pending_sleep_spawn() -> bool:
+	if CycleState != null and CycleState.has_method("consume_pending_sleep_spawn"):
+		return bool(CycleState.consume_pending_sleep_spawn())
+	return false
+
+func queue_respawn_blackout() -> void:
+	if CycleState != null and CycleState.has_method("queue_respawn_blackout"):
+		CycleState.queue_respawn_blackout()
+
+func consume_pending_respawn_blackout() -> bool:
+	if CycleState != null and CycleState.has_method("consume_pending_respawn_blackout"):
+		return bool(CycleState.consume_pending_respawn_blackout())
+	return false
+
 func reset_run() -> void:
-	_set_ate_this_cycle(false)
-	lab_done = false
-	completed_labs = PackedStringArray()
-	phone_picked = false
-	fridge_interacted = false
 	unique_feeding_intro_played = false
-	pending_sleep_spawn = false
-	pending_respawn_blackout = false
-	electricity_on = true
-	set_phase(Phase.NORMAL)
+	flashlight_unlocked = false
+	running_unlocked = false
 	last_scene_path = ""
 	has_active_run = false
+	if CycleState != null and CycleState.has_method("reset_runtime_state_only"):
+		CycleState.reset_runtime_state_only()
 	_save_run_state()
 
 func autosave_run() -> void:
 	_save_run_state()
 
+func restore_autosave_run() -> bool:
+	if not _saves_enabled():
+		return false
+	var config := ConfigFile.new()
+	if config.load(SAVE_PATH) != OK:
+		return false
+	load_save_data(config)
+	if CycleState != null and CycleState.has_method("load_save_data"):
+		CycleState.load_save_data(config)
+	return true
+
 func _save_run_state() -> void:
 	if not _saves_enabled():
 		return
 	var config := ConfigFile.new()
-	config.set_value("run", "last_scene_path", last_scene_path)
-	config.set_value("run", "has_active_run", has_active_run)
-	config.set_value("run", "lab_done", lab_done)
-	config.set_value("run", "completed_labs", completed_labs)
-	config.set_value("run", "phone_picked", phone_picked)
-	config.set_value("run", "fridge_interacted", fridge_interacted)
-	config.set_value("run", "unique_feeding_intro_played", unique_feeding_intro_played)
-	config.set_value("run", "ate_this_cycle", ate_this_cycle)
-	config.set_value("run", "electricity_on", electricity_on)
+	write_save_data(config)
+	if CycleState != null and CycleState.has_method("write_save_data"):
+		CycleState.write_save_data(config)
 	config.save(SAVE_PATH)
 
 func _load_run_state() -> void:
-	if not _saves_enabled():
-		return
-	var config := ConfigFile.new()
-	if config.load(SAVE_PATH) != OK:
-		return
-	last_scene_path = str(config.get_value("run", "last_scene_path", last_scene_path))
-	has_active_run = bool(config.get_value("run", "has_active_run", has_active_run))
-	lab_done = bool(config.get_value("run", "lab_done", lab_done))
-	var completed_labs_raw: Variant = config.get_value("run", "completed_labs", [])
-	completed_labs = PackedStringArray(_coerce_string_array(completed_labs_raw))
-	if not lab_done and not completed_labs.is_empty():
-		lab_done = true
-	phone_picked = bool(config.get_value("run", "phone_picked", phone_picked))
-	fridge_interacted = bool(config.get_value("run", "fridge_interacted", fridge_interacted))
-	unique_feeding_intro_played = bool(config.get_value("run", "unique_feeding_intro_played", unique_feeding_intro_played))
-	_set_ate_this_cycle(bool(config.get_value("run", "ate_this_cycle", ate_this_cycle)))
-	electricity_on = bool(config.get_value("run", "electricity_on", electricity_on))
-	pending_sleep_spawn = false
-	pending_respawn_blackout = false
-	set_phase(Phase.NORMAL)
-
-func mark_lab_completed(lab_id: String = "") -> void:
-	var normalized_id := lab_id.strip_edges()
-	var did_add_specific := false
-	if normalized_id != "" and not completed_labs.has(normalized_id):
-		completed_labs.append(normalized_id)
-		did_add_specific = true
-		lab_completed_with_id.emit(normalized_id)
-	if not lab_done:
-		lab_done = true
-		lab_completed.emit()
-	if did_add_specific or normalized_id == "":
-		_save_run_state()
-
-func is_lab_completed(lab_id: String = "") -> bool:
-	var normalized_id := lab_id.strip_edges()
-	if normalized_id == "":
-		return lab_done
-	return completed_labs.has(normalized_id)
-
-func has_completed_any_lab() -> bool:
-	return lab_done
-
-func queue_sleep_spawn() -> void:
-	pending_sleep_spawn = true
-
-func has_pending_sleep_spawn() -> bool:
-	return pending_sleep_spawn
-
-func consume_pending_sleep_spawn() -> bool:
-	if not pending_sleep_spawn:
-		return false
-	pending_sleep_spawn = false
-	return true
-
-func queue_respawn_blackout() -> void:
-	pending_respawn_blackout = true
-
-func has_pending_respawn_blackout() -> bool:
-	return pending_respawn_blackout
-
-func consume_pending_respawn_blackout() -> bool:
-	if not pending_respawn_blackout:
-		return false
-	pending_respawn_blackout = false
-	return true
+	restore_autosave_run()
 
 func get_last_scene_path() -> String:
 	return last_scene_path
@@ -205,11 +126,32 @@ func get_last_scene_path() -> String:
 func has_active_run_state() -> bool:
 	return has_active_run
 
-func _set_ate_this_cycle(value: bool) -> void:
-	if ate_this_cycle == value:
+func is_flashlight_unlocked() -> bool:
+	return flashlight_unlocked
+
+func unlock_flashlight() -> void:
+	if flashlight_unlocked:
 		return
-	ate_this_cycle = value
-	ate_this_cycle_changed.emit(ate_this_cycle)
+	flashlight_unlocked = true
+	_save_run_state()
+
+func write_save_data(config: ConfigFile) -> void:
+	if config == null:
+		return
+	config.set_value("game", "last_scene_path", last_scene_path)
+	config.set_value("game", "has_active_run", has_active_run)
+	config.set_value("game", "unique_feeding_intro_played", unique_feeding_intro_played)
+	config.set_value("game", "flashlight_unlocked", flashlight_unlocked)
+	config.set_value("game", "running_unlocked", running_unlocked)
+
+func load_save_data(config: ConfigFile) -> void:
+	if config == null:
+		return
+	last_scene_path = str(config.get_value("game", "last_scene_path", ""))
+	has_active_run = bool(config.get_value("game", "has_active_run", false))
+	unique_feeding_intro_played = bool(config.get_value("game", "unique_feeding_intro_played", false))
+	flashlight_unlocked = bool(config.get_value("game", "flashlight_unlocked", false))
+	running_unlocked = bool(config.get_value("game", "running_unlocked", false))
 
 func _coerce_string_array(value: Variant) -> Array[String]:
 	var result: Array[String] = []

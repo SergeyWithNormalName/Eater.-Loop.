@@ -56,14 +56,14 @@ func _wire_level12_dependencies() -> void:
 		if _fridge_node.has_method("refresh_visual_state"):
 			_fridge_node.call("refresh_visual_state")
 
-	if GameState != null and GameState.has_signal("fridge_interacted_changed"):
+	if CycleState != null and CycleState.has_signal("fridge_interacted_changed"):
 		var on_fridge_interacted := Callable(self, "_on_fridge_interacted_changed")
-		if not GameState.is_connected("fridge_interacted_changed", on_fridge_interacted):
-			GameState.connect("fridge_interacted_changed", on_fridge_interacted)
-	if GameState != null and GameState.has_signal("ate_this_cycle_changed"):
+		if not CycleState.is_connected("fridge_interacted_changed", on_fridge_interacted):
+			CycleState.connect("fridge_interacted_changed", on_fridge_interacted)
+	if CycleState != null and CycleState.has_signal("ate_this_cycle_changed"):
 		var on_ate_changed := Callable(self, "_on_ate_this_cycle_changed")
-		if not GameState.is_connected("ate_this_cycle_changed", on_ate_changed):
-			GameState.connect("ate_this_cycle_changed", on_ate_changed)
+		if not CycleState.is_connected("ate_this_cycle_changed", on_ate_changed):
+			CycleState.connect("ate_this_cycle_changed", on_ate_changed)
 	_update_to202_target()
 
 func should_show_start_subtitle() -> bool:
@@ -85,6 +85,6 @@ func _on_ate_this_cycle_changed(_value: bool) -> void:
 func _update_to202_target() -> void:
 	if _door_to_202_node == null:
 		return
-	var should_open_bedroom := GameState != null and bool(GameState.has_eaten_this_cycle())
+	var should_open_bedroom := CycleState != null and bool(CycleState.has_eaten_this_cycle())
 	if _door_to_202_node.has_method("set_target_marker_path"):
 		_door_to_202_node.call("set_target_marker_path", TO202_BEDROOM_TARGET if should_open_bedroom else TO202_DEFAULT_TARGET)

@@ -34,6 +34,10 @@ class_name CycleLevel
 ## Длительность проявления из чёрного после респавна (сек).
 @export var respawn_blackout_fade_in_duration: float = 0.4
 
+@export_group("Условный Респавн")
+## Маркер, у которого нужно возродить игрока, если в цикле уже был успешный холодильник.
+@export var fridge_interacted_spawn_marker_path: NodePath
+
 const DEFAULT_WAKE_SFX_PATH := "res://objects/interactable/bed/OutOfBed.wav"
 const DEFAULT_BLACKOUT_FALLBACK := 1.0
 
@@ -41,6 +45,7 @@ var _start_subtitle_shown: bool = false
 var _cached_default_wake_blackout_duration: float = -1.0
 
 func _ready() -> void:
+	call_deferred("_apply_conditional_respawn_position")
 	call_deferred("_run_pending_respawn_blackout")
 	if show_start_hint and start_hint_text.strip_edges() != "":
 		call_deferred("_show_start_hint")
@@ -94,6 +99,21 @@ func _show_start_subtitle() -> void:
 	elif UIMessage.has_method("show_text"):
 		UIMessage.show_text(text, start_subtitle_duration)
 
+func _apply_conditional_respawn_position() -> void:
+	if fridge_interacted_spawn_marker_path == NodePath(""):
+		return
+	if CycleState == null or not CycleState.has_method("is_fridge_interacted"):
+		return
+	if not bool(CycleState.is_fridge_interacted()):
+		return
+	var marker := get_node_or_null(fridge_interacted_spawn_marker_path) as Node2D
+	if marker == null:
+		return
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return
+	player.global_position = marker.global_position
+
 func _wait_until_screen_is_not_dark() -> void:
 	if UIMessage == null:
 		return
@@ -123,14 +143,9 @@ func _run_pending_respawn_blackout() -> void:
 		await UIMessage.fade_in(maxf(0.0, respawn_blackout_fade_in_duration))
 
 func _consume_pending_respawn_blackout() -> bool:
-	if GameState == null:
+	if CycleState == null:
 		return false
-	if GameState.has_method("consume_pending_respawn_blackout"):
-		return bool(GameState.consume_pending_respawn_blackout()) and respawn_blackout_enabled
-	if not bool(GameState.get("pending_respawn_blackout")):
-		return false
-	GameState.pending_respawn_blackout = false
-	return respawn_blackout_enabled
+	return bool(CycleState.consume_pending_respawn_blackout()) and respawn_blackout_enabled
 
 func _resolve_respawn_blackout_hold_duration() -> float:
 	if respawn_blackout_hold_duration >= 0.0:

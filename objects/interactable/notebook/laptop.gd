@@ -9,7 +9,7 @@ class_name Laptop
 @export var time_limit: float = 45.0
 ## Штраф по времени за ошибку.
 @export var penalty_time: float = 10.0
-## Уникальный ID лабораторной для мульти-режима (пусто = старый глобальный lab_done).
+## Уникальный ID лабораторной для мульти-режима (пусто = достаточно любой лабораторной текущего цикла).
 @export var lab_completion_id: String = ""
 
 @export_group("Награда Деньгами")
@@ -76,11 +76,12 @@ func _ready() -> void:
 	
 	_setup_dependency_interaction_listener()
 	
-	# Следим за завершением лаб через GameState
-	if GameState.has_signal("lab_completed"):
-		GameState.lab_completed.connect(_update_visuals)
-	if GameState.has_signal("lab_completed_with_id"):
-		GameState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+	if CycleState != null and CycleState.has_signal("lab_completed"):
+		CycleState.lab_completed.connect(_update_visuals)
+	if CycleState != null and CycleState.has_signal("lab_completed_with_id"):
+		CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+	if CycleState != null and CycleState.has_signal("cycle_state_reset"):
+		CycleState.cycle_state_reset.connect(_update_visuals)
 
 # --- ВЗАИМОДЕЙСТВИЕ ---
 func _on_interact() -> void:
@@ -211,16 +212,16 @@ func _apply_enabled_state() -> void:
 	_update_visuals()
 
 func _is_lab_completed() -> bool:
-	if GameState == null:
+	if CycleState == null:
 		return false
 	var local_id := lab_completion_id.strip_edges()
 	if local_id != "":
-		if GameState.has_method("is_lab_completed"):
-			return bool(GameState.is_lab_completed(local_id))
+		if CycleState.has_method("is_lab_completed"):
+			return bool(CycleState.is_lab_completed(local_id))
 		return false
-	if GameState.has_method("has_completed_any_lab"):
-		return bool(GameState.has_completed_any_lab())
-	return bool(GameState.lab_done)
+	if CycleState.has_method("has_completed_any_lab"):
+		return bool(CycleState.has_completed_any_lab())
+	return false
 
 func _is_dependency_satisfied() -> bool:
 	if _dependency_override:

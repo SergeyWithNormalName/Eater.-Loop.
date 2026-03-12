@@ -177,10 +177,8 @@ func _start_new_game(_unused_difficulty: int = 0) -> void:
 	if GameState:
 		GameState.reset_run()
 		GameState.set_current_scene_path(new_game_scene.resource_path)
-		if GameState.has_method("queue_sleep_spawn"):
-			GameState.queue_sleep_spawn()
-		else:
-			GameState.pending_sleep_spawn = true
+		if CycleState != null:
+			CycleState.queue_sleep_spawn()
 	_stop_menu_music()
 	await UIMessage.change_scene_with_fade_delay(new_game_scene, 0.4, _get_sleep_sfx_delay())
 

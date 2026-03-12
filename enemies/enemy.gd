@@ -186,14 +186,14 @@ func _play_attack_sfx(stream_override: AudioStream = null) -> void:
 func _attack_player() -> void:
 	if _is_player_busy_with_minigame():
 		return
-	var is_lethal := kill_on_attack or GameState.phase == GameState.Phase.DISTORTED
+	var is_lethal := kill_on_attack or (CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED)
 	if is_lethal:
 		_play_attack_sfx(_pick_random_death_scream())
 		if GameDirector and GameDirector.has_method("trigger_death_screen"):
 			GameDirector.trigger_death_screen()
 		else:
-			if GameState:
-				GameState.reset_cycle_state()
+			if CycleState != null:
+				CycleState.reset_cycle_state()
 			get_tree().call_deferred("reload_current_scene")
 		return
 	_play_attack_sfx(_pick_random_death_scream())

@@ -24,7 +24,7 @@ func _ready() -> void:
 	_setup_sfx_player()
 	_connect_to_game_director()
 	_connect_to_minigame_controller()
-	if GameState and GameState.phase == GameState.Phase.DISTORTED:
+	if CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED:
 		_on_distortion_started()
 
 func _exit_tree() -> void:
@@ -116,7 +116,7 @@ func _play_distortion_music() -> void:
 func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
 	if GameState == null:
 		return
-	if GameState.phase != GameState.Phase.DISTORTED:
+	if CycleState == null or CycleState.phase != CycleState.Phase.DISTORTED:
 		return
 	_play_distortion_music()
 

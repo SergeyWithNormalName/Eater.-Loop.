@@ -166,7 +166,7 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 		for door in doors_for_state:
 			if route.has(door):
 				continue
-			if not _has_line_of_sight(state_pos, door.global_position):
+			if not _can_approach_door(state_pos, door):
 				continue
 			var exit_node: Node2D = _get_door_exit_node(door)
 			if exit_node == null:
@@ -189,6 +189,15 @@ func _find_door_route(start_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 			queue.append({"pos": exit_pos, "route": new_route})
 
 	return empty_route
+
+func _can_approach_door(from_pos: Vector2, door: Node2D) -> bool:
+	if door == null:
+		return false
+	var door_pos := door.global_position
+	if _has_line_of_sight(from_pos, door_pos):
+		return true
+	var horizontal_approach := Vector2(door_pos.x, from_pos.y)
+	return _has_line_of_sight(from_pos, horizontal_approach)
 
 func _sort_doors_for_state(doors: Array[Node], from_pos: Vector2, target_pos: Vector2) -> Array[Node]:
 	var sorted_doors: Array[Node] = doors.duplicate()

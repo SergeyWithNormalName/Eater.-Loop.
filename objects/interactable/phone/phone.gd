@@ -66,5 +66,5 @@ func _pickup() -> void:
 		_pickup_player.stream = pickup_sound
 	if _pickup_player.stream:
 		_pickup_player.play()
-	if GameState and GameState.has_method("mark_phone_picked"):
-		GameState.mark_phone_picked()
+	if CycleState != null:
+		CycleState.mark_phone_picked()

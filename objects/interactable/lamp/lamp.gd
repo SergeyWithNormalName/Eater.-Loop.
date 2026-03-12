@@ -1,5 +1,7 @@
 extends InteractiveObject # Убедись, что наследуешься от обновленного класса
 
+const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
+
 @export_group("Lamp Settings")
 ## Лампа относится к спальне (для проверки сна).
 @export var is_bedroom: bool = false
@@ -61,6 +63,8 @@ func _ready() -> void:
 		_apply_light_settings()
 		if not _light.is_in_group("lamp_light"):
 			_light.add_to_group("lamp_light")
+	if not is_in_group("reactive_light_source"):
+		add_to_group("reactive_light_source")
 
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	if _sprite and off_texture == null:
@@ -77,6 +81,8 @@ func _ready() -> void:
 		add_to_group("lamp")
 	if requires_generator and not is_in_group("generator_required_lamp"):
 		add_to_group("generator_required_lamp")
+	if requires_generator and not is_in_group("generator_required_light"):
+		add_to_group("generator_required_light")
 	
 	# По умолчанию лампа работает без генератора.
 	# Для ламп с requires_generator питание появится после запуска генератора.
@@ -198,5 +204,13 @@ func _update_sprite(is_lit: bool) -> void:
 func _update_prompt() -> void:
 	if is_player_in_range():
 		_show_prompt()
-		
-		
+
+func is_light_active() -> bool:
+	return _light != null and _light.enabled
+
+func is_point_lit(point: Vector2) -> bool:
+	if not is_light_active():
+		return false
+	var origin := ReactiveLightUtils.resolve_light_origin(_light)
+	var light_range := ReactiveLightUtils.resolve_point_light_range(_light, light_range)
+	return ReactiveLightUtils.is_point_within_radius(origin, point, light_range)

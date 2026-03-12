@@ -91,6 +91,7 @@
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="88_cblsg"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="89_5wh42"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="90_qkwv8"]
+[ext_resource type="PackedScene" uid="uid://dgei8q6auq1wr" path="res://objects/interactable/flashlight/pickup_flashlight.tscn" id="91_pickup_flashlight"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lu44e"]
 shader = ExtResource("2_qkwv8")
@@ -150,6 +151,7 @@ position = Vector2(16, 0)
 script = ExtResource("1_vnsrs")
 cycle_number = 7
 timer_duration = 180.0
+fridge_interacted_spawn_marker_path = NodePath("Fridge2/FridgeMarker")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=535559152]
 
@@ -3048,11 +3050,9 @@ position = Vector2(10324, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("76_gufev")
 
-[node name="Battery2" type="Sprite2D" parent="." unique_id=2096992923]
+[node name="PickupFlashlight" parent="." unique_id=196650323 instance=ExtResource("91_pickup_flashlight")]
 z_index = -4
-position = Vector2(13314, 210)
-scale = Vector2(0.48396507, 0.48396507)
-texture = ExtResource("76_gufev")
+position = Vector2(12419, 73)
 
 [node name="Plintus7" type="Sprite2D" parent="." unique_id=138330700]
 z_index = -5

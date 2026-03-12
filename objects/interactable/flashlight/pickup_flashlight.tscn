@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dgei8q6auq1wr"]
+
+[ext_resource type="Script" uid="uid://cr7a48ctuhc1o" path="res://objects/interactable/flashlight/pickup_flashlight.gd" id="1_pickup_flashlight_script"]
+[ext_resource type="Texture2D" uid="uid://cxasdh16f1d3c" path="res://objects/interactable/flashlight/Flashlight_Sprite.png" id="2_hdyya"]
+[ext_resource type="Script" uid="uid://bxhvl744s5arf" path="res://player/flashlight.gd" id="3_player_flashlight_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup_flashlight"]
+radius = 74.0
+
+[sub_resource type="Gradient" id="Gradient_hdyya"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nsikq"]
+gradient = SubResource("Gradient_hdyya")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.6, 0)
+
+[sub_resource type="Gradient" id="Gradient_pickup_flashlight"]
+offsets = PackedFloat32Array(0.019543974, 0.09771987, 0.6123778)
+colors = PackedColorArray(1.0039216, 1.0039216, 1.0039216, 1, 1.0011894, 1.0011894, 1.0011894, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pickup_flashlight"]
+gradient = SubResource("Gradient_pickup_flashlight")
+width = 3000
+height = 910
+fill = 1
+fill_from = Vector2(0.182, 0.437)
+fill_to = Vector2(0.75, 0.237)
+
+[node name="PickupFlashlight" type="Area2D" unique_id=927340495]
+script = ExtResource("1_pickup_flashlight_script")
+prompt_text = "Подобрать фонарик"
+prompt_offset = Vector2(0, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2042306213]
+shape = SubResource("CircleShape2D_pickup_flashlight")
+
+[node name="PointLight2D2" type="PointLight2D" parent="." unique_id=580031108]
+position = Vector2(46.999996, 3)
+rotation = 0.15456748
+scale = Vector2(0.16352189, 0.31169376)
+energy = 1.49
+texture = SubResource("GradientTexture2D_nsikq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=953179305]
+light_mask = 3
+rotation = 0.03
+scale = Vector2(-0.09, 0.09)
+texture = ExtResource("2_hdyya")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1889724680]
+light_mask = 7
+visibility_layer = 15
+position = Vector2(210, -14)
+rotation = 3.141593
+scale = Vector2(1.0089942, 1)
+energy = 1.12
+range_item_cull_mask = 7
+texture = SubResource("GradientTexture2D_pickup_flashlight")
+script = ExtResource("3_player_flashlight_script")
+base_energy = 1.12

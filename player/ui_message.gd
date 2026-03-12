@@ -9,6 +9,12 @@ extends CanvasLayer
 ## Размер шрифта субтитров.
 @export var subtitle_font_size: int = 52
 
+@export_group("Записки")
+## Доля ширины записки относительно экрана.
+@export_range(0.2, 0.95, 0.01) var note_max_width_ratio: float = 0.56
+## Доля высоты записки относительно экрана.
+@export_range(0.2, 0.95, 0.01) var note_max_height_ratio: float = 0.72
+
 @export_group("Подсказки")
 ## Цвет затемнения фона подсказки.
 @export var hint_overlay_color: Color = Color(0, 0, 0, 0.7)
@@ -133,6 +139,9 @@ func _ready() -> void:
 	
 	_setup_note_viewer()
 	_setup_hint_viewer()
+	var viewport := get_viewport()
+	if viewport != null and not viewport.size_changed.is_connected(_on_viewport_size_changed):
+		viewport.size_changed.connect(_on_viewport_size_changed)
 
 func _setup_note_viewer() -> void:
 	_note_bg = ColorRect.new()
@@ -142,7 +151,7 @@ func _setup_note_viewer() -> void:
 	add_child(_note_bg)
 	
 	_note_image = TextureRect.new()
-	_note_image.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_note_image.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	_note_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_note_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_note_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -216,6 +225,7 @@ func show_note(texture: Texture2D) -> void:
 		return
 	_is_viewing_note = true
 	_note_image.texture = texture
+	_apply_note_layout()
 	_note_bg.visible = true
 	_note_image.visible = true
 	_note_prev_paused = get_tree().paused
@@ -247,6 +257,17 @@ func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true)
 	if pause_game:
 		get_tree().paused = true
 	_apply_hint_layout()
+
+func _apply_note_layout() -> void:
+	var viewport_size := get_viewport().get_visible_rect().size
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return
+	var target_size := Vector2(
+		viewport_size.x * note_max_width_ratio,
+		viewport_size.y * note_max_height_ratio
+	)
+	_note_image.position = (viewport_size - target_size) * 0.5
+	_note_image.size = target_size
 
 func hide_hint() -> void:
 	if not _is_viewing_hint:
@@ -280,7 +301,13 @@ func _apply_hint_layout() -> void:
 		_hint_image.custom_minimum_size = Vector2(0, target_size.y * hint_image_height_ratio)
 	else:
 		_hint_image.custom_minimum_size = Vector2.ZERO
-	# ----------------------------------------------------------------------------------
+		# ----------------------------------------------------------------------------------
+
+func _on_viewport_size_changed() -> void:
+	if _is_viewing_note:
+		_apply_note_layout()
+	if _is_viewing_hint:
+		_apply_hint_layout()
 
 func _input(event: InputEvent) -> void:
 	if _is_viewing_hint:

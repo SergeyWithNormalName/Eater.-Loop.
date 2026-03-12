@@ -21,13 +21,9 @@ var _is_sleeping: bool = false # Защита от повторного нажа
 func _ready() -> void:
 	super._ready()
 	input_pickable = false
-	if GameState != null and GameState.has_method("consume_pending_sleep_spawn") and GameState.consume_pending_sleep_spawn():
+	if CycleState != null and CycleState.consume_pending_sleep_spawn():
 		if UIMessage and sleep_sfx != null:
 			UIMessage.play_sfx(sleep_sfx)
-	elif GameState.pending_sleep_spawn:
-		if UIMessage and sleep_sfx != null:
-			UIMessage.play_sfx(sleep_sfx)
-		GameState.pending_sleep_spawn = false
 
 func _on_interact() -> void:
 	if _is_sleeping:
@@ -36,10 +32,8 @@ func _on_interact() -> void:
 
 func _try_sleep() -> void:
 	var ate_this_cycle := false
-	if GameState != null and GameState.has_method("has_eaten_this_cycle"):
-		ate_this_cycle = bool(GameState.has_eaten_this_cycle())
-	else:
-		ate_this_cycle = bool(GameState.ate_this_cycle)
+	if CycleState != null:
+		ate_this_cycle = bool(CycleState.has_eaten_this_cycle())
 	if not ate_this_cycle:
 		UIMessage.show_notification(not_ate_message)
 		return
@@ -66,10 +60,8 @@ func _try_sleep() -> void:
 		await UIMessage.fade_in(0.4)
 		return
 	
-	if GameState != null and GameState.has_method("queue_sleep_spawn"):
-		GameState.queue_sleep_spawn()
-	else:
-		GameState.pending_sleep_spawn = true
+	if CycleState != null:
+		CycleState.queue_sleep_spawn()
 	var sleep_delay := _get_sleep_sfx_delay()
 	await UIMessage.change_scene_with_fade_delay(next_level_scene, 0.4, sleep_delay, Callable(self, "_advance_cycle_before_sleep_scene_change"))
 

@@ -23,6 +23,7 @@ config/windows_native_icon="res://global/windows_icon.ico"
 
 [autoload]
 
+CycleState="*res://levels/cycles/cycle_state.gd"
 GameState="*res://levels/cycles/game_state.gd"
 UIMessage="*res://player/ui_message.gd"
 GameDirector="*res://levels/game_director.gd"

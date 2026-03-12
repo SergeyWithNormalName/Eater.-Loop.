@@ -113,6 +113,9 @@ func _update_visibility() -> void:
 	var scene := get_tree().current_scene
 	var path := scene.scene_file_path if scene else ""
 	var should_show := path.find("/levels/cycles/") != -1
+	var player := _get_player()
+	if player != null and player.has_method("has_flashlight_available"):
+		should_show = should_show and bool(player.has_flashlight_available())
 	if should_show and not _was_visible:
 		_idle_time = hide_delay
 		_fade_alpha = 0.0
