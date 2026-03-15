@@ -1,5 +1,7 @@
 extends InteractiveObject
 
+const PICKUP_FLASHLIGHT_GROUP := &"pickup_flashlight"
+
 @export_group("Pickup")
 @export var pickup_message: String = "Подобрал фонарик."
 @export var already_collected_message: String = ""
@@ -19,6 +21,8 @@ func _ready() -> void:
 
 	_light = get_node_or_null(light_node) as PointLight2D
 	_prompt_anchor = get_node_or_null(prompt_anchor_node) as Node2D
+	if not is_in_group(PICKUP_FLASHLIGHT_GROUP):
+		add_to_group(PICKUP_FLASHLIGHT_GROUP)
 	if not is_in_group("reactive_light_source"):
 		add_to_group("reactive_light_source")
 	if _should_despawn_immediately():
@@ -50,12 +54,7 @@ func _on_interact() -> void:
 	CycleState.collect_flashlight_for_cycle()
 	if UIMessage != null and pickup_message.strip_edges() != "":
 		UIMessage.show_notification(tr(pickup_message))
-	_hide_prompt()
-	if _light != null:
-		_light.enabled = false
-	set_interaction_enabled(false)
-	visible = false
-	call_deferred("queue_free")
+	_despawn_all_pickups_in_location()
 
 func _should_despawn_immediately() -> bool:
 	if CycleState != null and CycleState.has_method("has_flashlight_for_current_cycle"):
@@ -63,3 +62,41 @@ func _should_despawn_immediately() -> bool:
 	if GameState != null and GameState.has_method("is_flashlight_unlocked"):
 		return bool(GameState.is_flashlight_unlocked())
 	return false
+
+func _despawn_all_pickups_in_location() -> void:
+	var tree := get_tree()
+	if tree == null:
+		_despawn_pickup()
+		return
+	var branch_root := _get_location_branch_root()
+	for pickup in tree.get_nodes_in_group(PICKUP_FLASHLIGHT_GROUP):
+		if not (pickup is Node):
+			continue
+		if pickup == null or not is_instance_valid(pickup):
+			continue
+		if branch_root != null and _get_branch_root_for_node(pickup) != branch_root:
+			continue
+		if pickup.has_method("_despawn_pickup"):
+			pickup.call("_despawn_pickup")
+
+func _despawn_pickup() -> void:
+	_hide_prompt()
+	if _light != null:
+		_light.enabled = false
+	set_interaction_enabled(false)
+	visible = false
+	call_deferred("queue_free")
+
+func _get_location_branch_root() -> Node:
+	return _get_branch_root_for_node(self)
+
+func _get_branch_root_for_node(node: Node) -> Node:
+	if node == null:
+		return null
+	var tree := node.get_tree()
+	if tree == null:
+		return node
+	var branch_root: Node = node
+	while branch_root.get_parent() != null and branch_root.get_parent() != tree.root:
+		branch_root = branch_root.get_parent()
+	return branch_root

@@ -159,12 +159,12 @@ shader_parameter/edge_darkening = 0.28
 position = Vector2(16, 0)
 script = ExtResource("1_sbrmi")
 cycle_number = 9
-unlock_flashlight_on_ready = true
 timer_duration = 110.0
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1779346994]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.22935206, 0.22925654, 0.33242673, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1195334158]
 

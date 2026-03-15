@@ -317,6 +317,7 @@
 │   │   ├── level_04_findkey.tscn
 │   │   ├── level_05_sql.tscn
 │   │   ├── level_06_corridordistortion.tscn
+│   │   ├── level_06_monster.tscn
 │   │   ├── level_07_doors.gd
 │   │   ├── level_07_doors.gd.uid
 │   │   ├── level_07_doors.tscn
@@ -335,6 +336,8 @@
 │   │   ├── level_13_STU_3.tscn
 │   │   ├── level_13_stu_3.gd
 │   │   ├── level_13_stu_3.gd.uid
+│   │   ├── level_14_end.gd
+│   │   ├── level_14_end.gd.uid
 │   │   ├── level_14_end.tscn
 │   │   ├── level_NSTU_test.tscn
 │   │   ├── level_music.gd
@@ -696,6 +699,8 @@
 │   ├── MusicForBasicMonster.wav.import
 │   ├── MusicForEat.mp3
 │   ├── MusicForEat.mp3.import
+│   ├── MusicForLabs.wav
+│   ├── MusicForLabs.wav.import
 │   ├── MyHorrorHit_1.wav
 │   ├── MyHorrorHit_1.wav.import
 │   ├── MyHorrorHit_2.wav
@@ -1388,12 +1393,24 @@
 │   │   ├── test_cycle_state_flashlight_unlock.gd.uid
 │   │   ├── test_cycle_state_lab_scope.gd
 │   │   ├── test_cycle_state_lab_scope.gd.uid
+│   │   ├── test_disclaimer_screen_session_gate_runtime.gd
+│   │   ├── test_disclaimer_screen_session_gate_runtime.gd.uid
+│   │   ├── test_ending_credits_session_gate_runtime.gd
+│   │   ├── test_ending_credits_session_gate_runtime.gd.uid
+│   │   ├── test_enemy_light_sensitive_blind_detection_runtime.gd
+│   │   ├── test_enemy_light_sensitive_blind_detection_runtime.gd.uid
 │   │   ├── test_enemy_light_sensitive_external_flashlight.gd
 │   │   ├── test_enemy_light_sensitive_external_flashlight.gd.uid
 │   │   ├── test_enemy_light_sensitive_flashlight_stun.gd
 │   │   ├── test_enemy_light_sensitive_flashlight_stun.gd.uid
+│   │   ├── test_final_feed_minigame_stage_transition.gd
+│   │   ├── test_final_feed_minigame_stage_transition.gd.uid
+│   │   ├── test_flashlight_pickup_clears_location.gd
+│   │   ├── test_flashlight_pickup_clears_location.gd.uid
 │   │   ├── test_fridge_chase_interaction.gd
 │   │   ├── test_fridge_chase_interaction.gd.uid
+│   │   ├── test_fridge_visual_after_eating.gd
+│   │   ├── test_fridge_visual_after_eating.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
 │   │   ├── test_gamepad_pick_place_flow.gd.uid
 │   │   ├── test_gamepad_runtime_navigation.gd
@@ -1408,6 +1425,8 @@
 │   │   ├── test_interactive_object_locked_message.gd.uid
 │   │   ├── test_lamp_generator_requirement.gd
 │   │   ├── test_lamp_generator_requirement.gd.uid
+│   │   ├── test_laptop_lab_music_runtime.gd
+│   │   ├── test_laptop_lab_music_runtime.gd.uid
 │   │   ├── test_laptop_multi_lab_ids.gd
 │   │   ├── test_laptop_multi_lab_ids.gd.uid
 │   │   ├── test_level12_laptop_money_reward.gd
@@ -1420,16 +1439,26 @@
 │   │   ├── test_level12_student_reward.gd.uid
 │   │   ├── test_level13_multi_lab_requirement.gd
 │   │   ├── test_level13_multi_lab_requirement.gd.uid
+│   │   ├── test_level14_end_music_policy_runtime.gd
+│   │   ├── test_level14_end_music_policy_runtime.gd.uid
 │   │   ├── test_level_checkpoint_spawn.gd
 │   │   ├── test_level_checkpoint_spawn.gd.uid
 │   │   ├── test_level_default_flashlight.gd
 │   │   ├── test_level_default_flashlight.gd.uid
 │   │   ├── test_light_adds_directional_contract.gd
 │   │   ├── test_light_adds_directional_contract.gd.uid
+│   │   ├── test_main_menu_startup_disclaimer_runtime.gd
+│   │   ├── test_main_menu_startup_disclaimer_runtime.gd.uid
+│   │   ├── test_minigame_backdrop_dedup_runtime.gd
+│   │   ├── test_minigame_backdrop_dedup_runtime.gd.uid
+│   │   ├── test_minigame_backdrop_transition_visibility.gd
+│   │   ├── test_minigame_backdrop_transition_visibility.gd.uid
 │   │   ├── test_minigame_gamepad_bindings.gd
 │   │   ├── test_minigame_gamepad_bindings.gd.uid
 │   │   ├── test_music_crossfade_suppression_runtime.gd
 │   │   ├── test_music_crossfade_suppression_runtime.gd.uid
+│   │   ├── test_musicmanager_priority_resume_runtime.gd
+│   │   ├── test_musicmanager_priority_resume_runtime.gd.uid
 │   │   ├── test_musicmanager_private_api_usage.gd
 │   │   ├── test_musicmanager_private_api_usage.gd.uid
 │   │   ├── test_note_audio_optional.gd
@@ -1470,4 +1499,4 @@
 ├── project.godot
 └── structure.txt
 
-124 directories, 1347 files
+124 directories, 1376 files

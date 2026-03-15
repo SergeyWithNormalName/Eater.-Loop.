@@ -18,6 +18,7 @@ extends Control
 @onready var _exit_hint_label: Label = $ExitHint
 
 const MAIN_MENU_SCENE_PATH := "res://levels/menu/main_menu.tscn"
+const STARTUP_DISCLAIMER_META := "startup_disclaimer_shown_session"
 
 var _scroll_started: bool = false
 var _is_finishing: bool = false
@@ -97,14 +98,26 @@ func _play_credits_music() -> void:
 		return
 	if MusicManager == null:
 		return
-	MusicManager.play_ambient_music(credits_music, credits_music_fade_time, credits_music_volume_db)
+	if MusicManager.has_method("clear_stack"):
+		MusicManager.clear_stack()
+	MusicManager.play_music(
+		credits_music,
+		credits_music_fade_time,
+		credits_music_volume_db,
+		0.0,
+		999.0,
+		0,
+		MusicManager.SOURCE_KIND_EVENT
+	)
 
 func _stop_credits_music() -> void:
 	if credits_music == null:
 		return
 	if MusicManager == null:
 		return
-	MusicManager.stop_ambient_music(credits_music, credits_music_fade_time)
+	if MusicManager.get_current_stream() != credits_music:
+		return
+	MusicManager.stop_music(credits_music_fade_time)
 
 func _apply_label_fonts() -> void:
 	var title_font = load("res://global/fonts/AmaticSC-Bold.ttf")
@@ -187,6 +200,8 @@ func _perform_return_transition() -> void:
 	_esc_confirm_token += 1
 	_hide_exit_hint()
 	get_tree().paused = false
+	if GameState != null:
+		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
 	_stop_credits_music()
 	if UIMessage != null and UIMessage.has_method("play_fade_sequence") and return_fade_time > 0.0:
 		var token := _esc_confirm_token

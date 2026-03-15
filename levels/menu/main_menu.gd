@@ -53,9 +53,6 @@ const PANEL_MAIN := "main"
 const PANEL_SETTINGS := "settings"
 const PANEL_CREDITS := "credits"
 const STARTUP_DISCLAIMER_META := "startup_disclaimer_shown_session"
-const STARTUP_DISCLAIMER_STATE_PATH := "user://startup_state.cfg"
-const STARTUP_DISCLAIMER_SECTION := "ui"
-const STARTUP_DISCLAIMER_KEY := "disclaimer_seen"
 const MENU_SPOILER_SHADER: Shader = preload("res://levels/menu/screen_spoiler_blur.gdshader")
 const STARTUP_DISCLAIMER_TEXT_KEY := "menu.startup_disclaimer_text"
 
@@ -360,11 +357,15 @@ func _setup_startup_disclaimer() -> void:
 	_activate_startup_disclaimer()
 
 func _should_show_startup_disclaimer() -> bool:
-	return true
+	if GameState == null:
+		return true
+	return not bool(GameState.get_meta(STARTUP_DISCLAIMER_META, false))
 
 func _activate_startup_disclaimer() -> void:
 	_startup_disclaimer_active = true
 	_startup_disclaimer_transitioning = false
+	if GameState != null:
+		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
 	_startup_disclaimer.visible = true
 	_startup_disclaimer.modulate = Color(1, 1, 1, 1)
 	_startup_disclaimer.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -492,15 +493,3 @@ func _fit_startup_disclaimer_text() -> void:
 		candidate_font_size -= 1
 	_startup_disclaimer_text.add_theme_font_size_override("normal_font_size", selected_size)
 	_startup_disclaimer_text.scroll_to_line(0)
-
-func _is_startup_disclaimer_seen_persisted() -> bool:
-	var config := ConfigFile.new()
-	if config.load(STARTUP_DISCLAIMER_STATE_PATH) != OK:
-		return false
-	return bool(config.get_value(STARTUP_DISCLAIMER_SECTION, STARTUP_DISCLAIMER_KEY, false))
-
-func _mark_startup_disclaimer_seen_persisted() -> void:
-	var config := ConfigFile.new()
-	config.load(STARTUP_DISCLAIMER_STATE_PATH)
-	config.set_value(STARTUP_DISCLAIMER_SECTION, STARTUP_DISCLAIMER_KEY, true)
-	config.save(STARTUP_DISCLAIMER_STATE_PATH)

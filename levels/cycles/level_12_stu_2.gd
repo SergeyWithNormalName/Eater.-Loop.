@@ -5,6 +5,8 @@ const BASEMENT_DARKNESS_COLOR := Color(0.007843138, 0.007843138, 0.011764706, 1.
 const TO202_DEFAULT_TARGET := NodePath("../../../202/InteractableObjects/Door(In202)")
 const TO202_BEDROOM_TARGET := NodePath("../../../../Bedroom/InteractableObjects/Door(InBedroom)")
 const CYCLE_START_SUBTITLE := "Как же темно.. наверно, генератор сдох"
+const FRIDGE_LOCKED_MESSAGE_RU := "Сначала запусти генератор."
+const FRIDGE_LOCKED_MESSAGE_EN := "Start the generator first."
 
 var _darkness_node: CanvasModulate = null
 var _player_node: Node2D = null
@@ -52,9 +54,14 @@ func _wire_level12_dependencies() -> void:
 
 	if _generator_node != null and _fridge_node != null and _fridge_node.has_method("set_dependency_object"):
 		_fridge_node.call("set_dependency_object", _generator_node)
-		_fridge_node.set("locked_message", "Snachala zapusti generator.")
+		_update_fridge_locked_message()
 		if _fridge_node.has_method("refresh_visual_state"):
 			_fridge_node.call("refresh_visual_state")
+
+	if SettingsManager != null and SettingsManager.has_signal("language_changed"):
+		var on_language_changed := Callable(self, "_on_language_changed")
+		if not SettingsManager.language_changed.is_connected(on_language_changed):
+			SettingsManager.language_changed.connect(on_language_changed)
 
 	if CycleState != null and CycleState.has_signal("fridge_interacted_changed"):
 		var on_fridge_interacted := Callable(self, "_on_fridge_interacted_changed")
@@ -82,9 +89,23 @@ func _on_fridge_interacted_changed() -> void:
 func _on_ate_this_cycle_changed(_value: bool) -> void:
 	_update_to202_target()
 
+func _on_language_changed(_language: String) -> void:
+	_update_fridge_locked_message()
+
 func _update_to202_target() -> void:
 	if _door_to_202_node == null:
 		return
 	var should_open_bedroom := CycleState != null and bool(CycleState.has_eaten_this_cycle())
 	if _door_to_202_node.has_method("set_target_marker_path"):
 		_door_to_202_node.call("set_target_marker_path", TO202_BEDROOM_TARGET if should_open_bedroom else TO202_DEFAULT_TARGET)
+
+func _update_fridge_locked_message() -> void:
+	if _fridge_node == null:
+		return
+	var message := FRIDGE_LOCKED_MESSAGE_RU if _is_russian_language() else FRIDGE_LOCKED_MESSAGE_EN
+	_fridge_node.set("locked_message", message)
+
+func _is_russian_language() -> bool:
+	if SettingsManager != null and SettingsManager.has_method("get_language"):
+		return String(SettingsManager.get_language()) == "ru"
+	return TranslationServer.get_locale().to_lower().begins_with("ru")

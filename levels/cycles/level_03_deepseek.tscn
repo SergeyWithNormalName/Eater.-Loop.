@@ -96,7 +96,7 @@ cycle_number = 3
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1308211362]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.27450982, 0.27450982, 0.39215687, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1987420498]
 

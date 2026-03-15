@@ -170,12 +170,12 @@ size = Vector2(339.5, 406.78906)
 position = Vector2(16, 0)
 script = ExtResource("1_py70c")
 cycle_number = 2
-unlock_flashlight_on_ready = true
 timer_duration = 600.0
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.045, 0.045, 0.055, 1)
+color = Color(0.07042777, 0.070413984, 0.1243337, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 
@@ -3801,7 +3801,6 @@ food_count = 6
 bg_music = ExtResource("89_rhkyr")
 eat_sound = ExtResource("90_68led")
 background_texture = ExtResource("91_0ckeq")
-dependency_object = NodePath("../../../../Generator")
 locked_message = "Snachala zapusti generator."
 
 [node name="603" type="Node2D" parent="6thLevel" unique_id=1673846713]
@@ -8553,8 +8552,26 @@ position = Vector2(8273, 115)
 [node name="EnemyLightOnly2" parent="Basement/InteractableObjects" unique_id=21741578 instance=ExtResource("119_esq3s")]
 position = Vector2(8962, 115)
 
-[node name="EnemyLightOnly7" parent="Basement/InteractableObjects" unique_id=1264427166 instance=ExtResource("119_esq3s")]
-position = Vector2(10446, -7455)
+[node name="EnemyLightOnly7" parent="Basement/InteractableObjects" unique_id=1499821905 instance=ExtResource("119_esq3s")]
+position = Vector2(8697, 115)
+
+[node name="EnemyLightOnly9" parent="Basement/InteractableObjects" unique_id=1680110324 instance=ExtResource("119_esq3s")]
+position = Vector2(9886, 115)
+
+[node name="EnemyLightOnly10" parent="Basement/InteractableObjects" unique_id=1619550037 instance=ExtResource("119_esq3s")]
+position = Vector2(9610, 115)
+
+[node name="EnemyLightOnly11" parent="Basement/InteractableObjects" unique_id=310347271 instance=ExtResource("119_esq3s")]
+position = Vector2(10632, 115)
+
+[node name="EnemyLightOnly12" parent="Basement/InteractableObjects" unique_id=18666300 instance=ExtResource("119_esq3s")]
+position = Vector2(11609, 115)
+
+[node name="EnemyLightOnly13" parent="Basement/InteractableObjects" unique_id=336819596 instance=ExtResource("119_esq3s")]
+position = Vector2(13080, 115)
+
+[node name="EnemyLightOnly14" parent="Basement/InteractableObjects" unique_id=668617860 instance=ExtResource("119_esq3s")]
+position = Vector2(12372, 115)
 
 [node name="EnemyLightOnly8" parent="Basement/InteractableObjects" unique_id=1400591879 instance=ExtResource("119_esq3s")]
 position = Vector2(9482, -15179)
@@ -8745,7 +8762,7 @@ position = Vector2(1.4901161e-08, -14.999999)
 scale = Vector2(0.64408255, 0.56408244)
 texture = ExtResource("119_r6pxs")
 
-[node name="EnemyLightOnly" parent="Basement2/InteractableObjects" unique_id=1499821905 instance=ExtResource("119_esq3s")]
+[node name="EnemyLightOnly" parent="Basement2/InteractableObjects" unique_id=118938510 instance=ExtResource("119_esq3s")]
 position = Vector2(13454, 106)
 
 [node name="EnemyLightOnly2" parent="Basement2/InteractableObjects" unique_id=277091628 instance=ExtResource("119_esq3s")]
@@ -8753,6 +8770,8 @@ position = Vector2(13943, 103)
 
 [node name="EnemyLightOnly3" parent="Basement2/InteractableObjects" unique_id=61975738 instance=ExtResource("119_esq3s")]
 position = Vector2(14396, 124)
+jump_distance_min = 120.0
+jump_distance_max = 180.0
 
 [node name="EnemyLightOnly4" parent="Basement2/InteractableObjects" unique_id=774508825 instance=ExtResource("119_esq3s")]
 position = Vector2(14972, 107)
@@ -8798,7 +8817,7 @@ locked_sprite = ExtResource("66_lbsek")
 available_sprite = ExtResource("130_gy0x1")
 
 [node name="Generator" parent="." unique_id=1749179163 instance=ExtResource("131_yuqxs")]
-position = Vector2(14043.999, 52074.996)
+position = Vector2(14043.999, 52033)
 scale = Vector2(0.36, 0.36)
 
 [node name="Lamp" parent="." unique_id=137672882 instance=ExtResource("134_esq3s")]

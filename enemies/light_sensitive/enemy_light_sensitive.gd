@@ -27,6 +27,7 @@ var _animated_sprite: AnimatedSprite2D = null
 var _flashlight_anim_active: bool = false
 var _lamp_anim_active: bool = false
 var _lamp_react_playing: bool = false
+var _detection_area: Area2D = null
 
 const WALK_FRAMES_DIR := "res://enemies/light_sensitive/animations/walking"
 const WALK_FRAME_PREFIX := "ezgif-frame-"
@@ -40,6 +41,7 @@ const WALK_FRAME_PROBE_END: int = 64
 func _ready() -> void:
 	super._ready()
 	_animated_sprite = _sprite as AnimatedSprite2D
+	_detection_area = get_node_or_null("DetectionArea") as Area2D
 	if _animated_sprite == null:
 		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 		if _animated_sprite != null:
@@ -179,7 +181,10 @@ func _physics_process(delta: float) -> void:
 		_stop_flashlight_stun_animation()
 	var lamp_frozen_now := _update_lamp_freeze_state()
 	var stunned_now := lamp_frozen_now or flashlight_hit or _stun_timer > 0.0
+	if stunned_now:
+		_clear_player_target_while_blinded()
 	if _was_stunned and not stunned_now:
+		_refresh_player_target_from_detection()
 		_try_attack_if_in_hitbox()
 	_was_stunned = stunned_now
 	if lamp_frozen_now:
@@ -190,6 +195,19 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_apply_chase_motion()
+
+func _on_detection_area_body_entered(body: Node) -> void:
+	if not body.is_in_group("player"):
+		return
+	if _is_currently_blinded():
+		_clear_player_target_while_blinded()
+		return
+	super._on_detection_area_body_entered(body)
+
+func _on_detection_area_body_exited(body: Node) -> void:
+	super._on_detection_area_body_exited(body)
+	if body == _player:
+		_player = null
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -296,6 +314,23 @@ func _update_lamp_freeze_state() -> bool:
 		else:
 			_stop_lamp_animation()
 	return _lamp_frozen
+
+func _is_currently_blinded() -> bool:
+	return _lamp_frozen or _stun_timer > 0.0 or _is_player_flashlight_hitting()
+
+func _clear_player_target_while_blinded() -> void:
+	if _player == null:
+		return
+	_player = null
+	_stop_chase_music()
+
+func _refresh_player_target_from_detection() -> void:
+	if _detection_area == null or _is_currently_blinded():
+		return
+	for body in _detection_area.get_overlapping_bodies():
+		if body != null and body.is_in_group("player"):
+			super._on_detection_area_body_entered(body)
+			return
 
 func _apply_lamp_freeze_motion() -> void:
 	velocity = Vector2.ZERO

@@ -14,6 +14,8 @@ extends CanvasLayer
 @export_range(0.2, 0.95, 0.01) var note_max_width_ratio: float = 0.56
 ## Доля высоты записки относительно экрана.
 @export_range(0.2, 0.95, 0.01) var note_max_height_ratio: float = 0.72
+## Длительность затемнения при открытии и закрытии записки.
+@export_range(0.0, 5.0, 0.05) var note_transition_duration: float = 0.4
 
 @export_group("Подсказки")
 ## Цвет затемнения фона подсказки.
@@ -43,6 +45,7 @@ var _modules: Dictionary = {}
 var _note_bg: ColorRect
 var _note_image: TextureRect
 var _is_viewing_note: bool = false
+var _note_transition_active: bool = false
 var _note_prev_paused: bool = false
 var _queued_subtitle_text: String = ""
 var _queued_subtitle_duration: float = -1.0
@@ -139,6 +142,7 @@ func _ready() -> void:
 	
 	_setup_note_viewer()
 	_setup_hint_viewer()
+	_fade_rect.z_index = 100
 	var viewport := get_viewport()
 	if viewport != null and not viewport.size_changed.is_connected(_on_viewport_size_changed):
 		viewport.size_changed.connect(_on_viewport_size_changed)
@@ -146,7 +150,7 @@ func _ready() -> void:
 func _setup_note_viewer() -> void:
 	_note_bg = ColorRect.new()
 	_note_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_note_bg.color = Color(0, 0, 0, 0.7)
+	_note_bg.color = Color(0, 0, 0, 1.0)
 	_note_bg.visible = false
 	add_child(_note_bg)
 	
@@ -223,22 +227,35 @@ func _setup_hint_viewer() -> void:
 func show_note(texture: Texture2D) -> void:
 	if texture == null:
 		return
+	if _is_viewing_note and not _note_transition_active:
+		_note_image.texture = texture
+		_apply_note_layout()
+		_note_bg.visible = true
+		_note_image.visible = true
+		return
+	if _note_transition_active:
+		return
+	_note_transition_active = true
 	_is_viewing_note = true
-	_note_image.texture = texture
-	_apply_note_layout()
-	_note_bg.visible = true
-	_note_image.visible = true
 	_note_prev_paused = get_tree().paused
 	get_tree().paused = true
+	play_fade_sequence(
+		note_transition_duration,
+		note_transition_duration,
+		Callable(self, "_show_note_on_black").bind(texture),
+		Callable(self, "_finish_note_transition")
+	)
 
 func hide_note() -> void:
-	if not _is_viewing_note:
+	if not _is_viewing_note or _note_transition_active:
 		return
-	_is_viewing_note = false
-	_note_bg.visible = false
-	_note_image.visible = false
-	get_tree().paused = _note_prev_paused
-	_flush_queued_subtitle()
+	_note_transition_active = true
+	play_fade_sequence(
+		note_transition_duration,
+		note_transition_duration,
+		Callable(self, "_hide_note_on_black"),
+		Callable(self, "_finish_note_hide_transition")
+	)
 
 func show_hint(text: String, texture: Texture2D = null, pause_game: bool = true) -> void:
 	var t := text.strip_edges()
@@ -532,3 +549,25 @@ func _finish_fade_sequence(callback: Callable) -> void:
 	if _fade_rect != null:
 		_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_invoke_callable_if_valid(callback)
+
+func _show_note_on_black(texture: Texture2D) -> void:
+	if texture == null:
+		return
+	_is_viewing_note = true
+	_note_image.texture = texture
+	_apply_note_layout()
+	_note_bg.visible = true
+	_note_image.visible = true
+
+func _hide_note_on_black() -> void:
+	_is_viewing_note = false
+	_note_bg.visible = false
+	_note_image.visible = false
+	get_tree().paused = _note_prev_paused
+
+func _finish_note_transition() -> void:
+	_note_transition_active = false
+
+func _finish_note_hide_transition() -> void:
+	_note_transition_active = false
+	_flush_queued_subtitle()

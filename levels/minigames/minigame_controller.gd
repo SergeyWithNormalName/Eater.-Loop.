@@ -27,6 +27,7 @@ signal minigame_cancel_allowed_changed(allowed: bool)
 @export var default_music_fade_time: float = 0.3
 ## Слой для контейнера мини-игр (должен быть ниже меню паузы).
 @export var default_minigame_layer: int = 75
+@export var minigame_backdrop_color: Color = Color(0.0, 0.0, 0.0, 1.0)
 @export var minigame_transition_enabled: bool = true
 @export_range(0.0, 5.0, 0.05) var minigame_start_fade_time: float = 0.3
 @export_range(0.0, 5.0, 0.05) var minigame_finish_fade_time: float = 0.4
@@ -55,6 +56,7 @@ var _transition_active: bool = false
 var _transition_queue: Array = []
 var _gamepad_runtime = null
 var _gamepad_schemes: Dictionary = {}
+var _minigame_backdrops: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -84,10 +86,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> void:
 	if minigame == null:
 		return
+	var target_layer := _resolve_minigame_layer(layer_override)
 	if minigame.get_parent() != null:
 		if minigame is CanvasLayer:
 			var existing_layer := minigame as CanvasLayer
-			existing_layer.layer = _resolve_minigame_layer(layer_override)
+			existing_layer.layer = target_layer
+		var backdrop_parent := minigame.get_parent()
+		if not (minigame is CanvasLayer) and backdrop_parent is CanvasLayer and backdrop_parent.get_parent() != null:
+			backdrop_parent = backdrop_parent.get_parent()
+		_ensure_minigame_backdrop(minigame, target_layer, backdrop_parent)
 		return
 
 	var parent := parent_override
@@ -98,7 +105,7 @@ func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: 
 	if parent == null:
 		return
 
-	var target_layer := _resolve_minigame_layer(layer_override)
+	_ensure_minigame_backdrop(minigame, target_layer, parent)
 	if minigame is CanvasLayer:
 		var canvas := minigame as CanvasLayer
 		canvas.layer = target_layer
@@ -115,6 +122,81 @@ func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: 
 		if is_instance_valid(wrapper):
 			wrapper.queue_free()
 	)
+
+func _ensure_minigame_backdrop(minigame: Node, target_layer: int, parent: Node) -> void:
+	if minigame == null or parent == null:
+		return
+	var id := minigame.get_instance_id()
+	var existing := _minigame_backdrops.get(id, null) as CanvasLayer
+	if existing != null and is_instance_valid(existing):
+		existing.layer = target_layer - 1
+		return
+	if _has_builtin_fullscreen_backdrop(minigame):
+		return
+	var backdrop_layer := CanvasLayer.new()
+	backdrop_layer.name = "MinigameBackdrop"
+	backdrop_layer.layer = target_layer - 1
+	backdrop_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	backdrop_layer.visible = false
+	var rect := ColorRect.new()
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	rect.color = minigame_backdrop_color
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_layer.add_child(rect)
+	parent.add_child(backdrop_layer)
+	_minigame_backdrops[id] = backdrop_layer
+	minigame.tree_exited.connect(Callable(self, "_cleanup_minigame_backdrop").bind(id), Object.CONNECT_ONE_SHOT)
+
+func _cleanup_minigame_backdrop(minigame_id: int) -> void:
+	var backdrop := _minigame_backdrops.get(minigame_id, null) as CanvasLayer
+	if backdrop != null and is_instance_valid(backdrop):
+		backdrop.queue_free()
+	_minigame_backdrops.erase(minigame_id)
+
+func _has_builtin_fullscreen_backdrop(minigame: Node) -> bool:
+	return _find_builtin_fullscreen_backdrop(minigame, minigame)
+
+func _find_builtin_fullscreen_backdrop(node: Node, root: Node) -> bool:
+	if node is ColorRect:
+		var rect := node as ColorRect
+		if _is_opaque_fullscreen_rect(rect, root):
+			return true
+	for child in node.get_children():
+		if child is Node and _find_builtin_fullscreen_backdrop(child, root):
+			return true
+	return false
+
+func _fills_minigame_rect(control: Control, root: Node) -> bool:
+	var current: Node = control
+	while current != null and current != root:
+		if not (current is Control) or not _is_full_rect_control(current as Control):
+			return false
+		current = current.get_parent()
+	if current != root:
+		return false
+	if root is Control:
+		return _is_full_rect_control(root as Control)
+	return root is CanvasLayer
+
+func _is_full_rect_control(control: Control) -> bool:
+	return _is_zero_approx(control.anchor_left) \
+		and _is_zero_approx(control.anchor_top) \
+		and is_equal_approx(control.anchor_right, 1.0) \
+		and is_equal_approx(control.anchor_bottom, 1.0) \
+		and _is_zero_approx(control.offset_left) \
+		and _is_zero_approx(control.offset_top) \
+		and _is_zero_approx(control.offset_right) \
+		and _is_zero_approx(control.offset_bottom)
+
+func _is_opaque_fullscreen_rect(rect: ColorRect, root: Node) -> bool:
+	if rect == null or not rect.visible:
+		return false
+	if rect.color.a < 0.98:
+		return false
+	return _fills_minigame_rect(rect, root)
+
+func _is_zero_approx(value: float) -> bool:
+	return absf(value) <= 0.5
 
 func set_pause_menu_open(is_open: bool) -> void:
 	_pause_menu_open = is_open
@@ -388,8 +470,9 @@ func _resolve_minigame_layer(override_layer: int) -> int:
 
 func _request_start_transition(minigame: Node) -> void:
 	if not _can_run_transition(minigame_start_fade_time):
+		_set_minigame_presentation_visible(minigame, true)
 		return
-	_set_minigame_visible(minigame, false)
+	_set_minigame_presentation_visible(minigame, false)
 	_enqueue_transition(minigame_start_fade_time, Callable(self, "_set_minigame_visibility_bound").bind(minigame, true))
 
 func _request_finish_transition(minigame: Node) -> void:
@@ -552,7 +635,7 @@ func _set_minigame_visibility_bound(minigame: Variant, visible: bool) -> void:
 	var target := minigame as Node
 	if target == null:
 		return
-	_set_minigame_visible(target, visible)
+	_set_minigame_presentation_visible(target, visible)
 
 func _finish_minigame_transition_on_black(minigame: Variant, success: bool, callback: Callable) -> void:
 	if minigame == null or not is_instance_valid(minigame):
@@ -563,7 +646,7 @@ func _finish_minigame_transition_on_black(minigame: Variant, success: bool, call
 	if target == null:
 		return
 	_finalize_minigame_finish(target, success)
-	_set_minigame_visible(target, false)
+	_set_minigame_presentation_visible(target, false)
 	_call_callable_if_alive(callback)
 
 func _on_transition_fade_finished(callback: Callable) -> void:
@@ -579,6 +662,26 @@ func _queue_free_minigame_if_alive(minigame: Variant) -> void:
 	var target := minigame as Node
 	if target != null and target.is_inside_tree():
 		target.queue_free()
+
+func _get_minigame_backdrop(minigame: Node) -> CanvasLayer:
+	if minigame == null:
+		return null
+	var id := minigame.get_instance_id()
+	var backdrop := _minigame_backdrops.get(id, null) as CanvasLayer
+	if backdrop != null and not is_instance_valid(backdrop):
+		_minigame_backdrops.erase(id)
+		return null
+	return backdrop
+
+func _set_minigame_backdrop_visible(minigame: Node, visible: bool) -> void:
+	var backdrop := _get_minigame_backdrop(minigame)
+	if backdrop == null:
+		return
+	backdrop.visible = visible
+
+func _set_minigame_presentation_visible(minigame: Node, visible: bool) -> void:
+	_set_minigame_backdrop_visible(minigame, visible)
+	_set_minigame_visible(minigame, visible)
 
 func _call_callable_if_alive(callback: Callable) -> void:
 	if callback.is_null():

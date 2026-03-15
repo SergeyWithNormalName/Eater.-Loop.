@@ -10,6 +10,7 @@ var _start_position: Vector2
 var _grab_offset: Vector2 = Vector2.ZERO
 var _target_mouth: Area2D = null
 var _is_auto_feeding: bool = false
+var _interaction_enabled: bool = true
 
 # Новый флаг: находится ли пельмень прямо сейчас над ртом?
 var _is_over_mouth: bool = false
@@ -40,6 +41,8 @@ func _on_area_exited(area: Area2D) -> void:
 # ---------------------------------------------
 
 func _input(event: InputEvent) -> void:
+	if not _interaction_enabled:
+		return
 	if _is_auto_feeding:
 		return
 	if not event is InputEventMouseButton:
@@ -86,7 +89,7 @@ func _process(_delta: float) -> void:
 		global_position = get_global_mouse_position() + _grab_offset
 
 func is_gamepad_focusable() -> bool:
-	return not _is_auto_feeding
+	return _interaction_enabled and not _is_auto_feeding
 
 func get_gamepad_focus_rect() -> Rect2:
 	var bounds := Rect2(global_position - Vector2(28, 28), Vector2(56, 56))
@@ -104,6 +107,8 @@ func get_gamepad_focus_rect() -> Rect2:
 	return bounds
 
 func feed_to_mouth(mouth: Area2D) -> void:
+	if not _interaction_enabled:
+		return
 	if mouth == null:
 		return
 	_target_mouth = mouth
@@ -205,6 +210,17 @@ func _is_in_mouth() -> bool:
 func eat_me() -> void:
 	eaten.emit()
 	queue_free()
+
+func set_interaction_enabled(enabled: bool) -> void:
+	if _interaction_enabled == enabled:
+		return
+	_interaction_enabled = enabled
+	input_pickable = enabled
+	if not enabled and _is_dragging:
+		_is_dragging = false
+		is_any_dragging = false
+		z_index = 0
+		_return_to_plate()
 
 func _exit_tree() -> void:
 	if _is_dragging:

@@ -109,12 +109,12 @@ fill_from = Vector2(0.5, 0.5)
 position = Vector2(16, 0)
 script = ExtResource("1_dipft")
 cycle_number = 9
-unlock_flashlight_on_ready = true
 timer_duration = 500.0
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1779346994]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.22935206, 0.22925654, 0.33242673, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1195334158]
 
@@ -1436,35 +1436,11 @@ z_index = -5
 position = Vector2(6698, 306)
 scale = Vector2(0.19589221, 0.19589221)
 
-[node name="Window2" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1931799854]
-z_index = -4
-position = Vector2(10323, -45.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_cmjap")
-
-[node name="OpenShtora2" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1558986746]
-z_index = -3
-position = Vector2(10323, 20.491882)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("48_g4gu4")
-
 [node name="Battery" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=517377610]
 z_index = -4
 position = Vector2(10324, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("49_lkxrq")
-
-[node name="Window5" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=39235397]
-z_index = -4
-position = Vector2(9139, -45.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_cmjap")
-
-[node name="OpenShtora5" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=380075618]
-z_index = -3
-position = Vector2(9139, 20.491882)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("48_g4gu4")
 
 [node name="Battery4" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1678829428]
 z_index = -4
@@ -1472,53 +1448,17 @@ position = Vector2(9140, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("49_lkxrq")
 
-[node name="Window6" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=966942797]
-z_index = -4
-position = Vector2(7919.0005, -45.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_cmjap")
-
-[node name="OpenShtora6" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1595777922]
-z_index = -3
-position = Vector2(7919.0005, 20.491882)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("48_g4gu4")
-
 [node name="Battery5" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1164867633]
 z_index = -4
 position = Vector2(7920.0005, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("49_lkxrq")
 
-[node name="Window3" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1473332002]
-z_index = -4
-position = Vector2(11530, -45.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_cmjap")
-
-[node name="OpenShtora3" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1101671922]
-z_index = -3
-position = Vector2(11530, 20.491882)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("48_g4gu4")
-
 [node name="Battery2" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=196754622]
 z_index = -4
 position = Vector2(11531, 210)
 scale = Vector2(0.48396507, 0.48396507)
 texture = ExtResource("49_lkxrq")
-
-[node name="Window4" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1615999043]
-z_index = -4
-position = Vector2(12714, -45.50812)
-scale = Vector2(0.9091287, 0.9091287)
-texture = ExtResource("47_cmjap")
-
-[node name="OpenShtora4" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1693020270]
-z_index = -3
-position = Vector2(12714, 20.491882)
-scale = Vector2(0.66074157, 0.59296346)
-texture = ExtResource("48_g4gu4")
 
 [node name="Battery3" type="Sprite2D" parent="HallLebedka1/Sprites" unique_id=1362866224]
 z_index = -4
@@ -2607,7 +2547,6 @@ position = Vector2(6803, 103)
 position = Vector2(25388.002, 5297)
 scale = Vector2(5.72, 7.123382)
 script = ExtResource("89_ivcsp")
-search_spots = Array[NodePath]([])
 
 [node name="Fridge" parent="." unique_id=1816588780 instance=ExtResource("108_dlf1h")]
 position = Vector2(7403, 10621)
@@ -2642,6 +2581,76 @@ z_index = -5
 position = Vector2(12108, -455.00046)
 rotation = 0.7109258
 scale = Vector2(0.41573974, 0.41573974)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole7" type="Sprite2D" parent="." unique_id=624335430]
+z_index = -5
+position = Vector2(9068, 5162.0005)
+rotation = 0.2238808
+scale = Vector2(0.41573974, 0.41573974)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole8" type="Sprite2D" parent="." unique_id=1128818573]
+z_index = -5
+position = Vector2(8306, 4935.9995)
+rotation = -0.3487127
+scale = Vector2(0.38423553, 0.38423553)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole9" type="Sprite2D" parent="." unique_id=806175163]
+z_index = -5
+position = Vector2(8870, 4754.9995)
+rotation = 0.12812099
+scale = Vector2(0.5341234, 0.5341234)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole14" type="Sprite2D" parent="." unique_id=339899172]
+z_index = -5
+position = Vector2(12427.125, 4917.6304)
+rotation = -3.0913453
+scale = Vector2(0.3427311, 0.3427311)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole16" type="Sprite2D" parent="." unique_id=990902057]
+z_index = -5
+position = Vector2(12004, 5115.0005)
+rotation = -0.007045269
+scale = Vector2(0.432504, 0.43250394)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole15" type="Sprite2D" parent="." unique_id=513154515]
+z_index = -5
+position = Vector2(13130.001, 4951)
+rotation = -2.6145117
+scale = Vector2(0.5341234, 0.5341234)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole10" type="Sprite2D" parent="." unique_id=462375094]
+z_index = -5
+position = Vector2(9902, 4992.9995)
+rotation = -0.09956615
+scale = Vector2(0.33212647, 0.33212647)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole13" type="Sprite2D" parent="." unique_id=493824399]
+z_index = -5
+position = Vector2(10876.612, 4762.804)
+rotation = 0.18939488
+scale = Vector2(0.30988702, 0.30988702)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole11" type="Sprite2D" parent="." unique_id=164307637]
+z_index = -5
+position = Vector2(10496, 5130)
+rotation = 0.23133244
+scale = Vector2(0.41980788, 0.41980782)
+texture = ExtResource("117_tnkfd")
+
+[node name="Hole12" type="Sprite2D" parent="." unique_id=523566903]
+z_index = -5
+position = Vector2(11312, 4976)
+rotation = -0.09687291
+scale = Vector2(0.60868496, 0.6669149)
 texture = ExtResource("117_tnkfd")
 
 [node name="Hole5" type="Sprite2D" parent="." unique_id=856208697]

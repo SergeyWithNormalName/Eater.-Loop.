@@ -55,3 +55,15 @@ shape = SubResource("CircleShape2D_wyl2e")
 
 [node name="FoodContainer" type="Node2D" parent="Control"]
 position = Vector2(1407, 694)
+
+[node name="HintLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 24.0
+offset_right = 420.0
+offset_bottom = 78.0
+text = "Затолкайте еду в рот Андрею!"
+horizontal_alignment = 1
