@@ -159,12 +159,12 @@ shader_parameter/edge_darkening = 0.28
 position = Vector2(16, 0)
 script = ExtResource("1_sbrmi")
 cycle_number = 9
-unlock_flashlight_on_ready = true
 timer_duration = 110.0
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=1779346994]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.22935206, 0.22925654, 0.33242673, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1195334158]
 
@@ -277,8 +277,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_wmbyb")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Toilet" type="Node2D" parent="." unique_id=43382815]
@@ -368,8 +366,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("16_wmbyb")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Hall" type="Node2D" parent="." unique_id=505273404]
@@ -1086,8 +1082,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToParents)" parent="Hall/InteractableObjects" unique_id=1606818286 instance=ExtResource("15_xph0r")]
@@ -1099,8 +1093,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToLebedka)" parent="Hall/InteractableObjects" unique_id=1555384058 instance=ExtResource("15_xph0r")]
@@ -1113,8 +1105,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_5kg7j")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToKeyHall)" parent="Hall/InteractableObjects" unique_id=1095698003 instance=ExtResource("15_xph0r")]
@@ -1125,8 +1115,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToKladovka)" parent="Hall/InteractableObjects" unique_id=2061516348 instance=ExtResource("15_xph0r")]
@@ -1138,8 +1126,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_1iu6x")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Exit)" parent="Hall/InteractableObjects" unique_id=2003142809 instance=ExtResource("15_xph0r")]
@@ -1152,8 +1138,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_5kg7j")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToBathroom)" parent="Hall/InteractableObjects" unique_id=1877339093 instance=ExtResource("15_xph0r")]
@@ -1166,8 +1150,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("45_w5m2t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(ToToilet)" parent="Hall/InteractableObjects" unique_id=587734171 instance=ExtResource("15_xph0r")]
@@ -1180,8 +1162,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("45_w5m2t")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Fridge" parent="Hall/InteractableObjects" unique_id=1243623637 instance=ExtResource("46_1bre6")]
@@ -1812,8 +1792,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_5kg7j")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)2" parent="HallLebedka1/InteractableObjects" unique_id=359245110 instance=ExtResource("15_xph0r")]
@@ -1824,8 +1802,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)3" parent="HallLebedka1/InteractableObjects" unique_id=699660232 instance=ExtResource("15_xph0r")]
@@ -1836,8 +1812,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)4" parent="HallLebedka1/InteractableObjects" unique_id=846977662 instance=ExtResource("15_xph0r")]
@@ -1848,8 +1822,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)5" parent="HallLebedka1/InteractableObjects" unique_id=803609167 instance=ExtResource("15_xph0r")]
@@ -1860,8 +1832,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)6" parent="HallLebedka1/InteractableObjects" unique_id=1438485508 instance=ExtResource("15_xph0r")]
@@ -1872,8 +1842,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Lebedka" parent="HallLebedka1/InteractableObjects" unique_id=1292910143 instance=ExtResource("89_pe4dr")]
@@ -2274,8 +2242,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(KeyHall)Right" parent="HallKey/InteractableObjects" unique_id=730629514 instance=ExtResource("15_xph0r")]
@@ -2286,8 +2252,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="HallLebedka2" type="Node2D" parent="." unique_id=1652488699]
@@ -2842,8 +2806,6 @@ required_key_name = null
 consume_key_on_unlock = null
 door_texture = ExtResource("44_5kg7j")
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)2" parent="HallLebedka2/InteractableObjects" unique_id=2115787854 instance=ExtResource("15_xph0r")]
@@ -2854,8 +2816,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)3" parent="HallLebedka2/InteractableObjects" unique_id=1463351492 instance=ExtResource("15_xph0r")]
@@ -2866,8 +2826,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)4" parent="HallLebedka2/InteractableObjects" unique_id=970487280 instance=ExtResource("15_xph0r")]
@@ -2878,8 +2836,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)5" parent="HallLebedka2/InteractableObjects" unique_id=1130902487 instance=ExtResource("15_xph0r")]
@@ -2890,8 +2846,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Door(Lebedka)6" parent="HallLebedka2/InteractableObjects" unique_id=1072427281 instance=ExtResource("15_xph0r")]
@@ -2902,8 +2856,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Bedroom" type="Node2D" parent="." unique_id=122944335]
@@ -3180,8 +3132,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="Bed" parent="Bedroom/InteractableObjects" unique_id=490067309 instance=ExtResource("69_rg3cs")]
@@ -3307,8 +3257,6 @@ required_key_id = null
 required_key_name = null
 consume_key_on_unlock = null
 interact_area_node = null
-auto_prompt = null
-handle_input = null
 one_shot = null
 
 [node name="EnemyLightSensitive" parent="Kladovka" unique_id=590527961 instance=ExtResource("79_3debg")]

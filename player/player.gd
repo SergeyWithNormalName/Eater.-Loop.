@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
-
 signal player_made_sound
 signal flashlight_recharged
 signal flashlight_activation_denied(charge_ratio: float)

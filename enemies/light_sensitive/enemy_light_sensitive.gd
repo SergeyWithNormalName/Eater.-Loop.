@@ -17,19 +17,8 @@ extends "res://enemies/enemy_flashlight_base.gd"
 @export_group("Stun")
 ## Длительность стана от света.
 @export var stun_duration: float = 2.0
-## Перезарядка стана.
-@export var stun_cooldown: float = 6.0
-## Замедление после стана, если фонарик продолжает светить (1.0 = без замедления).
-@export_range(1.0, 3.0, 0.1) var flashlight_slow_factor: float = 1.5
-## Дистанция отступления при стане.
-@export var knockback_distance: float = 60.0
-## Скорость отступления при стане.
-@export var knockback_speed: float = 120.0
 
 var _stun_timer: float = 0.0
-var _stun_cooldown_timer: float = 0.0
-var _knockback_remaining: float = 0.0
-var _knockback_dir: Vector2 = Vector2.ZERO
 var _player_in_hitbox: Node2D = null
 var _is_walking: bool = false
 var _was_stunned: bool = false
@@ -38,6 +27,7 @@ var _animated_sprite: AnimatedSprite2D = null
 var _flashlight_anim_active: bool = false
 var _lamp_anim_active: bool = false
 var _lamp_react_playing: bool = false
+var _detection_area: Area2D = null
 
 const WALK_FRAMES_DIR := "res://enemies/light_sensitive/animations/walking"
 const WALK_FRAME_PREFIX := "ezgif-frame-"
@@ -51,6 +41,7 @@ const WALK_FRAME_PROBE_END: int = 64
 func _ready() -> void:
 	super._ready()
 	_animated_sprite = _sprite as AnimatedSprite2D
+	_detection_area = get_node_or_null("DetectionArea") as Area2D
 	if _animated_sprite == null:
 		_animated_sprite = get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 		if _animated_sprite != null:
@@ -190,7 +181,10 @@ func _physics_process(delta: float) -> void:
 		_stop_flashlight_stun_animation()
 	var lamp_frozen_now := _update_lamp_freeze_state()
 	var stunned_now := lamp_frozen_now or flashlight_hit or _stun_timer > 0.0
+	if stunned_now:
+		_clear_player_target_while_blinded()
 	if _was_stunned and not stunned_now:
+		_refresh_player_target_from_detection()
 		_try_attack_if_in_hitbox()
 	_was_stunned = stunned_now
 	if lamp_frozen_now:
@@ -201,6 +195,19 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_apply_chase_motion()
+
+func _on_detection_area_body_entered(body: Node) -> void:
+	if not body.is_in_group("player"):
+		return
+	if _is_currently_blinded():
+		_clear_player_target_while_blinded()
+		return
+	super._on_detection_area_body_entered(body)
+
+func _on_detection_area_body_exited(body: Node) -> void:
+	super._on_detection_area_body_exited(body)
+	if body == _player:
+		_player = null
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -225,19 +232,7 @@ func _apply_player_flashlight_stun() -> bool:
 	_stun_timer = maxf(_stun_timer, maxf(0.0, stun_duration))
 	if _stun_timer > 0.0 and not _flashlight_anim_active:
 		_start_flashlight_stun_animation()
-	_knockback_remaining = 0.0
-	_knockback_dir = Vector2.ZERO
 	return _stun_timer > 0.0
-
-func _start_knockback() -> void:
-	_knockback_remaining = max(0.0, knockback_distance)
-	if _knockback_remaining <= 0.0:
-		_knockback_dir = Vector2.ZERO
-		return
-	if _player != null:
-		_knockback_dir = Vector2(sign(global_position.x - _player.global_position.x), 0.0)
-	else:
-		_knockback_dir = Vector2.LEFT
 
 func _update_stun_motion(_delta: float) -> void:
 	velocity = Vector2.ZERO
@@ -319,6 +314,23 @@ func _update_lamp_freeze_state() -> bool:
 		else:
 			_stop_lamp_animation()
 	return _lamp_frozen
+
+func _is_currently_blinded() -> bool:
+	return _lamp_frozen or _stun_timer > 0.0 or _is_player_flashlight_hitting()
+
+func _clear_player_target_while_blinded() -> void:
+	if _player == null:
+		return
+	_player = null
+	_stop_chase_music()
+
+func _refresh_player_target_from_detection() -> void:
+	if _detection_area == null or _is_currently_blinded():
+		return
+	for body in _detection_area.get_overlapping_bodies():
+		if body != null and body.is_in_group("player"):
+			super._on_detection_area_body_entered(body)
+			return
 
 func _apply_lamp_freeze_motion() -> void:
 	velocity = Vector2.ZERO
@@ -407,9 +419,6 @@ func _set_idle_animation() -> void:
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()
 	state["stun_timer"] = _stun_timer
-	state["stun_cooldown_timer"] = _stun_cooldown_timer
-	state["knockback_remaining"] = _knockback_remaining
-	state["knockback_dir"] = _knockback_dir
 	state["is_walking"] = _is_walking
 	state["was_stunned"] = _was_stunned
 	state["lamp_frozen"] = _lamp_frozen
@@ -425,9 +434,6 @@ func capture_checkpoint_state() -> Dictionary:
 func apply_checkpoint_state(state: Dictionary) -> void:
 	super.apply_checkpoint_state(state)
 	_stun_timer = float(state.get("stun_timer", _stun_timer))
-	_stun_cooldown_timer = float(state.get("stun_cooldown_timer", _stun_cooldown_timer))
-	_knockback_remaining = float(state.get("knockback_remaining", _knockback_remaining))
-	_knockback_dir = state.get("knockback_dir", _knockback_dir)
 	_is_walking = bool(state.get("is_walking", _is_walking))
 	_was_stunned = bool(state.get("was_stunned", _was_stunned))
 	_lamp_frozen = bool(state.get("lamp_frozen", _lamp_frozen))

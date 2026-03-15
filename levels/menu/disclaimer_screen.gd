@@ -16,6 +16,7 @@ extends Control
 @export_range(12, 32, 1) var body_font_min_size: int = 20
 
 const MENU_TRANSITION_META := "menu_intro_from_disclaimer"
+const STARTUP_DISCLAIMER_META := "startup_disclaimer_shown_session"
 const DISCLAIMER_TEXT_KEY := "menu.startup_disclaimer_text"
 
 var _is_transitioning: bool = false
@@ -30,6 +31,8 @@ var _content_base_y: float = 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	if GameState:
+		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
 	_apply_readable_font()
 	_disclaimer_text.text = tr(DISCLAIMER_TEXT_KEY)
 	_update_layout()
@@ -143,6 +146,7 @@ func _advance_to_main_menu() -> void:
 		return
 	if GameState:
 		GameState.set_meta(MENU_TRANSITION_META, true)
+		GameState.set_meta(STARTUP_DISCLAIMER_META, true)
 	get_tree().change_scene_to_packed(main_menu_scene)
 
 func _is_skip_input(event: InputEvent) -> bool:

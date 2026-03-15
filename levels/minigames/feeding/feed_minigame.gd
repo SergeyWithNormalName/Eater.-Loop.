@@ -22,6 +22,7 @@ const DEFAULT_BG: Texture2D = preload("res://levels/minigames/feeding/Background
 const DEFAULT_MUSIC: AudioStream = preload("res://music/MusicForEat.mp3")
 const DEFAULT_EAT: AudioStream = preload("res://levels/minigames/feeding/sounds/Nam-nam_1.wav")
 const DEFAULT_WIN: AudioStream = preload("res://levels/minigames/feeding/sounds/Poel_1.wav")
+const HINT_FONT: FontFile = preload("res://global/fonts/AmaticSC-Regular.ttf")
 
 # Путь к сцене тарелки теперь жестко прописан в коде
 var tarelka_scene = load("res://levels/minigames/feeding/food/plate/plate.tscn") 
@@ -31,6 +32,7 @@ var tarelka_scene = load("res://levels/minigames/feeding/food/plate/plate.tscn")
 @onready var andrey_sprite: TextureRect = $Control/AndreyFace
 @onready var food_container: Node2D = $Control/FoodContainer
 @onready var mouth_area: Area2D = $Control/AndreyFace/MouthArea
+@onready var hint_label: Label = get_node_or_null("Control/HintLabel") as Label
 
 var sfx_player: AudioStreamPlayer 
 var eat_sfx_player: AudioStreamPlayer
@@ -57,12 +59,22 @@ func _ready() -> void:
 	_selected_music = DEFAULT_MUSIC
 	_start_minigame_session()
 	_register_gamepad_scheme()
+	_apply_hint_label_style()
 	
 	_base_viewport = Vector2(
 		float(ProjectSettings.get_setting("display/window/size/viewport_width", 1920)),
 		float(ProjectSettings.get_setting("display/window/size/viewport_height", 1080))
 	)
 	_apply_background_layout()
+
+func _apply_hint_label_style() -> void:
+	if hint_label == null:
+		return
+	var hint_variation := FontVariation.new()
+	hint_variation.base_font = HINT_FONT
+	hint_variation.spacing_glyph = 3
+	hint_label.add_theme_font_override("font", hint_variation)
+	hint_label.add_theme_font_size_override("font_size", 52)
 
 func setup_game(andrey_texture: Texture2D, count: int, music: AudioStream, win_sound: AudioStream, eat_sound_override: AudioStream = null, bg_override: Texture2D = null, food_scenes: Array[PackedScene] = []) -> void:
 	if andrey_texture:

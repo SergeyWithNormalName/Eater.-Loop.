@@ -112,14 +112,17 @@ func _start_lab_minigame() -> void:
 	if "penalty_time" in game: game.penalty_time = penalty_time
 	if "lab_completion_id" in game:
 		game.lab_completion_id = lab_completion_id.strip_edges()
-	
-	var settings := MinigameSettings.new()
-	settings.pause_game = false
-	settings.show_mouse_cursor = true
-	settings.block_player_movement = true
-	settings.time_limit = time_limit
-	settings.auto_finish_on_timeout = false
-	start_managed_minigame(game, settings)
+
+	if game is TimedLabMinigameBase:
+		attach_minigame(game)
+	else:
+		var settings := MinigameSettings.new()
+		settings.pause_game = false
+		settings.show_mouse_cursor = true
+		settings.block_player_movement = true
+		settings.time_limit = time_limit
+		settings.auto_finish_on_timeout = false
+		start_managed_minigame(game, settings)
 	
 	# Ловим момент закрытия игры
 	game.tree_exited.connect(_on_minigame_closed)

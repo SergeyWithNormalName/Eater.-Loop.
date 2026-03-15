@@ -73,13 +73,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_refresh_prompt()
 
 func _ensure_interact_area_script() -> void:
-	if _interact_area.get_script() == INTERACTION_SCRIPT:
-		_interact_area.auto_prompt = false
-		_interact_area.handle_input = false
-		return
-	_interact_area.set_script(INTERACTION_SCRIPT)
-	_interact_area.auto_prompt = false
-	_interact_area.handle_input = false
+	if _interact_area.get_script() != INTERACTION_SCRIPT:
+		_interact_area.set_script(INTERACTION_SCRIPT)
+	if _interact_area.has_method("set_interaction_enabled"):
+		_interact_area.set_interaction_enabled(false)
 
 func _on_interact_area_player_entered(player: Node) -> void:
 	_player_in_range = player

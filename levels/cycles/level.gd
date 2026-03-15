@@ -101,12 +101,7 @@ func _show_start_subtitle() -> void:
 	if UIMessage == null:
 		return
 	_start_subtitle_shown = true
-	if UIMessage.has_method("show_dialogue"):
-		UIMessage.show_dialogue(text, null, start_subtitle_duration)
-	elif UIMessage.has_method("show_subtitle"):
-		UIMessage.show_subtitle(text, start_subtitle_duration)
-	elif UIMessage.has_method("show_text"):
-		UIMessage.show_text(text, start_subtitle_duration)
+	UIMessage.show_dialogue(text, null, start_subtitle_duration)
 
 func _apply_conditional_respawn_position() -> void:
 	if _checkpoint_restored:

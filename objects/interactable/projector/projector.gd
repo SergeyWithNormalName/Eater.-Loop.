@@ -1,7 +1,5 @@
 extends InteractiveObject
 
-const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
-
 @export_group("Projector Settings")
 @export var requires_generator: bool = false
 @export var start_on: bool = false

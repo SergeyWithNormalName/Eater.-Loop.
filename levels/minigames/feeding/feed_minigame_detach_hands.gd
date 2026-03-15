@@ -262,7 +262,7 @@ func _stop_active_hand_drag() -> void:
 	var tween := create_tween()
 	tween.tween_property(state.node, "global_position", state.base_global_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-func _finalize_removed_hand(hand_id: StringName, state: HandState) -> void:
+func _finalize_removed_hand(_hand_id: StringName, state: HandState) -> void:
 	if state.removed:
 		return
 	state.removed = true

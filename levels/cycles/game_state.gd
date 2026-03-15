@@ -1,7 +1,5 @@
 extends Node
 
-const CheckpointStateUtils = preload("res://global/checkpoint_state_utils.gd")
-
 const SAVE_PATH := "user://run_save.cfg"
 const GAME_SECTION := "game"
 const CHECKPOINT_SECTION := "checkpoint"

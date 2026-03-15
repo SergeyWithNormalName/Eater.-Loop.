@@ -1,6 +1,7 @@
 extends Control
 class_name TimedLabMinigameBase
 
+@warning_ignore("unused_signal")
 signal task_completed(success: bool)
 
 @export_group("Timed Lab")
@@ -14,7 +15,7 @@ signal task_completed(success: bool)
 @export var failure_dialogue_voice: AudioStream
 @export var dialogue_duration: float = -1.0
 
-const LAB_MUSIC_STREAM := preload("res://music/TimerForLabs_DEMO.wav")
+const LAB_MUSIC_STREAM := preload("res://music/MusicForLabs.wav")
 
 var current_time: float = 0.0
 
@@ -27,7 +28,8 @@ func start_timed_lab_session(
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_ensure_lab_music_loop(music_stream)
-	if MinigameController != null and not MinigameController.is_active(self):
+	var controller_active := MinigameController != null and MinigameController.is_active(self)
+	if MinigameController != null and not controller_active:
 		var settings := MinigameSettings.new()
 		settings.pause_game = false
 		settings.show_mouse_cursor = true
@@ -37,6 +39,8 @@ func start_timed_lab_session(
 		settings.music_fade_time = music_fade_time
 		settings.auto_finish_on_timeout = false
 		MinigameController.start_minigame(self, settings)
+	elif controller_active and music_stream != null:
+		MinigameController.update_minigame_music(music_stream, 999.0, music_fade_time)
 	current_time = time_limit
 	if MinigameController == null:
 		return

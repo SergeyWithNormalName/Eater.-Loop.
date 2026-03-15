@@ -170,12 +170,12 @@ size = Vector2(339.5, 406.78906)
 position = Vector2(16, 0)
 script = ExtResource("1_upyn3")
 cycle_number = 2
-unlock_flashlight_on_ready = true
 timer_duration = 600.0
+unlock_flashlight_on_ready = true
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=2136761093]
 rotation = 0.009666472
-color = Color(0.23529412, 0.23529412, 0.27450982, 1)
+color = Color(0.19607843, 0.19607843, 0.29411766, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=623567004]
 

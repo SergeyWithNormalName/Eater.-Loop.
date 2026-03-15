@@ -30,14 +30,17 @@ func run() -> Array[String]:
 	await tree.create_timer(0.2, true).timeout
 	assert_true(not ui.is_dialogue_visible(), "Dialogue channel must auto-hide after timeout")
 
+	var note_transition_duration := float(ui.get("note_transition_duration"))
+	var note_transition_wait := maxf(0.1, note_transition_duration * 2.0 + 0.1)
 	var was_paused := tree.paused
 	ui.show_note(_build_test_texture())
 	assert_true(tree.paused, "Reading a note must pause the tree")
-	ui.show_dialogue(QUEUED_DIALOGUE_TEXT, null, 0.1)
+	ui.show_dialogue(QUEUED_DIALOGUE_TEXT, null, 1.0)
 	assert_true(not ui.is_dialogue_visible(), "Dialogue must queue while note viewer is open")
+	await tree.create_timer(note_transition_wait, true).timeout
 	ui.hide_note()
+	await tree.create_timer(note_transition_wait, true).timeout
 	assert_eq(tree.paused, was_paused, "Closing a note must restore previous pause state")
-	await tree.process_frame
 	assert_true(ui.is_dialogue_visible(), "Queued dialogue must flush after closing note viewer")
 	assert_eq(ui.get_dialogue_text(), QUEUED_DIALOGUE_TEXT, "Queued dialogue text must survive note viewer")
 	await tree.create_timer(0.2, true).timeout

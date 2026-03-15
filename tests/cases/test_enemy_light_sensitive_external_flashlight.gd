@@ -30,12 +30,12 @@ func run() -> Array[String]:
 	root.add_child(enemy)
 	await tree.process_frame
 
-	enemy.global_position = pickup_flashlight.global_position + Vector2.RIGHT * 240.0
+	enemy.global_position = pickup_flashlight.global_position + Vector2.RIGHT * 420.0
 	await tree.physics_frame
 	await tree.physics_frame
 	assert_true(bool(enemy.get("_lamp_frozen")), "Light-sensitive enemy must freeze inside the visible beam of a placed flashlight")
 
-	enemy.global_position = pickup_flashlight.global_position + Vector2.LEFT * 240.0
+	enemy.global_position = pickup_flashlight.global_position + Vector2.LEFT * 420.0
 	await tree.physics_frame
 	await tree.physics_frame
 	assert_true(not bool(enemy.get("_lamp_frozen")), "Light-sensitive enemy must not freeze behind a placed flashlight")

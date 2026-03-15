@@ -39,7 +39,14 @@ signal feeding_finished
 ## Запретить еду, пока не сдана лабораторная.
 @export var require_lab_completion: bool = false
 ## Если список не пуст, холодильник разблокируется только после выполнения всех указанных лабораторных в текущем цикле.
-@export var required_lab_completion_ids: PackedStringArray = PackedStringArray()
+var _required_lab_completion_ids: PackedStringArray = PackedStringArray()
+@export var required_lab_completion_ids: PackedStringArray:
+	get:
+		return _required_lab_completion_ids
+	set(value):
+		_required_lab_completion_ids = value
+		if not _required_lab_completion_ids.is_empty():
+			require_lab_completion = true
 ## Сообщение, если лабораторная еще не выполнена.
 @export var lab_required_message: String = "Сначала нужно сделать лабораторную работу."
 
@@ -53,6 +60,8 @@ signal feeding_finished
 @export var noise_sound: AudioStream
 ## Громкость шума холодильника (dB).
 @export var noise_volume_db: float = -18.0
+## Показывать заблокированный визуал после того, как игрок уже поел в этом цикле.
+@export var use_locked_visual_after_eating: bool = false
 ## Узел проигрывателя шума.
 @export var noise_player_node: NodePath = NodePath("AudioStreamPlayer2D")
 @export var locked_sprite: Texture2D
@@ -110,10 +119,12 @@ func _ready() -> void:
 	_update_rocking_pivot()
 	_start_rocking_if_configured()
 	
-	if require_lab_completion and CycleState != null and CycleState.has_signal("lab_completed"):
+	if _requires_lab_gate() and CycleState != null and CycleState.has_signal("lab_completed"):
 		CycleState.lab_completed.connect(_update_visuals)
-	if require_lab_completion and CycleState != null and CycleState.has_signal("lab_completed_with_id"):
+	if _requires_lab_gate() and CycleState != null and CycleState.has_signal("lab_completed_with_id"):
 		CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+	if CycleState != null and CycleState.has_signal("ate_this_cycle_changed"):
+		CycleState.ate_this_cycle_changed.connect(_on_ate_this_cycle_changed)
 	if CycleState != null and CycleState.has_signal("cycle_state_reset"):
 		CycleState.cycle_state_reset.connect(_update_visuals)
 
@@ -123,7 +134,7 @@ func _on_interact() -> void:
 		return
 
 	# 0. Проверка: лабораторная не завершена
-	if require_lab_completion and not _has_required_lab_completion():
+	if _requires_lab_gate() and not _has_required_lab_completion():
 		_show_locked_message()
 		return
 
@@ -282,8 +293,8 @@ func _clear_chase_after_teleport_success() -> void:
 		MusicManager.clear_chase_music_sources(0.2)
 
 func _show_locked_message() -> void:
-	if require_lab_completion and not _has_required_lab_completion():
-		if UIMessage and UIMessage.has_method("show_message"):
+	if _requires_lab_gate() and not _has_required_lab_completion():
+		if UIMessage:
 			UIMessage.show_notification(lab_required_message)
 		else:
 			print("LOCKED: " + lab_required_message)
@@ -294,19 +305,36 @@ func _show_access_code_failed_message() -> void:
 	var message := access_code_failed_message.strip_edges()
 	if message == "":
 		return
-	if UIMessage and UIMessage.has_method("show_notification"):
+	if UIMessage:
 		UIMessage.show_notification(message)
 	else:
 		print("LOCKED: " + message)
 
 # --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
-func _update_visuals() -> void:
-	# Доступен, если не требуется код/лаба ИЛИ условия выполнены
-	var is_unlocked := (not require_access_code or _code_unlocked)
-	if require_lab_completion and not _has_required_lab_completion():
+func _is_available_for_player() -> bool:
+	var is_unlocked := not require_access_code or _code_unlocked
+	if _should_show_unavailable_after_eating():
+		is_unlocked = false
+	if _requires_lab_gate() and not _has_required_lab_completion():
 		is_unlocked = false
 	if dependency_object != null and not dependency_object.is_completed:
 		is_unlocked = false
+	return is_unlocked
+
+func _sync_noise_state(is_available: bool = _is_available_for_player()) -> void:
+	if _noise_player == null:
+		return
+	if not is_available:
+		if _noise_player.playing:
+			_noise_player.stop()
+		return
+	if _noise_player.stream == null:
+		return
+	if not _noise_player.playing:
+		_noise_player.play()
+
+func _update_visuals() -> void:
+	var is_unlocked := _is_available_for_player()
 	
 	if is_unlocked:
 		if _sprite and available_sprite:
@@ -318,6 +346,7 @@ func _update_visuals() -> void:
 			_sprite.texture = locked_sprite
 		if _available_light: _available_light.visible = false
 		if _available_light_secondary: _available_light_secondary.visible = false
+	_sync_noise_state(is_unlocked)
 	_update_rocking_pivot()
 
 func refresh_visual_state() -> void:
@@ -328,6 +357,9 @@ func _on_dependency_finished() -> void:
 	_update_visuals()
 
 func _on_lab_completed_with_id(_completed_id: String) -> void:
+	_update_visuals()
+
+func _on_ate_this_cycle_changed(_is_ate: bool) -> void:
 	_update_visuals()
 
 func _teleport_player_if_needed() -> void:
@@ -345,6 +377,16 @@ func _has_required_lab_completion() -> bool:
 	if not required_lab_completion_ids.is_empty():
 		return bool(CycleState.has_completed_all_labs(required_lab_completion_ids))
 	return bool(CycleState.has_completed_any_lab())
+
+func _requires_lab_gate() -> bool:
+	return require_lab_completion or not required_lab_completion_ids.is_empty()
+
+func _should_show_unavailable_after_eating() -> bool:
+	if not use_locked_visual_after_eating:
+		return false
+	if CycleState == null:
+		return false
+	return bool(CycleState.has_eaten_this_cycle())
 
 func _update_rocking_pivot() -> void:
 	if _sprite == null or _sprite.texture == null:

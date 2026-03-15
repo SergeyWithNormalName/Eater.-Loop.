@@ -37,7 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://cvd5vua2mbdba" path="res://objects/environment/background/decals/HoleInWall4.png" id="35_4yyvl"]
 [ext_resource type="Texture2D" uid="uid://45m67gwm2a23" path="res://objects/environment/background/decals/HoleInWall1.png" id="36_on7v4"]
 [ext_resource type="Texture2D" uid="uid://t64dqy3yqjie" path="res://objects/environment/background/decals/HoleInWall3.png" id="37_qqkdi"]
-[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/archive(trash)/level_05_corridor_distortion.gd" id="38_ml68x"]
+[ext_resource type="Script" uid="uid://c7l1xd16hft7e" path="res://levels/cycles/corridor_distortion.gd" id="38_ml68x"]
 [ext_resource type="Texture2D" uid="uid://4njouhl5s5ss" path="res://objects/environment/background/Plintus.png" id="39_3jki4"]
 [ext_resource type="Script" uid="uid://ckfsunrxesy0h" path="res://objects/interactable/trigger/trigger_set_property.gd" id="40_fx2a0"]
 [ext_resource type="AudioStream" uid="uid://b8mota5j1bj6r" path="res://player/audio/HeartBeat_1.wav" id="41_vdt5w"]
@@ -892,7 +892,7 @@ texture = ExtResource("33_vuvb0")
 position = Vector2(9126, 0)
 script = ExtResource("38_ml68x")
 trigger_path = NodePath("../Trigger")
-kitchen_nodes = Array[NodePath]([NodePath(""), NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
+kitchen_nodes = Array[NodePath]([NodePath("../KitchenFurniture"), NodePath("../KitchenTable"), NodePath("../CookingGas"), NodePath("../Chair1"), NodePath("../Chair2"), NodePath("../Chair3"), NodePath("../HighKitchen"), NodePath("../Urna"), NodePath("../../Fridge")])
 kitchen_move = Vector2(3000, 0)
 kitchen_duration = 7.0
 kitchen_trans = 4
@@ -3024,17 +3024,6 @@ position = Vector2(41809.938, 138.85997)
 scale = Vector2(0.3938595, 0.39385954)
 texture = ExtResource("68_ywra3")
 
-[node name="Lamp" parent="." unique_id=851486712 instance=ExtResource("73_lcysk")]
-z_index = -1
-position = Vector2(9806, -214)
-start_on = true
-turn_on_sfx = ExtResource("74_cmj7n")
-light_color = Color(0.9372438, 0.9548512, 0.949725, 1)
-light_range = 200.0
-flicker_enabled = true
-flicker_chance = 0.04
-flicker_energy_min = 0.6
-
 [node name="EnemyLightSensitive" parent="." unique_id=799227234 instance=ExtResource("75_fu1x1")]
 position = Vector2(13013, 119)
 speed = 325.0
@@ -3052,6 +3041,11 @@ texture = ExtResource("76_gufev")
 [node name="PickupFlashlight" parent="." unique_id=196650323 instance=ExtResource("91_pickup_flashlight")]
 z_index = -4
 position = Vector2(12419, 117)
+prompt_offset = Vector2(0, -80)
+
+[node name="PickupFlashlight2" parent="." unique_id=927340495 instance=ExtResource("91_pickup_flashlight")]
+z_index = -4
+position = Vector2(13422, 3061)
 prompt_offset = Vector2(0, -80)
 
 [node name="Plintus7" type="Sprite2D" parent="." unique_id=138330700]
@@ -3660,7 +3654,7 @@ position = Vector2(0.20996094, -32.749985)
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=143657066]
 rotation = 0.009666472
-color = Color(0.3137255, 0.3137255, 0.36862746, 1)
+color = Color(0.27450982, 0.27450982, 0.39215687, 1)
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1407939672]
 stream = ExtResource("87_3t5ik")

@@ -1,7 +1,5 @@
 extends "res://enemies/enemy.gd"
 
-const ReactiveLightUtils = preload("res://global/reactive_light_utils.gd")
-
 @export_group("Flashlight Detection")
 ## Максимальная дальность влияния фонарика.
 @export var flashlight_range: float = 650.0

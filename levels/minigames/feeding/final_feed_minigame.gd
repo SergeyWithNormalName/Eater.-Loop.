@@ -65,12 +65,13 @@ func _on_food_eaten() -> void:
 	_stage_transition_active = true
 	_play_stage_glitch()
 
-func _start_next_stage() -> void:
+func _start_next_stage(interaction_enabled: bool = true) -> void:
 	_stage_index += 1
 	if _stage_index >= _stages.size():
 		_win()
 		return
 	_spawn_stage(_stage_index)
+	_set_stage_food_interaction_enabled(interaction_enabled)
 	stage_changed.emit(_stage_index + 1, _stages.size())
 
 func _spawn_stage(index: int) -> void:
@@ -102,7 +103,11 @@ func _clear_food_nodes() -> void:
 	for child in food_container.get_children():
 		if child == null:
 			continue
-		child.free()
+		if child is CanvasItem:
+			(child as CanvasItem).visible = false
+		if child.has_method("set_interaction_enabled"):
+			child.call("set_interaction_enabled", false)
+		child.queue_free()
 
 func _sanitize_stages(raw_stages: Array) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -150,7 +155,7 @@ func _create_stage_glitch_overlay() -> void:
 
 func _play_stage_glitch() -> void:
 	if _stage_glitch_rect == null or _stage_glitch_material == null:
-		_start_next_stage()
+		_start_next_stage(false)
 		_complete_stage_transition_after_glitch()
 		return
 	_play_stage_glitch_sfx()
@@ -160,6 +165,10 @@ func _play_stage_glitch() -> void:
 	var half_duration := maxf(0.05, stage_glitch_duration * 0.5)
 	var tween := create_tween()
 	tween.tween_method(_set_stage_glitch_intensity, 0.0, stage_glitch_peak_intensity, half_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(func() -> void:
+		if _stage_transition_active:
+			_start_next_stage(false)
+	)
 	tween.tween_method(_set_stage_glitch_intensity, stage_glitch_peak_intensity, 0.0, half_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tween.finished.connect(_finish_stage_glitch_overlay)
 
@@ -179,10 +188,10 @@ func _finish_stage_glitch_overlay() -> void:
 
 func _complete_stage_transition_after_glitch() -> void:
 	_stage_transition_active = false
+	_set_stage_food_interaction_enabled(true)
 
 func _finalize_stage_transition_after_glitch() -> void:
 	_complete_stage_transition_after_glitch()
-	_start_next_stage()
 
 func _play_stage_glitch_sfx() -> void:
 	if stage_glitch_sfx == null:
@@ -196,3 +205,8 @@ func _win() -> void:
 		MinigameController.stop_minigame_music(music_suspend_fade_time)
 	# Для финальной feeding-миниигры в level_14_end отключаем win-sfx (Poel_1.wav).
 	get_tree().create_timer(finish_delay).timeout.connect(_close_game)
+
+func _set_stage_food_interaction_enabled(enabled: bool) -> void:
+	for child in food_container.get_children():
+		if child != null and child.has_method("set_interaction_enabled"):
+			child.call("set_interaction_enabled", enabled)

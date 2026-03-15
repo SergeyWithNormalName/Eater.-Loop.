@@ -193,7 +193,7 @@ func apply_checkpoint_state(state: Dictionary) -> void:
 	var raw_phase := int(state.get("phase", int(Phase.NORMAL)))
 	if raw_phase < int(Phase.NORMAL) or raw_phase > int(Phase.DISTORTED):
 		raw_phase = int(Phase.NORMAL)
-	phase = raw_phase
+	phase = raw_phase as Phase
 	ate_this_cycle = bool(state.get("ate_this_cycle", false))
 	lab_done = bool(state.get("lab_done", false))
 	var completed_labs_raw: Variant = state.get("completed_labs", [])
@@ -215,7 +215,7 @@ func load_save_data(config: ConfigFile) -> void:
 	if config.has_section_key(SAVE_SECTION, "phase"):
 		var raw_phase := int(config.get_value(SAVE_SECTION, "phase", int(Phase.NORMAL)))
 		if raw_phase >= int(Phase.NORMAL) and raw_phase <= int(Phase.DISTORTED):
-			phase = raw_phase
+			phase = raw_phase as Phase
 	ate_this_cycle = bool(config.get_value(SAVE_SECTION, "ate_this_cycle", false))
 	lab_done = bool(config.get_value(SAVE_SECTION, "lab_done", false))
 	var completed_labs_raw: Variant = config.get_value(SAVE_SECTION, "completed_labs", [])
