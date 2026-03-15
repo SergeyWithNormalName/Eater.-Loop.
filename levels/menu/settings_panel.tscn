@@ -14,9 +14,9 @@ corner_radius_top_right = 20
 corner_radius_bottom_left = 20
 corner_radius_bottom_right = 20
 content_margin_left = 34.0
-content_margin_top = 30.0
+content_margin_top = 24.0
 content_margin_right = 34.0
-content_margin_bottom = 28.0
+content_margin_bottom = 24.0
 shadow_color = Color(0, 0, 0, 0.44)
 shadow_size = 24
 shadow_offset = Vector2(0, 8)
@@ -26,7 +26,7 @@ anti_aliasing_size = 1.0
 [node name="SettingsPanel" type="PanelContainer"]
 visible = false
 layout_mode = 2
-custom_minimum_size = Vector2(920, 660)
+custom_minimum_size = Vector2(920, 560)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_settings_script")
 
@@ -38,10 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 separation = 16
-
-[node name="TopSpacer" type="Control" parent="VBox"]
-layout_mode = 2
-size_flags_vertical = 3
+alignment = 1
 
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
@@ -172,7 +169,3 @@ text = "Назад"
 size_flags_horizontal = 4
 custom_minimum_size = Vector2(280, 0)
 focus_mode = 2
-
-[node name="BottomSpacer" type="Control" parent="VBox"]
-layout_mode = 2
-size_flags_vertical = 3

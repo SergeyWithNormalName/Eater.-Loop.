@@ -14,9 +14,9 @@ corner_radius_top_right = 22
 corner_radius_bottom_left = 22
 corner_radius_bottom_right = 22
 content_margin_left = 34.0
-content_margin_top = 30.0
+content_margin_top = 24.0
 content_margin_right = 34.0
-content_margin_bottom = 28.0
+content_margin_bottom = 24.0
 shadow_color = Color(0, 0, 0, 0.42)
 shadow_size = 28
 shadow_offset = Vector2(0, 8)
@@ -26,7 +26,7 @@ anti_aliasing_size = 1.0
 [node name="SettingsPanel" type="PanelContainer"]
 visible = false
 layout_mode = 2
-custom_minimum_size = Vector2(830, 620)
+custom_minimum_size = Vector2(830, 540)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_settings_script")
 
@@ -38,6 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 separation = 16
+alignment = 1
 
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
@@ -48,7 +49,6 @@ theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.96)
 
 [node name="Content" type="VBoxContainer" parent="VBox"]
 layout_mode = 2
-size_flags_vertical = 3
 separation = 10
 
 [node name="SoundTitle" type="Label" parent="VBox/Content"]
@@ -164,10 +164,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(280, 0)
 focus_mode = 2
-
-[node name="Spacer" type="Control" parent="VBox"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="BackButton" type="Button" parent="VBox" groups=["menu_button"]]
 layout_mode = 2

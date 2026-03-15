@@ -9,9 +9,9 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 content_margin_left = 34.0
-content_margin_top = 28.0
+content_margin_top = 24.0
 content_margin_right = 34.0
-content_margin_bottom = 28.0
+content_margin_bottom = 24.0
 bg_color = Color(0.05, 0.05, 0.05, 0.82)
 border_width_left = 1
 border_width_top = 1
@@ -87,7 +87,7 @@ mouse_filter = 2
 
 [node name="MainPanel" type="PanelContainer" parent="PauseMenu/MainPanelCenter"]
 layout_mode = 2
-custom_minimum_size = Vector2(760, 540)
+custom_minimum_size = Vector2(760, 440)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="PauseMenu/MainPanelCenter/MainPanel"]
@@ -98,10 +98,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 separation = 16
-
-[node name="TopSpacer" type="Control" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
+alignment = 1
 
 [node name="Title" type="Label" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
 layout_mode = 2
@@ -137,16 +134,12 @@ custom_minimum_size = Vector2(430, 0)
 size_flags_horizontal = 4
 text = "Выйти из игры"
 
-[node name="BottomSpacer" type="Control" parent="PauseMenu/MainPanelCenter/MainPanel/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
 [node name="SettingsPanel" parent="PauseMenu/SettingsPanelCenter" instance=ExtResource("2_settings_panel")]
 
 [node name="ConfirmPanel" type="PanelContainer" parent="PauseMenu/ConfirmPanelCenter"]
 visible = false
 layout_mode = 2
-custom_minimum_size = Vector2(760, 360)
+custom_minimum_size = Vector2(760, 248)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel"]
@@ -158,10 +151,6 @@ grow_horizontal = 2
 grow_vertical = 2
 separation = 16
 alignment = 1
-
-[node name="TopSpacer" type="Control" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="Message" type="Label" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
 layout_mode = 2
@@ -182,10 +171,6 @@ text = "Да"
 layout_mode = 2
 custom_minimum_size = Vector2(170, 0)
 text = "Нет"
-
-[node name="BottomSpacer" type="Control" parent="PauseMenu/ConfirmPanelCenter/ConfirmPanel/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="SfxPlayer" type="AudioStreamPlayer" parent="PauseMenu"]
 bus = &"Sounds"
