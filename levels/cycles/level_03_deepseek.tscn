@@ -663,6 +663,7 @@ eat_sound = ExtResource("52_0h1b5")
 background_texture = ExtResource("53_4xyk0")
 require_lab_completion = true
 lab_required_message = "Я не буду есть, пока не сделаю лабораторную работу"
+use_locked_visual_after_eating = true
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true

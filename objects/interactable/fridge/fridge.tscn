@@ -22,6 +22,7 @@ script = ExtResource("1_w83lr")
 unique_intro_once_per_run = false
 code_lock_scene = ExtResource("2_s32oc")
 open_sound = ExtResource("2_lv756")
+use_locked_visual_after_eating = true
 locked_sprite = ExtResource("2_fpbeo")
 available_sprite = ExtResource("2_w83lr")
 available_light_node = NodePath("PointLight2D")

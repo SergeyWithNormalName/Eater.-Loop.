@@ -706,6 +706,7 @@ bg_music = ExtResource("54_1u7l1")
 win_sound = ExtResource("55_goh1n")
 eat_sound = ExtResource("56_oph48")
 background_texture = ExtResource("57_vebv3")
+use_locked_visual_after_eating = true
 metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Hall/InteractableObjects/Fridge" unique_id=1440638420]
