@@ -910,6 +910,11 @@ func _retarget_base_output_volume(target_db: float, fade_time: float) -> void:
 
 func _fade_volume(player: AudioStreamPlayer, target_db: float, duration: float, stop_after: bool = false) -> void:
 	_kill_fade_tween()
+	if duration <= 0.0:
+		player.volume_db = target_db
+		if stop_after and player.playing:
+			player.stop()
+		return
 	_fade_tween = create_tween()
 	_fade_tween.tween_property(player, "volume_db", target_db, duration)
 	if stop_after:

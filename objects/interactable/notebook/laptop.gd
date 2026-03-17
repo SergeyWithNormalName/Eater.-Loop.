@@ -1,6 +1,9 @@
 extends InteractiveObject
 class_name Laptop
 
+const InteractableAvailabilityVisualScript = preload("res://objects/interactable/shared/interactable_availability_visual.gd")
+const LaptopCompletionRewardScript = preload("res://objects/interactable/notebook/laptop_completion_reward.gd")
+const UnlockOnDependencyAttemptScript = preload("res://objects/interactable/notebook/unlock_on_dependency_attempt.gd")
 
 @export_group("Lab Settings")
 ## Сцена мини-игры (sql_minigame.tscn).
@@ -61,38 +64,47 @@ var _available_light_secondary: CanvasItem = null
 var _current_minigame: Node = null
 var _is_ready: bool = false
 var _is_enabled: bool = true
-var _dependency_override: bool = false
-var _money_rewarded: bool = false
+var _availability_visual = InteractableAvailabilityVisualScript.new()
+var _completion_reward = LaptopCompletionRewardScript.new()
+var _dependency_unlock = UnlockOnDependencyAttemptScript.new()
 
 func _ready() -> void:
-	super._ready() # Важно для работы базового класса
-	
+	super._ready()
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
-	
+	_availability_visual.configure(
+		_sprite,
+		locked_sprite,
+		available_sprite,
+		[_available_light, _available_light_secondary]
+	)
+	_completion_reward.configure(
+		reward_on_work_completion,
+		money_system_path,
+		reward_money,
+		reward_reason,
+		reward_once
+	)
+	_dependency_unlock.configure(
+		unlock_on_dependency_interaction,
+		Callable(self, "_on_dependency_unlock_requested")
+	)
+	_dependency_unlock.update_dependency(dependency_object)
 	_is_ready = true
 	_apply_enabled_state()
-	
-	_setup_dependency_interaction_listener()
-	
-	if CycleState != null and CycleState.has_signal("lab_completed"):
-		CycleState.lab_completed.connect(_update_visuals)
-	if CycleState != null and CycleState.has_signal("lab_completed_with_id"):
-		CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
-	if CycleState != null and CycleState.has_signal("cycle_state_reset"):
-		CycleState.cycle_state_reset.connect(_update_visuals)
+	if CycleState != null:
+		if not CycleState.lab_completed.is_connected(_on_lab_completed):
+			CycleState.lab_completed.connect(_on_lab_completed)
+		if not CycleState.lab_completed_with_id.is_connected(_on_lab_completed_with_id):
+			CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+		if not CycleState.cycle_state_reset.is_connected(_update_visuals):
+			CycleState.cycle_state_reset.connect(_update_visuals)
 
-# --- ВЗАИМОДЕЙСТВИЕ ---
 func _on_interact() -> void:
-	# Сюда мы попадаем, только если dependency_object (Холодильник) уже выполнен!
-	
-	# 1. Если работа уже сдана
 	if _is_lab_completed():
 		_handle_completed_interaction()
 		return
-
-	# 2. Запускаем мини-игру
 	_start_lab_minigame()
 
 func _start_lab_minigame() -> void:
@@ -101,18 +113,16 @@ func _start_lab_minigame() -> void:
 	if minigame_scene == null:
 		push_warning("Laptop: Не назначена сцена мини-игры!")
 		return
-	
-	var game = minigame_scene.instantiate()
+	var game := minigame_scene.instantiate()
 	_current_minigame = game
 	if game is Node:
 		game.process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	# Настраиваем параметры (как в твоем старом коде)
-	if "time_limit" in game: game.time_limit = time_limit
-	if "penalty_time" in game: game.penalty_time = penalty_time
+	if "time_limit" in game:
+		game.time_limit = time_limit
+	if "penalty_time" in game:
+		game.penalty_time = penalty_time
 	if "lab_completion_id" in game:
 		game.lab_completion_id = lab_completion_id.strip_edges()
-
 	if game is TimedLabMinigameBase:
 		attach_minigame(game)
 	else:
@@ -123,76 +133,28 @@ func _start_lab_minigame() -> void:
 		settings.time_limit = time_limit
 		settings.auto_finish_on_timeout = false
 		start_managed_minigame(game, settings)
-	
-	# Ловим момент закрытия игры
 	game.tree_exited.connect(_on_minigame_closed)
 
 func _on_minigame_closed() -> void:
 	_current_minigame = null
-	_try_reward_for_work_completion()
+	_completion_reward.try_reward(self)
 	_update_visuals()
-	
-	# Если после игры лаба появилась в списке выполненных — успех
 	if _is_lab_completed():
 		_handle_completed_interaction()
-		complete_interaction() # Помечаем ноутбук как "пройденный" (для других цепочек)
+		complete_interaction()
 
 func _handle_completed_interaction() -> void:
-	if show_note_on_completed and completed_note_texture:
+	if show_note_on_completed and completed_note_texture != null:
 		UIMessage.show_note(completed_note_texture)
-	else:
-		UIMessage.show_notification(completed_message)
+		return
+	UIMessage.show_notification(completed_message)
 
-# --- ВИЗУАЛ ---
 func _on_dependency_finished() -> void:
+	super._on_dependency_finished()
 	_update_visuals()
 
-func _on_dependency_interaction_requested(_player: Node = null) -> void:
-	if not unlock_on_dependency_interaction:
-		return
-	_dependency_override = true
-	if not _is_enabled:
-		is_enabled = true
+func _on_lab_completed() -> void:
 	_update_visuals()
-
-func set_dependency_object(new_dependency: InteractiveObject) -> void:
-	_disconnect_dependency_interaction_listener()
-	super.set_dependency_object(new_dependency)
-	_setup_dependency_interaction_listener()
-
-func _setup_dependency_interaction_listener() -> void:
-	if not unlock_on_dependency_interaction:
-		return
-	if dependency_object == null or not is_instance_valid(dependency_object):
-		return
-	if not dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
-		dependency_object.interaction_requested.connect(_on_dependency_interaction_requested)
-
-func _disconnect_dependency_interaction_listener() -> void:
-	if dependency_object == null or not is_instance_valid(dependency_object):
-		return
-	if dependency_object.interaction_requested.is_connected(_on_dependency_interaction_requested):
-		dependency_object.interaction_requested.disconnect(_on_dependency_interaction_requested)
-
-func _update_visuals() -> void:
-	# Ноутбук "доступен" (светится), если зависимость выполнена.
-	# (Базовый класс сам проверит зависимость при клике, но нам нужно обновить спрайт)
-	var is_unlocked = true
-	if dependency_object and not dependency_object.is_completed and not _dependency_override:
-		is_unlocked = false
-	if not _is_enabled:
-		is_unlocked = false
-	if _is_lab_completed():
-		is_unlocked = false
-	
-	if is_unlocked:
-		if _sprite and available_sprite: _sprite.texture = available_sprite
-		if _available_light: _available_light.visible = true
-		if _available_light_secondary: _available_light_secondary.visible = true
-	else:
-		if _sprite and locked_sprite: _sprite.texture = locked_sprite
-		if _available_light: _available_light.visible = false
-		if _available_light_secondary: _available_light_secondary.visible = false
 
 func _on_lab_completed_with_id(completed_id: String) -> void:
 	var local_id := lab_completion_id.strip_edges()
@@ -201,6 +163,15 @@ func _on_lab_completed_with_id(completed_id: String) -> void:
 	if completed_id != local_id:
 		return
 	_update_visuals()
+
+func _on_dependency_unlock_requested() -> void:
+	if not _is_enabled:
+		is_enabled = true
+	refresh_interaction_state()
+
+func set_dependency_object(new_dependency: InteractiveObject) -> void:
+	super.set_dependency_object(new_dependency)
+	_dependency_unlock.update_dependency(dependency_object)
 
 func _can_interact() -> bool:
 	return _is_enabled
@@ -219,51 +190,39 @@ func _is_lab_completed() -> bool:
 		return false
 	var local_id := lab_completion_id.strip_edges()
 	if local_id != "":
-		if CycleState.has_method("is_lab_completed"):
-			return bool(CycleState.is_lab_completed(local_id))
-		return false
-	if CycleState.has_method("has_completed_any_lab"):
-		return bool(CycleState.has_completed_any_lab())
-	return false
+		return bool(CycleState.is_lab_completed(local_id))
+	return bool(CycleState.has_completed_any_lab())
 
 func _is_dependency_satisfied() -> bool:
-	if _dependency_override:
+	if _dependency_unlock.is_active():
 		return true
-	if dependency_object == null:
-		return true
-	return dependency_object.is_completed
+	return super._is_dependency_satisfied()
 
-func _try_reward_for_work_completion() -> void:
-	if not reward_on_work_completion:
-		return
-	if reward_once and _money_rewarded:
-		return
-	if reward_money <= 0:
-		return
+func _is_available_for_player() -> bool:
+	if not _is_enabled:
+		return false
+	if _is_lab_completed():
+		return false
+	if dependency_object != null and not dependency_object.is_completed and not _dependency_unlock.is_active():
+		return false
+	return true
 
-	var money_system := _resolve_money_system()
-	if money_system == null or not money_system.has_method("add_money"):
-		return
+func _update_visuals() -> void:
+	_availability_visual.apply(_is_available_for_player())
 
-	money_system.call("add_money", reward_money, reward_reason)
-	_money_rewarded = true
-
-func _resolve_money_system() -> Node:
-	if money_system_path.is_empty():
-		return get_node_or_null("../Level12MoneySystem")
-	return get_node_or_null(money_system_path)
+func _on_interaction_state_refreshed() -> void:
+	_update_visuals()
 
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()
 	state["is_enabled"] = _is_enabled
-	state["dependency_override"] = _dependency_override
-	state["money_rewarded"] = _money_rewarded
+	state.merge(_dependency_unlock.capture_state(), true)
+	state.merge(_completion_reward.capture_state(), true)
 	return state
 
 func apply_checkpoint_state(state: Dictionary) -> void:
 	super.apply_checkpoint_state(state)
 	_is_enabled = bool(state.get("is_enabled", _is_enabled))
-	_dependency_override = bool(state.get("dependency_override", _dependency_override))
-	_money_rewarded = bool(state.get("money_rewarded", _money_rewarded))
+	_dependency_unlock.apply_state(state)
+	_completion_reward.apply_state(state)
 	_apply_enabled_state()
-	_update_visuals()

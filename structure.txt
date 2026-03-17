@@ -2,9 +2,14 @@
 ├── docs
 │   ├── architecture_overview.md
 │   ├── audio_system.md
+│   ├── interaction_system.md
 │   ├── level_end_endings.md
+│   ├── level_event_system.md
 │   ├── macos-dmg-export-fix.md
-│   └── minigame_gamepad_system.md
+│   ├── minigame_gamepad_system.md
+│   ├── refactor_safety_rules.md
+│   ├── state_and_checkpoint_system.md
+│   └── testing_strategy.md
 ├── enemies
 │   ├── light_ceiling
 │   │   ├── enemy_ceiling.gd
@@ -291,13 +296,6 @@
 ├── levels
 │   ├── cycles
 │   │   ├── archive(trash)
-│   │   │   ├── level_04_old_trash.tscn
-│   │   │   ├── level_05_keystests.tscn
-│   │   │   ├── level_06.tscn
-│   │   │   ├── level_07_doors_save.tscn
-│   │   │   ├── level_test_enemies.tscn
-│   │   │   ├── level_test_enemies2.tscn
-│   │   │   └── trashhh.tscn
 │   │   ├── TextureDistortionManager.tscn
 │   │   ├── corridor_distortion.gd
 │   │   ├── corridor_distortion.gd.uid
@@ -352,6 +350,10 @@
 │   │   ├── ending_screen.gd
 │   │   ├── ending_screen.gd.uid
 │   │   └── good_ending_screen.tscn
+│   ├── game_director
+│   │   ├── death_sequence_controller.gd
+│   │   ├── distortion_phase_controller.gd
+│   │   └── screen_fx_overlay_controller.gd
 │   ├── menu
 │   │   ├── MainMenuBackground.png
 │   │   ├── MainMenuBackground.png.import
@@ -665,6 +667,19 @@
 │   │   ├── minigame_controller.gd.uid
 │   │   ├── minigame_settings.gd
 │   │   └── minigame_settings.gd.uid
+│   ├── scene_rules
+│   │   ├── refresh_interaction_state_action.gd
+│   │   ├── scene_rule.gd
+│   │   ├── scene_rule_action.gd
+│   │   ├── scene_rule_runner.gd
+│   │   ├── set_dependency_action.gd
+│   │   ├── set_door_target_action.gd
+│   │   ├── set_door_target_from_cycle_state_action.gd
+│   │   ├── set_interaction_enabled_action.gd
+│   │   ├── set_locked_action.gd
+│   │   ├── set_property_action.gd
+│   │   ├── show_notification_action.gd
+│   │   └── start_crazy_level_event_action.gd
 │   ├── ui
 │   │   ├── prompts
 │   │   │   ├── prompt_interact_default.tscn
@@ -1241,7 +1256,9 @@
 │       │   ├── laptop.gd
 │       │   ├── laptop.gd.uid
 │       │   ├── laptop.tscn
-│       │   └── laptop_STU.tscn
+│       │   ├── laptop_STU.tscn
+│       │   ├── laptop_completion_reward.gd
+│       │   └── unlock_on_dependency_attempt.gd
 │       ├── obstacle
 │       │   ├── obstacle.gd
 │       │   ├── obstacle.gd.uid
@@ -1266,6 +1283,10 @@
 │       │   ├── search_spot.gd
 │       │   ├── search_spot.gd.uid
 │       │   └── search_spot.tscn
+│       ├── shared
+│       │   ├── code_lock_gate.gd
+│       │   ├── idle_rocking_2d.gd
+│       │   └── interactable_availability_visual.gd
 │       ├── trigger
 │       │   ├── property_change.gd
 │       │   ├── property_change.gd.uid
@@ -1273,7 +1294,8 @@
 │       │   ├── trigger_set_property.gd.uid
 │       │   └── trigger_set_property.tscn
 │       ├── interactive_object.gd
-│       └── interactive_object.gd.uid
+│       ├── interactive_object.gd.uid
+│       └── powered_switchable_interactable.gd
 ├── player
 │   ├── animations
 │   │   └── walking
@@ -1411,6 +1433,7 @@
 │   │   ├── test_fridge_chase_interaction.gd.uid
 │   │   ├── test_fridge_visual_after_eating.gd
 │   │   ├── test_fridge_visual_after_eating.gd.uid
+│   │   ├── test_game_director_runtime.gd
 │   │   ├── test_gamepad_pick_place_flow.gd
 │   │   ├── test_gamepad_pick_place_flow.gd.uid
 │   │   ├── test_gamepad_runtime_navigation.gd
@@ -1421,6 +1444,7 @@
 │   │   ├── test_input_actions.gd.uid
 │   │   ├── test_interaction_architecture_contracts.gd
 │   │   ├── test_interaction_architecture_contracts.gd.uid
+│   │   ├── test_interactive_object_feedback_audio.gd
 │   │   ├── test_interactive_object_locked_message.gd
 │   │   ├── test_interactive_object_locked_message.gd.uid
 │   │   ├── test_lamp_generator_requirement.gd
@@ -1469,6 +1493,7 @@
 │   │   ├── test_respawn_checkpoint_restore.gd.uid
 │   │   ├── test_save_state_split.gd
 │   │   ├── test_save_state_split.gd.uid
+│   │   ├── test_scene_rule_runner.gd
 │   │   ├── test_scenes_load.gd
 │   │   ├── test_scenes_load.gd.uid
 │   │   ├── test_scripts_compile.gd
@@ -1492,6 +1517,7 @@
 │       ├── export_macos_dmg.sh
 │       ├── hdiutil
 │       └── run_godot_with_dmg_fix.sh
+├── README.md
 ├── default_bus_layout.tres
 ├── export_presets.cfg
 ├── icon.svg
@@ -1499,4 +1525,4 @@
 ├── project.godot
 └── structure.txt
 
-124 directories, 1376 files
+127 directories, 1399 files

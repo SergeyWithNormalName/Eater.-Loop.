@@ -116,6 +116,9 @@ const INPUT_KIND_GAMEPAD := 1
 const INPUT_KIND_UNKNOWN := -1
 const JOYPAD_MOTION_DEADZONE := 0.45
 const CycleLevelBase = preload("res://levels/cycles/level.gd")
+const DistortionPhaseControllerScript = preload("res://levels/game_director/distortion_phase_controller.gd")
+const ScreenFxOverlayControllerScript = preload("res://levels/game_director/screen_fx_overlay_controller.gd")
+const DeathSequenceControllerScript = preload("res://levels/game_director/death_sequence_controller.gd")
 const DEATH_TITLE_GLITCH_SHADER: Shader = preload("res://shaders/death_text_glitch.gdshader")
 const LIGHT_ONLY_JUMP_SHADER: Shader = preload("res://shaders/light_only_jump_overlay.gdshader")
 const DEATH_TITLE_PENANCE_LINE := "Никогда не заслужу прощения."
@@ -141,6 +144,10 @@ const DEATH_GLITCH_BACKGROUND_LAYOUT := [
 	{"anchor": Vector2(0.9, 0.92), "offset": Vector2(-40.0, 60.0), "width": 740.0, "font_size": 60, "rotation": 0.26, "scale": Vector2(1.1, 1.1), "alpha": 0.2, "strength": 0.9},
 ]
 
+var _distortion_phase_controller = DistortionPhaseControllerScript.new()
+var _screen_fx_controller = ScreenFxOverlayControllerScript.new()
+var _death_sequence_controller = DeathSequenceControllerScript.new()
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process_input(true)
@@ -152,7 +159,7 @@ func _ready() -> void:
 	_create_distortion_overlay()
 	_create_death_overlay()
 	_connect_minigame_controller()
-	if get_tree() and get_tree().has_signal("scene_changed"):
+	if get_tree():
 		get_tree().scene_changed.connect(_on_scene_changed)
 	_update_for_scene(get_tree().current_scene)
 
@@ -167,115 +174,25 @@ func _input(event: InputEvent) -> void:
 		_apply_death_input_mode()
 
 func _process(delta: float) -> void:
-	_update_overlay_layer()
-	if _death_sequence_active:
-		return
-	if _distortion_rect == null or _distortion_material == null:
-		return
-	if not _is_distortion_allowed():
-		_hide_distortion_overlays()
-		return
-	var has_active := false
-	if _distortion_active:
-		_distortion_rect.visible = true
-		_advance_distortion(delta)
-		has_active = true
-	if _transition_active:
-		_transition_rect.visible = true
-		_advance_transition(delta)
-		has_active = true
-	if _damage_flash_active:
-		has_active = true
-	if _light_only_jump_active:
-		has_active = true
-	if _flash_active:
-		return
-	if not has_active:
-		_hide_distortion_overlays()
+	_screen_fx_controller.process_frame(self, delta)
 
 func start_normal_phase(timer_duration: float = -1.0) -> void:
-	if CycleState != null:
-		CycleState.set_phase(CycleState.Phase.NORMAL)
-	_pending_distortion_activation = false
-	_distortion_active = false
-	_distortion_progress = 0.0
-	_transition_active = false
-	_transition_progress = 0.0
-	_flash_active = false
-	_damage_flash_active = false
-	_stop_light_only_jump_effect()
-	_stalker_spawned = false
-	_hide_distortion_overlays()
-	
-	var time_to_set: float = timer_duration
-	if time_to_set < 0.0:
-		time_to_set = default_time
-	
-	# Если время больше 0, запускаем таймер
-	if time_to_set > 0.0:
-		current_max_time = time_to_set
-		_timer.start(time_to_set)
-		print("GameDirector: Таймер запущен на %.1f сек." % time_to_set)
-	else:
-		# Если время 0 или меньше, останавливаем таймер (он не будет тикать)
-		_timer.stop()
-		current_max_time = 0.0 
-		print("GameDirector: Таймер отключен для уровня.")
+	_distortion_phase_controller.start_normal_phase(self, timer_duration)
 
 func reduce_time(amount: float, damage_flash: bool = false) -> void:
-	if amount <= 0.0:
-		return
-	if not is_timer_running():
-		return
-	set_time_left(get_time_left() - amount)
-	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
-		return
-	if damage_flash:
-		trigger_damage_flash()
-	else:
-		_flash_red()
+	_distortion_phase_controller.reduce_time(self, amount, damage_flash)
 
 func trigger_damage_flash() -> void:
-	if _death_sequence_active:
-		return
-	_flash_damage()
+	_distortion_phase_controller.trigger_damage_flash(self)
 
 func _on_distortion_timeout() -> void:
-	if CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED:
-		_pending_distortion_activation = false
-		return
-	if _should_defer_distortion_activation():
-		_pending_distortion_activation = true
-		return
-	_activate_distortion_phase()
+	_distortion_phase_controller.on_distortion_timeout(self)
 
 func _activate_distortion_phase() -> void:
-	if CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED:
-		_pending_distortion_activation = false
-		return
-	_pending_distortion_activation = false
-	if CycleState != null:
-		CycleState.set_phase(CycleState.Phase.DISTORTED)
-	_distortion_active = true
-	_distortion_progress = 0.0
-	_transition_active = true
-	_transition_progress = 0.0
-	_flash_active = false
-	_damage_flash_active = false
-	if _damage_rect:
-		_damage_rect.visible = false
-	_set_damage_intensity(0.0)
-	_distortion_rect.visible = _is_distortion_allowed()
-	_transition_rect.visible = _is_distortion_allowed()
-	_apply_distortion_progress(0.0)
-	_apply_transition_strength(1.0)
-	_spawn_stalker_if_needed()
-	distortion_started.emit()
+	_distortion_phase_controller.activate_distortion_phase(self)
 
 func _should_defer_distortion_activation() -> bool:
-	if _death_sequence_active:
-		return false
-	return _minigame_active and _minigame_blocks_distortion
+	return _distortion_phase_controller.should_defer_distortion_activation(self)
 
 func trigger_distortion_now() -> void:
 	if _death_sequence_active:
@@ -285,139 +202,28 @@ func trigger_distortion_now() -> void:
 	_on_distortion_timeout()
 
 func get_time_ratio() -> float:
-	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
-		return 0.0
-	
-	# Если таймер стоит в нормальной фазе — значит время бесконечное (100%)
-	if _timer.is_stopped() or current_max_time <= 0.0:
-		return 1.0
-		
-	return _timer.time_left / current_max_time
+	return _distortion_phase_controller.get_time_ratio(self)
 
 func get_time_left() -> float:
-	if current_max_time <= 0.0:
-		return 0.0
-	if _timer.is_stopped():
-		if CycleState != null and CycleState.phase == CycleState.Phase.NORMAL:
-			return current_max_time
-		return 0.0
-	return _timer.time_left
+	return _distortion_phase_controller.get_time_left(self)
 
 func is_timer_running() -> bool:
-	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
-		return false
-	return current_max_time > 0.0 and not _timer.is_stopped()
+	return _distortion_phase_controller.is_timer_running(self)
 
 func ensure_timer_running(fallback_time: float) -> void:
-	if fallback_time <= 0.0:
-		return
-	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
-		return
-	if is_timer_running():
-		return
-	current_max_time = fallback_time
-	_timer.start(fallback_time)
+	_distortion_phase_controller.ensure_timer_running(self, fallback_time)
 
 func set_time_left(new_time: float) -> void:
-	if _death_sequence_active:
-		return
-	if CycleState != null and CycleState.phase != CycleState.Phase.NORMAL:
-		return
-	if current_max_time <= 0.0:
-		return
-	var clamped_time: float = float(clamp(new_time, 0.0, current_max_time))
-	if clamped_time <= 0.0:
-		_timer.stop()
-		_on_distortion_timeout()
-		return
-	_timer.start(clamped_time)
+	_distortion_phase_controller.set_time_left(self, new_time)
 
 func _create_distortion_overlay() -> void:
-	_overlay_layer = CanvasLayer.new()
-	_overlay_layer.layer = 90
-	add_child(_overlay_layer)
-	
-	_distortion_rect = ColorRect.new()
-	_distortion_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_distortion_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_distortion_rect.visible = false
-	_distortion_material = ShaderMaterial.new()
-	_distortion_material.shader = preload("res://shaders/distortion_overlay.gdshader")
-	_distortion_rect.material = _distortion_material
-	_overlay_layer.add_child(_distortion_rect)
-	_set_distortion_intensity(0.0)
-	_set_distortion_squash(0.0)
-	
-	_transition_rect = ColorRect.new()
-	_transition_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_transition_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_transition_rect.visible = false
-	_transition_material = ShaderMaterial.new()
-	_transition_material.shader = preload("res://shaders/distortion_transition.gdshader")
-	_transition_rect.material = _transition_material
-	_overlay_layer.add_child(_transition_rect)
-	_set_transition_intensity(0.0)
-	_set_transition_squash(0.0)
-
-	_damage_rect = ColorRect.new()
-	_damage_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_damage_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_damage_rect.visible = false
-	_damage_material = ShaderMaterial.new()
-	_damage_material.shader = preload("res://shaders/distortion_transition.gdshader")
-	_damage_rect.material = _damage_material
-	_overlay_layer.add_child(_damage_rect)
-	_set_damage_intensity(0.0)
-	_configure_damage_material()
-
-	_light_only_jump_rect = ColorRect.new()
-	_light_only_jump_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_light_only_jump_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_light_only_jump_rect.visible = false
-	_light_only_jump_material = ShaderMaterial.new()
-	_light_only_jump_material.shader = LIGHT_ONLY_JUMP_SHADER
-	_light_only_jump_rect.material = _light_only_jump_material
-	_overlay_layer.add_child(_light_only_jump_rect)
-	_configure_light_only_jump_material()
-	_set_light_only_jump_intensity(0.0)
+	_screen_fx_controller.create_distortion_overlay(self)
 
 func _flash_red() -> void:
-	if _distortion_rect.visible:
-		return
-	if not _is_distortion_allowed():
-		return
-	_flash_active = true
-	_distortion_rect.visible = true
-	_set_distortion_intensity(0.25)
-	_set_distortion_squash(0.0)
-	get_tree().create_timer(0.1).timeout.connect(func():
-		if CycleState == null or CycleState.phase == CycleState.Phase.NORMAL:
-			_distortion_rect.visible = false
-			_set_distortion_intensity(0.0)
-			_set_distortion_squash(0.0)
-		_flash_active = false
-	)
+	_screen_fx_controller.flash_red(self)
 
 func _flash_damage() -> void:
-	if _damage_rect == null or _damage_material == null:
-		return
-	if _death_sequence_active:
-		return
-	if _damage_flash_active:
-		return
-	if not _is_distortion_allowed():
-		return
-	_damage_flash_active = true
-	_configure_damage_material()
-	_damage_rect.visible = true
-	_set_damage_intensity(damage_flash_intensity)
-	_apply_damage_camera_punch()
-	get_tree().create_timer(damage_flash_duration).timeout.connect(func():
-		if _damage_rect:
-			_damage_rect.visible = false
-			_set_damage_intensity(0.0)
-		_damage_flash_active = false
-	)
+	_screen_fx_controller.flash_damage(self)
 
 func _on_scene_changed(scene: Node = null) -> void:
 	if scene == null:
@@ -448,198 +254,38 @@ func _update_for_scene(scene: Node) -> void:
 		CycleState.set_phase(CycleState.Phase.NORMAL)
 
 func _apply_level_settings(scene: Node) -> void:
-	_current_cycle_number = _resolve_cycle_number(scene)
-	_current_timer_duration = _resolve_timer_duration(scene)
-	start_normal_phase(_current_timer_duration)
+	_distortion_phase_controller.apply_level_settings(self, scene)
 
 func _resolve_cycle_number(scene: Node) -> int:
-	if scene == null:
-		return 0
-	if scene.has_method("get_cycle_number"):
-		return int(scene.get_cycle_number())
-	return 0
+	return _distortion_phase_controller.resolve_cycle_number(self, scene)
 
 func _resolve_timer_duration(scene: Node) -> float:
-	if scene == null:
-		return default_time
-	if scene.has_method("get_timer_duration"):
-		return float(scene.get_timer_duration())
-	return default_time
+	return _distortion_phase_controller.resolve_timer_duration(self, scene)
 
 func _set_mouse_visibility(in_game: bool) -> void:
 	if CursorManager:
 		CursorManager.set_in_game(in_game)
 
 func _create_death_overlay() -> void:
-	_death_layer = CanvasLayer.new()
-	_death_layer.layer = 120
-	_death_layer.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	add_child(_death_layer)
-
-	_death_fade_rect = ColorRect.new()
-	_death_fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_death_fade_rect.color = Color(0, 0, 0, 0)
-	_death_fade_rect.visible = false
-	_death_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	_death_fade_rect.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	_death_layer.add_child(_death_fade_rect)
-
-	_death_root = Control.new()
-	_death_root.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_death_root.visible = false
-	_death_root.mouse_filter = Control.MOUSE_FILTER_STOP
-	_death_root.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	_death_layer.add_child(_death_root)
-
-	_death_glitch_background = Control.new()
-	_death_glitch_background.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_death_glitch_background.visible = false
-	_death_glitch_background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_death_glitch_background.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	_death_root.add_child(_death_glitch_background)
-
-	var center := CenterContainer.new()
-	center.set_anchors_preset(Control.PRESET_FULL_RECT)
-	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_death_root.add_child(center)
-
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 24)
-	content.alignment = BoxContainer.ALIGNMENT_CENTER
-	center.add_child(content)
-
-	_death_title_label = Label.new()
-	_death_title_label.text = death_title_text
-	_death_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_death_title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_death_title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_death_title_label.add_theme_font_size_override("font_size", 112)
-	var base_font = load("res://global/fonts/AmaticSC-Regular.ttf")
-	if base_font:
-		var font_variation := FontVariation.new()
-		font_variation.base_font = base_font
-		font_variation.spacing_glyph = 3
-		_death_title_label.add_theme_font_override("font", font_variation)
-	content.add_child(_death_title_label)
-	_death_title_glitch_material = _build_death_glitch_material(0.82, 0.06, 0.016, 0.3, 11.0, Color(1.0, 0.82, 0.82, 1.0))
-	_death_title_readable_glitch_material = _build_death_glitch_material(0.38, 0.028, 0.008, 0.12, 6.5, Color(1.0, 0.9, 0.9, 1.0))
-	_apply_death_title(death_title_text, false)
-
-	_death_retry_button = Button.new()
-	_death_retry_button.text = death_retry_text
-	_death_retry_button.custom_minimum_size = Vector2(420, 92)
-	_death_retry_button.focus_mode = Control.FOCUS_ALL
-	_death_retry_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	_death_retry_button.pressed.connect(_on_death_retry_pressed)
-	content.add_child(_death_retry_button)
-	_death_focus_style_hidden = StyleBoxEmpty.new()
+	_death_sequence_controller.create_death_overlay(self)
 
 func trigger_death_screen() -> void:
-	if _death_sequence_active:
-		return
-	if _handle_custom_scene_death():
-		return
-	_death_sequence_active = true
-	_release_death_cursor_request()
-	_timer.stop()
-	_distortion_active = false
-	_distortion_progress = 0.0
-	_transition_active = false
-	_transition_progress = 0.0
-	_flash_active = false
-	_damage_flash_active = false
-	_stop_light_only_jump_effect()
-	_hide_distortion_overlays()
-	_death_camera = _resolve_primary_camera()
-	if _death_camera != null:
-		_death_camera_base_rotation = _death_camera.rotation
-		_death_camera_base_zoom = _death_camera.zoom
-		_death_camera_base_offset = _death_camera.offset
-	_apply_next_death_title()
-	if _death_retry_button:
-		_death_retry_button.text = death_retry_text
-	if _death_root:
-		_death_root.visible = false
-	if _death_fade_rect:
-		_death_fade_rect.visible = true
-		_death_fade_rect.color = Color(0, 0, 0, 0)
-	var fade_time: float = maxf(0.01, death_fade_duration)
-	var tween := create_tween()
-	tween.set_parallel(true)
-	if _death_fade_rect:
-		tween.tween_property(_death_fade_rect, "color:a", 1.0, fade_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	if _death_camera != null:
-		var tilt_sign := -1.0 if randf() < 0.5 else 1.0
-		var target_rotation := _death_camera_base_rotation + deg_to_rad(death_camera_tilt_deg) * tilt_sign
-		var target_zoom := _death_camera_base_zoom * death_camera_zoom_mult
-		tween.tween_property(_death_camera, "rotation", target_rotation, fade_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(_death_camera, "zoom", target_zoom, fade_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.finished.connect(_on_death_fade_completed)
+	_death_sequence_controller.trigger_death_screen(self)
 
 func _handle_custom_scene_death() -> bool:
-	var scene := get_tree().current_scene
-	if scene == null:
-		return false
-	if not (scene is CycleLevelBase):
-		return false
-	return bool((scene as CycleLevelBase).handle_custom_death_screen())
+	return _death_sequence_controller.handle_custom_scene_death(self)
 
 func _on_death_fade_completed() -> void:
-	if not _death_sequence_active:
-		return
-	if _death_root:
-		_death_root.visible = true
-	_apply_death_input_mode()
-	if get_tree():
-		get_tree().paused = true
+	_death_sequence_controller.on_death_fade_completed(self)
 
 func _on_death_retry_pressed() -> void:
-	if not _death_sequence_active:
-		return
-	var restored_autosave := false
-	if GameState != null and GameState.has_method("restore_respawn_checkpoint"):
-		restored_autosave = bool(GameState.restore_respawn_checkpoint())
-	elif GameState != null and GameState.has_method("restore_autosave_run"):
-		restored_autosave = bool(GameState.restore_autosave_run())
-	if not restored_autosave and CycleState != null:
-		CycleState.reset_cycle_state()
-	if CycleState != null:
-		CycleState.queue_respawn_blackout()
-	if UIMessage != null:
-		if UIMessage.has_method("set_screen_dark"):
-			UIMessage.set_screen_dark(true)
-		elif UIMessage.has_method("fade_out"):
-			await UIMessage.fade_out(0.0)
-	_restore_death_camera()
-	if _death_root:
-		_death_root.visible = false
-	_release_death_cursor_request()
-	if get_tree():
-		get_tree().paused = false
-		get_tree().call_deferred("reload_current_scene")
+	await _death_sequence_controller.on_death_retry_pressed(self)
 
 func _reset_death_screen_state() -> void:
-	_death_sequence_active = false
-	_restore_death_camera()
-	if _death_root:
-		_death_root.visible = false
-	if _death_glitch_background:
-		_death_glitch_background.visible = false
-	if _death_fade_rect:
-		_death_fade_rect.visible = false
-		_death_fade_rect.color = Color(0, 0, 0, 0)
-	if _death_retry_button:
-		_death_retry_button.remove_theme_stylebox_override("focus")
-	_release_death_cursor_request()
-	if get_tree() and get_tree().paused:
-		get_tree().paused = false
+	_death_sequence_controller.reset_death_screen_state(self)
 
 func _restore_death_camera() -> void:
-	if _death_camera != null and is_instance_valid(_death_camera):
-		_death_camera.rotation = _death_camera_base_rotation
-		_death_camera.zoom = _death_camera_base_zoom
-		_death_camera.offset = _death_camera_base_offset
-	_death_camera = null
+	_death_sequence_controller.restore_death_camera(self)
 
 func _set_distortion_intensity(value: float) -> void:
 	if _distortion_material == null:
@@ -680,404 +326,105 @@ func _get_light_only_jump_intensity() -> float:
 	return clampf(float(value), 0.0, 1.0)
 
 func _configure_light_only_jump_material() -> void:
-	if _light_only_jump_material == null:
-		return
-	_light_only_jump_material.set_shader_parameter("noise_speed", light_only_jump_noise_speed)
-	_light_only_jump_material.set_shader_parameter("glitch_amount", light_only_jump_glitch_amount)
+	_screen_fx_controller.configure_light_only_jump_material(self)
 
 func trigger_light_only_jump_effect(peak_intensity: float = -1.0) -> void:
-	if not light_only_jump_effect_enabled:
-		return
-	if _light_only_jump_rect == null or _light_only_jump_material == null:
-		return
-	if _death_sequence_active:
-		return
-	_configure_light_only_jump_material()
-	var target_peak := light_only_jump_peak_intensity if peak_intensity < 0.0 else peak_intensity
-	target_peak = clampf(target_peak, 0.0, 1.0)
-	var attack_time := maxf(0.01, light_only_jump_attack_duration)
-	var release_time := maxf(0.01, light_only_jump_release_duration)
-	var current := _get_light_only_jump_intensity()
-	var peak := maxf(current, target_peak)
-	_light_only_jump_rect.visible = true
-	_light_only_jump_active = true
-	if _light_only_jump_tween != null and is_instance_valid(_light_only_jump_tween):
-		_light_only_jump_tween.kill()
-	_light_only_jump_tween = create_tween()
-	_light_only_jump_tween.tween_property(_light_only_jump_material, "shader_parameter/intensity", peak, attack_time).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	_light_only_jump_tween.tween_property(_light_only_jump_material, "shader_parameter/intensity", 0.0, release_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	_light_only_jump_tween.finished.connect(_on_light_only_jump_effect_finished)
+	_screen_fx_controller.trigger_light_only_jump_effect(self, peak_intensity)
 
 func _on_light_only_jump_effect_finished() -> void:
-	_light_only_jump_tween = null
-	_light_only_jump_active = false
-	if _light_only_jump_rect:
-		_light_only_jump_rect.visible = false
-	_set_light_only_jump_intensity(0.0)
+	_screen_fx_controller.on_light_only_jump_effect_finished(self)
 
 func _stop_light_only_jump_effect() -> void:
-	if _light_only_jump_tween != null and is_instance_valid(_light_only_jump_tween):
-		_light_only_jump_tween.kill()
-	_light_only_jump_tween = null
-	_light_only_jump_active = false
-	if _light_only_jump_rect:
-		_light_only_jump_rect.visible = false
-	_set_light_only_jump_intensity(0.0)
+	_screen_fx_controller.stop_light_only_jump_effect(self)
 
 func _configure_damage_material() -> void:
-	if _damage_material == null:
-		return
-	_damage_material.set_shader_parameter("desaturation", damage_flash_desaturation)
-	_damage_material.set_shader_parameter("shake_power", damage_flash_shake_power)
-	_damage_material.set_shader_parameter("color_bleeding", damage_flash_color_bleeding)
-	_damage_material.set_shader_parameter("glitch_lines", damage_flash_glitch_lines)
-	_damage_material.set_shader_parameter("vignette_intensity", damage_flash_vignette_intensity)
+	_screen_fx_controller.configure_damage_material(self)
 
 func _apply_next_death_title() -> void:
-	if _death_title_sequence_index < DEATH_TITLE_SEQUENCE.size():
-		var next_index := _death_title_sequence_index
-		_death_title_sequence_index += 1
-		var is_glitch_title := next_index == DEATH_TITLE_SEQUENCE.size() - 1
-		_apply_death_title(DEATH_TITLE_SEQUENCE[next_index], is_glitch_title)
-		return
-	_apply_death_title(death_title_text, false)
+	_death_sequence_controller.apply_next_death_title(self)
 
 func _apply_death_title(text: String, glitchy: bool) -> void:
-	if _death_title_label == null:
-		return
-	_update_death_title_layout(glitchy)
-	_death_title_label.text = _get_readable_death_glitch_text(text) if glitchy else text
-	_death_title_label.rotation = 0.0
-	_death_title_label.scale = Vector2.ONE
-	_death_title_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-	_death_title_label.remove_theme_color_override("font_color")
-	_death_title_label.remove_theme_color_override("font_shadow_color")
-	_death_title_label.remove_theme_constant_override("shadow_offset_x")
-	_death_title_label.remove_theme_constant_override("shadow_offset_y")
-	if glitchy:
-		_death_title_label.add_theme_font_size_override("font_size", 58)
-		_death_title_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.9, 1.0))
-		_death_title_label.add_theme_color_override("font_shadow_color", Color(0.32, 0.0, 0.0, 0.92))
-		_death_title_label.add_theme_constant_override("shadow_offset_x", 3)
-		_death_title_label.add_theme_constant_override("shadow_offset_y", 3)
-		_death_title_label.material = _death_title_readable_glitch_material
-		_show_death_glitch_background(text)
-	else:
-		_death_title_label.add_theme_font_size_override("font_size", 112)
-		_death_title_label.material = null
-		if _death_glitch_background:
-			_death_glitch_background.visible = false
+	_death_sequence_controller.apply_death_title(self, text, glitchy)
 
 func _update_death_title_layout(glitchy: bool = false) -> void:
-	if _death_title_label == null:
-		return
-	var title_width := 1280.0
-	if get_viewport():
-		var visible_size := get_viewport().get_visible_rect().size
-		var width_ratio := 0.92 if glitchy else 0.82
-		var min_width := 860.0 if glitchy else 620.0
-		title_width = maxf(min_width, visible_size.x * width_ratio)
-	_death_title_label.custom_minimum_size = Vector2(title_width, 0.0)
+	_death_sequence_controller.update_death_title_layout(self, glitchy)
 
 func _get_readable_death_glitch_text(text: String) -> String:
-	if text == DEATH_TITLE_PENANCE_TEXT:
-		return "%s\n%s" % [DEATH_TITLE_PENANCE_LINE, DEATH_TITLE_PENANCE_LINE]
-	return text
+	return _death_sequence_controller.get_readable_death_glitch_text(self, text)
 
 func _build_death_glitch_material(glitch_strength: float, line_jitter: float, chroma_shift: float, scanline_strength: float, flicker_speed: float, tint: Color) -> ShaderMaterial:
-	var material := ShaderMaterial.new()
-	material.shader = DEATH_TITLE_GLITCH_SHADER
-	material.set_shader_parameter("glitch_strength", glitch_strength)
-	material.set_shader_parameter("line_jitter", line_jitter)
-	material.set_shader_parameter("chroma_shift", chroma_shift)
-	material.set_shader_parameter("scanline_strength", scanline_strength)
-	material.set_shader_parameter("flicker_speed", flicker_speed)
-	material.set_shader_parameter("tint", tint)
-	return material
+	return _death_sequence_controller.build_death_glitch_material(self, glitch_strength, line_jitter, chroma_shift, scanline_strength, flicker_speed, tint)
 
 func _show_death_glitch_background(text: String) -> void:
-	if _death_glitch_background == null:
-		return
-	var viewport_size := Vector2(1920.0, 1080.0)
-	if get_viewport():
-		viewport_size = get_viewport().get_visible_rect().size
-	var background_text := _build_death_glitch_background_text(text)
-	for child in _death_glitch_background.get_children():
-		child.free()
-	for layout_variant in DEATH_GLITCH_BACKGROUND_LAYOUT:
-		if not (layout_variant is Dictionary):
-			continue
-		var layout := layout_variant as Dictionary
-		var label := Label.new()
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		label.text = background_text
-		label.add_theme_font_size_override("font_size", int(layout.get("font_size", 64)))
-		label.add_theme_color_override("font_color", Color(1.0, 0.86, 0.86, float(layout.get("alpha", 0.18))))
-		label.add_theme_color_override("font_shadow_color", Color(0.25, 0.0, 0.0, minf(0.95, float(layout.get("alpha", 0.18)) + 0.16)))
-		label.add_theme_constant_override("shadow_offset_x", 3)
-		label.add_theme_constant_override("shadow_offset_y", 3)
-		label.rotation = float(layout.get("rotation", 0.0))
-		var scale_value: Variant = layout.get("scale", Vector2.ONE)
-		if scale_value is Vector2:
-			label.scale = scale_value
-		var anchor_value: Variant = layout.get("anchor", Vector2.ZERO)
-		var offset_value: Variant = layout.get("offset", Vector2.ZERO)
-		var anchor := Vector2.ZERO
-		if anchor_value is Vector2:
-			anchor = anchor_value
-		var offset := Vector2.ZERO
-		if offset_value is Vector2:
-			offset = offset_value
-		var width := float(layout.get("width", viewport_size.x * 0.45))
-		label.position = Vector2(viewport_size.x * anchor.x, viewport_size.y * anchor.y) + offset
-		label.custom_minimum_size = Vector2(width, 0.0)
-		var alpha := float(layout.get("alpha", 0.18))
-		var strength := float(layout.get("strength", 0.8))
-		label.material = _build_death_glitch_material(strength, 0.065, 0.018, 0.32, 12.0, Color(1.0, 0.8, 0.8, alpha))
-		_death_glitch_background.add_child(label)
-	_death_glitch_background.visible = true
+	_death_sequence_controller.show_death_glitch_background(self, text)
 
 func _build_death_glitch_background_text(text: String) -> String:
-	var compact := text.replace("\n", " ").strip_edges()
-	if compact == "":
-		compact = DEATH_TITLE_PENANCE_LINE
-	if compact == DEATH_TITLE_PENANCE_TEXT:
-		return DEATH_TITLE_PENANCE_TEXT
-	return ("%s %s %s" % [compact, compact, compact]).strip_edges()
+	return _death_sequence_controller.build_death_glitch_background_text(self, text)
 
 func _apply_damage_camera_punch() -> void:
-	if damage_flash_duration <= 0.0:
-		return
-	var camera := _resolve_primary_camera()
-	if camera == null:
-		return
-	var base_zoom := camera.zoom
-	var base_offset := camera.offset
-	var base_rotation := camera.rotation
-	var target_zoom := base_zoom * (1.0 + damage_flash_camera_zoom_punch)
-	var jitter := Vector2(
-		randf_range(-damage_flash_camera_offset_jitter, damage_flash_camera_offset_jitter),
-		randf_range(-damage_flash_camera_offset_jitter, damage_flash_camera_offset_jitter)
-	)
-	var tilt_sign := -1.0 if randf() < 0.5 else 1.0
-	var target_rotation := base_rotation + deg_to_rad(damage_flash_camera_tilt_deg) * tilt_sign
-	var in_time: float = maxf(0.02, damage_flash_duration * 0.3)
-	var out_time: float = maxf(0.02, damage_flash_duration * 0.7)
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(camera, "zoom", target_zoom, in_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(camera, "offset", base_offset + jitter, in_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(camera, "rotation", target_rotation, in_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.chain()
-	tween.set_parallel(true)
-	tween.tween_property(camera, "zoom", base_zoom, out_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	tween.tween_property(camera, "offset", base_offset, out_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	tween.tween_property(camera, "rotation", base_rotation, out_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	_screen_fx_controller.apply_damage_camera_punch(self)
 
 func _resolve_primary_camera() -> Camera2D:
-	if get_viewport() and get_viewport().get_camera_2d():
-		return get_viewport().get_camera_2d()
-	var player := get_tree().get_first_node_in_group("player")
-	if player == null:
-		return null
-	if player.has_node("Camera2D"):
-		return player.get_node("Camera2D") as Camera2D
-	return null
+	return _screen_fx_controller.resolve_primary_camera(self)
 
 func _apply_death_input_mode() -> void:
-	var using_gamepad := _input_kind == INPUT_KIND_GAMEPAD
-	if _death_retry_button:
-		if using_gamepad:
-			if _death_focus_style_hidden == null:
-				_death_focus_style_hidden = StyleBoxEmpty.new()
-			_death_retry_button.add_theme_stylebox_override("focus", _death_focus_style_hidden)
-			_death_retry_button.grab_focus()
-		else:
-			_death_retry_button.remove_theme_stylebox_override("focus")
-			if _death_retry_button.has_focus():
-				_death_retry_button.release_focus()
-	if CursorManager:
-		if using_gamepad:
-			CursorManager.release_visible(self)
-		else:
-			CursorManager.request_visible(self)
+	_death_sequence_controller.apply_death_input_mode(self)
 
 func _release_death_cursor_request() -> void:
-	if CursorManager:
-		CursorManager.release_visible(self)
+	_death_sequence_controller.release_death_cursor_request(self)
 
 func _resolve_input_kind(event: InputEvent) -> int:
-	if event == null or event.is_echo():
-		return INPUT_KIND_UNKNOWN
-	if event is InputEventJoypadButton:
-		var joy_button := event as InputEventJoypadButton
-		if not joy_button.pressed:
-			return INPUT_KIND_UNKNOWN
-		return INPUT_KIND_GAMEPAD
-	if event is InputEventJoypadMotion:
-		var joy_motion := event as InputEventJoypadMotion
-		if absf(joy_motion.axis_value) < JOYPAD_MOTION_DEADZONE:
-			return INPUT_KIND_UNKNOWN
-		return INPUT_KIND_GAMEPAD
-	if event is InputEventKey:
-		var key_event := event as InputEventKey
-		if not key_event.pressed:
-			return INPUT_KIND_UNKNOWN
-		return INPUT_KIND_KEYBOARD
-	if event is InputEventMouseButton:
-		var mouse_button := event as InputEventMouseButton
-		if not mouse_button.pressed:
-			return INPUT_KIND_UNKNOWN
-		return INPUT_KIND_KEYBOARD
-	if event is InputEventMouseMotion:
-		var mouse_motion := event as InputEventMouseMotion
-		if mouse_motion.relative.length_squared() <= 0.0:
-			return INPUT_KIND_UNKNOWN
-		return INPUT_KIND_KEYBOARD
-	return INPUT_KIND_UNKNOWN
+	return _death_sequence_controller.resolve_input_kind(self, event)
 
 func _apply_distortion_progress(progress: float) -> void:
-	var value: float = float(clamp(progress, 0.0, 1.0))
-	_set_distortion_intensity(value)
-	_set_distortion_squash(value * distortion_squash_amount)
+	_screen_fx_controller.apply_distortion_progress(self, progress)
 
 func _apply_transition_strength(strength: float) -> void:
-	var value: float = float(clamp(strength, 0.0, 1.0))
-	# Мы убрали squash, так как новый шейдер делает всё через intensity
-	_set_transition_intensity(value * distortion_transition_intensity)
-	# _set_transition_squash(...) — эту строку можно удалить, она больше не нужна
+	_screen_fx_controller.apply_transition_strength(self, strength)
 
 func _advance_distortion(delta: float) -> void:
-	if distortion_ramp_duration <= 0.0:
-		_distortion_progress = 1.0
-	elif _distortion_progress < 1.0:
-		_distortion_progress = min(1.0, _distortion_progress + (delta / distortion_ramp_duration))
-	var eased := _ease_out(_distortion_progress)
-	_apply_distortion_progress(eased)
+	_screen_fx_controller.advance_distortion(self, delta)
 
 func _advance_transition(delta: float) -> void:
-	if distortion_transition_duration <= 0.0:
-		_transition_progress = 1.0
-	elif _transition_progress < 1.0:
-		_transition_progress = min(1.0, _transition_progress + (delta / distortion_transition_duration))
-	var t: float = float(clamp(_transition_progress, 0.0, 1.0))
-	var strength := pow(1.0 - t, 2.0)
-	_apply_transition_strength(strength)
-	if _transition_progress >= 1.0:
-		_transition_active = false
-		if _transition_rect:
-			_transition_rect.visible = false
+	_screen_fx_controller.advance_transition(self, delta)
 
 func _ease_out(t: float) -> float:
-	var clamped: float = float(clamp(t, 0.0, 1.0))
-	return 1.0 - pow(1.0 - clamped, 2.0)
+	return _screen_fx_controller.ease_out(t)
 
 func _is_distortion_allowed() -> bool:
-	if not _in_game_scene:
-		return false
-	if _minigame_active and _minigame_blocks_distortion:
-		return false
-	return true
+	return _screen_fx_controller.is_distortion_allowed(self)
 
 func _update_overlay_layer() -> void:
-	if _overlay_layer == null:
-		return
-	var target_layer := 90
-	var pause_menu_open := false
-	if PauseManager and PauseManager.has_method("is_pause_menu_open"):
-		pause_menu_open = PauseManager.is_pause_menu_open()
-	if pause_menu_open or (get_tree() and get_tree().paused and not _minigame_active):
-		target_layer = 70
-	elif _minigame_active and MinigameController and MinigameController.has_method("get_active_minigame_layer"):
-		target_layer = clampi(MinigameController.get_active_minigame_layer() - 1, 0, 89)
-	if _overlay_layer.layer != target_layer:
-		_overlay_layer.layer = target_layer
+	_screen_fx_controller.update_overlay_layer(self)
 
 func _hide_distortion_overlays() -> void:
-	if _distortion_rect:
-		_distortion_rect.visible = false
-	if _transition_rect:
-		_transition_rect.visible = false
-	if _damage_rect and not _damage_flash_active:
-		_damage_rect.visible = false
-	if _light_only_jump_rect and not _light_only_jump_active:
-		_light_only_jump_rect.visible = false
-	_set_distortion_intensity(0.0)
-	_set_distortion_squash(0.0)
-	_set_transition_intensity(0.0)
-	_set_transition_squash(0.0)
-	if not _damage_flash_active:
-		_set_damage_intensity(0.0)
-	if not _light_only_jump_active:
-		_set_light_only_jump_intensity(0.0)
+	_screen_fx_controller.hide_distortion_overlays(self)
 
 func _spawn_stalker_if_needed() -> void:
-	if _stalker_spawned:
-		return
-	if not _in_game_scene:
-		return
-	if stalker_scene == null:
-		return
-	var scene := get_tree().current_scene
-	if scene == null:
-		return
-	var spawn := _find_stalker_spawn(scene)
-	if spawn == null:
-		return
-	_stalker_spawned = true
-	call_deferred("_spawn_stalker_deferred", scene, spawn.global_position)
+	_distortion_phase_controller.spawn_stalker_if_needed(self)
 
 func _spawn_stalker_deferred(scene: Node, spawn_position: Vector2) -> void:
-	if not _stalker_spawned:
-		return
-	if scene == null or not is_instance_valid(scene):
-		_stalker_spawned = false
-		return
-	if get_tree() == null or scene != get_tree().current_scene:
-		_stalker_spawned = false
-		return
-	var stalker := stalker_scene.instantiate()
-	if stalker == null:
-		_stalker_spawned = false
-		return
-	scene.add_child(stalker)
-	if stalker is Node2D:
-		(stalker as Node2D).global_position = spawn_position
+	_distortion_phase_controller.spawn_stalker_deferred(self, scene, spawn_position)
 
 func _find_stalker_spawn(scene: Node) -> Node2D:
-	var nodes := get_tree().get_nodes_in_group(STALKER_SPAWN_GROUP)
-	for node in nodes:
-		if node is Node2D and scene.is_ancestor_of(node):
-			return node
-	return null
+	return _distortion_phase_controller.find_stalker_spawn(self, scene)
 
 func _connect_minigame_controller() -> void:
 	if MinigameController == null:
 		return
-	if MinigameController.has_signal("minigame_started") and not MinigameController.minigame_started.is_connected(_on_minigame_started):
+	if not MinigameController.minigame_started.is_connected(_on_minigame_started):
 		MinigameController.minigame_started.connect(_on_minigame_started)
-	if MinigameController.has_signal("minigame_finished") and not MinigameController.minigame_finished.is_connected(_on_minigame_finished):
+	if not MinigameController.minigame_finished.is_connected(_on_minigame_finished):
 		MinigameController.minigame_finished.connect(_on_minigame_finished)
 
 func _on_minigame_started(_minigame: Node) -> void:
-	_minigame_active = true
-	_minigame_blocks_distortion = not _minigame_allows_distortion(_minigame)
+	_distortion_phase_controller.on_minigame_started(self, _minigame)
 
 func _on_minigame_finished(_minigame: Node, _success: bool) -> void:
-	_minigame_active = false
-	_minigame_blocks_distortion = false
-	if _pending_distortion_activation:
-		_activate_distortion_phase()
+	_distortion_phase_controller.on_minigame_finished(self, _minigame, _success)
 
 func _minigame_allows_distortion(minigame: Node) -> bool:
-	if minigame == null:
-		return true
-	if minigame.has_method("allows_distortion_overlay"):
-		return bool(minigame.allows_distortion_overlay())
-	if minigame.has_meta("allow_distortion_overlay"):
-		return bool(minigame.get_meta("allow_distortion_overlay"))
-	return true
+	return _distortion_phase_controller.minigame_allows_distortion(minigame)
 
 func get_cycle_number() -> int:
 	return _current_cycle_number

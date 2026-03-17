@@ -26,6 +26,8 @@ func _ready() -> void:
 	_read_audio_player = AudioStreamPlayer2D.new()
 	_read_audio_player.bus = "Sounds"
 	add_child(_read_audio_player)
+	if _feedback_audio_player != null:
+		move_child(_read_audio_player, get_children().find(_feedback_audio_player))
 
 func _get_prompt_text() -> String:
 	var message_text := interact_message.strip_edges()

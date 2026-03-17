@@ -1,8 +1,11 @@
 extends InteractiveObject
 class_name Fridge
 
-signal feeding_finished
+const InteractableAvailabilityVisualScript = preload("res://objects/interactable/shared/interactable_availability_visual.gd")
+const CodeLockGateScript = preload("res://objects/interactable/shared/code_lock_gate.gd")
+const IdleRocking2DScript = preload("res://objects/interactable/shared/idle_rocking_2d.gd")
 
+signal feeding_finished
 
 @export_group("Minigame (Feeding)")
 ## Сцена мини-игры (еда).
@@ -33,7 +36,7 @@ signal feeding_finished
 ## Сообщение, если код не введен или неверный.
 @export var access_code_failed_message: String = ""
 ## Сцена мини-игры "Кодовый замок".
-@export var code_lock_scene: PackedScene 
+@export var code_lock_scene: PackedScene
 
 @export_group("Lab Requirement")
 ## Запретить еду, пока не сдана лабораторная.
@@ -55,7 +58,7 @@ var _required_lab_completion_ids: PackedStringArray = PackedStringArray()
 @export var teleport_target: NodePath
 
 @export_group("Visuals & Audio")
-@export var open_sound: AudioStream 
+@export var open_sound: AudioStream
 ## Фоновый шум холодильника.
 @export var noise_sound: AudioStream
 ## Громкость шума холодильника (dB).
@@ -82,149 +85,118 @@ var _required_lab_completion_ids: PackedStringArray = PackedStringArray()
 ## Звук покачивания.
 @export var rocking_sound: AudioStream
 
-# Внутренние переменные
 var _is_interacting: bool = false
 var _current_minigame: Node = null
-var _sfx_player: AudioStreamPlayer
-var _code_unlocked: bool = false # Флаг, открыт ли замок
+var _sfx_player: AudioStreamPlayer = null
 var _sprite: Sprite2D = null
 var _available_light: CanvasItem = null
 var _available_light_secondary: CanvasItem = null
 var _noise_player: AudioStreamPlayer2D = null
-var _rocking_active: bool = false
-var _rocking_elapsed: float = 0.0
-var _rocking_base_rotation: float = 0.0
-var _rocking_sound_player: AudioStreamPlayer2D = null
-var _rocking_sound_connected: bool = false
-var _force_centered_sprite: bool = false
+var _availability_visual = InteractableAvailabilityVisualScript.new()
+var _code_lock_gate = CodeLockGateScript.new()
+var _rocking_controller = null
 
 func _ready() -> void:
-	super._ready() # Важно вызвать ready родителя!
-	set_process(false)
-	
+	super._ready()
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.bus = "Sounds"
 	add_child(_sfx_player)
-	
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	_available_light = get_node_or_null(available_light_node) as CanvasItem
 	_available_light_secondary = get_node_or_null(available_light_node_secondary) as CanvasItem
 	_noise_player = get_node_or_null(noise_player_node) as AudioStreamPlayer2D
-	if _noise_player:
-		if noise_sound:
+	if _noise_player != null:
+		if noise_sound != null:
 			_noise_player.stream = noise_sound
 		_noise_player.volume_db = noise_volume_db
-	
+	_availability_visual.configure(
+		_sprite,
+		locked_sprite,
+		available_sprite,
+		[_available_light, _available_light_secondary],
+		_noise_player
+	)
+	_code_lock_gate.configure(
+		require_access_code,
+		access_code,
+		access_code_failed_message,
+		code_lock_scene
+	)
+	_rocking_controller = IdleRocking2DScript.new()
+	add_child(_rocking_controller)
+	_rocking_controller.configure(
+		_sprite,
+		rocking_cycle_duration,
+		rocking_strength_degrees,
+		rocking_pivot_mode,
+		rocking_pivot_offset,
+		rocking_sound
+	)
 	_update_visuals()
-	_update_rocking_pivot()
 	_start_rocking_if_configured()
-	
-	if _requires_lab_gate() and CycleState != null and CycleState.has_signal("lab_completed"):
-		CycleState.lab_completed.connect(_update_visuals)
-	if _requires_lab_gate() and CycleState != null and CycleState.has_signal("lab_completed_with_id"):
-		CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
-	if CycleState != null and CycleState.has_signal("ate_this_cycle_changed"):
-		CycleState.ate_this_cycle_changed.connect(_on_ate_this_cycle_changed)
-	if CycleState != null and CycleState.has_signal("cycle_state_reset"):
-		CycleState.cycle_state_reset.connect(_update_visuals)
+	if CycleState != null:
+		if _requires_lab_gate() and not CycleState.lab_completed.is_connected(_update_visuals):
+			CycleState.lab_completed.connect(_update_visuals)
+		if _requires_lab_gate() and not CycleState.lab_completed_with_id.is_connected(_on_lab_completed_with_id):
+			CycleState.lab_completed_with_id.connect(_on_lab_completed_with_id)
+		if not CycleState.ate_this_cycle_changed.is_connected(_on_ate_this_cycle_changed):
+			CycleState.ate_this_cycle_changed.connect(_on_ate_this_cycle_changed)
+		if not CycleState.cycle_state_reset.is_connected(_update_visuals):
+			CycleState.cycle_state_reset.connect(_update_visuals)
 
-# --- ОСНОВНАЯ ТОЧКА ВХОДА ---
 func _on_interact() -> void:
 	if _is_interacting:
 		return
-
-	# 0. Проверка: лабораторная не завершена
 	if _requires_lab_gate() and not _has_required_lab_completion():
 		_show_locked_message()
 		return
-
-	# 1. Проверка: уже ел?
 	if CycleState != null and CycleState.has_eaten_this_cycle():
 		UIMessage.show_notification("Я уже поел.")
 		return
-	
-	# 2. Если замок закрыт — запускаем взлом
-	if require_access_code and not _code_unlocked:
+	if _code_lock_gate.needs_unlock():
 		_start_code_lock()
 		return
-
-	# 3. Если всё ок (замок открыт или не нужен) — ЕДИМ
 	_start_feeding_process()
 
-# --- ЛОГИКА КОДОВОГО ЗАМКА ---
 func _start_code_lock() -> void:
-	if code_lock_scene == null:
-		push_warning("Frizzer: Не назначена сцена Code Lock!")
-		return
-	
-	# 1. Создаем экземпляр (Node) из PackedScene
-	var lock_instance = code_lock_scene.instantiate()
-	_current_minigame = lock_instance
-	
-	# 2. Настраиваем пароль (как в твоем старом скрипте)
-	if "code_value" in lock_instance:
-		lock_instance.code_value = access_code
-	elif "target_code" in lock_instance:
-		lock_instance.target_code = access_code
-	
-	# 3. Подключаем сигнал успеха
-	if lock_instance.has_signal("unlocked"):
-		lock_instance.unlocked.connect(_on_unlock_success)
-	
-	# Добавляем обработку закрытия (чтобы разблокировать игрока, если он нажал отмену)
-	lock_instance.tree_exited.connect(func():
-		_is_interacting = false
-		if require_access_code and not _code_unlocked:
-			_show_access_code_failed_message()
+	_code_lock_gate.request_unlock(
+		self,
+		Callable(self, "_attach_code_lock"),
+		Callable(self, "_on_unlock_success"),
+		Callable(self, "_show_access_code_failed_message"),
+		Callable(self, "_set_interacting_state")
 	)
 
-	# 4. Добавляем замок на сцену (поверх всего, но внутри текущей сцены)
+func _attach_code_lock(lock_instance: Node) -> void:
+	_current_minigame = lock_instance
+	lock_instance.tree_exited.connect(_on_code_lock_tree_exited, Object.CONNECT_ONE_SHOT)
 	attach_minigame(lock_instance)
-	
-	# 5. Активируем режим взаимодействия (старт мини-игры обрабатывает сам замок)
-	_is_interacting = true
-	if MinigameController == null:
-		push_error("MinigameController не найден!")
+
+func _on_code_lock_tree_exited() -> void:
+	_current_minigame = null
 
 func _on_unlock_success() -> void:
-	_code_unlocked = true
-	_is_interacting = false
+	_current_minigame = null
 	UIMessage.show_notification("Замок открыт.")
-	_update_visuals()
-	
-	# Сразу после взлома можно предложить поесть или заставить нажать Е еще раз.
-	# Давай заставим нажать Е еще раз, чтобы игрок увидел открытую дверь.
+	refresh_interaction_state()
 
-func _on_unlock_cancel() -> void:
-	_is_interacting = false
-
-# --- ЛОГИКА ЕДЫ ---
 func _start_feeding_process() -> void:
 	_is_interacting = true
-	
-	# Звук открытия
-	if open_sound:
+	if open_sound != null:
 		_sfx_player.stream = open_sound
 		_sfx_player.play()
-	
-	# Проверка наличия еды
 	var has_food := not food_scenes.is_empty()
 	var selected_scene := _resolve_feeding_scene()
 	if selected_scene == null or not has_food:
 		push_warning("Frizzer: Нет сцены мини-игры или еды!")
 		_finish_feeding_logic()
 		return
-	
-	# Запуск игры
-	var game = selected_scene.instantiate()
+	var game := selected_scene.instantiate()
 	_current_minigame = game
 	attach_minigame(game)
 	_mark_unique_intro_as_played(selected_scene)
-	
-	# Передаем параметры (как в твоем старом скрипте)
 	if game.has_method("setup_game"):
 		game.setup_game(andrey_face, food_count, bg_music, win_sound, eat_sound, background_texture, food_scenes)
-	
 	game.minigame_finished.connect(_on_feeding_finished)
 
 func _resolve_feeding_scene() -> PackedScene:
@@ -259,9 +231,7 @@ func _on_feeding_finished() -> void:
 	if _current_minigame != null:
 		_current_minigame.queue_free()
 		_current_minigame = null
-	
 	_finish_feeding_logic()
-	
 	_is_interacting = false
 
 func _finish_feeding_logic() -> void:
@@ -270,26 +240,22 @@ func _finish_feeding_logic() -> void:
 	if CycleState != null:
 		CycleState.mark_ate()
 	UIMessage.show_notification("Вкуснятина")
-	
 	if CycleState != null:
 		CycleState.mark_fridge_interacted()
 	feeding_finished.emit()
-
-	# ВАЖНО: Помечаем объект выполненным только ПОСЛЕ еды.
-	# Теперь Ноутбук (зависящий от Холодильника) станет доступен.
-	complete_interaction() 
-
+	complete_interaction()
 	_teleport_player_if_needed()
 	var tree := get_tree() if is_inside_tree() else null
-	if GameState != null and GameState.has_method("capture_fridge_checkpoint") and tree != null:
+	if GameState != null and tree != null:
 		GameState.capture_fridge_checkpoint(tree.current_scene)
-	elif GameState != null and GameState.has_method("autosave_run"):
+	elif GameState != null:
 		GameState.autosave_run()
 
 func _clear_chase_after_teleport_success() -> void:
-	if get_tree() != null:
-		get_tree().call_group("enemies", "force_stop_chase")
-	if MusicManager != null and MusicManager.has_method("clear_chase_music_sources"):
+	var tree := get_tree()
+	if tree != null:
+		tree.call_group("enemies", "force_stop_chase")
+	if MusicManager != null:
 		MusicManager.clear_chase_music_sources(0.2)
 
 func _show_locked_message() -> void:
@@ -310,9 +276,8 @@ func _show_access_code_failed_message() -> void:
 	else:
 		print("LOCKED: " + message)
 
-# --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
 func _is_available_for_player() -> bool:
-	var is_unlocked := not require_access_code or _code_unlocked
+	var is_unlocked: bool = not require_access_code or bool(_code_lock_gate.unlocked)
 	if _should_show_unavailable_after_eating():
 		is_unlocked = false
 	if _requires_lab_gate() and not _has_required_lab_completion():
@@ -321,36 +286,12 @@ func _is_available_for_player() -> bool:
 		is_unlocked = false
 	return is_unlocked
 
-func _sync_noise_state(is_available: bool = _is_available_for_player()) -> void:
-	if _noise_player == null:
-		return
-	if not is_available:
-		if _noise_player.playing:
-			_noise_player.stop()
-		return
-	if _noise_player.stream == null:
-		return
-	if not _noise_player.playing:
-		_noise_player.play()
-
 func _update_visuals() -> void:
-	var is_unlocked := _is_available_for_player()
-	
-	if is_unlocked:
-		if _sprite and available_sprite:
-			_sprite.texture = available_sprite
-		if _available_light: _available_light.visible = true
-		if _available_light_secondary: _available_light_secondary.visible = true
-	else:
-		if _sprite and locked_sprite:
-			_sprite.texture = locked_sprite
-		if _available_light: _available_light.visible = false
-		if _available_light_secondary: _available_light_secondary.visible = false
-	_sync_noise_state(is_unlocked)
+	_availability_visual.apply(_is_available_for_player())
 	_update_rocking_pivot()
 
 func refresh_visual_state() -> void:
-	_update_visuals()
+	refresh_interaction_state()
 
 func _on_dependency_finished() -> void:
 	super._on_dependency_finished()
@@ -362,14 +303,18 @@ func _on_lab_completed_with_id(_completed_id: String) -> void:
 func _on_ate_this_cycle_changed(_is_ate: bool) -> void:
 	_update_visuals()
 
+func _on_interaction_state_refreshed() -> void:
+	_update_visuals()
+
 func _teleport_player_if_needed() -> void:
 	if not enable_teleport or teleport_target.is_empty():
 		return
-	var marker = get_node_or_null(teleport_target)
-	if marker:
-		var player = get_tree().get_first_node_in_group("player")
-		if player:
-			player.global_position = marker.global_position
+	var marker := get_node_or_null(teleport_target)
+	if marker == null:
+		return
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		player.global_position = marker.global_position
 
 func _has_required_lab_completion() -> bool:
 	if CycleState == null:
@@ -389,81 +334,35 @@ func _should_show_unavailable_after_eating() -> bool:
 	return bool(CycleState.has_eaten_this_cycle())
 
 func _update_rocking_pivot() -> void:
-	if _sprite == null or _sprite.texture == null:
-		return
-	if _force_centered_sprite:
-		_sprite.centered = true
-		_sprite.offset = Vector2.ZERO
-		return
-	if rocking_pivot_mode == 1:
-		var tex_size := _sprite.texture.get_size()
-		# Поворот вокруг верхней кромки (эффект подвешенности).
-		_sprite.centered = false
-		_sprite.offset = Vector2(-tex_size.x * 0.5, 0.0) + rocking_pivot_offset
-	else:
-		# Стандартная центрированная отрисовка.
-		_sprite.centered = true
-		_sprite.offset = Vector2.ZERO
+	if _rocking_controller != null:
+		_rocking_controller.apply_pivot()
 
 func _start_rocking_if_configured() -> void:
-	if rocking_strength_degrees <= 0.0:
-		return
-	if _sprite == null:
-		return
-	if _rocking_active:
-		return
-	_rocking_active = true
-	_rocking_elapsed = 0.0
-	_rocking_base_rotation = _sprite.rotation
-	if rocking_sound:
-		if _rocking_sound_player == null:
-			_rocking_sound_player = AudioStreamPlayer2D.new()
-			_rocking_sound_player.bus = "Sounds"
-			_rocking_sound_player.volume_db = -12.0
-			add_child(_rocking_sound_player)
-			_rocking_sound_connected = false
-		_rocking_sound_player.stream = rocking_sound
-		_rocking_sound_player.play()
-		if not _rocking_sound_connected:
-			_rocking_sound_player.finished.connect(_on_rocking_sound_finished)
-			_rocking_sound_connected = true
-	set_process(true)
-
-func _process(delta: float) -> void:
-	if not _rocking_active or _sprite == null:
-		return
-	_rocking_elapsed += delta
-	var cycle: float = max(0.05, float(rocking_cycle_duration))
-	var angle := sin(_rocking_elapsed * TAU / cycle) * deg_to_rad(rocking_strength_degrees)
-	_sprite.rotation = _rocking_base_rotation + angle
+	if _rocking_controller != null:
+		_rocking_controller.start_if_configured()
 
 func _stop_rocking() -> void:
-	_rocking_active = false
-	if _sprite:
-		_sprite.rotation = _rocking_base_rotation
-	if _rocking_sound_player:
-		_rocking_sound_player.stop()
-	set_process(false)
-
-func _on_rocking_sound_finished() -> void:
-	if _rocking_active and _rocking_sound_player:
-		_rocking_sound_player.play()
+	if _rocking_controller != null:
+		_rocking_controller.stop()
 
 func apply_winch_release_state() -> void:
 	_stop_rocking()
-	_force_centered_sprite = true
 	rocking_strength_degrees = 0.0
 	rocking_pivot_mode = 0
-	_update_rocking_pivot()
+	if _rocking_controller != null:
+		_rocking_controller.apply_winch_release_state()
 
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()
-	state["code_unlocked"] = _code_unlocked
+	state["code_unlocked"] = _code_lock_gate.unlocked
 	state["is_interacting"] = _is_interacting
 	return state
 
 func apply_checkpoint_state(state: Dictionary) -> void:
 	super.apply_checkpoint_state(state)
-	_code_unlocked = bool(state.get("code_unlocked", _code_unlocked))
+	_code_lock_gate.apply_state({"unlocked": bool(state.get("code_unlocked", _code_lock_gate.unlocked))})
 	_is_interacting = bool(state.get("is_interacting", false))
 	_update_visuals()
+
+func _set_interacting_state(value: bool) -> void:
+	_is_interacting = value

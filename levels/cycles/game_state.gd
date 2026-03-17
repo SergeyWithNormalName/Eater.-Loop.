@@ -26,11 +26,10 @@ func _ready() -> void:
 		restore_autosave_run()
 
 func next_cycle() -> void:
-	if not flashlight_unlocked and CycleState != null and CycleState.has_method("has_flashlight_for_current_cycle"):
-		if bool(CycleState.has_flashlight_for_current_cycle()):
-			flashlight_unlocked = true
+	if not flashlight_unlocked and CycleState != null and CycleState.has_flashlight_for_current_cycle():
+		flashlight_unlocked = true
 	clear_checkpoint_state()
-	if CycleState != null and CycleState.has_method("next_cycle"):
+	if CycleState != null:
 		CycleState.next_cycle()
 	_save_run_state()
 
@@ -52,51 +51,51 @@ func set_current_scene_path(path: String) -> void:
 
 func reset_cycle_state() -> void:
 	clear_checkpoint_state()
-	if CycleState != null and CycleState.has_method("reset_cycle_state"):
+	if CycleState != null:
 		CycleState.reset_cycle_state()
 	_save_run_state()
 
 func set_phase(new_phase: int) -> void:
-	if CycleState != null and CycleState.has_method("set_phase"):
+	if CycleState != null:
 		CycleState.set_phase(new_phase)
 
 func mark_ate() -> void:
-	if CycleState != null and CycleState.has_method("mark_ate"):
+	if CycleState != null:
 		CycleState.mark_ate()
 
 func has_eaten_this_cycle() -> bool:
-	if CycleState != null and CycleState.has_method("has_eaten_this_cycle"):
+	if CycleState != null:
 		return bool(CycleState.has_eaten_this_cycle())
 	return false
 
 func mark_phone_picked() -> void:
-	if CycleState != null and CycleState.has_method("mark_phone_picked"):
+	if CycleState != null:
 		CycleState.mark_phone_picked()
 
 func mark_fridge_interacted() -> void:
-	if CycleState != null and CycleState.has_method("mark_fridge_interacted"):
+	if CycleState != null:
 		CycleState.mark_fridge_interacted()
 
 func is_fridge_interacted() -> bool:
-	if CycleState != null and CycleState.has_method("is_fridge_interacted"):
+	if CycleState != null:
 		return bool(CycleState.is_fridge_interacted())
 	return false
 
 func queue_sleep_spawn() -> void:
-	if CycleState != null and CycleState.has_method("queue_sleep_spawn"):
+	if CycleState != null:
 		CycleState.queue_sleep_spawn()
 
 func consume_pending_sleep_spawn() -> bool:
-	if CycleState != null and CycleState.has_method("consume_pending_sleep_spawn"):
+	if CycleState != null:
 		return bool(CycleState.consume_pending_sleep_spawn())
 	return false
 
 func queue_respawn_blackout() -> void:
-	if CycleState != null and CycleState.has_method("queue_respawn_blackout"):
+	if CycleState != null:
 		CycleState.queue_respawn_blackout()
 
 func consume_pending_respawn_blackout() -> bool:
-	if CycleState != null and CycleState.has_method("consume_pending_respawn_blackout"):
+	if CycleState != null:
 		return bool(CycleState.consume_pending_respawn_blackout())
 	return false
 
@@ -107,7 +106,7 @@ func reset_run() -> void:
 	last_scene_path = ""
 	has_active_run = false
 	clear_checkpoint_state()
-	if CycleState != null and CycleState.has_method("reset_runtime_state_only"):
+	if CycleState != null:
 		CycleState.reset_runtime_state_only()
 	_save_run_state()
 
@@ -145,23 +144,21 @@ func apply_checkpoint_to_scene(scene: Node) -> bool:
 	var preserve_sleep_spawn := false
 	var preserve_respawn_blackout := false
 	if CycleState != null:
-		if CycleState.has_method("has_pending_sleep_spawn"):
-			preserve_sleep_spawn = bool(CycleState.has_pending_sleep_spawn())
-		if CycleState.has_method("has_pending_respawn_blackout"):
-			preserve_respawn_blackout = bool(CycleState.has_pending_respawn_blackout())
+		preserve_sleep_spawn = bool(CycleState.has_pending_sleep_spawn())
+		preserve_respawn_blackout = bool(CycleState.has_pending_respawn_blackout())
 
 	_import_runtime_state(checkpoint_game_state)
 	_apply_cycle_checkpoint_state(checkpoint_cycle_state)
-	if preserve_sleep_spawn and CycleState != null and CycleState.has_method("queue_sleep_spawn"):
+	if preserve_sleep_spawn and CycleState != null:
 		CycleState.queue_sleep_spawn()
-	if preserve_respawn_blackout and CycleState != null and CycleState.has_method("queue_respawn_blackout"):
+	if preserve_respawn_blackout and CycleState != null:
 		CycleState.queue_respawn_blackout()
 
 	_apply_scene_checkpoint_state(scene)
 
-	if GameDirector != null and GameDirector.has_method("apply_checkpoint_state"):
+	if GameDirector != null:
 		GameDirector.apply_checkpoint_state(checkpoint_director_state)
-	if MusicManager != null and MusicManager.has_method("clear_chase_music_sources"):
+	if MusicManager != null:
 		MusicManager.clear_chase_music_sources(0.0)
 	return true
 
@@ -181,7 +178,7 @@ func restore_autosave_run() -> bool:
 	if config.load(SAVE_PATH) != OK:
 		return false
 	load_save_data(config)
-	if CycleState != null and CycleState.has_method("load_save_data"):
+	if CycleState != null:
 		CycleState.load_save_data(config)
 	return true
 
@@ -190,7 +187,7 @@ func _save_run_state() -> void:
 		return
 	var config := ConfigFile.new()
 	write_save_data(config)
-	if CycleState != null and CycleState.has_method("write_save_data"):
+	if CycleState != null:
 		CycleState.write_save_data(config)
 	config.save(SAVE_PATH)
 
@@ -294,18 +291,18 @@ func _import_runtime_state(state: Dictionary) -> void:
 	running_unlocked = bool(state.get("running_unlocked", running_unlocked))
 
 func _export_cycle_state() -> Dictionary:
-	if CycleState != null and CycleState.has_method("export_checkpoint_state"):
+	if CycleState != null:
 		var state: Variant = CycleState.export_checkpoint_state()
 		if state is Dictionary:
 			return state
 	return {}
 
 func _apply_cycle_checkpoint_state(state: Dictionary) -> void:
-	if CycleState != null and CycleState.has_method("apply_checkpoint_state"):
+	if CycleState != null:
 		CycleState.apply_checkpoint_state(state)
 
 func _export_director_state() -> Dictionary:
-	if GameDirector != null and GameDirector.has_method("capture_checkpoint_state"):
+	if GameDirector != null:
 		var state: Variant = GameDirector.capture_checkpoint_state()
 		if state is Dictionary:
 			return state

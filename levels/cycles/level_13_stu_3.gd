@@ -1,5 +1,9 @@
 extends "res://levels/cycles/level.gd"
 
+const SceneRuleRunnerScript = preload("res://levels/scene_rules/scene_rule_runner.gd")
+const SceneRuleScript = preload("res://levels/scene_rules/scene_rule.gd")
+const SetDoorTargetFromCycleStateActionScript = preload("res://levels/scene_rules/set_door_target_from_cycle_state_action.gd")
+
 const TO_BATHROOM_DEFAULT_TARGET := NodePath("../../../1thBathroom/InteractableObjects/Door(In1thBathroom)")
 const TO_BEDROOM_TARGET := NodePath("../../../../Bedroom/InteractableObjects/Door(InBedroom)")
 
@@ -7,55 +11,37 @@ const TO_BEDROOM_TARGET := NodePath("../../../../Bedroom/InteractableObjects/Doo
 @export var primary_fridge_path: NodePath = NodePath("6thLevel/604/InteractableObjects/Fridge")
 @export var secondary_fridge_path: NodePath = NodePath("Stolovaya/InteractableObjects/Fridge")
 
-var _door_to_bathroom: Node = null
-var _fridges: Array[InteractiveObject] = []
-
 func _ready() -> void:
 	super._ready()
-	call_deferred("_wire_bathroom_redirect")
+	_wire_bathroom_redirect()
 
 func _wire_bathroom_redirect() -> void:
-	_door_to_bathroom = get_node_or_null(door_to_bathroom_path)
-	_fridges.clear()
-	_register_fridge(primary_fridge_path)
-	_register_fridge(secondary_fridge_path)
-
-	for fridge in _fridges:
-		if fridge == null:
-			continue
-		if not fridge.interaction_finished.is_connected(_on_fridge_interaction_finished):
-			fridge.interaction_finished.connect(_on_fridge_interaction_finished)
-
-	if CycleState != null and CycleState.has_signal("fridge_interacted_changed"):
-		var on_changed := Callable(self, "_on_fridge_interacted_changed")
-		if not CycleState.is_connected("fridge_interacted_changed", on_changed):
-			CycleState.connect("fridge_interacted_changed", on_changed)
-
-	_update_bathroom_door_target()
-
-func _register_fridge(path: NodePath) -> void:
-	var fridge := get_node_or_null(path) as InteractiveObject
-	if fridge == null:
-		return
-	_fridges.append(fridge)
-
-func _on_fridge_interaction_finished() -> void:
-	_update_bathroom_door_target()
-
-func _on_fridge_interacted_changed() -> void:
-	_update_bathroom_door_target()
-
-func _update_bathroom_door_target() -> void:
-	if _door_to_bathroom == null:
-		return
-	var target := TO_BEDROOM_TARGET if _is_fridge_interacted() else TO_BATHROOM_DEFAULT_TARGET
-	if _door_to_bathroom.has_method("set_target_marker_path"):
-		_door_to_bathroom.call("set_target_marker_path", target)
-
-func _is_fridge_interacted() -> bool:
-	if CycleState != null and CycleState.has_method("is_fridge_interacted") and CycleState.is_fridge_interacted():
-		return true
-	for fridge in _fridges:
-		if fridge != null and is_instance_valid(fridge) and bool(fridge.is_completed):
-			return true
-	return false
+	var runner = SceneRuleRunnerScript.new()
+	var update_target = SetDoorTargetFromCycleStateActionScript.new()
+	update_target.door_path = door_to_bathroom_path
+	update_target.condition_kind = SetDoorTargetFromCycleStateActionScript.ConditionKind.FRIDGE_INTERACTED
+	update_target.target_if_true = TO_BEDROOM_TARGET
+	update_target.target_if_false = TO_BATHROOM_DEFAULT_TARGET
+	var ready_rule = SceneRuleScript.new()
+	ready_rule.trigger_kind = SceneRuleScript.TriggerKind.READY
+	ready_rule.actions = [update_target]
+	var primary_rule = SceneRuleScript.new()
+	primary_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	primary_rule.source_path = primary_fridge_path
+	primary_rule.signal_name = "interaction_finished"
+	primary_rule.one_shot = false
+	primary_rule.actions = [update_target]
+	var secondary_rule = SceneRuleScript.new()
+	secondary_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	secondary_rule.source_path = secondary_fridge_path
+	secondary_rule.signal_name = "interaction_finished"
+	secondary_rule.one_shot = false
+	secondary_rule.actions = [update_target]
+	var state_rule = SceneRuleScript.new()
+	state_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	state_rule.source_path = NodePath("/root/CycleState")
+	state_rule.signal_name = "fridge_interacted_changed"
+	state_rule.one_shot = false
+	state_rule.actions = [update_target]
+	runner.rules = [ready_rule, primary_rule, secondary_rule, state_rule]
+	add_child(runner)

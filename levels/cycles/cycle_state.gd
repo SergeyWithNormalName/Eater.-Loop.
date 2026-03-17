@@ -122,7 +122,7 @@ func clear_flashlight_for_cycle() -> void:
 func has_flashlight_for_current_cycle() -> bool:
 	if flashlight_collected_this_cycle:
 		return true
-	if GameState != null and GameState.has_method("is_flashlight_unlocked"):
+	if GameState != null:
 		return bool(GameState.is_flashlight_unlocked())
 	return false
 
@@ -271,5 +271,4 @@ func _coerce_string_array(value: Variant) -> Array[String]:
 func _autosave_run() -> void:
 	if GameState == null:
 		return
-	if GameState.has_method("autosave_run"):
-		GameState.autosave_run()
+	GameState.autosave_run()

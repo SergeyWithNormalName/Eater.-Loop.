@@ -1,97 +1,46 @@
-# Обзор архитектуры проекта
+# Обновлённая карта архитектуры
 
-Документ фиксирует текущие технические границы проекта: кто за что отвечает,
-какие API считаются публичными и какие инварианты должны сохраняться при
-рефакторинге.
+Документ фиксирует технические границы, публичные API и вспомогательные реалии, которые нужно помнить при рефакторинге. Он остаётся союзником, а не справочником по поведению.
 
-## 1. Карта autoload-модулей
+## 1. Autoload-маппинг и контроллеры
+- `GameState` (`res://levels/cycles/game_state.gd`) — хранит run-персистентность, checkpoint-данные, сетевые селекторы и публичные мутации (`next_cycle`, `mark_{ate|fridge_interacted|phone_picked}`, `reset_run`, `capture_fridge_checkpoint` и т.п.).
+- `CycleState` (`res://levels/cycles/cycle_state.gd`) — хранит runtime-флаги текущего цикла (labs, fridge, flashlight, pending respawn/sleep) и сигналами оповещает UI/levels.
+- `GameDirector` (`res://levels/game_director.gd`) — фасад, оборачивающий три контроллера:
+  * `DistortionPhaseController` — таймер и переключения NORMAL↔DISTORTED, дефер к мини-играм, spawn сталкера.
+  * `ScreenFxOverlayController` — шифт/сдвиг камеры, damage-flash, light-only overlay, overlay-сцены с тенями.
+  * `DeathSequenceController` — затемнение, shaders, retry-кнопка и custom-death hook.
+- `MusicManager` (`res://levels/music_manager.gd`) — единственная точка для ambient/event/minigame/chase/priority-stack.
+- `MinigameController` (`res://levels/minigames/minigame_controller.gd`) — жизненный цикл мини-игр, gamepad-схемы, блокировки движения и музыки.
+- UI-сервисы: `UIMessage`, `InteractionPrompts`, `CursorManager`, `StaminaBar`, `FlashlightBar`, `CursorManager`
 
-- `GameState` (`res://levels/cycles/game_state.gd`)
-  Хранит состояние текущего забега/цикла, флаги прогресса и данные сохранения.
-- `GameDirector` (`res://levels/game_director.gd`)
-  Оркестрация времени цикла, фаз искажений, death-screen, спавн сталкера.
-- `MusicManager` (`res://levels/music_manager.gd`)
-  Единая точка управления музыкой (ambient/event/minigame/chase/pause/menu).
-- `PauseManager` (`res://levels/menu/pause_manager.gd`)
-  Открытие/закрытие pause-меню и синхронизация с состоянием мини-игр.
-- `SettingsManager` (`res://levels/menu/settings_manager.gd`)
-  Аудио/видео-настройки, загрузка/сохранение `user://settings.cfg`.
-- `MinigameController` (`res://levels/minigames/minigame_controller.gd`)
-  Жизненный цикл мини-игр (пауза, музыка, cancel, таймер, gamepad-схемы).
-- `UIMessage`, `InteractionPrompts`, `CursorManager`, `StaminaBar`, `FlashlightBar`
-  UI-слой, системные подсказки, курсор и индикаторы игрока.
+## 2. Контур интеракций
+- `InteractiveObject` — единый публичный контракт. Он обрабатывает подсказки, ввод, зависимости, one-shot-политику, checkpoint-serialize и предоставляет `attach_minigame()`/`start_managed_minigame()`.
+- `play_feedback_sfx(stream, volume_db := 0.0, pitch_min := 1.0, pitch_max := 1.0)` — публичный helper для звука интеракции. Не дублируйте `AudioStreamPlayer` в наследниках.
+- `InteractableAvailabilityVisual` — компонент для переключения спрайтов и indicator-ламп, проигрывания looping noise и блокировки по состоянию. Используется холодильником, ноутбуком и другими сложными контентными узлами.
+- `PoweredSwitchableInteractable` — базовый класс для энергозависимых объектов, предоставляющий `set_powered(enabled: bool)` и совместимость `turn_on()`.
+- `Lamp`, `Projector` и `Generator` реализуют этот контракт: лампы реагируют на `powered` и настраиваемый flicker, проектор делится подсветкой, генератор содержит `set_powered(true)` и никак больше не вызывает `has_method("turn_on")`.
 
-## 2. Ключевые контуры
+## 3. Mind the helpers
+- `Fridge` разбивается на: лаб-контроль, уникальное вступление, feeding-flow, teleport/chase clear/autosave и `InteractableAvailabilityVisual`. Всё что остаётся внутри — упорядоченный pipeline: prerequisites → code lock → feeding → completion.
+- `Laptop` держит базовый запуск SQL-мини-игры и completion-state, а вспомогательные политики (награда, unlock-on-dependency) выносятся в `LaptopCompletionReward` и `UnlockOnDependencyAttempt`.
+- `SceneRuleRunner` с ресурсами `SceneRuleAction` (`SetDependencyAction`, `SetInteractionEnabledAction`, `SetDoorTargetAction`, `SetLockedAction`, `RefreshInteractionStateAction`, `SetPropertyAction`, `ShowNotificationAction` и т.п.) заменяет level-specific `has_method/call` и делает wiring декларативным.
 
-### 2.1 Переходы сцен
+## 4. Контур уровней и событий
+- Все levels/cycles/… держат `CycleLevel` как базу. Специфические wiring, ранее лежавшие в `_ready()`/`call_deferred(...)`, теперь оформляются через `SceneRuleRunner`.
+- `CrazyLevelEvent` и аналогичные эффектные узлы остаются, но подключаются к `SceneRuleRunner` либо сигналам (например, `SceneRuleRunner` запускает `CrazyLevelEvent.start_event()`).
 
-- Меню/интеракции переключают сцену через `UIMessage.change_scene_with_fade*`.
-- При переходе в игровую сцену `GameDirector` перенастраивает фазу/таймер.
-- `GameState` обновляет путь текущей сцены для продолжения забега.
+## 5. Границы API и инварианты
+- Никаких `has_method("_private")` за пределами класса. Только публичные методы (`InteractiveObject`, `GameState`, `CycleState`, `MusicManager`, `GameDirector`).
+- `InteractiveObject.locked_message` — canonical: наследники могут синхронизировать свои local message (например `door_locked_message` остаётся deprecated alias).
+- Не вмешивайтесь в тайминги: shader transitions, feeding stages, music fades, teleport delays, bedtime fade должен работать как сейчас.
+- Новые уровни и объекты обязательно проходят через `README.md`/`docs/testing_strategy.md`, чтобы знать, где фиксировать инварианты.
 
-### 2.2 Музыкальный контур
+## 6. Ссылки на документацию
+- `README.md` (корневой README) — навигационный хаб.
+- `docs/interaction_system.md`, `docs/state_and_checkpoint_system.md`, `docs/level_event_system.md`, `docs/refactor_safety_rules.md`, `docs/testing_strategy.md` — углублённые справочники.
 
-- Любая музыка должна идти через `MusicManager`.
-- Сценовые `LevelMusic`-узлы вызывают только публичные методы `MusicManager`.
-- Trigger-зоны управляют музыкой через `TriggerSetProperty` действиями `music_on_*`.
-
-### 2.3 Контур мини-игр
-
-- Мини-игра регистрируется в `MinigameController.start_minigame(...)`.
-- Игра/пауза/cursor/music синхронизируются централизованно в контроллере.
-- Схема геймпада задаётся через `set_gamepad_scheme`/`clear_gamepad_scheme`.
-- Timed lab-мини-игры наследуются от `res://levels/minigames/labs/timed_lab_minigame_base.gd`.
-- Общий timed-lab helper отвечает за таймер, cleanup, стандартный outcome и post-line для успеха/провала.
-
-### 2.4 Текстовый UI-контур
-
-- `UIMessage` остаётся единой facade-точкой экранного текста.
-- Публичный канал `show_dialogue(...)` используется для нижних реплик/субтитров, с опциональной озвучкой.
-- Публичный канал `show_notification(...)` используется для системных сообщений, лута, дверей, блокировок и наград.
-- `show_text`, `show_message`, `show_subtitle` считаются legacy-wrapper API и не должны быть основной точкой интеграции в новом коде.
-
-### 2.5 Контур интеракций
-
-- `InteractiveObject` является базовым публичным контрактом интеракции.
-- Зависимости между интерактивными объектами задаются только через `set_dependency_object(...)`.
-- Включение/отключение объекта делается через `set_interaction_enabled(...)`, а не прямой раздельной правкой prompt/input флагов.
-- Запуск/attach мини-игр делается через `attach_minigame(...)` или `start_managed_minigame(...)`.
-- Если зависимость не выполнена, базовый `InteractiveObject` обязан показать `locked_message`, если наследник не переопределил это поведение явно.
-
-## 3. Границы API (важно)
-
-- Внешний код не должен обращаться к приватным `MusicManager._*`.
-- Внешний код не должен обращаться к приватным `InteractiveObject._*`.
-- Для расчёта итоговой громкости категории использовать публичный
-  `MusicManager.resolve_mix_volume_db(...)`.
-- Сцены/объекты вызывают только публичные методы autoload-модулей.
-- Для специальных death-screen веток используется публичный override-point `CycleLevel.handle_custom_death_screen() -> bool`, без `has_method/call` по строке.
-- Чтение/запись runtime-флагов `GameState` должно идти через публичные getter/mutator/consume методы, а не через разрозненные прямые правки полей там, где уже есть API.
-- Приватные методы (`_...`) можно менять без обратной совместимости, поэтому
-  внешние зависимости на них считаются архитектурным дефектом.
-
-## 4. Инварианты стабильности
-
-- Исправления не должны менять игровую логику (скорости, урон, тайминги, условия победы).
-- Аудио-инвариант спальни: при старте уровня внутри `TriggerBedroomSilent` ambient
-  должен быть подавлен до выхода из зоны.
-- При кроссфейде базовой музыки команды синхронизации громкости должны
-  применяться к фактическому целевому плееру, чтобы не возникало «протекания» звука.
-
-## 5. Практика тестирования
-
-- Базовые smoke-проверки: загрузка сцен/скриптов/autoload/input.
-- Runtime-регрессии: отдельные async-тесты для переходов и кадро-зависимых гонок.
-- Архитектурные инварианты: тесты на отсутствие private-coupling между модулями.
-
-## 6. Изменения (changelog)
-
-- Добавлен публичный API микса `MusicManager.resolve_mix_volume_db(...)`.
-- Устранена гонка при sync-громкости в кроссфейде базовой музыки.
-- Добавлены runtime-тесты для перехода `menu -> level_01_start` и synthetic race.
-- Добавлен архитектурный тест, запрещающий внешние вызовы `MusicManager._*`.
-- Добавлены публичные UI-каналы `UIMessage.show_dialogue(...)` и `UIMessage.show_notification(...)`.
-- Интерактивные зависимости/мини-игры унифицированы вокруг публичного API `InteractiveObject`.
-- Лабораторные мини-игры сведены к общему timed-lab base/helper без изменения геймплейной семантики.
-- Добавлены архитектурные тесты на запрет private-coupling к `InteractiveObject` и stringly custom death handler.
-- Эти изменения не меняют игровой процесс и затрагивают только подкапотную часть.
+## 7. Ченджлог (на будущее)
+- Добавлены `SceneRuleRunner` и `SceneRuleAction`.
+- `GameDirector` теперь фасад, за ним контроллеры `DistortionPhaseController`, `ScreenFxOverlayController`, `DeathSequenceController`.
+- `InteractiveObject` поставляет `play_feedback_sfx` и опосредует powered interactables через `PoweredSwitchableInteractable`.
+- `Fridge`/`Laptop` используют вспомогательные компоненты и больше не хранят level-specific wiring.

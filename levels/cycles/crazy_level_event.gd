@@ -126,10 +126,8 @@ func _prepare_timer_collapse() -> void:
 	_collapse_start_time = 0.0
 	if GameDirector == null:
 		return
-	if GameDirector.has_method("ensure_timer_running") and fallback_time_if_timer_disabled > 0.0:
+	if fallback_time_if_timer_disabled > 0.0:
 		GameDirector.ensure_timer_running(fallback_time_if_timer_disabled)
-	if not GameDirector.has_method("get_time_left"):
-		return
 	_collapse_start_time = float(GameDirector.get_time_left())
 	if _collapse_start_time <= 0.0:
 		return
@@ -138,7 +136,7 @@ func _prepare_timer_collapse() -> void:
 func _update_timer_collapse(delta: float) -> void:
 	if not _collapse_active:
 		return
-	if GameDirector == null or not GameDirector.has_method("set_time_left"):
+	if GameDirector == null:
 		_collapse_active = false
 		return
 	var collapse_duration: float = maxf(0.001, timer_collapse_duration)

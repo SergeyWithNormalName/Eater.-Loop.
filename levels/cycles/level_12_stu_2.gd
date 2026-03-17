@@ -1,5 +1,11 @@
 extends "res://levels/cycles/level.gd"
 
+const SceneRuleRunnerScript = preload("res://levels/scene_rules/scene_rule_runner.gd")
+const SceneRuleScript = preload("res://levels/scene_rules/scene_rule.gd")
+const SetDependencyActionScript = preload("res://levels/scene_rules/set_dependency_action.gd")
+const RefreshInteractionStateActionScript = preload("res://levels/scene_rules/refresh_interaction_state_action.gd")
+const SetDoorTargetFromCycleStateActionScript = preload("res://levels/scene_rules/set_door_target_from_cycle_state_action.gd")
+
 const BASEMENT_LOCAL_BOUNDS := Rect2(6050.0, -320.0, 9150.0, 900.0)
 const BASEMENT_DARKNESS_COLOR := Color(0.007843138, 0.007843138, 0.011764706, 1.0)
 const TO202_DEFAULT_TARGET := NodePath("../../../202/InteractableObjects/Door(In202)")
@@ -13,14 +19,11 @@ var _player_node: Node2D = null
 var _basement_node: Node2D = null
 var _default_darkness_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 var _is_player_in_basement: bool = false
-var _generator_node: InteractiveObject = null
-var _fridge_node: Node = null
-var _door_to_202_node: Node = null
+var _fridge_node: InteractiveObject = null
 
 func _ready() -> void:
 	show_start_subtitle = true
 	start_subtitle_text = CYCLE_START_SUBTITLE
-	_generator_node = get_node_or_null("Generator") as InteractiveObject
 	super._ready()
 	_darkness_node = get_node_or_null("Darkness") as CanvasModulate
 	_player_node = get_node_or_null("Player") as Node2D
@@ -28,7 +31,7 @@ func _ready() -> void:
 	if _darkness_node != null:
 		_default_darkness_color = _darkness_node.color
 	_update_basement_darkness(true)
-	call_deferred("_wire_level12_dependencies")
+	_wire_level12_dependencies()
 
 func _physics_process(_delta: float) -> void:
 	_update_basement_darkness()
@@ -48,64 +51,54 @@ func _update_basement_darkness(force: bool = false) -> void:
 	_darkness_node.color = BASEMENT_DARKNESS_COLOR if is_in_basement else _default_darkness_color
 
 func _wire_level12_dependencies() -> void:
-	_generator_node = get_node_or_null("Generator") as InteractiveObject
-	_fridge_node = get_node_or_null("6thLevel/604/InteractableObjects/Fridge")
-	_door_to_202_node = get_node_or_null("2thLevel/2thHall/InteractableObjects/Door(To202)")
-
-	if _generator_node != null and _fridge_node != null and _fridge_node.has_method("set_dependency_object"):
-		_fridge_node.call("set_dependency_object", _generator_node)
-		_update_fridge_locked_message()
-		if _fridge_node.has_method("refresh_visual_state"):
-			_fridge_node.call("refresh_visual_state")
-
-	if SettingsManager != null and SettingsManager.has_signal("language_changed"):
-		var on_language_changed := Callable(self, "_on_language_changed")
-		if not SettingsManager.language_changed.is_connected(on_language_changed):
-			SettingsManager.language_changed.connect(on_language_changed)
-
-	if CycleState != null and CycleState.has_signal("fridge_interacted_changed"):
-		var on_fridge_interacted := Callable(self, "_on_fridge_interacted_changed")
-		if not CycleState.is_connected("fridge_interacted_changed", on_fridge_interacted):
-			CycleState.connect("fridge_interacted_changed", on_fridge_interacted)
-	if CycleState != null and CycleState.has_signal("ate_this_cycle_changed"):
-		var on_ate_changed := Callable(self, "_on_ate_this_cycle_changed")
-		if not CycleState.is_connected("ate_this_cycle_changed", on_ate_changed):
-			CycleState.connect("ate_this_cycle_changed", on_ate_changed)
-	_update_to202_target()
+	_fridge_node = get_node_or_null("6thLevel/604/InteractableObjects/Fridge") as InteractiveObject
+	var runner = SceneRuleRunnerScript.new()
+	var dependency_rule = SceneRuleScript.new()
+	dependency_rule.trigger_kind = SceneRuleScript.TriggerKind.READY
+	var set_dependency = SetDependencyActionScript.new()
+	set_dependency.target_path = NodePath("6thLevel/604/InteractableObjects/Fridge")
+	set_dependency.dependency_path = NodePath("Generator")
+	var refresh_fridge = RefreshInteractionStateActionScript.new()
+	refresh_fridge.target_path = NodePath("6thLevel/604/InteractableObjects/Fridge")
+	var set_target = SetDoorTargetFromCycleStateActionScript.new()
+	set_target.door_path = NodePath("2thLevel/2thHall/InteractableObjects/Door(To202)")
+	set_target.condition_kind = SetDoorTargetFromCycleStateActionScript.ConditionKind.ATE_THIS_CYCLE
+	set_target.target_if_true = TO202_BEDROOM_TARGET
+	set_target.target_if_false = TO202_DEFAULT_TARGET
+	dependency_rule.actions = [set_dependency, refresh_fridge, set_target]
+	var fridge_changed_rule = SceneRuleScript.new()
+	fridge_changed_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	fridge_changed_rule.source_path = NodePath("/root/CycleState")
+	fridge_changed_rule.signal_name = "fridge_interacted_changed"
+	fridge_changed_rule.one_shot = false
+	fridge_changed_rule.actions = [set_target]
+	var ate_changed_rule = SceneRuleScript.new()
+	ate_changed_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	ate_changed_rule.source_path = NodePath("/root/CycleState")
+	ate_changed_rule.signal_name = "ate_this_cycle_changed"
+	ate_changed_rule.one_shot = false
+	ate_changed_rule.actions = [set_target]
+	runner.rules = [dependency_rule, fridge_changed_rule, ate_changed_rule]
+	add_child(runner)
+	runner.run_actions(dependency_rule.actions, [])
+	if SettingsManager != null and not SettingsManager.language_changed.is_connected(_on_language_changed):
+		SettingsManager.language_changed.connect(_on_language_changed)
+	_update_fridge_locked_message()
 
 func should_show_start_subtitle() -> bool:
-	if _generator_node == null:
-		_generator_node = get_node_or_null("Generator") as InteractiveObject
-	return not _is_generator_completed()
-
-func _is_generator_completed() -> bool:
-	if _generator_node == null:
-		return false
-	return bool(_generator_node.is_completed)
-
-func _on_fridge_interacted_changed() -> void:
-	_update_to202_target()
-
-func _on_ate_this_cycle_changed(_value: bool) -> void:
-	_update_to202_target()
+	var generator_node := get_node_or_null("Generator") as InteractiveObject
+	return generator_node == null or not generator_node.is_completed
 
 func _on_language_changed(_language: String) -> void:
 	_update_fridge_locked_message()
 
-func _update_to202_target() -> void:
-	if _door_to_202_node == null:
-		return
-	var should_open_bedroom := CycleState != null and bool(CycleState.has_eaten_this_cycle())
-	if _door_to_202_node.has_method("set_target_marker_path"):
-		_door_to_202_node.call("set_target_marker_path", TO202_BEDROOM_TARGET if should_open_bedroom else TO202_DEFAULT_TARGET)
-
 func _update_fridge_locked_message() -> void:
 	if _fridge_node == null:
 		return
-	var message := FRIDGE_LOCKED_MESSAGE_RU if _is_russian_language() else FRIDGE_LOCKED_MESSAGE_EN
-	_fridge_node.set("locked_message", message)
+	_fridge_node.locked_message = FRIDGE_LOCKED_MESSAGE_RU if _is_russian_language() else FRIDGE_LOCKED_MESSAGE_EN
+	_fridge_node.refresh_interaction_state()
 
 func _is_russian_language() -> bool:
-	if SettingsManager != null and SettingsManager.has_method("get_language"):
+	if SettingsManager != null:
 		return String(SettingsManager.get_language()) == "ru"
 	return TranslationServer.get_locale().to_lower().begins_with("ru")

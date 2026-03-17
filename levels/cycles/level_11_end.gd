@@ -22,9 +22,9 @@ var _branch: EndingBranch = EndingBranch.NONE
 var _ending_started: bool = false
 var _bad_ending_queued: bool = false
 
-var _laptop: Node = null
-var _fridge: Node = null
-var _bed: Node = null
+var _laptop: Laptop = null
+var _fridge: Fridge = null
+var _bed: InteractiveObject = null
 
 func _ready() -> void:
 	super._ready()
@@ -40,18 +40,18 @@ func handle_custom_death_screen() -> bool:
 	return true
 
 func _resolve_nodes() -> void:
-	_laptop = get_node_or_null(laptop_path)
-	_fridge = get_node_or_null(fridge_path)
-	_bed = get_node_or_null(bed_path)
+	_laptop = get_node_or_null(laptop_path) as Laptop
+	_fridge = get_node_or_null(fridge_path) as Fridge
+	_bed = get_node_or_null(bed_path) as InteractiveObject
 
 func _connect_level_flow() -> void:
-	if _laptop != null and _laptop.has_signal("interaction_requested") and not _laptop.interaction_requested.is_connected(_on_laptop_interaction_requested):
+	if _laptop != null and not _laptop.interaction_requested.is_connected(_on_laptop_interaction_requested):
 		_laptop.interaction_requested.connect(_on_laptop_interaction_requested)
-	if _fridge != null and _fridge.has_signal("interaction_requested") and not _fridge.interaction_requested.is_connected(_on_fridge_interaction_requested):
+	if _fridge != null and not _fridge.interaction_requested.is_connected(_on_fridge_interaction_requested):
 		_fridge.interaction_requested.connect(_on_fridge_interaction_requested)
-	if CycleState != null and CycleState.has_signal("lab_completed") and not CycleState.lab_completed.is_connected(_on_lab_completed):
+	if CycleState != null and not CycleState.lab_completed.is_connected(_on_lab_completed):
 		CycleState.lab_completed.connect(_on_lab_completed)
-	if _fridge != null and _fridge.has_signal("feeding_finished") and not _fridge.feeding_finished.is_connected(_on_fridge_feeding_finished):
+	if _fridge != null and not _fridge.feeding_finished.is_connected(_on_fridge_feeding_finished):
 		_fridge.feeding_finished.connect(_on_fridge_feeding_finished)
 
 func _on_laptop_interaction_requested(_player: Node = null) -> void:
@@ -67,9 +67,7 @@ func _choose_branch(branch: EndingBranch) -> void:
 	match _branch:
 		EndingBranch.LAPTOP:
 			_set_fridge_enabled(false)
-			var has_lab := false
-			if CycleState != null and CycleState.has_method("has_completed_any_lab"):
-				has_lab = bool(CycleState.has_completed_any_lab())
+			var has_lab := CycleState != null and bool(CycleState.has_completed_any_lab())
 			if has_lab:
 				_on_lab_completed()
 		EndingBranch.FRIDGE:
@@ -78,7 +76,7 @@ func _choose_branch(branch: EndingBranch) -> void:
 func _on_lab_completed() -> void:
 	if _branch != EndingBranch.LAPTOP:
 		return
-	if CycleState != null and CycleState.has_method("mark_ate"):
+	if CycleState != null:
 		CycleState.mark_ate()
 	_set_bed_enabled(true)
 	if UIMessage != null and laptop_sleep_prompt.strip_edges() != "":
@@ -109,7 +107,7 @@ func _start_bad_ending() -> void:
 	if bad_ending_scene == null:
 		push_warning("LevelEnd: bad_ending_scene не назначена.")
 		return
-	if UIMessage != null and UIMessage.has_method("change_scene_with_fade"):
+	if UIMessage != null:
 		await UIMessage.change_scene_with_fade(bad_ending_scene, 0.6, true)
 		return
 	get_tree().change_scene_to_packed(bad_ending_scene)
@@ -118,24 +116,21 @@ func _set_bed_enabled(enabled: bool) -> void:
 	_set_object_enabled(_bed, enabled)
 
 func _set_laptop_enabled(enabled: bool) -> void:
-	_set_object_enabled(_laptop, enabled)
-	if _laptop == null or not ("is_enabled" in _laptop):
+	if _laptop == null:
 		return
-	_laptop.set("is_enabled", enabled)
+	_laptop.is_enabled = enabled
 
 func _set_fridge_enabled(enabled: bool) -> void:
 	_set_object_enabled(_fridge, enabled)
 	_set_fridge_locked_visual(not enabled)
 
-func _set_object_enabled(object: Node, enabled: bool) -> void:
-	if object == null or not object.has_method("set_interaction_enabled"):
+func _set_object_enabled(object: InteractiveObject, enabled: bool) -> void:
+	if object == null:
 		return
-	object.call("set_interaction_enabled", enabled)
+	object.set_interaction_enabled(enabled)
 
 func _set_fridge_locked_visual(locked: bool) -> void:
 	if _fridge == null:
 		return
-	if _fridge.has_method("set_interaction_enabled"):
-		_fridge.call("set_interaction_enabled", not locked)
-	if _fridge.has_method("refresh_visual_state"):
-		_fridge.call("refresh_visual_state")
+	_fridge.set_interaction_enabled(not locked)
+	_fridge.refresh_visual_state()

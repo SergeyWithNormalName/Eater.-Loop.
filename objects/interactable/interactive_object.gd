@@ -36,11 +36,13 @@ var _interact_area: Area2D = null
 var _player_in_range: Node = null
 var _prompts_enabled: bool = true
 var is_completed: bool = false # <--- ФЛАГ: Выполнен объект или нет
+var _feedback_audio_player: AudioStreamPlayer2D = null
 
 func _ready() -> void:
 	if not is_in_group("checkpoint_stateful"):
 		add_to_group("checkpoint_stateful")
 	input_pickable = false
+	_setup_feedback_audio()
 	_setup_interaction_area()
 	set_dependency_object(dependency_object)
 
@@ -57,7 +59,7 @@ func apply_checkpoint_state(state: Dictionary) -> void:
 	handle_input = bool(state.get("handle_input", handle_input))
 	auto_prompt = bool(state.get("auto_prompt", auto_prompt))
 	_prompts_enabled = bool(state.get("prompts_enabled", _prompts_enabled))
-	_refresh_prompt_state()
+	refresh_interaction_state()
 
 # --- ЛОГИКА ВЗАИМОДЕЙСТВИЯ ---
 
@@ -180,15 +182,16 @@ func set_interaction_enabled(enabled: bool) -> void:
 
 func refresh_interaction_state() -> void:
 	_refresh_prompt_state()
+	_on_interaction_state_refreshed()
 
 func set_dependency_object(new_dependency: InteractiveObject) -> void:
 	if dependency_object == new_dependency:
-		_refresh_prompt_state()
+		refresh_interaction_state()
 		return
 	_disconnect_dependency_listener()
 	dependency_object = new_dependency
 	_setup_dependency_listener()
-	_refresh_prompt_state()
+	refresh_interaction_state()
 
 func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> Node:
 	if minigame == null:
@@ -230,7 +233,7 @@ func _disconnect_dependency_listener() -> void:
 		dependency_object.interaction_finished.disconnect(_on_dependency_finished)
 
 func _on_dependency_finished() -> void:
-	_refresh_prompt_state()
+	refresh_interaction_state()
 
 func _is_dependency_satisfied() -> bool:
 	if dependency_object == null:
@@ -257,3 +260,31 @@ func _refresh_prompt_state() -> void:
 		_show_prompt()
 	else:
 		_hide_prompt()
+
+func play_feedback_sfx(
+	stream: AudioStream,
+	volume_db: float = 0.0,
+	pitch_min: float = 1.0,
+	pitch_max: float = 1.0
+) -> void:
+	if stream == null:
+		return
+	if _feedback_audio_player == null:
+		_setup_feedback_audio()
+	if _feedback_audio_player == null:
+		return
+	_feedback_audio_player.stream = stream
+	_feedback_audio_player.volume_db = volume_db
+	_feedback_audio_player.pitch_scale = randf_range(minf(pitch_min, pitch_max), maxf(pitch_min, pitch_max))
+	_feedback_audio_player.play()
+
+func _on_interaction_state_refreshed() -> void:
+	pass
+
+func _setup_feedback_audio() -> void:
+	if _feedback_audio_player != null:
+		return
+	_feedback_audio_player = AudioStreamPlayer2D.new()
+	_feedback_audio_player.bus = "Sounds"
+	_feedback_audio_player.max_distance = 2000.0
+	add_child(_feedback_audio_player)

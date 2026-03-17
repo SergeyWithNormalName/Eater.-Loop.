@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-const INTERACTION_SCRIPT := preload("res://objects/interactable/interactive_object.gd")
-
 enum ClearMode { HOLD, PRESS }
 
 @export_group("Препятствие")
@@ -26,7 +24,7 @@ enum ClearMode { HOLD, PRESS }
 ## Смещение спрайта подсказки относительно зоны взаимодействия.
 @export var prompt_offset: Vector2 = Vector2.ZERO
 
-@onready var _interact_area: Area2D = $InteractArea
+@onready var _interact_area: InteractiveObject = $InteractArea
 var _player_in_range: Node = null
 var _hold_time: float = 0.0
 var _presses: int = 0
@@ -35,12 +33,12 @@ var _last_prompt_text: String = ""
 func _ready() -> void:
 	if not is_in_group("checkpoint_stateful"):
 		add_to_group("checkpoint_stateful")
-	if _interact_area:
-		_ensure_interact_area_script()
+	if _interact_area != null:
 		if _interact_area.has_signal("player_entered"):
 			_interact_area.player_entered.connect(_on_interact_area_player_entered)
 		if _interact_area.has_signal("player_exited"):
 			_interact_area.player_exited.connect(_on_interact_area_player_exited)
+		_interact_area.set_interaction_enabled(false)
 	set_process(true)
 
 func _process(delta: float) -> void:
@@ -71,12 +69,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_clear_obstacle()
 			return
 		_refresh_prompt()
-
-func _ensure_interact_area_script() -> void:
-	if _interact_area.get_script() != INTERACTION_SCRIPT:
-		_interact_area.set_script(INTERACTION_SCRIPT)
-	if _interact_area.has_method("set_interaction_enabled"):
-		_interact_area.set_interaction_enabled(false)
 
 func _on_interact_area_player_entered(player: Node) -> void:
 	_player_in_range = player
