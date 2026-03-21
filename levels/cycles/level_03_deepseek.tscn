@@ -74,13 +74,19 @@
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="72_i1whk"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="73_brys8"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="74_qxn6o"]
-[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
+[ext_resource type="Script" uid="uid://dawqw5w6r16cr" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_brys8")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_level03_fridge_lab_requirement"]
+script = ExtResource("200_fridge_lab_cfg")
+require_any_lab_completion = true
+required_lab_completion_ids = null
+required_message = "Я не буду есть, пока не сделаю лабораторную работу"
 
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -89,11 +95,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Resource" id="Resource_level03_fridge_lab_requirement"]
-script = ExtResource("200_fridge_lab_cfg")
-require_any_lab_completion = true
-required_message = "Я не буду есть, пока не сделаю лабораторную работу"
 
 [node name="Level" type="Node2D" unique_id=803271373]
 position = Vector2(16, 0)
@@ -668,7 +669,6 @@ win_sound = ExtResource("51_80xnd")
 eat_sound = ExtResource("52_0h1b5")
 background_texture = ExtResource("53_4xyk0")
 lab_requirement_config = SubResource("Resource_level03_fridge_lab_requirement")
-use_locked_visual_after_eating = true
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true

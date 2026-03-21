@@ -130,6 +130,7 @@ func _start_lab_minigame() -> void:
 		if lab_music_stream != null:
 			game.lab_music_stream = lab_music_stream
 		attach_minigame(game)
+		game.call_deferred("setup_lab_music", lab_music_stream)
 	else:
 		var settings := MinigameSettings.new()
 		settings.pause_game = false

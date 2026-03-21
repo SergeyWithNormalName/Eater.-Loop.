@@ -40,6 +40,15 @@ func run() -> Array[String]:
 	if active_player != null:
 		assert_true(active_player.playing, "Timed lab music must actually be playing, not only assigned as current stream")
 		assert_true(active_player.volume_db > -80.0, "Timed lab music player must stay audible")
+		active_player.stop()
+		await tree.process_frame
+		if active_minigame != null and active_minigame.has_method("setup_lab_music"):
+			active_minigame.call("setup_lab_music", CUSTOM_LAB_MUSIC)
+		await tree.create_timer(0.35, true).timeout
+		var recovered_player := MusicManager.get("_active_player") as AudioStreamPlayer
+		assert_true(recovered_player != null and recovered_player.playing, "Timed lab music reapply must recover playback if the minigame player fell silent")
+		if recovered_player != null:
+			assert_eq(String(recovered_player.stream.resource_path), CUSTOM_LAB_MUSIC_PATH, "Timed lab music reapply must keep the laptop-selected stream")
 
 	if active_minigame != null and is_instance_valid(active_minigame):
 		if MinigameController.is_active(active_minigame):

@@ -12,6 +12,8 @@ signal task_completed(success: bool)
 @export var lab_completion_id: String = ""
 @export var complete_lab_on_failure: bool = true
 @export var lab_music_stream: AudioStream = LAB_MUSIC_STREAM
+@export_range(-40.0, 6.0, 0.1) var music_volume_db: float = -12.0
+@export_range(0.0, 5.0, 0.1) var music_suspend_fade_time: float = 0.3
 @export_multiline var success_dialogue_text: String = ""
 @export_multiline var failure_dialogue_text: String = ""
 @export var success_dialogue_voice: AudioStream
@@ -25,13 +27,14 @@ func start_timed_lab_session(
 	on_time_updated: Callable,
 	on_time_expired: Callable,
 	music_stream: AudioStream = null,
-	music_fade_time: float = 0.0
+	music_fade_time: float = -1.0
 ) -> void:
 	add_to_group("minigame_ui")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process(true)
 	set_physics_process(true)
 	var resolved_music_stream := music_stream if music_stream != null else lab_music_stream
+	var resolved_music_fade_time := music_suspend_fade_time if music_fade_time < 0.0 else music_fade_time
 	_ensure_lab_music_loop(resolved_music_stream)
 	var controller_active := MinigameController != null and MinigameController.is_active(self)
 	if MinigameController != null and not controller_active:
@@ -41,11 +44,14 @@ func start_timed_lab_session(
 		settings.block_player_movement = true
 		settings.time_limit = time_limit
 		settings.music_stream = resolved_music_stream
-		settings.music_fade_time = music_fade_time
+		settings.music_volume_db = music_volume_db
+		settings.music_fade_time = resolved_music_fade_time
+		settings.stop_music_on_finish = false
 		settings.auto_finish_on_timeout = false
 		MinigameController.start_minigame(self, settings)
-	elif controller_active and resolved_music_stream != null:
-		MinigameController.update_minigame_music(resolved_music_stream, 999.0, music_fade_time)
+		controller_active = true
+	if controller_active:
+		setup_lab_music(resolved_music_stream, resolved_music_fade_time)
 	current_time = time_limit
 	if MinigameController == null:
 		return
@@ -91,6 +97,17 @@ func set_runtime_paused(paused: bool) -> void:
 	_runtime_paused = paused
 	set_process(not paused)
 	set_physics_process(not paused)
+
+func setup_lab_music(music: AudioStream = null, fade_time: float = -1.0) -> void:
+	var resolved_music_stream := music if music != null else lab_music_stream
+	if resolved_music_stream == null:
+		return
+	lab_music_stream = resolved_music_stream
+	_ensure_lab_music_loop(resolved_music_stream)
+	if MinigameController == null or not MinigameController.is_active(self):
+		return
+	var resolved_fade_time := music_suspend_fade_time if fade_time < 0.0 else fade_time
+	MinigameController.update_minigame_music(resolved_music_stream, music_volume_db, resolved_fade_time)
 
 func _ensure_lab_music_loop(stream: AudioStream) -> void:
 	if stream is AudioStreamWAV:
