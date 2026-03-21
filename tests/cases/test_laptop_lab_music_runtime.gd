@@ -2,7 +2,8 @@ extends "res://tests/test_case.gd"
 
 const LaptopScript := preload("res://objects/interactable/notebook/laptop.gd")
 const SqlMinigameScene := preload("res://levels/minigames/labs/sql/sql_minigame.tscn")
-const LAB_MUSIC_PATH := "res://music/MusicForLabs.wav"
+const CUSTOM_LAB_MUSIC := preload("res://music/InsideAmbient.wav")
+const CUSTOM_LAB_MUSIC_PATH := "res://music/InsideAmbient.wav"
 
 func run() -> Array[String]:
 	var tree := Engine.get_main_loop() as SceneTree
@@ -17,6 +18,7 @@ func run() -> Array[String]:
 
 	var laptop := LaptopScript.new()
 	laptop.minigame_scene = SqlMinigameScene
+	laptop.lab_music_stream = CUSTOM_LAB_MUSIC
 	tree.root.add_child(laptop)
 	await tree.process_frame
 
@@ -32,7 +34,12 @@ func run() -> Array[String]:
 	var current_stream := MusicManager.get_current_stream()
 	assert_true(current_stream != null, "Timed lab minigame must start its dedicated music")
 	if current_stream != null:
-		assert_eq(String(current_stream.resource_path), LAB_MUSIC_PATH, "Timed lab minigame must play MusicForLabs.wav")
+		assert_eq(String(current_stream.resource_path), CUSTOM_LAB_MUSIC_PATH, "Timed lab minigame must play the music selected on the laptop")
+	var active_player := MusicManager.get("_active_player") as AudioStreamPlayer
+	assert_true(active_player != null, "MusicManager must expose an active player during timed lab music")
+	if active_player != null:
+		assert_true(active_player.playing, "Timed lab music must actually be playing, not only assigned as current stream")
+		assert_true(active_player.volume_db > -80.0, "Timed lab music player must stay audible")
 
 	if active_minigame != null and is_instance_valid(active_minigame):
 		if MinigameController.is_active(active_minigame):

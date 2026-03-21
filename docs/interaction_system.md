@@ -14,6 +14,11 @@
 - Вспомогательный `RefCounted`, который инкапсулирует: спрайты locked/available, indicator lights и optional looping noise.
 - Сам ни на что не подписывается: владелец (`Fridge`, `Laptop` и будущие объекты) вызывает `configure(...)` и затем `apply(is_available)` из своих `_ready()`/`refresh_interaction_state()`-веток.
 
+## Optional config resources
+- `Fridge` больше не держит одноразовые настройки кодового замка, телепорта, списка лабораторных, уникального интро и покачивания плоским списком в корне инспектора. Для этого используются отдельные ресурсы-конфиги (`FridgeCodeLockConfig`, `FridgeLabRequirementConfig`, `FridgeTeleportConfig`, `FridgeUniqueIntroConfig`, `IdleRockingConfig`).
+- `Laptop` держит денежную награду через `LaptopRewardConfig`, поэтому обычный ноутбук не показывает пять reward-полей, которыми он не пользуется.
+- Старые сериализованные поля всё ещё поддерживаются для совместимости существующих сцен, но новые сцены и новые правки должны идти через config resources.
+
 ## `PoweredSwitchableInteractable`
 - Базовый узел для ламп/проекторов: содержит `set_powered(bool)`, `is_powered`, `turn_on` (обёртка для совместимости) и `requires_generator`.
 - Звук переключения делается через `play_feedback_sfx`; специфичное поведение вроде flicker остаётся в наследниках (`Lamp`).

@@ -129,6 +129,7 @@
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="126_yauvq"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="127_hip56"]
 [ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="128_jsb5w"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 [ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_jqckr"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_e4eaf"]
 [ext_resource type="Texture2D" uid="uid://bdytis2jqaj38" path="res://objects/interactable/note/Otchislenie.png" id="131_g6lqu"]
@@ -165,6 +166,10 @@ size = Vector2(339.5, 466.78906)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
 size = Vector2(339.5, 406.78906)
+
+[sub_resource type="Resource" id="Resource_level11_fridge_lab_requirement"]
+script = ExtResource("200_fridge_lab_cfg")
+require_any_lab_completion = true
 
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -3800,7 +3805,7 @@ andrey_face = ExtResource("89_t2sbq")
 bg_music = ExtResource("89_drtc1")
 eat_sound = ExtResource("90_8v0td")
 background_texture = ExtResource("91_ibrhk")
-require_lab_completion = true
+lab_requirement_config = SubResource("Resource_level11_fridge_lab_requirement")
 
 [node name="603" type="Node2D" parent="6thLevel" unique_id=1673846713]
 position = Vector2(38317, 0)
@@ -8560,8 +8565,8 @@ enemy_scene = ExtResource("133_g6lqu")
 
 [node name="Lamp" parent="." unique_id=1861148071 instance=ExtResource("131_upyn3")]
 position = Vector2(12091, 6290)
-light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
 flicker_enabled = true
+light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

@@ -124,6 +124,9 @@
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="126_nwjv1"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="127_djg4i"]
 [ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="128_kuiyc"]
+[ext_resource type="Script" path="res://objects/interactable/notebook/laptop_reward_config.gd" id="200_laptop_reward_cfg"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_unique_intro_config.gd" id="201_fridge_intro_cfg"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="202_fridge_lab_cfg"]
 [ext_resource type="PackedScene" uid="uid://cdumkmia83xgl" path="res://levels/minigames/labs/sql/sql_minigame_glitch.tscn" id="129_nuox8"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_1d7t7"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_0jbf5"]
@@ -163,6 +166,20 @@ size = Vector2(339.5, 406.78906)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nuox8"]
 size = Vector2(339.5, 406.78906)
+
+[sub_resource type="Resource" id="Resource_level13_laptop_reward"]
+script = ExtResource("200_laptop_reward_cfg")
+enabled = true
+money_system_path = NodePath("../Level12MoneySystem")
+reward_money = 250
+
+[sub_resource type="Resource" id="Resource_level13_fridge_unique_intro"]
+script = ExtResource("201_fridge_intro_cfg")
+once_per_run = true
+
+[sub_resource type="Resource" id="Resource_level13_fridge_lab_requirement"]
+script = ExtResource("202_fridge_lab_cfg")
+required_lab_completion_ids = PackedStringArray("level_13_stu_3_laptop_1", "level_13_stu_3_laptop_2", "level_13_stu_3_laptop_3", "level_13_stu_3_laptop_4")
 
 [node name="Level2" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -8521,9 +8538,7 @@ position = Vector2(47060, -7123)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
 lab_completion_id = "level_13_stu_3_laptop_1"
-reward_on_work_completion = true
-money_system_path = NodePath("../Level12MoneySystem")
-reward_money = 250
+reward_config = SubResource("Resource_level13_laptop_reward")
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8532,9 +8547,7 @@ position = Vector2(44983, -14956)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
 lab_completion_id = "level_13_stu_3_laptop_2"
-reward_on_work_completion = true
-money_system_path = NodePath("../Level12MoneySystem")
-reward_money = 250
+reward_config = SubResource("Resource_level13_laptop_reward")
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8543,9 +8556,7 @@ position = Vector2(46021, 6563)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
 lab_completion_id = "level_13_stu_3_laptop_3"
-reward_on_work_completion = true
-money_system_path = NodePath("../Level12MoneySystem")
-reward_money = 250
+reward_config = SubResource("Resource_level13_laptop_reward")
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8554,9 +8565,7 @@ position = Vector2(48430, 20508)
 minigame_scene = ExtResource("129_nuox8")
 time_limit = 10.0
 lab_completion_id = "level_13_stu_3_laptop_4"
-reward_on_work_completion = true
-money_system_path = NodePath("../Level12MoneySystem")
-reward_money = 250
+reward_config = SubResource("Resource_level13_laptop_reward")
 locked_sprite = ExtResource("66_r4j8a")
 available_sprite = ExtResource("130_1d7t7")
 
@@ -8689,8 +8698,8 @@ access_granted_message = "Я заплатил за проход"
 position = Vector2(9592, 114)
 food_scenes = Array[PackedScene]([ExtResource("133_kfa3y")])
 win_sound = ExtResource("90_7qnpl")
-unique_intro_once_per_run = true
-required_lab_completion_ids = PackedStringArray("level_13_stu_3_laptop_1", "level_13_stu_3_laptop_2", "level_13_stu_3_laptop_3", "level_13_stu_3_laptop_4")
+unique_intro_config = SubResource("Resource_level13_fridge_unique_intro")
+lab_requirement_config = SubResource("Resource_level13_fridge_lab_requirement")
 
 [node name="Level12MoneySystem" parent="." unique_id=234445541 instance=ExtResource("133_o0t8e")]
 

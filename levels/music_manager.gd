@@ -49,6 +49,10 @@ const MIX_PAUSE := "pause"
 const MIX_MENU := "menu"
 const PAUSE_REASON_MENU := "pause_menu"
 const PAUSE_REASON_GLOBAL := "global"
+const PAUSE_TRANSITION_IDLE := "idle"
+const PAUSE_TRANSITION_OPENING := "opening"
+const PAUSE_TRANSITION_OPEN := "open"
+const PAUSE_TRANSITION_CLOSING := "closing"
 const SOURCE_MINIGAME := -10
 const SOURCE_KIND_GENERIC := "generic"
 const SOURCE_KIND_AMBIENT := "ambient"
@@ -91,7 +95,10 @@ var _chase_base_muted: bool = false
 var _event_sources: Dictionary = {}
 var _distortion_sources: Dictionary = {}
 var _pause_player: AudioStreamPlayer
+var _pause_fade_tween: Tween
 var _pause_menu_active: bool = false
+var _pause_transition_state: String = PAUSE_TRANSITION_IDLE
+var _pause_transition_token: int = 0
 var _base_pause_reasons: Dictionary = {}
 var _base_pause_active: bool = false
 var _base_pause_player: AudioStreamPlayer
@@ -106,6 +113,8 @@ var _pending_ambient_fade_time: float = -1.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	if _player_a != null and _player_b != null and _runner_player != null and _pause_player != null:
+		return
 	_player_a = AudioStreamPlayer.new()
 	_player_b = AudioStreamPlayer.new()
 	_setup_player(_player_a)
@@ -143,18 +152,24 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 		output_volume = output_volume_db
 	output_volume = _resolve_output_volume(output_volume, source_kind)
 
+	var same_source := _current_stream == stream and _current_source_id == source_id and _current_source_kind == source_kind
 	_current_source_id = source_id
 	_current_source_kind = source_kind
 
-	if _current_stream == stream and _active_player.playing:
+	if same_source:
 		_base_volume_db = target_volume
 		_is_ducked = false
 		_pre_duck_volume_db = target_volume
+		var active_player := _resolve_base_output_player()
 		if _base_pause_active:
-			_apply_base_pause_to_player(_active_player, output_volume, target_fade)
+			_base_pause_stream = stream
+			_base_pause_restore_db = output_volume
+			if active_player != null and active_player.playing:
+				_apply_base_pause_to_player(active_player, output_volume, target_fade, start_position)
 			return
-		_fade_volume(_active_player, output_volume, target_fade)
-		return
+		if active_player != null and active_player.playing:
+			_fade_volume(active_player, output_volume, target_fade)
+			return
 
 	_current_stream = stream
 	_base_volume_db = target_volume
@@ -259,7 +274,15 @@ func clear_stack() -> void:
 	_stack.clear()
 
 func reset_base_music_state() -> void:
+	reset_all_music_state()
+
+func reset_all_music_state() -> void:
+	_kill_pitch_stop_tween()
 	_kill_fade_tween()
+	_kill_pause_fade_tween()
+	if _runner_fade_tween and _runner_fade_tween.is_running():
+		_runner_fade_tween.kill()
+	_runner_fade_tween = null
 	var players: Array[AudioStreamPlayer] = [_player_a, _player_b]
 	for player in players:
 		if player == null:
@@ -268,9 +291,20 @@ func reset_base_music_state() -> void:
 		player.stream_paused = false
 		player.stream = null
 		player.volume_db = -80.0
+	if _pause_player != null:
+		_pause_player.stop()
+		_pause_player.stream_paused = false
+		_pause_player.stream = null
+		_pause_player.volume_db = -80.0
+	if _runner_player != null:
+		_runner_player.stop()
+		_runner_player.stream_paused = false
+		_runner_player.stream = null
+		_runner_player.volume_db = -80.0
 	_current_stream = null
 	_current_source_id = 0
 	_current_source_kind = SOURCE_KIND_GENERIC
+	_stack.clear()
 	_base_volume_db = default_volume_db
 	_is_ducked = false
 	_pre_duck_volume_db = default_volume_db
@@ -282,8 +316,43 @@ func reset_base_music_state() -> void:
 	_base_pause_was_playing = false
 	_base_pause_reasons.clear()
 	_base_pause_active = false
+	_pause_menu_active = false
+	_pause_transition_state = PAUSE_TRANSITION_IDLE
+	_pause_transition_token = 0
+	_event_sources.clear()
+	_distortion_sources.clear()
+	_ambient_suppression_sources.clear()
+	_runner_sources.clear()
+	_runner_source_order.clear()
+	_runner_suppressed.clear()
+	_runner_active_source_id = 0
+	_runner_active_fade_out_time = -1.0
+	_runner_pause_position = 0.0
+	_runner_paused = false
+	_runner_global_paused = false
+	_runner_active = false
 	_chase_base_muted = false
 	_clear_pending_ambient_request()
+	_active_player = _player_a
+	_inactive_player = _player_b
+
+func get_music_debug_state() -> Dictionary:
+	return {
+		"current_stream_path": _resource_path(_current_stream),
+		"current_source_kind": _current_source_kind,
+		"current_source_id": _current_source_id,
+		"stack_depth": _stack.size(),
+		"pause_menu_active": _pause_menu_active,
+		"base_pause_active": _base_pause_active,
+		"pause_transition_state": _pause_transition_state,
+		"chase_active": is_chase_active(),
+		"chase_paused": _runner_paused or _runner_global_paused,
+		"ambient_suppressed": is_ambient_music_suppressed(),
+		"base_player_a": _describe_player(_player_a),
+		"base_player_b": _describe_player(_player_b),
+		"pause_player": _describe_player(_pause_player),
+		"runner_player": _describe_player(_runner_player)
+	}
 
 func get_current_stream() -> AudioStream:
 	return _current_stream
@@ -308,6 +377,18 @@ func remove_music_from_stack_by_source_id(source_id: int) -> void:
 		if int(_stack[i].get("source_id", 0)) == source_id:
 			_stack.remove_at(i)
 
+func remove_music_from_stack_by_source(source_id: int, source_kind: String = "", stream: AudioStream = null) -> void:
+	for i in range(_stack.size() - 1, -1, -1):
+		var entry: Dictionary = _stack[i]
+		var entry_source_id := int(entry.get("source_id", 0))
+		var entry_source_kind := str(entry.get("source_kind", SOURCE_KIND_GENERIC))
+		var entry_stream: AudioStream = entry.get("stream", null)
+		var matches_id := source_id != 0 and entry_source_id == source_id
+		var matches_kind := source_kind != "" and entry_source_kind == source_kind
+		var matches_stream := stream != null and entry_stream == stream
+		if matches_id or (matches_kind and matches_stream):
+			_stack.remove_at(i)
+
 func play_ambient_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	if stream == null:
 		_clear_pending_ambient_request()
@@ -316,7 +397,7 @@ func play_ambient_music(stream: AudioStream, fade_time: float = -1.0, volume_db:
 	var target_volume := resolve_mix_volume_db(MIX_AMBIENT, volume_db)
 	if is_ambient_music_suppressed():
 		_set_pending_ambient_request(stream, target_volume, fade_time)
-		_stop_base_music_if_playing()
+		_stop_active_ambient_if_playing()
 		return
 	_clear_pending_ambient_request()
 	play_music(stream, fade_time, target_volume, 0.0, 999.0, 0, SOURCE_KIND_AMBIENT)
@@ -335,9 +416,9 @@ func stop_ambient_music(stream: AudioStream, fade_time: float = -1.0) -> void:
 		return
 	if _pending_ambient_stream == stream:
 		_clear_pending_ambient_request()
-	if _current_stream == stream:
+	if _current_source_kind == SOURCE_KIND_AMBIENT and _current_stream == stream:
 		stop_music(fade_time)
-	remove_music_from_stack(stream)
+	remove_music_from_stack_by_source(0, SOURCE_KIND_AMBIENT, stream)
 
 func start_distortion_music(source: Object, stream: AudioStream, fade_time: float = -1.0, volume_db: float = 999.0) -> void:
 	if source == null or stream == null:
@@ -345,6 +426,10 @@ func start_distortion_music(source: Object, stream: AudioStream, fade_time: floa
 	var source_id := source.get_instance_id()
 	_distortion_sources[source_id] = true
 	var target_volume := resolve_mix_volume_db(MIX_DISTORTION, volume_db)
+	if _current_source_id == source_id and _current_source_kind == SOURCE_KIND_DISTORTION:
+		play_music(stream, fade_time, target_volume, 0.0, 999.0, source_id, SOURCE_KIND_DISTORTION)
+		return
+	remove_music_from_stack_by_source_id(source_id)
 	push_music(stream, fade_time, target_volume, source_id, SOURCE_KIND_DISTORTION)
 
 func stop_distortion_music(source: Object, fade_time: float = -1.0) -> void:
@@ -363,6 +448,10 @@ func start_event_music(source: Object, stream: AudioStream, fade_in_time: float 
 	var source_id := source.get_instance_id()
 	_event_sources[source_id] = {"fade_out_time": fade_out_time}
 	var target_volume := resolve_mix_volume_db(MIX_EVENT, volume_db)
+	if _current_source_id == source_id and _current_source_kind == SOURCE_KIND_EVENT:
+		play_music(stream, fade_in_time, target_volume, 0.0, 999.0, source_id, SOURCE_KIND_EVENT)
+		return
+	remove_music_from_stack_by_source_id(source_id)
 	push_music(stream, fade_in_time, target_volume, source_id, SOURCE_KIND_EVENT)
 
 func stop_event_music(source: Object, fade_out_time: float = -1.0) -> void:
@@ -382,20 +471,25 @@ func stop_event_music(source: Object, fade_out_time: float = -1.0) -> void:
 		remove_music_from_stack_by_source_id(source_id)
 	_event_sources.erase(source_id)
 
-func start_minigame_music(stream: AudioStream, volume_db: float = 999.0) -> void:
+func start_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
 	if stream == null:
 		return
 	var target_volume := resolve_mix_volume_db(MIX_MINIGAME, volume_db)
-	push_music(stream, 0.0, target_volume, SOURCE_MINIGAME, SOURCE_KIND_MINIGAME)
+	if _current_source_id == SOURCE_MINIGAME and _current_source_kind == SOURCE_KIND_MINIGAME:
+		play_music(stream, fade_time, target_volume, 0.0, 999.0, SOURCE_MINIGAME, SOURCE_KIND_MINIGAME)
+		return
+	remove_music_from_stack_by_source_id(SOURCE_MINIGAME)
+	push_music(stream, fade_time, target_volume, SOURCE_MINIGAME, SOURCE_KIND_MINIGAME)
 
-func stop_minigame_music() -> void:
+func stop_minigame_music(fade_time: float = -1.0) -> void:
 	if _current_source_id != SOURCE_MINIGAME:
 		return
 	var player := _resolve_playing_player()
 	if player == null:
 		return
 	_kill_pitch_stop_tween()
-	player.stop()
+	var target_fade := _resolve_fade_time(fade_time)
+	_fade_volume(player, -80.0, target_fade, true)
 
 func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: float = 0.05) -> void:
 	if _current_source_id != SOURCE_MINIGAME and _current_source_kind != SOURCE_KIND_MINIGAME:
@@ -419,28 +513,43 @@ func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: fl
 
 func start_pause_menu_music(stream: AudioStream, fade_out_time: float = -1.0, volume_db: float = 999.0) -> void:
 	_pause_menu_active = true
+	_pause_transition_token += 1
 	var target_fade := _resolve_fade_time(fade_out_time)
 	_request_base_pause(PAUSE_REASON_MENU, target_fade)
 	pause_chase_music(target_fade)
 	if stream == null:
+		_stop_pause_player_immediately()
+		_pause_transition_state = PAUSE_TRANSITION_OPEN
 		return
 	if _pause_player == null:
 		_pause_player = AudioStreamPlayer.new()
 		_setup_player(_pause_player)
 		add_child(_pause_player)
 	var target_volume := resolve_mix_volume_db(MIX_PAUSE, volume_db)
-	_pause_player.stream = stream
-	_pause_player.volume_db = target_volume
-	if _pause_player.playing:
-		_pause_player.stop()
-	_pause_player.play()
+	_ensure_music_loop(stream)
+	if _pause_player.playing and _pause_player.stream == stream:
+		_start_or_update_pause_player(stream, target_volume, 0.0)
+		return
+	_stop_pause_player_immediately()
+	if target_fade <= 0.0:
+		_start_or_update_pause_player(stream, target_volume, 0.0)
+		return
+	_pause_transition_state = PAUSE_TRANSITION_OPENING
+	var transition_token := _pause_transition_token
+	get_tree().create_timer(target_fade, true).timeout.connect(func() -> void:
+		if transition_token != _pause_transition_token:
+			return
+		if not _pause_menu_active:
+			return
+		_start_or_update_pause_player(stream, target_volume, 0.0)
+	, Object.CONNECT_ONE_SHOT)
 
 func stop_pause_menu_music(resume_fade_time: float = -1.0) -> void:
-	if not _pause_menu_active:
+	if not _pause_menu_active and (_pause_player == null or not _pause_player.playing):
 		return
 	_pause_menu_active = false
-	if _pause_player != null and _pause_player.playing:
-		_pause_player.stop()
+	_pause_transition_token += 1
+	_stop_pause_player_immediately()
 	var target_fade := _resolve_fade_time(resume_fade_time)
 	_request_base_resume(PAUSE_REASON_MENU, target_fade)
 	resume_chase_music(target_fade)
@@ -454,6 +563,49 @@ func resume_all_music(fade_time: float = -1.0) -> void:
 	var target_fade := _resolve_fade_time(fade_time)
 	_request_base_resume(PAUSE_REASON_GLOBAL, target_fade)
 	resume_chase_music(target_fade)
+
+func _start_or_update_pause_player(stream: AudioStream, target_volume: float, fade_time: float) -> void:
+	if _pause_player == null:
+		return
+	_kill_pause_fade_tween()
+	var same_stream := _pause_player.stream == stream
+	_pause_player.stream_paused = false
+	if not same_stream or not _pause_player.playing:
+		if _pause_player.playing:
+			_pause_player.stop()
+		_pause_player.stream = stream
+		_pause_player.volume_db = -80.0 if fade_time > 0.0 else target_volume
+		_pause_player.play()
+	if fade_time <= 0.0:
+		_pause_player.volume_db = target_volume
+		_pause_transition_state = PAUSE_TRANSITION_OPEN
+		return
+	_pause_transition_state = PAUSE_TRANSITION_OPENING
+	_pause_fade_tween = create_tween()
+	_pause_fade_tween.tween_property(_pause_player, "volume_db", target_volume, fade_time)
+	_pause_fade_tween.finished.connect(func() -> void:
+		_pause_fade_tween = null
+		if _pause_menu_active and _pause_player != null and _pause_player.playing:
+			_pause_transition_state = PAUSE_TRANSITION_OPEN
+		else:
+			_pause_transition_state = PAUSE_TRANSITION_IDLE
+	, Object.CONNECT_ONE_SHOT)
+
+func _stop_pause_player_immediately() -> void:
+	_kill_pause_fade_tween()
+	if _pause_player == null:
+		_pause_transition_state = PAUSE_TRANSITION_IDLE
+		return
+	if _pause_player.playing:
+		_pause_player.stop()
+	_pause_player.stream_paused = false
+	_pause_player.volume_db = -80.0
+	_pause_transition_state = PAUSE_TRANSITION_IDLE
+
+func _kill_pause_fade_tween() -> void:
+	if _pause_fade_tween and _pause_fade_tween.is_running():
+		_pause_fade_tween.kill()
+	_pause_fade_tween = null
 
 func set_ambient_music_suppressed(source: Object, suppressed: bool, fade_time: float = -1.0) -> void:
 	if source == null:
@@ -652,9 +804,13 @@ func clear_chase_music_sources(fade_time: float = -1.0) -> void:
 	_runner_pause_position = 0.0
 	_runner_global_paused = false
 	_runner_active_fade_out_time = -1.0
+	if _runner_fade_tween and _runner_fade_tween.is_running():
+		_runner_fade_tween.kill()
+	_runner_fade_tween = null
 	var target_fade := _resolve_fade_time(fade_time)
 	if _runner_player != null and _runner_player.playing:
 		_fade_runner_volume(-80.0, target_fade, true)
+	_sync_chase_base_mute()
 
 func _process(_delta: float) -> void:
 	_resume_pending_ambient_if_idle()
@@ -813,7 +969,7 @@ func _fade_runner_volume(target_db: float, duration: float, stop_after: bool = f
 	if stop_after:
 		_runner_fade_tween.tween_callback(_runner_player.stop)
 
-func _ensure_runner_loop(stream: AudioStream) -> void:
+func _ensure_music_loop(stream: AudioStream) -> void:
 	if stream is AudioStreamWAV:
 		var wav: AudioStreamWAV = stream
 		if wav.loop_mode == AudioStreamWAV.LOOP_DISABLED:
@@ -826,6 +982,9 @@ func _ensure_runner_loop(stream: AudioStream) -> void:
 	if stream is AudioStreamMP3:
 		var mp3: AudioStreamMP3 = stream
 		mp3.loop = true
+
+func _ensure_runner_loop(stream: AudioStream) -> void:
+	_ensure_music_loop(stream)
 
 func _resolve_runner_stream() -> AudioStream:
 	if runner_music_stream != null:
@@ -1042,7 +1201,7 @@ func _request_base_pause(reason: String, fade_time: float) -> void:
 		_base_pause_was_playing = false
 		return
 	_base_pause_player = player
-	_apply_base_pause_to_player(player, player.volume_db, fade_time)
+	_apply_base_pause_to_player(player, _get_base_target_volume_db(_current_source_kind), fade_time)
 
 func _request_base_resume(reason: String, fade_time: float) -> void:
 	if not _base_pause_reasons.has(reason):
@@ -1108,3 +1267,25 @@ func _sync_chase_base_mute() -> void:
 	var target_fade := chase_base_duck_time
 	var target_volume := -80.0 if should_mute else _get_base_target_volume_db(_current_source_kind)
 	_retarget_base_output_volume(target_volume, target_fade)
+
+func _resource_path(resource: Resource) -> String:
+	if resource == null:
+		return ""
+	return String(resource.resource_path)
+
+func _describe_player(player: AudioStreamPlayer) -> Dictionary:
+	if player == null:
+		return {
+			"exists": false,
+			"playing": false,
+			"stream_path": "",
+			"volume_db": -80.0,
+			"stream_paused": false
+		}
+	return {
+		"exists": true,
+		"playing": player.playing,
+		"stream_path": _resource_path(player.stream),
+		"volume_db": player.volume_db,
+		"stream_paused": player.stream_paused
+	}

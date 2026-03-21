@@ -4,6 +4,7 @@ class_name Laptop
 const InteractableAvailabilityVisualScript = preload("res://objects/interactable/shared/interactable_availability_visual.gd")
 const LaptopCompletionRewardScript = preload("res://objects/interactable/notebook/laptop_completion_reward.gd")
 const UnlockOnDependencyAttemptScript = preload("res://objects/interactable/notebook/unlock_on_dependency_attempt.gd")
+const LaptopRewardConfigScript = preload("res://objects/interactable/notebook/laptop_reward_config.gd")
 
 @export_group("Lab Settings")
 ## Сцена мини-игры (sql_minigame.tscn).
@@ -15,17 +16,19 @@ const UnlockOnDependencyAttemptScript = preload("res://objects/interactable/note
 ## Уникальный ID лабораторной для мульти-режима (пусто = достаточно любой лабораторной текущего цикла).
 @export var lab_completion_id: String = ""
 
+@export_group("Lab Audio")
+## Музыка, которая будет играть во время лабораторной.
+## Если очистить поле, мини-игра использует свой собственный трек.
+@export var lab_music_stream: AudioStream = preload("res://music/MusicForLabs.wav")
+
 @export_group("Награда Деньгами")
-## Выдавать деньги после закрытия мини-игры (успех/неуспех не важен).
-@export var reward_on_work_completion: bool = false
-## Путь до системы денег (если пусто, будет ../Level12MoneySystem).
-@export var money_system_path: NodePath
-## Размер награды за работу.
-@export var reward_money: int = 60
-## Причина начисления (для HUD).
-@export_multiline var reward_reason: String = "Награда за лабораторную"
-## Выдать награду только один раз для этого ноутбука.
-@export var reward_once: bool = true
+## Null = обычный ноутбук без денежной награды.
+@export var reward_config: Resource
+@export_storage var reward_on_work_completion: bool = false
+@export_storage var money_system_path: NodePath
+@export_storage var reward_money: int = 60
+@export_storage var reward_reason: String = "Награда за лабораторную"
+@export_storage var reward_once: bool = true
 
 @export_group("Availability")
 ## Вручную отключить ноутбук.
@@ -80,11 +83,11 @@ func _ready() -> void:
 		[_available_light, _available_light_secondary]
 	)
 	_completion_reward.configure(
-		reward_on_work_completion,
-		money_system_path,
-		reward_money,
-		reward_reason,
-		reward_once
+		_has_reward_config(),
+		_get_reward_money_system_path(),
+		_get_reward_money(),
+		_get_reward_reason(),
+		_is_reward_once()
 	)
 	_dependency_unlock.configure(
 		unlock_on_dependency_interaction,
@@ -124,6 +127,8 @@ func _start_lab_minigame() -> void:
 	if "lab_completion_id" in game:
 		game.lab_completion_id = lab_completion_id.strip_edges()
 	if game is TimedLabMinigameBase:
+		if lab_music_stream != null:
+			game.lab_music_stream = lab_music_stream
 		attach_minigame(game)
 	else:
 		var settings := MinigameSettings.new()
@@ -132,6 +137,8 @@ func _start_lab_minigame() -> void:
 		settings.block_player_movement = true
 		settings.time_limit = time_limit
 		settings.auto_finish_on_timeout = false
+		if lab_music_stream != null:
+			settings.music_stream = lab_music_stream
 		start_managed_minigame(game, settings)
 	game.tree_exited.connect(_on_minigame_closed)
 
@@ -226,3 +233,28 @@ func apply_checkpoint_state(state: Dictionary) -> void:
 	_dependency_unlock.apply_state(state)
 	_completion_reward.apply_state(state)
 	_apply_enabled_state()
+
+func _has_reward_config() -> bool:
+	if reward_config != null:
+		return reward_config.enabled
+	return reward_on_work_completion
+
+func _get_reward_money_system_path() -> NodePath:
+	if reward_config != null:
+		return reward_config.money_system_path
+	return money_system_path
+
+func _get_reward_money() -> int:
+	if reward_config != null:
+		return reward_config.reward_money
+	return reward_money
+
+func _get_reward_reason() -> String:
+	if reward_config != null:
+		return reward_config.reward_reason
+	return reward_reason
+
+func _is_reward_once() -> bool:
+	if reward_config != null:
+		return reward_config.reward_once
+	return reward_once

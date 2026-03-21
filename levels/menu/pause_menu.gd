@@ -204,6 +204,7 @@ func open_menu() -> void:
 
 func close_menu() -> void:
 	visible = false
+	_restore_menu_music()
 	_hide_confirm()
 	_hide_settings()
 

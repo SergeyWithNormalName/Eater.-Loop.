@@ -81,6 +81,8 @@
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="80_w4m87"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_code_lock_config.gd" id="200_fridge_code_cfg"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_teleport_config.gd" id="201_fridge_tp_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_ic6y1")
@@ -103,6 +105,15 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_ylonc")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Resource" id="Resource_level05_fridge_code_lock"]
+script = ExtResource("200_fridge_code_cfg")
+enabled = true
+access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
+
+[sub_resource type="Resource" id="Resource_level05_fridge_teleport"]
+script = ExtResource("201_fridge_tp_cfg")
+target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
 
 [node name="Level" type="Node2D" unique_id=1259179857]
 position = Vector2(16, 0)
@@ -677,10 +688,8 @@ bg_music = ExtResource("50_ofi8c")
 win_sound = ExtResource("51_or2ql")
 eat_sound = ExtResource("52_nnv0x")
 background_texture = ExtResource("53_jvjon")
-require_access_code = true
-access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
-enable_teleport = true
-teleport_target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
+code_lock_config = SubResource("Resource_level05_fridge_code_lock")
+teleport_config = SubResource("Resource_level05_fridge_teleport")
 locked_sprite = ExtResource("54_musk4")
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
@@ -1064,8 +1073,7 @@ bg_music = ExtResource("50_ofi8c")
 win_sound = ExtResource("51_or2ql")
 eat_sound = ExtResource("52_nnv0x")
 background_texture = ExtResource("53_jvjon")
-require_access_code = true
-access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
+code_lock_config = SubResource("Resource_level05_fridge_code_lock")
 locked_sprite = ExtResource("54_musk4")
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"

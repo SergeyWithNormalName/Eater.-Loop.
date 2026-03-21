@@ -352,8 +352,11 @@
 │   │   └── good_ending_screen.tscn
 │   ├── game_director
 │   │   ├── death_sequence_controller.gd
+│   │   ├── death_sequence_controller.gd.uid
 │   │   ├── distortion_phase_controller.gd
-│   │   └── screen_fx_overlay_controller.gd
+│   │   ├── distortion_phase_controller.gd.uid
+│   │   ├── screen_fx_overlay_controller.gd
+│   │   └── screen_fx_overlay_controller.gd.uid
 │   ├── menu
 │   │   ├── MainMenuBackground.png
 │   │   ├── MainMenuBackground.png.import
@@ -669,17 +672,29 @@
 │   │   └── minigame_settings.gd.uid
 │   ├── scene_rules
 │   │   ├── refresh_interaction_state_action.gd
+│   │   ├── refresh_interaction_state_action.gd.uid
 │   │   ├── scene_rule.gd
+│   │   ├── scene_rule.gd.uid
 │   │   ├── scene_rule_action.gd
+│   │   ├── scene_rule_action.gd.uid
 │   │   ├── scene_rule_runner.gd
+│   │   ├── scene_rule_runner.gd.uid
 │   │   ├── set_dependency_action.gd
+│   │   ├── set_dependency_action.gd.uid
 │   │   ├── set_door_target_action.gd
+│   │   ├── set_door_target_action.gd.uid
 │   │   ├── set_door_target_from_cycle_state_action.gd
+│   │   ├── set_door_target_from_cycle_state_action.gd.uid
 │   │   ├── set_interaction_enabled_action.gd
+│   │   ├── set_interaction_enabled_action.gd.uid
 │   │   ├── set_locked_action.gd
+│   │   ├── set_locked_action.gd.uid
 │   │   ├── set_property_action.gd
+│   │   ├── set_property_action.gd.uid
 │   │   ├── show_notification_action.gd
-│   │   └── start_crazy_level_event_action.gd
+│   │   ├── show_notification_action.gd.uid
+│   │   ├── start_crazy_level_event_action.gd
+│   │   └── start_crazy_level_event_action.gd.uid
 │   ├── ui
 │   │   ├── prompts
 │   │   │   ├── prompt_interact_default.tscn
@@ -716,6 +731,8 @@
 │   ├── MusicForEat.mp3.import
 │   ├── MusicForLabs.wav
 │   ├── MusicForLabs.wav.import
+│   ├── MusicForLabs2.wav
+│   ├── MusicForLabs2.wav.import
 │   ├── MyHorrorHit_1.wav
 │   ├── MyHorrorHit_1.wav.import
 │   ├── MyHorrorHit_2.wav
@@ -1191,7 +1208,15 @@
 │       │   ├── final_ending_fridge.gd.uid
 │       │   ├── fridge.gd
 │       │   ├── fridge.gd.uid
-│       │   └── fridge.tscn
+│       │   ├── fridge.tscn
+│       │   ├── fridge_code_lock_config.gd
+│       │   ├── fridge_code_lock_config.gd.uid
+│       │   ├── fridge_lab_requirement_config.gd
+│       │   ├── fridge_lab_requirement_config.gd.uid
+│       │   ├── fridge_teleport_config.gd
+│       │   ├── fridge_teleport_config.gd.uid
+│       │   ├── fridge_unique_intro_config.gd
+│       │   └── fridge_unique_intro_config.gd.uid
 │       ├── generator
 │       │   ├── Generator.png
 │       │   ├── Generator.png.import
@@ -1258,7 +1283,11 @@
 │       │   ├── laptop.tscn
 │       │   ├── laptop_STU.tscn
 │       │   ├── laptop_completion_reward.gd
-│       │   └── unlock_on_dependency_attempt.gd
+│       │   ├── laptop_completion_reward.gd.uid
+│       │   ├── laptop_reward_config.gd
+│       │   ├── laptop_reward_config.gd.uid
+│       │   ├── unlock_on_dependency_attempt.gd
+│       │   └── unlock_on_dependency_attempt.gd.uid
 │       ├── obstacle
 │       │   ├── obstacle.gd
 │       │   ├── obstacle.gd.uid
@@ -1285,8 +1314,13 @@
 │       │   └── search_spot.tscn
 │       ├── shared
 │       │   ├── code_lock_gate.gd
+│       │   ├── code_lock_gate.gd.uid
 │       │   ├── idle_rocking_2d.gd
-│       │   └── interactable_availability_visual.gd
+│       │   ├── idle_rocking_2d.gd.uid
+│       │   ├── idle_rocking_config.gd
+│       │   ├── idle_rocking_config.gd.uid
+│       │   ├── interactable_availability_visual.gd
+│       │   └── interactable_availability_visual.gd.uid
 │       ├── trigger
 │       │   ├── property_change.gd
 │       │   ├── property_change.gd.uid
@@ -1295,7 +1329,8 @@
 │       │   └── trigger_set_property.tscn
 │       ├── interactive_object.gd
 │       ├── interactive_object.gd.uid
-│       └── powered_switchable_interactable.gd
+│       ├── powered_switchable_interactable.gd
+│       └── powered_switchable_interactable.gd.uid
 ├── player
 │   ├── animations
 │   │   └── walking
@@ -1409,6 +1444,8 @@
 │   │   ├── test_audio_bedroom_music_policy.gd.uid
 │   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd
 │   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd.uid
+│   │   ├── test_audio_routing_policy.gd
+│   │   ├── test_audio_routing_policy.gd.uid
 │   │   ├── test_autoloads.gd
 │   │   ├── test_autoloads.gd.uid
 │   │   ├── test_cycle_state_flashlight_unlock.gd
@@ -1434,6 +1471,7 @@
 │   │   ├── test_fridge_visual_after_eating.gd
 │   │   ├── test_fridge_visual_after_eating.gd.uid
 │   │   ├── test_game_director_runtime.gd
+│   │   ├── test_game_director_runtime.gd.uid
 │   │   ├── test_gamepad_pick_place_flow.gd
 │   │   ├── test_gamepad_pick_place_flow.gd.uid
 │   │   ├── test_gamepad_runtime_navigation.gd
@@ -1445,14 +1483,19 @@
 │   │   ├── test_interaction_architecture_contracts.gd
 │   │   ├── test_interaction_architecture_contracts.gd.uid
 │   │   ├── test_interactive_object_feedback_audio.gd
+│   │   ├── test_interactive_object_feedback_audio.gd.uid
 │   │   ├── test_interactive_object_locked_message.gd
 │   │   ├── test_interactive_object_locked_message.gd.uid
+│   │   ├── test_lab_pause_resume_runtime.gd
+│   │   ├── test_lab_pause_resume_runtime.gd.uid
 │   │   ├── test_lamp_generator_requirement.gd
 │   │   ├── test_lamp_generator_requirement.gd.uid
 │   │   ├── test_laptop_lab_music_runtime.gd
 │   │   ├── test_laptop_lab_music_runtime.gd.uid
 │   │   ├── test_laptop_multi_lab_ids.gd
 │   │   ├── test_laptop_multi_lab_ids.gd.uid
+│   │   ├── test_level11_lab_music_runtime.gd
+│   │   ├── test_level11_lab_music_runtime.gd.uid
 │   │   ├── test_level12_laptop_money_reward.gd
 │   │   ├── test_level12_laptop_money_reward.gd.uid
 │   │   ├── test_level12_money_system.gd
@@ -1485,6 +1528,8 @@
 │   │   ├── test_musicmanager_priority_resume_runtime.gd.uid
 │   │   ├── test_musicmanager_private_api_usage.gd
 │   │   ├── test_musicmanager_private_api_usage.gd.uid
+│   │   ├── test_musicmanager_state_runtime.gd
+│   │   ├── test_musicmanager_state_runtime.gd.uid
 │   │   ├── test_note_audio_optional.gd
 │   │   ├── test_note_audio_optional.gd.uid
 │   │   ├── test_project_config.gd
@@ -1494,6 +1539,7 @@
 │   │   ├── test_save_state_split.gd
 │   │   ├── test_save_state_split.gd.uid
 │   │   ├── test_scene_rule_runner.gd
+│   │   ├── test_scene_rule_runner.gd.uid
 │   │   ├── test_scenes_load.gd
 │   │   ├── test_scenes_load.gd.uid
 │   │   ├── test_scripts_compile.gd
@@ -1525,4 +1571,4 @@
 ├── project.godot
 └── structure.txt
 
-127 directories, 1399 files
+127 directories, 1445 files

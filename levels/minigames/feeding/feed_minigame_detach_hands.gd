@@ -127,8 +127,12 @@ func _prepare_hands() -> void:
 	_hands[&"second"] = second_arm
 
 func _create_hand_layer(node_name: StringName, texture: Texture2D, tear_uv: Vector2, drip_point_path: NodePath) -> HandState:
+	var resolved_name := String(node_name).strip_edges()
+	if resolved_name == "":
+		resolved_name = "Hand"
+
 	var arm := TextureRect.new()
-	arm.name = String(node_name)
+	arm.name = resolved_name
 	arm.texture = texture
 	arm.stretch_mode = TextureRect.STRETCH_SCALE
 	arm.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -138,7 +142,7 @@ func _create_hand_layer(node_name: StringName, texture: Texture2D, tear_uv: Vect
 	andrey_sprite.add_child(arm)
 
 	var drip := ColorRect.new()
-	drip.name = "%sDrip" % node_name
+	drip.name = "%sDrip" % resolved_name
 	drip.color = Color.WHITE
 	drip.size = Vector2(130.0, 340.0)
 	drip.mouse_filter = Control.MOUSE_FILTER_IGNORE

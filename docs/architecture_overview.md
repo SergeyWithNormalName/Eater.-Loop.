@@ -22,7 +22,9 @@
 
 ## 3. Mind the helpers
 - `Fridge` разбивается на: лаб-контроль, уникальное вступление, feeding-flow, teleport/chase clear/autosave и `InteractableAvailabilityVisual`. Всё что остаётся внутри — упорядоченный pipeline: prerequisites → code lock → feeding → completion.
+- Одноразовые опции `Fridge` теперь живут в отдельных resource-конфигах, а не в корне инспектора: `FridgeCodeLockConfig`, `FridgeLabRequirementConfig`, `FridgeTeleportConfig`, `FridgeUniqueIntroConfig`, `IdleRockingConfig`.
 - `Laptop` держит базовый запуск SQL-мини-игры и completion-state, а вспомогательные политики (награда, unlock-on-dependency) выносятся в `LaptopCompletionReward` и `UnlockOnDependencyAttempt`.
+- Денежная награда `Laptop` настраивается через `LaptopRewardConfig`, поэтому обычные ноутбуки не тащат reward-поля в каждый инстанс.
 - `SceneRuleRunner` с ресурсами `SceneRuleAction` (`SetDependencyAction`, `SetInteractionEnabledAction`, `SetDoorTargetAction`, `SetLockedAction`, `RefreshInteractionStateAction`, `SetPropertyAction`, `ShowNotificationAction` и т.п.) заменяет level-specific `has_method/call` и делает wiring декларативным.
 
 ## 4. Контур уровней и событий

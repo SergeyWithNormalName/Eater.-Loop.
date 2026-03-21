@@ -4,6 +4,13 @@ class_name Fridge
 const InteractableAvailabilityVisualScript = preload("res://objects/interactable/shared/interactable_availability_visual.gd")
 const CodeLockGateScript = preload("res://objects/interactable/shared/code_lock_gate.gd")
 const IdleRocking2DScript = preload("res://objects/interactable/shared/idle_rocking_2d.gd")
+const FridgeUniqueIntroConfigScript = preload("res://objects/interactable/fridge/fridge_unique_intro_config.gd")
+const FridgeCodeLockConfigScript = preload("res://objects/interactable/fridge/fridge_code_lock_config.gd")
+const FridgeLabRequirementConfigScript = preload("res://objects/interactable/fridge/fridge_lab_requirement_config.gd")
+const FridgeTeleportConfigScript = preload("res://objects/interactable/fridge/fridge_teleport_config.gd")
+const IdleRockingConfigScript = preload("res://objects/interactable/shared/idle_rocking_config.gd")
+
+const DEFAULT_LAB_REQUIRED_MESSAGE := "Сначала нужно сделать лабораторную работу."
 
 signal feeding_finished
 
@@ -22,40 +29,12 @@ signal feeding_finished
 @export var eat_sound: AudioStream
 @export var background_texture: Texture2D
 
-@export_group("Minigame (Unique Intro)")
-## Уникальная версия feeding, которая запускается один раз за ран.
-@export var unique_intro_minigame_scene: PackedScene = preload("res://levels/minigames/feeding/feed_minigame_detach_hands.tscn")
-## Если включено, уникальный интро-этап будет только один раз за ран.
-@export var unique_intro_once_per_run: bool = true
-
-@export_group("Security")
-## Требовать ввод кода доступа.
-@export var require_access_code: bool = false
-## Код доступа.
-@export var access_code: String = "1234"
-## Сообщение, если код не введен или неверный.
-@export var access_code_failed_message: String = ""
-## Сцена мини-игры "Кодовый замок".
-@export var code_lock_scene: PackedScene
-
-@export_group("Lab Requirement")
-## Запретить еду, пока не сдана лабораторная.
-@export var require_lab_completion: bool = false
-## Если список не пуст, холодильник разблокируется только после выполнения всех указанных лабораторных в текущем цикле.
-var _required_lab_completion_ids: PackedStringArray = PackedStringArray()
-@export var required_lab_completion_ids: PackedStringArray:
-	get:
-		return _required_lab_completion_ids
-	set(value):
-		_required_lab_completion_ids = value
-		if not _required_lab_completion_ids.is_empty():
-			require_lab_completion = true
-## Сообщение, если лабораторная еще не выполнена.
-@export var lab_required_message: String = "Сначала нужно сделать лабораторную работу."
-
-@export_group("Teleport")
-@export var enable_teleport: bool = false
-@export var teleport_target: NodePath
+@export_group("Optional Features")
+@export var unique_intro_config: Resource
+@export var code_lock_config: Resource
+@export var lab_requirement_config: Resource
+@export var teleport_config: Resource
+@export var idle_rocking_config: Resource
 
 @export_group("Visuals & Audio")
 @export var open_sound: AudioStream
@@ -73,17 +52,149 @@ var _required_lab_completion_ids: PackedStringArray = PackedStringArray()
 @export var available_light_node: NodePath
 @export var available_light_node_secondary: NodePath
 
-@export_group("Idle Rocking")
-## Длительность одного полного цикла (сек). Меньше = быстрее.
-@export var rocking_cycle_duration: float = 2.0
-## Сила покачивания в градусах.
-@export var rocking_strength_degrees: float = 0.0
-## Точка подвеса: 0 = по центру (обычные холодильники), 1 = подвес сверху.
-@export_enum("Centered", "Hanging") var rocking_pivot_mode: int = 0
-## Доп. смещение точки подвеса (пиксели, до масштаба).
-@export var rocking_pivot_offset: Vector2 = Vector2.ZERO
-## Звук покачивания.
-@export var rocking_sound: AudioStream
+var unique_intro_minigame_scene: PackedScene:
+	get:
+		return unique_intro_config.minigame_scene if unique_intro_config != null else null
+	set(value):
+		if value == null:
+			unique_intro_config = null
+			return
+		_ensure_unique_intro_config().minigame_scene = value
+
+var unique_intro_once_per_run: bool:
+	get:
+		return unique_intro_config != null and unique_intro_config.once_per_run
+	set(value):
+		if not value and unique_intro_config == null:
+			return
+		_ensure_unique_intro_config().once_per_run = value
+
+var require_access_code: bool:
+	get:
+		return code_lock_config != null and code_lock_config.enabled
+	set(value):
+		if value:
+			_ensure_code_lock_config().enabled = true
+			return
+		if code_lock_config == null:
+			return
+		code_lock_config.enabled = false
+		_cleanup_code_lock_config()
+
+var access_code: String:
+	get:
+		return code_lock_config.access_code if code_lock_config != null else "1234"
+	set(value):
+		_ensure_code_lock_config().access_code = value
+
+var access_code_failed_message: String:
+	get:
+		return code_lock_config.access_code_failed_message if code_lock_config != null else ""
+	set(value):
+		_ensure_code_lock_config().access_code_failed_message = value
+
+var code_lock_scene: PackedScene:
+	get:
+		return code_lock_config.code_lock_scene if code_lock_config != null else null
+	set(value):
+		if value == null:
+			if code_lock_config != null:
+				code_lock_config.code_lock_scene = null
+			return
+		_ensure_code_lock_config().code_lock_scene = value
+
+var require_lab_completion: bool:
+	get:
+		return lab_requirement_config != null and (
+			lab_requirement_config.require_any_lab_completion
+			or not lab_requirement_config.required_lab_completion_ids.is_empty()
+		)
+	set(value):
+		if value:
+			_ensure_lab_requirement_config().require_any_lab_completion = true
+			return
+		if lab_requirement_config == null:
+			return
+		lab_requirement_config.require_any_lab_completion = false
+		_cleanup_lab_requirement_config()
+
+var required_lab_completion_ids: PackedStringArray:
+	get:
+		if lab_requirement_config == null:
+			return PackedStringArray()
+		return lab_requirement_config.required_lab_completion_ids
+	set(value):
+		if value.is_empty():
+			if lab_requirement_config != null:
+				lab_requirement_config.required_lab_completion_ids = value
+				_cleanup_lab_requirement_config()
+			return
+		_ensure_lab_requirement_config().required_lab_completion_ids = value
+
+var lab_required_message: String:
+	get:
+		if lab_requirement_config == null:
+			return DEFAULT_LAB_REQUIRED_MESSAGE
+		return lab_requirement_config.required_message
+	set(value):
+		if value == DEFAULT_LAB_REQUIRED_MESSAGE and lab_requirement_config == null:
+			return
+		_ensure_lab_requirement_config().required_message = value
+		_cleanup_lab_requirement_config()
+
+var enable_teleport: bool:
+	get:
+		return teleport_config != null
+	set(value):
+		if value:
+			_ensure_teleport_config()
+			return
+		teleport_config = null
+
+var teleport_target: NodePath:
+	get:
+		return teleport_config.target if teleport_config != null else NodePath()
+	set(value):
+		if value.is_empty():
+			if teleport_config != null:
+				teleport_config.target = value
+				_cleanup_teleport_config()
+			return
+		_ensure_teleport_config().target = value
+
+var rocking_cycle_duration: float:
+	get:
+		return idle_rocking_config.cycle_duration if idle_rocking_config != null else 2.0
+	set(value):
+		_ensure_idle_rocking_config().cycle_duration = value
+
+var rocking_strength_degrees: float:
+	get:
+		return idle_rocking_config.strength_degrees if idle_rocking_config != null else 0.0
+	set(value):
+		_ensure_idle_rocking_config().strength_degrees = value
+		_cleanup_idle_rocking_config()
+
+var rocking_pivot_mode: int:
+	get:
+		return idle_rocking_config.pivot_mode if idle_rocking_config != null else 0
+	set(value):
+		_ensure_idle_rocking_config().pivot_mode = value
+		_cleanup_idle_rocking_config()
+
+var rocking_pivot_offset: Vector2:
+	get:
+		return idle_rocking_config.pivot_offset if idle_rocking_config != null else Vector2.ZERO
+	set(value):
+		_ensure_idle_rocking_config().pivot_offset = value
+		_cleanup_idle_rocking_config()
+
+var rocking_sound: AudioStream:
+	get:
+		return idle_rocking_config.sound if idle_rocking_config != null else null
+	set(value):
+		_ensure_idle_rocking_config().sound = value
+		_cleanup_idle_rocking_config()
 
 var _is_interacting: bool = false
 var _current_minigame: Node = null
@@ -366,3 +477,56 @@ func apply_checkpoint_state(state: Dictionary) -> void:
 
 func _set_interacting_state(value: bool) -> void:
 	_is_interacting = value
+
+func _ensure_unique_intro_config():
+	if unique_intro_config == null:
+		unique_intro_config = FridgeUniqueIntroConfigScript.new()
+	return unique_intro_config
+
+func _ensure_code_lock_config():
+	if code_lock_config == null:
+		code_lock_config = FridgeCodeLockConfigScript.new()
+	return code_lock_config
+
+func _ensure_lab_requirement_config():
+	if lab_requirement_config == null:
+		lab_requirement_config = FridgeLabRequirementConfigScript.new()
+	return lab_requirement_config
+
+func _ensure_teleport_config():
+	if teleport_config == null:
+		teleport_config = FridgeTeleportConfigScript.new()
+	return teleport_config
+
+func _ensure_idle_rocking_config():
+	if idle_rocking_config == null:
+		idle_rocking_config = IdleRockingConfigScript.new()
+	return idle_rocking_config
+
+func _cleanup_lab_requirement_config() -> void:
+	if lab_requirement_config == null:
+		return
+	var has_ids: bool = not lab_requirement_config.required_lab_completion_ids.is_empty()
+	var has_custom_message: bool = lab_requirement_config.required_message.strip_edges() != "" and lab_requirement_config.required_message != DEFAULT_LAB_REQUIRED_MESSAGE
+	if not lab_requirement_config.require_any_lab_completion and not has_ids and not has_custom_message:
+		lab_requirement_config = null
+
+func _cleanup_code_lock_config() -> void:
+	if code_lock_config == null:
+		return
+	var has_custom_message: bool = code_lock_config.access_code_failed_message.strip_edges() != ""
+	if not code_lock_config.enabled and not has_custom_message:
+		code_lock_config = null
+
+func _cleanup_teleport_config() -> void:
+	if teleport_config != null and teleport_config.target.is_empty():
+		teleport_config = null
+
+func _cleanup_idle_rocking_config() -> void:
+	if idle_rocking_config == null:
+		return
+	var is_default_cycle := is_equal_approx(idle_rocking_config.cycle_duration, 2.0)
+	var is_default_strength := is_zero_approx(idle_rocking_config.strength_degrees)
+	var is_default_pivot: bool = idle_rocking_config.pivot_mode == 0 and idle_rocking_config.pivot_offset == Vector2.ZERO
+	if is_default_cycle and is_default_strength and is_default_pivot and idle_rocking_config.sound == null:
+		idle_rocking_config = null
