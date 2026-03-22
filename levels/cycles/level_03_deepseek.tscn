@@ -68,6 +68,7 @@
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_n60me"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="67_v1c7v"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="68_6lg8n"]
+[ext_resource type="AudioStream" uid="uid://brswriqoj1emp" path="res://music/MusicForLabs2.wav" id="69_k1f7c"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="69_nwisw"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="70_wk8e1"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="71_s3jat"]
@@ -869,6 +870,7 @@ position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
+lab_music_stream = ExtResource("69_k1f7c")
 is_enabled = false
 unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
@@ -1124,6 +1126,7 @@ position = Vector2(-1853, 2067)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
+lab_music_stream = ExtResource("69_k1f7c")
 is_enabled = false
 unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
@@ -1134,6 +1137,16 @@ position = Vector2(-2365, -473)
 
 [node name="TriggerBedroomSilent" parent="." unique_id=1091739183 instance=ExtResource("74_qxn6o")]
 position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 8
+music_on_exit = 9
+
+[node name="TriggerBedroomSilent2" parent="." unique_id=456511070 instance=ExtResource("74_qxn6o")]
+position = Vector2(-1919, 2046)
 scale = Vector2(28.560001, 13.879997)
 affect_on_exit = true
 one_shot = false

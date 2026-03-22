@@ -176,6 +176,8 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	_is_ducked = false
 	_pre_duck_volume_db = target_volume
 
+	_kill_fade_tween()
+	_reset_player_pitch(_inactive_player)
 	_inactive_player.stream_paused = false
 	_inactive_player.stream = stream
 	_inactive_player.volume_db = -80.0
@@ -183,7 +185,7 @@ func play_music(stream: AudioStream, fade_time: float = -1.0, volume_db: float =
 	_seek_if_possible(_inactive_player, start_position)
 	if _base_pause_active:
 		if _active_player != null and _active_player != _inactive_player and _active_player.playing:
-			_active_player.stop()
+			_stop_base_player(_active_player)
 		_swap_active_player(_inactive_player)
 		_apply_base_pause_to_player(_active_player, output_volume, 0.0, start_position)
 		return
@@ -287,7 +289,10 @@ func reset_all_music_state() -> void:
 	for player in players:
 		if player == null:
 			continue
-		player.stop()
+		if player.playing:
+			_stop_base_player(player)
+		else:
+			_reset_player_pitch(player)
 		player.stream_paused = false
 		player.stream = null
 		player.volume_db = -80.0
@@ -482,18 +487,32 @@ func start_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_ti
 	push_music(stream, fade_time, target_volume, SOURCE_MINIGAME, SOURCE_KIND_MINIGAME)
 
 func stop_minigame_music(fade_time: float = -1.0) -> void:
-	if _current_source_id != SOURCE_MINIGAME:
+	if _current_source_id != SOURCE_MINIGAME or _current_source_kind != SOURCE_KIND_MINIGAME:
 		return
+	_kill_pitch_stop_tween()
+	_kill_fade_tween()
 	var player := _resolve_playing_player()
 	if player == null:
 		return
-	_kill_pitch_stop_tween()
 	var target_fade := _resolve_fade_time(fade_time)
 	_fade_volume(player, -80.0, target_fade, true)
 
-func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: float = 0.05) -> void:
-	if _current_source_id != SOURCE_MINIGAME and _current_source_kind != SOURCE_KIND_MINIGAME:
+func end_minigame_music(fade_time: float = -1.0, stop_current: bool = false) -> void:
+	if _current_source_id == SOURCE_MINIGAME and _current_source_kind == SOURCE_KIND_MINIGAME:
+		if stop_current:
+			_kill_pitch_stop_tween()
+			_kill_fade_tween()
+			var player := _resolve_playing_player()
+			if player != null and player.playing:
+				_stop_base_player(player)
+		pop_music(fade_time)
 		return
+	remove_music_from_stack_by_source_id(SOURCE_MINIGAME)
+
+func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: float = 0.05) -> void:
+	if _current_source_id != SOURCE_MINIGAME or _current_source_kind != SOURCE_KIND_MINIGAME:
+		return
+	_kill_fade_tween()
 	var player := _resolve_playing_player()
 	if player == null or not player.playing:
 		return
@@ -505,8 +524,7 @@ func stop_minigame_music_with_pitch_drop(duration: float = 2.5, target_pitch: fl
 	_pitch_stop_tween.tween_property(player, "pitch_scale", safe_target_pitch, safe_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	_pitch_stop_tween.tween_callback(func():
 		if is_instance_valid(player):
-			player.stop()
-			player.pitch_scale = 1.0
+			_stop_base_player(player)
 		_pitch_stop_player = null
 		_pitch_stop_tween = null
 	)
@@ -1005,6 +1023,18 @@ func _setup_player(player: AudioStreamPlayer) -> void:
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	player.volume_db = -80.0
 
+func _reset_player_pitch(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.pitch_scale = 1.0
+
+func _stop_base_player(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	if player.playing:
+		player.stop()
+	_reset_player_pitch(player)
+
 func _resolve_fade_time(fade_time: float) -> float:
 	return default_fade_time if fade_time < 0.0 else fade_time
 
@@ -1072,12 +1102,14 @@ func _fade_volume(player: AudioStreamPlayer, target_db: float, duration: float, 
 	if duration <= 0.0:
 		player.volume_db = target_db
 		if stop_after and player.playing:
-			player.stop()
+			_stop_base_player(player)
 		return
 	_fade_tween = create_tween()
 	_fade_tween.tween_property(player, "volume_db", target_db, duration)
 	if stop_after:
-		_fade_tween.tween_callback(player.stop)
+		_fade_tween.tween_callback(func() -> void:
+			_stop_base_player(player)
+		)
 
 func _crossfade_players(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, target_db: float, duration: float) -> void:
 	_kill_fade_tween()
@@ -1093,7 +1125,7 @@ func _crossfade_players(from_player: AudioStreamPlayer, to_player: AudioStreamPl
 	_fade_tween.set_parallel(false)
 	_fade_tween.finished.connect(func():
 		if from_player.playing:
-			from_player.stop()
+			_stop_base_player(from_player)
 		_swap_active_player(to_player)
 		_clear_crossfade_state()
 	)
@@ -1113,8 +1145,8 @@ func _kill_pitch_stop_tween(reset_pitch: bool = true) -> void:
 	if _pitch_stop_tween and _pitch_stop_tween.is_running():
 		_pitch_stop_tween.kill()
 	_pitch_stop_tween = null
-	if reset_pitch and _pitch_stop_player != null and is_instance_valid(_pitch_stop_player):
-		_pitch_stop_player.pitch_scale = 1.0
+	if reset_pitch and _pitch_stop_player != null and is_instance_valid(_pitch_stop_player) and not _pitch_stop_player.playing:
+		_reset_player_pitch(_pitch_stop_player)
 	_pitch_stop_player = null
 
 func _finalize_crossfade() -> void:
@@ -1122,10 +1154,8 @@ func _finalize_crossfade() -> void:
 		return
 	var to_player := _crossfade_to
 	var from_player := _crossfade_from
-	if to_player:
-		to_player.volume_db = _crossfade_target_db
 	if from_player and from_player != to_player and from_player.playing:
-		from_player.stop()
+		_stop_base_player(from_player)
 	if to_player and to_player.playing:
 		_swap_active_player(to_player)
 	elif from_player:
@@ -1165,7 +1195,7 @@ func _apply_base_pause_to_player(player: AudioStreamPlayer, resume_volume_db: fl
 		return
 	if fade_time <= 0.0:
 		_base_pause_position = resume_position_override if resume_position_override >= 0.0 else _get_playback_position(player)
-		player.stop()
+		_stop_base_player(player)
 		player.volume_db = -80.0
 		return
 	_fade_tween = create_tween()
@@ -1173,7 +1203,7 @@ func _apply_base_pause_to_player(player: AudioStreamPlayer, resume_volume_db: fl
 	_fade_tween.tween_callback(func():
 		if is_instance_valid(player):
 			_base_pause_position = _get_playback_position(player)
-			player.stop()
+			_stop_base_player(player)
 			player.volume_db = -80.0
 	)
 
@@ -1232,7 +1262,9 @@ func _request_base_resume(reason: String, fade_time: float) -> void:
 	if player == _player_a or player == _player_b:
 		_swap_active_player(player)
 	if player.playing:
-		player.stop()
+		_stop_base_player(player)
+	else:
+		_reset_player_pitch(player)
 	player.volume_db = -80.0 if fade_time > 0.0 else resume_db
 	player.play()
 	_seek_if_possible(player, resume_position)

@@ -30,7 +30,6 @@ func _ready() -> void:
 	key_button.mouse_filter = Control.MOUSE_FILTER_STOP
 	key_button.pressed.connect(_on_key_pressed)
 	_apply_key_texture()
-	_register_gamepad_scheme()
 
 	if not _setup_done:
 		call_deferred("_spawn_content")

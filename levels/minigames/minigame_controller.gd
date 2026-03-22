@@ -295,17 +295,17 @@ func stop_minigame_music(fade_time: float = -1.0) -> void:
 		return
 	if not _music_pushed:
 		return
-	if _music_is_stream:
-		var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
-		MusicManager.stop_minigame_music(target_fade)
+	if not _music_is_stream:
 		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
-	MusicManager.stop_music(target_fade)
+	MusicManager.stop_minigame_music(target_fade)
 
 func update_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
 	if MusicManager == null:
 		return
 	if _active_minigame == null:
+		return
+	if stream == null:
 		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
 	if not _music_pushed:
@@ -313,6 +313,7 @@ func update_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_t
 		_music_is_stream = true
 		MusicManager.start_minigame_music(stream, volume_db, target_fade)
 		return
+	_music_is_stream = true
 	var mixed_volume: float = MusicManager.resolve_mix_volume_db(MusicManager.MIX_MINIGAME, volume_db)
 	MusicManager.play_music(stream, target_fade, mixed_volume, 0.0, 999.0, MusicManager.SOURCE_MINIGAME, MusicManager.SOURCE_KIND_MINIGAME)
 
@@ -459,13 +460,9 @@ func _restore_music() -> void:
 	if not _music_pushed:
 		return
 	if _music_is_stream:
+		MusicManager.end_minigame_music(_music_fade_time, _music_stop_on_finish)
+	else:
 		MusicManager.pop_music(_music_fade_time)
-		_music_pushed = false
-		_music_is_stream = false
-		return
-	if _music_stop_on_finish:
-		MusicManager.stop_music(_music_fade_time)
-	MusicManager.pop_music(_music_fade_time)
 	_music_pushed = false
 	_music_is_stream = false
 

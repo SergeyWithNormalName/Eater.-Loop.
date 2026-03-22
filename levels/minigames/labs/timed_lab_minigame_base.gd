@@ -71,6 +71,13 @@ func cleanup_timed_lab(on_time_updated: Callable, on_time_expired: Callable) -> 
 	if MinigameController.is_active(self):
 		MinigameController.finish_minigame(self, false)
 
+func finish_timed_lab_with_fade(success: bool, on_black: Callable) -> bool:
+	if MinigameController == null or not MinigameController.is_active(self):
+		return false
+	MinigameController.stop_minigame_music(music_suspend_fade_time)
+	MinigameController.finish_minigame_with_fade(self, success, on_black)
+	return true
+
 func apply_standard_lab_outcome(success: bool) -> void:
 	if not success:
 		var gd := get_node_or_null("/root/GameDirector")
