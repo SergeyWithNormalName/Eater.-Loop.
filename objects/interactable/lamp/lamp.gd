@@ -18,12 +18,12 @@ extends "res://objects/interactable/powered_switchable_interactable.gd"
 
 func _ready() -> void:
 	super._ready()
-	if is_bedroom and not is_in_group("bedroom_lamp"):
-		add_to_group("bedroom_lamp")
-	if not is_in_group("lamp"):
-		add_to_group("lamp")
-	if requires_generator and not is_in_group("generator_required_lamp"):
-		add_to_group("generator_required_lamp")
+	if is_bedroom and not is_in_group(GroupNames.BEDROOM_LAMP):
+		add_to_group(GroupNames.BEDROOM_LAMP)
+	if not is_in_group(GroupNames.LAMP):
+		add_to_group(GroupNames.LAMP)
+	if requires_generator and not is_in_group(GroupNames.GENERATOR_REQUIRED_LAMP):
+		add_to_group(GroupNames.GENERATOR_REQUIRED_LAMP)
 
 func _process(_delta: float) -> void:
 	if _light == null or not _light.enabled:
@@ -39,5 +39,5 @@ func _process(_delta: float) -> void:
 	_light.energy = lerp(_light.energy, light_energy, flicker_return_speed)
 
 func _register_light_groups() -> void:
-	if _light != null and not _light.is_in_group("lamp_light"):
-		_light.add_to_group("lamp_light")
+	if _light != null and not _light.is_in_group(GroupNames.LAMP_LIGHT):
+		_light.add_to_group(GroupNames.LAMP_LIGHT)

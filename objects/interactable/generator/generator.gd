@@ -48,7 +48,7 @@ func _activate_required_lamps_in_scene() -> void:
 	if tree == null:
 		return
 	var activated: Dictionary = {}
-	for light_node in tree.get_nodes_in_group("generator_required_light"):
+	for light_node in tree.get_nodes_in_group(GroupNames.GENERATOR_REQUIRED_LIGHT):
 		var powered = light_node
 		if powered == null or not (powered is PoweredSwitchableInteractableScript):
 			continue

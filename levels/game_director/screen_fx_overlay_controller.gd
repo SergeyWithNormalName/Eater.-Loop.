@@ -200,7 +200,7 @@ func apply_damage_camera_punch(host) -> void:
 func resolve_primary_camera(host) -> Camera2D:
 	if host.get_viewport() and host.get_viewport().get_camera_2d():
 		return host.get_viewport().get_camera_2d()
-	var player = host.get_tree().get_first_node_in_group("player")
+	var player = host.get_tree().get_first_node_in_group(GroupNames.PLAYER)
 	if player == null:
 		return null
 	if player.has_node("Camera2D"):

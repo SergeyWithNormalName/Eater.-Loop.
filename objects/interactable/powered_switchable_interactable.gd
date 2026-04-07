@@ -34,10 +34,10 @@ func _ready() -> void:
 	if _light != null:
 		_apply_light_settings()
 		_register_light_groups()
-	if not is_in_group("reactive_light_source"):
-		add_to_group("reactive_light_source")
-	if requires_generator and not is_in_group("generator_required_light"):
-		add_to_group("generator_required_light")
+	if not is_in_group(GroupNames.REACTIVE_LIGHT_SOURCE):
+		add_to_group(GroupNames.REACTIVE_LIGHT_SOURCE)
+	if requires_generator and not is_in_group(GroupNames.GENERATOR_REQUIRED_LIGHT):
+		add_to_group(GroupNames.GENERATOR_REQUIRED_LIGHT)
 	_sprite = get_node_or_null(sprite_node) as Sprite2D
 	if _sprite != null and off_texture == null:
 		off_texture = _sprite.texture

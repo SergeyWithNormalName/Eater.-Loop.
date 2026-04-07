@@ -452,17 +452,20 @@ func _setup_music(stream: AudioStream, volume_db: float, suspend_music: bool) ->
 	if stream != null:
 		MusicManager.start_minigame_music(stream, volume_db, _music_fade_time)
 		return
-	MusicManager.push_music(null, _music_fade_time)
+	MusicManager.push_music(
+		null,
+		_music_fade_time,
+		999.0,
+		MusicManager.SOURCE_MINIGAME,
+		MusicManager.SOURCE_KIND_MINIGAME
+	)
 
 func _restore_music() -> void:
 	if MusicManager == null:
 		return
 	if not _music_pushed:
 		return
-	if _music_is_stream:
-		MusicManager.end_minigame_music(_music_fade_time, _music_stop_on_finish)
-	else:
-		MusicManager.pop_music(_music_fade_time)
+	MusicManager.end_minigame_music(_music_fade_time, _music_is_stream and _music_stop_on_finish)
 	_music_pushed = false
 	_music_is_stream = false
 
@@ -556,7 +559,7 @@ func _cleanup_orphaned_minigames(scene: Node) -> void:
 	if current_scene == null and get_tree():
 		current_scene = get_tree().current_scene
 
-	var nodes := get_tree().get_nodes_in_group("minigame_ui")
+	var nodes := get_tree().get_nodes_in_group(GroupNames.MINIGAME_UI)
 	for node in nodes:
 		if node == null or not is_instance_valid(node):
 			continue

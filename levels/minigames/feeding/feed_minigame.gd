@@ -43,7 +43,7 @@ var _base_viewport: Vector2
 var _selected_music: AudioStream = null
 
 func _ready() -> void:
-	add_to_group("minigame_ui")
+	add_to_group(GroupNames.MINIGAME_UI)
 	if has_node("SoundsPlayer"):
 		sfx_player = $SoundsPlayer
 	else:
@@ -143,9 +143,6 @@ func setup_game(andrey_texture: Texture2D, count: int, music: AudioStream, win_s
 			
 		food.eaten.connect(_on_food_eaten)
 	_register_gamepad_scheme()
-
-func _process(_delta: float) -> void:
-	pass
 
 func _build_food_scene_pool(scenes: Array[PackedScene], count: int) -> Array[PackedScene]:
 	var result: Array[PackedScene] = []

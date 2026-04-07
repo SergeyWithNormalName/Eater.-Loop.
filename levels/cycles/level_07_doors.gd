@@ -52,7 +52,7 @@ func _build_post_fridge_actions() -> Array:
 	return [left, right]
 
 func _apply_unified_locked_messages() -> void:
-	for door_node in get_tree().get_nodes_in_group("doors"):
+	for door_node in get_tree().get_nodes_in_group(GroupNames.DOORS):
 		var door := door_node as Door
 		if door == null:
 			continue

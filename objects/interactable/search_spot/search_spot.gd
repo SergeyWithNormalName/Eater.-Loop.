@@ -86,7 +86,7 @@ func _on_minigame_finished(minigame: Node, success: bool) -> void:
 		_mark_all_spots_searched_empty()
 
 func _mark_all_spots_searched_empty() -> void:
-	var manager := get_tree().get_first_node_in_group("search_key_manager")
+	var manager := get_tree().get_first_node_in_group(GroupNames.SEARCH_KEY_MANAGER)
 	if manager == null:
 		return
 	if manager.has_method("mark_all_spots_searched_empty"):

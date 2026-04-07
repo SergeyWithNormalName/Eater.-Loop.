@@ -39,8 +39,8 @@ var is_completed: bool = false # <--- ФЛАГ: Выполнен объект и
 var _feedback_audio_player: AudioStreamPlayer2D = null
 
 func _ready() -> void:
-	if not is_in_group("checkpoint_stateful"):
-		add_to_group("checkpoint_stateful")
+	if not is_in_group(GroupNames.CHECKPOINT_STATEFUL):
+		add_to_group(GroupNames.CHECKPOINT_STATEFUL)
 	input_pickable = false
 	_setup_feedback_audio()
 	_setup_interaction_area()
@@ -123,7 +123,7 @@ func _get_interact_action() -> String:
 	return "interact"
 
 func _on_interact_area_body_entered(body: Node) -> void:
-	if not body.is_in_group("player"):
+	if not body.is_in_group(GroupNames.PLAYER):
 		return
 	_player_in_range = body
 	_on_player_entered(body)
@@ -196,7 +196,7 @@ func set_dependency_object(new_dependency: InteractiveObject) -> void:
 func attach_minigame(minigame: Node, layer_override: int = -1, parent_override: Node = null) -> Node:
 	if minigame == null:
 		return null
-	if MinigameController and MinigameController.has_method("attach_minigame"):
+	if MinigameController:
 		MinigameController.attach_minigame(minigame, layer_override, parent_override)
 		return minigame
 	var parent := parent_override

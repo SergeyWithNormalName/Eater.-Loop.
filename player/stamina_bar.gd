@@ -74,7 +74,7 @@ func _apply_bar() -> void:
 	_bar.size = Vector2(viewport_size.x * _ratio, max(1.0, bar_height))
 
 func _get_player() -> Node:
-	var player := get_tree().get_first_node_in_group("player")
+	var player := get_tree().get_first_node_in_group(GroupNames.PLAYER)
 	return player if player is Node else null
 
 func _update_fade(delta: float) -> void:

@@ -221,7 +221,7 @@ func _resolve_camera() -> Camera2D:
 			return explicit_camera
 	if get_viewport() and get_viewport().get_camera_2d():
 		return get_viewport().get_camera_2d()
-	var player := get_tree().get_first_node_in_group("player")
+	var player := get_tree().get_first_node_in_group(GroupNames.PLAYER)
 	if player != null and player.has_node("Camera2D"):
 		return player.get_node("Camera2D") as Camera2D
 	return null

@@ -18,8 +18,8 @@ var _setup_done: bool = false
 var _layout_state: Dictionary = {}
 
 func _ready() -> void:
-	add_to_group("minigame_ui")
-	add_to_group("search_key_minigame")
+	add_to_group(GroupNames.MINIGAME_UI)
+	add_to_group(GroupNames.SEARCH_KEY_MINIGAME)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_rng.randomize()
 	_hide_search_area_background()
@@ -200,7 +200,7 @@ func get_layout_state() -> Dictionary:
 	return state
 
 func _on_key_pressed() -> void:
-	var player := get_tree().get_first_node_in_group("player")
+	var player := get_tree().get_first_node_in_group(GroupNames.PLAYER)
 	if player and player.has_method("add_key"):
 		player.add_key(key_id)
 	if UIMessage:

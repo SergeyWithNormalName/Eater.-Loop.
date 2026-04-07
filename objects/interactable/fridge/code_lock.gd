@@ -21,7 +21,7 @@ var _current_input: String = ""
 @onready var cancel_button: Button = $Center/PanelRoot/ContentMargin/VBox/ActionPanel/Buttons/CancelButton
 
 func _ready() -> void:
-	add_to_group("minigame_ui")
+	add_to_group(GroupNames.MINIGAME_UI)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_start_minigame_session()
 	_apply_theme()

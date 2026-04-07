@@ -41,9 +41,9 @@ static var _death_screams_cache: Array[AudioStream] = []
 var _death_screams: Array[AudioStream] = []
 
 func _ready() -> void:
-	add_to_group("enemies")
-	if not is_in_group("checkpoint_stateful"):
-		add_to_group("checkpoint_stateful")
+	add_to_group(GroupNames.ENEMIES)
+	if not is_in_group(GroupNames.CHECKPOINT_STATEFUL):
+		add_to_group(GroupNames.CHECKPOINT_STATEFUL)
 	if _sprite:
 		_sprite_base_scale = _sprite.scale
 	_load_death_screams()
@@ -56,7 +56,7 @@ func capture_checkpoint_state() -> Dictionary:
 
 func apply_checkpoint_state(state: Dictionary) -> void:
 	if bool(state.get("has_player_target", false)):
-		_player = get_tree().get_first_node_in_group("player") as Node2D
+		_player = get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 	else:
 		_player = null
 	if bool(state.get("chase_music_started", false)):
@@ -82,12 +82,16 @@ func _physics_process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 
 func _update_facing_from_velocity() -> void:
-	if _sprite == null:
-		return
 	if abs(velocity.x) < 0.1:
 		return
-	var dir = sign(velocity.x)
-	_sprite.scale = Vector2(_sprite_base_scale.x * -dir, _sprite_base_scale.y)
+	_update_facing_from_direction(velocity)
+
+func _update_facing_from_direction(dir: Vector2) -> void:
+	if _sprite == null:
+		return
+	if abs(dir.x) < 0.01:
+		return
+	_sprite.scale = Vector2(_sprite_base_scale.x * -sign(dir.x), _sprite_base_scale.y)
 
 func _resolve_visual_node() -> Node2D:
 	var animated := get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
@@ -98,7 +102,7 @@ func _resolve_visual_node() -> Node2D:
 # --- Сигналы обнаружения (Detection Area) ---
 
 func _on_detection_area_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_player = body
 		_start_chase_music()
 
@@ -112,7 +116,7 @@ func _on_detection_area_body_exited(body: Node) -> void:
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if _is_player_busy_with_minigame():
 		return
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_attack_player()
 
 func _on_hitbox_area_body_exited(_body: Node2D) -> void:
@@ -186,21 +190,8 @@ func _play_attack_sfx(stream_override: AudioStream = null) -> void:
 	var pitch_min := minf(attack_sfx_pitch_min, attack_sfx_pitch_max)
 	var pitch_max := maxf(attack_sfx_pitch_min, attack_sfx_pitch_max)
 	var pitch := randf_range(pitch_min, pitch_max)
-	if UIMessage and UIMessage.has_method("play_sfx"):
+	if UIMessage:
 		UIMessage.play_sfx(stream, attack_sfx_volume_db, pitch)
-		return
-	if get_tree() == null:
-		return
-	var fallback_player := AudioStreamPlayer.new()
-	fallback_player.bus = "Sounds"
-	fallback_player.stream = stream
-	fallback_player.volume_db = attack_sfx_volume_db
-	fallback_player.pitch_scale = pitch
-	get_tree().root.add_child(fallback_player)
-	fallback_player.finished.connect(func():
-		fallback_player.queue_free()
-	)
-	fallback_player.play()
 
 func _attack_player() -> void:
 	if _is_player_busy_with_minigame():
@@ -208,22 +199,25 @@ func _attack_player() -> void:
 	var is_lethal := kill_on_attack or (CycleState != null and CycleState.phase == CycleState.Phase.DISTORTED)
 	if is_lethal:
 		_play_attack_sfx(_pick_random_death_scream())
-		if GameDirector and GameDirector.has_method("trigger_death_screen"):
-			GameDirector.trigger_death_screen()
-		else:
-			if CycleState != null:
-				CycleState.reset_cycle_state()
-			get_tree().call_deferred("reload_current_scene")
+		GameDirector.trigger_death_screen()
 		return
 	_play_attack_sfx(_pick_random_death_scream())
-	if GameDirector:
-		if GameDirector.has_method("trigger_damage_flash"):
-			GameDirector.trigger_damage_flash()
-		if GameDirector.has_method("reduce_time"):
-			GameDirector.reduce_time(time_penalty)
+	GameDirector.trigger_damage_flash()
+	GameDirector.reduce_time(time_penalty)
 	
 	# Удаляем врага, чтобы он не кусал каждый кадр
 	call_deferred("queue_free")
+
+func _create_sfx_player() -> AudioStreamPlayer2D:
+	var player := AudioStreamPlayer2D.new()
+	player.bus = "Sounds"
+	add_child(player)
+	return player
+
+static func _rand_range(min_val: float, max_val: float) -> float:
+	var min_safe := maxf(0.05, min_val)
+	var max_safe := maxf(min_safe, max_val)
+	return randf_range(min_safe, max_safe)
 
 func _exit_tree() -> void:
 	_stop_chase_music()
@@ -231,8 +225,4 @@ func _exit_tree() -> void:
 func _is_player_busy_with_minigame() -> bool:
 	if MinigameController == null:
 		return false
-	if MinigameController.has_method("has_active_minigame"):
-		return bool(MinigameController.has_active_minigame())
-	if MinigameController.has_method("should_block_player_movement"):
-		return bool(MinigameController.should_block_player_movement())
-	return false
+	return MinigameController.has_active_minigame()

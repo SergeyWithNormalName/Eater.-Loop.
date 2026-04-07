@@ -23,8 +23,8 @@ func _ready() -> void:
 	_prompt_anchor = get_node_or_null(prompt_anchor_node) as Node2D
 	if not is_in_group(PICKUP_FLASHLIGHT_GROUP):
 		add_to_group(PICKUP_FLASHLIGHT_GROUP)
-	if not is_in_group("reactive_light_source"):
-		add_to_group("reactive_light_source")
+	if not is_in_group(GroupNames.REACTIVE_LIGHT_SOURCE):
+		add_to_group(GroupNames.REACTIVE_LIGHT_SOURCE)
 	if _should_despawn_immediately():
 		call_deferred("queue_free")
 

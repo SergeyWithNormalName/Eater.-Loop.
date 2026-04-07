@@ -245,7 +245,7 @@ func _get_source_texture_size() -> Vector2:
 	return Vector2(128.0, 128.0)
 
 func _get_player() -> Node:
-	var player := get_tree().get_first_node_in_group("player")
+	var player := get_tree().get_first_node_in_group(GroupNames.PLAYER)
 	return player if player is Node else null
 
 func _on_player_flashlight_recharged() -> void:

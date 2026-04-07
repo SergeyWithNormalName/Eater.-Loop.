@@ -77,7 +77,7 @@ func _wire_buttons() -> void:
 		var button := node as Button
 		if button == null:
 			continue
-		if not button.is_in_group("menu_button"):
+		if not button.is_in_group(GroupNames.MENU_BUTTON):
 			continue
 		button.focus_mode = Control.FOCUS_ALL
 		button.pivot_offset = button.size * 0.5

@@ -423,7 +423,7 @@ func _teleport_player_if_needed() -> void:
 	var marker := get_node_or_null(teleport_target)
 	if marker == null:
 		return
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 	if player != null:
 		player.global_position = marker.global_position
 

@@ -52,7 +52,7 @@ func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
 	if not only_sound:
 		return
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_heard_player_sound = false
 		_connect_player_sound(body)
 
@@ -89,7 +89,7 @@ func _on_hitbox_area_body_entered(body: Node2D) -> void:
 		return
 	if not _should_chase_player():
 		return
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_attack_player()
 
 func _apply_lamp_freeze() -> bool:
@@ -107,13 +107,13 @@ func _is_lamp_light_hitting() -> bool:
 	var tree := get_tree()
 	if tree == null:
 		return false
-	for light_source in tree.get_nodes_in_group("reactive_light_source"):
+	for light_source in tree.get_nodes_in_group(GroupNames.REACTIVE_LIGHT_SOURCE):
 		if light_source == null or not is_instance_valid(light_source):
 			continue
 		if not light_source.has_method("is_point_lit"):
 			continue
-			if bool(light_source.call("is_point_lit", global_position)):
-				return true
+		if bool(light_source.call("is_point_lit", global_position)):
+			return true
 	return false
 
 func capture_checkpoint_state() -> Dictionary:

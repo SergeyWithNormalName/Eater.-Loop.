@@ -31,8 +31,8 @@ var _presses: int = 0
 var _last_prompt_text: String = ""
 
 func _ready() -> void:
-	if not is_in_group("checkpoint_stateful"):
-		add_to_group("checkpoint_stateful")
+	if not is_in_group(GroupNames.CHECKPOINT_STATEFUL):
+		add_to_group(GroupNames.CHECKPOINT_STATEFUL)
 	if _interact_area != null:
 		if _interact_area.has_signal("player_entered"):
 			_interact_area.player_entered.connect(_on_interact_area_player_entered)

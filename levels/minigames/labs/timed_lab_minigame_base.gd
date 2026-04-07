@@ -29,12 +29,13 @@ func start_timed_lab_session(
 	music_stream: AudioStream = null,
 	music_fade_time: float = -1.0
 ) -> void:
-	add_to_group("minigame_ui")
+	add_to_group(GroupNames.MINIGAME_UI)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process(true)
 	set_physics_process(true)
 	var resolved_music_stream := music_stream if music_stream != null else lab_music_stream
 	var resolved_music_fade_time := music_suspend_fade_time if music_fade_time < 0.0 else music_fade_time
+	# WAV loop flags must be configured before MusicManager reaches AudioStreamPlayer.play().
 	_ensure_lab_music_loop(resolved_music_stream)
 	var controller_active := MinigameController != null and MinigameController.is_active(self)
 	if MinigameController != null and not controller_active:

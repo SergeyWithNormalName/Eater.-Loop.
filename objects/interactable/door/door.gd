@@ -42,8 +42,8 @@ var _number_sprite: Sprite2D
 func _ready() -> void:
 	super._ready()
 	_sync_locked_message_alias()
-	if not is_in_group("doors"):
-		add_to_group("doors")
+	if not is_in_group(GroupNames.DOORS):
+		add_to_group(GroupNames.DOORS)
 	input_pickable = false
 	_sprite = get_node_or_null("Sprite2D")
 	_number_sprite = get_node_or_null("Number")

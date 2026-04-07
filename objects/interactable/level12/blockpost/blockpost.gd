@@ -20,7 +20,7 @@ func _ready() -> void:
 		_touch_area.body_entered.connect(_on_touch_area_body_entered)
 
 func _on_touch_area_body_entered(body: Node) -> void:
-	if body == null or not body.is_in_group("player"):
+	if body == null or not body.is_in_group(GroupNames.PLAYER):
 		return
 	if _has_access:
 		return

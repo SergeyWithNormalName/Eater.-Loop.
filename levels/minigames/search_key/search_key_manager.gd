@@ -5,7 +5,7 @@ extends Node
 var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
-	add_to_group("search_key_manager")
+	add_to_group(GroupNames.SEARCH_KEY_MANAGER)
 	_rng.randomize()
 	_assign_key_to_random_spot()
 
