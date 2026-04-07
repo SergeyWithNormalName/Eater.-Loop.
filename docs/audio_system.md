@@ -44,8 +44,29 @@
 
 - два `AudioStreamPlayer` для кроссфейда базовой музыки;
 - стек временных состояний;
-- отдельные потоки для музыки погони и pause-menu;
+- отдельные потоки для музыки погони и pause-menu (вынесены в подсистемы);
 - поддержка duck/pause/resume.
+
+### Подсистемы (helpers под `levels/audio/`)
+
+Чтобы `music_manager.gd` не превратился в God Object, часть ответственностей
+вынесена в отдельные `RefCounted` помощники, которые принадлежат `MusicManager`
+и получают ссылку на хост через конструктор:
+
+- `levels/audio/music_chase_system.gd` (`MusicChaseSystem`) — владеет плеером
+  музыки погони, списком источников (runner), порядком приоритетов, логикой
+  pause/resume погони и ответом на вопрос "нужно ли глушить базу". Хост вызывает
+  `process_tick()` из `_process()` и дергает публичные методы из своих оберток
+  (`set_chase_music_source`, `pause_chase_music`, `clear_chase_music_sources`,
+  ...).
+- `levels/audio/music_pause_layer.gd` (`MusicPauseLayer`) — владеет плеером
+  приоритетной музыки меню паузы, состоянием перехода
+  (`idle/opening/open/closing`) и таймером транзишена. Используется из
+  `start_pause_menu_music` / `stop_pause_menu_music`.
+
+Внешние скрипты **не** должны обращаться к этим файлам напрямую — интерфейс
+по-прежнему проходит только через публичные методы `MusicManager`. Помощники
+— деталь реализации и могут меняться без предупреждения.
 
 ### Инвариант кроссфейда базовой музыки
 
@@ -238,6 +259,10 @@ MusicManager.play_ambient_music(stream, fade_time, volume_db)
   всегда применяются к фактическому целевому плееру.
 - Добавлен публичный API `MusicManager.resolve_mix_volume_db(...)` для внешних
   модулей, чтобы не обращаться к приватным методам.
+- `music_manager.gd` разбит: логика погони вынесена в
+  `levels/audio/music_chase_system.gd`, логика pause-menu — в
+  `levels/audio/music_pause_layer.gd`. Публичный API `MusicManager` и
+  наблюдаемое поведение не изменились.
 - Изменения не меняют геймплей и затрагивают только подкапотную логику звука.
 
 ## SFX (звуки)

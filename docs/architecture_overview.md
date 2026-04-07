@@ -9,7 +9,7 @@
   * `DistortionPhaseController` — таймер и переключения NORMAL↔DISTORTED, дефер к мини-играм, spawn сталкера.
   * `ScreenFxOverlayController` — шифт/сдвиг камеры, damage-flash, light-only overlay, overlay-сцены с тенями.
   * `DeathSequenceController` — затемнение, shaders, retry-кнопка и custom-death hook.
-- `MusicManager` (`res://levels/music_manager.gd`) — единственная точка для ambient/event/minigame/chase/priority-stack.
+- `MusicManager` (`res://levels/music_manager.gd`) — единственная точка для ambient/event/minigame/chase/priority-stack. Внутри делегирует часть ответственностей в `MusicChaseSystem` (`res://levels/audio/music_chase_system.gd`, музыка погони) и `MusicPauseLayer` (`res://levels/audio/music_pause_layer.gd`, музыка меню паузы). Эти хелперы — деталь реализации, не трогаются извне.
 - `MinigameController` (`res://levels/minigames/minigame_controller.gd`) — жизненный цикл мини-игр, gamepad-схемы, блокировки движения и музыки.
 - UI-сервисы: `UIMessage`, `InteractionPrompts`, `CursorManager`, `StaminaBar`, `FlashlightBar`, `CursorManager`
 
@@ -46,3 +46,4 @@
 - `GameDirector` теперь фасад, за ним контроллеры `DistortionPhaseController`, `ScreenFxOverlayController`, `DeathSequenceController`.
 - `InteractiveObject` поставляет `play_feedback_sfx` и опосредует powered interactables через `PoweredSwitchableInteractable`.
 - `Fridge`/`Laptop` используют вспомогательные компоненты и больше не хранят level-specific wiring.
+- `MusicManager` разгружен: из него извлечены `MusicChaseSystem` и `MusicPauseLayer`. Публичный API и тесты не изменились, файл `music_manager.gd` стал значительно компактнее.
