@@ -129,13 +129,14 @@
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="126_yauvq"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="127_hip56"]
 [ext_resource type="PackedScene" uid="uid://u02pjldgfvip" path="res://objects/interactable/notebook/laptop_STU.tscn" id="128_jsb5w"]
-[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 [ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_jqckr"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_e4eaf"]
 [ext_resource type="Texture2D" uid="uid://bdytis2jqaj38" path="res://objects/interactable/note/Otchislenie.png" id="131_g6lqu"]
 [ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://objects/interactable/lamp/lamp.tscn" id="131_upyn3"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/target/target.tscn" id="132_0grpv"]
 [ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="133_g6lqu"]
+[ext_resource type="PackedScene" path="res://objects/interactable/projector/projector.tscn" id="137_fbbig"]
+[ext_resource type="Script" uid="uid://dawqw5w6r16cr" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_yl6qn")
@@ -164,12 +165,13 @@ fill_to = Vector2(0.78846157, 0.17948718)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_len77"]
 size = Vector2(339.5, 466.78906)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
-size = Vector2(339.5, 406.78906)
-
 [sub_resource type="Resource" id="Resource_level11_fridge_lab_requirement"]
 script = ExtResource("200_fridge_lab_cfg")
 require_any_lab_completion = true
+required_lab_completion_ids = null
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
+size = Vector2(339.5, 406.78906)
 
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -8567,6 +8569,9 @@ enemy_scene = ExtResource("133_g6lqu")
 position = Vector2(12091, 6290)
 flicker_enabled = true
 light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
+
+[node name="Projector" parent="." unique_id=810543244 instance=ExtResource("137_fbbig")]
+position = Vector2(6864, 254)
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

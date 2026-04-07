@@ -97,7 +97,7 @@ gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Level" type="Node2D" unique_id=803271373]
+[node name="Laptop" type="Node2D" unique_id=803271373]
 position = Vector2(16, 0)
 script = ExtResource("1_iylu1")
 cycle_number = 3
