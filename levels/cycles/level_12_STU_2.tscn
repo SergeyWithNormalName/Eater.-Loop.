@@ -129,6 +129,7 @@
 [ext_resource type="AudioStream" uid="uid://d0bvo05v2vmx" path="res://music/MyHorrorHit_3.wav" id="126_owlbn"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="127_sveeh"]
 [ext_resource type="PackedScene" path="res://objects/interactable/level12/notebook/laptop_money.tscn" id="128_qyde8"]
+[ext_resource type="Script" path="res://objects/interactable/notebook/laptop_reward_config.gd" id="200_laptop_reward_cfg"]
 [ext_resource type="PackedScene" uid="uid://bwksdg5axx40r" path="res://levels/minigames/labs/LLM/llm_minigame_glitch.tscn" id="129_0r3n2"]
 [ext_resource type="Texture2D" uid="uid://beaed5ulq6pqh" path="res://objects/interactable/notebook/Table_U_PC_on.png" id="130_gy0x1"]
 [ext_resource type="PackedScene" uid="uid://d1lyjcoq121yx" path="res://objects/interactable/generator/generator.tscn" id="131_yuqxs"]
@@ -165,6 +166,11 @@ size = Vector2(339.5, 466.78906)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
 size = Vector2(339.5, 406.78906)
+
+[sub_resource type="Resource" id="Resource_level12_laptop_reward"]
+script = ExtResource("200_laptop_reward_cfg")
+money_system_path = NodePath("../Level12MoneySystem")
+reward_reason = "Лабораторная работа"
 
 [node name="Level" type="Node2D" unique_id=2066288641]
 position = Vector2(16, 0)
@@ -8810,8 +8816,7 @@ reward_message = "Ты получил 40 руб."
 position = Vector2(47060, -7123)
 minigame_scene = ExtResource("129_0r3n2")
 time_limit = 12.0
-money_system_path = NodePath("../Level12MoneySystem")
-reward_reason = "Лабораторная работа"
+reward_config = SubResource("Resource_level12_laptop_reward")
 completed_message = "Я уже сдал эту работу. Оценка отличная."
 locked_sprite = ExtResource("66_lbsek")
 available_sprite = ExtResource("130_gy0x1")

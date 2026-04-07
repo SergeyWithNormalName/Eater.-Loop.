@@ -37,6 +37,7 @@ var _timer: Timer
 var _subtitle_timer: Timer
 var _fade_rect: ColorRect
 var _fade_tween: Tween
+var _fade_finished_callback: Callable = Callable()
 var _sfx_player: AudioStreamPlayer
 var _dialogue_voice_player: AudioStreamPlayer
 var _modules: Dictionary = {}
@@ -487,14 +488,19 @@ func play_fade_sequence(fade_out_duration: float, fade_in_duration: float, on_bl
 		return
 	if _fade_tween and _fade_tween.is_running():
 		_fade_tween.kill()
+		_fade_tween = null
+		var interrupted_callback := _fade_finished_callback
+		_fade_finished_callback = Callable()
+		_finish_fade_sequence(interrupted_callback)
 	_fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
 	var out_time: float = max(0.0, float(fade_out_duration))
 	var in_time: float = max(0.0, float(fade_in_duration))
+	_fade_finished_callback = on_finished
 	_fade_tween = create_tween()
 	_fade_tween.tween_property(_fade_rect, "color:a", 1.0, out_time)
 	_fade_tween.tween_callback(Callable(self, "_invoke_callable_if_valid").bind(on_black))
 	_fade_tween.tween_property(_fade_rect, "color:a", 0.0, in_time)
-	_fade_tween.tween_callback(Callable(self, "_finish_fade_sequence").bind(on_finished))
+	_fade_tween.tween_callback(Callable(self, "_finish_fade_sequence").bind(_fade_finished_callback))
 
 func is_screen_dark(threshold: float = 0.01) -> bool:
 	if _fade_rect == null:
@@ -546,6 +552,8 @@ func _invoke_callable_if_valid(callback: Callable) -> void:
 		callback.call()
 
 func _finish_fade_sequence(callback: Callable) -> void:
+	_fade_tween = null
+	_fade_finished_callback = Callable()
 	if _fade_rect != null:
 		_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_invoke_callable_if_valid(callback)

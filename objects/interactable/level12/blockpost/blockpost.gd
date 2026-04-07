@@ -20,7 +20,7 @@ func _ready() -> void:
 		_touch_area.body_entered.connect(_on_touch_area_body_entered)
 
 func _on_touch_area_body_entered(body: Node) -> void:
-	if body == null or not body.is_in_group("player"):
+	if body == null or not body.is_in_group(GroupNames.PLAYER):
 		return
 	if _has_access:
 		return
@@ -37,12 +37,12 @@ func _try_use_door() -> void:
 		return
 
 	var money_system := _resolve_money_system()
-	if money_system == null or not money_system.has_method("try_open_blockpost"):
+	if money_system == null:
 		UIMessage.show_notification("Система денег не настроена.")
 		_play_sound(sfx_locked)
 		return
 
-	var can_pass: bool = bool(money_system.call("try_open_blockpost", required_money))
+	var can_pass: bool = money_system.try_open_blockpost(required_money)
 	if not can_pass:
 		_show_not_enough_money_feedback(true)
 		return
@@ -55,16 +55,16 @@ func _try_use_door() -> void:
 		UIMessage.show_notification(access_granted_message)
 	_play_sound(sfx_open)
 
-func _resolve_money_system() -> Node:
+func _resolve_money_system() -> Level12MoneySystem:
 	if money_system_path.is_empty():
-		return get_node_or_null("../Level12MoneySystem")
-	return get_node_or_null(money_system_path)
+		return get_node_or_null("../Level12MoneySystem") as Level12MoneySystem
+	return get_node_or_null(money_system_path) as Level12MoneySystem
 
 func _can_afford_passage() -> bool:
 	var money_system := _resolve_money_system()
-	if money_system == null or not money_system.has_method("has_enough_money"):
+	if money_system == null:
 		return false
-	return bool(money_system.call("has_enough_money", required_money))
+	return money_system.has_enough_money(required_money)
 
 func _show_not_enough_money_feedback(force: bool) -> void:
 	if not force:

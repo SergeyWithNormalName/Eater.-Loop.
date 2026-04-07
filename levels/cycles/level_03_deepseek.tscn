@@ -68,18 +68,26 @@
 [ext_resource type="PackedScene" uid="uid://dgwhss1swdo0j" path="res://objects/interactable/notebook/laptop.tscn" id="66_n60me"]
 [ext_resource type="PackedScene" uid="uid://d4k8r7hh7qfse" path="res://levels/minigames/labs/LLM/llm_minigame.tscn" id="67_v1c7v"]
 [ext_resource type="Texture2D" uid="uid://obrre6750bjw" path="res://objects/environment/smart/world_clock/Clock.png" id="68_6lg8n"]
+[ext_resource type="AudioStream" uid="uid://brswriqoj1emp" path="res://music/MusicForLabs2.wav" id="69_k1f7c"]
 [ext_resource type="PackedScene" uid="uid://cundvm73iemvc" path="res://objects/environment/smart/world_clock/world_clock.tscn" id="69_nwisw"]
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="70_wk8e1"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="71_s3jat"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="72_i1whk"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="73_brys8"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="74_qxn6o"]
+[ext_resource type="Script" uid="uid://dawqw5w6r16cr" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_brys8")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_level03_fridge_lab_requirement"]
+script = ExtResource("200_fridge_lab_cfg")
+require_any_lab_completion = true
+required_lab_completion_ids = null
+required_message = "Я не буду есть, пока не сделаю лабораторную работу"
 
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -89,7 +97,7 @@ gradient = SubResource("Gradient_tgt7k")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Level" type="Node2D" unique_id=803271373]
+[node name="Laptop" type="Node2D" unique_id=803271373]
 position = Vector2(16, 0)
 script = ExtResource("1_iylu1")
 cycle_number = 3
@@ -661,9 +669,7 @@ bg_music = ExtResource("50_j4tnn")
 win_sound = ExtResource("51_80xnd")
 eat_sound = ExtResource("52_0h1b5")
 background_texture = ExtResource("53_4xyk0")
-require_lab_completion = true
-lab_required_message = "Я не буду есть, пока не сделаю лабораторную работу"
-use_locked_visual_after_eating = true
+lab_requirement_config = SubResource("Resource_level03_fridge_lab_requirement")
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
@@ -864,6 +870,7 @@ position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
+lab_music_stream = ExtResource("69_k1f7c")
 is_enabled = false
 unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
@@ -1119,6 +1126,7 @@ position = Vector2(-1853, 2067)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_v1c7v")
 time_limit = 60.0
+lab_music_stream = ExtResource("69_k1f7c")
 is_enabled = false
 unlock_on_dependency_interaction = true
 completed_message = "Я уже сделал эту работу"
@@ -1129,6 +1137,16 @@ position = Vector2(-2365, -473)
 
 [node name="TriggerBedroomSilent" parent="." unique_id=1091739183 instance=ExtResource("74_qxn6o")]
 position = Vector2(-1919, 83)
+scale = Vector2(28.560001, 13.879997)
+affect_on_exit = true
+one_shot = false
+apply_on_ready_if_overlapping = true
+music_enabled = true
+music_on_enter = 8
+music_on_exit = 9
+
+[node name="TriggerBedroomSilent2" parent="." unique_id=456511070 instance=ExtResource("74_qxn6o")]
+position = Vector2(-1919, 2046)
 scale = Vector2(28.560001, 13.879997)
 affect_on_exit = true
 one_shot = false

@@ -135,6 +135,8 @@
 [ext_resource type="PackedScene" uid="uid://b08r06tf2q8d8" path="res://objects/interactable/lamp/lamp.tscn" id="131_upyn3"]
 [ext_resource type="PackedScene" path="res://objects/environment/smart/target/target.tscn" id="132_0grpv"]
 [ext_resource type="PackedScene" uid="uid://c8tigiycrqn8" path="res://enemies/light_only/enemy_light_only.tscn" id="133_g6lqu"]
+[ext_resource type="PackedScene" path="res://objects/interactable/projector/projector.tscn" id="137_fbbig"]
+[ext_resource type="Script" uid="uid://dawqw5w6r16cr" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="200_fridge_lab_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_yl6qn")
@@ -162,6 +164,11 @@ fill_to = Vector2(0.78846157, 0.17948718)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_len77"]
 size = Vector2(339.5, 466.78906)
+
+[sub_resource type="Resource" id="Resource_level11_fridge_lab_requirement"]
+script = ExtResource("200_fridge_lab_cfg")
+require_any_lab_completion = true
+required_lab_completion_ids = null
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkc2"]
 size = Vector2(339.5, 406.78906)
@@ -3800,7 +3807,7 @@ andrey_face = ExtResource("89_t2sbq")
 bg_music = ExtResource("89_drtc1")
 eat_sound = ExtResource("90_8v0td")
 background_texture = ExtResource("91_ibrhk")
-require_lab_completion = true
+lab_requirement_config = SubResource("Resource_level11_fridge_lab_requirement")
 
 [node name="603" type="Node2D" parent="6thLevel" unique_id=1673846713]
 position = Vector2(38317, 0)
@@ -8560,8 +8567,11 @@ enemy_scene = ExtResource("133_g6lqu")
 
 [node name="Lamp" parent="." unique_id=1861148071 instance=ExtResource("131_upyn3")]
 position = Vector2(12091, 6290)
-light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
 flicker_enabled = true
+light_color = Color(0.8995881, 0.9622616, 0.99435014, 1)
+
+[node name="Projector" parent="." unique_id=810543244 instance=ExtResource("137_fbbig")]
+position = Vector2(6864, 254)
 
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsLeft)"]
 [editable path="9thLevel/9thHall/InteractableObjects/Door(StairsRight)"]

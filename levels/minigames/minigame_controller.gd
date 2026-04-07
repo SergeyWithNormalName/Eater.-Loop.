@@ -199,7 +199,10 @@ func _is_zero_approx(value: float) -> bool:
 	return absf(value) <= 0.5
 
 func set_pause_menu_open(is_open: bool) -> void:
+	if _pause_menu_open == is_open:
+		return
 	_pause_menu_open = is_open
+	_set_active_minigame_runtime_paused(is_open)
 
 func is_pause_menu_open() -> bool:
 	return _pause_menu_open
@@ -292,24 +295,26 @@ func stop_minigame_music(fade_time: float = -1.0) -> void:
 		return
 	if not _music_pushed:
 		return
-	if _music_is_stream:
-		MusicManager.stop_minigame_music()
+	if not _music_is_stream:
 		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
-	MusicManager.stop_music(target_fade)
+	MusicManager.stop_minigame_music(target_fade)
 
 func update_minigame_music(stream: AudioStream, volume_db: float = 999.0, fade_time: float = -1.0) -> void:
 	if MusicManager == null:
 		return
 	if _active_minigame == null:
 		return
+	if stream == null:
+		return
 	var target_fade := _music_fade_time if fade_time < 0.0 else fade_time
 	if not _music_pushed:
 		_music_pushed = true
 		_music_is_stream = true
-		MusicManager.start_minigame_music(stream, volume_db)
+		MusicManager.start_minigame_music(stream, volume_db, target_fade)
 		return
-	var mixed_volume := MusicManager.resolve_mix_volume_db(MusicManager.MIX_MINIGAME, volume_db)
+	_music_is_stream = true
+	var mixed_volume: float = MusicManager.resolve_mix_volume_db(MusicManager.MIX_MINIGAME, volume_db)
 	MusicManager.play_music(stream, target_fade, mixed_volume, 0.0, 999.0, MusicManager.SOURCE_MINIGAME, MusicManager.SOURCE_KIND_MINIGAME)
 
 func get_time_left() -> float:
@@ -445,23 +450,22 @@ func _setup_music(stream: AudioStream, volume_db: float, suspend_music: bool) ->
 		return
 	_music_pushed = true
 	if stream != null:
-		MusicManager.start_minigame_music(stream, volume_db)
+		MusicManager.start_minigame_music(stream, volume_db, _music_fade_time)
 		return
-	MusicManager.push_music(null, _music_fade_time)
+	MusicManager.push_music(
+		null,
+		_music_fade_time,
+		999.0,
+		MusicManager.SOURCE_MINIGAME,
+		MusicManager.SOURCE_KIND_MINIGAME
+	)
 
 func _restore_music() -> void:
 	if MusicManager == null:
 		return
 	if not _music_pushed:
 		return
-	if _music_is_stream:
-		MusicManager.pop_music(0.0)
-		_music_pushed = false
-		_music_is_stream = false
-		return
-	if _music_stop_on_finish:
-		MusicManager.stop_music(_music_fade_time)
-	MusicManager.pop_music(_music_fade_time)
+	MusicManager.end_minigame_music(_music_fade_time, _music_is_stream and _music_stop_on_finish)
 	_music_pushed = false
 	_music_is_stream = false
 
@@ -555,7 +559,7 @@ func _cleanup_orphaned_minigames(scene: Node) -> void:
 	if current_scene == null and get_tree():
 		current_scene = get_tree().current_scene
 
-	var nodes := get_tree().get_nodes_in_group("minigame_ui")
+	var nodes := get_tree().get_nodes_in_group(GroupNames.MINIGAME_UI)
 	for node in nodes:
 		if node == null or not is_instance_valid(node):
 			continue
@@ -574,6 +578,8 @@ func _force_clear_active_state() -> void:
 		return
 	_active_minigame = null
 	_restore_music()
+	if MusicManager:
+		MusicManager.resume_chase_music(CHASE_MUSIC_PAUSE_FADE_TIME)
 	if _gamepad_runtime:
 		_gamepad_runtime.clear()
 	_restore_mouse_cursor()
@@ -695,6 +701,12 @@ func _call_callable_if_alive(callback: Callable) -> void:
 		if custom_target != null and not is_instance_valid(custom_target):
 			return
 	callback.call()
+
+func _set_active_minigame_runtime_paused(paused: bool) -> void:
+	if _active_minigame == null or not is_instance_valid(_active_minigame):
+		return
+	if _active_minigame.has_method("set_runtime_paused"):
+		_active_minigame.call("set_runtime_paused", paused)
 
 func _apply_registered_gamepad_scheme(minigame: Node) -> void:
 	if _gamepad_runtime == null:

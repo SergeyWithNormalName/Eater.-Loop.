@@ -150,8 +150,7 @@ func finish_game(success: bool):
 	if _is_finished:
 		return
 	_is_finished = true
-	if MinigameController:
-		MinigameController.finish_minigame_with_fade(self, success, Callable(self, "_finalize_finish_after_fade").bind(success))
+	if finish_timed_lab_with_fade(success, Callable(self, "_finalize_finish_after_fade").bind(success)):
 		return
 	_finalize_finish_after_fade(success)
 

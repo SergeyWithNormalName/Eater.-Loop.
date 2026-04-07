@@ -75,13 +75,8 @@ var _step_audio: StepAudioComponent = null
 func _ready() -> void:
 	super._ready()
 
-	_growl_player = AudioStreamPlayer2D.new()
-	_growl_player.bus = "Sounds"
-	add_child(_growl_player)
-
-	_scream_player = AudioStreamPlayer2D.new()
-	_scream_player.bus = "Sounds"
-	add_child(_scream_player)
+	_growl_player = _create_sfx_player()
+	_scream_player = _create_sfx_player()
 
 	_reset_growl_timer()
 
@@ -159,21 +154,16 @@ func _update_idle_wander(delta: float) -> void:
 	if _wander_timer <= 0.0:
 		if _wander_moving:
 			_wander_moving = false
-			_wander_timer = _rand_range_clamped(wander_pause_time_min, wander_pause_time_max)
+			_wander_timer = _rand_range(wander_pause_time_min, wander_pause_time_max)
 		else:
 			_wander_moving = true
 			_wander_dir = -1.0 if randf() < 0.5 else 1.0
-			_wander_timer = _rand_range_clamped(wander_walk_time_min, wander_walk_time_max)
+			_wander_timer = _rand_range(wander_walk_time_min, wander_walk_time_max)
 
 	if _wander_moving:
 		velocity = Vector2(_wander_dir * wander_speed, 0.0)
 	else:
 		velocity = Vector2.ZERO
-
-func _rand_range_clamped(min_val: float, max_val: float) -> float:
-	var min_safe = max(0.05, min_val)
-	var max_safe = max(min_safe, max_val)
-	return randf_range(min_safe, max_safe)
 
 func _apply_facing() -> void:
 	if _sprite == null:
@@ -339,7 +329,7 @@ func apply_checkpoint_state(state: Dictionary) -> void:
 
 func _on_detection_area_body_entered(body: Node) -> void:
 	super._on_detection_area_body_entered(body)
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_play_scream()
 
 func _shake_camera() -> void:

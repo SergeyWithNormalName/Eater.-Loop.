@@ -1,0 +1,18 @@
+class_name GroupNames
+
+const PLAYER := "player"
+const ENEMIES := "enemies"
+const CHECKPOINT_STATEFUL := "checkpoint_stateful"
+const DOORS := "doors"
+const REACTIVE_LIGHT_SOURCE := "reactive_light_source"
+const GENERATOR_REQUIRED_LIGHT := "generator_required_light"
+const GENERATOR_REQUIRED_LAMP := "generator_required_lamp"
+const LAMP := "lamp"
+const LAMP_LIGHT := "lamp_light"
+const BEDROOM_LAMP := "bedroom_lamp"
+const MINIGAME_UI := "minigame_ui"
+const MENU_BUTTON := "menu_button"
+const TARGET_MONSTER_SPAWNER := "target_monster_spawner"
+const SEARCH_KEY_MANAGER := "search_key_manager"
+const SEARCH_KEY_MINIGAME := "search_key_minigame"
+const ENDING_CREDIT_LABEL := "ending_credit_label"

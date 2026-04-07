@@ -77,6 +77,8 @@
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="70_bqble"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="71_1c5xg"]
 [ext_resource type="AudioStream" uid="uid://dyuhyx3bs3v16" path="res://objects/interactable/fridge/audio/FridgeCreaking.wav" id="72_fcrek"]
+[ext_resource type="Script" path="res://objects/interactable/shared/idle_rocking_config.gd" id="200_idle_rocking_cfg"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_lab_requirement_config.gd" id="201_fridge_lab_cfg"]
 [ext_resource type="Texture2D" uid="uid://cl2f16mia8e0b" path="res://objects/environment/sprites/allrooms/Chain.png" id="76_hq6el"]
 [ext_resource type="Texture2D" uid="uid://be6gwo1nupumw" path="res://objects/environment/sprites/allrooms/BigChain.png" id="77_6gd7j"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="78_1iu6x"]
@@ -154,6 +156,18 @@ shader_parameter/hole_density = 0.48
 shader_parameter/hole_noise_scale = 56.0
 shader_parameter/edge_softness = 0.015
 shader_parameter/edge_darkening = 0.28
+
+[sub_resource type="Resource" id="Resource_level08_fridge_rocking"]
+script = ExtResource("200_idle_rocking_cfg")
+cycle_duration = 4.0
+strength_degrees = 2.0
+pivot_mode = 1
+sound = ExtResource("72_fcrek")
+
+[sub_resource type="Resource" id="Resource_level08_fridge_lab_requirement"]
+script = ExtResource("201_fridge_lab_cfg")
+require_any_lab_completion = true
+required_message = "Я подвесил холодильник, чтобы не есть"
 
 [node name="Level" type="Node2D" unique_id=1851398424]
 position = Vector2(16, 0)
@@ -1174,15 +1188,11 @@ bg_music = ExtResource("50_ccica")
 win_sound = ExtResource("51_2e7ln")
 eat_sound = ExtResource("52_w2mig")
 background_texture = ExtResource("53_q015q")
-require_lab_completion = true
-lab_required_message = "Я подвесил холодильник, чтобы не есть"
+lab_requirement_config = SubResource("Resource_level08_fridge_lab_requirement")
 use_locked_visual_after_eating = false
 locked_sprite = ExtResource("54_4qouy")
 available_sprite = ExtResource("64_0ugqs")
-rocking_cycle_duration = 4.0
-rocking_strength_degrees = 2.0
-rocking_pivot_mode = 1
-rocking_sound = ExtResource("72_fcrek")
+idle_rocking_config = SubResource("Resource_level08_fridge_rocking")
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
 metadata/_edit_group_ = true
 

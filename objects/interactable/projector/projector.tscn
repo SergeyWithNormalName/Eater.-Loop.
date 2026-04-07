@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://objects/interactable/projector/projector.gd" id="1_projector_script"]
 [ext_resource type="Texture2D" path="res://objects/interactable/projector/ProjectorSprite.png" id="2_projector_texture"]
@@ -22,9 +22,37 @@ fill_to = Vector2(0.86, 0.24)
 script = ExtResource("1_projector_script")
 prompt_offset = Vector2(0, -120)
 off_texture = ExtResource("2_projector_texture")
+light_color = Color(1, 0.952941, 0.87451, 1)
+light_range = 1020.0
+light_energy = 1.95
+light_fov_deg = 78.0
+beam_direction_local = Vector2(1, -0.18)
+beam_origin_local = Vector2(60, -20)
+beam_visual_length = 980.0
+beam_visual_near_width = 92.0
+beam_visual_far_width = 920.0
+beam_visual_alpha = 0.42
+beam_visual_core_alpha = 0.24
+beam_visual_start_softness = 0.04
+beam_visual_end_softness = 0.4
+beam_visual_edge_softness = 0.18
+beam_visual_spread_curve = 0.92
+beam_visual_length_falloff = 1.15
+beam_visual_origin_strength = 1.0
+beam_core_width_ratio = 0.42
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_projector")
+
+[node name="BeamVisual" type="Polygon2D" parent="."]
+visible = false
+antialiased = true
+z_index = -2
+
+[node name="BeamCore" type="Polygon2D" parent="."]
+visible = false
+antialiased = true
+z_index = -1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 light_mask = 2
@@ -38,5 +66,4 @@ visibility_layer = 15
 position = Vector2(60, -20)
 range_item_cull_mask = 7
 texture = SubResource("GradientTexture2D_projector")
-energy = 1.6
-
+energy = 1.95

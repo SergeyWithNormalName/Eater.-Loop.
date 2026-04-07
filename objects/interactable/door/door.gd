@@ -35,27 +35,20 @@ class_name Door
 ## Звук скрипа/открытия.
 @export var sfx_open: AudioStream   # Звук скрипа/открытия
 
-var _is_transitioning: bool = false 
-var _audio_player: AudioStreamPlayer2D # Наш "динамик"
+var _is_transitioning: bool = false
 var _sprite: Sprite2D
 var _number_sprite: Sprite2D
 
 func _ready() -> void:
 	super._ready()
-	if not is_in_group("doors"):
-		add_to_group("doors")
-	input_pickable = false 
+	_sync_locked_message_alias()
+	if not is_in_group(GroupNames.DOORS):
+		add_to_group(GroupNames.DOORS)
+	input_pickable = false
 	_sprite = get_node_or_null("Sprite2D")
 	_number_sprite = get_node_or_null("Number")
 	_apply_door_texture()
 	_apply_number_texture()
-	
-	# Создаем аудио-плеер программно
-	_audio_player = AudioStreamPlayer2D.new()
-	_audio_player.bus = "Sounds"
-	# Убираем затухание по дистанции, чтобы звук двери был четким, даже если камера чуть в стороне
-	_audio_player.max_distance = 2000 
-	add_child(_audio_player)
 
 func _on_interact() -> void:
 	if _is_transitioning:
@@ -81,14 +74,14 @@ func _try_use_door() -> void:
 				return
 			else:
 				if required_key_name != "":
-					UIMessage.show_notification("%s\n%s" % [tr(door_locked_message), tr("Нужен: %s.") % tr(required_key_name)])
+					UIMessage.show_notification("%s\n%s" % [tr(locked_message), tr("Нужен: %s.") % tr(required_key_name)])
 				else:
-					UIMessage.show_notification(door_locked_message)
+					UIMessage.show_notification(locked_message)
 				
 				_play_sound(sfx_locked) # ЗВУК: Дверь заперта
 				return
 
-		UIMessage.show_notification(door_locked_message)
+		UIMessage.show_notification(locked_message)
 		_play_sound(sfx_locked) # ЗВУК: Дверь заперта (без ключа)
 		return
 
@@ -149,7 +142,8 @@ func _apply_number_texture() -> void:
 func set_locked(locked: bool, locked_message_override: String = "") -> void:
 	is_locked = locked
 	if locked_message_override.strip_edges() != "":
-		door_locked_message = locked_message_override
+		locked_message = locked_message_override
+	_sync_locked_message_alias()
 
 func set_target_marker_path(path: NodePath) -> void:
 	target_marker = path
@@ -160,6 +154,7 @@ func get_target_marker_path() -> NodePath:
 func capture_checkpoint_state() -> Dictionary:
 	var state := super.capture_checkpoint_state()
 	state["is_locked"] = is_locked
+	state["locked_message"] = locked_message
 	state["door_locked_message"] = door_locked_message
 	state["is_transitioning"] = _is_transitioning
 	return state
@@ -167,15 +162,16 @@ func capture_checkpoint_state() -> Dictionary:
 func apply_checkpoint_state(state: Dictionary) -> void:
 	super.apply_checkpoint_state(state)
 	is_locked = bool(state.get("is_locked", is_locked))
-	door_locked_message = str(state.get("door_locked_message", door_locked_message))
+	locked_message = str(state.get("locked_message", state.get("door_locked_message", locked_message)))
 	_is_transitioning = bool(state.get("is_transitioning", false))
+	_sync_locked_message_alias()
 
 # Вспомогательная функция для проигрывания
 func _play_sound(stream: AudioStream) -> void:
-	if stream != null:
-		_audio_player.stream = stream
-		# Делаем питч чуть-чуть рандомным (от 0.9 до 1.1), 
-		# чтобы звук не казался роботоподобным при частых нажатиях
-		_audio_player.pitch_scale = randf_range(0.95, 1.05)
-		_audio_player.play()
-		
+	play_feedback_sfx(stream, 0.0, 0.95, 1.05)
+
+func _sync_locked_message_alias() -> void:
+	var alias_message := String(door_locked_message).strip_edges()
+	if alias_message != "":
+		locked_message = alias_message
+	door_locked_message = locked_message

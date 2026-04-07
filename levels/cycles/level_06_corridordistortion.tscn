@@ -84,6 +84,7 @@
 [ext_resource type="PackedScene" uid="uid://bs2yhxdctsyia" path="res://levels/minigames/feeding/food/hotdog/food_hotdog.tscn" id="81_sll5l"]
 [ext_resource type="Texture2D" uid="uid://b1ui73qxfq1r7" path="res://levels/minigames/feeding/andreys_faces/HappyEat.png" id="82_x32yt"]
 [ext_resource type="AudioStream" uid="uid://bv3s44nd2ovih" path="res://music/MusicForEat.mp3" id="83_o5sh5"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_teleport_config.gd" id="200_fridge_tp_cfg"]
 [ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="84_wxfxf"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="85_1wty1"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="86_ghwa3"]
@@ -125,6 +126,14 @@ gradient = SubResource("Gradient_8u1p6")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.75, 0)
+
+[sub_resource type="Resource" id="Resource_corridor_fridge_teleport_a"]
+script = ExtResource("200_fridge_tp_cfg")
+target = NodePath("../Fridge2/FridgeMarker")
+
+[sub_resource type="Resource" id="Resource_corridor_fridge_teleport_b"]
+script = ExtResource("200_fridge_tp_cfg")
+target = NodePath("FridgeMarker")
 
 [sub_resource type="Gradient" id="Gradient_twaj4"]
 colors = PackedColorArray(0.92156863, 0.9411765, 0.9411765, 1, 0.92156863, 0.9411765, 0.9411765, 1)
@@ -3627,8 +3636,7 @@ bg_music = ExtResource("83_o5sh5")
 win_sound = ExtResource("84_wxfxf")
 eat_sound = ExtResource("85_1wty1")
 background_texture = ExtResource("86_ghwa3")
-enable_teleport = true
-teleport_target = NodePath("../Fridge2/FridgeMarker")
+teleport_config = SubResource("Resource_corridor_fridge_teleport_a")
 metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Fridge" unique_id=227164999]
@@ -3645,8 +3653,7 @@ bg_music = ExtResource("83_o5sh5")
 win_sound = ExtResource("84_wxfxf")
 eat_sound = ExtResource("85_1wty1")
 background_texture = ExtResource("86_ghwa3")
-enable_teleport = true
-teleport_target = NodePath("FridgeMarker")
+teleport_config = SubResource("Resource_corridor_fridge_teleport_b")
 metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Fridge2" unique_id=2036200517]

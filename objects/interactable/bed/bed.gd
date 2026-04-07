@@ -70,7 +70,7 @@ func _advance_cycle_before_sleep_scene_change() -> void:
 		GameState.next_cycle()
 
 func _is_bedroom_light_on() -> bool:
-	var lamps := get_tree().get_nodes_in_group("bedroom_lamp")
+	var lamps := get_tree().get_nodes_in_group(GroupNames.BEDROOM_LAMP)
 	for lamp in lamps:
 		if lamp.has_method("is_light_active") and lamp.is_light_active():
 			return true

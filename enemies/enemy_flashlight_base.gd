@@ -16,7 +16,7 @@ func _get_flashlight() -> PointLight2D:
 
 	var player := _player
 	if player == null:
-		player = get_tree().get_first_node_in_group("player") as Node2D
+		player = get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 	if player == null:
 		return null
 
@@ -33,7 +33,7 @@ func _is_flashlight_hitting() -> bool:
 func _is_player_flashlight_hitting() -> bool:
 	var player := _player
 	if player == null:
-		player = get_tree().get_first_node_in_group("player") as Node2D
+		player = get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 	if player != null and player.has_method("is_point_lit") and flashlight_requires_enabled:
 		for probe_point in _get_flashlight_hit_points():
 			if bool(player.call("is_point_lit", probe_point)):
@@ -64,10 +64,10 @@ func _is_external_reactive_light_hitting() -> bool:
 	if tree == null:
 		return false
 	var probe_points := _get_flashlight_hit_points()
-	for light_source in tree.get_nodes_in_group("reactive_light_source"):
+	for light_source in tree.get_nodes_in_group(GroupNames.REACTIVE_LIGHT_SOURCE):
 		if light_source == null or not is_instance_valid(light_source):
 			continue
-		if light_source.is_in_group("player"):
+		if light_source.is_in_group(GroupNames.PLAYER):
 			continue
 		if not light_source.has_method("is_point_lit"):
 			continue

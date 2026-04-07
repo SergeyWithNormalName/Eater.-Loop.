@@ -53,6 +53,7 @@
 [ext_resource type="AudioStream" uid="uid://6m4ac3achlpp" path="res://levels/minigames/feeding/sounds/Poel_1.wav" id="51_or2ql"]
 [ext_resource type="AudioStream" uid="uid://hhyijaghs0gn" path="res://levels/minigames/feeding/sounds/Nam-nam_1.wav" id="52_nnv0x"]
 [ext_resource type="Texture2D" uid="uid://b1pqal5xx0hvr" path="res://levels/minigames/feeding/BackgroundBasic.png" id="53_jvjon"]
+[ext_resource type="PackedScene" uid="uid://ck7hxh6s4dxr5" path="res://levels/minigames/ui/code_lock.tscn" id="54_dd5ne"]
 [ext_resource type="Texture2D" uid="uid://cg74oaswbokgj" path="res://objects/environment/sprites/bedroom/Comode2.png" id="54_i0aid"]
 [ext_resource type="Texture2D" uid="uid://buttapkmak6le" path="res://objects/interactable/fridge/sprites/LockedFridge.png" id="54_musk4"]
 [ext_resource type="Texture2D" uid="uid://ct8unv1pqd5es" path="res://objects/environment/sprites/bedroom/TableForPC.png" id="55_uer02"]
@@ -73,6 +74,7 @@
 [ext_resource type="PackedScene" uid="uid://cb7ct4ybeeytr" path="res://objects/interactable/bed/bed.tscn" id="69_npe2g"]
 [ext_resource type="Texture2D" uid="uid://ur3wgaqhvydx" path="res://objects/interactable/note/1234.jpg" id="69_x6q6p"]
 [ext_resource type="Texture2D" uid="uid://dft7vmpvcxr2l" path="res://objects/environment/background/BackWallsParents.png" id="72_gp7cx"]
+[ext_resource type="AudioStream" uid="uid://brswriqoj1emp" path="res://music/MusicForLabs2.wav" id="72_h5pfm"]
 [ext_resource type="Texture2D" uid="uid://dwpnebdi0x2gp" path="res://objects/environment/sprites/parents/ShkafParents.png" id="73_72fc3"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="74_44y35"]
 [ext_resource type="Texture2D" uid="uid://brnubvnj46o8t" path="res://objects/environment/sprites/parents/BedParents.png" id="74_72fc3"]
@@ -81,12 +83,24 @@
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="80_w4m87"]
 [ext_resource type="AudioStream" uid="uid://bbfdp1kwg2vd1" path="res://music/InsideAmbient.wav" id="90_inside_ambient"]
 [ext_resource type="Script" uid="uid://s7le0a6m747a" path="res://levels/cycles/level_music.gd" id="91_level_music"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_code_lock_config.gd" id="200_fridge_code_cfg"]
+[ext_resource type="Script" path="res://objects/interactable/fridge/fridge_teleport_config.gd" id="201_fridge_tp_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_ic6y1")
 shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_level05_fridge_code_lock"]
+script = ExtResource("200_fridge_code_cfg")
+enabled = true
+access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
+code_lock_scene = ExtResource("54_dd5ne")
+
+[sub_resource type="Resource" id="Resource_level05_fridge_teleport"]
+script = ExtResource("201_fridge_tp_cfg")
+target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
 
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -677,10 +691,8 @@ bg_music = ExtResource("50_ofi8c")
 win_sound = ExtResource("51_or2ql")
 eat_sound = ExtResource("52_nnv0x")
 background_texture = ExtResource("53_jvjon")
-require_access_code = true
-access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
-enable_teleport = true
-teleport_target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
+code_lock_config = SubResource("Resource_level05_fridge_code_lock")
+teleport_config = SubResource("Resource_level05_fridge_teleport")
 locked_sprite = ExtResource("54_musk4")
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
@@ -1064,8 +1076,7 @@ bg_music = ExtResource("50_ofi8c")
 win_sound = ExtResource("51_or2ql")
 eat_sound = ExtResource("52_nnv0x")
 background_texture = ExtResource("53_jvjon")
-require_access_code = true
-access_code_failed_message = "Я поставил пароль, чтобы не забыть сначала сделать лабу"
+code_lock_config = SubResource("Resource_level05_fridge_code_lock")
 locked_sprite = ExtResource("54_musk4")
 one_shot = true
 locked_message = "Я не буду есть, пока не сделаю лабораторную работу"
@@ -1267,6 +1278,7 @@ position = Vector2(-1853, 76)
 scale = Vector2(0.96, 0.96)
 minigame_scene = ExtResource("67_ic6y1")
 time_limit = 60.0
+lab_music_stream = ExtResource("72_h5pfm")
 is_enabled = false
 unlock_on_dependency_interaction = true
 show_note_on_completed = true

@@ -1,1502 +1,495 @@
 .
-├── docs
-│   ├── architecture_overview.md
-│   ├── audio_system.md
-│   ├── level_end_endings.md
-│   ├── macos-dmg-export-fix.md
-│   └── minigame_gamepad_system.md
-├── enemies
-│   ├── light_ceiling
-│   │   ├── enemy_ceiling.gd
-│   │   ├── enemy_ceiling.gd.uid
-│   │   └── enemy_ceiling.tscn
-│   ├── light_only
-│   │   ├── sprites
-│   │   │   ├── Denis.png
-│   │   │   ├── Denis.png.import
-│   │   │   ├── Max.png
-│   │   │   ├── Max.png.import
-│   │   │   ├── Nikita.png
-│   │   │   ├── Nikita.png.import
-│   │   │   ├── Serega.png
-│   │   │   ├── Serega.png.import
-│   │   │   ├── Slava.png
-│   │   │   ├── Slava.png.import
-│   │   │   ├── Tolya.png
-│   │   │   └── Tolya.png.import
-│   │   ├── enemy_light_only.gd
-│   │   ├── enemy_light_only.gd.uid
-│   │   └── enemy_light_only.tscn
-│   ├── light_sensitive
-│   │   ├── animations
-│   │   │   ├── Flashlight
-│   │   │   │   ├── ezgif-frame-001.png
-│   │   │   │   ├── ezgif-frame-001.png.import
-│   │   │   │   ├── ezgif-frame-002.png
-│   │   │   │   ├── ezgif-frame-002.png.import
-│   │   │   │   ├── ezgif-frame-003.png
-│   │   │   │   ├── ezgif-frame-003.png.import
-│   │   │   │   ├── ezgif-frame-004.png
-│   │   │   │   ├── ezgif-frame-004.png.import
-│   │   │   │   ├── ezgif-frame-005.png
-│   │   │   │   ├── ezgif-frame-005.png.import
-│   │   │   │   ├── ezgif-frame-006.png
-│   │   │   │   ├── ezgif-frame-006.png.import
-│   │   │   │   ├── ezgif-frame-007.png
-│   │   │   │   ├── ezgif-frame-007.png.import
-│   │   │   │   ├── ezgif-frame-008.png
-│   │   │   │   ├── ezgif-frame-008.png.import
-│   │   │   │   ├── ezgif-frame-009.png
-│   │   │   │   ├── ezgif-frame-009.png.import
-│   │   │   │   ├── ezgif-frame-010.png
-│   │   │   │   ├── ezgif-frame-010.png.import
-│   │   │   │   ├── ezgif-frame-011.png
-│   │   │   │   ├── ezgif-frame-011.png.import
-│   │   │   │   ├── ezgif-frame-012.png
-│   │   │   │   ├── ezgif-frame-012.png.import
-│   │   │   │   ├── ezgif-frame-013.png
-│   │   │   │   ├── ezgif-frame-013.png.import
-│   │   │   │   ├── ezgif-frame-014.png
-│   │   │   │   ├── ezgif-frame-014.png.import
-│   │   │   │   ├── ezgif-frame-015.png
-│   │   │   │   ├── ezgif-frame-015.png.import
-│   │   │   │   ├── ezgif-frame-016.png
-│   │   │   │   ├── ezgif-frame-016.png.import
-│   │   │   │   ├── ezgif-frame-017.png
-│   │   │   │   ├── ezgif-frame-017.png.import
-│   │   │   │   ├── ezgif-frame-018.png
-│   │   │   │   ├── ezgif-frame-018.png.import
-│   │   │   │   ├── ezgif-frame-019.png
-│   │   │   │   ├── ezgif-frame-019.png.import
-│   │   │   │   ├── ezgif-frame-020.png
-│   │   │   │   └── ezgif-frame-020.png.import
-│   │   │   ├── LampReact
-│   │   │   │   ├── ezgif-frame-001.png
-│   │   │   │   ├── ezgif-frame-001.png.import
-│   │   │   │   ├── ezgif-frame-002.png
-│   │   │   │   ├── ezgif-frame-002.png.import
-│   │   │   │   ├── ezgif-frame-003.png
-│   │   │   │   ├── ezgif-frame-003.png.import
-│   │   │   │   ├── ezgif-frame-004.png
-│   │   │   │   ├── ezgif-frame-004.png.import
-│   │   │   │   ├── ezgif-frame-005.png
-│   │   │   │   ├── ezgif-frame-005.png.import
-│   │   │   │   ├── ezgif-frame-006.png
-│   │   │   │   ├── ezgif-frame-006.png.import
-│   │   │   │   ├── ezgif-frame-007.png
-│   │   │   │   ├── ezgif-frame-007.png.import
-│   │   │   │   ├── ezgif-frame-008.png
-│   │   │   │   ├── ezgif-frame-008.png.import
-│   │   │   │   ├── ezgif-frame-009.png
-│   │   │   │   ├── ezgif-frame-009.png.import
-│   │   │   │   ├── ezgif-frame-010.png
-│   │   │   │   ├── ezgif-frame-010.png.import
-│   │   │   │   ├── ezgif-frame-011.png
-│   │   │   │   ├── ezgif-frame-011.png.import
-│   │   │   │   ├── ezgif-frame-012.png
-│   │   │   │   ├── ezgif-frame-012.png.import
-│   │   │   │   ├── ezgif-frame-013.png
-│   │   │   │   ├── ezgif-frame-013.png.import
-│   │   │   │   ├── ezgif-frame-014.png
-│   │   │   │   └── ezgif-frame-014.png.import
-│   │   │   ├── LampStan
-│   │   │   │   ├── ezgif-frame-001.png
-│   │   │   │   ├── ezgif-frame-001.png.import
-│   │   │   │   ├── ezgif-frame-002.png
-│   │   │   │   ├── ezgif-frame-002.png.import
-│   │   │   │   ├── ezgif-frame-003.png
-│   │   │   │   └── ezgif-frame-003.png.import
-│   │   │   └── walking
-│   │   │       ├── ezgif-frame-008.png
-│   │   │       ├── ezgif-frame-008.png.import
-│   │   │       ├── ezgif-frame-009.png
-│   │   │       ├── ezgif-frame-009.png.import
-│   │   │       ├── ezgif-frame-010.png
-│   │   │       ├── ezgif-frame-010.png.import
-│   │   │       ├── ezgif-frame-011.png
-│   │   │       ├── ezgif-frame-011.png.import
-│   │   │       ├── ezgif-frame-012.png
-│   │   │       ├── ezgif-frame-012.png.import
-│   │   │       ├── ezgif-frame-013.png
-│   │   │       ├── ezgif-frame-013.png.import
-│   │   │       ├── ezgif-frame-014.png
-│   │   │       ├── ezgif-frame-014.png.import
-│   │   │       ├── ezgif-frame-015.png
-│   │   │       ├── ezgif-frame-015.png.import
-│   │   │       ├── ezgif-frame-016.png
-│   │   │       ├── ezgif-frame-016.png.import
-│   │   │       ├── ezgif-frame-017.png
-│   │   │       ├── ezgif-frame-017.png.import
-│   │   │       ├── ezgif-frame-018.png
-│   │   │       ├── ezgif-frame-018.png.import
-│   │   │       ├── ezgif-frame-019.png
-│   │   │       ├── ezgif-frame-019.png.import
-│   │   │       ├── ezgif-frame-020.png
-│   │   │       ├── ezgif-frame-020.png.import
-│   │   │       ├── ezgif-frame-021.png
-│   │   │       └── ezgif-frame-021.png.import
-│   │   ├── Monster_2.png
-│   │   ├── Monster_2.png.import
-│   │   ├── enemy_light_sensitive.gd
-│   │   ├── enemy_light_sensitive.gd.uid
-│   │   └── enemy_light_sensitive.tscn
-│   ├── runner
-│   │   ├── animations
-│   │   │   ├── ezgif-frame-001.png
-│   │   │   ├── ezgif-frame-001.png.import
-│   │   │   ├── ezgif-frame-002.png
-│   │   │   ├── ezgif-frame-002.png.import
-│   │   │   ├── ezgif-frame-003.png
-│   │   │   ├── ezgif-frame-003.png.import
-│   │   │   ├── ezgif-frame-004.png
-│   │   │   ├── ezgif-frame-004.png.import
-│   │   │   ├── ezgif-frame-005.png
-│   │   │   ├── ezgif-frame-005.png.import
-│   │   │   ├── ezgif-frame-006.png
-│   │   │   ├── ezgif-frame-006.png.import
-│   │   │   ├── ezgif-frame-007.png
-│   │   │   ├── ezgif-frame-007.png.import
-│   │   │   ├── ezgif-frame-008.png
-│   │   │   ├── ezgif-frame-008.png.import
-│   │   │   ├── ezgif-frame-009.png
-│   │   │   ├── ezgif-frame-009.png.import
-│   │   │   ├── ezgif-frame-010.png
-│   │   │   ├── ezgif-frame-010.png.import
-│   │   │   ├── ezgif-frame-011.png
-│   │   │   ├── ezgif-frame-011.png.import
-│   │   │   ├── ezgif-frame-012.png
-│   │   │   ├── ezgif-frame-012.png.import
-│   │   │   ├── ezgif-frame-013.png
-│   │   │   ├── ezgif-frame-013.png.import
-│   │   │   ├── ezgif-frame-014.png
-│   │   │   ├── ezgif-frame-014.png.import
-│   │   │   ├── ezgif-frame-015.png
-│   │   │   ├── ezgif-frame-015.png.import
-│   │   │   ├── ezgif-frame-016.png
-│   │   │   ├── ezgif-frame-016.png.import
-│   │   │   ├── ezgif-frame-017.png
-│   │   │   ├── ezgif-frame-017.png.import
-│   │   │   ├── ezgif-frame-018.png
-│   │   │   ├── ezgif-frame-018.png.import
-│   │   │   ├── ezgif-frame-019.png
-│   │   │   ├── ezgif-frame-019.png.import
-│   │   │   ├── ezgif-frame-020.png
-│   │   │   ├── ezgif-frame-020.png.import
-│   │   │   ├── ezgif-frame-021.png
-│   │   │   └── ezgif-frame-021.png.import
-│   │   ├── audio
-│   │   │   ├── BigStep_1V.wav
-│   │   │   └── BigStep_1V.wav.import
-│   │   ├── Monster.png
-│   │   ├── Monster.png.import
-│   │   ├── enemy_runner.gd
-│   │   ├── enemy_runner.gd.uid
-│   │   └── enemy_runner.tscn
-│   ├── stalker
-│   │   ├── StalkerWalk
-│   │   │   ├── StalkerWalk_Creak_1.wav
-│   │   │   ├── StalkerWalk_Creak_1.wav.import
-│   │   │   ├── StalkerWalk_Creak_2.wav
-│   │   │   ├── StalkerWalk_Creak_2.wav.import
-│   │   │   ├── StalkerWalk_Step_1.wav
-│   │   │   ├── StalkerWalk_Step_1.wav.import
-│   │   │   ├── StalkerWalk_Step_2.wav
-│   │   │   └── StalkerWalk_Step_2.wav.import
-│   │   ├── walking_animation
-│   │   │   ├── ezgif-frame-008.png
-│   │   │   ├── ezgif-frame-008.png.import
-│   │   │   ├── ezgif-frame-009.png
-│   │   │   ├── ezgif-frame-009.png.import
-│   │   │   ├── ezgif-frame-010.png
-│   │   │   ├── ezgif-frame-010.png.import
-│   │   │   ├── ezgif-frame-011.png
-│   │   │   ├── ezgif-frame-011.png.import
-│   │   │   ├── ezgif-frame-012.png
-│   │   │   ├── ezgif-frame-012.png.import
-│   │   │   ├── ezgif-frame-013.png
-│   │   │   ├── ezgif-frame-013.png.import
-│   │   │   ├── ezgif-frame-014.png
-│   │   │   ├── ezgif-frame-014.png.import
-│   │   │   ├── ezgif-frame-015.png
-│   │   │   ├── ezgif-frame-015.png.import
-│   │   │   ├── ezgif-frame-016.png
-│   │   │   ├── ezgif-frame-016.png.import
-│   │   │   ├── ezgif-frame-017.png
-│   │   │   ├── ezgif-frame-017.png.import
-│   │   │   ├── ezgif-frame-018.png
-│   │   │   ├── ezgif-frame-018.png.import
-│   │   │   ├── ezgif-frame-019.png
-│   │   │   ├── ezgif-frame-019.png.import
-│   │   │   ├── ezgif-frame-020.png
-│   │   │   ├── ezgif-frame-020.png.import
-│   │   │   ├── ezgif-frame-021.png
-│   │   │   ├── ezgif-frame-021.png.import
-│   │   │   ├── ezgif-frame-022.png
-│   │   │   ├── ezgif-frame-022.png.import
-│   │   │   ├── ezgif-frame-023.png
-│   │   │   ├── ezgif-frame-023.png.import
-│   │   │   ├── ezgif-frame-024.png
-│   │   │   ├── ezgif-frame-024.png.import
-│   │   │   ├── ezgif-frame-025.png
-│   │   │   ├── ezgif-frame-025.png.import
-│   │   │   ├── ezgif-frame-026.png
-│   │   │   ├── ezgif-frame-026.png.import
-│   │   │   ├── ezgif-frame-027.png
-│   │   │   ├── ezgif-frame-027.png.import
-│   │   │   ├── ezgif-frame-028.png
-│   │   │   ├── ezgif-frame-028.png.import
-│   │   │   ├── ezgif-frame-029.png
-│   │   │   └── ezgif-frame-029.png.import
-│   │   ├── StalkerOpenDoor.wav
-│   │   ├── StalkerOpenDoor.wav.import
-│   │   ├── StalkerWalk.wav
-│   │   ├── StalkerWalk.wav.import
-│   │   ├── enemy_stalker.gd
-│   │   ├── enemy_stalker.gd.uid
-│   │   ├── enemy_stalker.tscn
-│   │   ├── sprite.png
-│   │   ├── sprite.png.import
-│   │   ├── stalker_motion_audio_component.gd
-│   │   └── stalker_motion_audio_component.gd.uid
-│   ├── enemy.gd
-│   ├── enemy.gd.uid
-│   ├── enemy.tscn
-│   ├── enemy_flashlight_base.gd
-│   └── enemy_flashlight_base.gd.uid
-├── global
-│   ├── fonts
-│   │   ├── AmaticSC-Bold.ttf
-│   │   ├── AmaticSC-Bold.ttf.import
-│   │   ├── AmaticSC-Regular.ttf
-│   │   ├── AmaticSC-Regular.ttf.import
-│   │   └── OFL.txt
-│   ├── localization
-│   │   ├── texts.csv
-│   │   ├── texts.csv.import
-│   │   ├── texts.en.translation
-│   │   └── texts.ru.translation
-│   ├── checkpoint_state_utils.gd
-│   ├── checkpoint_state_utils.gd.uid
-│   ├── export_presets.cfg
-│   ├── iconofgame.png
-│   ├── iconofgame.png.import
-│   ├── itchio.jpg
-│   ├── itchio.jpg.import
-│   ├── macos_icon.icns
-│   ├── reactive_light_utils.gd
-│   ├── reactive_light_utils.gd.uid
-│   ├── windows_icon.ico
-│   ├── Иконка_предварительно.icns
-│   └── Иконка_предварительно.ico
-├── levels
-│   ├── cycles
-│   │   ├── archive(trash)
-│   │   │   ├── level_04_old_trash.tscn
-│   │   │   ├── level_05_keystests.tscn
-│   │   │   ├── level_06.tscn
-│   │   │   ├── level_07_doors_save.tscn
-│   │   │   ├── level_test_enemies.tscn
-│   │   │   ├── level_test_enemies2.tscn
-│   │   │   └── trashhh.tscn
-│   │   ├── TextureDistortionManager.tscn
-│   │   ├── corridor_distortion.gd
-│   │   ├── corridor_distortion.gd.uid
-│   │   ├── crazy_level_event.gd
-│   │   ├── crazy_level_event.gd.uid
-│   │   ├── cycle_state.gd
-│   │   ├── cycle_state.gd.uid
-│   │   ├── game_state.gd
-│   │   ├── game_state.gd.uid
-│   │   ├── level.gd
-│   │   ├── level.gd.uid
-│   │   ├── level_01.gdshader
-│   │   ├── level_01.gdshader.uid
-│   │   ├── level_01_start.tscn
-│   │   ├── level_02_basic.tscn
-│   │   ├── level_03_deepseek.tscn
-│   │   ├── level_04_findkey.tscn
-│   │   ├── level_05_sql.tscn
-│   │   ├── level_06_corridordistortion.tscn
-│   │   ├── level_06_monster.tscn
-│   │   ├── level_07_doors.gd
-│   │   ├── level_07_doors.gd.uid
-│   │   ├── level_07_doors.tscn
-│   │   ├── level_08_PT.tscn
-│   │   ├── level_09_crazy.gd
-│   │   ├── level_09_crazy.gd.uid
-│   │   ├── level_09_сrazy.tscn
-│   │   ├── level_11_STU_1.tscn
-│   │   ├── level_11_end.gd
-│   │   ├── level_11_end.gd.uid
-│   │   ├── level_11_stu_1.gd
-│   │   ├── level_11_stu_1.gd.uid
-│   │   ├── level_12_STU_2.tscn
-│   │   ├── level_12_stu_2.gd
-│   │   ├── level_12_stu_2.gd.uid
-│   │   ├── level_13_STU_3.tscn
-│   │   ├── level_13_stu_3.gd
-│   │   ├── level_13_stu_3.gd.uid
-│   │   ├── level_14_end.gd
-│   │   ├── level_14_end.gd.uid
-│   │   ├── level_14_end.tscn
-│   │   ├── level_NSTU_test.tscn
-│   │   ├── level_music.gd
-│   │   ├── level_music.gd.uid
-│   │   ├── texture_distortion_manager.gd
-│   │   └── texture_distortion_manager.gd.uid
-│   ├── endings
-│   │   ├── bad_ending_screen.tscn
-│   │   ├── ending_credits.gd
-│   │   ├── ending_credits.gd.uid
-│   │   ├── ending_credits.tscn
-│   │   ├── ending_screen.gd
-│   │   ├── ending_screen.gd.uid
-│   │   └── good_ending_screen.tscn
-│   ├── menu
-│   │   ├── MainMenuBackground.png
-│   │   ├── MainMenuBackground.png.import
-│   │   ├── cold_bloom_fade.gdshader
-│   │   ├── cold_bloom_fade.gdshader.uid
-│   │   ├── disclaimer_screen.gd
-│   │   ├── disclaimer_screen.gd.uid
-│   │   ├── disclaimer_screen.tscn
-│   │   ├── main_menu.gd
-│   │   ├── main_menu.gd.uid
-│   │   ├── main_menu.tscn
-│   │   ├── main_settings_panel.tscn
-│   │   ├── menu_base.gd
-│   │   ├── menu_base.gd.uid
-│   │   ├── pause_manager.gd
-│   │   ├── pause_manager.gd.uid
-│   │   ├── pause_menu.gd
-│   │   ├── pause_menu.gd.uid
-│   │   ├── pause_menu.tscn
-│   │   ├── screen_spoiler_blur.gdshader
-│   │   ├── screen_spoiler_blur.gdshader.uid
-│   │   ├── settings_manager.gd
-│   │   ├── settings_manager.gd.uid
-│   │   ├── settings_panel.gd
-│   │   ├── settings_panel.gd.uid
-│   │   └── settings_panel.tscn
-│   ├── minigames
-│   │   ├── feeding
-│   │   │   ├── andreys_faces
-│   │   │   │   ├── Amputation
-│   │   │   │   │   ├── Body.png
-│   │   │   │   │   ├── Body.png.import
-│   │   │   │   │   ├── FirstArm.png
-│   │   │   │   │   ├── FirstArm.png.import
-│   │   │   │   │   ├── SecondArm.png
-│   │   │   │   │   └── SecondArm.png.import
-│   │   │   │   ├── BadEat.png
-│   │   │   │   ├── BadEat.png.import
-│   │   │   │   ├── BasicEat.png
-│   │   │   │   ├── BasicEat.png.import
-│   │   │   │   ├── HappyEat.png
-│   │   │   │   ├── HappyEat.png.import
-│   │   │   │   ├── SadEat.png
-│   │   │   │   ├── SadEat.png.import
-│   │   │   │   ├── TheBadestEat.png
-│   │   │   │   ├── TheBadestEat.png.import
-│   │   │   │   ├── VeryBadEat.png
-│   │   │   │   └── VeryBadEat.png.import
-│   │   │   ├── food
-│   │   │   │   ├── 1_textures
-│   │   │   │   │   ├── RawMeet.png
-│   │   │   │   │   └── RawMeet.png.import
-│   │   │   │   ├── burger
-│   │   │   │   │   ├── Burger.png
-│   │   │   │   │   ├── Burger.png.import
-│   │   │   │   │   └── food_burger.tscn
-│   │   │   │   ├── chiken
-│   │   │   │   │   ├── Chicken.png
-│   │   │   │   │   ├── Chicken.png.import
-│   │   │   │   │   └── food_chicken.tscn
-│   │   │   │   ├── cookie
-│   │   │   │   │   ├── Cookie_1.png
-│   │   │   │   │   ├── Cookie_1.png.import
-│   │   │   │   │   ├── Cookie_2.png
-│   │   │   │   │   ├── Cookie_2.png.import
-│   │   │   │   │   ├── Cookie_3.png
-│   │   │   │   │   ├── Cookie_3.png.import
-│   │   │   │   │   ├── Cookie_4.png
-│   │   │   │   │   ├── Cookie_4.png.import
-│   │   │   │   │   ├── Cookie_5.png
-│   │   │   │   │   ├── Cookie_5.png.import
-│   │   │   │   │   ├── Cookie_6.png
-│   │   │   │   │   ├── Cookie_6.png.import
-│   │   │   │   │   ├── food_cookie_1.tscn
-│   │   │   │   │   ├── food_cookie_2.tscn
-│   │   │   │   │   ├── food_cookie_3.tscn
-│   │   │   │   │   ├── food_cookie_4.tscn
-│   │   │   │   │   ├── food_cookie_5.tscn
-│   │   │   │   │   └── food_cookie_6.tscn
-│   │   │   │   ├── dumpling
-│   │   │   │   │   ├── Dumpling.png
-│   │   │   │   │   ├── Dumpling.png.import
-│   │   │   │   │   └── food_dumpling.tscn
-│   │   │   │   ├── eye
-│   │   │   │   │   ├── food_eye.gd
-│   │   │   │   │   ├── food_eye.gd.uid
-│   │   │   │   │   ├── food_eye.tscn
-│   │   │   │   │   ├── Белок.png
-│   │   │   │   │   ├── Белок.png.import
-│   │   │   │   │   ├── Зрачок.png
-│   │   │   │   │   └── Зрачок.png.import
-│   │   │   │   ├── fish
-│   │   │   │   │   ├── Fish.png
-│   │   │   │   │   ├── Fish.png.import
-│   │   │   │   │   └── food_fish.tscn
-│   │   │   │   ├── hachapuri
-│   │   │   │   │   ├── Hachapuri.png
-│   │   │   │   │   ├── Hachapuri.png.import
-│   │   │   │   │   └── food_hachapuri.tscn
-│   │   │   │   ├── hands
-│   │   │   │   │   ├── food_hand_first.tscn
-│   │   │   │   │   └── food_hand_second.tscn
-│   │   │   │   ├── hotdog
-│   │   │   │   │   ├── HotDog.png
-│   │   │   │   │   ├── HotDog.png.import
-│   │   │   │   │   └── food_hotdog.tscn
-│   │   │   │   ├── krilishki
-│   │   │   │   │   ├── Krilishko.png
-│   │   │   │   │   ├── Krilishko.png.import
-│   │   │   │   │   ├── Krilishko_2.png
-│   │   │   │   │   ├── Krilishko_2.png.import
-│   │   │   │   │   └── food_krilishki.tscn
-│   │   │   │   ├── meet
-│   │   │   │   │   ├── MeetSteak.png
-│   │   │   │   │   ├── MeetSteak.png.import
-│   │   │   │   │   └── food_meet.tscn
-│   │   │   │   ├── naggets
-│   │   │   │   │   ├── Naggets.png
-│   │   │   │   │   ├── Naggets.png.import
-│   │   │   │   │   └── food_naggets.tscn
-│   │   │   │   ├── plate
-│   │   │   │   │   ├── plate.png
-│   │   │   │   │   ├── plate.png.import
-│   │   │   │   │   └── plate.tscn
-│   │   │   │   ├── shaurma
-│   │   │   │   │   ├── Shaurma.png
-│   │   │   │   │   ├── Shaurma.png.import
-│   │   │   │   │   └── food_shaurma.tscn
-│   │   │   │   ├── sushi
-│   │   │   │   │   ├── Sushi.png
-│   │   │   │   │   ├── Sushi.png.import
-│   │   │   │   │   ├── food_sushi.tscn
-│   │   │   │   │   └── food_sushi_2.tscn
-│   │   │   │   ├── tort
-│   │   │   │   │   ├── Tort.png
-│   │   │   │   │   ├── Tort.png.import
-│   │   │   │   │   └── food_tort.tscn
-│   │   │   │   ├── food_item.gd
-│   │   │   │   └── food_item.gd.uid
-│   │   │   ├── sounds
-│   │   │   │   ├── DushuProdat.wav
-│   │   │   │   ├── DushuProdat.wav.import
-│   │   │   │   ├── Nam-nam_1.wav
-│   │   │   │   ├── Nam-nam_1.wav.import
-│   │   │   │   ├── Ohuenno.wav
-│   │   │   │   ├── Ohuenno.wav.import
-│   │   │   │   ├── Pizdato.wav
-│   │   │   │   ├── Pizdato.wav.import
-│   │   │   │   ├── Poel_1.wav
-│   │   │   │   ├── Poel_1.wav.import
-│   │   │   │   ├── Upitanaya_Bitch.wav
-│   │   │   │   └── Upitanaya_Bitch.wav.import
-│   │   │   ├── BackgroundBasic.png
-│   │   │   ├── BackgroundBasic.png.import
-│   │   │   ├── feed_minigame.gd
-│   │   │   ├── feed_minigame.gd.uid
-│   │   │   ├── feed_minigame.tscn
-│   │   │   ├── feed_minigame_detach_hands.gd
-│   │   │   ├── feed_minigame_detach_hands.gd.uid
-│   │   │   ├── feed_minigame_detach_hands.tscn
-│   │   │   ├── final_feed_minigame.gd
-│   │   │   ├── final_feed_minigame.gd.uid
-│   │   │   └── final_feed_minigame.tscn
-│   │   ├── gamepad
-│   │   │   ├── gamepad_highlighter.gd
-│   │   │   ├── gamepad_highlighter.gd.uid
-│   │   │   ├── gamepad_hint_bar.gd
-│   │   │   ├── gamepad_hint_bar.gd.uid
-│   │   │   ├── gamepad_runtime.gd
-│   │   │   ├── gamepad_runtime.gd.uid
-│   │   │   ├── gamepad_spatial_nav.gd
-│   │   │   └── gamepad_spatial_nav.gd.uid
-│   │   ├── labs
-│   │   │   ├── LLM
-│   │   │   │   ├── background.png
-│   │   │   │   ├── background.png.import
-│   │   │   │   ├── llm_minigame.gd
-│   │   │   │   ├── llm_minigame.gd.uid
-│   │   │   │   ├── llm_minigame.tscn
-│   │   │   │   ├── llm_minigame_glitch.gd
-│   │   │   │   ├── llm_minigame_glitch.gd.uid
-│   │   │   │   └── llm_minigame_glitch.tscn
-│   │   │   ├── sql
-│   │   │   │   ├── drag_slot.gd
-│   │   │   │   ├── drag_slot.gd.uid
-│   │   │   │   ├── drag_word.gd
-│   │   │   │   ├── drag_word.gd.uid
-│   │   │   │   ├── sql_minigame.gd
-│   │   │   │   ├── sql_minigame.gd.uid
-│   │   │   │   ├── sql_minigame.tscn
-│   │   │   │   ├── sql_minigame_glitch.gd
-│   │   │   │   ├── sql_minigame_glitch.gd.uid
-│   │   │   │   └── sql_minigame_glitch.tscn
-│   │   │   ├── timed_lab_minigame_base.gd
-│   │   │   └── timed_lab_minigame_base.gd.uid
-│   │   ├── search_key
-│   │   │   ├── rakovina
-│   │   │   │   ├── sprites
-│   │   │   │   │   ├── Posuda_1.png
-│   │   │   │   │   ├── Posuda_1.png.import
-│   │   │   │   │   ├── Posuda_2.png
-│   │   │   │   │   ├── Posuda_2.png.import
-│   │   │   │   │   ├── Posuda_3.png
-│   │   │   │   │   ├── Posuda_3.png.import
-│   │   │   │   │   ├── Posuda_4.png
-│   │   │   │   │   ├── Posuda_4.png.import
-│   │   │   │   │   ├── Posuda_5.png
-│   │   │   │   │   ├── Posuda_5.png.import
-│   │   │   │   │   ├── Posuda_6.png
-│   │   │   │   │   └── Posuda_6.png.import
-│   │   │   │   ├── Без названия 7.png
-│   │   │   │   └── Без названия 7.png.import
-│   │   │   ├── shkaf
-│   │   │   │   ├── Без названия 6.png
-│   │   │   │   └── Без названия 6.png.import
-│   │   │   ├── stiralka
-│   │   │   │   ├── sprites
-│   │   │   │   │   ├── Clear_Cloth_1.png
-│   │   │   │   │   ├── Clear_Cloth_1.png.import
-│   │   │   │   │   ├── Clear_Cloth_10.png
-│   │   │   │   │   ├── Clear_Cloth_10.png.import
-│   │   │   │   │   ├── Clear_Cloth_11.png
-│   │   │   │   │   ├── Clear_Cloth_11.png.import
-│   │   │   │   │   ├── Clear_Cloth_12.png
-│   │   │   │   │   ├── Clear_Cloth_12.png.import
-│   │   │   │   │   ├── Clear_Cloth_13.png
-│   │   │   │   │   ├── Clear_Cloth_13.png.import
-│   │   │   │   │   ├── Clear_Cloth_14.png
-│   │   │   │   │   ├── Clear_Cloth_14.png.import
-│   │   │   │   │   ├── Clear_Cloth_15.png
-│   │   │   │   │   ├── Clear_Cloth_15.png.import
-│   │   │   │   │   ├── Clear_Cloth_16.png
-│   │   │   │   │   ├── Clear_Cloth_16.png.import
-│   │   │   │   │   ├── Clear_Cloth_2.png
-│   │   │   │   │   ├── Clear_Cloth_2.png.import
-│   │   │   │   │   ├── Clear_Cloth_3.png
-│   │   │   │   │   ├── Clear_Cloth_3.png.import
-│   │   │   │   │   ├── Clear_Cloth_4.png
-│   │   │   │   │   ├── Clear_Cloth_4.png.import
-│   │   │   │   │   ├── Clear_Cloth_5.png
-│   │   │   │   │   ├── Clear_Cloth_5.png.import
-│   │   │   │   │   ├── Clear_Cloth_6.png
-│   │   │   │   │   ├── Clear_Cloth_6.png.import
-│   │   │   │   │   ├── Clear_Cloth_7.png
-│   │   │   │   │   ├── Clear_Cloth_7.png.import
-│   │   │   │   │   ├── Clear_Cloth_8.png
-│   │   │   │   │   ├── Clear_Cloth_8.png.import
-│   │   │   │   │   ├── Clear_Cloth_9.png
-│   │   │   │   │   └── Clear_Cloth_9.png.import
-│   │   │   │   ├── Без названия 10.png
-│   │   │   │   └── Без названия 10.png.import
-│   │   │   ├── urna
-│   │   │   │   ├── sprites
-│   │   │   │   │   ├── Trash_1.png
-│   │   │   │   │   ├── Trash_1.png.import
-│   │   │   │   │   ├── Trash_10.png
-│   │   │   │   │   ├── Trash_10.png.import
-│   │   │   │   │   ├── Trash_11.png
-│   │   │   │   │   ├── Trash_11.png.import
-│   │   │   │   │   ├── Trash_12.png
-│   │   │   │   │   ├── Trash_12.png.import
-│   │   │   │   │   ├── Trash_13.png
-│   │   │   │   │   ├── Trash_13.png.import
-│   │   │   │   │   ├── Trash_14.png
-│   │   │   │   │   ├── Trash_14.png.import
-│   │   │   │   │   ├── Trash_15.png
-│   │   │   │   │   ├── Trash_15.png.import
-│   │   │   │   │   ├── Trash_2.png
-│   │   │   │   │   ├── Trash_2.png.import
-│   │   │   │   │   ├── Trash_3.png
-│   │   │   │   │   ├── Trash_3.png.import
-│   │   │   │   │   ├── Trash_4.png
-│   │   │   │   │   ├── Trash_4.png.import
-│   │   │   │   │   ├── Trash_5.png
-│   │   │   │   │   ├── Trash_5.png.import
-│   │   │   │   │   ├── Trash_6.png
-│   │   │   │   │   ├── Trash_6.png.import
-│   │   │   │   │   ├── Trash_7.png
-│   │   │   │   │   ├── Trash_7.png.import
-│   │   │   │   │   ├── Trash_8.png
-│   │   │   │   │   ├── Trash_8.png.import
-│   │   │   │   │   ├── Trash_9.png
-│   │   │   │   │   └── Trash_9.png.import
-│   │   │   │   ├── BackgroundUrna.png
-│   │   │   │   ├── BackgroundUrna.png.import
-│   │   │   │   ├── urna_search_minigame.tscn
-│   │   │   │   ├── Без названия 8.png
-│   │   │   │   └── Без названия 8.png.import
-│   │   │   ├── Key.png
-│   │   │   ├── Key.png.import
-│   │   │   ├── draggable_trash.gd
-│   │   │   ├── draggable_trash.gd.uid
-│   │   │   ├── search_key_manager.gd
-│   │   │   ├── search_key_manager.gd.uid
-│   │   │   ├── search_minigame.gd
-│   │   │   ├── search_minigame.gd.uid
-│   │   │   ├── search_minigame.tscn
-│   │   │   ├── search_minigame_rakovina.tscn
-│   │   │   ├── search_minigame_shkaf_1.tscn
-│   │   │   ├── search_minigame_stiralka.tscn
-│   │   │   └── search_minigame_urna.tscn
-│   │   ├── ui
-│   │   │   ├── code_lock.tscn
-│   │   │   ├── code_lock.tscn.uid
-│   │   │   ├── drag_word.tscn
-│   │   │   ├── draggable_trash.tscn
-│   │   │   └── drop_slot.tscn
-│   │   ├── cursor_manager.gd
-│   │   ├── cursor_manager.gd.uid
-│   │   ├── minigame_controller.gd
-│   │   ├── minigame_controller.gd.uid
-│   │   ├── minigame_settings.gd
-│   │   └── minigame_settings.gd.uid
-│   ├── ui
-│   │   ├── prompts
-│   │   │   ├── prompt_interact_default.tscn
-│   │   │   └── prompt_lamp_default.tscn
-│   │   └── interaction_prompts.tscn
-│   ├── Hahaha.wav
-│   ├── Hahaha.wav.import
-│   ├── ScaryStepsAndDoor.mp3
-│   ├── ScaryStepsAndDoor.mp3.import
-│   ├── game_director.gd
-│   ├── game_director.gd.uid
-│   ├── interaction_prompts.gd
-│   ├── interaction_prompts.gd.uid
-│   ├── music_manager.gd
-│   ├── music_manager.gd.uid
-│   ├── music_mix_settings.gd
-│   ├── music_mix_settings.gd.uid
-│   ├── prompt_view.gd
-│   └── prompt_view.gd.uid
-├── music
-│   ├── AlienSounds.wav
-│   ├── AlienSounds.wav.import
-│   ├── CreepyAmbient.wav
-│   ├── CreepyAmbient.wav.import
-│   ├── DrainMusic.wav
-│   ├── DrainMusic.wav.import
-│   ├── GlitchedHorrorHit.wav
-│   ├── GlitchedHorrorHit.wav.import
-│   ├── InsideAmbient.wav
-│   ├── InsideAmbient.wav.import
-│   ├── MusicForBasicMonster.wav
-│   ├── MusicForBasicMonster.wav.import
-│   ├── MusicForEat.mp3
-│   ├── MusicForEat.mp3.import
-│   ├── MusicForLabs.wav
-│   ├── MusicForLabs.wav.import
-│   ├── MyHorrorHit_1.wav
-│   ├── MyHorrorHit_1.wav.import
-│   ├── MyHorrorHit_2.wav
-│   ├── MyHorrorHit_2.wav.import
-│   ├── MyHorrorHit_3.wav
-│   ├── MyHorrorHit_3.wav.import
-│   ├── RunnerHARDMUSIC.wav
-│   ├── RunnerHARDMUSIC.wav.import
-│   ├── StressMusic.wav
-│   ├── StressMusic.wav.import
-│   ├── TimerForLabs_DEMO.wav
-│   ├── TimerForLabs_DEMO.wav.import
-│   ├── TypeSilentHill.wav
-│   ├── TypeSilentHill.wav.import
-│   ├── UniversityMusic.wav
-│   ├── UniversityMusic.wav.import
-│   └── music_mix_settings.tres
-├── objects
-│   ├── environment
-│   │   ├── background
-│   │   │   ├── decals
-│   │   │   │   ├── HoleInWall1.png
-│   │   │   │   ├── HoleInWall1.png.import
-│   │   │   │   ├── HoleInWall2.png
-│   │   │   │   ├── HoleInWall2.png.import
-│   │   │   │   ├── HoleInWall3.png
-│   │   │   │   ├── HoleInWall3.png.import
-│   │   │   │   ├── HoleInWall4.png
-│   │   │   │   ├── HoleInWall4.png.import
-│   │   │   │   ├── HoleInWall5.png
-│   │   │   │   ├── HoleInWall5.png.import
-│   │   │   │   ├── HoleInWall6.png
-│   │   │   │   ├── HoleInWall6.png.import
-│   │   │   │   ├── HoleInWall7.png
-│   │   │   │   └── HoleInWall7.png.import
-│   │   │   ├── BackWalls.png
-│   │   │   ├── BackWalls.png.import
-│   │   │   ├── BackWallsDistorted 2.png
-│   │   │   ├── BackWallsDistorted 2.png.import
-│   │   │   ├── BackWallsDistorted.png
-│   │   │   ├── BackWallsDistorted.png.import
-│   │   │   ├── BackWallsParents.png
-│   │   │   ├── BackWallsParents.png.import
-│   │   │   ├── Floor.png
-│   │   │   ├── Floor.png.import
-│   │   │   ├── FloorDistorted.png
-│   │   │   ├── FloorDistorted.png.import
-│   │   │   ├── Plintus.png
-│   │   │   ├── Plintus.png.import
-│   │   │   ├── TilesFloor1.png
-│   │   │   ├── TilesFloor1.png.import
-│   │   │   ├── ToiletTiles.png
-│   │   │   ├── ToiletTiles.png.import
-│   │   │   ├── WhiteWallU.png
-│   │   │   └── WhiteWallU.png.import
-│   │   ├── creepy_eye
-│   │   │   ├── creepy_eye.gd
-│   │   │   ├── creepy_eye.gd.uid
-│   │   │   ├── creepy_eye.gdshader
-│   │   │   ├── creepy_eye.gdshader.uid
-│   │   │   └── creepy_eye.tscn
-│   │   ├── floor
-│   │   │   ├── FloorWood.png
-│   │   │   ├── FloorWood.png.import
-│   │   │   ├── floor.gd
-│   │   │   ├── floor.gd.uid
-│   │   │   ├── floor.tscn
-│   │   │   ├── floor_U_1stFloor.png
-│   │   │   ├── floor_U_1stFloor.png.import
-│   │   │   ├── floor_perspective.gdshader
-│   │   │   ├── floor_perspective.gdshader.uid
-│   │   │   ├── table_perspective.gd
-│   │   │   ├── table_perspective.gd.uid
-│   │   │   ├── table_perspective.gdshader
-│   │   │   └── table_perspective.gdshader.uid
-│   │   ├── smart
-│   │   │   ├── markers
-│   │   │   │   ├── stalker_spawn_marker.gd
-│   │   │   │   ├── stalker_spawn_marker.gd.uid
-│   │   │   │   └── stalker_spawn_marker.tscn
-│   │   │   ├── target
-│   │   │   │   ├── target.gd
-│   │   │   │   ├── target.gd.uid
-│   │   │   │   └── target.tscn
-│   │   │   └── world_clock
-│   │   │       ├── Clock.png
-│   │   │       ├── Clock.png.import
-│   │   │       ├── world_clock.gd
-│   │   │       ├── world_clock.gd.uid
-│   │   │       └── world_clock.tscn
-│   │   ├── sprites
-│   │   │   ├── allrooms
-│   │   │   │   ├── windows
-│   │   │   │   │   ├── Hole.png
-│   │   │   │   │   ├── Hole.png.import
-│   │   │   │   │   ├── Window1.png
-│   │   │   │   │   ├── Window1.png.import
-│   │   │   │   │   ├── Window2.png
-│   │   │   │   │   ├── Window2.png.import
-│   │   │   │   │   ├── Window2Morning.png
-│   │   │   │   │   ├── Window2Morning.png.import
-│   │   │   │   │   ├── Window3.png
-│   │   │   │   │   ├── Window3.png.import
-│   │   │   │   │   ├── WindowKilled1.png
-│   │   │   │   │   ├── WindowKilled1.png.import
-│   │   │   │   │   ├── WindowKilled2.png
-│   │   │   │   │   ├── WindowKilled2.png.import
-│   │   │   │   │   ├── WindowKilled3.png
-│   │   │   │   │   ├── WindowKilled3.png.import
-│   │   │   │   │   ├── WindowWithMonster.png
-│   │   │   │   │   ├── WindowWithMonster.png.import
-│   │   │   │   │   ├── Windows3Morning.png
-│   │   │   │   │   └── Windows3Morning.png.import
-│   │   │   │   ├── Balka.png
-│   │   │   │   ├── Balka.png.import
-│   │   │   │   ├── BigChain.png
-│   │   │   │   ├── BigChain.png.import
-│   │   │   │   ├── Chain.png
-│   │   │   │   ├── Chain.png.import
-│   │   │   │   ├── On-offer.png
-│   │   │   │   ├── On-offer.png.import
-│   │   │   │   ├── OpenShtora.png
-│   │   │   │   ├── OpenShtora.png.import
-│   │   │   │   ├── Pozetka.png
-│   │   │   │   ├── Pozetka.png.import
-│   │   │   │   ├── Shtora.png
-│   │   │   │   ├── Shtora.png.import
-│   │   │   │   ├── WallBOK.png
-│   │   │   │   └── WallBOK.png.import
-│   │   │   ├── bedroom
-│   │   │   │   ├── ChairBedroom.png
-│   │   │   │   ├── ChairBedroom.png.import
-│   │   │   │   ├── Comode2.png
-│   │   │   │   ├── Comode2.png.import
-│   │   │   │   ├── Plakat1.png
-│   │   │   │   ├── Plakat1.png.import
-│   │   │   │   ├── Plakat2.png
-│   │   │   │   ├── Plakat2.png.import
-│   │   │   │   ├── Powerbank2.png
-│   │   │   │   ├── Powerbank2.png.import
-│   │   │   │   ├── SteamDeck.png
-│   │   │   │   ├── SteamDeck.png.import
-│   │   │   │   ├── Sweets.png
-│   │   │   │   ├── Sweets.png.import
-│   │   │   │   ├── TableForPC.png
-│   │   │   │   ├── TableForPC.png.import
-│   │   │   │   ├── Tumbochka2.png
-│   │   │   │   ├── Tumbochka2.png.import
-│   │   │   │   ├── UsedFood.png
-│   │   │   │   └── UsedFood.png.import
-│   │   │   ├── hall
-│   │   │   │   ├── Aquarium.png
-│   │   │   │   ├── Aquarium.png.import
-│   │   │   │   ├── Armchair.png
-│   │   │   │   ├── Armchair.png.import
-│   │   │   │   ├── Battery.png
-│   │   │   │   ├── Battery.png.import
-│   │   │   │   ├── Boots1.png
-│   │   │   │   ├── Boots1.png.import
-│   │   │   │   ├── Boots2.png
-│   │   │   │   ├── Boots2.png.import
-│   │   │   │   ├── Boots3.png
-│   │   │   │   ├── Boots3.png.import
-│   │   │   │   ├── Boots4.png
-│   │   │   │   ├── Boots4.png.import
-│   │   │   │   ├── Boots5.png
-│   │   │   │   ├── Boots5.png.import
-│   │   │   │   ├── Boots6.png
-│   │   │   │   ├── Boots6.png.import
-│   │   │   │   ├── BootsBoard.png
-│   │   │   │   ├── BootsBoard.png.import
-│   │   │   │   ├── CoverOnWall_1.png
-│   │   │   │   ├── CoverOnWall_1.png.import
-│   │   │   │   ├── Kover.png
-│   │   │   │   ├── Kover.png.import
-│   │   │   │   ├── PictureOne.png
-│   │   │   │   ├── PictureOne.png.import
-│   │   │   │   ├── PictureThree.png
-│   │   │   │   ├── PictureThree.png.import
-│   │   │   │   ├── PictureTwo.png
-│   │   │   │   ├── PictureTwo.png.import
-│   │   │   │   ├── Shkaf1.png
-│   │   │   │   ├── Shkaf1.png.import
-│   │   │   │   ├── Sofa.png
-│   │   │   │   ├── Sofa.png.import
-│   │   │   │   ├── tv_1.png
-│   │   │   │   ├── tv_1.png.import
-│   │   │   │   ├── tv_2.png
-│   │   │   │   └── tv_2.png.import
-│   │   │   ├── kitchen
-│   │   │   │   ├── Chair_1.png
-│   │   │   │   ├── Chair_1.png.import
-│   │   │   │   ├── Chair_2.png
-│   │   │   │   ├── Chair_2.png.import
-│   │   │   │   ├── CookingGas.png
-│   │   │   │   ├── CookingGas.png.import
-│   │   │   │   ├── High_kitchen.png
-│   │   │   │   ├── High_kitchen.png.import
-│   │   │   │   ├── Kitchen_garn.png
-│   │   │   │   ├── Kitchen_garn.png.import
-│   │   │   │   ├── Table.png
-│   │   │   │   ├── Table.png.import
-│   │   │   │   ├── Urna.png
-│   │   │   │   └── Urna.png.import
-│   │   │   ├── kladovka
-│   │   │   │   ├── PolkaWithHlam.png
-│   │   │   │   ├── PolkaWithHlam.png.import
-│   │   │   │   ├── PolkaWithHlam2.png
-│   │   │   │   ├── PolkaWithHlam2.png.import
-│   │   │   │   ├── Shvabra.png
-│   │   │   │   └── Shvabra.png.import
-│   │   │   ├── parents
-│   │   │   │   ├── BedParents.png
-│   │   │   │   ├── BedParents.png.import
-│   │   │   │   ├── ShkafParents.png
-│   │   │   │   └── ShkafParents.png.import
-│   │   │   └── toilet and bathroom
-│   │   │       ├── Mirror.png
-│   │   │       ├── Mirror.png.import
-│   │   │       ├── Rakovina.png
-│   │   │       ├── Rakovina.png.import
-│   │   │       ├── Toilet.png
-│   │   │       ├── Toilet.png.import
-│   │   │       ├── ToiletPaper.png
-│   │   │       ├── ToiletPaper.png.import
-│   │   │       ├── ToothPolka.png
-│   │   │       ├── ToothPolka.png.import
-│   │   │       ├── Vent.png
-│   │   │       ├── Vent.png.import
-│   │   │       ├── WaterMachine.png
-│   │   │       ├── WaterMachine.png.import
-│   │   │       ├── Yorhic.png
-│   │   │       ├── Yorhic.png.import
-│   │   │       ├── bath.png
-│   │   │       ├── bath.png.import
-│   │   │       └── wash.tscn
-│   │   ├── university
-│   │   │   ├── ApplePoster.png
-│   │   │   ├── ApplePoster.png.import
-│   │   │   ├── BackWallsUn.png
-│   │   │   ├── BackWallsUn.png.import
-│   │   │   ├── Battery_dist.png
-│   │   │   ├── Battery_dist.png.import
-│   │   │   ├── Chair.png
-│   │   │   ├── Chair.png.import
-│   │   │   ├── DownStairs.png
-│   │   │   ├── DownStairs.png.import
-│   │   │   ├── ElevatorButtons.png
-│   │   │   ├── ElevatorButtons.png.import
-│   │   │   ├── Exit.png
-│   │   │   ├── Exit.png.import
-│   │   │   ├── FireButton.png
-│   │   │   ├── FireButton.png.import
-│   │   │   ├── FireWash.png
-│   │   │   ├── FireWash.png.import
-│   │   │   ├── FloorU.png
-│   │   │   ├── FloorU.png.import
-│   │   │   ├── KitchLenta.png
-│   │   │   ├── KitchLenta.png.import
-│   │   │   ├── Lift.png
-│   │   │   ├── Lift.png.import
-│   │   │   ├── ListOfLevels.png
-│   │   │   ├── ListOfLevels.png.import
-│   │   │   ├── MirrorToilet.png
-│   │   │   ├── MirrorToilet.png.import
-│   │   │   ├── PlanOfLevel1.png
-│   │   │   ├── PlanOfLevel1.png.import
-│   │   │   ├── PlanOfLevel2.png
-│   │   │   ├── PlanOfLevel2.png.import
-│   │   │   ├── PlanOfLevel3.png
-│   │   │   ├── PlanOfLevel3.png.import
-│   │   │   ├── PlanOfLevel4.png
-│   │   │   ├── PlanOfLevel4.png.import
-│   │   │   ├── PlanOfLevel5.png
-│   │   │   ├── PlanOfLevel5.png.import
-│   │   │   ├── PlanOfLevel6.png
-│   │   │   ├── PlanOfLevel6.png.import
-│   │   │   ├── PlanOfLevel7.png
-│   │   │   ├── PlanOfLevel7.png.import
-│   │   │   ├── PlanOfLevel8.png
-│   │   │   ├── PlanOfLevel8.png.import
-│   │   │   ├── PlanOfLevel9.png
-│   │   │   ├── PlanOfLevel9.png.import
-│   │   │   ├── PlantU.png
-│   │   │   ├── PlantU.png.import
-│   │   │   ├── RadiatorU.png
-│   │   │   ├── RadiatorU.png.import
-│   │   │   ├── STU_OnWallDecor_1.png
-│   │   │   ├── STU_OnWallDecor_1.png.import
-│   │   │   ├── STU_OnWallDecor_2.png
-│   │   │   ├── STU_OnWallDecor_2.png.import
-│   │   │   ├── Shkaf_U1.png
-│   │   │   ├── Shkaf_U1.png.import
-│   │   │   ├── Shkaf_U2.png
-│   │   │   ├── Shkaf_U2.png.import
-│   │   │   ├── Shkaf_U3.png
-│   │   │   ├── Shkaf_U3.png.import
-│   │   │   ├── SofaSTU.png
-│   │   │   ├── SofaSTU.png.import
-│   │   │   ├── Table.png
-│   │   │   ├── Table.png.import
-│   │   │   ├── Table_U_PC.png
-│   │   │   ├── Table_U_PC.png.import
-│   │   │   ├── Table_U_PC_90g.png
-│   │   │   ├── Table_U_PC_90g.png.import
-│   │   │   ├── TestFloorVertU.png
-│   │   │   ├── TestFloorVertU.png.import
-│   │   │   ├── ToiletTiles2.png
-│   │   │   ├── ToiletTiles2.png.import
-│   │   │   ├── UpStairs.png
-│   │   │   ├── UpStairs.png.import
-│   │   │   ├── conditioner.png
-│   │   │   ├── conditioner.png.import
-│   │   │   └── table_U.tscn
-│   │   └── walls
-│   │       ├── wall_horizontal.tscn
-│   │       └── wall_vertical.tscn
-│   └── interactable
-│       ├── bed
-│       │   ├── Bed.png
-│       │   ├── Bed.png.import
-│       │   ├── BigBed.png
-│       │   ├── BigBed.png.import
-│       │   ├── OutOfBed.wav
-│       │   ├── OutOfBed.wav.import
-│       │   ├── bed.gd
-│       │   ├── bed.gd.uid
-│       │   └── bed.tscn
-│       ├── door
-│       │   ├── audio
-│       │   │   ├── door_locked1.wav
-│       │   │   ├── door_locked1.wav.import
-│       │   │   ├── door_open1.wav
-│       │   │   ├── door_open1.wav.import
-│       │   │   ├── door_unlocked.wav
-│       │   │   └── door_unlocked.wav.import
-│       │   ├── sprites
-│       │   │   ├── numbersU
-│       │   │   │   ├── 101.jpg
-│       │   │   │   ├── 101.jpg.import
-│       │   │   │   ├── 102.jpg
-│       │   │   │   ├── 102.jpg.import
-│       │   │   │   ├── 103.jpg
-│       │   │   │   ├── 103.jpg.import
-│       │   │   │   ├── 104.jpg
-│       │   │   │   ├── 104.jpg.import
-│       │   │   │   ├── 201.jpg
-│       │   │   │   ├── 201.jpg.import
-│       │   │   │   ├── 202.jpg
-│       │   │   │   ├── 202.jpg.import
-│       │   │   │   ├── 203.jpg
-│       │   │   │   ├── 203.jpg.import
-│       │   │   │   ├── 204.jpg
-│       │   │   │   ├── 204.jpg.import
-│       │   │   │   ├── 301.jpg
-│       │   │   │   ├── 301.jpg.import
-│       │   │   │   ├── 302.jpg
-│       │   │   │   ├── 302.jpg.import
-│       │   │   │   ├── 303.jpg
-│       │   │   │   ├── 303.jpg.import
-│       │   │   │   ├── 304.jpg
-│       │   │   │   ├── 304.jpg.import
-│       │   │   │   ├── 401.jpg
-│       │   │   │   ├── 401.jpg.import
-│       │   │   │   ├── 402.jpg
-│       │   │   │   ├── 402.jpg.import
-│       │   │   │   ├── 403.jpg
-│       │   │   │   ├── 403.jpg.import
-│       │   │   │   ├── 404.jpg
-│       │   │   │   ├── 404.jpg.import
-│       │   │   │   ├── 501.jpg
-│       │   │   │   ├── 501.jpg.import
-│       │   │   │   ├── 502.jpg
-│       │   │   │   ├── 502.jpg.import
-│       │   │   │   ├── 503.jpg
-│       │   │   │   ├── 503.jpg.import
-│       │   │   │   ├── 504.jpg
-│       │   │   │   ├── 504.jpg.import
-│       │   │   │   ├── 601.jpg
-│       │   │   │   ├── 601.jpg.import
-│       │   │   │   ├── 602.jpg
-│       │   │   │   ├── 602.jpg.import
-│       │   │   │   ├── 603.jpg
-│       │   │   │   ├── 603.jpg.import
-│       │   │   │   ├── 604.jpg
-│       │   │   │   ├── 604.jpg.import
-│       │   │   │   ├── 701.jpg
-│       │   │   │   ├── 701.jpg.import
-│       │   │   │   ├── 702.jpg
-│       │   │   │   ├── 702.jpg.import
-│       │   │   │   ├── 703.jpg
-│       │   │   │   ├── 703.jpg.import
-│       │   │   │   ├── 704.jpg
-│       │   │   │   ├── 704.jpg.import
-│       │   │   │   ├── 801.jpg
-│       │   │   │   ├── 801.jpg.import
-│       │   │   │   ├── 802.jpg
-│       │   │   │   ├── 802.jpg.import
-│       │   │   │   ├── 803.jpg
-│       │   │   │   ├── 803.jpg.import
-│       │   │   │   ├── 804.jpg
-│       │   │   │   ├── 804.jpg.import
-│       │   │   │   ├── 901.jpg
-│       │   │   │   ├── 901.jpg.import
-│       │   │   │   ├── 902.jpg
-│       │   │   │   ├── 902.jpg.import
-│       │   │   │   ├── 903.jpg
-│       │   │   │   ├── 903.jpg.import
-│       │   │   │   ├── 904.jpg
-│       │   │   │   ├── 904.jpg.import
-│       │   │   │   ├── ToiletM.jpg
-│       │   │   │   ├── ToiletM.jpg.import
-│       │   │   │   ├── ToiletW.jpg
-│       │   │   │   └── ToiletW.jpg.import
-│       │   │   ├── DoorBasement.png
-│       │   │   ├── DoorBasement.png.import
-│       │   │   ├── DoorBasic.png
-│       │   │   ├── DoorBasic.png.import
-│       │   │   ├── DoorBasic_Distorted.png
-│       │   │   ├── DoorBasic_Distorted.png.import
-│       │   │   ├── DoorExit.png
-│       │   │   ├── DoorExit.png.import
-│       │   │   ├── DoorNSTU_highevel.png
-│       │   │   ├── DoorNSTU_highevel.png.import
-│       │   │   ├── DoorStairs.png
-│       │   │   ├── DoorStairs.png.import
-│       │   │   ├── DoorToiletInside.png
-│       │   │   ├── DoorToiletInside.png.import
-│       │   │   ├── DoorToiletOutside.png
-│       │   │   ├── DoorToiletOutside.png.import
-│       │   │   ├── Door_Opened_1.png
-│       │   │   ├── Door_Opened_1.png.import
-│       │   │   ├── Door_Opened_2.png
-│       │   │   ├── Door_Opened_2.png.import
-│       │   │   ├── Door_With_Monster.png
-│       │   │   ├── Door_With_Monster.png.import
-│       │   │   ├── DoubleDoorU.png
-│       │   │   └── DoubleDoorU.png.import
-│       │   ├── door.gd
-│       │   ├── door.gd.uid
-│       │   ├── door.tscn
-│       │   └── door_university.tscn
-│       ├── flashlight
-│       │   ├── Flashlight_Sprite.png
-│       │   ├── Flashlight_Sprite.png.import
-│       │   ├── pickup_flashlight.gd
-│       │   ├── pickup_flashlight.gd.uid
-│       │   └── pickup_flashlight.tscn
-│       ├── fridge
-│       │   ├── audio
-│       │   │   ├── FridgeCreaking.wav
-│       │   │   ├── FridgeCreaking.wav.import
-│       │   │   ├── FridgeNoizeE.wav
-│       │   │   ├── FridgeNoizeE.wav.import
-│       │   │   ├── OpenFridgeE.wav
-│       │   │   ├── OpenFridgeE.wav.import
-│       │   │   ├── PigsScream.wav
-│       │   │   └── PigsScream.wav.import
-│       │   ├── sprites
-│       │   │   ├── ClosedFridge.png
-│       │   │   ├── ClosedFridge.png.import
-│       │   │   ├── FallenFridge.png
-│       │   │   ├── FallenFridge.png.import
-│       │   │   ├── FridgeOnChain.png
-│       │   │   ├── FridgeOnChain.png.import
-│       │   │   ├── LockedFridge.png
-│       │   │   ├── LockedFridge.png.import
-│       │   │   ├── OpenFridge.png
-│       │   │   └── OpenFridge.png.import
-│       │   ├── code_lock.gd
-│       │   ├── code_lock.gd.uid
-│       │   ├── final_ending_fridge.gd
-│       │   ├── final_ending_fridge.gd.uid
-│       │   ├── fridge.gd
-│       │   ├── fridge.gd.uid
-│       │   └── fridge.tscn
-│       ├── generator
-│       │   ├── Generator.png
-│       │   ├── Generator.png.import
-│       │   ├── generator.gd
-│       │   ├── generator.gd.uid
-│       │   └── generator.tscn
-│       ├── key
-│       │   ├── key.gd
-│       │   └── key.gd.uid
-│       ├── lamp
-│       │   ├── Lamp1.png
-│       │   ├── Lamp1.png.import
-│       │   ├── LampOn1.png
-│       │   ├── LampOn1.png.import
-│       │   ├── lamp.gd
-│       │   ├── lamp.gd.uid
-│       │   ├── lamp.tscn
-│       │   ├── lamp.wav
-│       │   └── lamp.wav.import
-│       ├── lebedka
-│       │   ├── Lebedka.png
-│       │   ├── Lebedka.png.import
-│       │   ├── LebedkaBezRuchki.png
-│       │   ├── LebedkaBezRuchki.png.import
-│       │   ├── RuchkaOtLebedki.png
-│       │   ├── RuchkaOtLebedki.png.import
-│       │   ├── lebedka.gd
-│       │   ├── lebedka.gd.uid
-│       │   └── lebedka.tscn
-│       ├── level12
-│       │   ├── blockpost
-│       │   │   ├── blockpost.gd
-│       │   │   ├── blockpost.gd.uid
-│       │   │   └── blockpost.tscn
-│       │   ├── money
-│       │   │   ├── level12_money_system.gd
-│       │   │   ├── level12_money_system.gd.uid
-│       │   │   └── level12_money_system.tscn
-│       │   ├── notebook
-│       │   │   ├── laptop_money.gd
-│       │   │   ├── laptop_money.gd.uid
-│       │   │   └── laptop_money.tscn
-│       │   └── student
-│       │       ├── student_money_npc.gd
-│       │       ├── student_money_npc.gd.uid
-│       │       └── student_money_npc.tscn
-│       ├── note
-│       │   ├── 1234.jpg
-│       │   ├── 1234.jpg.import
-│       │   ├── Otchislenie.png
-│       │   ├── Otchislenie.png.import
-│       │   ├── note.tscn
-│       │   ├── note_object.gd
-│       │   └── note_object.gd.uid
-│       ├── notebook
-│       │   ├── NotebookOff.png
-│       │   ├── NotebookOff.png.import
-│       │   ├── NotebookOn.png
-│       │   ├── NotebookOn.png.import
-│       │   ├── Table_U_PC_on.png
-│       │   ├── Table_U_PC_on.png.import
-│       │   ├── laptop.gd
-│       │   ├── laptop.gd.uid
-│       │   ├── laptop.tscn
-│       │   └── laptop_STU.tscn
-│       ├── obstacle
-│       │   ├── obstacle.gd
-│       │   ├── obstacle.gd.uid
-│       │   └── obstacle.tscn
-│       ├── phone
-│       │   ├── 164690__deleted_user_2104797__phone_ring.wav
-│       │   ├── 164690__deleted_user_2104797__phone_ring.wav.import
-│       │   ├── JokeAboutChicken.wav
-│       │   ├── JokeAboutChicken.wav.import
-│       │   ├── phone.gd
-│       │   ├── phone.gd.uid
-│       │   ├── phone.png
-│       │   ├── phone.png.import
-│       │   └── phone.tscn
-│       ├── projector
-│       │   ├── ProjectorSprite.png
-│       │   ├── ProjectorSprite.png.import
-│       │   ├── projector.gd
-│       │   ├── projector.gd.uid
-│       │   └── projector.tscn
-│       ├── search_spot
-│       │   ├── search_spot.gd
-│       │   ├── search_spot.gd.uid
-│       │   └── search_spot.tscn
-│       ├── trigger
-│       │   ├── property_change.gd
-│       │   ├── property_change.gd.uid
-│       │   ├── trigger_set_property.gd
-│       │   ├── trigger_set_property.gd.uid
-│       │   └── trigger_set_property.tscn
-│       ├── interactive_object.gd
-│       └── interactive_object.gd.uid
-├── player
-│   ├── animations
-│   │   └── walking
-│   │       ├── ezgif-frame-001.png
-│   │       ├── ezgif-frame-001.png.import
-│   │       ├── ezgif-frame-002.png
-│   │       ├── ezgif-frame-002.png.import
-│   │       ├── ezgif-frame-003.png
-│   │       ├── ezgif-frame-003.png.import
-│   │       ├── ezgif-frame-004.png
-│   │       ├── ezgif-frame-004.png.import
-│   │       ├── ezgif-frame-005.png
-│   │       ├── ezgif-frame-005.png.import
-│   │       ├── ezgif-frame-006.png
-│   │       ├── ezgif-frame-006.png.import
-│   │       ├── ezgif-frame-007.png
-│   │       ├── ezgif-frame-007.png.import
-│   │       ├── ezgif-frame-008.png
-│   │       ├── ezgif-frame-008.png.import
-│   │       ├── ezgif-frame-009.png
-│   │       ├── ezgif-frame-009.png.import
-│   │       ├── ezgif-frame-010.png
-│   │       ├── ezgif-frame-010.png.import
-│   │       ├── ezgif-frame-011.png
-│   │       ├── ezgif-frame-011.png.import
-│   │       ├── ezgif-frame-012.png
-│   │       ├── ezgif-frame-012.png.import
-│   │       ├── ezgif-frame-013.png
-│   │       ├── ezgif-frame-013.png.import
-│   │       ├── ezgif-frame-014.png
-│   │       ├── ezgif-frame-014.png.import
-│   │       ├── ezgif-frame-015.png
-│   │       ├── ezgif-frame-015.png.import
-│   │       ├── ezgif-frame-016.png
-│   │       └── ezgif-frame-016.png.import
-│   ├── audio
-│   │   ├── screams
-│   │   │   ├── Scream_1.wav
-│   │   │   ├── Scream_1.wav.import
-│   │   │   ├── Scream_2.wav
-│   │   │   ├── Scream_2.wav.import
-│   │   │   ├── Scream_3.wav
-│   │   │   ├── Scream_3.wav.import
-│   │   │   ├── Scream_4.wav
-│   │   │   └── Scream_4.wav.import
-│   │   ├── steps
-│   │   │   ├── steps1.wav
-│   │   │   ├── steps1.wav.import
-│   │   │   ├── steps2.wav
-│   │   │   ├── steps2.wav.import
-│   │   │   ├── steps3.wav
-│   │   │   ├── steps3.wav.import
-│   │   │   ├── steps4.wav
-│   │   │   └── steps4.wav.import
-│   │   ├── FlashlightOnOff.wav
-│   │   ├── FlashlightOnOff.wav.import
-│   │   ├── HeartBeat_1.wav
-│   │   └── HeartBeat_1.wav.import
-│   ├── ui
-│   │   ├── FlashlightDrawing.png
-│   │   ├── FlashlightDrawing.png.import
-│   │   ├── FlashlightWithoutSpotlight.png
-│   │   ├── FlashlightWithoutSpotlight.png.import
-│   │   ├── FullFlashlight.png
-│   │   ├── FullFlashlight.png.import
-│   │   ├── OnlySpotlight.png
-│   │   ├── OnlySpotlight.png.import
-│   │   ├── PouringFlashlight.png
-│   │   └── PouringFlashlight.png.import
-│   ├── Andry.png
-│   ├── Andry.png.import
-│   ├── AndryWithFlashlight.png
-│   ├── AndryWithFlashlight.png.import
-│   ├── UI_Button_Sprite.png
-│   ├── UI_Button_Sprite.png.import
-│   ├── UI_Button_Sprite_Dualsense.png
-│   ├── UI_Button_Sprite_Dualsense.png.import
-│   ├── UI_Button_Sprite_Xbox.png
-│   ├── UI_Button_Sprite_Xbox.png.import
-│   ├── flashlight.gd
-│   ├── flashlight.gd.uid
-│   ├── flashlight_bar.gd
-│   ├── flashlight_bar.gd.uid
-│   ├── player.gd
-│   ├── player.gd.uid
-│   ├── player.tscn
-│   ├── stamina_bar.gd
-│   ├── stamina_bar.gd.uid
-│   ├── step_audio_component.gd
-│   ├── step_audio_component.gd.uid
-│   ├── ui_message.gd
-│   └── ui_message.gd.uid
-├── shaders
-│   ├── death_text_glitch.gdshader
-│   ├── death_text_glitch.gdshader.uid
-│   ├── distortion_overlay.gdshader
-│   ├── distortion_overlay.gdshader.uid
-│   ├── distortion_transition.gdshader
-│   ├── distortion_transition.gdshader.uid
-│   ├── feeding_blood_drips.gdshader
-│   ├── feeding_blood_drips.gdshader.uid
-│   ├── light_only_jump_overlay.gdshader
-│   ├── light_only_jump_overlay.gdshader.uid
-│   ├── pain_shock_distortion.gdshader
-│   ├── pain_shock_distortion.gdshader.uid
-│   ├── torn_right_wallpaper.gdshader
-│   └── torn_right_wallpaper.gdshader.uid
-├── tests
-│   ├── cases
-│   │   ├── test_audio_bedroom_music_policy.gd
-│   │   ├── test_audio_bedroom_music_policy.gd.uid
-│   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd
-│   │   ├── test_audio_menu_to_level01_bedroom_runtime.gd.uid
-│   │   ├── test_autoloads.gd
-│   │   ├── test_autoloads.gd.uid
-│   │   ├── test_cycle_state_flashlight_unlock.gd
-│   │   ├── test_cycle_state_flashlight_unlock.gd.uid
-│   │   ├── test_cycle_state_lab_scope.gd
-│   │   ├── test_cycle_state_lab_scope.gd.uid
-│   │   ├── test_disclaimer_screen_session_gate_runtime.gd
-│   │   ├── test_disclaimer_screen_session_gate_runtime.gd.uid
-│   │   ├── test_ending_credits_session_gate_runtime.gd
-│   │   ├── test_ending_credits_session_gate_runtime.gd.uid
-│   │   ├── test_enemy_light_sensitive_blind_detection_runtime.gd
-│   │   ├── test_enemy_light_sensitive_blind_detection_runtime.gd.uid
-│   │   ├── test_enemy_light_sensitive_external_flashlight.gd
-│   │   ├── test_enemy_light_sensitive_external_flashlight.gd.uid
-│   │   ├── test_enemy_light_sensitive_flashlight_stun.gd
-│   │   ├── test_enemy_light_sensitive_flashlight_stun.gd.uid
-│   │   ├── test_final_feed_minigame_stage_transition.gd
-│   │   ├── test_final_feed_minigame_stage_transition.gd.uid
-│   │   ├── test_flashlight_pickup_clears_location.gd
-│   │   ├── test_flashlight_pickup_clears_location.gd.uid
-│   │   ├── test_fridge_chase_interaction.gd
-│   │   ├── test_fridge_chase_interaction.gd.uid
-│   │   ├── test_fridge_visual_after_eating.gd
-│   │   ├── test_fridge_visual_after_eating.gd.uid
-│   │   ├── test_gamepad_pick_place_flow.gd
-│   │   ├── test_gamepad_pick_place_flow.gd.uid
-│   │   ├── test_gamepad_runtime_navigation.gd
-│   │   ├── test_gamepad_runtime_navigation.gd.uid
-│   │   ├── test_generator_activates_required_lamps.gd
-│   │   ├── test_generator_activates_required_lamps.gd.uid
-│   │   ├── test_input_actions.gd
-│   │   ├── test_input_actions.gd.uid
-│   │   ├── test_interaction_architecture_contracts.gd
-│   │   ├── test_interaction_architecture_contracts.gd.uid
-│   │   ├── test_interactive_object_locked_message.gd
-│   │   ├── test_interactive_object_locked_message.gd.uid
-│   │   ├── test_lamp_generator_requirement.gd
-│   │   ├── test_lamp_generator_requirement.gd.uid
-│   │   ├── test_laptop_lab_music_runtime.gd
-│   │   ├── test_laptop_lab_music_runtime.gd.uid
-│   │   ├── test_laptop_multi_lab_ids.gd
-│   │   ├── test_laptop_multi_lab_ids.gd.uid
-│   │   ├── test_level12_laptop_money_reward.gd
-│   │   ├── test_level12_laptop_money_reward.gd.uid
-│   │   ├── test_level12_money_system.gd
-│   │   ├── test_level12_money_system.gd.uid
-│   │   ├── test_level12_stu2_wiring_runtime.gd
-│   │   ├── test_level12_stu2_wiring_runtime.gd.uid
-│   │   ├── test_level12_student_reward.gd
-│   │   ├── test_level12_student_reward.gd.uid
-│   │   ├── test_level13_multi_lab_requirement.gd
-│   │   ├── test_level13_multi_lab_requirement.gd.uid
-│   │   ├── test_level14_end_music_policy_runtime.gd
-│   │   ├── test_level14_end_music_policy_runtime.gd.uid
-│   │   ├── test_level_checkpoint_spawn.gd
-│   │   ├── test_level_checkpoint_spawn.gd.uid
-│   │   ├── test_level_default_flashlight.gd
-│   │   ├── test_level_default_flashlight.gd.uid
-│   │   ├── test_light_adds_directional_contract.gd
-│   │   ├── test_light_adds_directional_contract.gd.uid
-│   │   ├── test_main_menu_startup_disclaimer_runtime.gd
-│   │   ├── test_main_menu_startup_disclaimer_runtime.gd.uid
-│   │   ├── test_minigame_backdrop_dedup_runtime.gd
-│   │   ├── test_minigame_backdrop_dedup_runtime.gd.uid
-│   │   ├── test_minigame_backdrop_transition_visibility.gd
-│   │   ├── test_minigame_backdrop_transition_visibility.gd.uid
-│   │   ├── test_minigame_gamepad_bindings.gd
-│   │   ├── test_minigame_gamepad_bindings.gd.uid
-│   │   ├── test_music_crossfade_suppression_runtime.gd
-│   │   ├── test_music_crossfade_suppression_runtime.gd.uid
-│   │   ├── test_musicmanager_priority_resume_runtime.gd
-│   │   ├── test_musicmanager_priority_resume_runtime.gd.uid
-│   │   ├── test_musicmanager_private_api_usage.gd
-│   │   ├── test_musicmanager_private_api_usage.gd.uid
-│   │   ├── test_note_audio_optional.gd
-│   │   ├── test_note_audio_optional.gd.uid
-│   │   ├── test_project_config.gd
-│   │   ├── test_project_config.gd.uid
-│   │   ├── test_respawn_checkpoint_restore.gd
-│   │   ├── test_respawn_checkpoint_restore.gd.uid
-│   │   ├── test_save_state_split.gd
-│   │   ├── test_save_state_split.gd.uid
-│   │   ├── test_scenes_load.gd
-│   │   ├── test_scenes_load.gd.uid
-│   │   ├── test_scripts_compile.gd
-│   │   ├── test_scripts_compile.gd.uid
-│   │   ├── test_stalker_behavior.gd
-│   │   ├── test_stalker_behavior.gd.uid
-│   │   ├── test_stalker_motion_audio_component.gd
-│   │   ├── test_stalker_motion_audio_component.gd.uid
-│   │   ├── test_ui_message_dialogue_channels.gd
-│   │   └── test_ui_message_dialogue_channels.gd.uid
-│   ├── README.md
-│   ├── run_tests.gd
-│   ├── run_tests.gd.uid
-│   ├── run_tests.sh
-│   ├── test_case.gd
-│   ├── test_case.gd.uid
-│   ├── test_utils.gd
-│   └── test_utils.gd.uid
-├── tools
-│   └── macos_dmg_fix
-│       ├── export_macos_dmg.sh
-│       ├── hdiutil
-│       └── run_godot_with_dmg_fix.sh
-├── default_bus_layout.tres
-├── export_presets.cfg
-├── icon.svg
-├── icon.svg.import
-├── project.godot
-└── structure.txt
-
-124 directories, 1376 files
+./music
+./music/MusicForLabs2.wav.import
+./music/AlienSounds.wav
+./music/CreepyAmbient.wav
+./music/StressMusic.wav
+./music/MusicForEat.mp3.import
+./music/TimerForLabs2.wav
+./music/RunnerHARDMUSIC.wav.import
+./music/MyHorrorHit_1.wav
+./music/MusicForBasicMonster.wav.import
+./music/MyHorrorHit_3.wav
+./music/MusicForLabs.wav
+./music/UniversityMusic.wav.import
+./music/MyHorrorHit_2.wav
+./music/TypeSilentHill.wav.import
+./music/StressMusic.wav.import
+./music/TimerForLabs2.wav.import
+./music/AlienSounds.wav.import
+./music/MusicForLabs2.wav
+./music/DrainMusic.wav
+./music/UniversityMusic.wav
+./music/MyHorrorHit_2.wav.import
+./music/MusicForEat.mp3
+./music/RunnerHARDMUSIC.wav
+./music/music_mix_settings.tres
+./music/MyHorrorHit_1.wav.import
+./music/CreepyAmbient.wav.import
+./music/TypeSilentHill.wav
+./music/DrainMusic.wav.import
+./music/MyHorrorHit_3.wav.import
+./music/MusicForLabs.wav.import
+./music/TimerForLabs_DEMO.wav.import
+./music/GlitchedHorrorHit.wav.import
+./music/MusicForBasicMonster.wav
+./music/GlitchedHorrorHit.wav
+./music/InsideAmbient.wav
+./music/TimerForLabs_DEMO.wav
+./music/InsideAmbient.wav.import
+./tools
+./tools/macos_dmg_fix
+./tools/macos_dmg_fix/hdiutil
+./tools/macos_dmg_fix/export_macos_dmg.sh
+./tools/macos_dmg_fix/run_godot_with_dmg_fix.sh
+./tests
+./tests/run_tests.gd.uid
+./tests/test_case.gd.uid
+./tests/test_case.gd
+./tests/cases
+./tests/cases/test_gamepad_pick_place_flow.gd
+./tests/cases/test_cycle_state_lab_scope.gd
+./tests/cases/test_enemy_light_sensitive_flashlight_stun.gd.uid
+./tests/cases/test_enemy_light_sensitive_flashlight_stun.gd
+./tests/cases/test_fridge_chase_interaction.gd
+./tests/cases/test_level13_multi_lab_requirement.gd
+./tests/cases/test_project_config.gd.uid
+./tests/cases/test_respawn_checkpoint_restore.gd.uid
+./tests/cases/test_ui_message_dialogue_channels.gd
+./tests/cases/test_minigame_backdrop_transition_visibility.gd
+./tests/cases/test_laptop_multi_lab_ids.gd
+./tests/cases/test_fridge_visual_after_eating.gd
+./tests/cases/test_generator_activates_required_lamps.gd.uid
+./tests/cases/test_level05_sql_post_lab_fridge_runtime.gd
+./tests/cases/test_scripts_compile.gd.uid
+./tests/cases/test_musicmanager_priority_resume_runtime.gd
+./tests/cases/test_project_config.gd
+./tests/cases/test_game_director_runtime.gd
+./tests/cases/test_input_actions.gd
+./tests/cases/test_ui_message_dialogue_channels.gd.uid
+./tests/cases/test_level_checkpoint_spawn.gd.uid
+./tests/cases/test_stalker_behavior.gd.uid
+./tests/cases/test_cycle_state_lab_scope.gd.uid
+./tests/cases/test_audio_bedroom_music_policy.gd.uid
+./tests/cases/test_gamepad_pick_place_flow.gd.uid
+./tests/cases/test_musicmanager_private_api_usage.gd.uid
+./tests/cases/test_level14_end_music_policy_runtime.gd
+./tests/cases/test_ending_credits_session_gate_runtime.gd.uid
+./tests/cases/test_flashlight_pickup_clears_location.gd.uid
+./tests/cases/test_save_state_split.gd.uid
+./tests/cases/test_interactive_object_feedback_audio.gd.uid
+./tests/cases/test_audio_routing_policy.gd.uid
+./tests/cases/test_disclaimer_screen_session_gate_runtime.gd.uid
+./tests/cases/test_scene_rule_runner.gd.uid
+./tests/cases/test_scenes_load.gd.uid
+./tests/cases/test_flashlight_pickup_clears_location.gd
+./tests/cases/test_interactive_object_locked_message.gd
+./tests/cases/test_minigame_backdrop_transition_visibility.gd.uid
+./tests/cases/test_autoloads.gd
+./tests/cases/test_audio_menu_to_level01_bedroom_runtime.gd.uid
+./tests/cases/test_level12_stu2_wiring_runtime.gd.uid
+./tests/cases/test_music_crossfade_suppression_runtime.gd
+./tests/cases/test_audio_menu_to_level01_bedroom_runtime.gd
+./tests/cases/test_stalker_motion_audio_component.gd.uid
+./tests/cases/test_level_default_flashlight.gd
+./tests/cases/test_stalker_motion_audio_component.gd
+./tests/cases/test_interactive_object_locked_message.gd.uid
+./tests/cases/test_cycle_state_flashlight_unlock.gd
+./tests/cases/test_gamepad_runtime_navigation.gd
+./tests/cases/test_disclaimer_screen_session_gate_runtime.gd
+./tests/cases/test_interactive_object_feedback_audio.gd
+./tests/cases/test_level12_laptop_money_reward.gd
+./tests/cases/test_interaction_architecture_contracts.gd.uid
+./tests/cases/test_main_menu_startup_disclaimer_runtime.gd
+./tests/cases/test_level11_lab_music_runtime.gd
+./tests/cases/test_projector_beam_runtime.gd
+./tests/cases/test_level12_money_system.gd.uid
+./tests/cases/test_lab_pause_resume_runtime.gd
+./tests/cases/test_final_feed_minigame_stage_transition.gd.uid
+./tests/cases/test_audio_bedroom_music_policy.gd
+./tests/cases/test_fridge_visual_after_eating.gd.uid
+./tests/cases/test_level_default_flashlight.gd.uid
+./tests/cases/test_scenes_load.gd
+./tests/cases/test_minigame_gamepad_bindings.gd
+./tests/cases/test_main_menu_startup_disclaimer_runtime.gd.uid
+./tests/cases/test_final_feed_minigame_stage_transition.gd
+./tests/cases/test_note_audio_optional.gd.uid
+./tests/cases/test_enemy_light_sensitive_external_flashlight.gd
+./tests/cases/test_level12_student_reward.gd
+./tests/cases/test_level13_multi_lab_requirement.gd.uid
+./tests/cases/test_light_adds_directional_contract.gd.uid
+./tests/cases/test_projector_beam_runtime.gd.uid
+./tests/cases/test_scripts_compile.gd
+./tests/cases/test_minigame_backdrop_dedup_runtime.gd.uid
+./tests/cases/test_laptop_lab_music_runtime.gd.uid
+./tests/cases/test_save_state_split.gd
+./tests/cases/test_enemy_light_sensitive_blind_detection_runtime.gd.uid
+./tests/cases/test_level05_sql_post_lab_fridge_runtime.gd.uid
+./tests/cases/test_level14_end_music_policy_runtime.gd.uid
+./tests/cases/test_lab_pause_resume_runtime.gd.uid
+./tests/cases/test_level11_lab_music_runtime.gd.uid
+./tests/cases/test_respawn_checkpoint_restore.gd
+./tests/cases/test_lamp_generator_requirement.gd
+./tests/cases/test_enemy_light_sensitive_external_flashlight.gd.uid
+./tests/cases/test_light_adds_directional_contract.gd
+./tests/cases/test_ending_credits_session_gate_runtime.gd
+./tests/cases/test_music_crossfade_suppression_runtime.gd.uid
+./tests/cases/test_musicmanager_priority_resume_runtime.gd.uid
+./tests/cases/test_musicmanager_private_api_usage.gd
+./tests/cases/test_generator_activates_required_lamps.gd
+./tests/cases/test_musicmanager_state_runtime.gd.uid
+./tests/cases/test_minigame_gamepad_bindings.gd.uid
+./tests/cases/test_laptop_multi_lab_ids.gd.uid
+./tests/cases/test_fridge_chase_interaction.gd.uid
+./tests/cases/test_level_checkpoint_spawn.gd
+./tests/cases/test_stalker_behavior.gd
+./tests/cases/test_game_director_runtime.gd.uid
+./tests/cases/test_minigame_backdrop_dedup_runtime.gd
+./tests/cases/test_level12_student_reward.gd.uid
+./tests/cases/test_interaction_architecture_contracts.gd
+./tests/cases/test_note_audio_optional.gd
+./tests/cases/test_cycle_state_flashlight_unlock.gd.uid
+./tests/cases/test_enemy_light_sensitive_blind_detection_runtime.gd
+./tests/cases/test_input_actions.gd.uid
+./tests/cases/test_level12_stu2_wiring_runtime.gd
+./tests/cases/test_audio_routing_policy.gd
+./tests/cases/test_musicmanager_state_runtime.gd
+./tests/cases/test_lamp_generator_requirement.gd.uid
+./tests/cases/test_level12_money_system.gd
+./tests/cases/test_laptop_lab_music_runtime.gd
+./tests/cases/test_autoloads.gd.uid
+./tests/cases/test_gamepad_runtime_navigation.gd.uid
+./tests/cases/test_scene_rule_runner.gd
+./tests/cases/test_level12_laptop_money_reward.gd.uid
+./tests/README.md
+./tests/test_utils.gd.uid
+./tests/run_tests.gd
+./tests/run_tests.sh
+./tests/test_utils.gd
+./icon.svg
+./objects
+./objects/interactable
+./objects/interactable/note
+./objects/interactable/lamp
+./objects/interactable/bed
+./objects/interactable/search_spot
+./objects/interactable/trigger
+./objects/interactable/projector
+./objects/interactable/level12
+./objects/interactable/powered_switchable_interactable.gd.uid
+./objects/interactable/interactive_object.gd.uid
+./objects/interactable/shared
+./objects/interactable/key
+./objects/interactable/lebedka
+./objects/interactable/generator
+./objects/interactable/phone
+./objects/interactable/flashlight
+./objects/interactable/powered_switchable_interactable.gd
+./objects/interactable/obstacle
+./objects/interactable/notebook
+./objects/interactable/fridge
+./objects/interactable/interactive_object.gd
+./objects/interactable/door
+./objects/environment
+./objects/environment/background
+./objects/environment/walls
+./objects/environment/smart
+./objects/environment/university
+./objects/environment/creepy_eye
+./objects/environment/sprites
+./objects/environment/floor
+./docs
+./docs/testing_strategy.md
+./docs/refactor_safety_rules.md
+./docs/architecture_overview.md
+./docs/macos-dmg-export-fix.md
+./docs/state_and_checkpoint_system.md
+./docs/level_end_endings.md
+./docs/audio_system.md
+./docs/interaction_system.md
+./docs/minigame_gamepad_system.md
+./docs/level_event_system.md
+./README.md
+./icon.svg.import
+./default_bus_layout.tres
+./shaders
+./shaders/light_only_jump_overlay.gdshader
+./shaders/distortion_overlay.gdshader.uid
+./shaders/pain_shock_distortion.gdshader
+./shaders/distortion_transition.gdshader
+./shaders/feeding_blood_drips.gdshader
+./shaders/torn_right_wallpaper.gdshader
+./shaders/death_text_glitch.gdshader.uid
+./shaders/torn_right_wallpaper.gdshader.uid
+./shaders/light_only_jump_overlay.gdshader.uid
+./shaders/distortion_overlay.gdshader
+./shaders/pain_shock_distortion.gdshader.uid
+./shaders/feeding_blood_drips.gdshader.uid
+./shaders/distortion_transition.gdshader.uid
+./shaders/death_text_glitch.gdshader
+./project.godot
+./export_presets.cfg
+./structure.txt
+./levels
+./levels/cycles
+./levels/cycles/level_01.gdshader
+./levels/cycles/level.gd
+./levels/cycles/level.gd.uid
+./levels/cycles/level_09_crazy.gd
+./levels/cycles/level_06_corridordistortion.tscn
+./levels/cycles/crazy_level_event.gd.uid
+./levels/cycles/level_11_stu_1.gd
+./levels/cycles/cycle_state.gd
+./levels/cycles/level_01_start.tscn
+./levels/cycles/cycle_state.gd.uid
+./levels/cycles/texture_distortion_manager.gd
+./levels/cycles/level_11_end.gd.uid
+./levels/cycles/TextureDistortionManager.tscn
+./levels/cycles/level_11_end.gd
+./levels/cycles/level_NSTU_test.tscn
+./levels/cycles/level_14_end.gd.uid
+./levels/cycles/corridor_distortion.gd.uid
+./levels/cycles/level_13_stu_3.gd.uid
+./levels/cycles/texture_distortion_manager.gd.uid
+./levels/cycles/game_state.gd.uid
+./levels/cycles/level_music.gd.uid
+./levels/cycles/level_09_crazy.gd.uid
+./levels/cycles/crazy_level_event.gd
+./levels/cycles/level_music.gd
+./levels/cycles/level_03_deepseek.tscn
+./levels/cycles/level_05_sql.tscn
+./levels/cycles/corridor_distortion.gd
+./levels/cycles/level_06_monster.tscn
+./levels/cycles/level_12_stu_2.gd
+./levels/cycles/level_11_STU_1.tscn
+./levels/cycles/level_13_stu_3.gd
+./levels/cycles/level_07_doors.gd
+./levels/cycles/level_12_STU_2.tscn
+./levels/cycles/level_12_stu_2.gd.uid
+./levels/cycles/level_14_end.tscn
+./levels/cycles/level_07_doors.tscn
+./levels/cycles/level_04_findkey.tscn
+./levels/cycles/level_09_сrazy.tscn
+./levels/cycles/level_02_basic.tscn
+./levels/cycles/game_state.gd
+./levels/cycles/level_07_doors.gd.uid
+./levels/cycles/level_01.gdshader.uid
+./levels/cycles/level_08_PT.tscn
+./levels/cycles/level_13_STU_3.tscn
+./levels/cycles/level_11_stu_1.gd.uid
+./levels/cycles/level_14_end.gd
+./levels/game_director.gd
+./levels/ui
+./levels/ui/interaction_prompts.tscn
+./levels/ui/prompts
+./levels/game_director.gd.uid
+./levels/minigames
+./levels/minigames/labs
+./levels/minigames/ui
+./levels/minigames/minigame_controller.gd
+./levels/minigames/gamepad
+./levels/minigames/minigame_settings.gd
+./levels/minigames/minigame_settings.gd.uid
+./levels/minigames/search_key
+./levels/minigames/feeding
+./levels/minigames/cursor_manager.gd.uid
+./levels/minigames/minigame_controller.gd.uid
+./levels/minigames/cursor_manager.gd
+./levels/music_mix_settings.gd
+./levels/prompt_view.gd
+./levels/endings
+./levels/endings/good_ending_screen.tscn
+./levels/endings/ending_credits.gd.uid
+./levels/endings/bad_ending_screen.tscn
+./levels/endings/ending_screen.gd
+./levels/endings/ending_screen.gd.uid
+./levels/endings/ending_credits.tscn
+./levels/endings/ending_credits.gd
+./levels/music_mix_settings.gd.uid
+./levels/Hahaha.wav.import
+./levels/interaction_prompts.gd
+./levels/ScaryStepsAndDoor.mp3.import
+./levels/ScaryStepsAndDoor.mp3
+./levels/music_manager.gd.uid
+./levels/Hahaha.wav
+./levels/prompt_view.gd.uid
+./levels/audio
+./levels/audio/music_pause_layer.gd.uid
+./levels/audio/music_pause_layer.gd
+./levels/audio/music_chase_system.gd
+./levels/audio/music_chase_system.gd.uid
+./levels/music_manager.gd
+./levels/menu
+./levels/menu/settings_panel.gd.uid
+./levels/menu/settings_manager.gd
+./levels/menu/pause_menu.gd.uid
+./levels/menu/main_menu.gd.uid
+./levels/menu/MainMenuBackground.png
+./levels/menu/MainMenuBackground.png.import
+./levels/menu/settings_panel.gd
+./levels/menu/main_settings_panel.tscn
+./levels/menu/screen_spoiler_blur.gdshader.uid
+./levels/menu/pause_menu.gd
+./levels/menu/settings_panel.tscn
+./levels/menu/pause_manager.gd
+./levels/menu/settings_manager.gd.uid
+./levels/menu/main_menu.gd
+./levels/menu/cold_bloom_fade.gdshader
+./levels/menu/pause_menu.tscn
+./levels/menu/menu_base.gd.uid
+./levels/menu/menu_base.gd
+./levels/menu/disclaimer_screen.gd.uid
+./levels/menu/screen_spoiler_blur.gdshader
+./levels/menu/disclaimer_screen.tscn
+./levels/menu/disclaimer_screen.gd
+./levels/menu/pause_manager.gd.uid
+./levels/menu/cold_bloom_fade.gdshader.uid
+./levels/menu/main_menu.tscn
+./levels/scene_rules
+./levels/scene_rules/set_property_action.gd.uid
+./levels/scene_rules/scene_rule_action.gd
+./levels/scene_rules/set_property_action.gd
+./levels/scene_rules/scene_rule.gd
+./levels/scene_rules/set_locked_action.gd.uid
+./levels/scene_rules/set_dependency_action.gd.uid
+./levels/scene_rules/scene_rule_action.gd.uid
+./levels/scene_rules/show_notification_action.gd.uid
+./levels/scene_rules/set_locked_action.gd
+./levels/scene_rules/set_dependency_action.gd
+./levels/scene_rules/start_crazy_level_event_action.gd.uid
+./levels/scene_rules/refresh_interaction_state_action.gd.uid
+./levels/scene_rules/scene_rule_runner.gd
+./levels/scene_rules/scene_rule.gd.uid
+./levels/scene_rules/show_notification_action.gd
+./levels/scene_rules/refresh_interaction_state_action.gd
+./levels/scene_rules/set_door_target_action.gd
+./levels/scene_rules/set_door_target_action.gd.uid
+./levels/scene_rules/set_door_target_from_cycle_state_action.gd
+./levels/scene_rules/set_interaction_enabled_action.gd
+./levels/scene_rules/start_crazy_level_event_action.gd
+./levels/scene_rules/scene_rule_runner.gd.uid
+./levels/scene_rules/set_interaction_enabled_action.gd.uid
+./levels/scene_rules/set_door_target_from_cycle_state_action.gd.uid
+./levels/interaction_prompts.gd.uid
+./levels/game_director
+./levels/game_director/distortion_phase_controller.gd
+./levels/game_director/death_sequence_controller.gd
+./levels/game_director/distortion_phase_controller.gd.uid
+./levels/game_director/death_sequence_controller.gd.uid
+./levels/game_director/screen_fx_overlay_controller.gd.uid
+./levels/game_director/screen_fx_overlay_controller.gd
+./global
+./global/iconofgame.png
+./global/itchio.jpg.import
+./global/group_names.gd.uid
+./global/itchio.jpg
+./global/macos_icon.icns
+./global/checkpoint_state_utils.gd.uid
+./global/reactive_light_utils.gd
+./global/Иконка_предварительно.ico
+./global/checkpoint_state_utils.gd
+./global/iconofgame.png.import
+./global/group_names.gd
+./global/windows_icon.ico
+./global/reactive_light_utils.gd.uid
+./global/Иконка_предварительно.icns
+./global/export_presets.cfg
+./global/fonts
+./global/fonts/AmaticSC-Regular.ttf
+./global/fonts/AmaticSC-Bold.ttf.import
+./global/fonts/AmaticSC-Regular.ttf.import
+./global/fonts/AmaticSC-Bold.ttf
+./global/fonts/OFL.txt
+./global/localization
+./global/localization/texts.csv
+./global/localization/texts.en.translation
+./global/localization/texts.ru.translation
+./global/localization/texts.csv.import
+./enemies
+./enemies/light_sensitive
+./enemies/light_sensitive/enemy_light_sensitive.gd.uid
+./enemies/light_sensitive/enemy_light_sensitive.gd
+./enemies/light_sensitive/Monster_2.png.import
+./enemies/light_sensitive/enemy_light_sensitive.tscn
+./enemies/light_sensitive/Monster_2.png
+./enemies/light_sensitive/animations
+./enemies/stalker
+./enemies/stalker/StalkerWalk
+./enemies/stalker/StalkerOpenDoor.wav.import
+./enemies/stalker/enemy_stalker.tscn
+./enemies/stalker/stalker_motion_audio_component.gd.uid
+./enemies/stalker/sprite.png.import
+./enemies/stalker/StalkerWalk.wav.import
+./enemies/stalker/enemy_stalker.gd
+./enemies/stalker/sprite.png
+./enemies/stalker/enemy_stalker.gd.uid
+./enemies/stalker/StalkerOpenDoor.wav
+./enemies/stalker/stalker_motion_audio_component.gd
+./enemies/stalker/StalkerWalk.wav
+./enemies/stalker/walking_animation
+./enemies/enemy.gd.uid
+./enemies/runner
+./enemies/runner/enemy_runner.tscn
+./enemies/runner/enemy_runner.gd.uid
+./enemies/runner/audio
+./enemies/runner/Monster.png.import
+./enemies/runner/enemy_runner.gd
+./enemies/runner/Monster.png
+./enemies/runner/animations
+./enemies/enemy.gd
+./enemies/enemy_flashlight_base.gd
+./enemies/enemy_flashlight_base.gd.uid
+./enemies/enemy.tscn
+./enemies/light_only
+./enemies/light_only/enemy_light_only.gd
+./enemies/light_only/enemy_light_only.tscn
+./enemies/light_only/sprites
+./enemies/light_only/enemy_light_only.gd.uid
+./enemies/light_ceiling
+./enemies/light_ceiling/enemy_ceiling.tscn
+./enemies/light_ceiling/enemy_ceiling.gd.uid
+./enemies/light_ceiling/enemy_ceiling.gd
+./player
+./player/UI_Button_Sprite_Dualsense.png
+./player/ui
+./player/ui/PouringFlashlight.png
+./player/ui/PouringFlashlight.png.import
+./player/ui/OnlySpotlight.png
+./player/ui/OnlySpotlight.png.import
+./player/ui/FlashlightWithoutSpotlight.png
+./player/ui/FullFlashlight.png
+./player/ui/FlashlightDrawing.png.import
+./player/ui/FullFlashlight.png.import
+./player/ui/FlashlightWithoutSpotlight.png.import
+./player/ui/FlashlightDrawing.png
+./player/player.tscn
+./player/ui_message.gd
+./player/stamina_bar.gd
+./player/ui_message.gd.uid
+./player/UI_Button_Sprite.png.import
+./player/stamina_bar.gd.uid
+./player/player.gd
+./player/step_audio_component.gd.uid
+./player/flashlight_bar.gd.uid
+./player/flashlight_bar.gd
+./player/UI_Button_Sprite_Dualsense.png.import
+./player/UI_Button_Sprite.png
+./player/AndryWithFlashlight.png
+./player/audio
+./player/audio/FlashlightOnOff.wav.import
+./player/audio/FlashlightOnOff.wav
+./player/audio/screams
+./player/audio/HeartBeat_1.wav
+./player/audio/steps
+./player/audio/HeartBeat_1.wav.import
+./player/UI_Button_Sprite_Xbox.png
+./player/flashlight.gd
+./player/step_audio_component.gd
+./player/player.gd.uid
+./player/AndryWithFlashlight.png.import
+./player/Andry.png
+./player/UI_Button_Sprite_Xbox.png.import
+./player/Andry.png.import
+./player/flashlight.gd.uid
+./player/animations
+./player/animations/walking

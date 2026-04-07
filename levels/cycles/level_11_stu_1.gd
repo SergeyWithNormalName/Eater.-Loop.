@@ -1,5 +1,13 @@
 extends "res://levels/cycles/level.gd"
 
+const SceneRuleRunnerScript = preload("res://levels/scene_rules/scene_rule_runner.gd")
+const SceneRuleScript = preload("res://levels/scene_rules/scene_rule.gd")
+const SetPropertyActionScript = preload("res://levels/scene_rules/set_property_action.gd")
+const SetDependencyActionScript = preload("res://levels/scene_rules/set_dependency_action.gd")
+const RefreshInteractionStateActionScript = preload("res://levels/scene_rules/refresh_interaction_state_action.gd")
+const SetLockedActionScript = preload("res://levels/scene_rules/set_locked_action.gd")
+const SetDoorTargetActionScript = preload("res://levels/scene_rules/set_door_target_action.gd")
+
 @export var fridge_path: NodePath = NodePath("6thLevel/604/InteractableObjects/Fridge")
 @export var door_in604_path: NodePath = NodePath("6thLevel/604/InteractableObjects/Door(In604)")
 @export var door_to701_path: NodePath = NodePath("7thLevel/7thHall/InteractableObjects/Door(To701)")
@@ -7,63 +15,60 @@ extends "res://levels/cycles/level.gd"
 @export var door_to701_target_after_fridge: NodePath = NodePath("../../../../Bedroom/InteractableObjects/Door(InBedroom)")
 @export var note_story_path: NodePath = NodePath("NoteStory")
 
-var _fridge: InteractiveObject = null
-var _door_in604: Node = null
-var _door_to701: Node = null
-var _note_story: InteractiveObject = null
-
 func _ready() -> void:
 	super._ready()
-	call_deferred("_wire_level11_fridge_state")
+	_wire_level11_fridge_state()
 
 func _wire_level11_fridge_state() -> void:
-	_fridge = get_node_or_null(fridge_path) as InteractiveObject
-	_door_in604 = get_node_or_null(door_in604_path)
-	_door_to701 = get_node_or_null(door_to701_path)
-	_note_story = get_node_or_null(note_story_path) as InteractiveObject
-
+	var runner = SceneRuleRunnerScript.new()
 	var fridge_done := _is_fridge_success_done()
-	if _fridge != null:
-		_fridge.is_completed = fridge_done
-		if not _fridge.interaction_finished.is_connected(_on_fridge_successfully_interacted):
-			_fridge.interaction_finished.connect(_on_fridge_successfully_interacted)
+	var ready_rule = SceneRuleScript.new()
+	ready_rule.trigger_kind = SceneRuleScript.TriggerKind.READY
+	ready_rule.actions = _build_ready_actions(fridge_done)
+	var signal_rule = SceneRuleScript.new()
+	signal_rule.trigger_kind = SceneRuleScript.TriggerKind.SIGNAL
+	signal_rule.source_path = fridge_path
+	signal_rule.signal_name = "interaction_finished"
+	signal_rule.one_shot = true
+	signal_rule.actions = _build_post_fridge_actions()
+	runner.rules = [ready_rule, signal_rule]
+	add_child(runner)
 
-	_configure_note_dependency()
-	_apply_door_lock_state(fridge_done)
-	_apply_to701_target(fridge_done)
+func _build_ready_actions(fridge_done: bool) -> Array:
+	var set_fridge_completed = SetPropertyActionScript.new()
+	set_fridge_completed.target_path = fridge_path
+	set_fridge_completed.property_name = "is_completed"
+	set_fridge_completed.value = fridge_done
+	var set_dependency = SetDependencyActionScript.new()
+	set_dependency.target_path = note_story_path
+	set_dependency.dependency_path = fridge_path
+	var refresh_note = RefreshInteractionStateActionScript.new()
+	refresh_note.target_path = note_story_path
+	var set_locked = SetLockedActionScript.new()
+	set_locked.door_path = door_in604_path
+	set_locked.locked = fridge_done
+	var set_target = SetDoorTargetActionScript.new()
+	set_target.door_path = door_to701_path
+	set_target.target_marker = door_to701_target_after_fridge if fridge_done else door_to701_target_before_fridge
+	return [set_fridge_completed, set_dependency, refresh_note, set_locked, set_target]
 
-func _configure_note_dependency() -> void:
-	if _note_story == null or _fridge == null:
-		return
-
-	_note_story.set_dependency_object(_fridge)
-	_note_story.refresh_interaction_state()
-
-func _on_fridge_successfully_interacted() -> void:
-	if _fridge != null:
-		_fridge.is_completed = true
-	_apply_door_lock_state(true)
-	_apply_to701_target(true)
-	if _note_story != null:
-		_note_story.refresh_interaction_state()
-
-func _apply_door_lock_state(is_locked_state: bool) -> void:
-	if _door_in604 == null or not _door_in604.has_method("set_locked"):
-		return
-	_door_in604.call("set_locked", is_locked_state)
-
-func _apply_to701_target(fridge_done: bool) -> void:
-	if _door_to701 == null or not _door_to701.has_method("set_target_marker_path"):
-		return
-
-	var target_marker: NodePath = door_to701_target_after_fridge if fridge_done else door_to701_target_before_fridge
-	if target_marker.is_empty():
-		return
-	_door_to701.call("set_target_marker_path", target_marker)
+func _build_post_fridge_actions() -> Array:
+	var set_fridge_completed = SetPropertyActionScript.new()
+	set_fridge_completed.target_path = fridge_path
+	set_fridge_completed.property_name = "is_completed"
+	set_fridge_completed.value = true
+	var set_locked = SetLockedActionScript.new()
+	set_locked.door_path = door_in604_path
+	set_locked.locked = true
+	var set_target = SetDoorTargetActionScript.new()
+	set_target.door_path = door_to701_path
+	set_target.target_marker = door_to701_target_after_fridge
+	var refresh_note = RefreshInteractionStateActionScript.new()
+	refresh_note.target_path = note_story_path
+	return [set_fridge_completed, set_locked, set_target, refresh_note]
 
 func _is_fridge_success_done() -> bool:
 	if CycleState == null:
-		return _fridge != null and _fridge.is_completed
-	if CycleState.has_method("is_fridge_interacted"):
-		return bool(CycleState.is_fridge_interacted())
-	return false
+		var fridge := get_node_or_null(fridge_path) as InteractiveObject
+		return fridge != null and fridge.is_completed
+	return bool(CycleState.is_fridge_interacted())

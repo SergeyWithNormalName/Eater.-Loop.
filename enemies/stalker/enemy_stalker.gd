@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 func _ensure_player() -> void:
 	if _player != null and is_instance_valid(_player):
 		return
-	_player = get_tree().get_first_node_in_group("player") as Node2D
+	_player = get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 
 func _follow_door_route() -> void:
 	if _door_route.is_empty():
@@ -221,7 +221,7 @@ func _sort_doors_for_state(doors: Array[Node], from_pos: Vector2, target_pos: Ve
 	return sorted_doors
 
 func _get_doors() -> Array[Node]:
-	var nodes := get_tree().get_nodes_in_group("doors")
+	var nodes := get_tree().get_nodes_in_group(GroupNames.DOORS)
 	var doors: Array[Node] = []
 	for node in nodes:
 		if node is Node2D:

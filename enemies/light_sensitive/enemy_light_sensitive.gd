@@ -148,7 +148,7 @@ func _walk_frame_path(frame_number: int) -> String:
 func _sync_light_mask_with_player() -> void:
 	var player := _player
 	if player == null:
-		player = get_tree().get_first_node_in_group("player") as Node2D
+		player = get_tree().get_first_node_in_group(GroupNames.PLAYER) as Node2D
 	if player == null:
 		return
 
@@ -197,7 +197,7 @@ func _physics_process(delta: float) -> void:
 	_apply_chase_motion()
 
 func _on_detection_area_body_entered(body: Node) -> void:
-	if not body.is_in_group("player"):
+	if not body.is_in_group(GroupNames.PLAYER):
 		return
 	if _is_currently_blinded():
 		_clear_player_target_while_blinded()
@@ -210,7 +210,7 @@ func _on_detection_area_body_exited(body: Node) -> void:
 		_player = null
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group(GroupNames.PLAYER):
 		_player_in_hitbox = body
 	if _update_lamp_freeze_state():
 		return
@@ -328,7 +328,7 @@ func _refresh_player_target_from_detection() -> void:
 	if _detection_area == null or _is_currently_blinded():
 		return
 	for body in _detection_area.get_overlapping_bodies():
-		if body != null and body.is_in_group("player"):
+		if body != null and body.is_in_group(GroupNames.PLAYER):
 			super._on_detection_area_body_entered(body)
 			return
 

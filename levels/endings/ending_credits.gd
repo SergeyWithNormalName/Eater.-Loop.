@@ -132,7 +132,7 @@ func _apply_label_fonts() -> void:
 			heading.add_theme_font_override("font", variation)
 	if body_font == null:
 		return
-	var labels := get_tree().get_nodes_in_group("ending_credit_label")
+	var labels := get_tree().get_nodes_in_group(GroupNames.ENDING_CREDIT_LABEL)
 	for node in labels:
 		if not (node is Label):
 			continue

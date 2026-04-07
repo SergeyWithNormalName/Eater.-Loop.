@@ -118,6 +118,7 @@
 [ext_resource type="PackedScene" path="res://objects/environment/smart/markers/stalker_spawn_marker.tscn" id="112_5wshx"]
 [ext_resource type="PackedScene" uid="uid://b7v0dt08jwi1j" path="res://levels/cycles/TextureDistortionManager.tscn" id="113_wtad1"]
 [ext_resource type="PackedScene" path="res://objects/interactable/trigger/trigger_set_property.tscn" id="114_5a25b"]
+[ext_resource type="Script" uid="uid://b7vt8ppv425d5" path="res://objects/interactable/fridge/fridge_teleport_config.gd" id="200_fridge_tp_cfg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srw7l"]
 shader = ExtResource("2_2bxq4")
@@ -125,19 +126,15 @@ shader_parameter/reach = 1.5
 shader_parameter/intensity = 0.8400000399
 shader_parameter/color = Color(0, 0, 0, 1)
 
+[sub_resource type="Resource" id="Resource_level04_fridge_teleport"]
+script = ExtResource("200_fridge_tp_cfg")
+target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
+
 [sub_resource type="Gradient" id="Gradient_tgt7k"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pgutp"]
 gradient = SubResource("Gradient_tgt7k")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_130pq"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmq65"]
-gradient = SubResource("Gradient_130pq")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -714,8 +711,7 @@ bg_music = ExtResource("50_4wpj2")
 win_sound = ExtResource("51_2hh7m")
 eat_sound = ExtResource("52_unttk")
 background_texture = ExtResource("53_l6n8o")
-enable_teleport = true
-teleport_target = NodePath("../../../Hall2/InteractableObjects/Fridge/FridgeMarker")
+teleport_config = SubResource("Resource_level04_fridge_teleport")
 metadata/_edit_group_ = true
 
 [node name="FridgeMarker" type="Marker2D" parent="Hall/InteractableObjects/Fridge" unique_id=1024986287]
@@ -927,6 +923,23 @@ start_game_time = "1:44"
 metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock/WorldClock" unique_id=1751171799]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
+[node name="Clock2" type="Sprite2D" parent="Bedroom/InteractableObjects" unique_id=687077716]
+position = Vector2(9433.53, 108.58)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("67_bar5d")
+
+[node name="WorldClock" parent="Bedroom/InteractableObjects/Clock2" unique_id=371658570 instance=ExtResource("68_siwla")]
+position = Vector2(-94.444336, -61.111206)
+rotation = 0.002830834
+scale = Vector2(2.0000002, 2.0000002)
+start_game_time = "1:44"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Bedroom/InteractableObjects/Clock2/WorldClock" unique_id=1639362084]
 position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_pgutp")
@@ -1709,6 +1722,23 @@ position = Vector2(47.222225, 38.88893)
 scale = Vector2(2.9513855, 1.1284723)
 texture = SubResource("GradientTexture2D_pgutp")
 
+[node name="Clock2" type="Sprite2D" parent="Bedroom2/InteractableObjects" unique_id=714928439]
+position = Vector2(9434, 108.99992)
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("67_bar5d")
+
+[node name="WorldClock" parent="Bedroom2/InteractableObjects/Clock2" unique_id=599709927 instance=ExtResource("68_siwla")]
+position = Vector2(-94.444336, -61.111206)
+rotation = 0.002830834
+scale = Vector2(2.0000002, 2.0000002)
+start_game_time = "1:44"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Bedroom2/InteractableObjects/Clock2/WorldClock" unique_id=2015836472]
+position = Vector2(47.222225, 38.88893)
+scale = Vector2(2.9513855, 1.1284723)
+texture = SubResource("GradientTexture2D_pgutp")
+
 [node name="Door(InBedroom)" parent="Bedroom2/InteractableObjects" unique_id=164581555 instance=ExtResource("15_ui823")]
 position = Vector2(-1581, 83)
 door_locked_message = "Сначала нужно сделать что-то другое..."
@@ -1769,40 +1799,6 @@ dependency_object = NodePath("../Hall2/InteractableObjects/Door(ToBedroom)")
 [node name="SearchKeyManager" type="Node2D" parent="." unique_id=1169853276]
 script = ExtResource("111_cmq65")
 search_spots = Array[NodePath]([NodePath("../SearchSpot3"), NodePath("../SearchSpot"), NodePath("../SearchSpot4"), NodePath("../SearchSpot2")])
-
-[node name="Clock2" type="Sprite2D" parent="." unique_id=1180667976]
-position = Vector2(9432, 109)
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("67_bar5d")
-
-[node name="WorldClock" parent="Clock2" unique_id=857398928 instance=ExtResource("68_siwla")]
-position = Vector2(-94.444336, -61.111206)
-rotation = 0.002830834
-scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:44"
-metadata/_edit_group_ = true
-
-[node name="PointLight2D" type="PointLight2D" parent="Clock2/WorldClock" unique_id=1389021483]
-position = Vector2(47.222225, 38.88893)
-scale = Vector2(2.9513855, 1.1284723)
-texture = SubResource("GradientTexture2D_cmq65")
-
-[node name="Clock3" type="Sprite2D" parent="." unique_id=1260657002]
-position = Vector2(9432, 2911)
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("67_bar5d")
-
-[node name="WorldClock" parent="Clock3" unique_id=1095163914 instance=ExtResource("68_siwla")]
-position = Vector2(-94.444336, -61.111206)
-rotation = 0.002830834
-scale = Vector2(2.0000002, 2.0000002)
-start_game_time = "1:44"
-metadata/_edit_group_ = true
-
-[node name="PointLight2D" type="PointLight2D" parent="Clock3/WorldClock" unique_id=638861899]
-position = Vector2(47.222225, 38.88893)
-scale = Vector2(2.9513855, 1.1284723)
-texture = SubResource("GradientTexture2D_cmq65")
 
 [node name="StalkerSpawnMarker" parent="." unique_id=933659121 instance=ExtResource("112_5wshx")]
 position = Vector2(10428, 2969)

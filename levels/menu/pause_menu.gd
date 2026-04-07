@@ -85,7 +85,7 @@ func _apply_pause_visual_style() -> void:
 		var button := node as Button
 		if button == null:
 			continue
-		if not button.is_in_group("menu_button"):
+		if not button.is_in_group(GroupNames.MENU_BUTTON):
 			continue
 		button.custom_minimum_size.y = maxf(button.custom_minimum_size.y, 72.0)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -204,6 +204,7 @@ func open_menu() -> void:
 
 func close_menu() -> void:
 	visible = false
+	_restore_menu_music()
 	_hide_confirm()
 	_hide_settings()
 

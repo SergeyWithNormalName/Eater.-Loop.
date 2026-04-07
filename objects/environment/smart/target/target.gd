@@ -60,9 +60,9 @@ const OVERLAP_CHECK_ATTEMPTS := 6
 var _spawned: bool = false
 
 func _ready() -> void:
-	add_to_group("target_monster_spawner")
-	if not is_in_group("checkpoint_stateful"):
-		add_to_group("checkpoint_stateful")
+	add_to_group(GroupNames.TARGET_MONSTER_SPAWNER)
+	if not is_in_group(GroupNames.CHECKPOINT_STATEFUL):
+		add_to_group(GroupNames.CHECKPOINT_STATEFUL)
 	_arm_condition()
 
 func _process(_delta: float) -> void:

@@ -34,13 +34,8 @@ func _ready() -> void:
 	super._ready()
 	_assign_random_sprite()
 
-	_jump_player = AudioStreamPlayer2D.new()
-	_jump_player.bus = "Sounds"
-	add_child(_jump_player)
-
-	_idle_sound_player = AudioStreamPlayer2D.new()
-	_idle_sound_player.bus = "Sounds"
-	add_child(_idle_sound_player)
+	_jump_player = _create_sfx_player()
+	_idle_sound_player = _create_sfx_player()
 
 	_reset_jump_timer()
 	_reset_idle_sound_timer()
@@ -115,8 +110,6 @@ func _play_jump_sound() -> void:
 func _trigger_jump_screen_effect() -> void:
 	if GameDirector == null:
 		return
-	if not GameDirector.has_method("trigger_light_only_jump_effect"):
-		return
 	GameDirector.trigger_light_only_jump_effect()
 
 func _play_idle_sound() -> void:
@@ -128,18 +121,6 @@ func _reset_jump_timer() -> void:
 
 func _reset_idle_sound_timer() -> void:
 	_idle_sound_timer = _rand_range(idle_sound_interval_min, idle_sound_interval_max)
-
-func _rand_range(min_val: float, max_val: float) -> float:
-	var min_safe: float = maxf(0.05, min_val)
-	var max_safe: float = maxf(min_safe, max_val)
-	return randf_range(min_safe, max_safe)
-
-func _update_facing_from_direction(dir: Vector2) -> void:
-	if _sprite == null:
-		return
-	if abs(dir.x) < 0.01:
-		return
-	_sprite.scale = Vector2(_sprite_base_scale.x * -sign(dir.x), _sprite_base_scale.y)
 
 func _on_hitbox_area_body_entered(body: Node2D) -> void:
 	if not _is_flashlight_hitting():

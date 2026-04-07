@@ -82,7 +82,7 @@ func _is_menu_scene() -> bool:
 	return current.scene_file_path.find("/levels/menu/") != -1
 
 func _is_minigame_active() -> bool:
-	var nodes := get_tree().get_nodes_in_group("minigame_ui")
+	var nodes := get_tree().get_nodes_in_group(GroupNames.MINIGAME_UI)
 	for node in nodes:
 		if node is CanvasItem and node.visible:
 			return true

@@ -44,6 +44,21 @@ const FORBIDDEN_GAME_DIRECTOR_PATTERNS := [
 const FORBIDDEN_ACTIVE_SCENE_PATTERNS := [
 	"archive(trash)"
 ]
+const MIGRATED_TYPED_CONTRACT_PATHS := [
+	"res://levels/cycles/game_state.gd",
+	"res://levels/cycles/cycle_state.gd",
+	"res://levels/cycles/crazy_level_event.gd",
+	"res://levels/cycles/level_07_doors.gd",
+	"res://levels/cycles/level_11_stu_1.gd",
+	"res://levels/cycles/level_12_stu_2.gd",
+	"res://levels/cycles/level_13_stu_3.gd",
+	"res://objects/interactable/level12/blockpost/blockpost.gd",
+	"res://objects/interactable/generator/generator.gd",
+]
+const FORBIDDEN_MIGRATED_STRINGLY_PATTERNS := [
+	"has_method(",
+	".call(",
+]
 
 func run() -> Array[String]:
 	var scripts: Array[String] = []
@@ -93,5 +108,13 @@ func run() -> Array[String]:
 
 	var fridge_content := FileAccess.get_file_as_string(FRIDGE_PATH)
 	assert_true(fridge_content.find("autosave_run") != -1, "Fridge must trigger autosave after successful interaction")
+
+	for path in MIGRATED_TYPED_CONTRACT_PATHS:
+		var migrated_content := FileAccess.get_file_as_string(path)
+		assert_true(migrated_content != "", "Failed to read migrated script: %s" % path)
+		if migrated_content == "":
+			continue
+		for pattern in FORBIDDEN_MIGRATED_STRINGLY_PATTERNS:
+			assert_true(migrated_content.find(pattern) == -1, "Migrated script must not use stringly dispatch: %s (%s)" % [path, pattern])
 
 	return get_failures()
